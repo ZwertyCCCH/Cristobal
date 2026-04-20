@@ -1,0 +1,874 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>English Practice · Sports & Routines</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fraunces:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --navy: #0d2137;
+  --blue: #1a4a7a;
+  --sky: #2d8bba;
+  --gold: #f5a623;
+  --gold-light: #fdf0d5;
+  --green: #27ae60;
+  --green-light: #d5f5e3;
+  --red: #e74c3c;
+  --red-light: #fdecea;
+  --grey: #f2f5f9;
+  --white: #ffffff;
+  --text: #1a2e42;
+  --muted: #5a7a9a;
+  --radius: 14px;
+  --shadow: 0 4px 20px rgba(13,33,55,0.13);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Nunito', sans-serif;
+  background: var(--grey);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--navy);
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.3);
+}
+header h2 {
+  font-family: 'Fraunces', serif;
+  color: var(--white);
+  font-size: 1.15rem;
+  letter-spacing: 0.3px;
+}
+.score-pill {
+  background: var(--gold);
+  color: var(--navy);
+  font-weight: 900;
+  font-size: 1rem;
+  padding: 6px 18px;
+  border-radius: 40px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(135deg, var(--blue) 0%, var(--sky) 100%);
+  color: white;
+  text-align: center;
+  padding: 36px 20px 28px;
+}
+.hero h1 {
+  font-family: 'Fraunces', serif;
+  font-size: clamp(1.6rem, 4vw, 2.4rem);
+  margin-bottom: 10px;
+}
+.hero p {
+  font-size: 1rem;
+  opacity: 0.88;
+  max-width: 560px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── MAIN LAYOUT ── */
+.main-layout {
+  display: grid;
+  grid-template-columns: 260px 1fr;
+  gap: 20px;
+  max-width: 1100px;
+  margin: 24px auto;
+  padding: 0 16px;
+  align-items: start;
+}
+
+/* ── WORD BANK ── */
+.bank-wrapper {
+  position: sticky;
+  top: 72px;
+}
+.bank-label {
+  font-size: 0.78rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.2px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.word-bank {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-height: 120px;
+  align-items: stretch;
+  border: 2px solid transparent;
+  transition: border-color 0.2s;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+.word-bank .chip {
+  text-align: center;
+  width: 100%;
+}
+.word-bank.drag-over {
+  border-color: var(--sky);
+  background: #f0f8ff;
+}
+.word-bank.empty-bank {
+  justify-content: center;
+  align-items: center;
+  color: var(--green);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+@media (max-width: 700px) {
+  .main-layout {
+    grid-template-columns: 1fr;
+  }
+  .bank-wrapper {
+    position: static;
+  }
+  .word-bank {
+    flex-direction: row;
+    flex-wrap: wrap;
+    max-height: none;
+  }
+  .word-bank .chip {
+    width: auto;
+  }
+}
+
+/* ── CHIPS ── */
+.chip {
+  background: #e8f0fe;
+  border: 2px solid #b3c8f0;
+  border-radius: 50px;
+  padding: 7px 17px;
+  font-weight: 700;
+  font-size: 0.92rem;
+  cursor: grab;
+  transition: all 0.18s;
+  user-select: none;
+  white-space: nowrap;
+  touch-action: none;
+}
+.chip:hover { background: #cfe0fd; transform: translateY(-2px); box-shadow: 0 3px 8px rgba(0,0,0,0.12); }
+.chip:active { cursor: grabbing; }
+.chip.dragging { opacity: 0.35; transform: scale(0.95); }
+
+/* ── TEXT AREA ── */
+.text-wrapper {
+  min-width: 0;
+}
+.text-box {
+  background: var(--white);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 36px;
+  font-size: 1.05rem;
+  line-height: 2.1;
+}
+
+/* ── BLANKS ── */
+.blank {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 130px;
+  padding: 3px 14px;
+  border-radius: 40px;
+  border: 2px dashed var(--gold);
+  background: var(--gold-light);
+  color: #997520;
+  font-weight: 700;
+  font-size: 0.88rem;
+  margin: 0 3px;
+  cursor: pointer;
+  transition: all 0.18s;
+  vertical-align: middle;
+  position: relative;
+}
+.blank.drag-over {
+  border-color: var(--sky);
+  background: #d9eeff;
+  color: var(--sky);
+  transform: scale(1.05);
+}
+.blank.filled {
+  background: var(--green-light);
+  border: 2px solid var(--green);
+  color: var(--green);
+  cursor: pointer;
+}
+.blank.filled:hover {
+  background: #c2f0d7;
+}
+.blank.correct {
+  background: var(--green-light);
+  border: 2px solid var(--green);
+  color: var(--green);
+}
+.blank.wrong {
+  background: var(--red-light);
+  border: 2px solid var(--red);
+  color: var(--red);
+}
+.blank .remove-btn {
+  margin-left: 6px;
+  font-size: 0.75rem;
+  opacity: 0.6;
+  line-height: 1;
+}
+
+/* ── ACTIONS ── */
+.actions {
+  text-align: center;
+  padding: 16px 0 8px;
+}
+.btn-check {
+  background: var(--navy);
+  color: var(--white);
+  border: none;
+  padding: 13px 38px;
+  font-size: 1.05rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 14px rgba(13,33,55,0.25);
+  display: none;
+}
+.btn-check:hover { background: var(--sky); transform: translateY(-2px); }
+
+/* ── TOAST ── */
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--navy);
+  color: var(--white);
+  padding: 12px 26px;
+  border-radius: 50px;
+  font-weight: 700;
+  font-size: 0.95rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.25);
+  transition: transform 0.3s ease, opacity 0.3s;
+  opacity: 0;
+  z-index: 999;
+  pointer-events: none;
+  white-space: nowrap;
+}
+#toast.show { transform: translateX(-50%) translateY(0); opacity: 1; }
+
+/* ── RESULTS PANEL ── */
+#results {
+  display: none;
+  background: var(--white);
+  border-radius: 24px;
+  box-shadow: var(--shadow);
+  padding: 32px;
+  text-align: center;
+  margin-top: 20px;
+}
+#results h3 {
+  font-family: 'Fraunces', serif;
+  font-size: 1.6rem;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.score-big {
+  font-family: 'Fraunces', serif;
+  font-size: 4rem;
+  font-weight: 900;
+  color: var(--navy);
+  line-height: 1;
+  margin: 12px 0 4px;
+}
+.score-sub {
+  color: var(--muted);
+  font-size: 0.92rem;
+  margin-bottom: 20px;
+}
+.stat-row {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+.stat {
+  background: var(--grey);
+  border-radius: 12px;
+  padding: 12px 20px;
+  font-weight: 700;
+  font-size: 0.9rem;
+}
+.stat span { display: block; font-size: 1.5rem; font-weight: 900; }
+.stat.good span { color: var(--green); }
+.stat.bad span { color: var(--red); }
+.btn-reset {
+  background: var(--sky);
+  color: white;
+  border: none;
+  padding: 12px 32px;
+  font-size: 1rem;
+  font-family: 'Nunito', sans-serif;
+  font-weight: 800;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-reset:hover { background: var(--blue); transform: translateY(-2px); }
+
+/* ── GRAMMAR KEY NOTES ── */
+.grammar-note {
+  font-size: 0.75rem;
+  color: var(--muted);
+  font-style: italic;
+  margin-left: 2px;
+}
+
+footer { text-align: center; padding: 20px; font-size: 0.78rem; color: var(--muted); }
+
+@media (max-width: 600px) {
+  .text-box { padding: 20px 16px; font-size: 0.95rem; }
+  .blank { min-width: 100px; font-size: 0.8rem; }
+  .score-big { font-size: 3rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <h2>🏃 Sports &amp; Daily Routines</h2>
+  <div class="score-pill">
+    <span id="placedCount">0</span> / <span id="totalCount">0</span> placed
+  </div>
+</header>
+
+<div class="hero">
+  <h1>Complete the Text</h1>
+  <p>Drag each word from the bank to the correct blank in the text. Click a filled blank to return a word to the bank.</p>
+</div>
+
+<div class="main-layout">
+  <div class="bank-wrapper">
+    <div class="bank-label">📦 Word Bank</div>
+    <div class="word-bank" id="wordBank"></div>
+  </div>
+
+  <div class="text-wrapper">
+    <div class="text-box" id="textBox"></div>
+    <div class="actions">
+      <button class="btn-check" id="btnCheck">✅ Check My Answers</button>
+    </div>
+    <div id="results">
+      <h3>Activity Complete!</h3>
+      <div class="score-big" id="scoreDisplay">—</div>
+      <div class="score-sub" id="scoreSub"></div>
+      <div class="stat-row">
+        <div class="stat good"><span id="correctCount">0</span>Correct ✓</div>
+        <div class="stat bad"><span id="wrongCount">0</span>Wrong ✗</div>
+      </div>
+      <button class="btn-reset" id="btnReset">🔄 Try Again</button>
+       <div style="display:flex; gap:12px; justify-content:center; margin-top:14px; flex-wrap:wrap;">
+    <a href="C_1_Ingles.html" class="btn-reset" style="background:var(--navy); text-decoration:none;">📚 Back to Class</a>
+    <a href="C_1D_Ingles.html" class="btn-reset" style="background:var(--blue); text-decoration:none;">📝 Next Exercise</a>
+  </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div id="toast"></div>
+
+<footer>Drag &amp; drop exercise · Present Simple &amp; Present Continuous · English Practice</footer>
+
+<script>
+// =============================================================
+// DATA — text segments and answers
+// Each item: { text: string, answer: string | null }
+// null = plain text (no blank). answer = the correct word/phrase.
+// =============================================================
+
+const segments = [
+  { text: "My name is Tom and I love sports. I " },
+  { answer: "play" },           // 0 – present simple (I)
+  { text: " soccer every Saturday morning with my team. Right now, we " },
+  { answer: "are training" },   // 1 – present continuous (we)
+  { text: " for an important match. We usually start practice at 8 a.m., but today we " },
+  { answer: "are playing" },    // 2 – present continuous (we) — today exception
+  { text: " in the afternoon.\n\nMy friend Sarah " },
+  { answer: "goes" },           // 3 – present simple (she)
+  { text: " swimming twice a week. She " },
+  { answer: "is always" },      // 4 – present simple + frequency adverb
+  { text: " happy after training. At the moment, she " },
+  { answer: "is working on" },  // 5 – present continuous
+  { text: " her technique with the coach.\n\nI " },
+  { answer: "never" },          // 6 – frequency adverb (0%)
+  { text: " skip my warm-up before exercising. I think " },
+  { answer: "stretching" },     // 7 – gerund as subject
+  { text: " is essential to avoid injuries. After running, I " },
+  { answer: "always" },         // 8 – frequency adverb (100%)
+  { text: " drink water to stay hydrated.\n\nThe coach " },
+  { answer: "is talking" },     // 9 – present continuous
+  { text: " to the players right now. He " },
+  { answer: "checks" },         // 10 – present simple (he)
+  { text: " our equipment before every practice. I thank him for " },
+  { answer: "helping" },        // 11 – gerund after preposition
+  { text: " us improve.\n\nOn weekends, my friends and I " },
+  { answer: "go" },             // 12 – present simple (we)
+  { text: " cycling in the mountains. We " },
+  { answer: "sometimes" },      // 13 – frequency adverb (~50%)
+  { text: " watch sports on TV when we are tired. " },
+  { answer: "Playing" },        // 14 – gerund to start a sentence
+  { text: " sports regularly " },
+  { answer: "keeps" },          // 15 – present simple (gerund subject → 3rd person)
+  { text: " us healthy and motivated. Sarah " },
+  { answer: "hardly ever" },    // 16 – frequency adverb (~10%)
+  { text: " eats junk food — she prefers fruit and vegetables.\n\nThe marathon " },
+  { answer: "starts" },         // 17 – present simple (scheduled future)
+  { text: " at 7:00 a.m. tomorrow. All the athletes " },
+  { answer: "are warming up" }, // 18 – present continuous
+  { text: " in the stadium at this moment. I " },
+  { answer: "am looking forward to" }, // 19 – present continuous + expression
+  { text: " competing next month!" }
+];
+
+// Pull answers and build blank list
+const blanks = []; // { answer, index in segments }
+segments.forEach((seg, i) => {
+  if (seg.answer) blanks.push({ answer: seg.answer, segIndex: i });
+});
+
+const TOTAL = blanks.length;
+
+// =============================================================
+// STATE
+// =============================================================
+// state[blankId] = null | word string
+let state = [];
+// chipPool: { word, chipEl, blankId } — blankId null means in bank
+let chipData = []; // { word, id }  unique per word occurrence
+
+function freshState() {
+  state = Array(TOTAL).fill(null);
+  chipData = blanks.map((b, i) => ({ word: b.answer, id: i }));
+  shuffle(chipData);
+}
+
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+}
+
+// Which chip is placed in blankId? chipData id === blankId (each chip belongs to exactly one blank)
+// chips are identified by their blankId (their correct target)
+
+// Track which chip is currently in pool (not placed anywhere)
+// inPool[chipId] = true if chip is in the bank
+let inPool = [];
+
+function getPlacedChipFor(blankId) {
+  // Returns chipId currently placed at blankId, or null
+  return state[blankId]; // state[blankId] = chipId or null
+}
+
+// =============================================================
+// DOM REFS
+// =============================================================
+const wordBank = document.getElementById('wordBank');
+const textBox = document.getElementById('textBox');
+const btnCheck = document.getElementById('btnCheck');
+const resultsEl = document.getElementById('results');
+const placedCountEl = document.getElementById('placedCount');
+const totalCountEl = document.getElementById('totalCount');
+const toast = document.getElementById('toast');
+
+let verified = false;
+let dragChipId = null; // id of chip being dragged
+
+// =============================================================
+// RENDER
+// =============================================================
+function render() {
+  renderBank();
+  renderText();
+  updateCounter();
+  btnCheck.style.display = placedCount() === TOTAL ? 'inline-block' : 'none';
+}
+
+function renderBank() {
+  wordBank.innerHTML = '';
+  const poolChips = chipData.filter(c => state.indexOf(c.id) === -1);
+
+  if (poolChips.length === 0) {
+    wordBank.innerHTML = '<span style="color:var(--green);font-weight:700;">✓ All words placed! Press Check.</span>';
+    return;
+  }
+
+  poolChips.forEach(c => {
+    const chip = createChip(c.id, c.word);
+    chip.dataset.source = 'bank';
+    wordBank.appendChild(chip);
+  });
+}
+
+function renderText() {
+  textBox.innerHTML = '';
+  let blankIdx = 0;
+
+  segments.forEach(seg => {
+    if (!seg.answer) {
+      // Plain text — preserve newlines as <br>
+      seg.text.split('\n').forEach((line, i) => {
+        if (i > 0) textBox.appendChild(document.createElement('br'));
+        textBox.appendChild(document.createTextNode(line));
+      });
+    } else {
+      const bi = blankIdx++;
+      const placedChipId = state[bi];
+
+      const span = document.createElement('span');
+      span.className = 'blank' + (placedChipId !== null ? ' filled' : '');
+      span.dataset.blankId = bi;
+
+      if (placedChipId !== null) {
+        const word = chipData.find(c => c.id === placedChipId).word;
+        span.textContent = word;
+        if (!verified) {
+          const rm = document.createElement('span');
+          rm.className = 'remove-btn';
+          rm.textContent = '✕';
+          span.appendChild(rm);
+          span.title = 'Click to return to bank';
+          span.addEventListener('click', () => removeFromBlank(bi));
+        }
+      } else {
+        span.textContent = '________________';
+        span.title = 'Drop a word here';
+      }
+
+      // Drop events
+      span.addEventListener('dragover', onBlankDragOver);
+      span.addEventListener('dragleave', onBlankDragLeave);
+      span.addEventListener('drop', e => onBlankDrop(e, bi));
+
+      // Touch support
+      span.addEventListener('touchstart', onBlankTouchStart, { passive: false });
+
+      textBox.appendChild(span);
+    }
+  });
+}
+
+function createChip(chipId, word) {
+  const div = document.createElement('div');
+  div.className = 'chip';
+  div.textContent = word;
+  div.dataset.chipId = chipId;
+  div.draggable = true;
+
+  div.addEventListener('dragstart', onChipDragStart);
+  div.addEventListener('dragend', onChipDragEnd);
+
+  // Touch
+  div.addEventListener('touchstart', onChipTouchStart, { passive: false });
+
+  return div;
+}
+
+function updateCounter() {
+  placedCountEl.textContent = placedCount();
+  totalCountEl.textContent = TOTAL;
+}
+
+function placedCount() {
+  return state.filter(v => v !== null).length;
+}
+
+// =============================================================
+// PLACEMENT LOGIC
+// =============================================================
+function placeChip(chipId, blankId) {
+  // If blank already has a chip, return it to bank first
+  if (state[blankId] !== null) {
+    state[blankId] = null; // return to bank (just clear)
+  }
+  // If chip is already placed somewhere, clear it
+  const prevBlank = state.indexOf(chipId);
+  if (prevBlank !== -1) state[prevBlank] = null;
+
+  state[blankId] = chipId;
+  render();
+}
+
+function removeFromBlank(blankId) {
+  state[blankId] = null;
+  render();
+}
+
+// =============================================================
+// DRAG & DROP (Mouse)
+// =============================================================
+function onChipDragStart(e) {
+  dragChipId = parseInt(e.currentTarget.dataset.chipId);
+  e.currentTarget.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+  e.dataTransfer.setData('text/plain', dragChipId);
+}
+
+function onChipDragEnd(e) {
+  e.currentTarget.classList.remove('dragging');
+}
+
+function onBlankDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  e.currentTarget.classList.add('drag-over');
+}
+
+function onBlankDragLeave(e) {
+  e.currentTarget.classList.remove('drag-over');
+}
+
+function onBlankDrop(e, blankId) {
+  e.preventDefault();
+  e.currentTarget.classList.remove('drag-over');
+  if (dragChipId === null) return;
+  placeChip(dragChipId, blankId);
+  dragChipId = null;
+}
+
+// Bank as drop zone (return chip)
+wordBank.addEventListener('dragover', e => {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  wordBank.classList.add('drag-over');
+});
+wordBank.addEventListener('dragleave', () => wordBank.classList.remove('drag-over'));
+wordBank.addEventListener('drop', e => {
+  e.preventDefault();
+  wordBank.classList.remove('drag-over');
+  if (dragChipId === null) return;
+  // Remove chip from wherever it is
+  const prevBlank = state.indexOf(dragChipId);
+  if (prevBlank !== -1) {
+    state[prevBlank] = null;
+    render();
+  }
+  dragChipId = null;
+});
+
+// =============================================================
+// TOUCH DRAG SUPPORT
+// =============================================================
+let touchChipId = null;
+let touchClone = null;
+let touchOffsetX = 0, touchOffsetY = 0;
+
+function onChipTouchStart(e) {
+  const chip = e.currentTarget;
+  touchChipId = parseInt(chip.dataset.chipId);
+  const rect = chip.getBoundingClientRect();
+  touchOffsetX = e.touches[0].clientX - rect.left;
+  touchOffsetY = e.touches[0].clientY - rect.top;
+
+  touchClone = chip.cloneNode(true);
+  touchClone.style.cssText = `
+    position:fixed; pointer-events:none; z-index:9999; opacity:0.85;
+    width:${rect.width}px; font-size:0.9rem;
+    left:${rect.left}px; top:${rect.top}px;
+    transition:none;
+  `;
+  document.body.appendChild(touchClone);
+
+  document.addEventListener('touchmove', onTouchMove, { passive: false });
+  document.addEventListener('touchend', onTouchEnd);
+}
+
+function onBlankTouchStart(e) {
+  // Allow touch-to-remove
+}
+
+function onTouchMove(e) {
+  e.preventDefault();
+  const x = e.touches[0].clientX;
+  const y = e.touches[0].clientY;
+  if (touchClone) {
+    touchClone.style.left = (x - touchOffsetX) + 'px';
+    touchClone.style.top = (y - touchOffsetY) + 'px';
+  }
+  // Highlight element under finger
+  document.querySelectorAll('.blank.drag-over, .word-bank.drag-over').forEach(el => el.classList.remove('drag-over'));
+  const el = document.elementFromPoint(x, y);
+  const blank = el && el.closest('.blank');
+  const bank = el && el.closest('.word-bank');
+  if (blank) blank.classList.add('drag-over');
+  if (bank) bank.classList.add('drag-over');
+}
+
+function onTouchEnd(e) {
+  document.removeEventListener('touchmove', onTouchMove);
+  document.removeEventListener('touchend', onTouchEnd);
+  if (touchClone) { touchClone.remove(); touchClone = null; }
+  document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+
+  const x = e.changedTouches[0].clientX;
+  const y = e.changedTouches[0].clientY;
+  const el = document.elementFromPoint(x, y);
+  const blank = el && el.closest('.blank');
+  const bank = el && el.closest('.word-bank');
+
+  if (blank && touchChipId !== null) {
+    const blankId = parseInt(blank.dataset.blankId);
+    placeChip(touchChipId, blankId);
+  } else if (bank && touchChipId !== null) {
+    const prevBlank = state.indexOf(touchChipId);
+    if (prevBlank !== -1) { state[prevBlank] = null; render(); }
+  }
+  touchChipId = null;
+}
+
+// =============================================================
+// VERIFY
+// =============================================================
+btnCheck.addEventListener('click', verify);
+
+function verify() {
+  if (placedCount() < TOTAL) {
+    showToast('Place all words first!', 2000);
+    return;
+  }
+  verified = true;
+  btnCheck.style.display = 'none';
+
+  let correct = 0;
+  blanks.forEach((b, bi) => {
+    const placedChipId = state[bi];
+    const placedWord = placedChipId !== null ? chipData.find(c => c.id === placedChipId).word : null;
+    const isCorrect = placedWord === b.answer;
+    if (isCorrect) correct++;
+
+    // Style the blank
+    const blankEl = textBox.querySelector(`.blank[data-blank-id="${bi}"]`);
+    if (blankEl) {
+      blankEl.className = 'blank ' + (isCorrect ? 'correct' : 'wrong');
+      if (!isCorrect) {
+        blankEl.title = `Correct: "${b.answer}"`;
+      }
+    }
+  });
+
+  // Re-render text with correct/wrong styles (blanks need data-blank-id)
+  renderTextVerified(correct);
+  showResults(correct);
+}
+
+function renderTextVerified(correct) {
+  textBox.innerHTML = '';
+  let blankIdx = 0;
+
+  segments.forEach(seg => {
+    if (!seg.answer) {
+      seg.text.split('\n').forEach((line, i) => {
+        if (i > 0) textBox.appendChild(document.createElement('br'));
+        textBox.appendChild(document.createTextNode(line));
+      });
+    } else {
+      const bi = blankIdx++;
+      const placedChipId = state[bi];
+      const placedWord = placedChipId !== null ? chipData.find(c => c.id === placedChipId).word : '?';
+      const isCorrect = placedWord === blanks[bi].answer;
+
+      const span = document.createElement('span');
+      span.className = 'blank ' + (isCorrect ? 'correct' : 'wrong');
+      span.textContent = placedWord;
+
+      if (!isCorrect) {
+        const hint = document.createElement('span');
+        hint.style.cssText = 'font-size:0.72rem;display:block;color:var(--red);font-style:italic;';
+        hint.textContent = '→ ' + blanks[bi].answer;
+        span.appendChild(hint);
+        span.style.minWidth = '140px';
+        span.style.flexDirection = 'column';
+        span.style.display = 'inline-flex';
+      }
+
+      textBox.appendChild(span);
+    }
+  });
+}
+
+function showResults(correct) {
+  const pct = correct / TOTAL;
+  let grade;
+  if (correct === TOTAL) {
+    grade = 7.0;
+  } else if (pct >= 0.6) {
+    grade = 4.0 + ((pct - 0.6) / 0.4) * 3.0;
+  } else {
+    grade = 1.0 + (pct / 0.6) * 3.0;
+  }
+  grade = Math.min(7.0, Math.max(1.0, grade)).toFixed(1);
+
+  document.getElementById('scoreDisplay').textContent = grade;
+  document.getElementById('scoreSub').textContent =
+    `${correct} of ${TOTAL} correct (${Math.round(pct * 100)}%) · Passing: 60% = 4.0`;
+  document.getElementById('correctCount').textContent = correct;
+  document.getElementById('wrongCount').textContent = TOTAL - correct;
+
+  resultsEl.style.display = 'block';
+  resultsEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+}
+
+// =============================================================
+// RESET
+// =============================================================
+document.getElementById('btnReset').addEventListener('click', init);
+
+function init() {
+  verified = false;
+  resultsEl.style.display = 'none';
+  freshState();
+  render();
+}
+
+// =============================================================
+// TOAST
+// =============================================================
+let toastTimer;
+function showToast(msg, duration = 2000) {
+  toast.textContent = msg;
+  toast.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => toast.classList.remove('show'), duration);
+}
+
+// =============================================================
+// BOOT
+// =============================================================
+totalCountEl.textContent = TOTAL;
+init();
+</script>
+</body>
+</html>

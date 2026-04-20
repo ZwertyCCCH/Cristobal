@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Activity 4 · Grammar Quiz · Sports for All</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --navy: #0e2240;
+  --navy2: #1a3560;
+  --amber: #e8940a;
+  --amber-light: #fdf3dc;
+  --green: #1a7f5a;
+  --green-light: #e3f5ed;
+  --red: #c0392b;
+  --red-light: #fdecea;
+  --sky: #2271b3;
+  --muted: #7a8899;
+  --border: #dde3ec;
+  --radius: 18px;
+  --shadow: 0 8px 32px rgba(14,34,64,0.10);
+  --shadow-sm: 0 2px 10px rgba(14,34,64,0.08);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--navy);
+}
+
+/* ── HEADER ── */
+.app-header {
+  background: var(--navy);
+  padding: 0 28px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.app-header h1 {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: #c8d8ee;
+  letter-spacing: 0.3px;
+}
+.app-header h1 em {
+  color: var(--amber);
+  font-style: normal;
+}
+
+/* Timer */
+.timer-wrap {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--navy2);
+  border-radius: 40px;
+  padding: 6px 16px;
+}
+.timer-icon { font-size: 1rem; }
+.timer-display {
+  font-family: 'Literata', serif;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: white;
+  letter-spacing: 2px;
+  min-width: 58px;
+  text-align: center;
+}
+.timer-wrap.warning { background: #c87209; }
+.timer-wrap.danger  { background: var(--red); animation: pulse 1s infinite; }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.75; } }
+
+/* Progress */
+.progress-track {
+  height: 5px;
+  background: var(--border);
+}
+.progress-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--amber), #f0b429);
+  transition: width 0.4s ease;
+}
+
+/* ── MAIN CONTAINER ── */
+.quiz-wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+
+/* Question counter strip */
+.q-meta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+.q-counter {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+}
+.q-dots {
+  display: flex;
+  gap: 5px;
+  flex-wrap: wrap;
+  justify-content: flex-end;
+  max-width: 420px;
+}
+.dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  background: var(--border);
+  transition: background 0.2s;
+  cursor: pointer;
+}
+.dot.answered  { background: var(--amber); }
+.dot.current   { background: var(--navy); transform: scale(1.3); }
+.dot.correct-d { background: var(--green); }
+.dot.wrong-d   { background: var(--red); }
+
+/* Question card */
+.question-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 36px 36px 28px;
+  margin-bottom: 20px;
+  animation: slideCard 0.3s ease;
+}
+@keyframes slideCard {
+  from { opacity:0; transform: translateY(12px); }
+  to   { opacity:1; transform: translateY(0); }
+}
+
+.q-topic {
+  display: inline-block;
+  background: var(--amber-light);
+  color: var(--amber);
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  padding: 4px 12px;
+  border-radius: 40px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(232,148,10,0.25);
+}
+
+.q-text {
+  font-family: 'Literata', serif;
+  font-size: 1.2rem;
+  line-height: 1.6;
+  color: var(--navy);
+  margin-bottom: 28px;
+  padding-left: 16px;
+  border-left: 3px solid var(--amber);
+}
+
+/* Options */
+.options {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.option {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 12px;
+  padding: 13px 18px;
+  cursor: pointer;
+  transition: all 0.18s;
+  font-size: 0.97rem;
+  font-weight: 600;
+  color: var(--navy);
+  text-align: left;
+}
+.option:hover:not(.locked) {
+  border-color: var(--navy2);
+  background: #eef2f9;
+  transform: translateX(3px);
+}
+.option.selected {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: white;
+}
+.option.locked { cursor: default; }
+.option.correct-opt {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green);
+}
+.option.wrong-opt {
+  background: var(--red-light);
+  border-color: var(--red);
+  color: var(--red);
+}
+.option.show-correct-opt {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green);
+  opacity: 0.7;
+}
+
+.opt-letter {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--border);
+  color: var(--muted);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 800;
+  flex-shrink: 0;
+  transition: all 0.18s;
+}
+.option.selected .opt-letter {
+  background: var(--amber);
+  color: var(--navy);
+}
+.option.correct-opt .opt-letter {
+  background: var(--green);
+  color: white;
+}
+.option.wrong-opt .opt-letter {
+  background: var(--red);
+  color: white;
+}
+.option.show-correct-opt .opt-letter {
+  background: var(--green);
+  color: white;
+}
+
+/* ── NAV ── */
+.nav-bar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+.btn {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.18s;
+  padding: 11px 26px;
+  font-size: 0.9rem;
+}
+.btn:hover { transform: translateY(-2px); }
+.btn-prev {
+  background: var(--border);
+  color: var(--navy);
+}
+.btn-prev:hover { background: #ccd5e4; }
+.btn-next {
+  background: var(--navy);
+  color: white;
+  box-shadow: 0 4px 14px rgba(14,34,64,0.2);
+}
+.btn-next:hover { background: var(--navy2); }
+.btn-submit {
+  background: var(--amber);
+  color: var(--navy);
+  box-shadow: 0 4px 14px rgba(232,148,10,0.3);
+}
+.btn-submit:hover { background: #d4860a; }
+
+.unanswered-warning {
+  font-size: 0.8rem;
+  color: var(--red);
+  font-weight: 600;
+  text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.unanswered-warning.show { opacity: 1; }
+
+/* ── RESULTS ── */
+#resultsSection { display: none; }
+
+.results-hero {
+  background: var(--navy);
+  border-radius: var(--radius);
+  padding: 40px 32px;
+  text-align: center;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+.results-hero::before {
+  content: '🏆';
+  position: absolute;
+  font-size: 14rem;
+  opacity: 0.04;
+  top: -30px; right: -20px;
+  pointer-events: none;
+}
+.results-hero h2 {
+  font-size: 1rem;
+  font-weight: 700;
+  color: #9aafc4;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  margin-bottom: 20px;
+}
+.grade-num {
+  font-family: 'Literata', serif;
+  font-size: 6rem;
+  font-weight: 700;
+  line-height: 1;
+  color: white;
+  margin-bottom: 6px;
+}
+.grade-num.pass  { color: #4dd9a0; }
+.grade-num.fail  { color: #ff7c72; }
+.grade-note {
+  color: #7a9ab8;
+  font-size: 0.88rem;
+  margin-bottom: 24px;
+}
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-bottom: 24px;
+}
+.stat-chip {
+  background: rgba(255,255,255,0.08);
+  border: 1px solid rgba(255,255,255,0.12);
+  border-radius: 14px;
+  padding: 14px 20px;
+  min-width: 100px;
+}
+.stat-chip .snum {
+  font-family: 'Literata', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  color: white;
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-chip .slabel {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #7a9ab8;
+}
+.stat-chip.s-green .snum { color: #4dd9a0; }
+.stat-chip.s-red   .snum { color: #ff7c72; }
+.stat-chip.s-amber .snum { color: var(--amber); }
+
+.time-badge {
+  display: inline-block;
+  padding: 8px 20px;
+  border-radius: 40px;
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 20px;
+}
+.time-badge.excellent { background: rgba(77,217,160,0.15); color: #4dd9a0; border: 1px solid rgba(77,217,160,0.3); }
+.time-badge.good      { background: rgba(232,148,10,0.15); color: var(--amber); border: 1px solid rgba(232,148,10,0.3); }
+.time-badge.slow      { background: rgba(255,124,114,0.15); color: #ff7c72; border: 1px solid rgba(255,124,114,0.3); }
+
+.verdict {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: white;
+}
+
+.nav-btns-results {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+.nbtn {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  padding: 11px 26px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+}
+.nbtn:hover { transform: translateY(-2px); }
+.nbtn-amber { background: var(--amber); color: var(--navy); }
+.nbtn-amber:hover { background: #d4860a; }
+.nbtn-outline { background: transparent; border: 2px solid var(--border); color: var(--navy); }
+.nbtn-outline:hover { background: var(--border); }
+
+/* Review section */
+.review-toggle {
+  text-align: center;
+  margin: 24px 0 12px;
+}
+.btn-review {
+  background: var(--surface);
+  border: 2px solid var(--border);
+  color: var(--navy);
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  padding: 10px 24px;
+  border-radius: 50px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.18s;
+}
+.btn-review:hover { border-color: var(--navy); transform: translateY(-2px); }
+
+#reviewList { display: none; }
+
+.review-item {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  padding: 20px 24px;
+  margin-bottom: 12px;
+  border-left: 5px solid var(--border);
+  animation: fadeIn 0.3s ease;
+}
+@keyframes fadeIn { from {opacity:0;} to {opacity:1;} }
+.review-item.r-correct { border-left-color: var(--green); }
+.review-item.r-wrong   { border-left-color: var(--red); }
+
+.review-item .r-qtext {
+  font-family: 'Literata', serif;
+  font-size: 0.95rem;
+  color: var(--navy);
+  margin-bottom: 10px;
+  line-height: 1.5;
+}
+.r-answer-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+.r-tag {
+  padding: 4px 12px;
+  border-radius: 40px;
+}
+.r-tag.user-correct { background: var(--green-light); color: var(--green); }
+.r-tag.user-wrong   { background: var(--red-light);   color: var(--red); }
+.r-tag.correct-ans  { background: var(--green-light); color: var(--green); }
+.r-tag.not-ans      { background: var(--border);       color: var(--muted); }
+.r-icon { margin-right: 4px; }
+
+footer {
+  text-align: center;
+  padding: 16px;
+  font-size: 0.78rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: 20px;
+}
+
+@media (max-width: 600px) {
+  .question-card { padding: 24px 18px 20px; }
+  .q-text { font-size: 1.05rem; }
+  .grade-num { font-size: 4.5rem; }
+  .q-dots { display: none; }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>🏃 <em>Activity 4</em> · Grammar Quiz · Sports for All</h1>
+  <div class="timer-wrap" id="timerWrap">
+    <span class="timer-icon">⏱</span>
+    <span class="timer-display" id="timerDisplay">45:00</span>
+  </div>
+</header>
+<div class="progress-track">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<!-- QUIZ -->
+<div class="quiz-wrap" id="quizSection">
+  <div class="q-meta">
+    <div class="q-counter" id="qCounter">Question 1 of 30</div>
+    <div class="q-dots" id="qDots"></div>
+  </div>
+  <div class="question-card" id="questionCard"></div>
+  <div class="unanswered-warning" id="warnMsg">⚠ Please select an answer before continuing.</div>
+  <div class="nav-bar" style="margin-top:16px;">
+    <button class="btn btn-prev" id="btnPrev" onclick="goTo(currentQ - 1)">◀ Previous</button>
+    <button class="btn btn-next" id="btnNext" onclick="handleNext()">Next ▶</button>
+  </div>
+</div>
+
+<!-- RESULTS -->
+<div class="quiz-wrap" id="resultsSection">
+  <div class="results-hero">
+    <h2>📊 Your Result</h2>
+    <div class="grade-num" id="gradeDisplay">—</div>
+    <div class="grade-note" id="gradeNote"></div>
+    <div class="stats-row">
+      <div class="stat-chip s-green"><span class="snum" id="sCorrect">0</span><span class="slabel">Correct</span></div>
+      <div class="stat-chip s-red">  <span class="snum" id="sWrong">0</span>  <span class="slabel">Wrong</span></div>
+      <div class="stat-chip s-amber"><span class="snum" id="sPct">0%</span>  <span class="slabel">Score</span></div>
+      <div class="stat-chip">        <span class="snum" id="sTime">—</span>  <span class="slabel">Time</span></div>
+    </div>
+    <div class="time-badge" id="timeBadge"></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="nav-btns-results">
+      <button class="nbtn nbtn-amber" onclick="resetQuiz()">🔄 Try Again</button>
+      <a href="C_1_Ingles.html"  class="nbtn nbtn-outline">📚 Back to Class</a>
+    </div>
+  </div>
+
+  <div class="review-toggle">
+    <button class="btn-review" onclick="toggleReview()">📋 Show / Hide Answer Review</button>
+  </div>
+  <div id="reviewList"></div>
+</div>
+
+<footer>Activity 4 · 30 Questions · Present Simple · Present Continuous · Adverbs of Frequency · Gerunds · Passing: 60% → 4.0</footer>
+
+<script>
+// ================================================================
+// QUESTIONS — 30 items, improved wording & distractors
+// topic: label shown on card
+// ================================================================
+const ALL_QUESTIONS = [
+  // ── PRESENT SIMPLE ──
+  { topic: "Present Simple", text: "She _____ tennis every Sunday morning.", opts: ["play","plays","is playing","played"], correct: 1 },
+  { topic: "Present Simple", text: "My brother _____ to the gym three times a week.", opts: ["go","going","goes","is go"], correct: 2 },
+  { topic: "Present Simple", text: "The coach always _____ before the players arrive.", opts: ["arrive","arrives","is arriving","arriving"], correct: 1 },
+  { topic: "Present Simple", text: "They _____ football on weekends with their friends.", opts: ["plays","is playing","play","are play"], correct: 2 },
+  { topic: "Present Simple", text: "He _____ his water bottle before every match.", opts: ["check","is checking","checking","checks"], correct: 3 },
+  { topic: "Present Simple — Negative", text: "She _____ junk food; she prefers salads and fruit.", opts: ["doesn't eat","don't eat","isn't eating","not eat"], correct: 0 },
+  { topic: "Present Simple — Negative", text: "I _____ play video games on school nights.", opts: ["doesn't","don't","am not","isn't"], correct: 1 },
+  { topic: "Present Simple — Question", text: "_____ your sister play any sport after school?", opts: ["Do","Does","Is","Are"], correct: 1 },
+  { topic: "Present Simple — Question", text: "How often _____ they train at the stadium?", opts: ["does","is","do","are"], correct: 2 },
+
+  // ── PRESENT CONTINUOUS ──
+  { topic: "Present Continuous", text: "Right now, the team _____ for the championship match.", opts: ["train","trains","is training","are trained"], correct: 2 },
+  { topic: "Present Continuous", text: "Look! They _____ basketball in the court.", opts: ["play","plays","are playing","is playing"], correct: 2 },
+  { topic: "Present Continuous", text: "I can't talk right now. I _____ yoga.", opts: ["do","does","am doing","is doing"], correct: 2 },
+  { topic: "Present Continuous", text: "The athletes _____ warming up in the stadium at this moment.", opts: ["am","is","are","be"], correct: 2 },
+  { topic: "Present Continuous", text: "Listen! The referee _____ the whistle to stop the game.", opts: ["blow","blows","is blowing","are blowing"], correct: 2 },
+  { topic: "Present Continuous — Negative", text: "We _____ football at the moment. We are taking a break.", opts: ["aren't playing","don't play","doesn't play","not playing"], correct: 0 },
+  { topic: "Present Continuous — Question", text: "_____ the coach talking to the players right now?", opts: ["Do","Does","Is","Are"], correct: 2 },
+
+  // ── PRESENT SIMPLE vs. CONTINUOUS ──
+  { topic: "Simple vs. Continuous", text: "Sarah usually _____ swimming, but today she _____ tennis.", opts: ["goes / is playing","is going / plays","go / playing","goes / plays"], correct: 0 },
+  { topic: "Simple vs. Continuous", text: "He _____ his routine every day, but right now he _____ a rest.", opts: ["follows / is taking","is following / takes","follow / taking","follows / takes"], correct: 0 },
+
+  // ── ADVERBS OF FREQUENCY ──
+  { topic: "Adverb of Frequency", text: "I _____ go to the gym — every single day without exception.", opts: ["never","sometimes","always","hardly ever"], correct: 2 },
+  { topic: "Adverb of Frequency", text: "He _____ arrives late to practice. He is always on time.", opts: ["always","never","usually","often"], correct: 1 },
+  { topic: "Adverb of Frequency", text: "We _____ watch sports on TV — about half the time.", opts: ["always","never","sometimes","hardly ever"], correct: 2 },
+  { topic: "Adverb of Frequency", text: "She _____ eats junk food — only once or twice a month.", opts: ["always","usually","often","hardly ever"], correct: 3 },
+  { topic: "Adverb of Frequency", text: "I _____ forget to stretch before exercising — it never happens.", opts: ["always","sometimes","often","never"], correct: 3 },
+  { topic: "Adverb of Frequency", text: "The team _____ wins at home. They lose there only very rarely.", opts: ["never","hardly ever","almost always","sometimes"], correct: 2 },
+
+  // ── GERUNDS ──
+  { topic: "Gerunds", text: "_____ swimming is great exercise for your whole body.", opts: ["Swim","Swims","Swimming","To swimming"], correct: 2 },
+  { topic: "Gerunds", text: "She hates _____ matches, so she trains very hard every day.", opts: ["lose","loses","losing","to lose"], correct: 2 },
+  { topic: "Gerunds", text: "Thank you for _____ me improve my technique.", opts: ["help","helps","helping","to help"], correct: 2 },
+  { topic: "Gerunds", text: "He is interested in _____ martial arts this semester.", opts: ["learn","learns","learning","to learn"], correct: 2 },
+  { topic: "Gerunds", text: "Let's practice _____ the ball accurately into the net.", opts: ["kick","kicks","kicking","to kick"], correct: 2 },
+  { topic: "Gerunds", text: "I really enjoy _____ soccer with my friends on weekends.", opts: ["play","plays","playing","to play"], correct: 2 },
+];
+
+const TOTAL = ALL_QUESTIONS.length;
+const TIME_LIMIT = 45 * 60; // seconds
+
+let questions = [];
+let currentQ = 0;
+let answers  = {}; // index → option index
+let timerInterval = null;
+let elapsed = 0;
+let quizDone = false;
+
+// ── UTILS ──
+function shuffle(arr) {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
+
+function calcGrade(correct, total) {
+  const p = correct / total;
+  if (correct === total) return 7.0;
+  if (p >= 0.6) return +(4.0 + ((p - 0.6) / 0.4) * 3.0).toFixed(1);
+  return +(1.0 + (p / 0.6) * 3.0).toFixed(1);
+}
+
+function fmtTime(sec) {
+  const m = Math.floor(sec / 60), s = sec % 60;
+  return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`;
+}
+
+// ── TIMER ──
+function startTimer() {
+  elapsed = 0;
+  clearInterval(timerInterval);
+  timerInterval = setInterval(() => {
+    elapsed++;
+    const remaining = TIME_LIMIT - elapsed;
+    document.getElementById('timerDisplay').textContent = fmtTime(remaining);
+    const wrap = document.getElementById('timerWrap');
+    if (remaining <= 0) {
+      clearInterval(timerInterval);
+      document.getElementById('timerDisplay').textContent = '00:00';
+      wrap.className = 'timer-wrap danger';
+      if (!quizDone) showResults();
+    } else if (remaining <= 300) {
+      wrap.className = 'timer-wrap danger';
+    } else if (remaining <= 600) {
+      wrap.className = 'timer-wrap warning';
+    } else {
+      wrap.className = 'timer-wrap';
+    }
+  }, 1000);
+}
+
+// ── RENDER DOTS ──
+function renderDots() {
+  const container = document.getElementById('qDots');
+  container.innerHTML = '';
+  questions.forEach((_, i) => {
+    const d = document.createElement('span');
+    d.className = 'dot' +
+      (i === currentQ ? ' current' : answers[i] !== undefined ? ' answered' : '');
+    d.title = `Question ${i + 1}`;
+    d.onclick = () => goTo(i);
+    container.appendChild(d);
+  });
+}
+
+// ── RENDER QUESTION ──
+function renderQuestion() {
+  const q = questions[currentQ];
+  const card = document.getElementById('questionCard');
+
+  const letters = ['A','B','C','D'];
+  const optsHtml = q.opts.map((opt, i) => {
+    let cls = 'option';
+    if (answers[currentQ] === i) cls += ' selected';
+    return `<button class="${cls}" onclick="selectAnswer(${i})">
+      <span class="opt-letter">${letters[i]}</span>
+      ${opt}
+    </button>`;
+  }).join('');
+
+  card.innerHTML = `
+    <span class="q-topic">${q.topic}</span>
+    <div class="q-text">${q.text}</div>
+    <div class="options">${optsHtml}</div>
+  `;
+
+  // counter
+  document.getElementById('qCounter').textContent = `Question ${currentQ + 1} of ${TOTAL}`;
+
+  // progress bar
+  document.getElementById('progressFill').style.width =
+    `${((currentQ + 1) / TOTAL) * 100}%`;
+
+  // nav buttons
+  document.getElementById('btnPrev').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
+  document.getElementById('btnNext').textContent =
+    currentQ === TOTAL - 1 ? 'Submit Quiz ✅' : 'Next ▶';
+  document.getElementById('btnNext').className =
+    currentQ === TOTAL - 1 ? 'btn btn-submit' : 'btn btn-next';
+
+  // warning
+  document.getElementById('warnMsg').classList.remove('show');
+
+  renderDots();
+}
+
+// ── SELECT ──
+function selectAnswer(idx) {
+  answers[currentQ] = idx;
+  renderQuestion();
+}
+
+// ── NAVIGATE ──
+function goTo(idx) {
+  if (idx < 0 || idx >= TOTAL) return;
+  currentQ = idx;
+  renderQuestion();
+}
+
+function handleNext() {
+  if (currentQ === TOTAL - 1) {
+    // Check all unanswered
+    const unanswered = TOTAL - Object.keys(answers).length;
+    if (unanswered > 0) {
+      const msg = document.getElementById('warnMsg');
+      msg.textContent = `⚠ You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. Please answer all before submitting.`;
+      msg.classList.add('show');
+      return;
+    }
+    showResults();
+  } else {
+    goTo(currentQ + 1);
+  }
+}
+
+// ── RESULTS ──
+function showResults() {
+  if (quizDone) return;
+  quizDone = true;
+  clearInterval(timerInterval);
+
+  let correct = 0;
+  questions.forEach((q, i) => {
+    if (answers[i] === q.correct) correct++;
+  });
+
+  const pct = Math.round((correct / TOTAL) * 100);
+  const grade = calcGrade(correct, TOTAL);
+  const pass = pct >= 60;
+
+  // Hide quiz, show results
+  document.getElementById('quizSection').style.display = 'none';
+  document.getElementById('resultsSection').style.display = 'block';
+
+  // Grade
+  const gradeEl = document.getElementById('gradeDisplay');
+  gradeEl.textContent = grade.toFixed(1);
+  gradeEl.className = 'grade-num ' + (pass ? 'pass' : 'fail');
+
+  document.getElementById('gradeNote').textContent =
+    `${correct} of ${TOTAL} correct · Passing: 60% = 4.0`;
+  document.getElementById('sCorrect').textContent = correct;
+  document.getElementById('sWrong').textContent = TOTAL - correct;
+  document.getElementById('sPct').textContent = pct + '%';
+  document.getElementById('sTime').textContent = fmtTime(elapsed);
+
+  // Time badge
+  const timeBadge = document.getElementById('timeBadge');
+  const mins = Math.floor(elapsed / 60);
+  if (elapsed >= TIME_LIMIT) {
+    timeBadge.className = 'time-badge slow';
+    timeBadge.textContent = '⏰ Time ran out!';
+  } else if (mins < 25) {
+    timeBadge.className = 'time-badge excellent';
+    timeBadge.textContent = '🏆 Excellent speed!';
+  } else if (mins <= 38) {
+    timeBadge.className = 'time-badge good';
+    timeBadge.textContent = '⏱ Good timing!';
+  } else {
+    timeBadge.className = 'time-badge slow';
+    timeBadge.textContent = '⚠ You used most of the time. Keep practicing!';
+  }
+
+  // Verdict
+  document.getElementById('verdict').textContent = pass
+    ? '✅ Passed! Excellent work!'
+    : '❌ Not passed. Review the lesson and try again.';
+
+  // Build review
+  buildReview();
+
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function buildReview() {
+  const list = document.getElementById('reviewList');
+  list.innerHTML = '';
+  questions.forEach((q, i) => {
+    const userIdx = answers[i];
+    const isCorrect = userIdx === q.correct;
+    const item = document.createElement('div');
+    item.className = `review-item ${isCorrect ? 'r-correct' : 'r-wrong'}`;
+
+    let answerRow = '';
+    if (userIdx === undefined) {
+      answerRow = `<span class="r-tag not-ans">Not answered</span>
+                   <span class="r-tag correct-ans">✓ ${q.opts[q.correct]}</span>`;
+    } else if (isCorrect) {
+      answerRow = `<span class="r-tag user-correct">✓ ${q.opts[userIdx]}</span>`;
+    } else {
+      answerRow = `<span class="r-tag user-wrong">✗ ${q.opts[userIdx]}</span>
+                   <span class="r-tag correct-ans">✓ ${q.opts[q.correct]}</span>`;
+    }
+
+    item.innerHTML = `
+      <div class="r-qtext"><strong>${i + 1}.</strong> ${q.text}</div>
+      <div class="r-answer-row">${answerRow}</div>
+    `;
+    list.appendChild(item);
+  });
+}
+
+function toggleReview() {
+  const list = document.getElementById('reviewList');
+  list.style.display = list.style.display === 'block' ? 'none' : 'block';
+}
+
+// ── RESET ──
+function resetQuiz() {
+  quizDone = false;
+  answers = {};
+  currentQ = 0;
+  questions = shuffle(ALL_QUESTIONS);
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+  document.getElementById('timerDisplay').textContent = fmtTime(TIME_LIMIT);
+  document.getElementById('timerWrap').className = 'timer-wrap';
+  startTimer();
+  renderQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// ── BOOT ──
+window.onload = () => {
+  questions = shuffle(ALL_QUESTIONS);
+  startTimer();
+  renderQuestion();
+};
+</script>
+</body>
+</html>

@@ -1,0 +1,652 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Vocabulary Quiz · Sports & Free Time | Activity 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0f1923;
+  --surface: #162030;
+  --card: #1d2d40;
+  --card-hover: #223347;
+  --accent: #00c9a7;
+  --accent2: #f7b731;
+  --red: #ff5252;
+  --green: #00c9a7;
+  --text: #e8f0f8;
+  --muted: #6b8aaa;
+  --border: #2a3f58;
+  --radius: 16px;
+  --shadow: 0 8px 32px rgba(0,0,0,0.35);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Outfit', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.1rem;
+  color: var(--accent);
+}
+.progress-pill {
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--accent2);
+  font-weight: 700;
+  font-size: 0.9rem;
+  padding: 6px 16px;
+  border-radius: 40px;
+}
+
+/* ── HERO ── */
+.hero {
+  text-align: center;
+  padding: 48px 20px 36px;
+  position: relative;
+  overflow: hidden;
+}
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -60px; left: 50%;
+  transform: translateX(-50%);
+  width: 500px; height: 300px;
+  background: radial-gradient(ellipse, rgba(0,201,167,0.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.hero-label {
+  display: inline-block;
+  background: rgba(0,201,167,0.12);
+  border: 1px solid rgba(0,201,167,0.3);
+  color: var(--accent);
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 40px;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3rem);
+  color: var(--text);
+  margin-bottom: 12px;
+  line-height: 1.1;
+}
+.hero h1 em {
+  color: var(--accent);
+  font-style: normal;
+}
+.hero p {
+  color: var(--muted);
+  font-size: 1rem;
+  max-width: 500px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── INSTRUCTIONS ── */
+.instructions {
+  max-width: 780px;
+  margin: 0 auto 28px;
+  padding: 0 20px;
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+.inst-badge {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 10px 18px;
+  font-size: 0.85rem;
+  color: var(--muted);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.inst-badge strong { color: var(--text); }
+
+/* ── QUIZ GRID ── */
+.quiz-container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 20px 40px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.word-row {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  display: grid;
+  grid-template-columns: 36px 1fr auto 220px auto;
+  align-items: center;
+  gap: 14px;
+  transition: all 0.2s;
+  animation: slideIn 0.3s ease both;
+}
+.word-row:hover { background: var(--card-hover); border-color: #3a5070; }
+
+@keyframes slideIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.row-num {
+  width: 32px; height: 32px;
+  border-radius: 50%;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  color: var(--muted);
+  flex-shrink: 0;
+}
+
+.english-word {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+/* Emoji container - oculto inicialmente */
+.emoji-display {
+  font-size: 1.3rem;
+  display: inline-block;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.emoji-display.visible {
+  opacity: 1;
+}
+
+.arrow {
+  color: var(--muted);
+  font-size: 1rem;
+  flex-shrink: 0;
+}
+
+.spanish-input {
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 10px 14px;
+  font-size: 0.95rem;
+  font-family: 'Outfit', sans-serif;
+  color: var(--text);
+  width: 100%;
+  transition: all 0.2s;
+  outline: none;
+}
+.spanish-input::placeholder { color: var(--muted); font-style: italic; }
+.spanish-input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(0,201,167,0.12); }
+.spanish-input:disabled { opacity: 0.7; cursor: default; }
+
+/* States after check */
+.spanish-input.correct {
+  border-color: var(--green);
+  background: rgba(0,201,167,0.07);
+  color: var(--green);
+}
+.spanish-input.wrong {
+  border-color: var(--red);
+  background: rgba(255,82,82,0.07);
+  color: var(--red);
+}
+
+.feedback-icon {
+  font-size: 1.3rem;
+  width: 28px;
+  text-align: center;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.feedback-icon.visible { opacity: 1; }
+
+.correct-answer {
+  display: none;
+  font-size: 0.78rem;
+  color: var(--accent);
+  margin-top: 4px;
+  font-style: italic;
+}
+.correct-answer.visible { display: block; }
+
+/* ── CHECK BUTTON ── */
+.actions {
+  text-align: center;
+  padding: 8px 20px 32px;
+}
+.btn-check {
+  background: var(--accent);
+  color: #0a1a14;
+  border: none;
+  padding: 14px 44px;
+  font-size: 1.05rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 800;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 20px rgba(0,201,167,0.3);
+  letter-spacing: 0.3px;
+}
+.btn-check:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(0,201,167,0.4); }
+.btn-check:active { transform: translateY(0); }
+.btn-check:disabled { opacity: 0.4; cursor: default; transform: none; }
+
+/* ── RESULTS ── */
+#results {
+  display: none;
+  max-width: 780px;
+  margin: 0 auto 40px;
+  padding: 0 20px;
+}
+.results-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 24px;
+  padding: 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.results-card::before {
+  content: '';
+  position: absolute;
+  top: -80px; left: 50%;
+  transform: translateX(-50%);
+  width: 400px; height: 300px;
+  background: radial-gradient(ellipse, rgba(0,201,167,0.08) 0%, transparent 70%);
+  pointer-events: none;
+}
+.results-card h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  margin-bottom: 6px;
+  color: var(--text);
+}
+.grade-display {
+  font-family: 'Playfair Display', serif;
+  font-size: 5rem;
+  font-weight: 900;
+  line-height: 1;
+  margin: 20px 0 8px;
+  background: linear-gradient(135deg, var(--accent), var(--accent2));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+.grade-sub {
+  color: var(--muted);
+  font-size: 0.9rem;
+  margin-bottom: 28px;
+}
+.stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 28px;
+  flex-wrap: wrap;
+}
+.stat-box {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 16px 24px;
+  min-width: 110px;
+}
+.stat-box .num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 900;
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.stat-box .label {
+  font-size: 0.78rem;
+  color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.8px;
+}
+.stat-box.green .num { color: var(--green); }
+.stat-box.red .num { color: var(--red); }
+.stat-box.yellow .num { color: var(--accent2); }
+
+.nav-buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.btn-nav {
+  padding: 11px 26px;
+  border-radius: 50px;
+  font-size: 0.95rem;
+  font-family: 'Outfit', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  border: none;
+}
+.btn-retry {
+  background: var(--accent2);
+  color: #1a1200;
+}
+.btn-retry:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(247,183,49,0.3); }
+.btn-class {
+  background: transparent;
+  border: 2px solid var(--border) !important;
+  color: var(--text);
+}
+.btn-class:hover { background: var(--card-hover); transform: translateY(-2px); }
+
+/* Responsive */
+@media (max-width: 640px) {
+  .word-row {
+    grid-template-columns: 28px 1fr 180px;
+    grid-template-rows: auto auto;
+  }
+  .word-row .arrow { display: none; }
+  .word-row .feedback-icon { grid-column: 3; grid-row: 1; justify-self: end; }
+  .word-row .english-word { grid-column: 2; }
+  .word-row .spanish-input { grid-column: 1 / -1; }
+  .word-row .row-num { grid-row: 1; }
+  .correct-answer { grid-column: 1 / -1; }
+  .grade-display { font-size: 3.5rem; }
+  .results-card { padding: 28px 20px; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-title">🏅 Activity 3 · Vocabulary</div>
+  <div class="progress-pill" id="progressPill">0 / 20</div>
+</header>
+
+<div class="hero">
+  <div class="hero-label">Activity 3</div>
+  <h1>Sports &amp; Free Time<br><em>Vocabulary</em></h1>
+  <p>Write the Spanish translation for each word. Accents are optional — spelling must be correct.</p>
+</div>
+
+<div class="instructions">
+  <div class="inst-badge">⌨️ <span>Type in the input field next to each word</span></div>
+  <div class="inst-badge">✅ <span>Press <strong>Check Answers</strong> when done</span></div>
+  <div class="inst-badge">🎯 <span>Passing grade: <strong>60%</strong> → 4.0</span></div>
+</div>
+
+<div class="quiz-container" id="quizContainer"></div>
+
+<div class="actions">
+  <button class="btn-check" id="btnCheck">Check Answers ✅</button>
+</div>
+
+<div id="results">
+  <div class="results-card">
+    <h3>Quiz Complete!</h3>
+    <div class="grade-display" id="gradeDisplay">—</div>
+    <div class="grade-sub" id="gradeSub"></div>
+    <div class="stats">
+      <div class="stat-box green"><span class="num" id="statCorrect">0</span><span class="label">Correct</span></div>
+      <div class="stat-box red"><span class="num" id="statWrong">0</span><span class="label">Wrong</span></div>
+      <div class="stat-box yellow"><span class="num" id="statPct">0%</span><span class="label">Score</span></div>
+    </div>
+    <div class="nav-buttons">
+      <button class="btn-nav btn-retry" id="btnRetry">🔄 Try Again</button>
+      <a href="C_1_Ingles.html" class="btn-nav btn-class">📚 Back to Class</a>
+      <a href="C_1B_Ingles.html" class="btn-nav btn-class">📝 Next Activity</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// VOCABULARY DATA
+// accepted: array of valid Spanish answers (lowercase, no accent required)
+// ============================================================
+const vocabulary = [
+  { en: "gloves",      emoji: "🥊", accepted: ["guantes"] },
+  { en: "skates",      emoji: "⛸️",  accepted: ["patines"] },
+  { en: "bat",         emoji: "🏏", accepted: ["bate"] },
+  { en: "ball",        emoji: "⚽", accepted: ["pelota", "balon", "balón"] },
+  { en: "helmet",      emoji: "⛑️",  accepted: ["casco"] },
+  { en: "goggles",     emoji: "🥽", accepted: ["gafas", "antiparras", "lentes"] },
+  { en: "net",         emoji: "🎾", accepted: ["red"] },
+  { en: "racket",      emoji: "🏸", accepted: ["raqueta"] },
+  { en: "sneakers",    emoji: "👟", accepted: ["zapatillas", "tenis", "deportivas"] },
+  { en: "stick",       emoji: "🏑", accepted: ["palo", "stick"] },
+  { en: "whistle",     emoji: "🎵", accepted: ["silbato", "pito"] },
+  { en: "trophy",      emoji: "🏆", accepted: ["trofeo"] },
+  { en: "swimsuit",    emoji: "🩱", accepted: ["traje de baño", "bañador"] },
+  { en: "skateboard",  emoji: "🛹", accepted: ["patineta", "skate"] },
+  { en: "weights",     emoji: "🏋️", accepted: ["pesas", "pesos"] },
+  { en: "jersey",      emoji: "👕", accepted: ["camiseta", "jersey"] },
+  { en: "stopwatch",   emoji: "⏱️",  accepted: ["cronometro", "cronómetro"] },
+  { en: "court",       emoji: "🏀", accepted: ["cancha", "pista", "campo"] },
+  { en: "knee pads",   emoji: "🛡️",  accepted: ["rodilleras"] },
+  { en: "scorecard",   emoji: "📋", accepted: ["marcador", "tabla de puntaje"] },
+];
+
+const TOTAL = vocabulary.length;
+let checked = false;
+
+const quizContainer = document.getElementById('quizContainer');
+const btnCheck = document.getElementById('btnCheck');
+const progressPill = document.getElementById('progressPill');
+const resultsEl = document.getElementById('results');
+
+// ── BUILD ROWS (sin emojis visibles inicialmente) ──
+vocabulary.forEach((item, i) => {
+  const delay = i * 40;
+  const row = document.createElement('div');
+  row.className = 'word-row';
+  row.style.animationDelay = delay + 'ms';
+  row.dataset.index = i;
+
+  row.innerHTML = `
+    <div class="row-num">${i + 1}</div>
+    <div class="english-word">
+      <span class="emoji-display" id="emoji-${i}" data-emoji="${item.emoji}"></span>
+      <span>${item.en}</span>
+    </div>
+    <div class="arrow">→</div>
+    <div style="display:flex;flex-direction:column;">
+      <input
+        class="spanish-input"
+        type="text"
+        placeholder="escribe en español…"
+        autocomplete="off"
+        autocorrect="off"
+        spellcheck="false"
+        data-index="${i}"
+      />
+      <span class="correct-answer" id="hint-${i}"></span>
+    </div>
+    <div class="feedback-icon" id="icon-${i}"></div>
+  `;
+
+  quizContainer.appendChild(row);
+});
+
+// Update progress counter as user types
+quizContainer.addEventListener('input', e => {
+  if (e.target.classList.contains('spanish-input')) updateProgress();
+});
+
+// Enter key moves to next input
+quizContainer.addEventListener('keydown', e => {
+  if (e.key === 'Enter' && e.target.classList.contains('spanish-input')) {
+    const idx = parseInt(e.target.dataset.index);
+    const next = quizContainer.querySelector(`input[data-index="${idx + 1}"]`);
+    if (next) next.focus();
+    else if (filledCount() === TOTAL) btnCheck.focus();
+  }
+});
+
+function updateProgress() {
+  const filled = filledCount();
+  progressPill.textContent = `${filled} / ${TOTAL}`;
+  btnCheck.disabled = false;
+}
+
+function filledCount() {
+  return [...quizContainer.querySelectorAll('.spanish-input')]
+    .filter(i => i.value.trim() !== '').length;
+}
+
+// ── NORMALIZE ── strip accents, lowercase, trim
+function normalize(str) {
+  return str.trim().toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+}
+
+// ── MOSTRAR EMOJIS DESPUÉS DE CONTESTAR ──
+function showEmojisAfterCheck() {
+  vocabulary.forEach((item, i) => {
+    const emojiSpan = document.getElementById(`emoji-${i}`);
+    if (emojiSpan) {
+      emojiSpan.textContent = item.emoji;
+      emojiSpan.classList.add('visible');
+    }
+  });
+}
+
+// ── CHECK ──
+btnCheck.addEventListener('click', () => {
+  if (checked) return;
+  checked = true;
+  btnCheck.disabled = true;
+
+  let correct = 0;
+
+  vocabulary.forEach((item, i) => {
+    const input = quizContainer.querySelector(`input[data-index="${i}"]`);
+    const icon = document.getElementById(`icon-${i}`);
+    const hint = document.getElementById(`hint-${i}`);
+    const userVal = normalize(input.value);
+
+    const isCorrect = item.accepted.some(a => normalize(a) === userVal);
+
+    input.disabled = true;
+
+    if (isCorrect) {
+      correct++;
+      input.classList.add('correct');
+      icon.textContent = '✅';
+      icon.classList.add('visible');
+    } else {
+      input.classList.add('wrong');
+      icon.textContent = '❌';
+      icon.classList.add('visible');
+      hint.textContent = '✓ ' + item.accepted[0];
+      hint.classList.add('visible');
+    }
+  });
+
+  // MOSTRAR EMOJIS DESPUÉS DE VERIFICAR
+  showEmojisAfterCheck();
+
+  showResults(correct);
+});
+
+function showResults(correct) {
+  const pct = correct / TOTAL;
+  let grade;
+  if (correct === TOTAL) {
+    grade = 7.0;
+  } else if (pct >= 0.6) {
+    grade = 4.0 + ((pct - 0.6) / 0.4) * 3.0;
+  } else {
+    grade = 1.0 + (pct / 0.6) * 3.0;
+  }
+  grade = Math.min(7.0, Math.max(1.0, grade)).toFixed(1);
+  const pctRound = Math.round(pct * 100);
+
+  document.getElementById('gradeDisplay').textContent = grade;
+  document.getElementById('gradeSub').textContent =
+    `${correct} of ${TOTAL} correct · ${pctRound}% · Passing: 60% = 4.0`;
+  document.getElementById('statCorrect').textContent = correct;
+  document.getElementById('statWrong').textContent = TOTAL - correct;
+  document.getElementById('statPct').textContent = pctRound + '%';
+
+  resultsEl.style.display = 'block';
+  setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
+}
+
+// ── REINICIAR (ocultar emojis nuevamente) ──
+document.getElementById('btnRetry').addEventListener('click', () => {
+  checked = false;
+  btnCheck.disabled = false;
+  resultsEl.style.display = 'none';
+  
+  // Limpiar inputs
+  document.querySelectorAll('.spanish-input').forEach(inp => {
+    inp.value = '';
+    inp.disabled = false;
+    inp.className = 'spanish-input';
+  });
+  
+  // Limpiar iconos de feedback
+  document.querySelectorAll('.feedback-icon').forEach(el => {
+    el.textContent = '';
+    el.classList.remove('visible');
+  });
+  
+  // Limpiar pistas de respuestas correctas
+  document.querySelectorAll('.correct-answer').forEach(el => {
+    el.textContent = '';
+    el.classList.remove('visible');
+  });
+  
+  // OCULTAR EMOJIS NUEVAMENTE
+  document.querySelectorAll('.emoji-display').forEach(el => {
+    el.textContent = '';
+    el.classList.remove('visible');
+  });
+  
+  progressPill.textContent = '0 / ' + TOTAL;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+// init
+progressPill.textContent = `0 / ${TOTAL}`;
+</script>
+</body>
+</html>

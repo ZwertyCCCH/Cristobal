@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reading Comprehension · Women and Sport | Activity 2</title>
+<link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;0,700;1,400&family=DM+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #faf6f0;
+  --paper: #fffdf9;
+  --navy: #1b2d4f;
+  --navy2: #243960;
+  --teal: #0f7b6c;
+  --teal-light: #e6f5f3;
+  --gold: #c8860a;
+  --gold-light: #fdf3e0;
+  --red: #c0392b;
+  --red-light: #fdecea;
+  --green: #0f7b6c;
+  --green-light: #e6f5f3;
+  --muted: #7a8fa6;
+  --border: #dde4ef;
+  --radius: 14px;
+  --shadow: 0 4px 24px rgba(27,45,79,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--cream);
+  color: var(--navy);
+  min-height: 100vh;
+}
+
+/* ── HEADER ── */
+header {
+  background: var(--navy);
+  padding: 14px 28px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.2);
+}
+.header-title {
+  font-family: 'Lora', serif;
+  font-size: 1rem;
+  color: #e8dfc8;
+  letter-spacing: 0.2px;
+}
+.score-pill {
+  background: var(--gold);
+  color: white;
+  font-weight: 700;
+  font-size: 0.88rem;
+  padding: 6px 16px;
+  border-radius: 40px;
+}
+
+/* ── HERO ── */
+.hero {
+  background: linear-gradient(160deg, var(--navy) 0%, var(--navy2) 100%);
+  padding: 48px 24px 40px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.hero::after {
+  content: '"';
+  position: absolute;
+  font-family: 'Lora', serif;
+  font-size: 22rem;
+  color: rgba(255,255,255,0.03);
+  top: -60px; right: 40px;
+  line-height: 1;
+  pointer-events: none;
+}
+.act-badge {
+  display: inline-block;
+  border: 1px solid rgba(200,134,10,0.5);
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  padding: 5px 16px;
+  border-radius: 40px;
+  margin-bottom: 18px;
+}
+.hero h1 {
+  font-family: 'Lora', serif;
+  font-size: clamp(1.8rem, 4vw, 2.8rem);
+  color: #f0e9d8;
+  margin-bottom: 10px;
+  line-height: 1.2;
+}
+.hero h1 span { color: var(--gold); }
+.hero p {
+  color: #9aafc4;
+  font-size: 0.95rem;
+  max-width: 480px;
+  margin: 0 auto;
+  line-height: 1.6;
+}
+
+/* ── MAIN LAYOUT ── */
+.main-wrap {
+  max-width: 1080px;
+  margin: 32px auto;
+  padding: 0 20px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 24px;
+  align-items: start;
+}
+
+/* ── READING PANEL ── */
+.reading-panel {
+  position: sticky;
+  top: 72px;
+}
+.panel-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--muted);
+  margin-bottom: 10px;
+}
+.reading-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 32px 28px;
+  max-height: calc(100vh - 110px);
+  overflow-y: auto;
+}
+.reading-card h2 {
+  font-family: 'Lora', serif;
+  font-size: 1.25rem;
+  color: var(--navy);
+  margin-bottom: 6px;
+  border-bottom: 2px solid var(--gold);
+  padding-bottom: 10px;
+}
+.reading-card h3 {
+  font-family: 'Lora', serif;
+  font-style: italic;
+  font-size: 1rem;
+  color: var(--gold);
+  margin-bottom: 16px;
+  font-weight: 400;
+}
+.reading-card p {
+  font-family: 'Lora', serif;
+  font-size: 0.95rem;
+  line-height: 1.85;
+  color: #2c3e55;
+  text-align: justify;
+  margin-bottom: 16px;
+}
+.reading-card p:last-child { margin-bottom: 0; }
+
+/* ── QUESTIONS PANEL ── */
+.questions-panel { }
+.questions-card {
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 28px;
+}
+
+.question-block {
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--border);
+  animation: fadeUp 0.3s ease both;
+}
+.question-block:last-of-type { border-bottom: none; margin-bottom: 0; }
+
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.q-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+.q-num {
+  flex-shrink: 0;
+  width: 28px; height: 28px;
+  background: var(--navy);
+  color: white;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.78rem;
+  font-weight: 700;
+  margin-top: 2px;
+}
+.q-text {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--navy);
+  line-height: 1.45;
+}
+
+/* True / False / Not Given options */
+.options {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+  padding-left: 40px;
+}
+.opt-btn {
+  background: var(--cream);
+  border: 2px solid var(--border);
+  border-radius: 10px;
+  padding: 7px 18px;
+  font-size: 0.85rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.18s;
+  color: var(--navy);
+}
+.opt-btn:hover { border-color: var(--navy2); background: #eef2f8; }
+.opt-btn.selected {
+  background: var(--navy);
+  border-color: var(--navy);
+  color: white;
+}
+/* After check */
+.opt-btn.correct-pick {
+  background: var(--teal);
+  border-color: var(--teal);
+  color: white;
+}
+.opt-btn.wrong-pick {
+  background: var(--red);
+  border-color: var(--red);
+  color: white;
+}
+.opt-btn.show-correct {
+  background: var(--teal-light);
+  border-color: var(--teal);
+  color: var(--teal);
+}
+.opt-btn:disabled { cursor: default; }
+
+.q-feedback {
+  padding-left: 40px;
+  margin-top: 8px;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  display: none;
+}
+.q-feedback.visible { display: block; }
+.q-feedback.ok { color: var(--teal); }
+.q-feedback.fail { color: var(--red); }
+
+.btn-check {
+  background: var(--navy);
+  color: white;
+  border: none;
+  padding: 14px 46px;
+  font-size: 1rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 4px 16px rgba(27,45,79,0.25);
+}
+.btn-check:hover { background: var(--navy2); transform: translateY(-2px); }
+
+/* ── RESULTS ── */
+#results {
+  display: none;
+  grid-column: 1 / -1;
+  background: var(--paper);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  box-shadow: var(--shadow);
+  padding: 40px;
+  text-align: center;
+}
+#results h3 {
+  font-family: 'Lora', serif;
+  font-size: 1.5rem;
+  color: var(--navy);
+  margin-bottom: 8px;
+}
+.grade-big {
+  font-family: 'Lora', serif;
+  font-size: 5rem;
+  font-weight: 700;
+  color: var(--navy);
+  line-height: 1;
+  margin: 16px 0 6px;
+}
+.grade-note { color: var(--muted); font-size: 0.9rem; margin-bottom: 24px; }
+.result-stats {
+  display: flex;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+  margin-bottom: 28px;
+}
+.r-stat {
+  background: var(--cream);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 14px 22px;
+  min-width: 100px;
+}
+.r-stat .rnum {
+  font-family: 'Lora', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  display: block;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+.r-stat .rlabel { font-size: 0.75rem; color: var(--muted); font-weight: 600; text-transform: uppercase; }
+.r-stat.g .rnum { color: var(--teal); }
+.r-stat.r .rnum { color: var(--red); }
+.r-stat.y .rnum { color: var(--gold); }
+.nav-btns {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+.nbtn {
+  padding: 11px 26px;
+  border-radius: 50px;
+  font-size: 0.92rem;
+  font-family: 'DM Sans', sans-serif;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+  border: 2px solid transparent;
+}
+.nbtn-primary { background: var(--navy); color: white; }
+.nbtn-primary:hover { background: var(--navy2); transform: translateY(-2px); }
+.nbtn-outline { background: transparent; border-color: var(--border); color: var(--navy); }
+.nbtn-outline:hover { background: var(--cream); transform: translateY(-2px); }
+
+@media (max-width: 720px) {
+  .main-wrap { grid-template-columns: 1fr; }
+  .reading-panel { position: static; }
+  .reading-card { max-height: 340px; }
+  .actions { grid-column: 1; }
+  #results { grid-column: 1; }
+  .grade-big { font-size: 3.5rem; }
+}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="header-title">📖 Activity 2 · Reading Comprehension</div>
+  <div class="score-pill" id="progressPill">0 / 15 answered</div>
+</header>
+
+<div class="hero">
+  <div class="act-badge">Activity 2</div>
+  <h1>Women and <span>Sport</span></h1>
+  <p>Read the text carefully, then answer the 15 comprehension questions on the right.</p>
+</div>
+
+<div class="main-wrap">
+
+  <!-- LEFT: Reading text -->
+  <div class="reading-panel">
+    <div class="panel-label">📄 Read the text</div>
+    <div class="reading-card">
+      <h2>Women and Sport</h2>
+      <h3>Changing attitudes?</h3>
+      <p>In the nineteenth century in Britain, sport was not considered a suitable pastime for a woman. It was associated with male physical strength and intense competition, whereas women were expected to be much gentler and less energetic. Middle-class women were, however, spectators at events like horse racing and cricket matches, and they did play slow games of tennis, badminton and croquet. If they played with men, the men were careful not to hit the ball too hard and to give the ladies every possible advantage. Richer women had the opportunity to take up sporting hobbies such as riding and hunting, as long as they behaved in a feminine manner. As women's clothes became looser and lighter towards the end of the century, cycling became popular with women of all social classes. Special sportswear was designed for other games; it carefully hid the body's real shape so that women would remain respectable.</p>
+      <p>With the new century, many more women participated in a much wider range of sports — cricket, golf, hockey, and swimming, among others. On the whole, though, they played separately from men. And it is still true that mixed sports are common at the social level but not in competitions. Many women favor the development of mixed participation and believe that in many sports women could compete successfully with men if they had the same opportunities and training.</p>
+    </div>
+  </div>
+
+  <!-- RIGHT: Questions -->
+  <div class="questions-panel">
+    <div class="panel-label">❓ Answer the questions</div>
+    <div class="questions-card" id="questionsCard"></div>
+    <div style="text-align:center; margin-top: 18px;">
+      <button class="btn-check" id="btnCheck">✅ Check All Answers</button>
+    </div>
+  </div>
+
+
+
+  <div id="results">
+    <h3>🎉 Activity Complete!</h3>
+    <div class="grade-big" id="gradeDisplay">—</div>
+    <div class="grade-note" id="gradeNote"></div>
+    <div class="result-stats">
+      <div class="r-stat g"><span class="rnum" id="rCorrect">0</span><span class="rlabel">Correct</span></div>
+      <div class="r-stat r"><span class="rnum" id="rWrong">0</span><span class="rlabel">Wrong</span></div>
+      <div class="r-stat y"><span class="rnum" id="rPct">0%</span><span class="rlabel">Score</span></div>
+    </div>
+    <div class="nav-btns">
+      <button class="nbtn nbtn-primary" id="btnRetry">🔄 Try Again</button>
+      <a href="C_1_Ingles.html" class="nbtn nbtn-outline">📚 Back to Class</a>
+      <a href="C_1C_Ingles.html" class="nbtn nbtn-outline">📝 Next Activity</a>
+    </div>
+  </div>
+
+</div>
+
+<script>
+// ============================================================
+// QUESTIONS  — True / False / Not Given
+// ============================================================
+const questions = [
+  {
+    text: "In the nineteenth century, sport in Britain was considered a suitable activity for women.",
+    answer: "False",
+    feedback: "The text states sport was NOT considered a suitable pastime for women."
+  },
+  {
+    text: "Sport in the 19th century was associated with male physical strength and intense competition.",
+    answer: "True",
+    feedback: "Correct — this is stated directly in the first paragraph."
+  },
+  {
+    text: "Middle-class women never attended any sporting events in the 19th century.",
+    answer: "False",
+    feedback: "They were spectators at events like horse racing and cricket matches."
+  },
+  {
+    text: "When men played tennis with women, they tried not to hit the ball too hard.",
+    answer: "True",
+    feedback: "Correct — men gave women every possible advantage."
+  },
+  {
+    text: "Only very poor women could afford to take up riding and hunting as hobbies.",
+    answer: "False",
+    feedback: "The text says RICHER women had this opportunity."
+  },
+  {
+    text: "Cycling became popular with women of all social classes towards the end of the 19th century.",
+    answer: "True",
+    feedback: "Correct — as clothes became looser and lighter, cycling spread across all classes."
+  },
+  {
+    text: "Special sportswear was designed to show off the natural shape of women's bodies.",
+    answer: "False",
+    feedback: "The sportswear HID the body's real shape so women would remain respectable."
+  },
+  {
+    text: "Women in the 20th century participated in a wider range of sports than before.",
+    answer: "True",
+    feedback: "Correct — the second paragraph states many more women played a wider range of sports."
+  },
+  {
+    text: "In the new century, men and women generally played sports together in competitions.",
+    answer: "False",
+    feedback: "The text says they played SEPARATELY from men on the whole."
+  },
+  {
+    text: "Mixed sports are currently common at the social level.",
+    answer: "True",
+    feedback: "Correct — the text confirms this is still true today."
+  },
+  {
+    text: "All women are against the idea of mixed participation in sports.",
+    answer: "False",
+    feedback: "Many women FAVOR the development of mixed participation."
+  },
+  {
+    text: "Women believe they could compete successfully with men given equal opportunities and training.",
+    answer: "True",
+    feedback: "Correct — this is stated in the final sentence of the text."
+  },
+  {
+    text: "The government introduced laws to allow women to play sports in the 19th century.",
+    answer: "Not Given",
+    feedback: "The text does not mention any government laws or legislation."
+  },
+  {
+    text: "Women played badminton and croquet in the 19th century.",
+    answer: "True",
+    feedback: "Correct — badminton and croquet are listed among the slow games women played."
+  },
+  {
+    text: "Mixed sports competitions are currently as common as mixed social sports.",
+    answer: "False",
+    feedback: "Mixed sports are common socially but NOT in competitions, according to the text."
+  }
+];
+
+const OPTIONS = ["True", "False", "Not Given"];
+const TOTAL = questions.length;
+let selected = Array(TOTAL).fill(null);
+let checked = false;
+
+const questionsCard = document.getElementById('questionsCard');
+const btnCheck = document.getElementById('btnCheck');
+const progressPill = document.getElementById('progressPill');
+const resultsEl = document.getElementById('results');
+
+// ── BUILD ──
+questions.forEach((q, i) => {
+  const block = document.createElement('div');
+  block.className = 'question-block';
+  block.style.animationDelay = (i * 35) + 'ms';
+
+  const opts = OPTIONS.map(opt =>
+    `<button class="opt-btn" data-q="${i}" data-opt="${opt}">${opt}</button>`
+  ).join('');
+
+  block.innerHTML = `
+    <div class="q-header">
+      <div class="q-num">${i + 1}</div>
+      <div class="q-text">${q.text}</div>
+    </div>
+    <div class="options">${opts}</div>
+    <div class="q-feedback" id="fb-${i}"></div>
+  `;
+
+  questionsCard.appendChild(block);
+});
+
+// ── SELECTION ──
+questionsCard.addEventListener('click', e => {
+  if (checked) return;
+  const btn = e.target.closest('.opt-btn');
+  if (!btn) return;
+
+  const qi = parseInt(btn.dataset.q);
+  const opt = btn.dataset.opt;
+
+  // deselect others in same question
+  questionsCard.querySelectorAll(`.opt-btn[data-q="${qi}"]`).forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  selected[qi] = opt;
+  updateProgress();
+});
+
+function updateProgress() {
+  const done = selected.filter(s => s !== null).length;
+  progressPill.textContent = `${done} / ${TOTAL} answered`;
+}
+
+// ── CHECK ──
+btnCheck.addEventListener('click', () => {
+  if (checked) return;
+  checked = true;
+  btnCheck.disabled = true;
+
+  let correct = 0;
+
+  questions.forEach((q, i) => {
+    const userAns = selected[i];
+    const isCorrect = userAns === q.answer;
+    if (isCorrect) correct++;
+
+    const fb = document.getElementById(`fb-${i}`);
+    fb.textContent = (isCorrect ? '✓ ' : '✗ ') + q.feedback;
+    fb.className = 'q-feedback visible ' + (isCorrect ? 'ok' : 'fail');
+
+    // Style buttons
+    questionsCard.querySelectorAll(`.opt-btn[data-q="${i}"]`).forEach(btn => {
+      btn.disabled = true;
+      const opt = btn.dataset.opt;
+      if (opt === q.answer && opt === userAns) btn.className = 'opt-btn correct-pick';
+      else if (opt === userAns && opt !== q.answer) btn.className = 'opt-btn wrong-pick';
+      else if (opt === q.answer) btn.className = 'opt-btn show-correct';
+      else btn.className = 'opt-btn';
+    });
+  });
+
+  showResults(correct);
+});
+
+function showResults(correct) {
+  const pct = correct / TOTAL;
+  let grade;
+  if (correct === TOTAL) grade = 7.0;
+  else if (pct >= 0.6) grade = 4.0 + ((pct - 0.6) / 0.4) * 3.0;
+  else grade = 1.0 + (pct / 0.6) * 3.0;
+  grade = Math.min(7.0, Math.max(1.0, grade)).toFixed(1);
+
+  document.getElementById('gradeDisplay').textContent = grade;
+  document.getElementById('gradeNote').textContent =
+    `${correct} of ${TOTAL} correct · ${Math.round(pct * 100)}% · Passing: 60% = 4.0`;
+  document.getElementById('rCorrect').textContent = correct;
+  document.getElementById('rWrong').textContent = TOTAL - correct;
+  document.getElementById('rPct').textContent = Math.round(pct * 100) + '%';
+
+  // Release sticky so results are fully visible
+  document.querySelector('.reading-panel').style.position = 'static';
+  document.querySelector('.reading-card').style.maxHeight = 'none';
+
+  resultsEl.style.display = 'block';
+  setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'start' }), 100);
+}
+
+// ── RETRY ──
+document.getElementById('btnRetry').addEventListener('click', () => {
+  checked = false;
+  selected = Array(TOTAL).fill(null);
+  btnCheck.disabled = false;
+  resultsEl.style.display = 'none';
+
+  questionsCard.querySelectorAll('.opt-btn').forEach(btn => {
+    btn.disabled = false;
+    btn.className = 'opt-btn';
+  });
+  questionsCard.querySelectorAll('.q-feedback').forEach(el => {
+    el.textContent = '';
+    el.className = 'q-feedback';
+  });
+
+  // Restore sticky reading panel
+  document.querySelector('.reading-panel').style.position = '';
+  document.querySelector('.reading-card').style.maxHeight = '';
+
+  progressPill.textContent = `0 / ${TOTAL} answered`;
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+});
+
+updateProgress();
+</script>
+</body>
+</html>
