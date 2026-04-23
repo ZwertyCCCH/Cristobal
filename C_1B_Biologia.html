@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>English Practice · Sports & Routines</title>
+<title>Biología · Bacterias y sus usos · Actividad interactiva</title>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=Fraunces:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -428,104 +428,102 @@ footer { text-align: center; padding: 20px; font-size: 0.78rem; color: var(--mut
 <body>
 
 <header>
-  <h2>🏃 Sports &amp; Daily Routines</h2>
+  <h2>🦠 Actividad 2 Bacterias · Usos y Aplicaciones</h2>
   <div class="score-pill">
-    <span id="placedCount">0</span> / <span id="totalCount">0</span> placed
+    <span id="placedCount">0</span> / <span id="totalCount">0</span> colocadas
   </div>
 </header>
 
 <div class="hero">
-  <h1>Complete the Text</h1>
-  <p>Drag each word from the bank to the correct blank in the text. Click a filled blank to return a word to the bank.</p>
+  <h1>Completa el texto sobre bacterias</h1>
+  <p>Arrastra cada palabra desde el banco al espacio correcto en el texto. Haz clic en un espacio lleno para devolver la palabra al banco.</p>
 </div>
 
 <div class="main-layout">
   <div class="bank-wrapper">
-    <div class="bank-label">📦 Word Bank</div>
+    <div class="bank-label">📦 Banco de palabras</div>
     <div class="word-bank" id="wordBank"></div>
   </div>
 
   <div class="text-wrapper">
     <div class="text-box" id="textBox"></div>
     <div class="actions">
-      <button class="btn-check" id="btnCheck">✅ Check My Answers</button>
+      <button class="btn-check" id="btnCheck">✅ Verificar respuestas</button>
     </div>
     <div id="results">
-      <h3>Activity Complete!</h3>
+      <h3>¡Actividad completada!</h3>
       <div class="score-big" id="scoreDisplay">—</div>
       <div class="score-sub" id="scoreSub"></div>
       <div class="stat-row">
-        <div class="stat good"><span id="correctCount">0</span>Correct ✓</div>
-        <div class="stat bad"><span id="wrongCount">0</span>Wrong ✗</div>
+        <div class="stat good"><span id="correctCount">0</span>Correctas ✓</div>
+        <div class="stat bad"><span id="wrongCount">0</span>Incorrectas ✗</div>
       </div>
-      <button class="btn-reset" id="btnReset">🔄 Try Again</button>
-       <div style="display:flex; gap:12px; justify-content:center; margin-top:14px; flex-wrap:wrap;">
-    <a href="C_1_Ingles.html" class="btn-reset" style="background:var(--navy); text-decoration:none;">📚 Back to Class</a>
-    <a href="C_1D_Ingles.html" class="btn-reset" style="background:var(--blue); text-decoration:none;">📝 Next Exercise</a>
-  </div>
+      <button class="btn-reset" id="btnReset">🔄 Reintentar</button>
+      <div style="display:flex; gap:12px; justify-content:center; margin-top:14px; flex-wrap:wrap;">
+        <a href="C_1_Biologia.html" class="btn-reset" style="background:var(--navy); text-decoration:none;">📚 Volver a la Clase</a>
+        <a href="C_1C_Biologia.html" class="btn-reset" style="background:var(--navy); text-decoration:none;"">📝 Siguiente Actividad</a>
+      </div>
     </div>
   </div>
 </div>
 
-
-
 <div id="toast"></div>
 
-<footer>Drag &amp; drop exercise · Present Simple &amp; Present Continuous · English Practice</footer>
+<footer>🦠 Actividad interactiva · Bacterias y sus múltiples aplicaciones en la industria, medicina y medio ambiente</footer>
 
 <script>
 // =============================================================
-// DATA — text segments and answers
-// Each item: { text: string, answer: string | null }
-// null = plain text (no blank). answer = the correct word/phrase.
+// DATOS — Texto sobre bacterias y sus usos
+// Cada item: { text: string, answer: string | null }
+// null = texto plano (sin espacio). answer = palabra correcta.
 // =============================================================
 
 const segments = [
-  { text: "My name is Tom and I love sports. I " },
-  { answer: "play" },           // 0 – present simple (I)
-  { text: " soccer every Saturday morning with my team. Right now, we " },
-  { answer: "are training" },   // 1 – present continuous (we)
-  { text: " for an important match. We usually start practice at 8 a.m., but today we " },
-  { answer: "are playing" },    // 2 – present continuous (we) — today exception
-  { text: " in the afternoon.\n\nMy friend Sarah " },
-  { answer: "goes" },           // 3 – present simple (she)
-  { text: " swimming twice a week. She " },
-  { answer: "is always" },      // 4 – present simple + frequency adverb
-  { text: " happy after training. At the moment, she " },
-  { answer: "is working on" },  // 5 – present continuous
-  { text: " her technique with the coach.\n\nI " },
-  { answer: "never" },          // 6 – frequency adverb (0%)
-  { text: " skip my warm-up before exercising. I think " },
-  { answer: "stretching" },     // 7 – gerund as subject
-  { text: " is essential to avoid injuries. After running, I " },
-  { answer: "always" },         // 8 – frequency adverb (100%)
-  { text: " drink water to stay hydrated.\n\nThe coach " },
-  { answer: "is talking" },     // 9 – present continuous
-  { text: " to the players right now. He " },
-  { answer: "checks" },         // 10 – present simple (he)
-  { text: " our equipment before every practice. I thank him for " },
-  { answer: "helping" },        // 11 – gerund after preposition
-  { text: " us improve.\n\nOn weekends, my friends and I " },
-  { answer: "go" },             // 12 – present simple (we)
-  { text: " cycling in the mountains. We " },
-  { answer: "sometimes" },      // 13 – frequency adverb (~50%)
-  { text: " watch sports on TV when we are tired. " },
-  { answer: "Playing" },        // 14 – gerund to start a sentence
-  { text: " sports regularly " },
-  { answer: "keeps" },          // 15 – present simple (gerund subject → 3rd person)
-  { text: " us healthy and motivated. Sarah " },
-  { answer: "hardly ever" },    // 16 – frequency adverb (~10%)
-  { text: " eats junk food — she prefers fruit and vegetables.\n\nThe marathon " },
-  { answer: "starts" },         // 17 – present simple (scheduled future)
-  { text: " at 7:00 a.m. tomorrow. All the athletes " },
-  { answer: "are warming up" }, // 18 – present continuous
-  { text: " in the stadium at this moment. I " },
-  { answer: "am looking forward to" }, // 19 – present continuous + expression
-  { text: " competing next month!" }
+  { text: "Las " },
+  { answer: "bacterias" },        // 0
+  { text: " son microorganismos procariotas con una enorme variedad de aplicaciones beneficiosas para los humanos. Por ejemplo, el género " },
+  { answer: "Lactobacillus" },    // 1
+  { text: " se utiliza en la producción de yogur, queso y chucrut mediante un proceso llamado " },
+  { answer: "fermentación" },     // 2
+  { text: " láctica.\n\nEn el ámbito médico, la bacteria " },
+  { answer: "Escherichia coli" }, // 3
+  { text: " ha sido modificada genéticamente para producir " },
+  { answer: "insulina" },         // 4
+  { text: " humana, un medicamento esencial para personas con diabetes. También se utilizan bacterias para fabricar " },
+  { answer: "antibióticos" },     // 5
+  { text: " como la estreptomicina y la tetraciclina.\n\nEn la agricultura, bacterias del género " },
+  { answer: "Rhizobium" },        // 6
+  { text: " viven en simbiosis con leguminosas y fijan el " },
+  { answer: "nitrógeno" },        // 7
+  { text: " atmosférico en el suelo, actuando como biofertilizantes naturales.\n\nUn área fascinante es la " },
+  { answer: "biorremediación" },  // 8
+  { text: ", donde bacterias como " },
+  { answer: "Pseudomonas" },      // 9
+  { text: " degradan contaminantes como el petróleo y los plásticos. Estas bacterias ayudan a limpiar " },
+  { answer: "derrames" },         // 10
+  { text: " de petróleo en mares y suelos contaminados.\n\nEn la industria química, las bacterias producen " },
+  { answer: "bioplásticos" },     // 11
+  { text: " a partir de fuentes renovables, reduciendo la contaminación por plásticos convencionales. También generan " },
+  { answer: "biogás" },          // 12
+  { text: " (metano) a partir de desechos orgánicos, una fuente de energía renovable.\n\nLa bacteria " },
+  { answer: "Bacillus thuringiensis" }, // 13
+  { text: " produce toxinas que actúan como " },
+  { answer: "plaguicidas" },      // 14
+  { text: " biológicos, controlando plagas sin dañar el medio ambiente.\n\nEn la investigación científica, " },
+  { answer: "PCR" },             // 15
+  { text: " utiliza una enzima llamada Taq polimerasa, obtenida de la bacteria " },
+  { answer: "Thermus aquaticus" }, // 16
+  { text: ", que vive en fuentes termales. Esta enzima resiste altas temperaturas y es fundamental para amplificar " },
+  { answer: "ADN" },             // 17
+  { text: " en el laboratorio.\n\nFinalmente, bacterias como los " },
+  { answer: "lactobacilos" },    // 18
+  { text: " forman parte de nuestra " },
+  { answer: "microbiota" },      // 19
+  { text: " intestinal, ayudando en la digestión y fortaleciendo nuestro sistema inmunológico." }
 ];
 
-// Pull answers and build blank list
-const blanks = []; // { answer, index in segments }
+// Extraer respuestas y construir lista de espacios
+const blanks = [];
 segments.forEach((seg, i) => {
   if (seg.answer) blanks.push({ answer: seg.answer, segIndex: i });
 });
@@ -533,12 +531,10 @@ segments.forEach((seg, i) => {
 const TOTAL = blanks.length;
 
 // =============================================================
-// STATE
+// ESTADO
 // =============================================================
-// state[blankId] = null | word string
 let state = [];
-// chipPool: { word, chipEl, blankId } — blankId null means in bank
-let chipData = []; // { word, id }  unique per word occurrence
+let chipData = [];
 
 function freshState() {
   state = Array(TOTAL).fill(null);
@@ -553,18 +549,6 @@ function shuffle(arr) {
   }
 }
 
-// Which chip is placed in blankId? chipData id === blankId (each chip belongs to exactly one blank)
-// chips are identified by their blankId (their correct target)
-
-// Track which chip is currently in pool (not placed anywhere)
-// inPool[chipId] = true if chip is in the bank
-let inPool = [];
-
-function getPlacedChipFor(blankId) {
-  // Returns chipId currently placed at blankId, or null
-  return state[blankId]; // state[blankId] = chipId or null
-}
-
 // =============================================================
 // DOM REFS
 // =============================================================
@@ -577,7 +561,7 @@ const totalCountEl = document.getElementById('totalCount');
 const toast = document.getElementById('toast');
 
 let verified = false;
-let dragChipId = null; // id of chip being dragged
+let dragChipId = null;
 
 // =============================================================
 // RENDER
@@ -594,7 +578,7 @@ function renderBank() {
   const poolChips = chipData.filter(c => state.indexOf(c.id) === -1);
 
   if (poolChips.length === 0) {
-    wordBank.innerHTML = '<span style="color:var(--green);font-weight:700;">✓ All words placed! Press Check.</span>';
+    wordBank.innerHTML = '<span style="color:var(--green);font-weight:700;">✓ ¡Todas las palabras colocadas! Presiona "Verificar".</span>';
     return;
   }
 
@@ -611,7 +595,6 @@ function renderText() {
 
   segments.forEach(seg => {
     if (!seg.answer) {
-      // Plain text — preserve newlines as <br>
       seg.text.split('\n').forEach((line, i) => {
         if (i > 0) textBox.appendChild(document.createElement('br'));
         textBox.appendChild(document.createTextNode(line));
@@ -632,20 +615,18 @@ function renderText() {
           rm.className = 'remove-btn';
           rm.textContent = '✕';
           span.appendChild(rm);
-          span.title = 'Click to return to bank';
+          span.title = 'Click para devolver al banco';
           span.addEventListener('click', () => removeFromBlank(bi));
         }
       } else {
         span.textContent = '________________';
-        span.title = 'Drop a word here';
+        span.title = 'Arrastra una palabra aquí';
       }
 
-      // Drop events
       span.addEventListener('dragover', onBlankDragOver);
       span.addEventListener('dragleave', onBlankDragLeave);
       span.addEventListener('drop', e => onBlankDrop(e, bi));
 
-      // Touch support
       span.addEventListener('touchstart', onBlankTouchStart, { passive: false });
 
       textBox.appendChild(span);
@@ -663,7 +644,6 @@ function createChip(chipId, word) {
   div.addEventListener('dragstart', onChipDragStart);
   div.addEventListener('dragend', onChipDragEnd);
 
-  // Touch
   div.addEventListener('touchstart', onChipTouchStart, { passive: false });
 
   return div;
@@ -682,11 +662,9 @@ function placedCount() {
 // PLACEMENT LOGIC
 // =============================================================
 function placeChip(chipId, blankId) {
-  // If blank already has a chip, return it to bank first
   if (state[blankId] !== null) {
-    state[blankId] = null; // return to bank (just clear)
+    state[blankId] = null;
   }
-  // If chip is already placed somewhere, clear it
   const prevBlank = state.indexOf(chipId);
   if (prevBlank !== -1) state[prevBlank] = null;
 
@@ -700,7 +678,7 @@ function removeFromBlank(blankId) {
 }
 
 // =============================================================
-// DRAG & DROP (Mouse)
+// DRAG & DROP
 // =============================================================
 function onChipDragStart(e) {
   dragChipId = parseInt(e.currentTarget.dataset.chipId);
@@ -731,7 +709,6 @@ function onBlankDrop(e, blankId) {
   dragChipId = null;
 }
 
-// Bank as drop zone (return chip)
 wordBank.addEventListener('dragover', e => {
   e.preventDefault();
   e.dataTransfer.dropEffect = 'move';
@@ -742,7 +719,6 @@ wordBank.addEventListener('drop', e => {
   e.preventDefault();
   wordBank.classList.remove('drag-over');
   if (dragChipId === null) return;
-  // Remove chip from wherever it is
   const prevBlank = state.indexOf(dragChipId);
   if (prevBlank !== -1) {
     state[prevBlank] = null;
@@ -752,7 +728,7 @@ wordBank.addEventListener('drop', e => {
 });
 
 // =============================================================
-// TOUCH DRAG SUPPORT
+// TOUCH SUPPORT
 // =============================================================
 let touchChipId = null;
 let touchClone = null;
@@ -778,9 +754,7 @@ function onChipTouchStart(e) {
   document.addEventListener('touchend', onTouchEnd);
 }
 
-function onBlankTouchStart(e) {
-  // Allow touch-to-remove
-}
+function onBlankTouchStart(e) {}
 
 function onTouchMove(e) {
   e.preventDefault();
@@ -790,7 +764,6 @@ function onTouchMove(e) {
     touchClone.style.left = (x - touchOffsetX) + 'px';
     touchClone.style.top = (y - touchOffsetY) + 'px';
   }
-  // Highlight element under finger
   document.querySelectorAll('.blank.drag-over, .word-bank.drag-over').forEach(el => el.classList.remove('drag-over'));
   const el = document.elementFromPoint(x, y);
   const blank = el && el.closest('.blank');
@@ -836,7 +809,7 @@ btnCheck.addEventListener('click', verify);
 
 function verify() {
   if (placedCount() < TOTAL) {
-    showToast('Place all words first!', 2000);
+    showToast('¡Coloca todas las palabras primero!', 2000);
     return;
   }
   verified = true;
@@ -849,17 +822,15 @@ function verify() {
     const isCorrect = placedWord === b.answer;
     if (isCorrect) correct++;
 
-    // Style the blank
     const blankEl = textBox.querySelector(`.blank[data-blank-id="${bi}"]`);
     if (blankEl) {
       blankEl.className = 'blank ' + (isCorrect ? 'correct' : 'wrong');
       if (!isCorrect) {
-        blankEl.title = `Correct: "${b.answer}"`;
+        blankEl.title = `Correcta: "${b.answer}"`;
       }
     }
   });
 
-  // Re-render text with correct/wrong styles (blanks need data-blank-id)
   renderTextVerified(correct);
   showResults(correct);
 }
@@ -913,7 +884,7 @@ function showResults(correct) {
 
   document.getElementById('scoreDisplay').textContent = grade;
   document.getElementById('scoreSub').textContent =
-    `${correct} of ${TOTAL} correct (${Math.round(pct * 100)}%) · Passing: 60% = 4.0`;
+    `${correct} de ${TOTAL} correctas (${Math.round(pct * 100)}%) · Exigencia: 60% = Nota 4.0`;
   document.getElementById('correctCount').textContent = correct;
   document.getElementById('wrongCount').textContent = TOTAL - correct;
 

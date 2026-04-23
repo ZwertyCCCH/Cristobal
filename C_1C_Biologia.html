@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Activity 4 · Grammar Quiz · Sports for All</title>
+<title>Actividad 4 · Biología · Bacterias y Estructura Celular</title>
 <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -45,12 +45,16 @@ body {
   position: sticky;
   top: 0;
   z-index: 200;
+  gap: 12px;
 }
 .app-header h1 {
-  font-size: 0.95rem;
+  font-size: 0.9rem;
   font-weight: 700;
   color: #c8d8ee;
   letter-spacing: 0.3px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .app-header h1 em {
   color: var(--amber);
@@ -65,6 +69,8 @@ body {
   background: var(--navy2);
   border-radius: 40px;
   padding: 6px 16px;
+  flex-shrink: 0;
+  transition: background 0.3s;
 }
 .timer-icon { font-size: 1rem; }
 .timer-display {
@@ -104,6 +110,7 @@ body {
   align-items: center;
   justify-content: space-between;
   margin-bottom: 20px;
+  gap: 12px;
 }
 .q-counter {
   font-size: 0.78rem;
@@ -111,6 +118,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 1.5px;
   color: var(--muted);
+  white-space: nowrap;
 }
 .q-dots {
   display: flex;
@@ -123,9 +131,11 @@ body {
   width: 9px; height: 9px;
   border-radius: 50%;
   background: var(--border);
-  transition: background 0.2s;
+  transition: all 0.2s;
   cursor: pointer;
+  flex-shrink: 0;
 }
+.dot:hover { transform: scale(1.4); background: var(--muted); }
 .dot.answered  { background: var(--amber); }
 .dot.current   { background: var(--navy); transform: scale(1.3); }
 .dot.correct-d { background: var(--green); }
@@ -161,8 +171,8 @@ body {
 
 .q-text {
   font-family: 'Literata', serif;
-  font-size: 1.2rem;
-  line-height: 1.6;
+  font-size: 1.15rem;
+  line-height: 1.65;
   color: var(--navy);
   margin-bottom: 28px;
   padding-left: 16px;
@@ -185,22 +195,27 @@ body {
   padding: 13px 18px;
   cursor: pointer;
   transition: all 0.18s;
-  font-size: 0.97rem;
+  font-size: 0.95rem;
   font-weight: 600;
   color: var(--navy);
   text-align: left;
+  width: 100%;
 }
 .option:hover:not(.locked) {
   border-color: var(--navy2);
   background: #eef2f9;
   transform: translateX(3px);
 }
+.option:focus-visible {
+  outline: 3px solid var(--amber);
+  outline-offset: 2px;
+}
 .option.selected {
   background: var(--navy);
   border-color: var(--navy);
   color: white;
 }
-.option.locked { cursor: default; }
+.option.locked { cursor: default; pointer-events: none; }
 .option.correct-opt {
   background: var(--green-light);
   border-color: var(--green);
@@ -229,22 +244,10 @@ body {
   flex-shrink: 0;
   transition: all 0.18s;
 }
-.option.selected .opt-letter {
-  background: var(--amber);
-  color: var(--navy);
-}
-.option.correct-opt .opt-letter {
-  background: var(--green);
-  color: white;
-}
-.option.wrong-opt .opt-letter {
-  background: var(--red);
-  color: white;
-}
-.option.show-correct-opt .opt-letter {
-  background: var(--green);
-  color: white;
-}
+.option.selected .opt-letter   { background: var(--amber); color: var(--navy); }
+.option.correct-opt .opt-letter { background: var(--green); color: white; }
+.option.wrong-opt .opt-letter   { background: var(--red);   color: white; }
+.option.show-correct-opt .opt-letter { background: var(--green); color: white; }
 
 /* ── NAV ── */
 .nav-bar {
@@ -263,34 +266,42 @@ body {
   padding: 11px 26px;
   font-size: 0.9rem;
 }
-.btn:hover { transform: translateY(-2px); }
+.btn:hover:not(:disabled) { transform: translateY(-2px); }
+.btn:disabled { opacity: 0.4; cursor: not-allowed; }
 .btn-prev {
   background: var(--border);
   color: var(--navy);
 }
-.btn-prev:hover { background: #ccd5e4; }
+.btn-prev:hover:not(:disabled) { background: #ccd5e4; }
 .btn-next {
   background: var(--navy);
   color: white;
   box-shadow: 0 4px 14px rgba(14,34,64,0.2);
 }
-.btn-next:hover { background: var(--navy2); }
+.btn-next:hover:not(:disabled) { background: var(--navy2); }
 .btn-submit {
   background: var(--amber);
   color: var(--navy);
   box-shadow: 0 4px 14px rgba(232,148,10,0.3);
 }
-.btn-submit:hover { background: #d4860a; }
+.btn-submit:hover:not(:disabled) { background: #d4860a; }
 
+/* Warning message */
 .unanswered-warning {
-  font-size: 0.8rem;
+  font-size: 0.82rem;
   color: var(--red);
   font-weight: 600;
   text-align: center;
+  background: var(--red-light);
+  border: 1px solid rgba(192,57,43,0.2);
+  border-radius: 10px;
+  padding: 10px 16px;
+  margin-bottom: 12px;
   opacity: 0;
+  pointer-events: none;
   transition: opacity 0.3s;
 }
-.unanswered-warning.show { opacity: 1; }
+.unanswered-warning.show { opacity: 1; pointer-events: auto; }
 
 /* ── RESULTS ── */
 #resultsSection { display: none; }
@@ -305,12 +316,13 @@ body {
   overflow: hidden;
 }
 .results-hero::before {
-  content: '🏆';
+  content: '🦠';
   position: absolute;
   font-size: 14rem;
   opacity: 0.04;
   top: -30px; right: -20px;
   pointer-events: none;
+  line-height: 1;
 }
 .results-hero h2 {
   font-size: 1rem;
@@ -378,39 +390,61 @@ body {
   margin-bottom: 20px;
 }
 .time-badge.excellent { background: rgba(77,217,160,0.15); color: #4dd9a0; border: 1px solid rgba(77,217,160,0.3); }
-.time-badge.good      { background: rgba(232,148,10,0.15); color: var(--amber); border: 1px solid rgba(232,148,10,0.3); }
-.time-badge.slow      { background: rgba(255,124,114,0.15); color: #ff7c72; border: 1px solid rgba(255,124,114,0.3); }
+.time-badge.good      { background: rgba(232,148,10,0.15);  color: var(--amber); border: 1px solid rgba(232,148,10,0.3); }
+.time-badge.slow      { background: rgba(255,124,114,0.15); color: #ff7c72;      border: 1px solid rgba(255,124,114,0.3); }
 
 .verdict {
   font-size: 1.05rem;
   font-weight: 700;
   color: white;
+  margin-bottom: 28px;
 }
 
+/* ── RESULT BUTTONS — always visible ── */
 .nav-btns-results {
   display: flex;
   gap: 12px;
   justify-content: center;
   flex-wrap: wrap;
-  margin-top: 20px;
 }
+
+/* Base style shared by both result buttons */
 .nbtn {
   font-family: 'Syne', sans-serif;
   font-weight: 700;
-  padding: 11px 26px;
+  padding: 12px 28px;
   border-radius: 50px;
   font-size: 0.9rem;
   cursor: pointer;
-  transition: all 0.18s;
+  transition: all 0.2s;
   text-decoration: none;
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
   border: none;
+  letter-spacing: 0.2px;
 }
-.nbtn:hover { transform: translateY(-2px); }
-.nbtn-amber { background: var(--amber); color: var(--navy); }
-.nbtn-amber:hover { background: #d4860a; }
-.nbtn-outline { background: transparent; border: 2px solid var(--border); color: var(--navy); }
-.nbtn-outline:hover { background: var(--border); }
+.nbtn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(0,0,0,0.25); }
+.nbtn:active { transform: translateY(0); }
+
+/* Reintentar — amber fill */
+.nbtn-amber {
+  background: var(--amber);
+  color: var(--navy);
+}
+.nbtn-amber:hover { background: #f0a420; }
+
+/* Volver a la Clase — clearly visible with solid border and text */
+.nbtn-back {
+  background: rgba(255,255,255,0.10);
+  color: #e8f0fb;
+  border: 2px solid rgba(200,216,238,0.45);
+}
+.nbtn-back:hover {
+  background: rgba(255,255,255,0.18);
+  border-color: rgba(200,216,238,0.85);
+  color: white;
+}
 
 /* Review section */
 .review-toggle {
@@ -433,6 +467,17 @@ body {
 
 #reviewList { display: none; }
 
+.review-section-title {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  color: var(--muted);
+  text-align: center;
+  margin-bottom: 16px;
+  padding-top: 4px;
+}
+
 .review-item {
   background: var(--surface);
   border-radius: var(--radius);
@@ -446,6 +491,14 @@ body {
 .review-item.r-correct { border-left-color: var(--green); }
 .review-item.r-wrong   { border-left-color: var(--red); }
 
+.review-item .r-num {
+  font-size: 0.7rem;
+  font-weight: 800;
+  color: var(--muted);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 6px;
+}
 .review-item .r-qtext {
   font-family: 'Literata', serif;
   font-size: 0.95rem;
@@ -463,12 +516,14 @@ body {
 .r-tag {
   padding: 4px 12px;
   border-radius: 40px;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
 }
 .r-tag.user-correct { background: var(--green-light); color: var(--green); }
 .r-tag.user-wrong   { background: var(--red-light);   color: var(--red); }
 .r-tag.correct-ans  { background: var(--green-light); color: var(--green); }
 .r-tag.not-ans      { background: var(--border);       color: var(--muted); }
-.r-icon { margin-right: 4px; }
 
 footer {
   text-align: center;
@@ -635,7 +690,7 @@ footer {
 <body>
 
 <header class="app-header">
-  <h1>🏃 <em>Activity 4</em> · Grammar Quiz · Sports for All</h1>
+  <h1>🦠 <em>Actividad 3</em> · Biología · Bacterias y Estructura Celular</h1>
   <div class="timer-wrap" id="timerWrap">
     <span class="timer-icon">⏱</span>
     <span class="timer-display" id="timerDisplay">45:00</span>
@@ -648,101 +703,101 @@ footer {
 <!-- QUIZ -->
 <div class="quiz-wrap" id="quizSection">
   <div class="q-meta">
-    <div class="q-counter" id="qCounter">Question 1 of 30</div>
+    <div class="q-counter" id="qCounter">Pregunta 1 de 30</div>
     <div class="q-dots" id="qDots"></div>
   </div>
   <div class="question-card" id="questionCard"></div>
-  <div class="unanswered-warning" id="warnMsg">⚠ Please select an answer before continuing.</div>
-  <div class="nav-bar" style="margin-top:16px;">
-    <button class="btn btn-prev" id="btnPrev" onclick="goTo(currentQ - 1)">◀ Previous</button>
-    <button class="btn btn-next" id="btnNext" onclick="handleNext()">Next ▶</button>
+  <div class="unanswered-warning" id="warnMsg">⚠ Selecciona una respuesta antes de continuar.</div>
+  <div class="nav-bar">
+    <button class="btn btn-prev" id="btnPrev" onclick="goTo(currentQ - 1)">◀ Anterior</button>
+    <button class="btn btn-next" id="btnNext" onclick="handleNext()">Siguiente ▶</button>
   </div>
 </div>
 
 <!-- RESULTS -->
 <div class="quiz-wrap" id="resultsSection">
   <div class="results-hero">
-    <h2>📊 Your Result</h2>
+    <h2>📊 Tu Resultado</h2>
     <div class="grade-num" id="gradeDisplay">—</div>
     <div class="grade-note" id="gradeNote"></div>
     <div class="stats-row">
-      <div class="stat-chip s-green"><span class="snum" id="sCorrect">0</span><span class="slabel">Correct</span></div>
-      <div class="stat-chip s-red">  <span class="snum" id="sWrong">0</span>  <span class="slabel">Wrong</span></div>
-      <div class="stat-chip s-amber"><span class="snum" id="sPct">0%</span>  <span class="slabel">Score</span></div>
-      <div class="stat-chip">        <span class="snum" id="sTime">—</span>  <span class="slabel">Time</span></div>
+      <div class="stat-chip s-green"><span class="snum" id="sCorrect">0</span><span class="slabel">Correctas</span></div>
+      <div class="stat-chip s-red">  <span class="snum" id="sWrong">0</span>  <span class="slabel">Incorrectas</span></div>
+      <div class="stat-chip s-amber"><span class="snum" id="sPct">0%</span>  <span class="slabel">Logro</span></div>
+      <div class="stat-chip">        <span class="snum" id="sTime">—</span>  <span class="slabel">Tiempo</span></div>
     </div>
     <div class="time-badge" id="timeBadge"></div>
     <div class="verdict" id="verdict"></div>
+
     <div class="nav-btns-results">
-      <button class="nbtn nbtn-amber" onclick="resetQuiz()">🔄 Try Again</button>
-      <a href="C_1_Ingles.html"  class="nbtn nbtn-outline">📚 Back to Class</a>
+      <button class="nbtn nbtn-amber" onclick="resetQuiz()">🔄 Reintentar</button>
+      <a href="C_1_Biologia.html" class="nbtn nbtn-back">📚 Volver a la Clase</a>
     </div>
   </div>
 
   <div class="review-toggle">
-    <button class="btn-review" onclick="toggleReview()">📋 Show / Hide Answer Review</button>
+    <button class="btn-review" onclick="toggleReview()">📋 Mostrar / Ocultar Revisión</button>
   </div>
   <div id="reviewList"></div>
 </div>
 
-<footer>Activity 4 · 30 Questions · Present Simple · Present Continuous · Adverbs of Frequency · Gerunds · Passing: 60% → 4.0</footer>
+<footer>Actividad 4 · 30 preguntas · Estructura bacteriana · Usos · Enfermedades · Antibióticos · Exigencia: 60% → 4.0</footer>
 
 <script>
 // ================================================================
-// QUESTIONS — 30 items, improved wording & distractors
-// topic: label shown on card
+// PREGUNTAS DE BIOLOGÍA — 30 items
 // ================================================================
 const ALL_QUESTIONS = [
-  // ── PRESENT SIMPLE ──
-  { topic: "Present Simple", text: "She _____ tennis every Sunday morning.", opts: ["play","plays","is playing","played"], correct: 1 },
-  { topic: "Present Simple", text: "My brother _____ to the gym three times a week.", opts: ["go","going","goes","is go"], correct: 2 },
-  { topic: "Present Simple", text: "The coach always _____ before the players arrive.", opts: ["arrive","arrives","is arriving","arriving"], correct: 1 },
-  { topic: "Present Simple", text: "They _____ football on weekends with their friends.", opts: ["plays","is playing","play","are play"], correct: 2 },
-  { topic: "Present Simple", text: "He _____ his water bottle before every match.", opts: ["check","is checking","checking","checks"], correct: 3 },
-  { topic: "Present Simple — Negative", text: "She _____ junk food; she prefers salads and fruit.", opts: ["doesn't eat","don't eat","isn't eating","not eat"], correct: 0 },
-  { topic: "Present Simple — Negative", text: "I _____ play video games on school nights.", opts: ["doesn't","don't","am not","isn't"], correct: 1 },
-  { topic: "Present Simple — Question", text: "_____ your sister play any sport after school?", opts: ["Do","Does","Is","Are"], correct: 1 },
-  { topic: "Present Simple — Question", text: "How often _____ they train at the stadium?", opts: ["does","is","do","are"], correct: 2 },
+  // ── ESTRUCTURA BACTERIANA ──
+  { topic:"Estructura bacteriana", text:"¿Cuál es la función principal de la pared celular en las bacterias?", opts:["Síntesis de proteínas","Proporcionar forma y protección","Almacenar material genético","Realizar fotosíntesis"], correct:1 },
+  { topic:"Estructura bacteriana", text:"¿Qué estructura permite la locomoción en las bacterias?", opts:["Pili","Cápsula","Flagelo","Ribosoma"], correct:2 },
+  { topic:"Estructura bacteriana", text:"¿Cómo se llama la capa externa de polisacáridos que protege a la bacteria de la fagocitosis?", opts:["Pared celular","Membrana plasmática","Cápsula","Endospora"], correct:2 },
+  { topic:"Estructura bacteriana", text:"¿Qué estructura utilizan las bacterias para adherirse a superficies y transferir plásmidos?", opts:["Flagelos","Pili o fimbrias","Ribosomas","Mesosomas"], correct:1 },
+  { topic:"Estructura bacteriana", text:"¿Dónde se encuentra el cromosoma bacteriano dentro de la célula?", opts:["Núcleo","Nucleoide","Mitocondria","Vacuola"], correct:1 },
+  { topic:"Estructura bacteriana", text:"¿Qué son los plásmidos en las bacterias?", opts:["Orgánulos para síntesis de proteínas","Estructuras de almacenamiento de energía","Pequeñas moléculas de ADN circular","Parte del flagelo"], correct:2 },
+  { topic:"Estructura bacteriana", text:"¿Qué orgánulo es responsable de la síntesis de proteínas en las bacterias?", opts:["Mitocondria","Retículo endoplasmático","Ribosoma","Aparato de Golgi"], correct:2 },
+  { topic:"Estructura bacteriana", text:"¿Cómo se llaman las estructuras de resistencia que forman algunas bacterias en condiciones extremas?", opts:["Cápsula","Endospora","Plásmido","Mesosoma"], correct:1 },
+  { topic:"Estructura bacteriana", text:"¿Qué estructura bacteriana está compuesta principalmente por peptidoglicano?", opts:["Membrana plasmática","Cápsula","Pared celular","Nucleoide"], correct:2 },
+  { topic:"Estructura bacteriana", text:"¿Cuál es la función de los mesosomas en bacterias?", opts:["Síntesis de proteínas","Respiración celular y división","Almacenamiento de nutrientes","Locomoción"], correct:1 },
+  { topic:"Estructura bacteriana", text:"¿Dónde se almacenan los gránulos de reserva como glucógeno o polifosfato?", opts:["En el nucleoide","En el citoplasma","En la pared celular","En los ribosomas"], correct:1 },
 
-  // ── PRESENT CONTINUOUS ──
-  { topic: "Present Continuous", text: "Right now, the team _____ for the championship match.", opts: ["train","trains","is training","are trained"], correct: 2 },
-  { topic: "Present Continuous", text: "Look! They _____ basketball in the court.", opts: ["play","plays","are playing","is playing"], correct: 2 },
-  { topic: "Present Continuous", text: "I can't talk right now. I _____ yoga.", opts: ["do","does","am doing","is doing"], correct: 2 },
-  { topic: "Present Continuous", text: "The athletes _____ warming up in the stadium at this moment.", opts: ["am","is","are","be"], correct: 2 },
-  { topic: "Present Continuous", text: "Listen! The referee _____ the whistle to stop the game.", opts: ["blow","blows","is blowing","are blowing"], correct: 2 },
-  { topic: "Present Continuous — Negative", text: "We _____ football at the moment. We are taking a break.", opts: ["aren't playing","don't play","doesn't play","not playing"], correct: 0 },
-  { topic: "Present Continuous — Question", text: "_____ the coach talking to the players right now?", opts: ["Do","Does","Is","Are"], correct: 2 },
+  // ── USOS Y APLICACIONES ──
+  { topic:"Usos de bacterias", text:"¿Qué bacteria se utiliza en la producción de yogur y queso?", opts:["Escherichia coli","Lactobacillus","Bacillus thuringiensis","Pseudomonas"], correct:1 },
+  { topic:"Usos de bacterias", text:"¿Qué bacteria ha sido modificada genéticamente para producir insulina humana?", opts:["Lactobacillus","Streptococcus","Escherichia coli","Rhizobium"], correct:2 },
+  { topic:"Usos de bacterias", text:"¿Qué bacteria fija nitrógeno en simbiosis con plantas leguminosas?", opts:["Pseudomonas","Bacillus thuringiensis","Rhizobium","Escherichia coli"], correct:2 },
+  { topic:"Usos de bacterias", text:"¿Qué proceso utilizan las bacterias para limpiar derrames de petróleo?", opts:["Fermentación","Biorremediación","Conjugación","Transformación"], correct:1 },
+  { topic:"Usos de bacterias", text:"¿Qué bacteria produce toxinas utilizadas como plaguicidas biológicos?", opts:["Lactobacillus","Escherichia coli","Bacillus thuringiensis","Pseudomonas"], correct:2 },
+  { topic:"Usos de bacterias", text:"¿De qué bacteria se obtiene la enzima Taq polimerasa, utilizada en PCR?", opts:["Thermus aquaticus","Escherichia coli","Bacillus subtilis","Streptococcus pyogenes"], correct:0 },
 
-  // ── PRESENT SIMPLE vs. CONTINUOUS ──
-  { topic: "Simple vs. Continuous", text: "Sarah usually _____ swimming, but today she _____ tennis.", opts: ["goes / is playing","is going / plays","go / playing","goes / plays"], correct: 0 },
-  { topic: "Simple vs. Continuous", text: "He _____ his routine every day, but right now he _____ a rest.", opts: ["follows / is taking","is following / takes","follow / taking","follows / takes"], correct: 0 },
+  // ── ENFERMEDADES BACTERIANAS ──
+  { topic:"Enfermedades", text:"¿Qué bacteria causa la tuberculosis?", opts:["Streptococcus pyogenes","Mycobacterium tuberculosis","Escherichia coli","Clostridium tetani"], correct:1 },
+  { topic:"Enfermedades", text:"¿Qué enfermedad es causada por la bacteria Streptococcus pyogenes?", opts:["Tuberculosis","Cólera","Faringitis estreptocócica","Tétanos"], correct:2 },
+  { topic:"Enfermedades", text:"¿Qué bacteria causa el tétanos?", opts:["Clostridium tetani","Salmonella typhi","Vibrio cholerae","Treponema pallidum"], correct:0 },
+  { topic:"Enfermedades", text:"¿Qué bacteria es la causa más común de infecciones urinarias?", opts:["Streptococcus pneumoniae","Escherichia coli","Mycobacterium leprae","Neisseria meningitidis"], correct:1 },
+  { topic:"Enfermedades", text:"¿Qué bacteria causa la sífilis?", opts:["Chlamydia trachomatis","Neisseria gonorrhoeae","Treponema pallidum","Haemophilus ducreyi"], correct:2 },
+  { topic:"Enfermedades", text:"¿Qué bacteria causa el cólera?", opts:["Salmonella typhi","Shigella dysenteriae","Vibrio cholerae","Yersinia pestis"], correct:2 },
 
-  // ── ADVERBS OF FREQUENCY ──
-  { topic: "Adverb of Frequency", text: "I _____ go to the gym — every single day without exception.", opts: ["never","sometimes","always","hardly ever"], correct: 2 },
-  { topic: "Adverb of Frequency", text: "He _____ arrives late to practice. He is always on time.", opts: ["always","never","usually","often"], correct: 1 },
-  { topic: "Adverb of Frequency", text: "We _____ watch sports on TV — about half the time.", opts: ["always","never","sometimes","hardly ever"], correct: 2 },
-  { topic: "Adverb of Frequency", text: "She _____ eats junk food — only once or twice a month.", opts: ["always","usually","often","hardly ever"], correct: 3 },
-  { topic: "Adverb of Frequency", text: "I _____ forget to stretch before exercising — it never happens.", opts: ["always","sometimes","often","never"], correct: 3 },
-  { topic: "Adverb of Frequency", text: "The team _____ wins at home. They lose there only very rarely.", opts: ["never","hardly ever","almost always","sometimes"], correct: 2 },
+  // ── ANTIBIÓTICOS Y RESISTENCIA ──
+  { topic:"Antibióticos", text:"¿Qué mecanismo de acción tienen las penicilinas?", opts:["Inhibición de síntesis de proteínas","Inhibición de síntesis de pared celular","Inhibición de síntesis de ADN","Alteración de membrana"], correct:1 },
+  { topic:"Antibióticos", text:"¿Cómo se llama la enzima producida por algunas bacterias que degrada la penicilina?", opts:["Proteasa","Lipasa","Betalactamasa","Quinasa"], correct:2 },
+  { topic:"Antibióticos", text:"¿Contra qué tipo de microorganismos son efectivos los antibióticos?", opts:["Virus","Hongos","Bacterias","Parásitos"], correct:2 },
+  { topic:"Antibióticos", text:"¿Cuál de los siguientes NO es un factor que aumenta la resistencia bacteriana?", opts:["Uso excesivo de antibióticos","Completar el tratamiento recetado","Automedicación","Uso en agricultura"], correct:1 },
 
-  // ── GERUNDS ──
-  { topic: "Gerunds", text: "_____ swimming is great exercise for your whole body.", opts: ["Swim","Swims","Swimming","To swimming"], correct: 2 },
-  { topic: "Gerunds", text: "She hates _____ matches, so she trains very hard every day.", opts: ["lose","loses","losing","to lose"], correct: 2 },
-  { topic: "Gerunds", text: "Thank you for _____ me improve my technique.", opts: ["help","helps","helping","to help"], correct: 2 },
-  { topic: "Gerunds", text: "He is interested in _____ martial arts this semester.", opts: ["learn","learns","learning","to learn"], correct: 2 },
-  { topic: "Gerunds", text: "Let's practice _____ the ball accurately into the net.", opts: ["kick","kicks","kicking","to kick"], correct: 2 },
-  { topic: "Gerunds", text: "I really enjoy _____ soccer with my friends on weekends.", opts: ["play","plays","playing","to play"], correct: 2 },
+  // ── TAXONOMÍA ──
+  { topic:"Taxonomía", text:"¿Las bacterias pertenecen a qué dominio?", opts:["Eukarya","Archaea","Bacteria","Protista"], correct:2 },
+  { topic:"Taxonomía", text:"¿Cómo se escribe correctamente el nombre científico de una bacteria?", opts:["escherichia coli","Escherichia Coli","Escherichia coli","E. COLI"], correct:2 },
+  { topic:"Taxonomía", text:"¿Qué nivel taxonómico sigue inmediatamente después del género?", opts:["Familia","Orden","Clase","Especie"], correct:3 }
 ];
 
-const TOTAL = ALL_QUESTIONS.length;
-const TIME_LIMIT = 45 * 60; // seconds
+const TOTAL      = ALL_QUESTIONS.length;
+const TIME_LIMIT = 45 * 60;
 
 let questions = [];
-let currentQ = 0;
-let answers  = {}; // index → option index
+let currentQ  = 0;
+let answers   = {};
 let timerInterval = null;
-let elapsed = 0;
-let quizDone = false;
+let elapsed   = 0;
+let quizDone  = false;
 
 // ── UTILS ──
 function shuffle(arr) {
@@ -770,14 +825,18 @@ function fmtTime(sec) {
 function startTimer() {
   elapsed = 0;
   clearInterval(timerInterval);
+  const display = document.getElementById('timerDisplay');
+  const wrap    = document.getElementById('timerWrap');
+  display.textContent = fmtTime(TIME_LIMIT);
+  wrap.className = 'timer-wrap';
+
   timerInterval = setInterval(() => {
     elapsed++;
     const remaining = TIME_LIMIT - elapsed;
-    document.getElementById('timerDisplay').textContent = fmtTime(remaining);
-    const wrap = document.getElementById('timerWrap');
+    display.textContent = fmtTime(Math.max(remaining, 0));
     if (remaining <= 0) {
       clearInterval(timerInterval);
-      document.getElementById('timerDisplay').textContent = '00:00';
+      display.textContent = '00:00';
       wrap.className = 'timer-wrap danger';
       if (!quizDone) showResults();
     } else if (remaining <= 300) {
@@ -790,7 +849,7 @@ function startTimer() {
   }, 1000);
 }
 
-// ── RENDER DOTS ──
+// ── DOTS ──
 function renderDots() {
   const container = document.getElementById('qDots');
   container.innerHTML = '';
@@ -798,7 +857,7 @@ function renderDots() {
     const d = document.createElement('span');
     d.className = 'dot' +
       (i === currentQ ? ' current' : answers[i] !== undefined ? ' answered' : '');
-    d.title = `Question ${i + 1}`;
+    d.title = `Pregunta ${i + 1}`;
     d.onclick = () => goTo(i);
     container.appendChild(d);
   });
@@ -807,41 +866,34 @@ function renderDots() {
 // ── RENDER QUESTION ──
 function renderQuestion() {
   const q = questions[currentQ];
-  const card = document.getElementById('questionCard');
-
   const letters = ['A','B','C','D'];
+
   const optsHtml = q.opts.map((opt, i) => {
-    let cls = 'option';
-    if (answers[currentQ] === i) cls += ' selected';
-    return `<button class="${cls}" onclick="selectAnswer(${i})">
+    const sel = answers[currentQ] === i ? ' selected' : '';
+    return `<button class="option${sel}" onclick="selectAnswer(${i})">
       <span class="opt-letter">${letters[i]}</span>
       ${opt}
     </button>`;
   }).join('');
 
-  card.innerHTML = `
+  document.getElementById('questionCard').innerHTML = `
     <span class="q-topic">${q.topic}</span>
     <div class="q-text">${q.text}</div>
     <div class="options">${optsHtml}</div>
   `;
 
-  // counter
-  document.getElementById('qCounter').textContent = `Question ${currentQ + 1} of ${TOTAL}`;
+  document.getElementById('qCounter').textContent = `Pregunta ${currentQ + 1} de ${TOTAL}`;
+  document.getElementById('progressFill').style.width = `${((currentQ + 1) / TOTAL) * 100}%`;
 
-  // progress bar
-  document.getElementById('progressFill').style.width =
-    `${((currentQ + 1) / TOTAL) * 100}%`;
+  const btnPrev = document.getElementById('btnPrev');
+  const btnNext = document.getElementById('btnNext');
+  btnPrev.disabled = currentQ === 0;
 
-  // nav buttons
-  document.getElementById('btnPrev').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
-  document.getElementById('btnNext').textContent =
-    currentQ === TOTAL - 1 ? 'Submit Quiz ✅' : 'Next ▶';
-  document.getElementById('btnNext').className =
-    currentQ === TOTAL - 1 ? 'btn btn-submit' : 'btn btn-next';
+  const isLast = currentQ === TOTAL - 1;
+  btnNext.textContent = isLast ? 'Enviar Quiz ✅' : 'Siguiente ▶';
+  btnNext.className   = isLast ? 'btn btn-submit' : 'btn btn-next';
 
-  // warning
   document.getElementById('warnMsg').classList.remove('show');
-
   renderDots();
 }
 
@@ -851,7 +903,7 @@ function selectAnswer(idx) {
   renderQuestion();
 }
 
-// ── NAVIGATE ──
+// ── NAVIGATION ──
 function goTo(idx) {
   if (idx < 0 || idx >= TOTAL) return;
   currentQ = idx;
@@ -860,11 +912,10 @@ function goTo(idx) {
 
 function handleNext() {
   if (currentQ === TOTAL - 1) {
-    // Check all unanswered
     const unanswered = TOTAL - Object.keys(answers).length;
     if (unanswered > 0) {
       const msg = document.getElementById('warnMsg');
-      msg.textContent = `⚠ You have ${unanswered} unanswered question${unanswered > 1 ? 's' : ''}. Please answer all before submitting.`;
+      msg.textContent = `⚠ Tienes ${unanswered} pregunta${unanswered > 1 ? 's' : ''} sin responder. Responde todas antes de enviar.`;
       msg.classList.add('show');
       return;
     }
@@ -881,80 +932,73 @@ function showResults() {
   clearInterval(timerInterval);
 
   let correct = 0;
-  questions.forEach((q, i) => {
-    if (answers[i] === q.correct) correct++;
-  });
+  questions.forEach((q, i) => { if (answers[i] === q.correct) correct++; });
 
-  const pct = Math.round((correct / TOTAL) * 100);
+  const pct   = Math.round((correct / TOTAL) * 100);
   const grade = calcGrade(correct, TOTAL);
-  const pass = pct >= 60;
+  const pass  = pct >= 60;
 
-  // Hide quiz, show results
   document.getElementById('quizSection').style.display = 'none';
   document.getElementById('resultsSection').style.display = 'block';
 
-  // Grade
   const gradeEl = document.getElementById('gradeDisplay');
   gradeEl.textContent = grade.toFixed(1);
-  gradeEl.className = 'grade-num ' + (pass ? 'pass' : 'fail');
+  gradeEl.className   = 'grade-num ' + (pass ? 'pass' : 'fail');
 
-  document.getElementById('gradeNote').textContent =
-    `${correct} of ${TOTAL} correct · Passing: 60% = 4.0`;
-  document.getElementById('sCorrect').textContent = correct;
-  document.getElementById('sWrong').textContent = TOTAL - correct;
-  document.getElementById('sPct').textContent = pct + '%';
-  document.getElementById('sTime').textContent = fmtTime(elapsed);
+  document.getElementById('gradeNote').textContent = `${correct} de ${TOTAL} correctas · Exigencia: 60% = Nota 4.0`;
+  document.getElementById('sCorrect').textContent  = correct;
+  document.getElementById('sWrong').textContent    = TOTAL - correct;
+  document.getElementById('sPct').textContent      = pct + '%';
+  document.getElementById('sTime').textContent     = fmtTime(elapsed);
 
-  // Time badge
   const timeBadge = document.getElementById('timeBadge');
   const mins = Math.floor(elapsed / 60);
   if (elapsed >= TIME_LIMIT) {
-    timeBadge.className = 'time-badge slow';
-    timeBadge.textContent = '⏰ Time ran out!';
+    timeBadge.className   = 'time-badge slow';
+    timeBadge.textContent = '⏰ ¡Tiempo agotado!';
   } else if (mins < 25) {
-    timeBadge.className = 'time-badge excellent';
-    timeBadge.textContent = '🏆 Excellent speed!';
+    timeBadge.className   = 'time-badge excellent';
+    timeBadge.textContent = '🏆 ¡Excelente velocidad!';
   } else if (mins <= 38) {
-    timeBadge.className = 'time-badge good';
-    timeBadge.textContent = '⏱ Good timing!';
+    timeBadge.className   = 'time-badge good';
+    timeBadge.textContent = '⏱ Buen tiempo';
   } else {
-    timeBadge.className = 'time-badge slow';
-    timeBadge.textContent = '⚠ You used most of the time. Keep practicing!';
+    timeBadge.className   = 'time-badge slow';
+    timeBadge.textContent = '⚠ Usaste la mayor parte del tiempo. ¡Sigue practicando!';
   }
 
-  // Verdict
   document.getElementById('verdict').textContent = pass
-    ? '✅ Passed! Excellent work!'
-    : '❌ Not passed. Review the lesson and try again.';
+    ? '✅ ¡Aprobado! Excelente trabajo.'
+    : '❌ No aprobado. Revisa la lección y vuelve a intentarlo.';
 
-  // Build review
   buildReview();
-
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
+// ── REVIEW ──
 function buildReview() {
   const list = document.getElementById('reviewList');
-  list.innerHTML = '';
+  list.innerHTML = `<div class="review-section-title">Revisión detallada</div>`;
   questions.forEach((q, i) => {
-    const userIdx = answers[i];
+    const userIdx  = answers[i];
     const isCorrect = userIdx === q.correct;
     const item = document.createElement('div');
     item.className = `review-item ${isCorrect ? 'r-correct' : 'r-wrong'}`;
 
-    let answerRow = '';
+    let answerRow;
     if (userIdx === undefined) {
-      answerRow = `<span class="r-tag not-ans">Not answered</span>
-                   <span class="r-tag correct-ans">✓ ${q.opts[q.correct]}</span>`;
+      answerRow = `<span class="r-tag not-ans">Sin responder</span>
+                   <span class="r-tag correct-ans">✓ Correcta: ${q.opts[q.correct]}</span>`;
     } else if (isCorrect) {
       answerRow = `<span class="r-tag user-correct">✓ ${q.opts[userIdx]}</span>`;
     } else {
-      answerRow = `<span class="r-tag user-wrong">✗ ${q.opts[userIdx]}</span>
-                   <span class="r-tag correct-ans">✓ ${q.opts[q.correct]}</span>`;
+      answerRow = `<span class="r-tag user-wrong">✗ Tu respuesta: ${q.opts[userIdx]}</span>
+                   <span class="r-tag correct-ans">✓ Correcta: ${q.opts[q.correct]}</span>`;
     }
 
     item.innerHTML = `
-      <div class="r-qtext"><strong>${i + 1}.</strong> ${q.text}</div>
+      <div class="r-num">Pregunta ${i + 1} · ${q.topic}</div>
+      <div class="r-qtext">${q.text}</div>
       <div class="r-answer-row">${answerRow}</div>
     `;
     list.appendChild(item);
@@ -968,20 +1012,18 @@ function toggleReview() {
 
 // ── RESET ──
 function resetQuiz() {
-  quizDone = false;
-  answers = {};
-  currentQ = 0;
+  quizDone  = false;
+  answers   = {};
+  currentQ  = 0;
   questions = shuffle(ALL_QUESTIONS);
   document.getElementById('resultsSection').style.display = 'none';
-  document.getElementById('quizSection').style.display = 'block';
-  document.getElementById('timerDisplay').textContent = fmtTime(TIME_LIMIT);
-  document.getElementById('timerWrap').className = 'timer-wrap';
+  document.getElementById('quizSection').style.display    = 'block';
   startTimer();
   renderQuestion();
   window.scrollTo({ top: 0, behavior: 'smooth' });
 }
 
-// ── BOOT ──
+// ── INIT ──
 window.onload = () => {
   questions = shuffle(ALL_QUESTIONS);
   startTimer();

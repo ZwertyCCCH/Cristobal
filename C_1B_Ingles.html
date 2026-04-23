@@ -358,12 +358,95 @@ header {
 .nbtn-outline:hover { background: var(--cream); transform: translateY(-2px); }
 
 @media (max-width: 720px) {
-  .main-wrap { grid-template-columns: 1fr; }
-  .reading-panel { position: static; }
-  .reading-card { max-height: 340px; }
-  .actions { grid-column: 1; }
-  #results { grid-column: 1; }
+  /* Layout: una sola columna */
+  .main-wrap {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    margin: 20px auto;
+  }
+
+  /* Reading panel: estático y con altura cómoda */
+  .reading-panel {
+    position: static;
+  }
+  .reading-card {
+    max-height: 45vh;        /* suficiente para leer sin aplastar */
+    padding: 20px 16px;
+    border-radius: 14px;
+  }
+  .reading-card p {
+    font-size: 0.9rem;
+    line-height: 1.75;
+  }
+
+  /* Hero más compacto */
+  .hero {
+    padding: 32px 16px 28px;
+  }
+  .hero p {
+    font-size: 0.88rem;
+  }
+
+  /* Preguntas */
+  .questions-card {
+    padding: 18px 14px;
+  }
+  .question-block {
+    margin-bottom: 18px;
+    padding-bottom: 18px;
+  }
+  .q-text {
+    font-size: 0.88rem;
+  }
+
+  /* Botones de opción: más grandes y táctiles */
+  .options {
+    padding-left: 0;          /* sin sangría en móvil */
+    gap: 8px;
+    margin-top: 4px;
+  }
+  .opt-btn {
+    padding: 10px 16px;       /* área táctil mínima ~44px */
+    font-size: 0.88rem;
+    border-radius: 10px;
+    flex: 1;                  /* ocupan el ancho disponible */
+    text-align: center;
+    min-height: 44px;         /* estándar Apple/Google de área táctil */
+  }
+
+  /* Feedback de respuesta */
+  .q-feedback {
+    padding-left: 0;
+    font-size: 0.78rem;
+    margin-top: 10px;
+  }
+
+  /* Botón principal */
+  .btn-check {
+    width: 100%;
+    padding: 14px 20px;
+    font-size: 0.95rem;
+    border-radius: 14px;
+  }
+
+  /* Results */
+  #results {
+    grid-column: 1;
+    padding: 28px 18px;
+    border-radius: 16px;
+  }
   .grade-big { font-size: 3.5rem; }
+  .r-stat { padding: 12px 16px; min-width: 85px; }
+
+  /* Nav buttons apilados */
+  .nav-btns {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .nbtn {
+    text-align: center;
+    padding: 13px 20px;
+  }
 }
 </style>
 </head>

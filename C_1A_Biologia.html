@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Vocabulary Quiz · Sports & Free Time | Activity 1</title>
+<title>Biología Quiz · Estructura Celular Bacteriana | Cristóbal</title>
 <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;500;600;700;800;900&family=Playfair+Display:wght@700;900&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -170,23 +170,24 @@ header {
   flex-shrink: 0;
 }
 
-.english-word {
-  font-size: 1.1rem;
-  font-weight: 700;
+.question-text {
+  font-size: 1rem;
+  font-weight: 600;
   color: var(--text);
   display: flex;
   align-items: center;
   gap: 10px;
+  line-height: 1.4;
 }
 
-/* Emoji container - oculto inicialmente */
-.emoji-display {
+/* Icono de biología - oculto inicialmente */
+.bio-icon {
   font-size: 1.3rem;
   display: inline-block;
   opacity: 0;
   transition: opacity 0.3s ease;
 }
-.emoji-display.visible {
+.bio-icon.visible {
   opacity: 1;
 }
 
@@ -377,7 +378,6 @@ header {
 .btn-class:hover { background: var(--card-hover); transform: translateY(-2px); }
 
 /* Responsive */
-/* REEMPLAZA el bloque @media (max-width: 640px) completo por este: */
 @media (max-width: 640px) {
   .word-row {
     grid-template-columns: 28px 1fr 36px;
@@ -398,75 +398,75 @@ header {
 <body>
 
 <header>
-  <div class="header-title">🏅 Activity 3 · Vocabulary</div>
+  <div class="header-title">🔬 Biología · Estructura Celular Bacteriana</div>
   <div class="progress-pill" id="progressPill">0 / 20</div>
 </header>
 
 <div class="hero">
-  <div class="hero-label">Activity 3</div>
-  <h1>Sports &amp; Free Time<br><em>Vocabulary</em></h1>
-  <p>Write the Spanish translation for each word. Accents are optional — spelling must be correct.</p>
+  <div class="hero-label">Actividad 1</div>
+  <h1>Estructura Celular<br><em>Bacterias</em></h1>
+  <p>Escribe el nombre de la estructura o concepto bacteriano según la descripción.</p>
 </div>
 
 <div class="instructions">
-  <div class="inst-badge">⌨️ <span>Type in the input field next to each word</span></div>
-  <div class="inst-badge">✅ <span>Press <strong>Check Answers</strong> when done</span></div>
-  <div class="inst-badge">🎯 <span>Passing grade: <strong>60%</strong> → 4.0</span></div>
+  <div class="inst-badge">⌨️ <span>Escribe tu respuesta en el campo</span></div>
+  <div class="inst-badge">✅ <span>Presiona <strong>Verificar respuestas</strong> al terminar</span></div>
+  <div class="inst-badge">🎯 <span>Exigencia: <strong>60%</strong> → Nota 4.0</span></div>
 </div>
 
 <div class="quiz-container" id="quizContainer"></div>
 
 <div class="actions">
-  <button class="btn-check" id="btnCheck">Check Answers ✅</button>
+  <button class="btn-check" id="btnCheck">Verificar Respuestas ✅</button>
 </div>
 
 <div id="results">
   <div class="results-card">
-    <h3>Quiz Complete!</h3>
+    <h3>¡Quiz Completado!</h3>
     <div class="grade-display" id="gradeDisplay">—</div>
     <div class="grade-sub" id="gradeSub"></div>
     <div class="stats">
-      <div class="stat-box green"><span class="num" id="statCorrect">0</span><span class="label">Correct</span></div>
-      <div class="stat-box red"><span class="num" id="statWrong">0</span><span class="label">Wrong</span></div>
-      <div class="stat-box yellow"><span class="num" id="statPct">0%</span><span class="label">Score</span></div>
+      <div class="stat-box green"><span class="num" id="statCorrect">0</span><span class="label">Correctas</span></div>
+      <div class="stat-box red"><span class="num" id="statWrong">0</span><span class="label">Incorrectas</span></div>
+      <div class="stat-box yellow"><span class="num" id="statPct">0%</span><span class="label">Logro</span></div>
     </div>
     <div class="nav-buttons">
-      <button class="btn-nav btn-retry" id="btnRetry">🔄 Try Again</button>
-      <a href="C_1_Ingles.html" class="btn-nav btn-class">📚 Back to Class</a>
-      <a href="C_1B_Ingles.html" class="btn-nav btn-class">📝 Next Activity</a>
+        <button class="btn-nav btn-retry" id="btnRetry">🔄 Reintentar</button>
+        <a href="C_1_Biologia.html" class="btn-nav btn-class">📚 Volver a la Clase</a>
+        <a href="C_1B_Biologia.html" class="btn-nav btn-class">📝 Siguiente Actividad</a>
+
     </div>
   </div>
 </div>
 
 <script>
 // ============================================================
-// VOCABULARY DATA
-// accepted: array of valid Spanish answers (lowercase, no accent required)
+// PREGUNTAS DE BIOLOGÍA - ESTRUCTURAS CELULARES BACTERIANAS
 // ============================================================
-const vocabulary = [
-  { en: "gloves",      emoji: "🥊", accepted: ["guantes"] },
-  { en: "skates",      emoji: "⛸️",  accepted: ["patines"] },
-  { en: "bat",         emoji: "🏏", accepted: ["bate"] },
-  { en: "ball",        emoji: "⚽", accepted: ["pelota", "balon", "balón"] },
-  { en: "helmet",      emoji: "⛑️",  accepted: ["casco"] },
-  { en: "goggles",     emoji: "🥽", accepted: ["gafas", "antiparras", "lentes"] },
-  { en: "net",         emoji: "🎾", accepted: ["red"] },
-  { en: "racket",      emoji: "🏸", accepted: ["raqueta"] },
-  { en: "sneakers",    emoji: "👟", accepted: ["zapatillas", "tenis", "deportivas"] },
-  { en: "stick",       emoji: "🏑", accepted: ["palo", "stick"] },
-  { en: "whistle",     emoji: "🎵", accepted: ["silbato", "pito"] },
-  { en: "trophy",      emoji: "🏆", accepted: ["trofeo"] },
-  { en: "swimsuit",    emoji: "🩱", accepted: ["traje de baño", "bañador"] },
-  { en: "skateboard",  emoji: "🛹", accepted: ["patineta", "skate"] },
-  { en: "weights",     emoji: "🏋️", accepted: ["pesas", "pesos"] },
-  { en: "jersey",      emoji: "👕", accepted: ["camiseta", "jersey"] },
-  { en: "stopwatch",   emoji: "⏱️",  accepted: ["cronometro", "cronómetro"] },
-  { en: "court",       emoji: "🏀", accepted: ["cancha", "pista", "campo"] },
-  { en: "knee pads",   emoji: "🛡️",  accepted: ["rodilleras"] },
-  { en: "scorecard",   emoji: "📋", accepted: ["marcador", "tabla de puntaje"] },
+const biologyQuestions = [
+  { pregunta: "Estructura rígida que rodea la membrana bacteriana, compuesta de peptidoglicano", icono: "🧱", accepted: ["pared celular", "pared bacteriana"] },
+  { pregunta: "Capa externa protectora de polisacáridos que ayuda a la bacteria a evitar la fagocitosis", icono: "🛡️", accepted: ["cápsula", "capsula"] },
+  { pregunta: "Orgánulo responsable de la síntesis de proteínas en la bacteria", icono: "🔴", accepted: ["ribosoma", "ribosomas"] },
+  { pregunta: "Estructura filamentosa que permite la locomoción de la bacteria", icono: "🏁", accepted: ["flagelo", "flagelos"] },
+  { pregunta: "Pequeñas moléculas de ADN circular que confieren resistencia a antibióticos", icono: "🧬", accepted: ["plásmido", "plásmidos", "plasmidio", "plasmidios"] },
+  { pregunta: "Nombre del único cromosoma circular que contiene la información genética principal", icono: "🧬", accepted: ["adn cromosómico", "adn", "cromosoma bacteriano"] },
+  { pregunta: "Estructuras de adherencia que permiten la conjugación bacteriana", icono: "📎", accepted: ["pili", "pilus", "fimbrias"] },
+  { pregunta: "Estructura resistente que algunas bacterias forman en condiciones extremas", icono: "💪", accepted: ["endospora", "espora", "endosporas"] },
+  { pregunta: "Barrera selectiva que regula el paso de sustancias dentro y fuera de la bacteria", icono: "🚪", accepted: ["membrana plasmática", "membrana celular", "membrana"] },
+  { pregunta: "Compartimento gelatinoso donde ocurren las reacciones metabólicas", icono: "💧", accepted: ["citoplasma", "citosol"] },
+  { pregunta: "Invaginaciones de la membrana plasmática donde ocurre la respiración celular en bacterias", icono: "🫀", accepted: ["mesosoma", "mesosomas"] },
+  { pregunta: "Estructura que almacena nutrientes de reserva como glucógeno o polifosfato", icono: "📦", accepted: ["gránulo", "gránulos", "inclusiones", "cuerpo de inclusión"] },
+  { pregunta: "Capa de proteínas que recubre la pared celular en algunas bacterias patógenas", icono: "🧥", accepted: ["capa s", "capa superficial", "s layer"] },
+  { pregunta: "Estructura que permite la fijación a superficies y la formación de biopelículas", icono: "🦠", accepted: ["fimbrias", "pili", "fimbria"] },
+  { pregunta: "Proceso por el cual las bacterias transfieren plásmidos a través de pili", icono: "🔄", accepted: ["conjugación", "conjugacion"] },
+  { pregunta: "Estructura que rodea a la bacteria Gram negativa por fuera de la pared celular", icono: "🛡️", accepted: ["membrana externa", "membrana exterior", "capa externa"] },
+  { pregunta: "Bacteria modelo utilizada en laboratorios de biología molecular", icono: "🧪", accepted: ["escherichia coli", "e coli", "e. coli"] },
+  { pregunta: "Zona del citoplasma donde se encuentra el cromosoma bacteriano", icono: "🎯", accepted: ["nucleoide", "nucleoide bacteriano"] },
+  { pregunta: "Estructura filamentosa más corta que el flagelo, involucrada en motilidad", icono: "🏃", accepted: ["fimbria", "fimbrias", "pili"] },
+  { pregunta: "Componente principal de la pared celular bacteriana que le da rigidez", icono: "🔗", accepted: ["peptidoglicano", "peptidoglicano", "mureína"] }
 ];
 
-const TOTAL = vocabulary.length;
+const TOTAL = biologyQuestions.length;
 let checked = false;
 
 const quizContainer = document.getElementById('quizContainer');
@@ -474,8 +474,8 @@ const btnCheck = document.getElementById('btnCheck');
 const progressPill = document.getElementById('progressPill');
 const resultsEl = document.getElementById('results');
 
-// ── BUILD ROWS (sin emojis visibles inicialmente) ──
-vocabulary.forEach((item, i) => {
+// ── CONSTRUIR FILAS (íconos ocultos inicialmente) ──
+biologyQuestions.forEach((item, i) => {
   const delay = i * 40;
   const row = document.createElement('div');
   row.className = 'word-row';
@@ -484,16 +484,16 @@ vocabulary.forEach((item, i) => {
 
   row.innerHTML = `
     <div class="row-num">${i + 1}</div>
-    <div class="english-word">
-      <span class="emoji-display" id="emoji-${i}" data-emoji="${item.emoji}"></span>
-      <span>${item.en}</span>
+    <div class="question-text">
+      <span class="bio-icon" id="icono-${i}" data-icono="${item.icono}"></span>
+      <span>${item.pregunta}</span>
     </div>
     <div class="arrow">→</div>
     <div style="display:flex;flex-direction:column;">
       <input
         class="spanish-input"
         type="text"
-        placeholder="escribe en español…"
+        placeholder="escribe tu respuesta…"
         autocomplete="off"
         autocorrect="off"
         autocapitalize="none"
@@ -504,18 +504,18 @@ vocabulary.forEach((item, i) => {
       />
       <span class="correct-answer" id="hint-${i}"></span>
     </div>
-    <div class="feedback-icon" id="icon-${i}"></div>
+    <div class="feedback-icon" id="feedback-${i}"></div>
   `;
 
   quizContainer.appendChild(row);
 });
 
-// Update progress counter as user types
+// Actualizar contador de progreso mientras el usuario escribe
 quizContainer.addEventListener('input', e => {
   if (e.target.classList.contains('spanish-input')) updateProgress();
 });
 
-// Enter key moves to next input
+// Tecla Enter mueve al siguiente input
 quizContainer.addEventListener('keydown', e => {
   if (e.key === 'Enter' && e.target.classList.contains('spanish-input')) {
     const idx = parseInt(e.target.dataset.index);
@@ -536,24 +536,24 @@ function filledCount() {
     .filter(i => i.value.trim() !== '').length;
 }
 
-// ── NORMALIZE ── strip accents, lowercase, trim
+// ── NORMALIZAR ── eliminar acentos, minúsculas, trim
 function normalize(str) {
   return str.trim().toLowerCase()
     .normalize('NFD').replace(/[\u0300-\u036f]/g, '');
 }
 
-// ── MOSTRAR EMOJIS DESPUÉS DE CONTESTAR ──
-function showEmojisAfterCheck() {
-  vocabulary.forEach((item, i) => {
-    const emojiSpan = document.getElementById(`emoji-${i}`);
-    if (emojiSpan) {
-      emojiSpan.textContent = item.emoji;
-      emojiSpan.classList.add('visible');
+// ── MOSTRAR ÍCONOS DE BIOLOGÍA DESPUÉS DE VERIFICAR ──
+function showIconsAfterCheck() {
+  biologyQuestions.forEach((item, i) => {
+    const iconSpan = document.getElementById(`icono-${i}`);
+    if (iconSpan) {
+      iconSpan.textContent = item.icono;
+      iconSpan.classList.add('visible');
     }
   });
 }
 
-// ── CHECK ──
+// ── VERIFICAR RESPUESTAS ──
 btnCheck.addEventListener('click', () => {
   if (checked) return;
   checked = true;
@@ -561,9 +561,9 @@ btnCheck.addEventListener('click', () => {
 
   let correct = 0;
 
-  vocabulary.forEach((item, i) => {
+  biologyQuestions.forEach((item, i) => {
     const input = quizContainer.querySelector(`input[data-index="${i}"]`);
-    const icon = document.getElementById(`icon-${i}`);
+    const feedback = document.getElementById(`feedback-${i}`);
     const hint = document.getElementById(`hint-${i}`);
     const userVal = normalize(input.value);
 
@@ -574,19 +574,19 @@ btnCheck.addEventListener('click', () => {
     if (isCorrect) {
       correct++;
       input.classList.add('correct');
-      icon.textContent = '✅';
-      icon.classList.add('visible');
+      feedback.textContent = '✅';
+      feedback.classList.add('visible');
     } else {
       input.classList.add('wrong');
-      icon.textContent = '❌';
-      icon.classList.add('visible');
-      hint.textContent = '✓ ' + item.accepted[0];
+      feedback.textContent = '❌';
+      feedback.classList.add('visible');
+      hint.textContent = '✓ Respuesta: ' + item.accepted[0];
       hint.classList.add('visible');
     }
   });
 
-  // MOSTRAR EMOJIS DESPUÉS DE VERIFICAR
-  showEmojisAfterCheck();
+  // MOSTRAR ÍCONOS DESPUÉS DE VERIFICAR
+  showIconsAfterCheck();
 
   showResults(correct);
 });
@@ -606,7 +606,7 @@ function showResults(correct) {
 
   document.getElementById('gradeDisplay').textContent = grade;
   document.getElementById('gradeSub').textContent =
-    `${correct} of ${TOTAL} correct · ${pctRound}% · Passing: 60% = 4.0`;
+    `${correct} de ${TOTAL} correctas · ${pctRound}% · Exigencia 60% = Nota 4.0`;
   document.getElementById('statCorrect').textContent = correct;
   document.getElementById('statWrong').textContent = TOTAL - correct;
   document.getElementById('statPct').textContent = pctRound + '%';
@@ -615,7 +615,7 @@ function showResults(correct) {
   setTimeout(() => resultsEl.scrollIntoView({ behavior: 'smooth', block: 'center' }), 100);
 }
 
-// ── REINICIAR (ocultar emojis nuevamente) ──
+// ── REINICIAR (ocultar íconos nuevamente) ──
 document.getElementById('btnRetry').addEventListener('click', () => {
   checked = false;
   btnCheck.disabled = false;
@@ -640,8 +640,8 @@ document.getElementById('btnRetry').addEventListener('click', () => {
     el.classList.remove('visible');
   });
   
-  // OCULTAR EMOJIS NUEVAMENTE
-  document.querySelectorAll('.emoji-display').forEach(el => {
+  // OCULTAR ÍCONOS DE BIOLOGÍA NUEVAMENTE
+  document.querySelectorAll('.bio-icon').forEach(el => {
     el.textContent = '';
     el.classList.remove('visible');
   });
@@ -650,7 +650,7 @@ document.getElementById('btnRetry').addEventListener('click', () => {
   window.scrollTo({ top: 0, behavior: 'smooth' });
 });
 
-// init
+// Inicializar
 progressPill.textContent = `0 / ${TOTAL}`;
 </script>
 </body>
