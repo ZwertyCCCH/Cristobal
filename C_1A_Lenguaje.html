@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Test: Relatos Espectrales · H.P. Lovecraft · Comprensión Lectora</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    :root {
+      --bg: #f5f3ee;
+      --surface: #ffffff;
+      --navy: #0e2240;
+      --navy2: #1a3560;
+      --amber: #e8940a;
+      --amber-light: #fdf3dc;
+      --green: #1a7f5a;
+      --green-light: #e3f5ed;
+      --red: #c0392b;
+      --red-light: #fdecea;
+      --sky: #2271b3;
+      --muted: #7a8899;
+      --border: #dde3ec;
+      --radius: 18px;
+      --shadow: 0 8px 32px rgba(14,34,64,0.10);
+      --shadow-sm: 0 2px 10px rgba(14,34,64,0.08);
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--navy);
+    }
+
+    /* header */
+    .app-header {
+      background: var(--navy);
+      padding: 0 28px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+
+    .app-header h1 {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #c8d8ee;
+      letter-spacing: 0.3px;
+    }
+
+    .app-header h1 em {
+      color: var(--amber);
+      font-style: normal;
+    }
+
+    .timer-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--navy2);
+      border-radius: 40px;
+      padding: 6px 16px;
+    }
+
+    .timer-icon {
+      font-size: 1rem;
+    }
+
+    .timer-display {
+      font-family: 'Literata', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: white;
+      letter-spacing: 2px;
+      min-width: 58px;
+      text-align: center;
+    }
+
+    .timer-wrap.warning {
+      background: #c87209;
+    }
+
+    .timer-wrap.danger {
+      background: var(--red);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.75; }
+    }
+
+    .progress-track {
+      height: 5px;
+      background: var(--border);
+    }
+
+    .progress-fill {
+      height: 100%;
+      background: linear-gradient(90deg, var(--amber), #f0b429);
+      transition: width 0.4s ease;
+    }
+
+    .quiz-wrap {
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 32px 20px 60px;
+    }
+
+    .q-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+
+    .q-counter {
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      color: var(--muted);
+    }
+
+    .q-dots {
+      display: flex;
+      gap: 5px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      max-width: 420px;
+    }
+
+    .dot {
+      width: 9px;
+      height: 9px;
+      border-radius: 50%;
+      background: var(--border);
+      transition: background 0.2s;
+      cursor: pointer;
+    }
+
+    .dot.answered {
+      background: var(--amber);
+    }
+
+    .dot.current {
+      background: var(--navy);
+      transform: scale(1.3);
+    }
+
+    .question-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 36px 28px;
+      margin-bottom: 20px;
+      animation: slideCard 0.3s ease;
+    }
+
+    @keyframes slideCard {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .q-topic {
+      display: inline-block;
+      background: var(--amber-light);
+      color: var(--amber);
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 4px 12px;
+      border-radius: 40px;
+      margin-bottom: 16px;
+      border: 1px solid rgba(232,148,10,0.25);
+    }
+
+    .q-text {
+      font-family: 'Literata', serif;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: var(--navy);
+      margin-bottom: 28px;
+      padding-left: 16px;
+      border-left: 3px solid var(--amber);
+    }
+
+    .options {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 18px;
+      cursor: pointer;
+      transition: all 0.18s;
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--navy);
+      text-align: left;
+    }
+
+    .option:hover:not(.locked) {
+      border-color: var(--navy2);
+      background: #eef2f9;
+      transform: translateX(3px);
+    }
+
+    .option.selected {
+      background: var(--navy);
+      border-color: var(--navy);
+      color: white;
+    }
+
+    .opt-letter {
+      width: 28px;
+      height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+
+    .option.selected .opt-letter {
+      background: var(--amber);
+      color: var(--navy);
+    }
+
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.18s;
+      padding: 11px 26px;
+      font-size: 0.9rem;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+    }
+
+    .btn-prev {
+      background: var(--border);
+      color: var(--navy);
+    }
+
+    .btn-prev:hover {
+      background: #ccd5e4;
+    }
+
+    .btn-next {
+      background: var(--navy);
+      color: white;
+      box-shadow: 0 4px 14px rgba(14,34,64,0.2);
+    }
+
+    .btn-next:hover {
+      background: var(--navy2);
+    }
+
+    .btn-submit {
+      background: var(--amber);
+      color: var(--navy);
+      box-shadow: 0 4px 14px rgba(232,148,10,0.3);
+    }
+
+    .btn-submit:hover {
+      background: #d4860a;
+    }
+
+    .unanswered-warning {
+      font-size: 0.8rem;
+      color: var(--red);
+      font-weight: 600;
+      text-align: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+    }
+
+    .unanswered-warning.show {
+      opacity: 1;
+    }
+
+    #resultsSection {
+      display: none;
+    }
+
+    .results-hero {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .grade-num {
+      font-family: 'Literata', serif;
+      font-size: 6rem;
+      font-weight: 600;
+      line-height: 1;
+      color: white;
+      margin-bottom: 6px;
+    }
+
+    .grade-num.pass {
+      color: #4dd9a0;
+    }
+
+    .grade-num.fail {
+      color: #ff7c72;
+    }
+
+    .stats-row {
+      display: flex;
+      justify-content: center;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 24px;
+    }
+
+    .stat-chip {
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 14px;
+      padding: 14px 20px;
+      min-width: 100px;
+    }
+
+    .stat-chip .snum {
+      font-family: 'Literata', serif;
+      font-size: 2rem;
+      font-weight: 600;
+      color: white;
+      display: block;
+      line-height: 1;
+      margin-bottom: 4px;
+    }
+
+    .stat-chip.s-green .snum {
+      color: #4dd9a0;
+    }
+
+    .stat-chip.s-red .snum {
+      color: #ff7c72;
+    }
+
+    .stat-chip.s-amber .snum {
+      color: var(--amber);
+    }
+
+    .time-badge {
+      display: inline-block;
+      padding: 8px 20px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 20px;
+    }
+
+    .time-badge.excellent {
+      background: rgba(77, 217, 160, 0.15);
+      color: #4dd9a0;
+      border: 1px solid rgba(77, 217, 160, 0.3);
+    }
+
+    .time-badge.good {
+      background: rgba(232, 148, 10, 0.15);
+      color: var(--amber);
+      border: 1px solid rgba(232, 148, 10, 0.3);
+    }
+
+    .time-badge.slow {
+      background: rgba(255, 124, 114, 0.15);
+      color: #ff7c72;
+      border: 1px solid rgba(255, 124, 114, 0.3);
+    }
+
+    .verdict {
+      font-size: 1.05rem;
+      font-weight: 600;
+      color: white;
+    }
+
+    .nav-btns-results {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+
+    .nbtn {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      padding: 11px 26px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      border: none;
+    }
+
+    .nbtn-amber {
+      background: var(--amber);
+      color: var(--navy);
+    }
+
+    .review-toggle {
+      text-align: center;
+      margin: 24px 0 12px;
+    }
+
+    .btn-review {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      color: var(--navy);
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+
+    #reviewList {
+      display: none;
+    }
+
+    .review-item {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-sm);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      border-left: 5px solid var(--border);
+    }
+
+    .review-item.r-correct {
+      border-left-color: var(--green);
+    }
+
+    .review-item.r-wrong {
+      border-left-color: var(--red);
+    }
+
+    .r-tag {
+      padding: 4px 12px;
+      border-radius: 40px;
+      font-size: 0.8rem;
+      font-weight: 600;
+    }
+
+    .r-tag.user-correct {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    .r-tag.user-wrong {
+      background: var(--red-light);
+      color: var(--red);
+    }
+
+    .r-tag.correct-ans {
+      background: var(--green-light);
+      color: var(--green);
+    }
+
+    footer {
+      text-align: center;
+      padding: 16px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      border-top: 1px solid var(--border);
+      margin-top: 20px;
+    }
+
+    /* Grupo de botones en resultados - contenedor flexible */
+.nav-btns-results {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 20px;
+}
+
+/* Estilo base para todos los botones de resultados */
+.nbtn {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  padding: 11px 26px;
+  border-radius: 50px;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: all 0.18s;
+  border: none;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.nbtn:hover {
+  transform: translateY(-2px);
+}
+
+/* Botón AMBER (Intentar de nuevo) */
+.nbtn-amber {
+  background: var(--amber);
+  color: var(--navy);
+}
+
+.nbtn-amber:hover {
+  background: #d4860a;
+}
+
+.nbtn-outline {
+  background: transparent;
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: white;   /* ← cambia var(--navy) por white */
+}
+
+.nbtn-outline:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(255, 255, 255, 0.7);
+}
+
+/* NUEVO: Botón AZUL (Lenguaje.html) */
+.nbtn-lang {
+  background: #2271b3;
+  color: white;
+  box-shadow: 0 2px 8px rgba(34,113,179,0.3);
+}
+
+.nbtn-lang:hover {
+  background: #1a5a8f;
+}
+
+/* NUEVO: Botón VERDE (Siguiente Ejercicio - C_1B_Lenguaje.html) */
+.nbtn-next-ex {
+  background: var(--green);
+  color: white;
+  box-shadow: 0 2px 8px rgba(26,127,90,0.3);
+}
+
+.nbtn-next-ex:hover {
+  background: #0e5f43;
+}
+
+    @media (max-width: 640px) {
+      .app-header {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+        padding: 12px 16px;
+      }
+
+      .timer-wrap {
+        align-self: flex-end;
+      }
+
+      .quiz-wrap {
+        padding: 20px 14px 80px;
+      }
+
+      .q-dots {
+        display: none;
+      }
+
+      .question-card {
+        padding: 20px 16px 18px;
+      }
+
+      .q-text {
+        font-size: 1rem;
+      }
+
+      .option {
+        padding: 14px 14px;
+      }
+
+      .nav-bar {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: var(--bg);
+        border-top: 1px solid var(--border);
+        padding: 10px 16px;
+        z-index: 150;
+        display: flex;
+        gap: 10px;
+      }
+
+      .btn {
+        flex: 1;
+        text-align: center;
+        padding: 13px 10px;
+      }
+
+      .grade-num {
+        font-size: 4rem;
+      }
+        .nbtn {
+    padding: 10px 18px;
+    font-size: 0.8rem;
+  }
+  .nav-btns-results {
+    gap: 8px;
+  }
+    }
+  </style>
+</head>
+<body>
+<header class="app-header">
+  <h1>📖 <em>Relatos Espectrales</em> · H.P. Lovecraft · Comprensión Lectora</h1>
+  <div class="timer-wrap" id="timerWrap">
+    <span class="timer-icon">⏱</span>
+    <span class="timer-display" id="timerDisplay">45:00</span>
+  </div>
+</header>
+<div class="progress-track">
+  <div class="progress-fill" id="progressFill" style="width:0%"></div>
+</div>
+
+<div class="quiz-wrap" id="quizSection">
+  <div class="q-meta">
+    <div class="q-counter" id="qCounter">Pregunta 1 de 40</div>
+    <div class="q-dots" id="qDots"></div>
+  </div>
+  <div class="question-card" id="questionCard"></div>
+  <div class="unanswered-warning" id="warnMsg">⚠ Responde la pregunta antes de continuar.</div>
+  <div class="nav-bar" style="margin-top:16px;">
+    <button class="btn btn-prev" id="btnPrev">◀ Anterior</button>
+    <button class="btn btn-next" id="btnNext">Siguiente ▶</button>
+  </div>
+</div>
+
+<div class="quiz-wrap" id="resultsSection">
+  <div class="results-hero">
+    <h2>📊 Tu resultado · Comprensión lectora</h2>
+    <div class="grade-num" id="gradeDisplay">—</div>
+    <div class="grade-note" id="gradeNote"></div>
+    <div class="stats-row">
+      <div class="stat-chip s-green"><span class="snum" id="sCorrect">0</span><span class="slabel">Correctas</span></div>
+      <div class="stat-chip s-red"><span class="snum" id="sWrong">0</span><span class="slabel">Incorrectas</span></div>
+      <div class="stat-chip s-amber"><span class="snum" id="sPct">0%</span><span class="slabel">Logro</span></div>
+      <div class="stat-chip"><span class="snum" id="sTime">—</span><span class="slabel">Tiempo</span></div>
+    </div>
+    <div class="time-badge" id="timeBadge"></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="nav-btns-results">
+      <button class="nbtn nbtn-amber" onclick="resetQuiz()">🔄 Intentar de nuevo</button>
+      <button class="nbtn nbtn-outline" onclick="toggleReview()">📋 Revisar respuestas</button>
+      <a href="Lenguaje.html" class="nbtn nbtn-lang">📚 Volver a Lenguaje</a>
+      <a href="C_1B_Lenguaje.html" class="nbtn nbtn-next-ex">⏩ Siguiente Ejercicio</a>
+    </div>
+  </div>
+  <div id="reviewList"></div>
+</div>
+<footer>📚 40 preguntas · Cuentos: En la cripta · El ser en el umbral · Los gatos de Ulthar · Las ratas de las paredes · Aprobación: 60% (24 correctas)</footer>
+
+<script>
+  // ============================================================
+  // 40 PREGUNTAS SOBRE "RELATOS ESPECTRALES" DE H.P. LOVECRAFT
+  // Basadas en las 40 preguntas de comprensión lectora generadas
+  // ============================================================
+  const ALL_QUESTIONS = [
+    // --- En la cripta (10 preguntas)
+    { topic: "📖 En la cripta", text: "¿Cuál es la profesión del protagonista de «En la cripta»?", opts: ["Médico","Sepulturero","Sacerdote","Cerrajero"], correct: 1 },
+    { topic: "📖 En la cripta", text: "¿Por qué el protagonista queda atrapado dentro del cementerio?", opts: ["Un guardia cierra la puerta","La llave se rompe","Se esconde y cierran el portón","Una tormenta bloquea la salida"], correct: 2 },
+    { topic: "📖 En la cripta", text: "¿Qué personaje o fuerza sobrenatural le da una lección de moral al sepulturero?", opts: ["Un fantasma de un niño","El mismo cementerio y los muertos","Una bruja del pueblo","Un demonio guardián"], correct: 1 },
+    { topic: "📖 En la cripta", text: "¿Cuál es la falta moral principal del sepulturero antes de quedar atrapado?", opts: ["Robar objetos de valor","Despreciar a los muertos y ser codicioso","No asistir a misa","Mentir a su familia"], correct: 1 },
+    { topic: "📖 En la cripta", text: "¿Qué enseñanza o moraleja podría extraerse de este cuento?", opts: ["Nunca entrar a un cementerio","Los muertos pueden regresar","El respeto a los difuntos y la humildad","El dinero es lo más importante"], correct: 2 },
+    { topic: "📖 En la cripta", text: "¿Cómo cambia la actitud del sepulturero al final del relato?", opts: ["Se vuelve más arrogante","Huye del pueblo","Se arrepiente y respeta la muerte","Se convierte en fantasma"], correct: 2 },
+    { topic: "📖 En la cripta", text: "¿Qué tipo de narrador presenta el cuento «En la cripta»?", opts: ["Narrador protagonista en primera persona","Narrador omnisciente en tercera persona","Narrador testigo","Narrador en segunda persona"], correct: 0 },    
+    { topic: "📖 En la cripta", text: "¿Qué decisión toma el sepulturero para tratar de salir del camposanto?", opts: ["Grita pidiendo auxilio","Intenta romper la reja","Se esconde en una cripta","Construye una escalera"], correct: 2 },
+    { topic: "📖 En la cripta", text: "¿Dónde se desarrolla principalmente la historia?", opts: ["En un castillo","En un pueblo costero","En un cementerio y sus criptas","En un bosque encantado"], correct: 2 },
+    { topic: "📖 En la cripta", text: "¿Qué ocurre con el sepulturero al final del relato?", opts: ["Muere dentro de la cripta","Escapa pero queda en estado de locura permanente","Sale vivo pero transformado, arrepentido y respetuoso","Nunca es encontrado"], correct: 2 },
+    // --- El ser en el umbral (10)
+    { topic: "🌌 El ser en el umbral", text: "¿Quién es el narrador de «El ser en el umbral»?", opts: ["El amigo del protagonista","El mismo Edward Derby","La esposa malvada","Un investigador policial"], correct: 0 },
+    { topic: "🌌 El ser en el umbral", text: "¿Cómo se llama el amigo del narrador que termina siendo víctima?", opts: ["Howard","Edward Derby","Charles Dexter Ward","Pickman"], correct: 1 },
+    { topic: "🌌 El ser en el umbral", text: "¿Qué papel juega la esposa de este amigo en la historia?", opts: ["Es inocente","Ayuda a salvarlo","Es una influencia maligna que lo transforma","Muere al principio"], correct: 2 },
+    { topic: "🌌 El ser en el umbral", text: "¿Qué son 'Los Mitos de Cthulhu' mencionados en la obra de Lovecraft?", opts: ["Libros sagrados","Un universo compartido de dioses y horror cósmico","Una secta real","Un pueblo antiguo"], correct: 1 },
+    { topic: "🌌 El ser en el umbral", text: "¿Qué tipo de transformación sufre el amigo del narrador?", opts: ["Se convierte en vampiro","Pierde la memoria","Es poseído por una entidad oscura","Se vuelve invisible"], correct: 2 },
+    { topic: "🌌 El ser en el umbral", text: "¿Qué significa el título «El ser en el umbral»?", opts: ["Un monstruo físico","Un espíritu que cruza entre dimensiones","Un asesino común","El protagonista mismo"], correct: 1 },
+    { topic: "🌌 El ser en el umbral", text: "¿Cómo influyen los conocimientos ocultos en la trama?", opts: ["Curan enfermedades","Corrompen y abren puertas a entidades malignas","Dan superpoderes","Son solo decoración"], correct: 1 },
+    { topic: "🌌 El ser en el umbral", text: "¿Qué advertencia entrega el cuento sobre obsesiones y secretos?", opts: ["Es mejor no investigar lo prohibido","La ignorancia es felicidad","La magia es divertida","Todos deben estudiar ocultismo"], correct: 0 },
+    { topic: "🌌 El ser en el umbral", text: "¿Por qué este relato es considerado 'horror cósmico'?", opts: ["Hay aliens","El terror viene de fuerzas incomprensibles y antiguas","Tiene fantasmas comunes","Es sangriento"], correct: 1 },
+    { topic: "🌌 El ser en el umbral", text: "¿Qué elemento sobrenatural domina la historia?", opts: ["Licantropía","Invocación y posesión de un ser interdimensional","Un objeto maldito","Un asesinato misterioso"], correct: 1 },
+    // --- Los gatos de Ulthar (10)
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Qué actitud tenían los habitantes de Ulthar hacia los gatos al inicio?", opts: ["Los adoraban","Los maltrataban y temían a una pareja que los mataba","Los ignoraban","Los consideraban dioses"], correct: 1 },
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Por qué una pareja de ancianos era temida?", opts: ["Eran brujos","Mataban gatos cruelmente","Secuestraban niños","Eran ladrones"], correct: 1 },
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Qué sucede con el gato de una familia de caravaneros nómadas?", opts: ["Es secuestrado por los ancianos","Desaparece y se presume muerto","Huye a la selva","Se vuelve salvaje"], correct: 1 },
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Qué antigua creencia o poder poseen los nómadas?", opts: ["Pueden comunicarse con los muertos","Tienen conocimientos de magia egipcia o relacionada con gatos","Controlan el clima","Son inmortales"], correct: 1 },
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Qué ocurre misteriosamente la noche después de que los nómadas parten?", opts: ["Los ancianos desaparecen sin dejar rastro","Llueve sangre","Los gatos atacan el pueblo","Un incendio destruye la cabaña"], correct: 0 },
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Qué sucede con la pareja de ancianos que maltrataba a los gatos?", opts: ["Son encarcelados por el pueblo","Huyen del pueblo al amanecer","Desaparecen sin dejar rastro, su cabaña queda vacía","Se convierten en gatos como castigo"], correct: 2 },
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Qué nueva ley se decreta en Ulthar al final?", opts: ["Prohibir los gatos","Que nadie puede matar un gato","Sacrificios anuales","Adoptar un gato por familia"], correct: 1 },
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Qué tipo de narrador tiene este cuento?", opts: ["Primera persona","Tercera persona omnisciente","Segunda persona","Carta"], correct: 1 },
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Cuál es la moraleja principal?", opts: ["El respeto a los animales y la justicia secreta","Los viejos son peligrosos","Los gatos son malvados","La venganza nunca es justa"], correct: 0 },
+    { topic: "🐱 Los gatos de Ulthar", text: "¿Qué elemento cultural antiguo está presente?", opts: ["Mitología nórdica","Creencias egipcias sobre felinos","Leyendas celtas","Cultura maya"], correct: 1 },
+    // --- Las ratas de las paredes (10)
+    { topic: "🐀 Las ratas de las paredes", text: "¿Quién es el protagonista de «Las ratas de las paredes»?", opts: ["Un arquitecto","Un heredero que regresa a una abadía ancestral","Un detective","Un científico"], correct: 1 },
+    { topic: "🐀 Las ratas de las paredes", text: "¿Qué sonido molesta constantemente al protagonista?", opts: ["Pasos","Ratas royendo detrás de los muros","Voces susurrantes","Campanas"], correct: 1 },
+    { topic: "🐀 Las ratas de las paredes", text: "¿Qué descubre cuando sigue el sonido de las ratas hasta los sótanos?", opts: ["Un tesoro","Una cámara secreta con antiguos tormentos humanos y canibalismo","Un pasadizo al exterior","Fósiles"], correct: 1 },
+    { topic: "🐀 Las ratas de las paredes", text: "¿Cuál es el terrible secreto que esconde la historia familiar?", opts: ["Eran asesinos","Sus antepasados practicaban canibalismo y crímenes horribles","Eran ladrones de tumbas","Una maldición gitana"], correct: 1 },
+    { topic: "🐀 Las ratas de las paredes", text: "¿Qué papel cumple el gato del protagonista?", opts: ["Es un simple animal","Lo guía hacia los secretos y se asusta reflejando el horror","Es el causante del ruido","Es un demonio"], correct: 1 },
+    { topic: "🐀 Las ratas de las paredes", text: "¿Cómo afecta la experiencia a la salud mental del protagonista?", opts: ["Mejora su vida","Pierde la cordura gradualmente y queda marcado","No le afecta","Se vuelve millonario"], correct: 1 },
+    { topic: "🐀 Las ratas de las paredes", text: "¿Qué simbolizan las 'ratas' en este cuento?", opts: ["La suciedad","La culpa ancestral y los pecados del pasado familiar","La pobreza","La libertad"], correct: 1 },
+    { topic: "🐀 Las ratas de las paredes", text: "¿Por qué este relato es considerado 'terror psicológico'?", opts: ["Tiene sustos baratos","Explora la mente del protagonista y su descenso a la locura por la verdad oculta","Hay asesinatos explícitos","Es un caso policial"], correct: 1 },
+    { topic: "🐀 Las ratas de las paredes", text: "¿Qué advertencia final se interpreta sobre el pasado familiar?", opts: ["El pasado siempre regresa y los secretos pueden destruir la cordura","Olvidar es mejor","La sangre llama","No heredar casas viejas"], correct: 0 },
+    { topic: "🐀 Las ratas de las paredes", text: "¿Dónde está ubicada la propiedad que recibe el heredero?", opts: ["En Estados Unidos","En una abadía en Inglaterra","En Francia","En Egipto"], correct: 1 }
+  ];
+
+  const TOTAL = ALL_QUESTIONS.length;
+  const TIME_LIMIT = 45 * 60;
+  let questions = [];
+  let currentQ = 0;
+  let answers = {};
+  let timerInterval = null;
+  let elapsed = 0;
+  let quizDone = false;
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [a[i], a[j]] = [a[j], a[i]];
+    }
+    return a;
+  }
+
+  function shuffleOptions(questionsArray) {
+  return questionsArray.map(question => {
+    // Crear array de objetos con cada opción y su índice original
+    const optsWithIndex = question.opts.map((opt, idx) => ({
+      text: opt,
+      isCorrect: idx === question.correct
+    }));
+    
+    // Mezclar las opciones (algoritmo Fisher-Yates)
+    for (let i = optsWithIndex.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [optsWithIndex[i], optsWithIndex[j]] = [optsWithIndex[j], optsWithIndex[i]];
+    }
+    
+    // Extraer los textos mezclados y encontrar el nuevo índice de la correcta
+    const shuffledOpts = optsWithIndex.map(item => item.text);
+    const newCorrectIndex = optsWithIndex.findIndex(item => item.isCorrect === true);
+    
+    return {
+      ...question,
+      opts: shuffledOpts,
+      correct: newCorrectIndex
+    };
+  });
+  }
+
+  function formatTime(sec) {
+    const m = Math.floor(sec / 60);
+    const s = sec % 60;
+    return `${String(m).padStart(2, '0')}:${String(s).padStart(2, '0')}`;
+  }
+
+  function startTimer() {
+    elapsed = 0;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      elapsed++;
+      const remaining = TIME_LIMIT - elapsed;
+      document.getElementById('timerDisplay').textContent = formatTime(remaining >= 0 ? remaining : 0);
+      const wrap = document.getElementById('timerWrap');
+      if (remaining <= 0) {
+        clearInterval(timerInterval);
+        document.getElementById('timerDisplay').textContent = '00:00';
+        wrap.className = 'timer-wrap danger';
+        if (!quizDone) showResults();
+      } else if (remaining <= 300) {
+        wrap.className = 'timer-wrap danger';
+      } else if (remaining <= 600) {
+        wrap.className = 'timer-wrap warning';
+      } else {
+        wrap.className = 'timer-wrap';
+      }
+    }, 1000);
+  }
+
+  function renderDots() {
+    const container = document.getElementById('qDots');
+    if (!container) return;
+    container.innerHTML = '';
+    questions.forEach((_, i) => {
+      const dot = document.createElement('span');
+      dot.className = 'dot' + (i === currentQ ? ' current' : answers[i] !== undefined ? ' answered' : '');
+      dot.onclick = () => goTo(i);
+      container.appendChild(dot);
+    });
+  }
+
+  function renderQuestion() {
+    const q = questions[currentQ];
+    const letters = ['A', 'B', 'C', 'D'];
+    const optionsHtml = q.opts.map((opt, idx) => {
+      const selectedClass = answers[currentQ] === idx ? ' selected' : '';
+      return `<button class="option${selectedClass}" onclick="selectAnswer(${idx})">
+                <span class="opt-letter">${letters[idx]}</span>${opt}
+              </button>`;
+    }).join('');
+
+    document.getElementById('questionCard').innerHTML = `
+      <span class="q-topic">${q.topic}</span>
+      <div class="q-text">${q.text}</div>
+      <div class="options">${optionsHtml}</div>
+    `;
+    document.getElementById('qCounter').textContent = `Pregunta ${currentQ + 1} de ${TOTAL}`;
+    document.getElementById('progressFill').style.width = `${((currentQ + 1) / TOTAL) * 100}%`;
+    document.getElementById('btnPrev').style.visibility = currentQ > 0 ? 'visible' : 'hidden';
+    const nextBtn = document.getElementById('btnNext');
+    nextBtn.textContent = currentQ === TOTAL - 1 ? '✅ Finalizar' : 'Siguiente ▶';
+    nextBtn.className = currentQ === TOTAL - 1 ? 'btn btn-submit' : 'btn btn-next';
+    document.getElementById('warnMsg').classList.remove('show');
+    renderDots();
+  }
+
+  window.selectAnswer = function(idx) {
+    answers[currentQ] = idx;
+    renderQuestion();
+  };
+
+  function goTo(idx) {
+    if (idx < 0 || idx >= TOTAL) return;
+    currentQ = idx;
+    renderQuestion();
+  }
+
+  window.handleNext = function() {
+    if (currentQ === TOTAL - 1) {
+      const unanswered = TOTAL - Object.keys(answers).length;
+      if (unanswered > 0) {
+        const msg = document.getElementById('warnMsg');
+        msg.textContent = `⚠ Te faltan ${unanswered} pregunta${unanswered > 1 ? 's' : ''} sin responder. Contesta todo antes de finalizar.`;
+        msg.classList.add('show');
+        return;
+      }
+      showResults();
+    } else {
+      goTo(currentQ + 1);
+    }
+  };
+
+  function calcGrade(correct, total) {
+    const p = correct / total;
+    if (correct === total) return 7.0;
+    if (p >= 0.6) return +(4.0 + ((p - 0.6) / 0.4) * 3.0).toFixed(1);
+    return +(1.0 + (p / 0.6) * 3.0).toFixed(1);
+  }
+
+  function showResults() {
+    if (quizDone) return;
+    quizDone = true;
+    clearInterval(timerInterval);
+    let correct = 0;
+    questions.forEach((q, idx) => {
+      if (answers[idx] === q.correct) correct++;
+    });
+    const pct = Math.round((correct / TOTAL) * 100);
+    const grade = calcGrade(correct, TOTAL);
+    const pass = pct >= 60;
+    document.getElementById('quizSection').style.display = 'none';
+    document.getElementById('resultsSection').style.display = 'block';
+    const gradeEl = document.getElementById('gradeDisplay');
+    gradeEl.textContent = grade.toFixed(1);
+    gradeEl.className = 'grade-num ' + (pass ? 'pass' : 'fail');
+    document.getElementById('gradeNote').textContent = `${correct} de ${TOTAL} correctas · Mínimo aprobación: 60% (24 correctas)`;
+    document.getElementById('sCorrect').textContent = correct;
+    document.getElementById('sWrong').textContent = TOTAL - correct;
+    document.getElementById('sPct').textContent = pct + '%';
+    document.getElementById('sTime').textContent = formatTime(elapsed);
+    const timeBadge = document.getElementById('timeBadge');
+    if (elapsed >= TIME_LIMIT) {
+      timeBadge.className = 'time-badge slow';
+      timeBadge.textContent = '⏰ Tiempo agotado';
+    } else if (elapsed < 1500) {
+      timeBadge.className = 'time-badge excellent';
+      timeBadge.textContent = '⚡ Muy rápido';
+    } else if (elapsed < 2700) {
+      timeBadge.className = 'time-badge good';
+      timeBadge.textContent = '✓ Tiempo adecuado';
+    } else {
+      timeBadge.className = 'time-badge slow';
+      timeBadge.textContent = '🐢 Tómate más tiempo la próxima';
+    }
+    document.getElementById('verdict').textContent = pass ? '✅ ¡Aprobado! Excelente comprensión de los relatos.' : '❌ No aprobado. Revisa los cuentos y vuelve a intentarlo.';
+    buildReviewList();
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function buildReviewList() {
+    const container = document.getElementById('reviewList');
+    container.innerHTML = '';
+    questions.forEach((q, i) => {
+      const user = answers[i];
+      const isCorrect = user === q.correct;
+      const div = document.createElement('div');
+      div.className = `review-item ${isCorrect ? 'r-correct' : 'r-wrong'}`;
+      let row = '';
+      if (user === undefined) row = `<span class="r-tag not-ans">❌ Sin respuesta</span><span class="r-tag correct-ans">✓ ${q.opts[q.correct]}</span>`;
+      else if (isCorrect) row = `<span class="r-tag user-correct">✓ Tu respuesta: ${q.opts[user]}</span>`;
+      else row = `<span class="r-tag user-wrong">✗ Tu respuesta: ${q.opts[user]}</span><span class="r-tag correct-ans">✓ Correcta: ${q.opts[q.correct]}</span>`;
+      div.innerHTML = `<div class="r-qtext"><strong>${i+1}.</strong> ${q.text}</div><div class="r-answer-row">${row}</div>`;
+      container.appendChild(div);
+    });
+  }
+
+  window.toggleReview = function() {
+    const list = document.getElementById('reviewList');
+    list.style.display = list.style.display === 'block' ? 'none' : 'block';
+  };
+
+  window.resetQuiz = function() {
+  quizDone = false;
+  answers = {};
+  currentQ = 0;
+  // Mezclar preguntas Y sus opciones al reiniciar
+  let shuffledQuestions = shuffle(ALL_QUESTIONS);
+  questions = shuffleOptions(shuffledQuestions);
+  document.getElementById('resultsSection').style.display = 'none';
+  document.getElementById('quizSection').style.display = 'block';
+  document.getElementById('timerDisplay').textContent = formatTime(TIME_LIMIT);
+  document.getElementById('timerWrap').className = 'timer-wrap';
+  startTimer();
+  renderQuestion();
+  window.scrollTo({ top: 0 });
+};
+
+  window.onload = () => {
+  // Primero mezclar el orden de las preguntas
+  let shuffledQuestions = shuffle(ALL_QUESTIONS);
+  // Luego mezclar las opciones de cada pregunta
+  questions = shuffleOptions(shuffledQuestions);
+  startTimer();
+  renderQuestion();
+  document.getElementById('btnPrev').onclick = () => goTo(currentQ - 1);
+  document.getElementById('btnNext').onclick = () => handleNext();
+};
+</script>
+</body>
+</html>

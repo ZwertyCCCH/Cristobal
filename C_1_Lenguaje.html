@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Relatos Espectrales · H.P. Lovecraft · Guía de estudio</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f5f3ee;
+      font-family: 'Syne', sans-serif;
+      color: #0e2240;
+    }
+
+    /* HEADER ESTILO CLASE */
+    .app-header {
+      background: #0e2240;
+      padding: 0 28px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      flex-wrap: wrap;
+    }
+
+    .app-header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #c8d8ee;
+      letter-spacing: 0.5px;
+    }
+
+    .app-header h1 em {
+      color: #e8940a;
+      font-style: normal;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-exercise {
+      background: #e8940a;
+      border: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      color: #0e2240;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-exercise:hover {
+      background: #f0b429;
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1a3560 0%, #0e2240 100%);
+      padding: 48px 24px;
+      text-align: center;
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .hero p {
+      font-family: 'Literata', serif;
+      max-width: 700px;
+      margin: 16px auto 0;
+      opacity: 0.85;
+    }
+
+    /* Contenedor principal */
+    .container {
+      max-width: 1280px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    /* Grid de cuentos */
+    .grid-cuentos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      margin-bottom: 60px;
+    }
+
+    .card-cuento {
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(14,34,64,0.08);
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .card-cuento:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 22px 40px rgba(14,34,64,0.12);
+    }
+
+    .card-header {
+      padding: 20px 24px 12px;
+      border-bottom: 3px solid #e8940a;
+    }
+
+    .card-header h3 {
+      font-size: 1.6rem;
+      font-weight: 600;
+      color: #0e2240;
+      letter-spacing: -0.3px;
+    }
+
+    .card-header .genero-tag {
+      display: inline-block;
+      background: #fdf3dc;
+      color: #e8940a;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 40px;
+      margin-top: 10px;
+    }
+
+    .card-body {
+      padding: 20px 24px;
+      flex: 1;
+    }
+
+    .resumen {
+      font-family: 'Literata', serif;
+      font-size: 0.92rem;
+      line-height: 1.55;
+      color: #2c3e55;
+      margin-bottom: 20px;
+    }
+
+    .personajes {
+      background: #f5f3ee;
+      border-radius: 20px;
+      padding: 14px 18px;
+      margin: 16px 0;
+    }
+
+    .personajes strong {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: #e8940a;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .personajes p {
+      font-size: 0.85rem;
+      font-weight: 500;
+      color: #1a3560;
+    }
+
+    .genero-explicacion {
+      border-top: 1px solid #dde3ec;
+      margin-top: 16px;
+      padding-top: 16px;
+      font-size: 0.82rem;
+    }
+
+    .genero-explicacion .gen-label {
+      font-weight: 600;
+      color: #0e2240;
+    }
+
+    .genero-explicacion .gen-desc {
+      color: #4a627a;
+      margin-top: 5px;
+      line-height: 1.45;
+    }
+
+    /* sección géneros literarios expandida */
+    .section-generos {
+      background: white;
+      border-radius: 32px;
+      padding: 32px 32px;
+      margin-top: 20px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      border: 1px solid #e2e8f0;
+    }
+
+    .section-generos h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 28px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .generos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 24px;
+    }
+
+    .gen-item {
+      background: #fefaf2;
+      border-radius: 24px;
+      padding: 20px;
+      transition: all 0.2s;
+    }
+
+    .gen-item h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #e8940a;
+      margin-bottom: 12px;
+    }
+
+    .gen-item p {
+      font-family: 'Literata', serif;
+      font-size: 0.9rem;
+      color: #2c3e55;
+      line-height: 1.5;
+    }
+
+    footer {
+      background: #0e2240;
+      color: #8ba0bc;
+      text-align: center;
+      padding: 28px;
+      margin-top: 60px;
+      font-size: 0.8rem;
+    }
+/* === BOTÓN VOLVER AL INICIO === */
+.btn-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: transparent;
+  border: 2px solid #e8940a;
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: 0.85rem;
+  padding: 8px 20px;
+  border-radius: 40px;
+  color: #e8940a;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  letter-spacing: 0.3px;
+}
+
+.btn-back:hover {
+  background: #e8940a;
+  color: #0e2240;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(232, 148, 10, 0.25);
+}
+
+.btn-back:active {
+  transform: translateY(1px);
+}
+
+/* Versión oscura si el fondo es azul marino (como en el header o footer) */
+.btn-back-dark,
+.app-header .btn-back {
+  background: transparent;
+  border: 2px solid #e8940a;
+  color: #e8940a;
+}
+
+.btn-back-dark:hover,
+.app-header .btn-back:hover {
+  background: #e8940a;
+  color: #0e2240;
+}
+
+/* Ajuste responsive para móviles */
+@media (max-width: 640px) {
+  .btn-back {
+    padding: 6px 16px;
+    font-size: 0.75rem;
+    gap: 5px;
+  }
+}
+    @media (max-width: 780px) {
+      .app-header {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+      }
+      .hero h2 { font-size: 1.6rem; }
+      .container { padding: 0 16px; }
+      .card-header h3 { font-size: 1.3rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>📖 <em>Relatos Espectrales</em> · H.P. Lovecraft · Guía de análisis</h1>
+  <div class="header-buttons">
+    <a href="Lenguaje.html" class="btn-back">← Volver al Inicio</a>
+    <a href="C_1A_Lenguaje.html" class="btn-exercise">📝 EJERCICIOS →</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h2>Cuentos del horror cósmico y la tradición gótica</h2>
+  <p>Cuatro relatos esenciales: «En la cripta», «El ser en el umbral», «Los gatos de Ulthar» y «Las ratas de las paredes». A continuación encontrarás resúmenes, personajes y el género literario de cada obra.</p>
+</section>
+
+<div class="container">
+  <div class="grid-cuentos">
+    
+    <!-- Cuento 1: En la cripta -->
+    <div class="card-cuento">
+      <div class="card-header">
+        <h3>«En la cripta»</h3>
+        <span class="genero-tag">Horror gótico / terror moral</span>
+      </div>
+      <div class="card-body">
+        <div class="resumen">
+          Un sepulturero codicioso y sin respeto por los muertos queda atrapado accidentalmente dentro del cementerio durante la noche. 
+          Al intentar esconderse en una cripta, los propios difuntos le dan una escalofriante lección: lo obligan a experimentar el miedo 
+          y la humildad que siempre debió tener. Al ser liberado al amanecer, emerge transformado, agradecido por la segunda oportunidad.
+        </div>
+        <div class="personajes">
+          <strong>👤 Personajes principales</strong>
+          <p>⚰️ El sepulturero (protagonista sin nombre) · Los muertos / espíritus de la cripta (fuerza moralizadora) · Guardianes del cementerio.</p>
+        </div>
+        <div class="genero-explicacion">
+          <span class="gen-label">🎭 Género: Horror gótico / terror moral</span>
+          <div class="gen-desc">Ambientación lúgubre, atmósfera opresiva y castigo sobrenatural como advertencia ética. Se exploran el remordimiento y la justicia poética.</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cuento 2: El ser en el umbral -->
+    <div class="card-cuento">
+      <div class="card-header">
+        <h3>«El ser en el umbral»</h3>
+        <span class="genero-tag">Horror cósmico</span>
+      </div>
+      <div class="card-body">
+        <div class="resumen">
+          Edward Derby, estudioso de lo oculto, se casa con una mujer de oscuros intereses relacionados con entidades ancestrales. 
+          Su amigo narra la progresiva transformación de Derby, que termina poseído por un ser interdimensional llamado «el que habita en el umbral». 
+          La esposa, vinculada a los Mitos de Cthulhu, prepara la invasión de la conciencia de Derby. El relato explora la posesión, 
+          la pérdida de identidad y el terror a lo incomprensible.
+        </div>
+        <div class="personajes">
+          <strong>👤 Personajes principales</strong>
+          <p>🌑 Edward Derby (víctima / anfitrión) · El narrador (amigo de Derby) · La esposa (entidad maligna encubierta) · El ser en el umbral (entidad cósmica).</p>
+        </div>
+        <div class="genero-explicacion">
+          <span class="gen-label">🌌 Género: Horror cósmico</span>
+          <div class="gen-desc">El miedo proviene de fuerzas antiguas e indiferentes, que escapan al entendimiento humano. Se enfatiza la insignificancia del hombre frente a dioses arcanos.</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cuento 3: Los gatos de Ulthar -->
+    <div class="card-cuento">
+      <div class="card-header">
+        <h3>«Los gatos de Ulthar»</h3>
+        <span class="genero-tag">Fábula / terror fantástico</span>
+      </div>
+      <div class="card-body">
+        <div class="resumen">
+          En el pueblo de Ulthar, una pareja de ancianos malvados disfruta asesinando gatos. Cuando unos caravaneros nómadas (herederos de antiguos saberes egipcios) 
+          pierden a su amado gato, invocan una venganza sobrenatural. Al día siguiente, los ancianos han desaparecido sin dejar rastro, y sus cuerpos nunca son encontrados. 
+          El pueblo decreta una ley que prohíbe matar gatos para siempre. Una historia sobre justicia secreta y el respeto a los animales.
+        </div>
+        <div class="personajes">
+          <strong>👤 Personajes principales</strong>
+          <p>🐈 Los caravaneros nómadas · El gato desaparecido · La pareja de ancianos (antagonistas) · Los gatos de Ulthar (seres místicos).</p>
+        </div>
+        <div class="genero-explicacion">
+          <span class="gen-label">📖 Género: Fábula / terror fantástico</span>
+          <div class="gen-desc">Combina una moraleja clara (respeto por los animales) con elementos sobrenaturales sutiles. Lovecraft utiliza lo maravilloso para impartir justicia.</div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Cuento 4: Las ratas de las paredes -->
+    <div class="card-cuento">
+      <div class="card-header">
+        <h3>«Las ratas de las paredes»</h3>
+        <span class="genero-tag">Terror psicológico</span>
+      </div>
+      <div class="card-body">
+        <div class="resumen">
+          Un hombre hereda la abadía de su familia en Inglaterra. Pronto él y su gato son perturbados por un roer constante tras los muros: las ratas. 
+          Al explorar los sótanos descubre que sus antepasados practicaban canibalismo y rituales atroces. El protagonista se sumerge en la locura al enfrentar 
+          el horror heredado, y el cuento insinúa que la sangre familiar es culpable de actos indescriptibles. La atmósfera y el declive mental son centrales.
+        </div>
+        <div class="personajes">
+          <strong>👤 Personajes principales</strong>
+          <p>🐀 El heredero (narrador) · Su gato (compañero que refleja el terror) · Los antepasados corruptos · ratas simbólicas.</p>
+        </div>
+        <div class="genero-explicacion">
+          <span class="gen-label">🧠 Género: Terror psicológico</span>
+          <div class="gen-desc">El horror se construye desde la mente del protagonista, explorando la culpa, la paranoia y el descenso a la locura. El ambiente opresivo y los soneros agobian la psique.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Sección explicación ampliada de cada género -->
+  <div class="section-generos">
+    <h3>🔍 Explicación de los géneros literarios</h3>
+    <div class="generos-grid">
+      <div class="gen-item">
+        <h4>🎭 Horror gótico</h4>
+        <p>Se caracteriza por ambientes lúgubres (castillos, cementerios, criptas), elementos sobrenaturales y una fuerte atmósfera de misterio. Busca generar tensión y reflexión ética a través de lo macabro. «En la cripta» utiliza la oscuridad y la presencia de los muertos para impartir justicia moral.</p>
+      </div>
+      <div class="gen-item">
+        <h4>🌌 Horror cósmico</h4>
+        <p>Subgénero creado por Lovecraft: el terror proviene de fuerzas arcaicas, incomprensibles e indiferentes a la humanidad. Los seres cósmicos desafían las leyes naturales y la razón humana. En «El ser en el umbral», la entidad interdimensional corrompe la identidad y muestra la insignificancia del hombre.</p>
+      </div>
+      <div class="gen-item">
+        <h4>📖 Fábula / terror fantástico</h4>
+        <p>Narración breve que contiene una enseñanza moral, a menudo con elementos sobrenaturales o mágicos. «Los gatos de Ulthar» combina la defensa de la justicia animal con una venganza inexplicable, dejando moraleja sobre el respeto a los seres indefensos.</p>
+      </div>
+      <div class="gen-item">
+        <h4>🧠 Terror psicológico</h4>
+        <p>El horror nace de la mente del protagonista: la ansiedad, culpa y paranoia. Los enemigos suelen ser internos o herencias atroces. «Las ratas de las paredes» explora la degeneración de la cordura cuando el personaje descubre los crímenes de sus ancestros y la locura se apodera de él.</p>
+      </div>
+    </div>
+    <div style="margin-top: 28px; background: #eef2f9; border-radius: 20px; padding: 20px;">
+      <p style="font-weight: 600; margin-bottom: 8px;">📚 Lovecraft y su legado</p>
+      <p style="font-family: 'Literata', serif; font-size: 0.9rem;">Las obras presentadas combinan el horror tradicional y la innovación del horror cósmico, influyendo profundamente en la literatura fantástica. Los temas del destino, la culpa familiar y los límites de la razón se entrelazan para crear una experiencia única de lectura.</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>📖 Relatos Espectrales · H.P. Lovecraft · Edición Vicens Vives · Material de comprensión lectora para 7° básico</p>
+  <p style="margin-top: 8px;">Resúmenes, personajes y análisis de géneros literarios | Actividad diseñada para el estudio independiente</p>
+</footer>
+
+<script>
+  // Pequeño script para agregar interactividad sutil (tooltips, etc). Sin funcionalidad crítica.
+  console.log("Página de estudio: Relatos espectrales lista.");
+  // El botón de ejercicios redirige a C_1A_Lenguaje.html según requerimiento
+</script>
+</body>
+</html>

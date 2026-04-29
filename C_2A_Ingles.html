@@ -1,0 +1,591 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Rue Morgue · Fill in the Blanks · Comprehension Activity</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #f5f3ee;
+  --surface: #ffffff;
+  --navy: #0e2240;
+  --navy2: #1a3560;
+  --amber: #e8940a;
+  --amber-light: #fdf3dc;
+  --green: #1a7f5a;
+  --green-light: #e3f5ed;
+  --red: #c0392b;
+  --red-light: #fdecea;
+  --sky: #2271b3;
+  --muted: #7a8899;
+  --border: #dde3ec;
+  --radius: 18px;
+  --shadow: 0 8px 32px rgba(14,34,64,0.10);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'Syne', sans-serif;
+  background: var(--bg);
+  color: var(--navy);
+  min-height: 100vh;
+}
+
+/* HEADER */
+.app-header {
+  background: var(--navy);
+  padding: 0 28px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 200;
+}
+.app-header h1 {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #c8d8ee;
+  letter-spacing: 0.3px;
+}
+.app-header h1 em {
+  color: var(--amber);
+  font-style: normal;
+}
+.score-pill {
+  background: var(--amber);
+  color: var(--navy);
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 6px 16px;
+  border-radius: 40px;
+}
+
+/* HERO */
+.hero {
+  background: linear-gradient(135deg, var(--navy2) 0%, var(--navy) 100%);
+  padding: 32px 24px;
+  text-align: center;
+  color: white;
+}
+.hero h2 {
+  font-size: 1.7rem;
+  font-weight: 600;
+  letter-spacing: -0.5px;
+}
+.hero p {
+  font-family: 'Literata', serif;
+  max-width: 700px;
+  margin: 12px auto 0;
+  opacity: 0.85;
+}
+
+/* MAIN */
+.container {
+  max-width: 880px;
+  margin: 32px auto;
+  padding: 0 20px;
+}
+
+/* TEXT CARD */
+.text-card {
+  background: var(--surface);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  padding: 32px 32px;
+  font-family: 'Literata', serif;
+  font-size: 1rem;
+  line-height: 1.85;
+  color: var(--navy);
+}
+.text-card p {
+  margin-bottom: 1.2rem;
+}
+
+/* INLINE SELECTORS */
+.select-blank {
+  display: inline-block;
+  margin: 0 4px;
+  vertical-align: middle;
+}
+.select-blank select {
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 0.8rem;
+  padding: 6px 12px;
+  border-radius: 40px;
+  border: 2px solid var(--amber);
+  background: var(--amber-light);
+  color: #997520;
+  cursor: pointer;
+  outline: none;
+  transition: all 0.2s;
+  min-width: 140px;
+  text-align: center;
+}
+.select-blank select.correct-selected {
+  background: var(--green-light);
+  border-color: var(--green);
+  color: var(--green);
+}
+.select-blank select.wrong-selected {
+  background: var(--red-light);
+  border-color: var(--red);
+  color: var(--red);
+}
+.select-blank select:focus {
+  border-color: var(--sky);
+  box-shadow: 0 0 0 2px rgba(34,113,179,0.3);
+}
+
+/* BUTTONS */
+.actions {
+  text-align: center;
+  margin-top: 32px;
+}
+.btn-check {
+  background: var(--navy);
+  color: white;
+  border: none;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  padding: 14px 42px;
+  border-radius: 60px;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: var(--shadow);
+}
+.btn-check:hover {
+  background: var(--sky);
+  transform: translateY(-2px);
+}
+
+/* RESULTS PANEL */
+.results-panel {
+  display: none;
+  background: var(--surface);
+  border-radius: 28px;
+  padding: 32px 24px;
+  text-align: center;
+  margin-top: 36px;
+  box-shadow: var(--shadow);
+}
+.results-panel h3 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--navy);
+}
+.score-big {
+  font-size: 4rem;
+  font-weight: 600;
+  font-family: 'Literata', serif;
+  color: var(--navy);
+  line-height: 1;
+  margin: 12px 0 4px;
+}
+.stats-row {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin: 20px 0;
+}
+.stat-card {
+  background: var(--bg);
+  border-radius: 24px;
+  padding: 14px 28px;
+  min-width: 130px;
+}
+.stat-card .stat-number {
+  font-size: 2.5rem;
+  font-weight: 600;
+  font-family: 'Literata', serif;
+}
+.stat-card.correct .stat-number { color: var(--green); }
+.stat-card.wrong .stat-number { color: var(--red); }
+.stat-card .stat-label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+}
+
+.btn-reset {
+  background: var(--amber);
+  color: var(--navy);
+  border: none;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 12px 28px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin: 6px;
+}
+.btn-reset:hover {
+  background: #d4860a;
+  transform: translateY(-2px);
+}
+.button-group {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-top: 16px;
+}
+.btn-nav {
+  background: var(--sky);
+  color: white;
+  border: none;
+  font-family: 'Syne', sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  padding: 12px 28px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-decoration: none;
+  display: inline-block;
+}
+.btn-nav:hover {
+  background: #1a5a8f;
+  transform: translateY(-2px);
+}
+
+#toast {
+  position: fixed;
+  bottom: 24px;
+  left: 50%;
+  transform: translateX(-50%) translateY(80px);
+  background: var(--navy);
+  color: white;
+  padding: 12px 28px;
+  border-radius: 50px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  transition: transform 0.25s;
+  opacity: 0;
+  z-index: 1000;
+  pointer-events: none;
+  white-space: nowrap;
+}
+#toast.show {
+  transform: translateX(-50%) translateY(0);
+  opacity: 1;
+}
+
+footer {
+  text-align: center;
+  padding: 24px;
+  font-size: 0.75rem;
+  color: var(--muted);
+  border-top: 1px solid var(--border);
+  margin-top: 40px;
+}
+
+@media (max-width: 680px) {
+  .app-header { height: auto; flex-direction: column; align-items: flex-start; gap: 8px; padding: 12px 16px; }
+  .hero h2 { font-size: 1.2rem; }
+  .text-card { padding: 20px 16px; font-size: 0.9rem; }
+  .select-blank select { min-width: 110px; font-size: 0.7rem; padding: 4px 8px; }
+  .btn-check { width: 100%; padding: 14px; }
+  .score-big { font-size: 3rem; }
+}
+</style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>🔍 <em>The Murders in the Rue Morgue</em> · Edgar Allan Poe</h1>
+  <div class="score-pill">📋 <span id="answeredCount">0</span> / <span id="totalBlanks">0</span></div>
+</header>
+
+<div class="hero">
+  <h2>Complete the text with the correct words</h2>
+  <p>Select the right option from each dropdown to reconstruct key passages from the first detective story.</p>
+</div>
+
+<div class="container">
+  <div class="text-card" id="textContainer"></div>
+  <div class="actions">
+    <button class="btn-check" id="checkBtn">✅ Check answers</button>
+  </div>
+  <div class="results-panel" id="resultsPanel">
+    <h3>📊 Your result</h3>
+    <div class="score-big" id="finalScore">—</div>
+    <div class="stats-row">
+      <div class="stat-card correct"><div class="stat-number" id="correctStat">0</div><div class="stat-label">CORRECT</div></div>
+      <div class="stat-card wrong"><div class="stat-number" id="wrongStat">0</div><div class="stat-label">WRONG</div></div>
+    </div>
+    <button class="btn-reset" id="resetBtn">🔄 Try Again</button>
+    <div class="button-group">
+      <a href="C_2_Ingles.html" class="btn-nav">📚 Back to Class</a>
+      <a href="C_2B_Ingles.html" class="btn-nav">⏩ Next Exercise</a>
+    </div>
+  </div>
+</div>
+<div id="toast"></div>
+<footer>🔍 20 blanks · Based on "The Murders in the Rue Morgue" · Detective fiction pioneer</footer>
+
+<script>
+// =============================================================
+// TEXT STRUCTURE WITH 20 BLANKS (key passages from the story)
+// =============================================================
+const textStructure = [
+  { type: "text", content: "The story is set in " },
+  { type: "blank", id: "Paris", label: "Paris" },
+  { type: "text", content: " during the summer of 1840. The narrator meets a brilliant young man named " },
+  { type: "blank", id: "C. Auguste Dupin", label: "C. Auguste Dupin" },
+  { type: "text", content: ", who possesses an extraordinary reasoning power. They become roommates, and Dupin can read the narrator's unspoken " },
+  { type: "blank", id: "thoughts", label: "thoughts" },
+  { type: "text", content: " simply by observing his gestures.\n\nOne morning they read about a brutal double murder on the " },
+  { type: "blank", id: "Rue Morgue", label: "Rue Morgue" },
+  { type: "text", content: ". The victims are an old woman, Madame L'Espanaye, and her daughter. The daughter has been strangled with incredible force, and her body is found stuffed up the " },
+  { type: "blank", id: "chimney", label: "chimney" },
+  { type: "text", content: ". The mother's throat is cut so deeply that her head is nearly " },
+  { type: "blank", id: "severed", label: "severed" },
+  { type: "text", content: ", and her body lies in the courtyard.\n\nThe room is locked from the inside. Witnesses hear two voices: one gruff voice speaking " },
+  { type: "blank", id: "French", label: "French" },
+  { type: "text", content: " saying 'Mon Dieu!', and a high-pitched voice that no one can identify. The police are baffled.\n\nDupin visits the crime scene and discovers a hidden " },
+  { type: "blank", id: "spring lock", label: "spring lock" },
+  { type: "text", content: " on one window. He also finds a broken nail, proving the killer escaped through the window. He notices a strand of unusual gray " },
+  { type: "blank", id: "hair", label: "hair" },
+  { type: "text", content: " in the old woman's hand and compares it to Cuvier's book. The hand marks on the daughter's neck are inhumanly large.\n\nDupin concludes the murderer is not a man but an " },
+  { type: "blank", id: "orangutan", label: "orangutan" },
+  { type: "text", content: ", a powerful ape from Borneo. The animal escaped from its owner, a " },
+  { type: "blank", id: "sailor", label: "sailor" },
+  { type: "text", content: ". Dupin places an advertisement in the newspaper offering to return the animal.\n\nThe sailor arrives at Dupin's apartment and confesses: he saw the orangutan climb up a " },
+  { type: "blank", id: "lightning rod", label: "lightning rod" },
+  { type: "text", content: " outside the building and enter the fourth-floor window. The ape, holding a " },
+  { type: "blank", id: "razor", label: "razor" },
+  { type: "text", content: ", attacked the women out of fear and imitation. The sailor watched in horror from the window but could not stop the killings.\n\nAfter hearing the confession, Dupin explains everything to the Prefect of Police. However, the Prefect is jealous and says people should mind their own " },
+  { type: "blank", id: "business", label: "business" },
+  { type: "text", content: ". The story ends with Dupin's quiet triumph. It is considered the first modern " },
+  { type: "blank", id: "detective story", label: "detective story" },
+  { type: "text", content: ", introducing the brilliant amateur detective and the locked-room mystery." }
+];
+
+// Distractors for each blank (incorrect options)
+const DISTRACTORS = {
+  "Paris": ["London", "New York", "Berlin", "Rome"],
+  "C. Auguste Dupin": ["Sherlock Holmes", "Edgar Allan Poe", "Auguste Duponte", "Inspector G."],
+  "thoughts": ["feelings", "dreams", "memories", "fears"],
+  "Rue Morgue": ["Ruhe Morgue", "Rue de Rivoli", "Rua Morguet", "Rue Morge"], 
+  "chimney": ["closet", "cellar", "attic", "floorboard"],
+  "severed": ["broken", "burned", "lost", "hidden"],
+  "French": ["English", "Italian", "Spanish", "German"],
+  "spring lock": ["padlock", "chain", "bolt", "secret latch"],
+  "hair": ["fabric", "thread", "rope", "paper"],
+  "orangutan": ["gorilla", "chimpanzee", "baboon", "bear"],
+  "sailor": ["soldier", "policeman", "doctor", "priest"],
+  "lightning rod": ["drainpipe", "ladder", "rope", "tree branch"],
+  "razor": ["knife", "scissors", "sword", "hammer"],
+  "business": ["work", "crime", "life", "affairs"],
+  "detective story": ["romance novel", "horror tale", "biography", "science fiction"]
+};
+
+// Ensure every blank has at least 4 distractors (fallback)
+for (let key in DISTRACTORS) {
+  if (DISTRACTORS[key].length < 4) {
+    DISTRACTORS[key] = ["Option A", "Option B", "Option C", "Option D"];
+  }
+}
+
+const blanks = textStructure.filter(item => item.type === "blank");
+const TOTAL_BLANKS = blanks.length;
+
+let userAnswers = new Array(TOTAL_BLANKS).fill("");
+let verified = false;
+
+// DOM elements
+const textContainer = document.getElementById("textContainer");
+const checkBtn = document.getElementById("checkBtn");
+const resultsPanel = document.getElementById("resultsPanel");
+const resetBtn = document.getElementById("resetBtn");
+const answeredCountSpan = document.getElementById("answeredCount");
+const totalBlanksSpan = document.getElementById("totalBlanks");
+const toastEl = document.getElementById("toast");
+
+totalBlanksSpan.textContent = TOTAL_BLANKS;
+
+// Helper: shuffle array
+function shuffleArray(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+// Get options for a specific blank (correct + 4 distractors random)
+function getOptionsForBlank(correctWord) {
+  let distractors = DISTRACTORS[correctWord];
+  if (!distractors || distractors.length < 4) {
+    distractors = ["incorrect", "wrong", "false", "mistake"];
+  }
+  const shuffledDist = shuffleArray([...distractors]);
+  const selected = shuffledDist.slice(0, 4);
+  const all = [correctWord, ...selected];
+  return shuffleArray(all);
+}
+
+// Update answered counter
+function updateAnsweredCounter() {
+  const answered = userAnswers.filter(ans => ans && ans !== "").length;
+  answeredCountSpan.textContent = answered;
+}
+
+// Show temporary message
+function showToast(msg, duration = 2200) {
+  toastEl.textContent = msg;
+  toastEl.classList.add("show");
+  setTimeout(() => toastEl.classList.remove("show"), duration);
+}
+
+// Render the full text with selectors
+function renderText() {
+  textContainer.innerHTML = "";
+  let blankIndex = 0;
+  
+  textStructure.forEach(item => {
+    if (item.type === "text") {
+      const lines = item.content.split("\n");
+      lines.forEach((line, idx) => {
+        if (idx > 0) {
+          const br = document.createElement("br");
+          textContainer.appendChild(br);
+        }
+        if (line) {
+          const textNode = document.createTextNode(line);
+          textContainer.appendChild(textNode);
+        }
+      });
+    } else if (item.type === "blank") {
+      const correctAnswer = item.id;
+      const options = getOptionsForBlank(correctAnswer);
+      const currentVal = userAnswers[blankIndex] || "";
+      
+      const wrapper = document.createElement("span");
+      wrapper.className = "select-blank";
+      
+      const select = document.createElement("select");
+      select.dataset.blankIndex = blankIndex;
+      select.dataset.correctAnswer = correctAnswer;
+      
+      // default option
+      const defaultOpt = document.createElement("option");
+      defaultOpt.value = "";
+      defaultOpt.textContent = "___ select ___";
+      defaultOpt.disabled = true;
+      defaultOpt.selected = (currentVal === "");
+      select.appendChild(defaultOpt);
+      
+      options.forEach(opt => {
+        const option = document.createElement("option");
+        option.value = opt;
+        option.textContent = opt;
+        if (currentVal === opt) option.selected = true;
+        select.appendChild(option);
+      });
+      
+      if (verified) {
+        if (currentVal === correctAnswer) select.classList.add("correct-selected");
+        else if (currentVal && currentVal !== correctAnswer) select.classList.add("wrong-selected");
+        select.disabled = true;
+      } else {
+        select.addEventListener("change", (e) => {
+          const idx = parseInt(e.target.dataset.blankIndex);
+          userAnswers[idx] = e.target.value;
+          updateAnsweredCounter();
+          e.target.classList.remove("correct-selected", "wrong-selected");
+        });
+      }
+      
+      wrapper.appendChild(select);
+      textContainer.appendChild(wrapper);
+      blankIndex++;
+    }
+  });
+}
+
+// Calculate grade (1.0 to 7.0, 60% passing = 4.0)
+function calculateGrade(correct, total) {
+  const percentage = (correct / total) * 100;
+  if (correct === total) return 7.0;
+  if (percentage >= 60) {
+    return +(4.0 + ((percentage - 60) / 40) * 3.0).toFixed(1);
+  } else {
+    return +(1.0 + (percentage / 60) * 3.0).toFixed(1);
+  }
+}
+
+// Verify all answers
+function verifyAnswers() {
+  const allAnswered = userAnswers.every(ans => ans && ans !== "");
+  if (!allAnswered) {
+    const missing = userAnswers.filter(ans => !ans || ans === "").length;
+    showToast(`⚠️ You have ${missing} blank(s) left to complete.`, 2500);
+    return;
+  }
+  
+  verified = true;
+  let correctCount = 0;
+  blanks.forEach((blank, idx) => {
+    if (userAnswers[idx] === blank.id) correctCount++;
+  });
+  const wrongCount = TOTAL_BLANKS - correctCount;
+  const grade = calculateGrade(correctCount, TOTAL_BLANKS);
+  const percentage = Math.round((correctCount / TOTAL_BLANKS) * 100);
+  
+  // Update results panel
+  document.getElementById("finalScore").textContent = grade;
+  document.getElementById("correctStat").textContent = correctCount;
+  document.getElementById("wrongStat").textContent = wrongCount;
+  
+  resultsPanel.style.display = "block";
+  
+  // Disable selects and set color styles
+  const allSelects = document.querySelectorAll(".select-blank select");
+  allSelects.forEach((select, idx) => {
+    select.disabled = true;
+    const blankItem = blanks[idx];
+    if (userAnswers[idx] === blankItem.id) {
+      select.classList.add("correct-selected");
+    } else {
+      select.classList.add("wrong-selected");
+    }
+  });
+  
+  checkBtn.style.display = "none";
+  
+  // smooth scroll to results
+  resultsPanel.scrollIntoView({ behavior: "smooth", block: "start" });
+}
+
+// Reset activity completely (new random options)
+function resetActivity() {
+  userAnswers = new Array(TOTAL_BLANKS).fill("");
+  verified = false;
+  resultsPanel.style.display = "none";
+  checkBtn.style.display = "block";
+  renderText();
+  updateAnsweredCounter();
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
+
+// Initialize
+function init() {
+  renderText();
+  updateAnsweredCounter();
+  checkBtn.addEventListener("click", verifyAnswers);
+  resetBtn.addEventListener("click", resetActivity);
+}
+
+init();
+</script>
+</body>
+</html>

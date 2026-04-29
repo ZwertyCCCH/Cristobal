@@ -1,0 +1,492 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Quiz: The Murders in the Rue Morgue · Edgar Allan Poe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #f5f3ee;
+      --surface: #ffffff;
+      --navy: #0e2240;
+      --navy2: #1a3560;
+      --amber: #e8940a;
+      --amber-light: #fdf3dc;
+      --green: #1a7f5a;
+      --green-light: #e3f5ed;
+      --red: #c0392b;
+      --red-light: #fdecea;
+      --muted: #7a8899;
+      --border: #dde3ec;
+      --radius: 18px;
+      --shadow: 0 8px 32px rgba(14,34,64,0.10);
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--navy);
+    }
+
+    .app-header {
+      background: var(--navy);
+      padding: 0 28px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .app-header h1 { font-size: 0.9rem; font-weight: 700; color: #c8d8ee; letter-spacing: 0.3px; }
+    .app-header h1 em { color: var(--amber); font-style: normal; }
+
+    .timer-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--navy2);
+      border-radius: 40px;
+      padding: 6px 16px;
+    }
+    .timer-display {
+      font-family: 'Literata', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: white;
+      letter-spacing: 2px;
+      min-width: 58px;
+      text-align: center;
+    }
+    .timer-wrap.warning { background: #c87209; }
+    .timer-wrap.danger { background: var(--red); animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.75; } }
+
+    .progress-track { height: 5px; background: var(--border); }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--amber), #f0b429); transition: width 0.4s ease; }
+
+    .quiz-wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+    .q-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .q-counter { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); }
+    .q-dots { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; max-width: 420px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border); transition: background 0.2s; cursor: pointer; }
+    .dot.answered { background: var(--amber); }
+    .dot.current { background: var(--navy); transform: scale(1.3); }
+
+    .question-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 36px 28px;
+      margin-bottom: 20px;
+      animation: slideCard 0.3s ease;
+    }
+    @keyframes slideCard { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+
+    .q-topic {
+      display: inline-block;
+      background: var(--amber-light);
+      color: var(--amber);
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 4px 12px;
+      border-radius: 40px;
+      margin-bottom: 16px;
+    }
+    .q-text {
+      font-family: 'Literata', serif;
+      font-size: 1.2rem;
+      line-height: 1.6;
+      color: var(--navy);
+      margin-bottom: 28px;
+      padding-left: 16px;
+      border-left: 3px solid var(--amber);
+    }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 18px;
+      cursor: pointer;
+      transition: all 0.18s;
+      font-size: 0.97rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .option:hover:not(.locked) { border-color: var(--navy2); background: #eef2f9; transform: translateX(3px); }
+    .option.selected { background: var(--navy); border-color: var(--navy); color: white; }
+    .opt-letter {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .option.selected .opt-letter { background: var(--amber); color: var(--navy); }
+
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.18s;
+      padding: 11px 26px;
+      font-size: 0.9rem;
+    }
+    .btn-prev { background: var(--border); color: var(--navy); }
+    .btn-prev:hover { background: #ccd5e4; transform: translateY(-2px); }
+    .btn-next { background: var(--navy); color: white; box-shadow: 0 4px 14px rgba(14,34,64,0.2); }
+    .btn-next:hover { background: var(--navy2); transform: translateY(-2px); }
+    .btn-submit { background: var(--amber); color: var(--navy); }
+    .btn-submit:hover { background: #d4860a; transform: translateY(-2px); }
+
+    .unanswered-warning { font-size: 0.8rem; color: var(--red); font-weight: 600; text-align: center; opacity: 0; transition: opacity 0.3s; }
+    .unanswered-warning.show { opacity: 1; }
+
+    #resultsSection { display: none; }
+    .results-hero {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .grade-num { font-family: 'Literata', serif; font-size: 6rem; font-weight: 700; line-height: 1; color: white; margin-bottom: 6px; }
+    .grade-num.pass { color: #4dd9a0; }
+    .grade-num.fail { color: #ff7c72; }
+    .stats-row { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
+    .stat-chip {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 14px 20px;
+      min-width: 100px;
+    }
+    .stat-chip .snum { font-family: 'Literata', serif; font-size: 2rem; font-weight: 700; color: white; display: block; line-height: 1; margin-bottom: 4px; }
+    .stat-chip.s-green .snum { color: #4dd9a0; }
+    .stat-chip.s-red .snum { color: #ff7c72; }
+    .stat-chip.s-amber .snum { color: var(--amber); }
+    .time-badge { display: inline-block; padding: 8px 20px; border-radius: 40px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; }
+    .time-badge.excellent { background: rgba(77,217,160,0.15); color: #4dd9a0; border: 1px solid rgba(77,217,160,0.3); }
+    .time-badge.good { background: rgba(232,148,10,0.15); color: var(--amber); border: 1px solid rgba(232,148,10,0.3); }
+    .time-badge.slow { background: rgba(255,124,114,0.15); color: #ff7c72; border: 1px solid rgba(255,124,114,0.3); }
+    .verdict { font-size: 1.05rem; font-weight: 700; color: white; }
+
+    .nav-btns-results {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .nbtn {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      padding: 11px 26px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nbtn:hover { transform: translateY(-2px); }
+    .nbtn-amber { background: var(--amber); color: var(--navy); }
+    .nbtn-outline { background: transparent; border: 2px solid rgba(255,255,255,0.4); color: white; }
+    .nbtn-outline:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.7); }
+    .nbtn-lang { background: #2271b3; color: white; }
+    .nbtn-lang:hover { background: #1a5a8f; }
+    .nbtn-next { background: var(--green); color: white; }
+    .nbtn-next:hover { background: #0e5f43; }
+
+    .review-toggle { text-align: center; margin: 24px 0 12px; }
+    .btn-review {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      color: var(--navy);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    #reviewList { display: none; }
+    .review-item {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      border-left: 5px solid var(--border);
+    }
+    .review-item.r-correct { border-left-color: var(--green); }
+    .review-item.r-wrong { border-left-color: var(--red); }
+    .r-tag { padding: 4px 12px; border-radius: 40px; font-size: 0.8rem; font-weight: 700; }
+    .r-tag.user-correct { background: var(--green-light); color: var(--green); }
+    .r-tag.user-wrong { background: var(--red-light); color: var(--red); }
+    .r-tag.correct-ans { background: var(--green-light); color: var(--green); }
+
+    footer { text-align: center; padding: 16px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 20px; }
+
+    @media (max-width: 640px) {
+      .app-header { height: auto; flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 16px; }
+      .timer-wrap { align-self: flex-end; }
+      .quiz-wrap { padding: 20px 14px 80px; }
+      .q-dots { display: none; }
+      .question-card { padding: 20px 16px 18px; }
+      .q-text { font-size: 1rem; }
+      .option { padding: 14px 14px; }
+      .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--border); padding: 10px 16px; z-index: 150; display: flex; gap: 10px; }
+      .btn { flex: 1; text-align: center; padding: 13px 10px; }
+      .grade-num { font-size: 4rem; }
+      .nbtn { padding: 10px 18px; font-size: 0.8rem; }
+      .nav-btns-results { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+<header class="app-header">
+  <h1>🔍 <em>The Murders in the Rue Morgue</em> · Edgar Allan Poe · Reading Comprehension</h1>
+  <div class="timer-wrap" id="timerWrap"><span class="timer-icon">⏱</span><span class="timer-display" id="timerDisplay">45:00</span></div>
+</header>
+<div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<div class="quiz-wrap" id="quizSection">
+  <div class="q-meta"><div class="q-counter" id="qCounter">Question 1 of 40</div><div class="q-dots" id="qDots"></div></div>
+  <div class="question-card" id="questionCard"></div>
+  <div class="unanswered-warning" id="warnMsg">⚠ Please answer before continuing.</div>
+  <div class="nav-bar"><button class="btn btn-prev" id="btnPrev">◀ Previous</button><button class="btn btn-next" id="btnNext">Next ▶</button></div>
+</div>
+
+<div class="quiz-wrap" id="resultsSection">
+  <div class="results-hero">
+    <h2>📊 Your Result · Comprehension Quiz</h2>
+    <div class="grade-num" id="gradeDisplay">—</div>
+    <div class="grade-note" id="gradeNote"></div>
+    <div class="stats-row">
+      <div class="stat-chip s-green"><span class="snum" id="sCorrect">0</span><span class="slabel">Correct</span></div>
+      <div class="stat-chip s-red"><span class="snum" id="sWrong">0</span><span class="slabel">Wrong</span></div>
+      <div class="stat-chip s-amber"><span class="snum" id="sPct">0%</span><span class="slabel">Score</span></div>
+      <div class="stat-chip"><span class="snum" id="sTime">—</span><span class="slabel">Time</span></div>
+    </div>
+    <div class="time-badge" id="timeBadge"></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="nav-btns-results">
+      <button class="nbtn nbtn-amber" onclick="resetQuiz()">🔄 Try Again</button>
+      <button class="nbtn nbtn-outline" onclick="toggleReview()">📋 Review Answers</button>
+      <a href="C_2_Ingles.html" class="nbtn nbtn-lang">📚 Back to Class</a>
+      <a href="C_2C_Ingles.html" class="nbtn nbtn-next">⏩ Next Activity</a>
+    </div>
+  </div>
+  <div id="reviewList"></div>
+</div>
+<footer>📚 40 questions · The Murders in the Rue Morgue · Passing: 60% (24 correct) · Detective Fiction & Analysis</footer>
+
+<script>
+  // ============================================================
+  // 40 OBJECTIVE QUESTIONS BASED ON "THE MURDERS IN THE RUE MORGUE"
+  // ============================================================
+  const ALL_QUESTIONS = [
+    { topic: "📖 Plot", text: "In which city does 'The Murders in the Rue Morgue' take place?", opts: ["London","New York","Paris","Rome"], correct: 2 },
+    { topic: "🔍 Dupin", text: "What is the name of the brilliant amateur detective?", opts: ["C. Auguste Dupin","Sherlock Holmes","Auguste C. Duponte","Edgar Allan Poe"], correct: 0 },
+    { topic: "🔍 Dupin", text: "How does Dupin know what the narrator is thinking about the actor Chantilly?", opts: ["He reads his diary","He follows his gaze and deduces the chain of associations","He heard him speak","The narrator told him earlier"], correct: 1 },
+    { topic: "🔍 Dupin", text: "What unusual ability does Dupin possess according to the narrator?", opts: ["He can see the future","He can read unspoken thoughts through observation","He can speak to animals","He is invisible"], correct: 1 },
+    { topic: "🏚️ Crime Scene", text: "Where is the daughter's body found?", opts: ["In the courtyard","Under the bed","Stuffed up the chimney / above the fireplace","Inside a closet"], correct: 2 },
+    { topic: "🏚️ Crime Scene", text: "How is Madame L'Espanaye killed?", opts: ["Strangled","Poisoned","Her throat is cut almost to decapitation","Stabbed with a knife"], correct: 2 },
+    { topic: "🏚️ Crime Scene", text: "What unusual condition is found inside the locked room?", opts: ["All windows were open","The furniture is broken and everything is in wild disorder","Everything is perfectly tidy","There is a secret passage"], correct: 1 },
+    { topic: "💬 Voices", text: "What do the witnesses agree about the gruff voice?", opts: ["It spoke Italian","It spoke French saying 'Mon Dieu!'","It spoke English","It was a woman's voice"], correct: 1 },
+    { topic: "💬 Voices", text: "Why is the high-pitched voice so strange?", opts: ["It was musical","No witness could identify the language or nationality","It was clearly Spanish","It was a child's voice"], correct: 1 },
+    { topic: "🚪 Locked Room", text: "How does Dupin prove the killer escaped through the window?", opts: ["He finds a key","He discovers a hidden spring lock and a broken nail","The window was wide open","There is a ladder outside"], correct: 1 },
+    { topic: "🚪 Locked Room", text: "What holds the window seemingly closed from the inside?", opts: ["A heavy lock","A nail that appears whole but was broken","A bar of iron","The window was painted shut"], correct: 1 },
+    { topic: "🧠 Deduction", text: "What clue leads Dupin to realize the killer is not human?", opts: ["A footprint outside","A strand of unusual gray hair found in the old woman's hand","A written note","A bloody knife"], correct: 1 },
+    { topic: "🧠 Deduction", text: "What book does Dupin use to identify the hair and hand marks?", opts: ["The Bible","Cuvier's natural history book","Poe's poetry","Paris directory"], correct: 1 },
+    { topic: "🧠 Deduction", text: "What does Dupin compare the marks on the daughter's neck to?", opts: ["A bear","A human hand","A hand of an orangutan","A lion's paw"], correct: 2 },
+    { topic: "🐒 The Killer", text: "What animal committed the murders?", opts: ["A wolf","A gorilla","An orangutan","A large dog"], correct: 2 },
+    { topic: "🐒 The Killer", text: "Where did the sailor acquire the orangutan?", opts: ["Paris zoo","Africa","Borneo (Far East)","South America"], correct: 2 },
+    { topic: "🐒 The Killer", text: "Why did the orangutan attack the women?", opts: ["Hunger","It was trained to kill","Fear and imitation of the razor","It escaped from a circus"], correct: 2 },
+    { topic: "👤 The Sailor", text: "What does the sailor do when he sees the animal in the room?", opts: ["He runs away immediately","He tries to save the women","He climbs up the lightning rod and watches in horror","He calls the police"], correct: 2 },
+    { topic: "👤 The Sailor", text: "How does Dupin lure the sailor to his apartment?", opts: ["He sends a letter","He puts an advertisement in the newspaper offering to return the orangutan","He arrests him","He asks the police to find him"], correct: 1 },
+    { topic: "👤 The Sailor", text: "What does the sailor confess to Dupin?", opts: ["He killed the women","He owns the orangutan and watched the events","He planned the murders","He stole money from the house"], correct: 1 },
+    { topic: "📰 Police", text: "What is the Prefect of Police's reaction when Dupin solves the mystery?", opts: ["He is grateful","He is jealous and says people should mind their own business","He promotes Dupin","He arrests the sailor"], correct: 1 },
+    { topic: "🕯️ Details", text: "What object does the orangutan hold during the attack?", opts: ["A club","A razor","A hammer","A candle"], correct: 1 },
+    { topic: "🕯️ Details", text: "What was found in the fireplace?", opts: ["Gold coins","Long gray hair (from the mother) and blood","A letter","The murder weapon"], correct: 1 },
+    { topic: "🕯️ Details", text: "How much money was found on the floor of the room?", opts: ["Nothing","A large amount in gold coins","Only some silver","A check"], correct: 1 },
+    { topic: "🔑 Evidence", text: "What does Dupin do with the window nail during his investigation?", opts: ["He removes it completely","He pulls it out and discovers the head is separate; the nail was broken","He leaves it untouched","He bends it"], correct: 1 },
+    { topic: "🔑 Evidence", text: "Why does Dupin believe robbery was not the motive?", opts: ["Nothing was stolen and the gold was left behind","The killer left a note","The women were poor","The police found a will"], correct: 0 },
+    { topic: "🗣️ Testimony", text: "What nationality does the English witness William Bird think the high voice belongs to?", opts: ["French","Spanish","Italian","German"], correct: 2 },
+    { topic: "🗣️ Testimony", text: "How many witnesses heard the voices?", opts: ["Two","Four (including Dubourg, Garcia, Bird, Montani)","Ten","Only one"], correct: 1 },
+    { topic: "🏠 Setting", text: "On which floor is the locked apartment?", opts: ["Second","Third","Fourth","Fifth"], correct: 2 },
+    { topic: "🏠 Setting", text: "What helps the murderer climb up to the window?", opts: ["A tree","A lightning rod on the side of the building","A ladder left by workers","A rope"], correct: 1 },
+    { topic: "📖 Literary Genre", text: "Why is this story considered the first modern detective tale?", opts: ["It has a large reward","It introduced the brilliant amateur detective, locked-room mystery, and logical deduction","It was written in English","It has a surprising ending"], correct: 1 },
+    { topic: "📖 Literary Genre", text: "What narrative technique does Poe use (narrator as friend/assistant)?", opts: ["First-person witness (the roommate)","Third-person omniscient","Epistolary","Second-person"], correct: 0 },
+    { topic: "🎭 Character: Narrator", text: "What is the relationship between the narrator and Dupin?", opts: ["Brothers","Roommates and friends","Detective and police","Doctor and patient"], correct: 1 },
+    { topic: "🎭 Character: Dupin", text: "What does Dupin enjoy most?", opts: ["Wealth","The use of his analytical reasoning power","Fame","Travel"], correct: 1 },
+    { topic: "🔪 The Murders", text: "What happens to the daughter's body after strangulation?", opts: ["Thrown out the window","Hidden under the floorboards","Placed head-down in the chimney opening","Left on the bed"], correct: 2 },
+    { topic: "🔪 The Murders", text: "Where is the mother's body found?", opts: ["In the bedroom","In the courtyard behind the house","In the cellar","On the stairs"], correct: 1 },
+    { topic: "🧬 Evidence", text: "What does Dupin say about the strength needed to commit the murders?", opts: ["It was normal human strength","It was superhuman, more than any man could exert","It was two men","It was done with a machine"], correct: 1 },
+    { topic: "🧬 Evidence", text: "What does the sailor think the orangutan was doing with the razor?", opts: ["Trying to hurt him","Playing and imitating shaving","Trying to cut the rope","Eating"], correct: 1 },
+    { topic: "🧬 Evidence", text: "What does the sailor say he saw through the window?", opts: ["The animal murdering the women","The women sleeping","The animal playing","A thief"], correct: 0 },
+    { topic: "🏁 Conclusion", text: "What does Dupin say about the Prefect of Police at the end?", opts: ["He is a genius","He is a good fellow but makes things less simple than they are","He is the best detective in Paris","He should be fired"], correct: 1 }
+  ];
+
+  const TOTAL = ALL_QUESTIONS.length;
+  const TIME_LIMIT = 45 * 60;
+  let questions = [];
+  let currentQ = 0;
+  let answers = {};
+  let timerInterval = null;
+  let elapsed = 0;
+  let quizDone = false;
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  }
+  function shuffleOptions(questionsArray) {
+    return questionsArray.map(q => {
+      const optsWithIndex = q.opts.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
+      for (let i = optsWithIndex.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [optsWithIndex[i], optsWithIndex[j]] = [optsWithIndex[j], optsWithIndex[i]]; }
+      const shuffledOpts = optsWithIndex.map(item => item.text);
+      const newCorrectIndex = optsWithIndex.findIndex(item => item.isCorrect === true);
+      return { ...q, opts: shuffledOpts, correct: newCorrectIndex };
+    });
+  }
+  function formatTime(sec) { const m = Math.floor(sec/60), s = sec%60; return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; }
+  function startTimer() {
+    elapsed = 0;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      elapsed++;
+      const remaining = TIME_LIMIT - elapsed;
+      document.getElementById('timerDisplay').textContent = formatTime(remaining>=0?remaining:0);
+      const wrap = document.getElementById('timerWrap');
+      if (remaining <= 0) { clearInterval(timerInterval); document.getElementById('timerDisplay').textContent='00:00'; wrap.className='timer-wrap danger'; if(!quizDone) showResults(); }
+      else if (remaining <= 300) wrap.className = 'timer-wrap danger';
+      else if (remaining <= 600) wrap.className = 'timer-wrap warning';
+      else wrap.className = 'timer-wrap';
+    }, 1000);
+  }
+  function renderDots() {
+    const container = document.getElementById('qDots');
+    if(!container) return;
+    container.innerHTML = '';
+    questions.forEach((_,i) => {
+      const d = document.createElement('span');
+      d.className = 'dot' + (i===currentQ ? ' current' : answers[i]!==undefined ? ' answered' : '');
+      d.onclick = () => goTo(i);
+      container.appendChild(d);
+    });
+  }
+  function renderQuestion() {
+    const q = questions[currentQ];
+    const letters = ['A','B','C','D'];
+    const optsHtml = q.opts.map((opt,idx) => `<button class="option${answers[currentQ]===idx?' selected':''}" onclick="selectAnswer(${idx})"><span class="opt-letter">${letters[idx]}</span>${opt}</button>`).join('');
+    document.getElementById('questionCard').innerHTML = `<span class="q-topic">${q.topic}</span><div class="q-text">${q.text}</div><div class="options">${optsHtml}</div>`;
+    document.getElementById('qCounter').textContent = `Question ${currentQ+1} of ${TOTAL}`;
+    document.getElementById('progressFill').style.width = `${((currentQ+1)/TOTAL)*100}%`;
+    document.getElementById('btnPrev').style.visibility = currentQ>0 ? 'visible' : 'hidden';
+    const nextBtn = document.getElementById('btnNext');
+    nextBtn.textContent = currentQ === TOTAL-1 ? '✅ Submit' : 'Next ▶';
+    nextBtn.className = currentQ === TOTAL-1 ? 'btn btn-submit' : 'btn btn-next';
+    document.getElementById('warnMsg').classList.remove('show');
+    renderDots();
+  }
+  window.selectAnswer = function(idx) { answers[currentQ]=idx; renderQuestion(); };
+  function goTo(idx) { if(idx<0 || idx>=TOTAL) return; currentQ=idx; renderQuestion(); }
+  window.handleNext = function() {
+    if(currentQ === TOTAL-1) {
+      const unanswered = TOTAL - Object.keys(answers).length;
+      if(unanswered > 0) { const msg = document.getElementById('warnMsg'); msg.textContent = `⚠ You have ${unanswered} unanswered question(s). Answer all before submitting.`; msg.classList.add('show'); return; }
+      showResults();
+    } else goTo(currentQ+1);
+  };
+  function calcGrade(correct, total) { const p = correct/total; if(correct===total) return 7.0; if(p>=0.6) return +(4.0+((p-0.6)/0.4)*3.0).toFixed(1); return +(1.0+(p/0.6)*3.0).toFixed(1); }
+  function showResults() {
+    if(quizDone) return;
+    quizDone = true;
+    clearInterval(timerInterval);
+    let correct = 0;
+    questions.forEach((q,idx) => { if(answers[idx]===q.correct) correct++; });
+    const pct = Math.round((correct/TOTAL)*100);
+    const grade = calcGrade(correct, TOTAL);
+    const pass = pct >= 60;
+    document.getElementById('quizSection').style.display = 'none';
+    document.getElementById('resultsSection').style.display = 'block';
+    const gradeEl = document.getElementById('gradeDisplay');
+    gradeEl.textContent = grade.toFixed(1);
+    gradeEl.className = 'grade-num ' + (pass ? 'pass' : 'fail');
+    document.getElementById('gradeNote').textContent = `${correct} of ${TOTAL} correct · Passing: 60% (24 correct)`;
+    document.getElementById('sCorrect').textContent = correct;
+    document.getElementById('sWrong').textContent = TOTAL - correct;
+    document.getElementById('sPct').textContent = pct + '%';
+    document.getElementById('sTime').textContent = formatTime(elapsed);
+    const timeBadge = document.getElementById('timeBadge');
+    if(elapsed >= TIME_LIMIT) { timeBadge.className='time-badge slow'; timeBadge.textContent='⏰ Time expired'; }
+    else if(elapsed < 1500) { timeBadge.className='time-badge excellent'; timeBadge.textContent='⚡ Excellent speed'; }
+    else if(elapsed < 2700) { timeBadge.className='time-badge good'; timeBadge.textContent='✓ Good timing'; }
+    else { timeBadge.className='time-badge slow'; timeBadge.textContent='🐢 Take less time next time'; }
+    document.getElementById('verdict').textContent = pass ? '✅ Passed! Excellent reading comprehension.' : '❌ Not passed. Review the story and try again.';
+    buildReviewList();
+    window.scrollTo({ top: 0, behavior:'smooth' });
+  }
+  function buildReviewList() {
+    const container = document.getElementById('reviewList');
+    container.innerHTML = '';
+    questions.forEach((q,i) => {
+      const user = answers[i];
+      const isCorrect = user === q.correct;
+      const div = document.createElement('div');
+      div.className = `review-item ${isCorrect ? 'r-correct' : 'r-wrong'}`;
+      let row = '';
+      if(user === undefined) row = `<span class="r-tag not-ans">❌ Not answered</span><span class="r-tag correct-ans">✓ ${q.opts[q.correct]}</span>`;
+      else if(isCorrect) row = `<span class="r-tag user-correct">✓ Your answer: ${q.opts[user]}</span>`;
+      else row = `<span class="r-tag user-wrong">✗ Your answer: ${q.opts[user]}</span><span class="r-tag correct-ans">✓ Correct: ${q.opts[q.correct]}</span>`;
+      div.innerHTML = `<div class="r-qtext"><strong>${i+1}.</strong> ${q.text}</div><div class="r-answer-row">${row}</div>`;
+      container.appendChild(div);
+    });
+  }
+  window.toggleReview = function() { const list = document.getElementById('reviewList'); list.style.display = list.style.display === 'block' ? 'none' : 'block'; };
+  window.resetQuiz = function() {
+    quizDone = false; answers = {}; currentQ = 0;
+    let shuffledQuestions = shuffle(ALL_QUESTIONS);
+    questions = shuffleOptions(shuffledQuestions);
+    document.getElementById('resultsSection').style.display = 'none';
+    document.getElementById('quizSection').style.display = 'block';
+    document.getElementById('timerDisplay').textContent = formatTime(TIME_LIMIT);
+    document.getElementById('timerWrap').className = 'timer-wrap';
+    startTimer(); renderQuestion();
+    window.scrollTo({ top:0 });
+  };
+  window.onload = () => {
+    let shuffled = shuffle(ALL_QUESTIONS);
+    questions = shuffleOptions(shuffled);
+    startTimer();
+    renderQuestion();
+    document.getElementById('btnPrev').onclick = () => goTo(currentQ-1);
+    document.getElementById('btnNext').onclick = () => handleNext();
+  };
+</script>
+</body>
+</html>

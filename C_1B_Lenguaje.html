@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Actividad de escritura: Relatos Espectrales · Lovecraft · Análisis de un cuento</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f5f3ee;
+      font-family: 'Syne', sans-serif;
+      color: #0e2240;
+      padding: 32px 20px;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .header-card {
+      background: #0e2240;
+      border-radius: 28px;
+      padding: 24px 32px;
+      color: white;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+    }
+    .header-card h1 { font-size: 1.7rem; font-weight: 600; letter-spacing: -0.3px; }
+    .header-card h1 span { color: #e8940a; }
+    .header-card p { font-family: 'Literata', serif; margin-top: 8px; opacity: 0.85; }
+    
+    .selector-card {
+      background: white;
+      border-radius: 24px;
+      padding: 20px 24px;
+      margin-bottom: 24px;
+      border: 1px solid #dde3ec;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+    }
+    .selector-card label {
+      font-weight: 600;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+    }
+    .story-select {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      padding: 10px 20px;
+      border-radius: 50px;
+      border: 2px solid #e8940a;
+      background: white;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: 0.2s;
+    }
+    .story-select:focus { outline: none; border-color: #0e2240; }
+    
+    .question-prompt {
+      background: #fef7e8;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 6px solid #e8940a;
+    }
+    .question-prompt h3 { font-size: 1rem; margin-bottom: 12px; color: #0e2240; }
+    .question-prompt p { font-family: 'Literata', serif; font-size: 0.95rem; line-height: 1.5; }
+    
+    .score-panel {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border: 1px solid #dde3ec;
+    }
+    .score-card {
+      background: #fef7e8;
+      border-radius: 32px;
+      padding: 12px 24px;
+      min-width: 130px;
+      text-align: center;
+    }
+    .score-card .label { font-size: 0.7rem; text-transform: uppercase; font-weight: 600; letter-spacing: 1px; color: #7a8899; }
+    .score-card .value { font-size: 2.5rem; font-weight: 600; font-family: 'Literata', serif; line-height: 1; color: #0e2240; }
+    .score-card.total .value { color: #e8940a; font-size: 3rem; }
+    .btn-eval {
+      background: #1a7f5a;
+      border: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      font-size: 1rem;
+      padding: 12px 28px;
+      border-radius: 60px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 0 #0c5239;
+    }
+    .btn-eval:active { transform: translateY(2px); box-shadow: 0 1px 0 #0c5239; }
+    .word-stats {
+      background: #eef2f9;
+      border-radius: 20px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+    .word-counter {
+      background: #0e2240;
+      color: white;
+      border-radius: 40px;
+      padding: 6px 18px;
+      font-family: monospace;
+      font-size: 1.2rem;
+    }
+    textarea {
+      width: 100%;
+      min-height: 320px;
+      padding: 20px;
+      font-family: 'Literata', serif;
+      font-size: 1rem;
+      line-height: 1.55;
+      border: 2px solid #dde3ec;
+      border-radius: 24px;
+      background: white;
+      resize: vertical;
+      transition: 0.2s;
+    }
+    textarea:focus { outline: none; border-color: #e8940a; box-shadow: 0 0 0 3px rgba(232,148,10,0.2); }
+    .results-area {
+      margin-top: 32px;
+      background: white;
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+      border-left: 6px solid #e8940a;
+    }
+    .grammar-list { background: #f9f7f2; padding: 16px; border-radius: 20px; margin-top: 12px; font-size: 0.85rem; }
+    .keyword-badge {
+      display: inline-block;
+      background: #e3f5ed;
+      color: #1a7f5a;
+      border-radius: 30px;
+      padding: 4px 12px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      margin: 3px 5px 3px 0;
+    }
+    hr { margin: 20px 0; border: none; height: 1px; background: #dde3ec; }
+    footer { text-align: center; margin-top: 40px; font-size: 0.75rem; color: #7a8899; }
+    
+    /* Botones de acción después de evaluar */
+    .action-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+    }
+    .btn-reset {
+      background: #e8940a;
+      color: #0e2240;
+    }
+    .btn-reset:hover {
+      background: #d4860a;
+      transform: translateY(-2px);
+    }
+    .btn-home {
+      background: #2271b3;
+      color: white;
+    }
+    .btn-home:hover {
+      background: #1a5a8f;
+      transform: translateY(-2px);
+    }
+    
+    .grade-circle {
+      background: #0e2240;
+      border-radius: 60px;
+      padding: 12px 24px;
+      text-align: center;
+      margin: 16px 0;
+      display: inline-block;
+      width: auto;
+    }
+    .grade-circle .grade-value {
+      font-size: 2.8rem;
+      font-weight: 600;
+      font-family: 'Literata', serif;
+    }
+    .grade-circle.pass .grade-value { color: #4dd9a0; }
+    .grade-circle.fail .grade-value { color: #ff7c72; }
+    
+    @media (max-width: 700px) {
+      body { padding: 16px; }
+      .score-card .value { font-size: 1.8rem; }
+      .score-card.total .value { font-size: 2.2rem; }
+      .selector-card { flex-direction: column; align-items: stretch; }
+      .action-buttons { flex-direction: column; align-items: stretch; }
+      .btn-action { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header-card">
+    <h1>📝 <span>Actividad de escritura</span> · Relatos Espectrales</h1>
+    <p>H.P. Lovecraft · Elige un cuento y desarrolla un análisis objetivo (150+ palabras) · 50 puntos totales · Exigencia 60% (30 pts) para nota 4.0</p>
+  </div>
+
+  <!-- SELECTOR DE CUENTO -->
+  <div class="selector-card">
+    <label>📖 SELECCIONA UN CUENTO:</label>
+    <select id="storySelect" class="story-select">
+      <option value="cripta">🏚️ En la cripta</option>
+      <option value="umbral">🌌 El ser en el umbral</option>
+      <option value="ulthar">🐱 Los gatos de Ulthar</option>
+      <option value="ratas">🐀 Las ratas de las paredes</option>
+    </select>
+  </div>
+
+  <!-- PREGUNTA GUIÁN DINÁMICA -->
+  <div class="question-prompt" id="questionPrompt">
+    <h3>📌 Pregunta guía para tu análisis</h3>
+    <p id="promptText">Describe el proceso de transformación del sepulturero. ¿Qué error comete al inicio? ¿Cómo lo castigan los muertos? ¿Qué enseñanza deja este relato sobre el respeto a los difuntos?</p>
+  </div>
+
+  <div class="score-panel">
+    <div class="score-card"><div class="label">📊 PUNTUACIÓN TOTAL</div><div class="value total" id="totalScore">0</div><div class="label">/ 50 pts</div></div>
+    <div class="score-card"><div class="label">📖 PALABRAS CLAVE</div><div class="value" id="kwScore">0</div><div class="label">/ 30 pts</div></div>
+    <div class="score-card"><div class="label">📏 LONGITUD (150+ palabras)</div><div class="value" id="lenScore">0</div><div class="label">/ 10 pts</div></div>
+    <div class="score-card"><div class="label">✍️ GRAMÁTICA (0 errores)</div><div class="value" id="gramScore">0</div><div class="label">/ 10 pts</div></div>
+    <button class="btn-eval" id="evaluateBtn">🔍 Evaluar texto</button>
+  </div>
+
+  <div class="word-stats">
+    <span>📌 <strong>Pool de palabras clave específico por cuento</strong> — debes incluir al menos 30 términos distintos (1 punto c/u). El sistema detecta automáticamente según el cuento elegido.</span>
+    <span class="word-counter" id="wordCountDisplay">0 palabras</span>
+  </div>
+  
+  <textarea id="userText" placeholder="Escribe aquí tu análisis."></textarea>
+  
+  <div class="results-area" id="resultArea" style="display: none;">
+    <h3>📋 Resultados detallados</h3>
+    <div id="detailedFeedback"></div>
+    <div class="action-buttons" id="actionButtons"></div>
+  </div>
+  <footer>✅ Criterios: 30 palabras clave específicas del cuento = 30 pts | mínimo 150 palabras = hasta 10 pts | sin errores gramaticales = 10 pts (cada error resta -1, máx -10). Nota según escala de 1 a 7, exigencia 60% (30 puntos = nota 4.0).</footer>
+</div>
+
+<script>
+  // --------------------------------------------------------------
+  // POOL DE PALABRAS CLAVE POR CADA CUENTO (más de 30 palabras cada uno)
+  // --------------------------------------------------------------
+  const KEYWORDS_BY_STORY = {
+    cripta: [
+      "cripta", "sepulturero", "cementerio", "ataúd", "muertos", "lección moral", "respeto", "justicia poética", "cadáver", "tumba",
+      "castigo", "arrepentimiento", "miedo", "encierro", "oscuridad", "humildad", "codicia", "transformación", "espíritus", "moral",
+      "gótico", "terror psicológico", "sotano", "noche", "lección", "difunto", "redención", "ataud", "sepultura", "alma",
+      "fantasma", "cementerio", "culpa"
+    ],
+    umbral: [
+      "Edward Derby", "umbral", "posesión", "entidad", "horror cósmico", "invocación", "ocultismo", "transformación", "esposa maligna", "Mitos de Cthulhu",
+      "interdimensional", "conciencia", "amigo", "narrador", "ritual", "demonio", "antiguo", "portal", "cuerpo", "alma",
+      "locura", "tenebroso", "arcano", "libros prohibidos", "identidad", "ser", "vacío", "dimensión", "pacto", "sombra",
+      " Lovecraft", "cosmos"
+    ],
+    ulthar: [
+      "Ulthar", "gatos", "ancianos", "venganza", "nómadas", "egipcio", "felino", "decreto", "animales", "justicia sobrenatural",
+      "caravaneros", "desaparición", "ley", "respeto animal", "moraleja", "pueblo", "misterio", "magia", "antigua creencia", "castigo",
+      "gato desaparecido", "justicia", "crueldad", "protectores", "fábula", "fantástico", "venganza secreta", "adoración", "felinos", "sabiduría",
+      "Bastet", "egipto"
+    ],
+    ratas: [
+      "ratas", "paredes", "abadía", "herencia", "canibalismo", "secreto familiar", "culpa ancestral", "locura", "sótano", "antepasados",
+      "roedores", "cordura", "descendencia", "crímenes", "degeneración", "terror psicológico", "alucinación", "gato", "descubrimiento", "oscuridad",
+      "sangre", "pesadilla", "culpa", "herencia maldita", "ruido", "persecución", "mente", "enfermedad", "foso", "cadáveres",
+      "castillo", "Inglaterra"
+    ]
+  };
+  
+  // Preguntas guía según cuento
+  const PROMPTS = {
+    cripta: "📖 «En la cripta»: Describe el proceso de transformación del sepulturero. ¿Qué error comete al inicio? ¿Cómo lo castigan los muertos? ¿Qué enseñanza deja este relato sobre el respeto a los difuntos?",
+    umbral: "🌌 «El ser en el umbral»: Explica el concepto de 'posesión interdimensional' en este cuento. ¿Quién es Edward Derby y por qué es vulnerable? ¿Qué rol cumple su esposa en la invocación del ser?",
+    ulthar: "🐱 «Los gatos de Ulthar»: ¿Por qué los ancianos son temidos en Ulthar? ¿Cómo se vengan los nómadas? ¿Qué ley se decreta al final y qué moraleja sobre el maltrato animal nos entrega Lovecraft?",
+    ratas: "🐀 «Las ratas de las paredes»: Analiza el simbolismo de las ratas en el cuento. ¿Qué descubre el protagonista en los sótanos de la abadía? ¿Cómo afecta este hallazgo a su salud mental y qué crítica hace Lovecraft sobre la herencia familiar?"
+  };
+  
+  // Elementos DOM
+  const storySelect = document.getElementById('storySelect');
+  const promptDiv = document.getElementById('promptText');
+  const textarea = document.getElementById('userText');
+  const evaluateBtn = document.getElementById('evaluateBtn');
+  const wordCountSpan = document.getElementById('wordCountDisplay');
+  const resultArea = document.getElementById('resultArea');
+  const detailedFeedback = document.getElementById('detailedFeedback');
+  const actionButtonsDiv = document.getElementById('actionButtons');
+  
+  // Actualizar pregunta según cuento elegido
+  function updatePrompt() {
+    const story = storySelect.value;
+    promptDiv.innerText = PROMPTS[story];
+  }
+  storySelect.addEventListener('change', updatePrompt);
+  updatePrompt();
+  
+  // Funciones auxiliares
+  function countWords(text) {
+    return text.trim().split(/\s+/).filter(w => w.length > 0).length;
+  }
+  
+  function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+  
+  // Contar palabras clave específicas del cuento elegido
+  function countKeywordsForStory(text, storyId) {
+    const keywords = KEYWORDS_BY_STORY[storyId] || KEYWORDS_BY_STORY.cripta;
+    const lowerText = text.toLowerCase();
+    let found = new Set();
+    for (let kw of keywords) {
+      const kwLower = kw.toLowerCase();
+      const regex = new RegExp(`\\b${escapeRegex(kwLower)}\\b`, 'i');
+      if (regex.test(lowerText)) {
+        found.add(kwLower);
+      }
+    }
+    return found.size;
+  }
+  
+  // Puntuación longitud (mínimo 150 palabras, puntuación lineal)
+  function evaluateLengthScore(wordCount) {
+    if (wordCount >= 150) return 10;
+    let score = (wordCount / 150) * 10;
+    return Math.min(10, Math.max(0, parseFloat(score.toFixed(1))));
+  }
+  
+  // Detector gramatical básico
+  function detectGrammarErrors(text) {
+    let errors = 0;
+    let feedback = [];
+    if (!text.trim()) return { errors: 1, details: ["El texto está vacío."] };
+    const trimmed = text.trim();
+    // Mayúscula inicial
+    if (trimmed.length > 0 && trimmed[0] !== trimmed[0].toUpperCase()) {
+      errors++;
+      feedback.push("❌ La primera letra debe ser mayúscula.");
+    }
+    // Punto final
+    const lastChar = trimmed[trimmed.length - 1];
+    if (!['.', '!', '?'].includes(lastChar)) {
+      errors++;
+      feedback.push("❌ El texto debe finalizar con un punto o signo de puntuación.");
+    }
+    // Mayúscula después de punto
+    const sentences = trimmed.split(/(?<=[.!?])\s+/);
+    for (let i = 1; i < sentences.length; i++) {
+      let sent = sentences[i].trim();
+      if (sent.length > 0 && sent[0] !== sent[0].toUpperCase()) {
+        errors++;
+        feedback.push(`❌ Tras un punto debe ir mayúscula: "${sent.substring(0, 30)}..."`);
+        break;
+      }
+    }
+    // Espacios después de coma/punto
+    if (/,([^\s])/g.test(text)) { errors++; feedback.push("❌ Falta espacio después de una coma."); }
+    if (/\.([A-Za-z])/g.test(text) && !/\.\.\./g.test(text)) { errors++; feedback.push("❌ Falta espacio después de un punto."); }
+    // Palabras repetidas
+    if (/\b(\w+)\s+\1\b/gi.test(text)) { errors++; feedback.push("❌ Palabras repetidas consecutivas."); }
+    // Concordancia básica
+    const wrongEnd = text.match(/\b(ellos|ellas|ustedes)\s+([a-záéíóú]+?)(?=\s|$|\.|,)/gi);
+    if (wrongEnd) {
+      for (let w of wrongEnd) {
+        const parts = w.split(/\s+/);
+        if (parts.length >= 2) {
+          const verb = parts[1];
+          if (verb && !verb.endsWith('n') && verb !== 'son' && verb !== 'están' && verb !== 'van' && verb !== 'tienen' && verb !== 'pueden') {
+            errors++;
+            feedback.push(`⚠️ Concordancia: "${w}" – verbo singular con sujeto plural.`);
+            break;
+          }
+        }
+      }
+    }
+    if (/\bhabían\s+[a-z]+s\b/i.test(text)) { errors++; feedback.push("⚠️ Uso incorrecto de 'habían' (debe ser 'había' en impersonal)."); }
+    if (errors > 10) errors = 10;
+    return { errors, details: feedback };
+  }
+  
+  // Función para convertir puntaje (0-50) a nota (1.0 a 7.0) con 60% exigencia
+  // 60% de 50 = 30 puntos equivalen a nota 4.0
+  // 0 puntos = 1.0, 50 puntos = 7.0
+  function calculateGrade(score) {
+    const maxScore = 50;
+    const passingScore = 30; // 60% de 50 = 30 puntos -> nota 4.0
+    const minGrade = 1.0;
+    const passingGrade = 4.0;
+    const maxGrade = 7.0;
+    
+    if (score >= passingScore) {
+      // Por sobre la nota 4.0: (score - 30) / (50 - 30) * (7 - 4) + 4
+      const grade = passingGrade + ((score - passingScore) / (maxScore - passingScore)) * (maxGrade - passingGrade);
+      return Math.min(maxGrade, parseFloat(grade.toFixed(1)));
+    } else {
+      // Por debajo de 4.0: (score - 0) / (30 - 0) * (4 - 1) + 1
+      const grade = minGrade + (score / passingScore) * (passingGrade - minGrade);
+      return parseFloat(grade.toFixed(1));
+    }
+  }
+  
+  // Generar botones de acción (reiniciar y volver a Lenguaje.html)
+  function renderActionButtons() {
+    actionButtonsDiv.innerHTML = `
+      <button class="btn-action btn-reset" onclick="resetActivity()">🔄 Reiniciar actividad</button>
+      <a href="Lenguaje.html" class="btn-action btn-home">🏠 Volver a Clase</a>
+    `;
+  }
+  
+  // Función para reiniciar toda la actividad
+  window.resetActivity = function() {
+    // Limpiar textarea
+    textarea.value = '';
+    // Ocultar resultados
+    resultArea.style.display = 'none';
+    // Reiniciar puntajes mostrados (valores visuales)
+    document.getElementById('totalScore').innerHTML = '0';
+    document.getElementById('kwScore').innerHTML = '0 / 30';
+    document.getElementById('lenScore').innerHTML = '0 / 10';
+    document.getElementById('gramScore').innerHTML = '0 / 10';
+    document.getElementById('wordCountDisplay').innerHTML = '0 palabras';
+    // Limpiar feedback detallado
+    detailedFeedback.innerHTML = '';
+    // Scroll al inicio
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
+  // Evaluación principal
+  function evaluateFullText() {
+    const rawText = textarea.value;
+    const text = rawText;
+    const wordCount = countWords(text);
+    wordCountSpan.innerText = `${wordCount} palabras`;
+    
+    const selectedStory = storySelect.value;
+    // Palabras clave específicas del cuento (máx 30 puntos)
+    let kwFound = countKeywordsForStory(text, selectedStory);
+    let kwPoints = Math.min(30, kwFound);
+    
+    // Puntuación longitud
+    let lengthPoints = evaluateLengthScore(wordCount);
+    const finalLength = parseFloat(lengthPoints.toFixed(1));
+    
+    // Gramática
+    const grammarEval = detectGrammarErrors(text);
+    let grammarPoints = 10 - grammarEval.errors;
+    if (grammarPoints < 0) grammarPoints = 0;
+    
+    // Total (máximo 50)
+    const total = kwPoints + finalLength + grammarPoints;
+    const totalFixed = Math.floor(total * 10) / 10;
+    
+    // Calcular nota con exigencia 60%
+    const grade = calculateGrade(total);
+    const isPassing = grade >= 4.0;
+    
+    // Actualizar UI
+    document.getElementById('kwScore').innerHTML = `${kwPoints} / 30 <span style="font-size:0.7rem;">(${kwFound} palabras clave)</span>`;
+    document.getElementById('lenScore').innerHTML = `${finalLength} / 10`;
+    document.getElementById('gramScore').innerHTML = `${grammarPoints} / 10<span style="font-size:0.7rem;"> (${grammarEval.errors} errores)</span>`;
+    document.getElementById('totalScore').innerHTML = `${totalFixed}`;
+    
+    // Mostrar panel
+    resultArea.style.display = 'block';
+    
+    // Construir feedback detallado
+    const lowerText = text.toLowerCase();
+    const keywordsList = KEYWORDS_BY_STORY[selectedStory] || KEYWORDS_BY_STORY.cripta;
+    const foundKeywords = keywordsList.filter(kw => new RegExp(`\\b${escapeRegex(kw.toLowerCase())}\\b`).test(lowerText));
+    
+    let keywordHtml = `<div><strong>🔑 Palabras clave encontradas (${foundKeywords.length} distintas):</strong><br>`;
+    if (foundKeywords.length === 0) keywordHtml += "<span>Ninguna aún. Revisa el vocabulario específico del cuento.</span>";
+    else keywordHtml += foundKeywords.slice(0, 45).map(k => `<span class="keyword-badge">${k}</span>`).join('');
+    keywordHtml += `</div>`;
+    
+    let lengthDetail = `<div><strong>📏 Longitud:</strong> ${wordCount} palabras. `;
+    if (wordCount >= 150) lengthDetail += `✅ Cumples el mínimo → +${finalLength} puntos.`;
+    else lengthDetail += `⚠️ Te faltan ${150 - wordCount} palabras. Puntaje: ${finalLength}/10.</div>`;
+    
+    let grammarDetail = `<div><strong>✍️ Gramática:</strong> ${grammarEval.errors} error(es). Puntos: ${grammarPoints}/10.<br>`;
+    if (grammarEval.details.length > 0) {
+      grammarDetail += `<div class="grammar-list"><strong>🔎 Correcciones sugeridas:</strong><ul>`;
+      grammarEval.details.forEach(d => { grammarDetail += `<li>${d}</li>`; });
+      grammarDetail += `</ul></div>`;
+    } else {
+      grammarDetail += `<span style="color:#1a7f5a;">✅ ¡Sin errores gramaticales! Obtienes los 10 puntos.</span>`;
+    }
+    grammarDetail += `</div>`;
+    
+    // Bloque de nota con diseño destacado
+    const gradeHtml = `<div style="text-align: center; margin: 20px 0;">
+      <div class="grade-circle ${isPassing ? 'pass' : 'fail'}" style="display: inline-block;">
+        <div class="grade-value">${grade.toFixed(1)}</div>
+        <div style="font-size: 0.8rem; letter-spacing: 1px;">NOTA (1.0 - 7.0)</div>
+      </div>
+      <div style="margin-top: 8px; font-size: 0.85rem;">
+        ${isPassing ? '✅ ¡APROBADO! Excelente análisis.' : '❌ NO APROBADO. Revisa los criterios y vuelve a intentarlo.'}
+        <br>Exigencia: 60% (30 puntos = nota 4.0) | Puntaje obtenido: ${totalFixed}/50
+      </div>
+    </div>`;
+    
+    const totalDetail = `<hr><div style="font-size:1.1rem; font-weight:600; text-align:center;">🏆 PUNTAJE FINAL: ${totalFixed} / 50 puntos</div>`;
+    
+    detailedFeedback.innerHTML = keywordHtml + lengthDetail + grammarDetail + gradeHtml + totalDetail;
+    
+    // Renderizar botones de acción
+    renderActionButtons();
+    
+    resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  
+  // Eventos
+  evaluateBtn.addEventListener('click', evaluateFullText);
+  
+  function updateWordCounter() {
+    const words = countWords(textarea.value);
+    document.getElementById('wordCountDisplay').innerHTML = `${words} palabras`;
+  }
+  textarea.addEventListener('input', updateWordCounter);
+  updateWordCounter();
+  
+  // Al cambiar de cuento, ocultar resultados y limpiar botones
+  storySelect.addEventListener('change', () => {
+    resultArea.style.display = 'none';
+    actionButtonsDiv.innerHTML = '';
+  });
+</script>
+</body>
+</html>

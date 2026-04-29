@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>The Murders in the Rue Morgue · Edgar Allan Poe · Detective Genre Analysis</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #f5f3ee;
+      font-family: 'Syne', sans-serif;
+      color: #0e2240;
+    }
+
+    /* HEADER */
+    .app-header {
+      background: #0e2240;
+      padding: 0 28px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      flex-wrap: wrap;
+    }
+
+    .app-header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #c8d8ee;
+      letter-spacing: 0.5px;
+    }
+
+    .app-header h1 em {
+      color: #e8940a;
+      font-style: normal;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-nav {
+      font-family: 'Syne', sans-serif;
+      font-weight: 600;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+      border: none;
+    }
+
+    .btn-home {
+      background: transparent;
+      border: 2px solid #e8940a;
+      color: #e8940a;
+    }
+
+    .btn-home:hover {
+      background: #e8940a;
+      color: #0e2240;
+      transform: translateY(-2px);
+    }
+
+    .btn-exercise {
+      background: #e8940a;
+      color: #0e2240;
+    }
+
+    .btn-exercise:hover {
+      background: #f0b429;
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #1a3560 0%, #0e2240 100%);
+      padding: 48px 24px;
+      text-align: center;
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .hero p {
+      font-family: 'Literata', serif;
+      max-width: 700px;
+      margin: 16px auto 0;
+      opacity: 0.85;
+    }
+
+    /* CONTAINER */
+    .container {
+      max-width: 1200px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    /* INFO CARDS */
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px;
+      margin-bottom: 40px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      box-shadow: 0 12px 32px rgba(14,34,64,0.08);
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+    }
+
+    .card-header {
+      background: #0e2240;
+      padding: 18px 24px;
+      color: white;
+    }
+
+    .card-header h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .card-body {
+      padding: 24px;
+    }
+
+    .summary-text {
+      font-family: 'Literata', serif;
+      font-size: 0.95rem;
+      line-height: 1.65;
+      color: #2c3e55;
+      text-align: justify;
+    }
+
+    .character-list {
+      list-style: none;
+    }
+
+    .character-item {
+      margin-bottom: 20px;
+      border-bottom: 1px solid #dde3ec;
+      padding-bottom: 16px;
+    }
+
+    .character-name {
+      font-weight: 600;
+      font-size: 1.1rem;
+      color: #e8940a;
+      margin-bottom: 6px;
+    }
+
+    .character-desc {
+      font-family: 'Literata', serif;
+      font-size: 0.85rem;
+      color: #4a627a;
+      line-height: 1.5;
+    }
+
+    /* GENRE SECTION */
+    .genre-section {
+      background: white;
+      border-radius: 28px;
+      padding: 32px;
+      margin-bottom: 40px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.04);
+      border: 1px solid #e2e8f0;
+    }
+
+    .genre-section h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin-bottom: 24px;
+      color: #0e2240;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .genre-def {
+      background: #fef7e8;
+      padding: 20px;
+      border-radius: 20px;
+      margin-bottom: 24px;
+    }
+
+    .genre-def h4 {
+      color: #e8940a;
+      font-size: 1.2rem;
+      margin-bottom: 12px;
+    }
+
+    .genre-def p {
+      font-family: 'Literata', serif;
+      line-height: 1.6;
+      color: #2c3e55;
+    }
+
+    .features-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin-top: 20px;
+    }
+
+    .feature-card {
+      background: #f5f3ee;
+      border-radius: 20px;
+      padding: 18px;
+      border-left: 4px solid #e8940a;
+    }
+
+    .feature-card h5 {
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: #0e2240;
+      margin-bottom: 10px;
+    }
+
+    .feature-card p {
+      font-family: 'Literata', serif;
+      font-size: 0.85rem;
+      color: #4a627a;
+      line-height: 1.5;
+    }
+
+    .evidence {
+      background: #eef2f9;
+      border-radius: 16px;
+      padding: 12px;
+      margin-top: 10px;
+      font-size: 0.8rem;
+      font-style: italic;
+      color: #1a3560;
+    }
+
+    footer {
+      background: #0e2240;
+      color: #8ba0bc;
+      text-align: center;
+      padding: 28px;
+      margin-top: 40px;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 780px) {
+      .app-header {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+      }
+      .hero h2 { font-size: 1.5rem; }
+      .container { padding: 0 16px; }
+      .card-header h3 { font-size: 1.1rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>📖 <em>The Murders in the Rue Morgue</em> · Edgar Allan Poe · Detective Fiction</h1>
+  <div class="header-buttons">
+    <a href="Ingles.html" class="btn-nav btn-home">🏠 Back to Index</a>
+    <a href="C_2A_Ingles.html" class="btn-nav btn-exercise">📝 Exercises →</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h2>🔍 The First Detective Story</h2>
+  <p>Published in 1841 · C. Auguste Dupin · The birth of modern detective fiction</p>
+</section>
+
+<div class="container">
+  
+  <!-- SUMMARY & CHARACTERS GRID -->
+  <div class="info-grid">
+    <!-- SUMMARY CARD -->
+    <div class="card">
+      <div class="card-header">
+        <h3>📖 Summary</h3>
+      </div>
+      <div class="card-body">
+        <div class="summary-text">
+          <p><strong>Paris, 1840.</strong> An old woman, Madame L'Espanaye, and her daughter are found brutally murdered in their locked fourth-floor apartment on the Rue Morgue. The daughter has been strangled with incredible force and her body stuffed up the chimney. The mother's throat is cut so deeply that her head is nearly severed; her body lies in the courtyard behind the house.</p>
+          <br>
+          <p>The killer has vanished despite the room being locked from the inside. Witnesses hear two voices — one a gruff voice speaking French, the other a high-pitched, incomprehensible voice that no one can identify. The police are baffled. Enter <strong>C. Auguste Dupin</strong>, a brilliant amateur detective who uses his extraordinary powers of analysis and observation to solve the mystery.</p>
+          <br>
+          <p>Dupin discovers a hidden lock on a window, proving the killer escaped. He identifies a strand of unusual hair and deduces that the perpetrator is not human — it is an <strong>orangutan</strong>. The animal escaped from its owner, a sailor, who watched in horror as the beast committed the murders. Dupin lures the sailor using a newspaper advertisement, and the full truth is revealed.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- CHARACTERS CARD -->
+    <div class="card">
+      <div class="card-header">
+        <h3>👤 Main Characters</h3>
+      </div>
+      <div class="card-body">
+        <div class="character-list">
+          <div class="character-item">
+            <div class="character-name">🔹 C. Auguste Dupin</div>
+            <div class="character-desc"><strong>Characteristics:</strong> Brilliant, analytical, reclusive, nocturnal. He possesses "double consciousness" — the ability to deconstruct and reconstruct thoughts. He is the first fictional detective, using logic and observation rather than physical force. He is poor but lives for intellectual challenges. He understands human psychology deeply and can read people's unspoken thoughts.</div>
+          </div>
+          <div class="character-item">
+            <div class="character-name">🔹 The Narrator (unnamed)</div>
+            <div class="character-desc"><strong>Characteristics:</strong> Dupin's friend and roommate. He is admiring, curious, and serves as the reader's proxy. He is astonished by Dupin's reasoning and records the investigation faithfully. He provides emotional contrast to Dupin's cold logic.</div>
+          </div>
+          <div class="character-item">
+            <div class="character-name">🔹 Madame L'Espanaye & her daughter</div>
+            <div class="character-desc"><strong>Characteristics:</strong> The victims. Reclusive women who lived alone on the fourth floor. They were known to have money but kept to themselves. Their brutal deaths are the central mystery.</div>
+          </div>
+          <div class="character-item">
+            <div class="character-name">🔹 The Sailor</div>
+            <div class="character-desc"><strong>Characteristics:</strong> Owner of the orangutan. A strong, honest man who is terrified and ashamed. He followed the animal to the scene but could not prevent the murders. He proves that the killer was not human.</div>
+          </div>
+          <div class="character-item">
+            <div class="character-name">🔹 The Orangutan</div>
+            <div class="character-desc"><strong>Characteristics:</strong> A powerful, wild animal from Borneo. It wields a razor, mimics human actions but without understanding. It acts out of fear and imitation, not malice. Its superhuman strength explains the impossible violence.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- GENRE SECTION -->
+  <div class="genre-section">
+    <h3>📚 Detective Fiction (The Mystery Genre)</h3>
+    
+    <div class="genre-def">
+      <h4>🔍 What is Detective Fiction?</h4>
+      <p><strong>Detective fiction</strong> is a subgenre of crime literature in which a detective (professional or amateur) investigates a crime, usually a murder, and solves it through logical deduction, observation, and analysis of clues. The reader is presented with the same evidence as the detective, creating an intellectual puzzle. Edgar Allan Poe's <em>"The Murders in the Rue Morgue"</em> (1841) is widely considered the <strong>first modern detective story</strong>, establishing conventions that would later be refined by Arthur Conan Doyle (Sherlock Holmes) and others.</p>
+    </div>
+
+    <h4 style="margin-top: 20px; margin-bottom: 16px;">📌 Key Characteristics of Detective Fiction & Evidence in the Text</h4>
+    
+    <div class="features-grid">
+      <div class="feature-card">
+        <h5>🕵️ Brilliant Amateur Detective</h5>
+        <p>The detective is exceptionally intelligent, observant, and often eccentric. He solves cases that confound official police.</p>
+        <div class="evidence"><strong>🔎 In the text:</strong> Dupin is introduced as having "a busy, forceful mind" and "unusual reasoning power." He reads the narrator's unspoken thoughts by observing his gestures. The Prefect of Police admits defeat, but Dupin succeeds.</div>
+      </div>
+
+      <div class="feature-card">
+        <h5>🧠 Analytical Deduction & Logic</h5>
+        <p>The detective uses reason to connect seemingly unrelated clues. He re-creates the criminal's thought process.</p>
+        <div class="evidence"><strong>🔎 In the text:</strong> Dupin reconstructs the narrator's chain of thought from "fruit-seller" to "cobblestones" to "stereotomy" to "Epicurus" to "Orion" to "Chantilly." Later, he deduces the window escape mechanism and the impossible strength of the killer.</div>
+      </div>
+
+      <div class="feature-card">
+        <h5>🔒 Locked-Room Mystery</h5>
+        <p>A crime committed in a sealed room, seemingly impossible. The solution involves a hidden mechanism or unexpected method.</p>
+        <div class="evidence"><strong>🔎 In the text:</strong> The fourth-floor room is locked from inside with nails driven into the window frames. Dupin discovers a hidden spring lock and a broken nail, proving the killer escaped through the window and the window locked itself.</div>
+      </div>
+
+      <div class="feature-card">
+        <h5>🗣️ Incompetent Police & The "Least Likely" Solution</h5>
+        <p>Official investigators are baffled or follow false leads. The true solution is unexpected and often bizarre.</p>
+        <div class="evidence"><strong>🔎 In the text:</strong> The Prefect (G——) admits they "do not know where to begin." They assume human motive (robbery). The shocking answer — an orangutan — is something no policeman would consider.</div>
+      </div>
+
+      <div class="feature-card">
+        <h5>📰 Narrator as Confidant / Watson Figure</h5>
+        <p>The story is told by a friend/assistant who admires the detective, records his methods, and asks questions for the reader's benefit.</p>
+        <div class="evidence"><strong>🔎 In the text:</strong> The unnamed narrator lives with Dupin, expresses astonishment, and says, "Explain how you knew." This narrative frame became the model for Dr. Watson in Sherlock Holmes stories.</div>
+      </div>
+
+      <div class="feature-card">
+        <h5>🔎 Clues & Evidence Left at the Scene</h5>
+        <p>Physical evidence (hair, marks, objects) is misinterpreted by police but correctly analyzed by the detective.</p>
+        <div class="evidence"><strong>🔎 In the text:</strong> The gray hair found in the fireplace — police ignore it, but Dupin identifies it as orangutan hair. The hand marks on the daughter's neck — doctors say "strong fingers," Dupin compares them to an ape's hand using Cuvier's book.</div>
+      </div>
+
+      <div class="feature-card">
+        <h5>🎭 Misdirection and Surprise Resolution</h5>
+        <p>The reader is led to believe one thing, but the solution is unexpected yet logical.</p>
+        <div class="evidence"><strong>🔎 In the text:</strong> Everyone assumes human killers. The voices that no witness can identify — Dupin realizes they are not human speech. The final revelation (orangutan) is shocking but perfectly consistent with the evidence.</div>
+      </div>
+
+      <div class="feature-card">
+        <h5>⚖️ Justice & Explanation</h5>
+        <p>The detective gathers all characters and explains the solution in a logical sequence, restoring order.</p>
+        <div class="evidence"><strong>🔎 In the text:</strong> Dupin lures the sailor, locks the door, and calmly reconstructs the entire crime. The sailor confesses, and the mystery is resolved. The narrator remarks that truth has triumphed over confusion.</div>
+      </div>
+    </div>
+
+    <!-- Additional Quote Box -->
+    <div style="margin-top: 32px; background: #0e2240; border-radius: 20px; padding: 20px; color: white;">
+      <p style="font-family: 'Literata', serif; font-style: italic; font-size: 0.95rem;">"An unusually interesting young man with a busy, forceful mind. This mind could, it seemed, look right through a man's body into his soul, and uncover his deepest thoughts."</p>
+      <p style="margin-top: 12px; font-size: 0.8rem; opacity: 0.8;">— Edgar Allan Poe, introducing the archetype of the detective</p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>📖 The Murders in the Rue Morgue · Edgar Allan Poe (1841) · Considered the first modern detective story</p>
+  <p style="margin-top: 8px;">C. Auguste Dupin prototype for Sherlock Holmes, Hercule Poirot, and all fictional detectives | Genre analysis based on academic conventions</p>
+</footer>
+
+</body>
+</html>

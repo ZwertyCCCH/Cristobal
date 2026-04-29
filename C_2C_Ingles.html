@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Writing Activity: The Murders in the Rue Morgue · Edgar Allan Poe</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body {
+      background: #f5f3ee;
+      font-family: 'Syne', sans-serif;
+      color: #0e2240;
+      padding: 32px 20px;
+    }
+    .container { max-width: 1000px; margin: 0 auto; }
+    .header-card {
+      background: #0e2240;
+      border-radius: 28px;
+      padding: 24px 32px;
+      color: white;
+      margin-bottom: 28px;
+      box-shadow: 0 12px 28px rgba(0,0,0,0.1);
+    }
+    .header-card h1 { font-size: 1.7rem; font-weight: 800; letter-spacing: -0.3px; }
+    .header-card h1 span { color: #e8940a; }
+    .header-card p { font-family: 'Literata', serif; margin-top: 8px; opacity: 0.85; }
+    
+    .question-prompt {
+      background: #fef7e8;
+      border-radius: 20px;
+      padding: 20px;
+      margin-bottom: 20px;
+      border-left: 6px solid #e8940a;
+    }
+    .question-prompt h3 { font-size: 1rem; margin-bottom: 12px; color: #0e2240; }
+    .question-prompt p { font-family: 'Literata', serif; font-size: 0.95rem; line-height: 1.5; }
+    
+    .score-panel {
+      background: white;
+      border-radius: 24px;
+      padding: 24px;
+      margin-bottom: 28px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.05);
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 20px;
+      border: 1px solid #dde3ec;
+    }
+    .score-card {
+      background: #fef7e8;
+      border-radius: 32px;
+      padding: 12px 24px;
+      min-width: 130px;
+      text-align: center;
+    }
+    .score-card .label { font-size: 0.7rem; text-transform: uppercase; font-weight: 800; letter-spacing: 1px; color: #7a8899; }
+    .score-card .value { font-size: 2.5rem; font-weight: 800; font-family: 'Literata', serif; line-height: 1; color: #0e2240; }
+    .score-card.total .value { color: #e8940a; font-size: 3rem; }
+    .btn-eval {
+      background: #1a7f5a;
+      border: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 1rem;
+      padding: 12px 28px;
+      border-radius: 60px;
+      color: white;
+      cursor: pointer;
+      transition: all 0.2s;
+      box-shadow: 0 4px 0 #0c5239;
+    }
+    .btn-eval:active { transform: translateY(2px); box-shadow: 0 1px 0 #0c5239; }
+    .word-stats {
+      background: #eef2f9;
+      border-radius: 20px;
+      padding: 16px 20px;
+      margin-bottom: 20px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      font-weight: 600;
+    }
+    .word-counter {
+      background: #0e2240;
+      color: white;
+      border-radius: 40px;
+      padding: 6px 18px;
+      font-family: monospace;
+      font-size: 1.2rem;
+    }
+    textarea {
+      width: 100%;
+      min-height: 320px;
+      padding: 20px;
+      font-family: 'Literata', serif;
+      font-size: 1rem;
+      line-height: 1.55;
+      border: 2px solid #dde3ec;
+      border-radius: 24px;
+      background: white;
+      resize: vertical;
+      transition: 0.2s;
+    }
+    textarea:focus { outline: none; border-color: #e8940a; box-shadow: 0 0 0 3px rgba(232,148,10,0.2); }
+    .results-area {
+      margin-top: 32px;
+      background: white;
+      border-radius: 28px;
+      padding: 24px;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+      border-left: 6px solid #e8940a;
+    }
+    .grammar-list { background: #f9f7f2; padding: 16px; border-radius: 20px; margin-top: 12px; font-size: 0.85rem; }
+    .keyword-badge {
+      display: inline-block;
+      background: #e3f5ed;
+      color: #1a7f5a;
+      border-radius: 30px;
+      padding: 4px 12px;
+      font-size: 0.7rem;
+      font-weight: 700;
+      margin: 3px 5px 3px 0;
+    }
+    hr { margin: 20px 0; border: none; height: 1px; background: #dde3ec; }
+    footer { text-align: center; margin-top: 40px; font-size: 0.75rem; color: #7a8899; }
+    
+    /* Action buttons */
+    .action-buttons {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .btn-action {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      border: none;
+    }
+    .btn-reset {
+      background: #e8940a;
+      color: #0e2240;
+    }
+    .btn-reset:hover {
+      background: #d4860a;
+      transform: translateY(-2px);
+    }
+    .btn-home {
+      background: #2271b3;
+      color: white;
+    }
+    .btn-home:hover {
+      background: #1a5a8f;
+      transform: translateY(-2px);
+    }
+    
+    .grade-circle {
+      background: #0e2240;
+      border-radius: 60px;
+      padding: 12px 24px;
+      text-align: center;
+      margin: 16px 0;
+      display: inline-block;
+      width: auto;
+    }
+    .grade-circle .grade-value {
+      font-size: 2.8rem;
+      font-weight: 800;
+      font-family: 'Literata', serif;
+    }
+    .grade-circle.pass .grade-value { color: #4dd9a0; }
+    .grade-circle.fail .grade-value { color: #ff7c72; }
+    
+    @media (max-width: 700px) {
+      body { padding: 16px; }
+      .score-card .value { font-size: 1.8rem; }
+      .score-card.total .value { font-size: 2.2rem; }
+      .action-buttons { flex-direction: column; align-items: stretch; }
+      .btn-action { justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+<div class="container">
+  <div class="header-card">
+    <h1>📝 <span>Writing Activity</span> · The Murders in the Rue Morgue</h1>
+    <p>Edgar Allan Poe · Write a well‑structured analysis in English (min. 100 words) · 50 points total · Passing grade: 60% (30 pts = 4.0)</p>
+  </div>
+
+  <!-- FIXED PROMPT (only one story) -->
+  <div class="question-prompt">
+    <h3>📌 Writing Prompt</h3>
+    <p>Analyze Edgar Allan Poe's <strong>"The Murders in the Rue Morgue"</strong>. In your analysis, you must:<br>
+    • Describe the main characters (<strong>C. Auguste Dupin</strong> and the narrator) and Dupin's unique reasoning method.<br>
+    • Explain the locked‑room mystery: how the killer escaped and what clues Dupin used to solve the case.<br>
+    • Discuss the final revelation (the <strong>orangutan</strong> and the sailor) and why this story is considered the first modern detective story.<br>
+    Use specific vocabulary from the text (e.g., deduction, analytical power, spring lock, lightning rod, razor, testimony). Write at least <strong>100 words</strong> in English.</p>
+  </div>
+
+  <div class="score-panel">
+    <div class="score-card"><div class="label">📊 TOTAL SCORE</div><div class="value total" id="totalScore">0</div><div class="label">/ 50 pts</div></div>
+    <div class="score-card"><div class="label">📖 KEYWORDS</div><div class="value" id="kwScore">0</div><div class="label">/ 30 pts</div></div>
+    <div class="score-card"><div class="label">📏 LENGTH (100+ words)</div><div class="value" id="lenScore">0</div><div class="label">/ 10 pts</div></div>
+    <div class="score-card"><div class="label">✍️ GRAMMAR (0 errors)</div><div class="value" id="gramScore">0</div><div class="label">/ 10 pts</div></div>
+    <button class="btn-eval" id="evaluateBtn">🔍 Evaluate Text</button>
+  </div>
+
+  <div class="word-stats">
+    <span>📌 <strong>Keyword pool (30+ terms)</strong> — each relevant term included gives 1 point (max 30). The system detects vocabulary from the story.</span>
+    <span class="word-counter" id="wordCountDisplay">0 words</span>
+  </div>
+  
+  <textarea id="userText" placeholder="Write your analysis in English here. Remember to discuss Dupin's reasoning, the locked-room mystery, the orangutan, and why this story is a milestone in detective fiction. Minimum 100 words."></textarea>
+  
+  <div class="results-area" id="resultArea" style="display: none;">
+    <h3>📋 Detailed Results</h3>
+    <div id="detailedFeedback"></div>
+    <div class="action-buttons" id="actionButtons"></div>
+  </div>
+  <footer>✅ Criteria: 30 specific keywords (from the story) = 30 pts | min. 100 words = 10 pts (all or nothing) | grammar: 10 pts (1 point off per error, max -10). Grade 1.0–7.0, 60% passing (30/50 = 4.0).</footer>
+</div>
+
+<script>
+  // ==========================================================
+  // KEYWORD POOL FOR "THE MURDERS IN THE RUE MORGUE"
+  // More than 30 relevant terms (case-insensitive detection)
+  // ==========================================================
+  const KEYWORDS = [
+    "Dupin", "Rue Morgue", "orangutan", "sailor", "locked room", "chimney", "razor", "lightning rod",
+    "spring lock", "deduction", "analytical", "reasoning", "witness", "testimony", "Paris", "apartment",
+    "strangled", "severed", "hair", "voice", "French", "mon Dieu", "Prefect", "police", "confession",
+    "Cuvier", "orang-outan", "Borneo", "advertisement", "newspaper", "detective", "mystery", "clue",
+    "evidence", "murder", "investigation", "logic", "observation", "hidden", "nail", "window", "escape"
+  ];
+  
+  const TOTAL_KEYWORDS_POSSIBLE = 30;  // we'll cap at 30
+  const TOTAL_POINTS = 50;
+  const PASSING_SCORE = 30; // 60% of 50 = 30 -> grade 4.0
+  const MIN_WORDS_FOR_FULL_LENGTH = 100; // minimum 100 words for full 10 points (all or nothing)
+  
+  // DOM elements
+  const textarea = document.getElementById('userText');
+  const evaluateBtn = document.getElementById('evaluateBtn');
+  const wordCountSpan = document.getElementById('wordCountDisplay');
+  const resultArea = document.getElementById('resultArea');
+  const detailedFeedback = document.getElementById('detailedFeedback');
+  const actionButtonsDiv = document.getElementById('actionButtons');
+  
+  // Helper functions
+  function countWords(text) {
+    return text.trim().split(/\s+/).filter(w => w.length > 0).length;
+  }
+  
+  function escapeRegex(str) {
+    return str.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+  
+  // Count keywords from the fixed pool (max 30)
+  function countKeywords(text) {
+    const lowerText = text.toLowerCase();
+    let found = new Set();
+    for (let kw of KEYWORDS) {
+      const kwLower = kw.toLowerCase();
+      const regex = new RegExp(`\\b${escapeRegex(kwLower)}\\b`, 'i');
+      if (regex.test(lowerText)) {
+        found.add(kwLower);
+      }
+    }
+    return Math.min(found.size, TOTAL_KEYWORDS_POSSIBLE);  // max 30 points
+  }
+  
+  // Length score: ALL OR NOTHING. 100+ words = 10 points, otherwise 0.
+  function evaluateLengthScore(wordCount) {
+    return wordCount >= MIN_WORDS_FOR_FULL_LENGTH ? 10 : 0;
+  }
+  
+  // English grammar checker (simplified but useful for academic writing)
+  // Detects common issues: capitalization, punctuation, run-ons, repeated words, basic subject-verb agreement.
+  function detectGrammarErrorsEnglish(text) {
+    let errors = 0;
+    let feedback = [];
+    if (!text.trim()) return { errors: 1, details: ["The text is empty."] };
+    const trimmed = text.trim();
+    
+    // First letter uppercase
+    if (trimmed.length > 0 && trimmed[0] !== trimmed[0].toUpperCase()) {
+      errors++;
+      feedback.push("❌ The first letter of the text must be capitalized.");
+    }
+    // Ends with proper punctuation (. ! ?)
+    const lastChar = trimmed[trimmed.length - 1];
+    if (!['.', '!', '?'].includes(lastChar)) {
+      errors++;
+      feedback.push("❌ The text should end with a period, exclamation or question mark.");
+    }
+    // Capital letter after period
+    const sentences = trimmed.split(/(?<=[.!?])\s+/);
+    for (let i = 1; i < sentences.length; i++) {
+      let sent = sentences[i].trim();
+      if (sent.length > 0 && sent[0] !== sent[0].toUpperCase()) {
+        errors++;
+        feedback.push(`❌ After a period, use a capital letter: "${sent.substring(0, 30)}..."`);
+        break;
+      }
+    }
+    // Missing space after comma/period
+    if (/,([^\s])/g.test(text)) { errors++; feedback.push("❌ Missing space after a comma."); }
+    if (/\.([A-Za-z])/g.test(text) && !/\.\.\./g.test(text)) { errors++; feedback.push("❌ Missing space after a period."); }
+    // Repeated consecutive words
+    if (/\b(\w+)\s+\1\b/gi.test(text)) { errors++; feedback.push("❌ Repeated consecutive words (e.g., 'the the')."); }
+    // Common English errors: "would of" / "could of"
+    if (/\bwould of\b/i.test(text)) { errors++; feedback.push("⚠️ Use 'would have' instead of 'would of'."); }
+    if (/\bcould of\b/i.test(text)) { errors++; feedback.push("⚠️ Use 'could have' instead of 'could of'."); }
+    // Subject-verb agreement basic (they + verb with -s)
+    const wrongSubjectVerb = text.match(/\b(they|we|people)\s+(\w+s)\b/gi);
+    if (wrongSubjectVerb) {
+      for (let match of wrongSubjectVerb) {
+        const parts = match.split(/\s+/);
+        if (parts.length >= 2 && parts[1].endsWith('s') && !parts[1].endsWith('ss')) {
+          errors++;
+          feedback.push(`⚠️ Possible subject-verb agreement: "${match}" (plural subject + verb with -s?).`);
+          break;
+        }
+      }
+    }
+    // Cap at 10 errors
+    if (errors > 10) errors = 10;
+    return { errors, details: feedback };
+  }
+  
+  // Calculate grade 1.0-7.0 with 60% passing (30/50 = 4.0)
+  function calculateGrade(score) {
+    const maxScore = 50;
+    const passingScore = PASSING_SCORE;
+    const minGrade = 1.0;
+    const passingGrade = 4.0;
+    const maxGrade = 7.0;
+    
+    if (score >= passingScore) {
+      let grade = passingGrade + ((score - passingScore) / (maxScore - passingScore)) * (maxGrade - passingGrade);
+      return Math.min(maxGrade, parseFloat(grade.toFixed(1)));
+    } else {
+      let grade = minGrade + (score / passingScore) * (passingGrade - minGrade);
+      return parseFloat(grade.toFixed(1));
+    }
+  }
+  
+  // Render action buttons (Reset + Back to Class)
+  function renderActionButtons() {
+    actionButtonsDiv.innerHTML = `
+      <button class="btn-action btn-reset" onclick="resetActivity()">🔄 Reset Activity</button>
+      <a href="C_2_Ingles.html" class="btn-action btn-home">📚 Back to Class</a>
+    `;
+  }
+  
+  // Reset all fields
+  window.resetActivity = function() {
+    textarea.value = '';
+    resultArea.style.display = 'none';
+    document.getElementById('totalScore').innerHTML = '0';
+    document.getElementById('kwScore').innerHTML = '0 / 30';
+    document.getElementById('lenScore').innerHTML = '0 / 10';
+    document.getElementById('gramScore').innerHTML = '0 / 10';
+    document.getElementById('wordCountDisplay').innerHTML = '0 words';
+    detailedFeedback.innerHTML = '';
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+  
+  // Main evaluation function
+  function evaluateFullText() {
+    const rawText = textarea.value;
+    const text = rawText;
+    const wordCount = countWords(text);
+    document.getElementById('wordCountDisplay').innerText = `${wordCount} words`;
+    
+    // Keywords (max 30)
+    let kwFound = countKeywords(text);
+    let kwPoints = kwFound;  // already capped at 30
+    
+    // Length score: ALL OR NOTHING (100+ words = 10 points, otherwise 0)
+    let lengthPoints = evaluateLengthScore(wordCount);
+    const finalLength = lengthPoints; // either 0 or 10
+    
+    // Grammar score
+    const grammarEval = detectGrammarErrorsEnglish(text);
+    let grammarPoints = 10 - grammarEval.errors;
+    if (grammarPoints < 0) grammarPoints = 0;
+    
+    // Total points (max 50)
+    const total = kwPoints + finalLength + grammarPoints;
+    const totalFixed = Math.floor(total * 10) / 10;
+    
+    // Grade
+    const grade = calculateGrade(total);
+    const isPassing = grade >= 4.0;
+    
+    // Update UI panels
+    document.getElementById('kwScore').innerHTML = `${kwPoints} / 30 <span style="font-size:0.7rem;">(${kwFound} keywords found)</span>`;
+    document.getElementById('lenScore').innerHTML = `${finalLength} / 10`;
+    document.getElementById('gramScore').innerHTML = `${grammarPoints} / 10<span style="font-size:0.7rem;"> (${grammarEval.errors} errors)</span>`;
+    document.getElementById('totalScore').innerHTML = `${totalFixed}`;
+    
+    // Show result area
+    resultArea.style.display = 'block';
+    
+    // Build detailed feedback
+    const lowerText = text.toLowerCase();
+    const foundKeywordsList = KEYWORDS.filter(kw => new RegExp(`\\b${escapeRegex(kw.toLowerCase())}\\b`).test(lowerText));
+    
+    let keywordHtml = `<div><strong>🔑 Keywords found (${foundKeywordsList.length} distinct):</strong><br>`;
+    if (foundKeywordsList.length === 0) keywordHtml += "<span>None yet. Use terms like 'Dupin', 'orangutan', 'locked room', 'deduction', etc.</span>";
+    else keywordHtml += foundKeywordsList.slice(0, 40).map(k => `<span class="keyword-badge">${k}</span>`).join('');
+    keywordHtml += `</div>`;
+    
+    let lengthDetail = `<div><strong>📏 Length:</strong> ${wordCount} words. `;
+    if (wordCount >= MIN_WORDS_FOR_FULL_LENGTH) {
+      lengthDetail += `✅ You reached the minimum (${MIN_WORDS_FOR_FULL_LENGTH} words) → +10 points (all or nothing).`;
+    } else {
+      lengthDetail += `❌ You need at least ${MIN_WORDS_FOR_FULL_LENGTH} words to earn the 10 points. Current score: 0/10.`;
+    }
+    lengthDetail += `</div>`;
+    
+    let grammarDetail = `<div><strong>✍️ Grammar:</strong> ${grammarEval.errors} error(s) detected. Points: ${grammarPoints}/10.<br>`;
+    if (grammarEval.details.length > 0) {
+      grammarDetail += `<div class="grammar-list"><strong>🔎 Suggestions / Corrections:</strong><ul>`;
+      grammarEval.details.forEach(d => { grammarDetail += `<li>${d}</li>`; });
+      grammarDetail += `</ul></div>`;
+    } else {
+      grammarDetail += `<span style="color:#1a7f5a;">✅ No grammar errors detected! Full 10 points.</span>`;
+    }
+    grammarDetail += `</div>`;
+    
+    const gradeHtml = `<div style="text-align: center; margin: 20px 0;">
+      <div class="grade-circle ${isPassing ? 'pass' : 'fail'}" style="display: inline-block;">
+        <div class="grade-value">${grade.toFixed(1)}</div>
+        <div style="font-size: 0.8rem; letter-spacing: 1px;">FINAL GRADE (1.0 - 7.0)</div>
+      </div>
+      <div style="margin-top: 8px; font-size: 0.85rem;">
+        ${isPassing ? '✅ PASSED! Excellent analysis.' : '❌ NOT PASSED. Review the story and try again.'}
+        <br>Passing requirement: 60% (30/50 points = grade 4.0) | Your score: ${totalFixed}/50
+      </div>
+    </div>`;
+    
+    const totalDetail = `<hr><div style="font-size:1.1rem; font-weight:800; text-align:center;">🏆 TOTAL SCORE: ${totalFixed} / 50 points</div>`;
+    
+    detailedFeedback.innerHTML = keywordHtml + lengthDetail + grammarDetail + gradeHtml + totalDetail;
+    
+    // Add action buttons
+    renderActionButtons();
+    
+    // Scroll to results
+    resultArea.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+  
+  // Event listeners
+  evaluateBtn.addEventListener('click', evaluateFullText);
+  
+  function updateWordCounter() {
+    const words = countWords(textarea.value);
+    document.getElementById('wordCountDisplay').innerHTML = `${words} words`;
+  }
+  textarea.addEventListener('input', updateWordCounter);
+  updateWordCounter();
+  
+  // Initially hide results, ensure buttons are not present until evaluation
+  resultArea.style.display = 'none';
+</script>
+</body>
+</html>
