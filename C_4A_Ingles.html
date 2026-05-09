@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Grammar Exercises - Comparatives, Superlatives & Adverbs of Degree</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        /* Layout principal con sidebar */
+        .container {
+            max-width: 1400px;
+            display: flex;
+            flex-direction: row;
+            overflow: hidden;
+        }
+
+        /* TABS LATERAL ESTÁTICO */
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 140px;
+            min-width: 140px;
+            background: #f8fafc;
+            border-right: 2px solid #e2e8f0;
+            gap: 8px;
+            padding: 24px 12px;
+            height: auto;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.4rem;
+        }
+
+        .tab-btn span {
+            font-size: 0.7rem;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #1e2a5e;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 3px solid #f4a261;
+        }
+        /* Estilos para ocultar/mostrar secciones */
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        /* Contenedor del contenido */
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        /* Ajustes responsive para móvil */
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            
+            .tabs {
+                flex-direction: row;
+                width: 100%;
+                min-width: auto;
+                border-right: none;
+                border-bottom: 2px solid #e2e8f0;
+                padding: 12px;
+                overflow-x: auto;
+                gap: 4px;
+            }
+            
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                min-width: auto;
+                padding: 10px 14px;
+            }
+            
+            .tab-btn i {
+                font-size: 1rem;
+            }
+            
+            .tab-btn span {
+                font-size: 0.75rem;
+                display: inline;
+            }
+            
+            .tab-content-container {
+                padding: 16px;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Questions styling */
+        .question-card {
+            background: #fef9e6;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ffe2b5;
+            transition: all 0.2s;
+        }
+
+        .question-card.correct-highlight {
+            border-left: 6px solid #2e7d32;
+            background: #f1f8e9;
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 6px solid #c62828;
+            background: #ffebee;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #1e2a5e;
+        }
+
+        .correct-answer-display {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #e8eaf6;
+            border-radius: 16px;
+            color: #1e2a5e;
+        }
+
+        .correct-answer-display i {
+            margin-right: 6px;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            background: #f1f5f9;
+        }
+
+        input[type="radio"], input[type="text"], select, textarea {
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="text"], select {
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            width: 100%;
+            background: white;
+        }
+
+        .word-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .word-btn {
+            background: #eef2ff;
+            border: none;
+            padding: 12px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #1e2a5e;
+        }
+
+        .word-btn.selected {
+            background: #2b4f8c;
+            color: white;
+        }
+
+        .sentence-builder {
+            background: #e2e8f0;
+            padding: 15px;
+            border-radius: 20px;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            min-height: 70px;
+        }
+
+        /* MATCH SECTION - CORREGIDO Y MEJORADO */
+        .match-item {
+            background: white;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .match-left {
+            font-weight: 700;
+            color: #1e2a5e;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #f4a261;
+            display: inline-block;
+        }
+
+        .match-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 40px;
+            border: 1px solid #cbd5e1;
+            background: white;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        /* Botón Evaluate en la barra lateral */
+        .btn-evaluate-sidebar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, #1e2a5e, #2b4f8c);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-evaluate-sidebar i {
+            font-size: 1.4rem;
+        }
+
+        .btn-evaluate-sidebar span {
+            font-size: 0.7rem;
+        }
+
+        .btn-evaluate-sidebar:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        /* Responsive: en móvil el botón se adapta */
+        @media (max-width: 768px) {
+            .btn-evaluate-sidebar {
+                flex-direction: row;
+                gap: 6px;
+                margin-top: 0;
+                margin-left: auto;
+                width: auto;
+                padding: 10px 16px;
+            }
+            
+            .btn-evaluate-sidebar i {
+                font-size: 1rem;
+            }
+            
+            .btn-evaluate-sidebar span {
+                font-size: 0.75rem;
+            }
+        }
+
+        .results-section {
+            background: #1e2a5e;
+            color: white;
+            padding: 24px 20px;
+            border-radius: 24px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .results-section p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+            font-weight: 500;
+        }
+
+        #scoreDisplay {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        #gradeDisplay {
+            font-size: 1.6rem;
+            font-weight: 700;
+        }
+
+        #passDisplay {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 12px;
+        }
+
+        /* Responsive para móviles */
+        @media (max-width: 680px) {
+            .results-section h3 {
+                font-size: 1.4rem;
+            }
+            
+            .results-section p {
+                font-size: 1.2rem;
+            }
+            
+            #scoreDisplay, #gradeDisplay {
+                font-size: 1.3rem;
+            }
+            
+            #passDisplay {
+                font-size: 1.1rem;
+            }
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            display: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #f4a261;
+            color: #1e2a5e;
+        }
+
+        .btn-secondary {
+            background: #2b4f8c;
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            border: 2px solid #1e2a5e;
+            color: #1e2a5e;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+        .match-item.correct-highlight {
+            border-left: 6px solid #2e7d32;
+            background: #f1f8e9;
+        }
+
+        .match-item.wrong-highlight {
+            border-left: 6px solid #c62828;
+            background: #ffebee;
+        }
+
+        @media (max-width: 680px) {
+            .tab-btn span {
+                display: none;
+            }
+            .tab-btn i {
+                font-size: 1.3rem;
+            }
+            .tab-btn {
+                min-width: 60px;
+            }
+            .question-card {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <!-- TABS LATERAL ESTÁTICO -->
+    <!-- TABS LATERAL ESTÁTICO CON BOTÓN EVALUATE -->
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1"><i class="fas fa-check-circle"></i><span> MCQ</span></button>
+        <button class="tab-btn" data-tab="tab2"><i class="fas fa-pen"></i><span> Gap Fill</span></button>
+        <button class="tab-btn" data-tab="tab3"><i class="fas fa-sort-amount-down"></i><span> Word Order</span></button>
+        <button class="tab-btn" data-tab="tab4"><i class="fas fa-link"></i><span> Matching</span></button>
+        <button class="tab-btn" data-tab="tab5"><i class="fas fa-edit"></i><span> Correct Error</span></button>
+        
+        <!-- Botón Evaluate dentro de la barra lateral -->
+        <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar">
+            <i class="fas fa-check-double"></i><span> Evaluate</span>
+        </button>
+    </div>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="tab-content-container">
+        <div id="tab1" class="tab-content active"><div id="mcq-questions"></div></div>
+        <div id="tab2" class="tab-content"><div id="gapfill-questions"></div></div>
+        <div id="tab3" class="tab-content"><div id="order-questions"></div></div>
+        <div id="tab4" class="tab-content"><div id="match-questions"></div></div>
+        <div id="tab5" class="tab-content"><div id="correct-questions"></div></div>
+
+        <!-- RESULTS SECTION -->
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-chart-line"></i> Your Results</h3>
+            <p id="scoreDisplay">Score: -- / 50</p>
+            <p id="gradeDisplay">Grade: -- (1.0 to 7.0)</p>
+            <p id="passDisplay"></p>
+        </div>
+
+        <!-- ACTION BUTTONS -->
+        <div class="action-buttons" id="actionButtons">
+            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-sync-alt"></i> Restart Test</button>
+            <button class="btn btn-secondary" id="backToClassBtn"><i class="fas fa-chalkboard"></i> Back to Class</button>
+            <button class="btn btn-outline" id="backToCourseBtn"><i class="fas fa-book-open"></i> Back to Course</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ======================== POOLS OF 30 QUESTIONS PER SECTION ========================
+    const mcqPool = [
+        { text: "My brother is ______ than me.", options: ["old", "older", "oldest", "more old"], correct: "older" },
+        { text: "This is ______ movie I've ever seen.", options: ["the most boring", "more boring", "boringer", "the boringest"], correct: "the most boring" },
+        { text: "She runs ______ than anyone in my family.", options: ["fast", "faster", "fastest", "more fast"], correct: "faster" },
+        { text: "He is ______ intelligent student in the school.", options: ["more", "the most", "the more", "most"], correct: "the most" },
+        { text: "My sister is ______ generous than my brother.", options: ["more", "most", "the most", "much"], correct: "more" },
+        { text: "That test was ______ difficult than the last one.", options: ["more", "most", "the most", "much"], correct: "more" },
+        { text: "She is ______ person I know.", options: ["the funniest", "the most funny", "funnier", "more funny"], correct: "the funniest" },
+        { text: "Today is ______ than yesterday.", options: ["hot", "more hot", "hotter", "the hottest"], correct: "hotter" },
+        { text: "This exercise is ______ easy one in the book.", options: ["the easiest", "easier", "more easy", "easiest"], correct: "the easiest" },
+        { text: "He speaks English ______ than his brother.", options: ["well", "good", "better", "best"], correct: "better" },
+        { text: "She is ______ person in our group.", options: ["the more quier", "the most quiet", "the quier", "the quiest"], correct: "the quiest" },
+        { text: "My dad is ______ than my mom.", options: ["tall", "taller", "tallest", "more tall"], correct: "taller" },
+        { text: "This is ______ expensive car in the showroom.", options: ["the more", "the most", "more", "most"], correct: "the most" },
+        { text: "He did ______ on the final exam than on the midterm.", options: ["bad", "worse", "worst", "badder"], correct: "worse" },
+        { text: "She is ______ than her classmates.", options: ["smart", "smarter", "smartest", "more smart"], correct: "smarter" },
+        { text: "That was ______ delicious meal I've ever had.", options: ["the most", "more", "most", "the more"], correct: "the most" },
+        { text: "I feel ______ today than yesterday.", options: ["good", "better", "best", "more good"], correct: "better" },
+        { text: "This book is ______ interesting than that one.", options: ["more", "most", "the most", "much"], correct: "more" },
+        { text: "He is ______ thoughtful person I know.", options: ["the more", "the most", "more", "most"], correct: "the most" },
+        { text: "My shoes are ______ than yours.", options: ["new", "newer", "newest", "more new"], correct: "newer" },
+        { text: "This is ______ day of my life!", options: ["the good", "the better", "the best", "the most good"], correct: "the best" },
+        { text: "She works ______ than anyone else.", options: ["hard", "harder", "hardest", "more hard"], correct: "harder" },
+        { text: "He's ______ person in the class.", options: ["the more shyest", "the most shy", "the shyest", "the shyer"], correct: "the shyest" },
+        { text: "My phone is ______ than my friend's phone.", options: ["cheap", "cheaper", "cheapest", "more cheap"], correct: "cheaper" },
+        { text: "This is ______ beautiful beach in the country.", options: ["the more", "the most", "more", "most"], correct: "the most" },
+        { text: "She sings ______ than me.", options: ["more beautifully", "more beautiful", "most beautiful", "beautifully"], correct: "more beautifully" },
+        { text: "He arrived ______ than expected.", options: ["late", "later", "latest", "more late"], correct: "later" },
+        { text: "That was ______ exciting match of the season.", options: ["the more", "the most", "more", "most"], correct: "the most" },
+        { text: "My grandmother is ______ than my grandfather.", options: ["old", "older", "oldest", "more old"], correct: "older" },
+        { text: "She is ______ patient teacher in the school.", options: ["the more", "the most", "more", "most"], correct: "the most" },
+        { text: "She completed the task ______ than anyone had anticipated.", options: ["more efficiently", "most efficiently", "more efficient", "the most efficiently"], correct: "more efficiently" },
+        { text: "This is ______ software our company has ever developed.", options: ["the most sophisticated", "the sophisticatedest", "more sophisticated", "the more sophisticated"], correct: "the most sophisticated" },
+        { text: "He performed ______ under pressure than his previous records suggested.", options: ["far better", "far more good", "the far best", "much more better"], correct: "far better" },
+    ];
+
+    const gapFillPool = [
+        { text: "This test is __________ (difficult) than the last one.", answer: "more difficult" },
+        { text: "He runs __________ (fast) of all the players.", answer: "the fastest" },
+        { text: "She is __________ (intelligent) student in the whole class.", answer: "the most intelligent" },
+        { text: "My car is __________ (expensive) than yours.", answer: "more expensive" },
+        { text: "Today is __________ (hot) day of the year.", answer: "the hottest" },
+        { text: "He speaks __________ (quietly) than his sister.", answer: "more quietly" },
+        { text: "This is __________ (good) pizza I've ever eaten.", answer: "the best" },
+        { text: "I am __________ (tall) than my brother.", answer: "taller" },
+        { text: "She woke up __________ (early) than me.", answer: "earlier" },
+        { text: "That was __________ (bad) movie in history.", answer: "the worst" },
+        { text: "He is __________ (funny) person I know.", answer: "the funniest" },
+        { text: "This exercise is __________ (easy) than the previous one.", answer: "easier" },
+        { text: "She sings __________ (beautifully) than any other contestant.", answer: "more beautifully" },
+        { text: "He's __________ (shy) student in the whole school.", answer: "the shyest" },
+        { text: "My room is __________ (clean) than my brother's room.", answer: "cleaner" },
+        { text: "This is __________ (interesting) book I've read.", answer: "the most interesting" },
+        { text: "She is __________ (generous) than her sister.", answer: "more generous" },
+        { text: "He arrived __________ (late) than usual.", answer: "later" },
+        { text: "That was __________ (exciting) game of the season.", answer: "the most exciting" },
+        { text: "My dad works __________ (hard) than my mom.", answer: "harder" },
+        { text: "The negotiations went __________ (smoothly) than the diplomats had expected.", answer: "more smoothly" },
+        { text: "That documentary was __________ (thought-provoking) film I have ever watched.", answer: "the most thought-provoking" },
+        { text: "She handled the crisis __________ (calmly) of all the managers involved.", answer: "the most calmly" },
+        { text: "This is __________ (beautiful) place I've visited.", answer: "the most beautiful" },
+        { text: "She is __________ (kind) person in our family.", answer: "the kindest" },
+        { text: "He did __________ (well) on the test than before.", answer: "better" },
+        { text: "This suitcase is __________ (heavy) than that one.", answer: "heavier" },
+        { text: "She is __________ (confident) than her friend.", answer: "more confident" },
+        { text: "That was __________ (crazy) idea ever!", answer: "the craziest" },
+        { text: "He is __________ (polite) than his brother.", answer: "more polite" },
+        { text: "This is __________ (sad) news I've heard.", answer: "the saddest" },
+        { text: "She dances __________ (gracefully) than anyone.", answer: "more gracefully" },
+        { text: "His answer was __________ (accurate) than mine.", answer: "more accurate" }
+    ];
+
+    const orderPool = [
+        { words: ["brother", "my", "older", "is", "me", "than"], correct: "my brother is older than me" },
+        { words: ["the", "she", "tallest", "is", "class", "in"], correct: "she is the tallest in the class" },
+        { words: ["than", "more", "is", "expensive", "this", "that", "one"], correct: "this one is more expensive than that" },
+        { words: ["fastest", "he", "runner", "the", "is"], correct: "he is the fastest runner" },
+        { words: ["have", "more", "I", "ever", "met", "dedicated", "never", "a", "person"], correct: "i have never met a more dedicated person ever" },
+        { words: ["the", "results", "were", "far", "than", "expected", "more", "impressive"], correct: "the results were far more impressive than expected" },
+        { words: ["most", "the", "carefully", "she", "of", "spoke", "all", "candidates"], correct: "she spoke the most carefully of all candidates" },
+        { words: ["better", "than", "this", "is", "that", "much"], correct: "this is much better than that" },
+        { words: ["the", "most", "intelligent", "he", "is", "student"], correct: "he is the most intelligent student" },
+        { words: ["than", "shyer", "me", "is", "she"], correct: "she is shyer than me" },
+        { words: ["most", "beautiful", "the", "flower", "this", "is"], correct: "this is the most beautiful flower" },
+        { words: ["than", "more", "interesting", "is", "book", "that", "this"], correct: "this book is more interesting than that" },
+        { words: ["best", "my", "friend", "the", "is"], correct: "my friend is the best" },
+        { words: ["harder", "than", "works", "anyone", "she", "else"], correct: "she works harder than anyone else" },
+        { words: ["the", "oldest", "am", "I", "friends", "of", "my"], correct: "i am the oldest of my friends" },
+        { words: ["than", "more", "generous", "is", "she", "her", "brother"], correct: "she is more generous than her brother" },
+        { words: ["the", "test", "most", "this", "difficult", "is"], correct: "this is the most difficult test" },
+        { words: ["earlier", "today", "woke", "I", "than", "yesterday", "up"], correct: "i woke up earlier than yesterday" },
+        { words: ["sings", "more", "than", "me", "beautifully", "she"], correct: "she sings more beautifully than me" },
+        { words: ["worst", "the", "day", "is", "this"], correct: "this is the worst day" },
+        { words: ["than", "funnier", "is", "my", "dad", "yours"], correct: "my dad is funnier than yours" },
+        { words: ["most", "interesting", "the", "person", "he", "is"], correct: "he is the most interesting person" },
+        { words: ["quieter", "much", "is", "this", "than", "that", "one", "place"], correct: "this place is much quieter than that one" },
+        { words: ["the", "she", "kindest", "is", "teacher"], correct: "she is the kindest teacher" },
+        { words: ["than", "more", "confident", "me", "he", "is"], correct: "he is more confident than me" },
+        { words: ["most", "expensive", "the", "bought", "she", "dress"], correct: "she bought the most expensive dress" },
+        { words: ["is", "worse", "than", "this", "that"], correct: "this is worse than that" },
+        { words: ["happiest", "day", "my", "of", "life", "this", "is"], correct: "this is the happiest day of my life" },
+        { words: ["than", "more", "carefully", "drive", "should", "you"], correct: "you should drive more carefully" },
+        { words: ["the", "closest", "she", "friend", "my", "is"], correct: "she is my closest friend" },
+        { words: ["easier", "much", "is", "exercise", "this", "that", "than"], correct: "this exercise is much easier than that" },
+        { words: ["funniest", "the", "comic", "is", "this", "ever", "read", "i've"], correct: "this is the funniest comic i've ever read" },
+        { words: ["laziest", "my", "the", "cat", "is"], correct: "my cat is the laziest" }
+    ];
+
+    const matchPool = [
+        { left: "The tallest", right: "building" },
+        { left: "More beautiful", right: "than before" },
+        { left: "The worst", right: "day" },
+        { left: "Better than", right: "nothing" },
+        { left: "The most generous", right: "person" },
+        { left: "Far more complex", right: "than anticipated" },
+        { left: "The least expected", right: "outcome" },
+        { left: "Considerably more difficult", right: "than the previous level" },
+        { left: "Shyer than", right: "her sister" },
+        { left: "The happiest", right: "moment" },
+        { left: "More carefully", right: "than before" },
+        { left: "The most difficult", right: "test" },
+        { left: "Cheaper than", right: "the other" },
+        { left: "The most interesting", right: "book" },
+        { left: "Quieter than", right: "a library" },
+        { left: "The strongest", right: "player" },
+        { left: "More politely", right: "than him" },
+        { left: "The longest", right: "river" },
+        { left: "Hotter than", right: "yesterday" },
+        { left: "The most exciting", right: "game" },
+        { left: "Later than", right: "midnight" },
+        { left: "The most famous", right: "singer" },
+        { left: "More quietly", right: "than a whisper" },
+        { left: "The funniest", right: "joke" },
+        { left: "More expensive", right: "than gold" },
+        { left: "The oldest", right: "tree" },
+        { left: "More intelligent", right: "than a computer" },
+        { left: "The fastest", right: "car" },
+        { left: "More slowly", right: "than a turtle" },
+        { left: "The coldest", right: "winter" },
+        { left: "More brightly", right: "than the sun" },
+        { left: "The sweetest", right: "candy" },
+        { left: "More peacefully", right: "than ever" }
+    ];
+
+    const correctPool = [
+        { text: "She is the more beautiful girl.", correct: "She is the most beautiful girl." },
+        { text: "He runs more fast than me.", correct: "He runs faster than me." },
+        { text: "This is the bestest day ever.", correct: "This is the best day ever." },
+        { text: "My sister is more old than me.", correct: "My sister is older than me." },
+        { text: "She is the more intelligent student.", correct: "She is the most intelligent student." },
+        { text: "He is more taller than his brother.", correct: "He is taller than his brother." },
+        { text: "She responded to the crisis more calm than her colleagues.", correct: "She responded to the crisis more calmly than her colleagues." },
+        { text: "This is by far the most cheapest option available.", correct: "This is by far the cheapest option available." },
+        { text: "He drives most careful than before, but still not carefully enough.", correct: "He drives more carefully than before, but still not carefully enough." },
+        { text: "This test is the difficultest.", correct: "This test is the most difficult." },
+        { text: "She sings more good than me.", correct: "She sings better than me." },
+        { text: "That was the baddest movie.", correct: "That was the worst movie." },
+        { text: "He is the more funny person.", correct: "He is the funniest person." },    
+        { text: "My house is more big than yours.", correct: "My house is bigger than yours." },
+        { text: "She is the most happiest person.", correct: "She is the happiest person." },
+        { text: "This car is the most faster.", correct: "This car is the fastest." },
+        { text: "He speaks English more good.", correct: "He speaks English better." },
+        { text: "That was the most easiest test.", correct: "That was the easiest test." },
+        { text: "She is more kinder than her friend.", correct: "She is kinder than her friend." },
+        { text: "This is the more expensive dress.", correct: "This is the most expensive dress." },
+        { text: "He runs the more fast.", correct: "He runs the fastest." },
+        { text: "My dad is the more strong.", correct: "My dad is the strongest." },
+        { text: "She is the more quiet student.", correct: "She is the quietest student." },
+        { text: "This exercise is more easy.", correct: "This exercise is easier." },
+        { text: "He is the more intelligent than me.", correct: "He is more intelligent than me." },
+        { text: "That was the more exciting game.", correct: "That was the most exciting game." },
+        { text: "She dances more gracefully as me.", correct: "She dances more gracefully than me." },
+        { text: "He is the more shy person.", correct: "He is the shyest person." },
+        { text: "This is the more interesting book.", correct: "This is the most interesting book." },
+        { text: "She woke up more early than me.", correct: "She woke up earlier than me." },
+        { text: "He is the more generous.", correct: "He is the most generous." },
+        { text: "This test is the more difficult.", correct: "This test is the most difficult." },
+        { text: "She is the more beautiful singer.", correct: "She is the most beautiful singer." }
+    ];
+
+    function getRandomItems(pool, n) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, n);
+    }
+
+    let currentMcq = [], currentGap = [], currentOrder = [], currentMatch = [], currentCorrect = [];
+    let mcqAnswers = [], gapAnswers = [], orderAnswers = [], matchAnswers = [], correctAnswers = [];
+    let evaluated = false;
+
+    function renderAll() {
+        renderMcq();
+        renderGapFill();
+        renderOrder();
+        renderMatch();
+        renderCorrect();
+    }
+
+    function renderMcq() {
+        const container = document.getElementById('mcq-questions');
+        container.innerHTML = '';
+        currentMcq.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `mcq-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options" data-qidx="${idx}">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="mcq_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(mcqAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="mcq_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === mcqAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) mcqAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderGapFill() {
+        const container = document.getElementById('gapfill-questions');
+        container.innerHTML = '';
+        currentGap.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `gap-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <input type="text" class="gap-input" data-idx="${idx}" placeholder="Type your answer..." value="${gapAnswers[idx] || ''}">
+            `;
+            container.appendChild(div);
+            const input = div.querySelector('.gap-input');
+            input.addEventListener('input', (e) => { if(!evaluated) gapAnswers[idx] = e.target.value.trim().toLowerCase(); });
+        });
+    }
+
+    function renderOrder() {
+        const container = document.getElementById('order-questions');
+        container.innerHTML = '';
+        currentOrder.forEach((q, idx) => {
+            const shuffledWords = [...q.words].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `order-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. Tap the words in order:</div>
+                <div class="word-buttons" data-order-idx="${idx}">
+                    ${shuffledWords.map(word => `<button class="word-btn" data-word="${word}">${word}</button>`).join('')}
+                </div>
+                <div class="sentence-builder" id="sentence-${idx}"></div>
+                <button class="clear-order-btn" data-idx="${idx}" style="margin-top:8px; padding:6px 16px; border-radius:40px; border:1px solid #cbd5e1; background:#f1f5f9; cursor:pointer; font-size:0.85rem;">🔄 Clear</button>
+            `;
+            container.appendChild(div);
+            const builder = div.querySelector(`#sentence-${idx}`);
+            let selectedWords = orderAnswers[idx] ? orderAnswers[idx].split(' ') : [];
+            function updateBuilder() { builder.innerHTML = selectedWords.join(' ') || 'Click words in the correct order...'; }
+            updateBuilder();
+            const btns = div.querySelectorAll('.word-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if(evaluated) return;
+                    const word = btn.getAttribute('data-word');
+                    if(selectedWords.includes(word) && selectedWords[selectedWords.length-1] === word) {
+                        selectedWords.pop();
+                        btn.classList.remove('selected');
+                    } else if(!selectedWords.includes(word)) {
+                        selectedWords.push(word);
+                        btn.classList.add('selected');
+                    }
+                    orderAnswers[idx] = selectedWords.join(' ');
+                    updateBuilder();
+                });
+            });
+            const clearBtn = div.querySelector('.clear-order-btn');
+            clearBtn.addEventListener('click', () => {
+                if(evaluated) return;
+                selectedWords = [];
+                orderAnswers[idx] = '';
+                div.querySelectorAll('.word-btn').forEach(b => b.classList.remove('selected'));
+                updateBuilder();
+            });
+            if(orderAnswers[idx]) {
+                const stored = orderAnswers[idx].split(' ');
+                selectedWords = stored;
+                updateBuilder();
+            }
+        });
+    }
+
+    function renderMatch() {
+    const container = document.getElementById('match-questions');
+    container.innerHTML = '';
+    currentMatch.forEach((q, idx) => {
+        // Opción correcta es la palabra/frase corta (q.right)
+        const correctOption = q.right;
+        
+        // Obtener otras opciones del pool que NO sean la correcta
+        const otherOptions = [...new Set(
+            currentMatch.filter(item => item.right !== correctOption).map(item => item.right)
+        )];
+        // Mezclar y tomar 4 opciones incorrectas
+        const shuffledOthers = [...otherOptions].sort(() => Math.random() - 0.5);
+        const incorrectOptions = shuffledOthers.slice(0, 4);
+        // Combinar correcta + incorrectas y mezclar
+        let allOptions = [correctOption, ...incorrectOptions];
+        allOptions = allOptions.sort(() => Math.random() - 0.5);
+        
+        const div = document.createElement('div');
+        div.className = 'match-item';
+        div.id = `match-card-${idx}`;
+        div.innerHTML = `
+            <div class="match-left">📌 ${q.left}</div>
+            <select class="match-select" data-idx="${idx}">
+                <option value="">-- Select the correct match --</option>
+                ${allOptions.map(opt => `<option value="${opt}" ${matchAnswers[idx] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+            </select>
+        `;
+        container.appendChild(div);
+        const sel = div.querySelector('.match-select');
+        sel.addEventListener('change', (e) => { if(!evaluated) matchAnswers[idx] = e.target.value; });
+    });
+    }
+
+    function renderCorrect() {
+        const container = document.getElementById('correct-questions');
+        container.innerHTML = '';
+        currentCorrect.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `correct-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. Correct the error: "${q.text}"</div>
+                <input type="text" class="correct-input" data-idx="${idx}" placeholder="Write the correct sentence..." value="${correctAnswers[idx] || ''}">
+            `;
+            container.appendChild(div);
+            const inp = div.querySelector('.correct-input');
+            inp.addEventListener('input', (e) => { if(!evaluated) correctAnswers[idx] = e.target.value.trim().toLowerCase(); });
+        });
+    }
+
+    function showCorrectAnswers() {
+        // MCQ
+        currentMcq.forEach((q, idx) => {
+            const card = document.getElementById(`mcq-card-${idx}`);
+            if(!card) return;
+            const isCorrect = mcqAnswers[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            const correctDiv = document.createElement('div');
+            correctDiv.className = 'correct-answer-display';
+            correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Correct answer: ${q.correct}`;
+            if(!card.querySelector('.correct-answer-display')) card.appendChild(correctDiv);
+        });
+        // Gap Fill
+        currentGap.forEach((q, idx) => {
+            const card = document.getElementById(`gap-card-${idx}`);
+            if(!card) return;
+            const isCorrect = gapAnswers[idx].trim() === q.answer.toLowerCase().trim();
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            const correctDiv = document.createElement('div');
+            correctDiv.className = 'correct-answer-display';
+            correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Correct answer: ${q.answer}`;
+            if(!card.querySelector('.correct-answer-display')) card.appendChild(correctDiv);
+        });
+        // Word Order
+        currentOrder.forEach((q, idx) => {
+            const card = document.getElementById(`order-card-${idx}`);
+            if(!card) return;
+            const isCorrect = orderAnswers[idx] && orderAnswers[idx].toLowerCase() === q.correct.toLowerCase();
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            const correctDiv = document.createElement('div');
+            correctDiv.className = 'correct-answer-display';
+            correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Correct sentence: "${q.correct}"`;
+            if(!card.querySelector('.correct-answer-display')) card.appendChild(correctDiv);
+        });
+        // Match - CORREGIDO con frase completa para mostrar
+        currentMatch.forEach((q, idx) => {
+            const card = document.getElementById(`match-card-${idx}`);
+            if(!card) return;
+            const userAnswer = matchAnswers[idx];
+            const isCorrect = (userAnswer === q.right);
+            
+            if(isCorrect) {
+                card.classList.add('correct-highlight');
+                card.classList.remove('wrong-highlight');
+            } else {
+                card.classList.add('wrong-highlight');
+                card.classList.remove('correct-highlight');
+            }
+            
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                // Mostrar la frase completa para que el alumno aprenda
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Correct match: "${q.left} ${q.right}"`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Correct Error
+        currentCorrect.forEach((q, idx) => {
+            const card = document.getElementById(`correct-card-${idx}`);
+            if(!card) return;
+            const isCorrect = correctAnswers[idx].replace(/\.$/, '').trim() === q.correct.toLowerCase().replace(/\.$/, '').trim();
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            const correctDiv = document.createElement('div');
+            correctDiv.className = 'correct-answer-display';
+            correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Correct sentence: "${q.correct}"`;
+            if(!card.querySelector('.correct-answer-display')) card.appendChild(correctDiv);
+        });
+    }
+
+    function calculateAndShowResults() {
+    let totalCorrect = 0;
+    for(let i=0; i<currentMcq.length; i++) {
+        if(mcqAnswers[i] && mcqAnswers[i] === currentMcq[i].correct) totalCorrect++;
+    }
+    for(let i=0; i<currentGap.length; i++) {
+        if(gapAnswers[i] && gapAnswers[i] === currentGap[i].answer.toLowerCase()) totalCorrect++;
+    }
+    for(let i=0; i<currentOrder.length; i++) {
+        if(orderAnswers[i] && orderAnswers[i].toLowerCase() === currentOrder[i].correct.toLowerCase()) totalCorrect++;
+    }
+    for(let i=0; i<currentMatch.length; i++) {
+        if(matchAnswers[i] && matchAnswers[i] === currentMatch[i].right) totalCorrect++;
+    }
+    for(let i=0; i<currentCorrect.length; i++) {
+        if(correctAnswers[i] && correctAnswers[i] === currentCorrect[i].correct.toLowerCase()) totalCorrect++;
+    }
+    const maxPoints = 50;
+    const grade = 1 + (6 * (totalCorrect / maxPoints));
+    const finalGrade = grade.toFixed(1);
+    
+    document.getElementById('scoreDisplay').innerHTML = `Score: ${totalCorrect} / ${maxPoints}`;
+    document.getElementById('gradeDisplay').innerHTML = `Grade: ${finalGrade} (1.0 to 7.0)`;
+    const passMsg = totalCorrect >= 30 ? '✅ PASSED! (Grade ≥ 4.0)' : '❌ NOT PASSED. Need at least 30 correct answers.';
+    document.getElementById('passDisplay').innerHTML = passMsg;
+    document.getElementById('resultsSection').style.display = 'block';
+    document.getElementById('actionButtons').style.display = 'flex';
+    showCorrectAnswers();
+    
+    // 🔽 NUEVO: Desplazarse automáticamente a la sección de resultados
+    const resultsSection = document.getElementById('resultsSection');
+    resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    
+    // 🔽 NUEVO: Opcional - agregar un efecto de destello para llamar la atención
+    resultsSection.style.transition = 'box-shadow 0.3s';
+    resultsSection.style.boxShadow = '0 0 0 3px #f4a261';
+    setTimeout(() => {
+        resultsSection.style.boxShadow = 'none';
+    }, 1000);
+}
+
+    function evaluateTest() {
+        if(evaluated) return;
+        evaluated = true;
+        calculateAndShowResults();
+    }
+
+    function restartTest() {
+        currentMcq = getRandomItems(mcqPool, 10);
+        currentGap = getRandomItems(gapFillPool, 10);
+        currentOrder = getRandomItems(orderPool, 10);
+        currentMatch = getRandomItems(matchPool, 10);
+        currentCorrect = getRandomItems(correctPool, 10);
+        mcqAnswers = new Array(10).fill(null);
+        gapAnswers = new Array(10).fill('');
+        orderAnswers = new Array(10).fill('');
+        matchAnswers = new Array(10).fill('');
+        correctAnswers = new Array(10).fill('');
+        evaluated = false;
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+        renderAll();
+    }
+
+ // Tab switching - Versión mejorada
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            // Remover active de todos los botones
+            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+            // Agregar active al botón clickeado
+            btn.classList.add('active');
+            // Obtener el ID del tab a mostrar
+            const tabId = btn.getAttribute('data-tab');
+            // Ocultar todos los contenidos
+            document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+            // Mostrar el contenido seleccionado
+            document.getElementById(tabId).classList.add('active');
+        });
+    });
+
+    const evaluateBtnSidebar = document.getElementById('evaluateBtnSidebar');
+    if (evaluateBtnSidebar) {
+        evaluateBtnSidebar.addEventListener('click', evaluateTest);
+    }
+    document.getElementById('restartBtn').addEventListener('click', restartTest);
+    document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_4_Ingles.html');
+    document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Ingles.html');
+
+    restartTest();
+</script>
+</body>
+</html>

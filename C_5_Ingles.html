@@ -1,0 +1,691 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Unit 2 - Friendship & Grammar | English Class</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 85vh;
+            max-height: 750px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3);
+            background: #ffffff;
+            border-radius: 32px;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: white;
+            border-radius: 32px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* Scroll personalizado */
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #764ba2;
+            border-radius: 8px;
+        }
+
+        /* Tipografía */
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #4a5568;
+            border-left: 5px solid #f6ad55;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #2d3748;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .badge {
+            background: #e9d8fd;
+            color: #6b46c1;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .example-box {
+            background: #fef5e7;
+            border-left: 5px solid #f6ad55;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+        }
+
+        .grammar-rule {
+            background: #edf2f7;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: #f7fafc;
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+        }
+
+        .highlight {
+            background: #fef5e7;
+            font-weight: bold;
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+            font-family: monospace;
+        }
+
+        .audio-player {
+            background: #f0f4f8;
+            padding: 1rem;
+            border-radius: 60px;
+            display: inline-flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .news-image-placeholder {
+            background: #e2e8f0;
+            border-radius: 20px;
+            padding: 1.5rem;
+            text-align: center;
+            border: 2px dashed #a0aec0;
+            margin: 1rem 0;
+        }
+
+        /* Navegación */
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: all 0.2s ease;
+            color: #4a5568;
+        }
+
+        .nav-btn:hover {
+            background: #667eea;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: #2d3748;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action:hover {
+            background: #1a202c;
+            transform: translateY(-2px);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #667eea;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        .poem-example {
+            background: #faf5ff;
+            border-radius: 24px;
+            padding: 1rem;
+            font-family: monospace;
+            font-size: 0.9rem;
+            margin: 0.8rem 0;
+            border-left: 4px solid #9f7aea;
+        }
+
+        @media (max-width: 680px) {
+            .slide {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            .nav-btn {
+                width: 42px;
+                height: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        
+        <!-- SLIDE 0 - PORTADA -->
+        <div class="slide active" data-index="0">
+            <div class="badge">📘 7th Grade • Unit 2</div>
+            <h1>Friendship & <br>Grammar</h1>
+            <p style="font-size: 1.2rem; margin-top: 0.5rem;">Listening, Vocabulary, Grammar and Writing about friends</p>
+            <div class="example-box" style="margin-top: 2rem;">
+                🌟 <strong>In this unit you will learn:</strong><br>
+                ➜ Friendship verb phrases (get on, hang out, keep in touch...)<br>
+                ➜ Questions with prepositions (What are you looking for?)<br>
+                ➜ Question tags (You like pizza, don't you?)<br>
+                ➜ Different types of poems (Haiku, Acrostic, Limerick, Cinquain)
+            </div>
+            <div style="margin-top: auto; text-align: center; padding: 1rem;">
+                <i class="fas fa-arrow-right"></i> Press ▶ or swipe to continue
+            </div>
+        </div>
+
+        <!-- SLIDE 1 - LISTENING: News Story -->
+        <div class="slide" data-index="1">
+            <div class="badge">🎧 LISTENING</div>
+            <h2>School bans best friends?</h2>
+            <div class="news-image-placeholder">
+                <img src="https://i.ibb.co/5g4dfWdt/image.png" alt="Daily News - School bans best friends" style="width: 100%; max-width: 400px; border-radius: 16px; margin: 0 auto; display: block;">
+                <p style="font-size: 0.8rem; margin-top: 8px; text-align: center;">📰 Local school will ban best friends</p>
+            </div>
+            <p>Imagine a school that says: <strong>"You cannot have best friends"</strong>. How do you feel?</p>
+            <div class="audio-player">
+                <i class="fas fa-headphones" style="color: #667eea;"></i>
+                <audio controls src="audio_2_4.mp3" style="flex: 1;">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+            <p class="example-box">🎙️ <strong>Track 2.4:</strong> Two students discuss the news. Listen and find out how they feel.</p>
+        </div>
+
+        <!-- SLIDE 2 - VOCABULARY: Friendship Verb Phrases (part 1) -->
+        <div class="slide" data-index="2">
+            <div class="badge">📖 VOCABULARY</div>
+            <h2>Friendship verb phrases</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                    <h3>🤝 Positive relationships</h3>
+                    <p><strong>get on</strong> = have a good relationship</p>
+                    <p><strong>get to know</strong> = learn about someone</p>
+                    <p><strong>hang out</strong> = spend time relaxing</p>
+                    <p><strong>meet up</strong> = see each other</p>
+                    <p><strong>keep in touch</strong> = stay connected</p>
+                    <p><strong>make friends</strong> = start new friendships</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-heart-broken"></i>
+                    <h3>💔 Difficult moments</h3>
+                    <p><strong>argue</strong> = disagree angrily</p>
+                    <p><strong>break up</strong> = end a friendship/relationship</p>
+                    <p><strong>lose touch</strong> = stop communicating</p>
+                    <p><strong>miss</strong> = feel sad when someone is absent</p>
+                </div>
+            </div>
+            <div class="grammar-rule">
+                💡 <strong>Examples:</strong> <br>
+                "I <em>hang out</em> with my best friend every weekend." <br>
+                "We <em>keep in touch</em> on WhatsApp." <br>
+                "I don't want to <em>lose touch</em> with my old friends."
+            </div>
+        </div>
+
+        <!-- SLIDE 3 - VOCABULARY: Examples in context -->
+        <div class="slide" data-index="3">
+            <div class="badge">✨ VOCABULARY IN USE</div>
+            <h2>Friendship in real life</h2>
+            <div class="example-box">
+                <i class="fas fa-comment-dots"></i> <strong>Complete the sentences (examples):</strong><br><br>
+                ➜ "When I am on holiday, I <strong>miss</strong> my friends."<br>
+                ➜ "I sometimes <strong>argue with</strong> my brother about the TV remote."<br>
+                ➜ "I <strong>got to know</strong> my best friend when we started playing football together."<br>
+                ➜ "I hope I don't <strong>lose touch with</strong> my primary school friends."
+            </div>
+            <div class="grammar-rule">
+                📌 <strong>Creative Thinking:</strong> How could we help students who feel sad because they don't have a best friend?
+            </div>
+        </div>
+
+        <!-- SLIDE 4 - GRAMMAR: Questions with prepositions -->
+        <div class="slide" data-index="4">
+            <div class="badge">📝 GRAMMAR PART 1</div>
+            <h2>Questions with prepositions</h2>
+            <p>Some verbs are followed by prepositions (look <strong>for</strong>, talk <strong>about</strong>, listen <strong>to</strong>). In questions, the preposition goes at the <strong>END</strong>.</p>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>✅ Correct</h3>
+                    <p><span class="highlight">What are you looking for?</span></p>
+                    <p><span class="highlight">Who are you talking to?</span></p>
+                    <p><span class="highlight">What are you thinking about?</span></p>
+                </div>
+                <div class="card">
+                    <h3>❌ Incorrect</h3>
+                    <p><span class="highlight">For what are you looking?</span></p>
+                    <p><span class="highlight">To whom are you talking?</span></p>
+                    <p><span class="highlight">About what are you thinking?</span></p>
+                </div>
+            </div>
+            <div class="grammar-rule">
+                ⚡ <strong>Remember:</strong> In everyday English, we put the preposition at the end of the question.
+            </div>
+        </div>
+
+        <!-- SLIDE 5 - GRAMMAR: Question Tags -->
+        <div class="slide" data-index="5">
+            <div class="badge">🏷️ GRAMMAR PART 2</div>
+            <h2>Question Tags</h2>
+            <p>We use question tags to check information or ask for agreement.</p>
+            <div class="example-box">
+                <strong>Structure:</strong> Statement + short question (opposite polarity)<br><br>
+                ➜ <strong>Positive statement → negative tag</strong><br>
+                <span class="highlight">"You like pizza, <u>don't you</u>?"</span><br><br>
+                ➜ <strong>Negative statement → positive tag</strong><br>
+                <span class="highlight">"You don't have a pet, <u>do you</u>?"</span>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Present Simple</h3>
+                    <p>She loves cats, <strong>doesn't she?</strong></p>
+                    <p>They play football, <strong>don't they?</strong></p>
+                </div>
+                <div class="card">
+                    <h3>Past Simple</h3>
+                    <p>You went to the party, <strong>didn't you?</strong></p>
+                    <p>She didn't call, <strong>did she?</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6 - GRAMMAR: More examples with prepositions -->
+        <div class="slide" data-index="6">
+            <div class="badge">🔍 GRAMMAR PRACTICE</div>
+            <h2>Common preposition questions</h2>
+            <div class="example-box">
+                <i class="fas fa-question-circle"></i> <strong>Examples:</strong><br><br>
+                ➜ <strong>What are you looking at?</strong> (see / focus on)<br>
+                ➜ <strong>What are you listening to?</strong> (music / podcast)<br>
+                ➜ <strong>What are you thinking about?</strong> (ideas / memories)<br>
+                ➜ <strong>What are you waiting for?</strong> (bus / friend / answer)<br>
+                ➜ <strong>Where are you hanging out?</strong> (park / mall / home)
+            </div>
+            <div class="grammar-rule">
+                📌 <strong>Question tags for predictions:</strong> "You live near here, <u>don't you</u>?"<br>
+                "Your birthday is in July, <u>isn't it</u>?"
+            </div>
+        </div>
+
+        <!-- SLIDE 7 - WRITING: Types of Poems (intro) -->
+        <div class="slide" data-index="7">
+            <div class="badge">✍️ WRITING</div>
+            <h2>Types of poems about friendship</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-leaf"></i>
+                    <h3>Haiku</h3>
+                    <p>Japanese poem, 5-7-5 syllables. Simple and elegant.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-font"></i>
+                    <h3>Acrostic</h3>
+                    <p>First letters of each line spell a word (e.g., FRIEND).</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-laugh"></i>
+                    <h3>Limerick</h3>
+                    <p>5 lines, funny, rhyme scheme AABBA.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Cinquain</h3>
+                    <p>5 lines, syllable pattern: 2-4-6-8-2.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 - WRITING: Haiku example -->
+        <div class="slide" data-index="8">
+            <div class="badge">🍃 HAIKU</div>
+            <h2>5-7-5 syllables</h2>
+            <div class="poem-example">
+                <i class="fas fa-tree"></i> <strong>Example:</strong><br>
+                Primary school (5)<br>
+                Run, fall down, get up, smile, play (7)<br>
+                I want this forever (5)
+            </div>
+            <div class="poem-example">
+                <i class="fas fa-fire"></i> <strong>Another example:</strong><br>
+                Group of best friends (5)<br>
+                Sitting around the beach fire (7)<br>
+                Everyone's laughing (5)
+            </div>
+            <p class="grammar-rule">💡 <strong>Topic idea:</strong> Write a haiku about a happy moment with friends.</p>
+        </div>
+
+        <!-- SLIDE 9 - WRITING: Acrostic poem example -->
+        <div class="slide" data-index="9">
+            <div class="badge">🔤 ACROSTIC POEM</div>
+            <h2>Hidden word: SISTER / FRIEND</h2>
+            <div class="poem-example">
+                <strong>S -</strong> he, Sally,<br>
+                <strong>I -</strong> s always there<br>
+                <strong>S -</strong> houting, bossy<br>
+                <strong>T -</strong> idy your room!<br>
+                <strong>E -</strong> veryday, but ...<br>
+                <strong>R -</strong> eally, she's my best friend, well ...<br>
+                <strong>S -</strong> sometimes.
+            </div>
+            <div class="poem-example">
+                <strong>Popcorn</strong> at the cinema<br>
+                <strong>Always</strong> the best<br>
+                <strong>Right</strong> at the front<br>
+                <strong>Thriller, horror, romance, action</strong><br>
+                <strong>You</strong> can watch them all
+            </div>
+        </div>
+
+        <!-- SLIDE 10 - WRITING: Limerick example -->
+        <div class="slide" data-index="10">
+            <div class="badge">😂 LIMERICK</div>
+            <h2>Funny 5-line poem (AABBA)</h2>
+            <div class="poem-example">
+                I have a friend who loves the sun (A)<br>
+                So outside we often have fun (A)<br>
+                Too long outside! (B)<br>
+                Go and hide! (B)<br>
+                His face is redder than anyone! (A)
+            </div>
+            <p class="grammar-rule">🎭 <strong>Rhyme scheme:</strong> Lines 1,2,5 rhyme with each other. Lines 3,4 rhyme together.</p>
+        </div>
+
+        <!-- SLIDE 11 - WRITING: Cinquain example -->
+        <div class="slide" data-index="11">
+            <div class="badge">📝 CINQUAIN</div>
+            <h2>Syllable pattern: 2-4-6-8-2</h2>
+            <div class="poem-example">
+                Look up ... (2)<br>
+                Someone is there (4)<br>
+                Waiting for you, happy (6)<br>
+                Let's chat about the world all day (8)<br>
+                With friends! (2)
+            </div>
+            <div class="grammar-rule">
+                💡 <strong>Tip:</strong> Cinquains don't need to rhyme. Focus on describing a moment or feeling.
+            </div>
+        </div>
+
+        <!-- SLIDE 12 - ORACY: Eye contact & Voice projection -->
+        <div class="slide" data-index="12">
+            <div class="badge">🎙️ ORACY</div>
+            <h2>Speaking with confidence</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Eye contact</h3>
+                    <p>Making eye contact helps you connect with your audience. It shows you are paying attention.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-volume-up"></i>
+                    <h3>Project your voice</h3>
+                    <p>Speak loudly enough so everyone can hear. Breathe from your stomach, not your chest.</p>
+                </div>
+            </div>
+            <div class="example-box">
+                <strong>Try this experiment:</strong><br>
+                1. Put your hand on your stomach<br>
+                2. Breathe in for 5 seconds<br>
+                3. Breathe out and say a line from your poem<br>
+                4. Your voice will be stronger!
+            </div>
+        </div>
+
+        <!-- SLIDE 13 - SUMMARY & NEXT STEPS -->
+        <div class="slide" data-index="13">
+            <div class="badge">📌 SUMMARY</div>
+            <h2>What we learned today</h2>
+            <ul style="margin-left: 1.5rem; line-height: 1.8;">
+                <li><strong>Listening:</strong> A news story about banning best friends (track 2.4)</li>
+                <li><strong>Vocabulary:</strong> 10 friendship verb phrases (get on, hang out, keep in touch...)</li>
+                <li><strong>Grammar:</strong> Questions with prepositions (put preposition at the end)</li>
+                <li><strong>Grammar:</strong> Question tags (You like pizza, don't you?)</li>
+                <li><strong>Writing:</strong> 4 types of poems: Haiku, Acrostic, Limerick, Cinquain</li>
+                <li><strong>Oracy:</strong> Eye contact and voice projection</li>
+            </ul>
+            <div class="grammar-rule" style="margin-top: 1rem;">
+                🎯 <strong>Next:</strong> Go to the exercises page and practice more!
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="dots" id="dotsContainer"></div>
+
+    <!-- Botones de acción (curso y ejercicios) -->
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Course</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Exercises</button>
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+    }
+
+    function nextSlide() {
+        if(currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        dotsContainer.innerHTML = '';
+        for(let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if(e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Ingles.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_5A_Ingles.html';
+    });
+
+    // Swipe para móviles
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if(touchEndX < touchStartX - 40) nextSlide();
+        if(touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    updateDots();
+</script>
+</body>
+</html>

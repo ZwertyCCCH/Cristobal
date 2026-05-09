@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Unit 2 Exercises - Personality & Animal Friends</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        /* TABS LATERAL ESTÁTICO */
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 180px;
+            min-width: 180px;
+            background: #f8fafc;
+            border-right: 2px solid #e2e8f0;
+            gap: 12px;
+            padding: 30px 16px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.5rem;
+        }
+
+        .tab-btn span {
+            font-size: 0.7rem;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #11998e;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 3px solid #38ef7d;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Botón Evaluate */
+        .btn-evaluate-sidebar {
+            width: 100%;
+            margin-top: 30px;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-evaluate-sidebar i {
+            font-size: 1.3rem;
+        }
+
+        .btn-evaluate-sidebar:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        /* Question styling */
+        .question-card {
+            background: #fef9e6;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .question-card.correct-highlight {
+            border-left: 6px solid #2e7d32;
+            background: #f1f8e9;
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 6px solid #c62828;
+            background: #ffebee;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #1e2a5e;
+        }
+
+        .correct-answer-display {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #e8eaf6;
+            border-radius: 16px;
+            color: #1e2a5e;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        .option:hover {
+            background: #f1f5f9;
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #11998e, #38ef7d);
+            color: white;
+            padding: 24px 20px;
+            border-radius: 24px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .results-section p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #f6ad55;
+            color: #1e2a5e;
+        }
+
+        .btn-secondary {
+            background: #11998e;
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            border: 2px solid #11998e;
+            color: #11998e;
+        }
+
+        .reading-text {
+            background: #e6f7e6;
+            padding: 1.2rem;
+            border-radius: 24px;
+            margin-bottom: 1.5rem;
+            border-left: 5px solid #38ef7d;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .tabs {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding: 12px;
+            }
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                width: auto;
+                padding: 10px 14px;
+            }
+            .btn-evaluate-sidebar {
+                flex-direction: row;
+                margin-top: 0;
+                width: auto;
+                margin-left: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1"><i class="fas fa-smile"></i><span> Personality Adjectives</span></button>
+        <button class="tab-btn" data-tab="tab2"><i class="fas fa-paw"></i><span> Reading: Animal Friends</span></button>
+        <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar"><i class="fas fa-check-double"></i><span> Evaluate</span></button>
+    </div>
+
+    <div class="tab-content-container">
+        <div id="tab1" class="tab-content active"><div id="personality-questions"></div></div>
+        <div id="tab2" class="tab-content"><div id="reading-questions"></div></div>
+
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-chart-line"></i> Your Results</h3>
+            <p id="scoreDisplay">Score: -- / 20</p>
+            <p id="gradeDisplay">Grade: -- (1.0 to 7.0)</p>
+            <p id="passDisplay"></p>
+        </div>
+
+        <div class="action-buttons" id="actionButtons">
+            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-sync-alt"></i> Restart Test</button>
+            <button class="btn btn-secondary" id="backToClassBtn"><i class="fas fa-chalkboard"></i> Back to Class</button>
+            <button class="btn btn-outline" id="backToCourseBtn"><i class="fas fa-book-open"></i> Back to Course</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ======================== SECTION 1: PERSONALITY ADJECTIVES (30 POOL) ========================
+    const personalityPool = [
+        { text: "Someone who is smart and learns quickly is ______.", options: ["clever", "bossy", "rude", "shy"], correct: "clever" },
+        { text: "A person who always tells the truth is ______.", options: ["honest", "nervous", "serious", "funny"], correct: "honest" },
+        { text: "Someone who makes other people laugh is ______.", options: ["funny", "serious", "shy", "rude"], correct: "funny" },
+        { text: "A person who shares things freely is ______.", options: ["generous", "bossy", "nervous", "patient"], correct: "generous" },
+        { text: "Someone who believes in themselves and is not afraid is ______.", options: ["confident", "shy", "nervous", "rude"], correct: "confident" },
+        { text: "A person who waits calmly without getting angry is ______.", options: ["patient", "bossy", "nervous", "rude"], correct: "patient" },
+        { text: "Someone who is quiet and doesn't like talking to new people is ______.", options: ["shy", "confident", "funny", "honest"], correct: "shy" },
+        { text: "A person who always tells others what to do is ______.", options: ["bossy", "generous", "patient", "clever"], correct: "bossy" },
+        { text: "Someone who feels worried or anxious is ______.", options: ["nervous", "confident", "funny", "patient"], correct: "nervous" },
+        { text: "A person who is not polite is ______.", options: ["rude", "honest", "generous", "clever"], correct: "rude" },
+        { text: "Someone who doesn't laugh or joke much is ______.", options: ["serious", "funny", "confident", "patient"], correct: "serious" },
+        { text: "My sister always shares her sweets. She is very ______.", options: ["generous", "bossy", "rude", "shy"], correct: "generous" },
+        { text: "He never tells lies. He is an ______ person.", options: ["honest", "funny", "nervous", "serious"], correct: "honest" },
+        { text: "She gets good grades because she is ______.", options: ["clever", "shy", "rude", "bossy"], correct: "clever" },
+        { text: "Before the exam, I always feel ______.", options: ["nervous", "confident", "funny", "patient"], correct: "nervous" },
+        { text: "He doesn't like speaking in front of the class. He is ______.", options: ["shy", "confident", "generous", "honest"], correct: "shy" },
+        { text: "My teacher never gets angry. She is very ______.", options: ["patient", "bossy", "rude", "nervous"], correct: "patient" },
+        { text: "He always tells jokes. He is very ______.", options: ["funny", "serious", "shy", "bossy"], correct: "funny" },
+        { text: "She thinks she can do anything. She is very ______.", options: ["confident", "nervous", "shy", "rude"], correct: "confident" },
+        { text: "Don't be ______. Say 'please' and 'thank you'.", options: ["rude", "generous", "patient", "clever"], correct: "rude" },
+        { text: "My big brother always tells me what to do. He is so ______!", options: ["bossy", "funny", "shy", "honest"], correct: "bossy" },
+        { text: "She never smiles or laughs. She is very ______.", options: ["serious", "funny", "confident", "generous"], correct: "serious" },
+        { text: "He waited for two hours without complaining. He is ______.", options: ["patient", "nervous", "rude", "bossy"], correct: "patient" },
+        { text: "She always says what she thinks. She is very ______.", options: ["honest", "shy", "nervous", "serious"], correct: "honest" },
+        { text: "He is afraid to meet new people. He is ______.", options: ["shy", "confident", "funny", "generous"], correct: "shy" },
+        { text: "She solved the difficult problem easily. She is ______.", options: ["clever", "bossy", "rude", "nervous"], correct: "clever" },
+        { text: "He never shares his toys. He is not very ______.", options: ["generous", "honest", "patient", "clever"], correct: "generous" },
+        { text: "She raised her hand and answered the question. She is ______.", options: ["confident", "shy", "nervous", "serious"], correct: "confident" },
+        { text: "He interrupted the teacher. That was ______.", options: ["rude", "funny", "patient", "clever"], correct: "rude" },
+        { text: "She worries about everything. She is very ______.", options: ["nervous", "confident", "patient", "honest"], correct: "nervous" }
+    ];
+
+    // ======================== SECTION 2: READING COMPREHENSION (30 POOL) ========================
+    const readingPool = [
+        { text: "What do scientists believe about some intelligent animals?", options: ["They laugh and have fun with each other", "They fight all the time", "They don't need friends", "They only eat and sleep"], correct: "They laugh and have fun with each other" },
+        { text: "What sound do chimpanzees make when they are playing?", options: ["A sound like a human laugh", "A loud roar", "A high-pitched sound", "No sound at all"], correct: "A sound like a human laugh" },
+        { text: "How do rats 'laugh'?", options: ["By making high-pitched sounds", "By smiling", "By jumping", "By making a roar"], correct: "By making high-pitched sounds" },
+        { text: "Why do rats play and 'laugh'?", options: ["To make friends", "To find food", "To scare other animals", "To exercise"], correct: "To make friends" },
+        { text: "Why do animals need friends?", options: ["Because a group is safer", "Because they get bored alone", "Because they need food", "Because they like to fight"], correct: "Because a group is safer" },
+        { text: "What happens when one animal is hurt?", options: ["Others help", "Others run away", "Others ignore it", "Others fight"], correct: "Others help" },
+        { text: "What does helping each other keep the group?", options: ["Strong and healthy", "Bigger and faster", "Quieter and calmer", "Smaller and weaker"], correct: "Strong and healthy" },
+        { text: "Which animals are described as very social in the text?", options: ["Dolphins and large birds", "Rats and mice", "Giraffes and elephants", "Sheep and ducks"], correct: "Dolphins and large birds" },
+        { text: "When can dolphins and large birds be generous?", options: ["When a friend needs food", "When they are playing", "When they are alone", "When they are hurt"], correct: "When a friend needs food" },
+        { text: "What role do older female giraffes and elephants play?", options: ["They act as babysitters for babies", "They find food for the group", "They protect the group from enemies", "They lead the group"], correct: "They act as babysitters for babies" },
+        { text: "What do animals do when they don't have others of their own kind?", options: ["They make friends with different animals", "They leave and travel alone", "They stop eating", "They become sad and quiet"], correct: "They make friends with different animals" },
+        { text: "Which animals are mentioned as an example of different species becoming friends?", options: ["Sheep and ducks", "Dogs and cats", "Lions and giraffes", "Rats and birds"], correct: "Sheep and ducks" },
+        { text: "Why do animals make friends with different species?", options: ["They don't want to be alone", "They want to be stronger", "They are looking for food", "They enjoy playing"], correct: "They don't want to be alone" },
+        { text: "How does the text describe animals at the end?", options: ["Amazing, just like us", "Dangerous and scary", "Different from humans", "Quiet and calm"], correct: "Amazing, just like us" },
+        { text: "What is the main idea of the article?", options: ["Animals laugh, make friends and help each other", "Animals are dangerous to humans", "Only rats and chimpanzees have feelings", "Animals don't need other animals"], correct: "Animals laugh, make friends and help each other" },
+        { text: "Which animals are specifically mentioned as making a laughing sound?", options: ["Chimpanzees and rats", "Dogs and cats", "Dolphins and birds", "Sheep and ducks"], correct: "Chimpanzees and rats" },
+        { text: "What is the title of the article?", options: ["Why do animals laugh and make friends?", "How animals sleep", "Animals in danger", "The best animal friends"], correct: "Why do animals laugh and make friends?" },
+        { text: "What do dolphins and large birds share with their friends?", options: ["Food", "Shelter", "Water", "Toys"], correct: "Food" },
+        { text: "According to the text, what keeps a group of animals strong and healthy?", options: ["Helping each other", "Eating more food", "Running faster", "Sleeping longer"], correct: "Helping each other" },
+        { text: "What kind of animals does the text say can laugh and have fun?", options: ["Intelligent animals", "All animals", "Only pets", "Only wild animals"], correct: "Intelligent animals" },
+        { text: "According to the text, chimpanzees laugh when they are ______.", options: ["playing", "eating", "sleeping", "fighting"], correct: "playing" },
+        { text: "Older female giraffes and elephants take care of ______.", options: ["babies", "food", "other animals", "the leader"], correct: "babies" },
+        { text: "What word in the text describes how dolphins and large birds act toward their friends?", options: ["Generous", "Aggressive", "Shy", "Nervous"], correct: "Generous" },
+        { text: "Animals make friends with different species because they don't want to be ______.", options: ["alone", "hungry", "lost", "cold"], correct: "alone" },
+        { text: "The text says that some animals laugh and have fun. What kind of animals are these?", options: ["Intelligent animals", "Small animals", "Fast animals", "Dangerous animals"], correct: "Intelligent animals" },
+        { text: "What helps show that animals have feelings similar to humans?", options: ["They laugh, help each other and make friends", "They eat the same food as humans", "They live in houses like humans", "They wear clothes like humans"], correct: "They laugh, help each other and make friends" },
+        { text: "Which group of animals acts as babysitters according to the text?", options: ["Older female giraffes and elephants", "Dolphins and large birds", "Chimpanzees and rats", "Sheep and ducks"], correct: "Older female giraffes and elephants" },
+        { text: "What does the text suggest about animal friendships?", options: ["They are important for survival", "They cause problems", "They only happen between same species", "They are rare"], correct: "They are important for survival" },
+        { text: "The article's tone toward animals can best be described as ______.", options: ["positive and admiring", "negative and critical", "neutral and boring", "frightened and worried"], correct: "positive and admiring" },
+        { text: "Which statement is TRUE according to the text?", options: ["Rats make high-pitched sounds to make friends", "Chimpanzees make friends with sheep", "Dolphins act as babysitters", "Large birds don't need friends"], correct: "Rats make high-pitched sounds to make friends" }
+    ];
+
+    function getRandomItems(pool, n) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, n);
+    }
+
+    let currentPersonality = [], currentReading = [];
+    let personalityAnswers = [], readingAnswers = [];
+    let evaluated = false;
+    let readingTextDisplayed = false;
+
+    // ======================== RENDER SECTION 1: PERSONALITY ========================
+    function renderPersonality() {
+        const container = document.getElementById('personality-questions');
+        container.innerHTML = '';
+        currentPersonality.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `personality-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="personality_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(personalityAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="personality_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === personalityAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) personalityAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    // ======================== RENDER SECTION 2: READING with TEXT ========================
+    function renderReading() {
+        const container = document.getElementById('reading-questions');
+        container.innerHTML = '';
+        
+        // Texto de lectura informativo
+        const readingDiv = document.createElement('div');
+        readingDiv.className = 'reading-text';
+        readingDiv.innerHTML = `
+            <h3 style="color:#11998e; margin-bottom:12px;"><i class="fas fa-newspaper"></i> Why do animals laugh and make friends?</h3>
+            <p>Scientists believe that some intelligent animals laugh and have fun with each other. Chimpanzees make a sound like a human laugh when they are playing. Rats also play and "laugh" by making high-pitched sounds. They do this to make friends!</p>
+            <p style="margin-top:12px;">Animals need friends because a group is safer. When one animal is hurt, others help. This keeps the group strong and healthy. Dolphins and large birds are very social. They can be generous when a "friend" needs food.</p>
+            <p style="margin-top:12px;">Giraffes and elephants have older females that act as babysitters for babies. When animals don't have others of their own kind, they make friends with different animals, like sheep and ducks. They don't want to be alone. Animals are amazing, just like us!</p>
+        `;
+        container.appendChild(readingDiv);
+        
+        // Preguntas
+        currentReading.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `reading-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="reading_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(readingAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="reading_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === readingAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) readingAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderAll() {
+        renderPersonality();
+        renderReading();
+    }
+
+    // ======================== SHOW CORRECT ANSWERS ========================
+    function showCorrectAnswers() {
+        const sections = [
+            { current: currentPersonality, answers: personalityAnswers, prefix: 'personality', getCorrect: (q) => q.correct },
+            { current: currentReading, answers: readingAnswers, prefix: 'reading', getCorrect: (q) => q.correct }
+        ];
+        sections.forEach(section => {
+            section.current.forEach((q, idx) => {
+                const card = document.getElementById(`${section.prefix}-card-${idx}`);
+                if(!card) return;
+                const isCorrect = section.answers[idx] === q.correct;
+                card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+                if(!card.querySelector('.correct-answer-display')) {
+                    const correctDiv = document.createElement('div');
+                    correctDiv.className = 'correct-answer-display';
+                    correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Correct answer: ${q.correct}`;
+                    card.appendChild(correctDiv);
+                }
+            });
+        });
+    }
+
+    // ======================== CALCULATE RESULTS ========================
+    function calculateAndShowResults() {
+        let totalCorrect = 0;
+        const maxPoints = 20; // 10 preguntas × 2 secciones
+        
+        for(let i=0; i<currentPersonality.length; i++) {
+            if(personalityAnswers[i] && personalityAnswers[i] === currentPersonality[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentReading.length; i++) {
+            if(readingAnswers[i] && readingAnswers[i] === currentReading[i].correct) totalCorrect++;
+        }
+        
+        const grade = 1 + (6 * (totalCorrect / maxPoints));
+        const finalGrade = grade.toFixed(1);
+        
+        document.getElementById('scoreDisplay').innerHTML = `Score: ${totalCorrect} / ${maxPoints}`;
+        document.getElementById('gradeDisplay').innerHTML = `Grade: ${finalGrade} (1.0 to 7.0)`;
+        const passMsg = totalCorrect >= 12 ? '✅ PASSED! (Grade ≥ 4.0 - 60%)' : '❌ NOT PASSED. Need at least 12 correct answers.';
+        document.getElementById('passDisplay').innerHTML = passMsg;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('actionButtons').style.display = 'flex';
+        showCorrectAnswers();
+        
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.style.transition = 'box-shadow 0.3s';
+        resultsSection.style.boxShadow = '0 0 0 3px #f6ad55';
+        setTimeout(() => { resultsSection.style.boxShadow = 'none'; }, 1000);
+    }
+
+    function evaluateTest() {
+        if(evaluated) return;
+        evaluated = true;
+        calculateAndShowResults();
+    }
+
+    function restartTest() {
+        currentPersonality = getRandomItems(personalityPool, 10);
+        currentReading = getRandomItems(readingPool, 10);
+        personalityAnswers = new Array(10).fill(null);
+        readingAnswers = new Array(10).fill(null);
+        evaluated = false;
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+        renderAll();
+    }
+
+    // ======================== TAB SWITCHING ========================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if(btn.id !== 'evaluateBtnSidebar') {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        }
+    });
+
+    // ======================== EVENT LISTENERS ========================
+    document.getElementById('evaluateBtnSidebar').addEventListener('click', evaluateTest);
+    document.getElementById('restartBtn').addEventListener('click', restartTest);
+    document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_3_Ingles.html');
+    document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Ingles.html');
+
+    // ======================== INIT ========================
+    restartTest();
+</script>
+</body>
+</html>

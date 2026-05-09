@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Unit 2 Exercises - Friendship & Grammar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        /* TABS LATERAL ESTÁTICO */
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 160px;
+            min-width: 160px;
+            background: #f8fafc;
+            border-right: 2px solid #e2e8f0;
+            gap: 8px;
+            padding: 24px 12px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #64748b;
+            cursor: pointer;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.3rem;
+        }
+
+        .tab-btn span {
+            font-size: 0.65rem;
+        }
+
+        .tab-btn.active {
+            background: white;
+            color: #667eea;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            border-left: 3px solid #f6ad55;
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Botón Evaluate en barra lateral */
+        .btn-evaluate-sidebar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-evaluate-sidebar i {
+            font-size: 1.3rem;
+        }
+
+        .btn-evaluate-sidebar:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        /* Question styling */
+        .question-card {
+            background: #fef9e6;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #ffe2b5;
+            transition: all 0.2s;
+        }
+
+        .question-card.correct-highlight {
+            border-left: 6px solid #2e7d32;
+            background: #f1f8e9;
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 6px solid #c62828;
+            background: #ffebee;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #1e2a5e;
+        }
+
+        .correct-answer-display {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #e8eaf6;
+            border-radius: 16px;
+            color: #1e2a5e;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+        }
+
+        input[type="radio"], input[type="text"], select {
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="text"], select {
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            width: 100%;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            padding: 24px 20px;
+            border-radius: 24px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .results-section p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .btn-primary {
+            background: #f6ad55;
+            color: #1e2a5e;
+        }
+
+        .btn-secondary {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-outline {
+            background: white;
+            border: 2px solid #667eea;
+            color: #667eea;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .tabs {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding: 12px;
+            }
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                width: auto;
+                padding: 10px 14px;
+            }
+            .btn-evaluate-sidebar {
+                flex-direction: row;
+                margin-top: 0;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1"><i class="fas fa-users"></i><span> Friendship Verbs</span></button>
+        <button class="tab-btn" data-tab="tab2"><i class="fas fa-question-circle"></i><span> Questions with Prepositions</span></button>
+        <button class="tab-btn" data-tab="tab3"><i class="fas fa-tag"></i><span> Question Tags</span></button>
+        <button class="tab-btn" data-tab="tab4"><i class="fas fa-pen-fancy"></i><span> Poems</span></button>
+        <button class="tab-btn" data-tab="tab5"><i class="fas fa-comments"></i><span> Reading</span></button>
+        <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar"><i class="fas fa-check-double"></i><span> Evaluate</span></button>
+    </div>
+
+    <div class="tab-content-container">
+        <div id="tab1" class="tab-content active"><div id="vocab-questions"></div></div>
+        <div id="tab2" class="tab-content"><div id="preposition-questions"></div></div>
+        <div id="tab3" class="tab-content"><div id="tag-questions"></div></div>
+        <div id="tab4" class="tab-content"><div id="poem-questions"></div></div>
+        <div id="tab5" class="tab-content"><div id="listening-questions"></div></div>
+
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-chart-line"></i> Your Results</h3>
+            <p id="scoreDisplay">Score: -- / 50</p>
+            <p id="gradeDisplay">Grade: -- (1.0 to 7.0)</p>
+            <p id="passDisplay"></p>
+        </div>
+
+        <div class="action-buttons" id="actionButtons">
+            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-sync-alt"></i> Restart Test</button>
+            <button class="btn btn-secondary" id="backToClassBtn"><i class="fas fa-chalkboard"></i> Back to Class</button>
+            <button class="btn btn-outline" id="backToCourseBtn"><i class="fas fa-book-open"></i> Back to Course</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ======================== SECTION 1: FRIENDSHIP VERB PHRASES (30) ========================
+    const vocabPool = [
+        { text: "To have a good relationship with someone is to ______ with them.", options: ["get on", "break up", "lose touch", "argue"], correct: "get on" },
+        { text: "When you stop communicating with someone, you ______.", options: ["keep in touch", "lose touch", "hang out", "meet up"], correct: "lose touch" },
+        { text: "To spend time relaxing with friends is to ______.", options: ["argue", "break up", "hang out", "miss"], correct: "hang out" },
+        { text: "When you start a new friendship, you ______.", options: ["make friends", "break up", "lose touch", "argue"], correct: "make friends" },
+        { text: "To feel sad when someone is not with you is to ______ them.", options: ["miss", "argue", "break up", "get on"], correct: "miss" },
+        { text: "When you end a friendship or relationship, you ______.", options: ["break up", "get on", "hang out", "keep in touch"], correct: "break up" },
+        { text: "To stay connected with someone is to ______.", options: ["keep in touch", "lose touch", "break up", "argue"], correct: "keep in touch" },
+        { text: "When you disagree angrily with someone, you ______.", options: ["argue", "get on", "hang out", "miss"], correct: "argue" },
+        { text: "To learn about someone new is to ______ them.", options: ["get to know", "lose touch", "break up", "miss"], correct: "get to know" },
+        { text: "To see each other in person is to ______.", options: ["meet up", "argue", "lose touch", "break up"], correct: "meet up" },
+        { text: "I hope I don't ______ with my primary school friends.", options: ["lose touch", "get on", "hang out", "make friends"], correct: "lose touch" },
+        { text: "My sister and I sometimes ______ about what to watch on TV.", options: ["argue", "miss", "meet up", "keep in touch"], correct: "argue" },
+        { text: "When I'm on holiday, I ______ my friends a lot.", options: ["miss", "argue", "break up", "get on"], correct: "miss" },
+        { text: "We ______ every weekend at the park.", options: ["hang out", "lose touch", "break up", "argue"], correct: "hang out" },
+        { text: "I ______ my best friend when we started playing football.", options: ["got to know", "lost touch", "broke up", "argued"], correct: "got to know" },
+        { text: "It's easy to ______ in a new school.", options: ["make friends", "lose touch", "break up", "argue"], correct: "make friends" },
+        { text: "We should ______ more often. Let's have coffee!", options: ["meet up", "break up", "lose touch", "argue"], correct: "meet up" },
+        { text: "My parents ______ after ten years of marriage.", options: ["broke up", "got on", "hung out", "kept in touch"], correct: "broke up" },
+        { text: "I still ______ with my cousin who lives in Canada.", options: ["keep in touch", "lose touch", "break up", "argue"], correct: "keep in touch" },
+        { text: "My brother and I don't always ______, but we love each other.", options: ["get on", "break up", "lose touch", "miss"], correct: "get on" },
+        { text: "After the argument, they decided to ______.", options: ["break up", "meet up", "hang out", "get to know"], correct: "break up" },
+        { text: "I ______ my grandmother every Sunday for lunch.", options: ["meet up with", "lose touch with", "break up with", "argue with"], correct: "meet up with" },
+        { text: "We ______ by sending messages on WhatsApp.", options: ["keep in touch", "break up", "lose touch", "argue"], correct: "keep in touch" },
+        { text: "It's sad when old friends ______.", options: ["lose touch", "get on", "hang out", "meet up"], correct: "lose touch" },
+        { text: "I ______ my new neighbour yesterday. She seems nice.", options: ["got to know", "lost touch", "broke up", "argued"], correct: "got to know" },
+        { text: "We ______ at the cinema last night and watched a great film.", options: ["hung out", "broke up", "lost touch", "argued"], correct: "hung out" },
+        { text: "Don't ______ with your teacher about the homework.", options: ["argue", "miss", "meet up", "keep in touch"], correct: "argue" },
+        { text: "I ______ my old phone because it had all my photos.", options: ["miss", "argue", "break up", "get on"], correct: "miss" },
+        { text: "You can ______ by joining a club or sports team.", options: ["make friends", "lose touch", "break up", "argue"], correct: "make friends" },
+        { text: "After moving to a new city, we slowly ______.", options: ["lost touch", "got on", "hung out", "met up"], correct: "lost touch" }
+    ];
+
+    // ======================== SECTION 2: QUESTIONS WITH PREPOSITIONS (30) ========================
+    const prepositionPool = [
+        { text: "What are you looking ______?", options: ["at", "for", "to", "about"], correct: "for" },
+        { text: "Who are you talking ______?", options: ["to", "for", "at", "about"], correct: "to" },
+        { text: "What are you thinking ______?", options: ["about", "for", "at", "to"], correct: "about" },
+        { text: "What are you waiting ______?", options: ["for", "to", "at", "about"], correct: "for" },
+        { text: "What music are you listening ______?", options: ["to", "for", "at", "about"], correct: "to" },
+        { text: "Where are you hanging ______?", options: ["out", "at", "for", "to"], correct: "out" },
+        { text: "What are you afraid ______?", options: ["of", "for", "to", "at"], correct: "of" },
+        { text: "Who does this book belong ______?", options: ["to", "for", "at", "about"], correct: "to" },
+        { text: "What are you interested ______?", options: ["in", "for", "at", "to"], correct: "in" },
+        { text: "What are you worried ______?", options: ["about", "for", "at", "to"], correct: "about" },
+        { text: "What are you laughing ______?", options: ["at", "for", "to", "about"], correct: "at" },
+        { text: "Who are you going ______ the party with?", options: ["to", "for", "at", "about"], correct: "to" },
+        { text: "What are you paying ______?", options: ["for", "to", "at", "about"], correct: "for" },
+        { text: "What are you dreaming ______?", options: ["about", "for", "at", "to"], correct: "about" },
+        { text: "What are you asking ______?", options: ["for", "to", "at", "about"], correct: "for" },
+        { text: "What are you complaining ______?", options: ["about", "for", "at", "to"], correct: "about" },
+        { text: "Who are you shopping ______?", options: ["for", "to", "at", "about"], correct: "for" },
+        { text: "What are you hoping ______?", options: ["for", "to", "at", "about"], correct: "for" },
+        { text: "What are you staring ______?", options: ["at", "for", "to", "about"], correct: "at" },
+        { text: "What are you preparing ______?", options: ["for", "to", "at", "about"], correct: "for" },
+        { text: "Who do you care ______?", options: ["about", "for", "at", "to"], correct: "about" },
+        { text: "What are you searching ______?", options: ["for", "to", "at", "about"], correct: "for" },
+        { text: "What are you smiling ______?", options: ["at", "for", "to", "about"], correct: "at" },
+        { text: "Who are you writing ______?", options: ["to", "for", "at", "about"], correct: "to" },
+        { text: "What are you applying ______?", options: ["for", "to", "at", "about"], correct: "for" },
+        { text: "What are you apologizing ______?", options: ["for", "to", "at", "about"], correct: "for" },
+        { text: "What are you looking forward ______?", options: ["to", "for", "at", "about"], correct: "to" },
+        { text: "What are you depending ______?", options: ["on", "for", "at", "to"], correct: "on" },
+        { text: "What are you insisting ______?", options: ["on", "for", "at", "to"], correct: "on" },
+        { text: "What did you succeed ______?", options: ["in", "for", "at", "to"], correct: "in" }
+    ];
+
+    // ======================== SECTION 3: QUESTION TAGS (30) ========================
+    const tagPool = [
+        { text: "You like pizza, ______?", options: ["don't you", "do you", "isn't it", "aren't you"], correct: "don't you" },
+        { text: "She is your best friend, ______?", options: ["isn't she", "is she", "doesn't she", "wasn't she"], correct: "isn't she" },
+        { text: "They play football every weekend, ______?", options: ["don't they", "do they", "aren't they", "didn't they"], correct: "don't they" },
+        { text: "You don't have a pet, ______?", options: ["do you", "don't you", "have you", "haven't you"], correct: "do you" },
+        { text: "He can swim very well, ______?", options: ["can't he", "can he", "doesn't he", "isn't he"], correct: "can't he" },
+        { text: "We should leave now, ______?", options: ["shouldn't we", "should we", "don't we", "aren't we"], correct: "shouldn't we" },
+        { text: "She was at the party last night, ______?", options: ["wasn't she", "was she", "didn't she", "isn't she"], correct: "wasn't she" },
+        { text: "You have finished your homework, ______?", options: ["haven't you", "have you", "didn't you", "don't you"], correct: "haven't you" },
+        { text: "They aren't coming to the concert, ______?", options: ["are they", "aren't they", "do they", "don't they"], correct: "are they" },
+        { text: "Let's go to the cinema, ______?", options: ["shall we", "will we", "can we", "should we"], correct: "shall we" },
+        { text: "Close the door, ______?", options: ["will you", "do you", "can you", "are you"], correct: "will you" },
+        { text: "She sings beautifully, ______?", options: ["doesn't she", "does she", "isn't she", "wasn't she"], correct: "doesn't she" },
+        { text: "You were born in Chile, ______?", options: ["weren't you", "were you", "didn't you", "aren't you"], correct: "weren't you" },
+        { text: "He didn't call you, ______?", options: ["did he", "didn't he", "was he", "wasn't he"], correct: "did he" },
+        { text: "They will arrive on time, ______?", options: ["won't they", "will they", "don't they", "aren't they"], correct: "won't they" },
+        { text: "I'm your best friend, ______?", options: ["aren't I", "am I", "don't I", "isn't I"], correct: "aren't I" },
+        { text: "She has got a new phone, ______?", options: ["hasn't she", "has she", "doesn't she", "isn't she"], correct: "hasn't she" },
+        { text: "You like this song, ______?", options: ["don't you", "do you", "isn't it", "aren't you"], correct: "don't you" },
+        { text: "He isn't very tall, ______?", options: ["is he", "isn't he", "does he", "doesn't he"], correct: "is he" },
+        { text: "They went to the museum, ______?", options: ["didn't they", "did they", "weren't they", "are they"], correct: "didn't they" },
+        { text: "She can't drive, ______?", options: ["can she", "can't she", "does she", "is she"], correct: "can she" },
+        { text: "You will help me, ______?", options: ["won't you", "will you", "don't you", "aren't you"], correct: "won't you" },
+        { text: "He loves his dog, ______?", options: ["doesn't he", "does he", "isn't he", "wasn't he"], correct: "doesn't he" },
+        { text: "They haven't eaten yet, ______?", options: ["have they", "haven't they", "did they", "do they"], correct: "have they" },
+        { text: "It's a beautiful day, ______?", options: ["isn't it", "is it", "doesn't it", "wasn't it"], correct: "isn't it" },
+        { text: "You don't like broccoli, ______?", options: ["do you", "don't you", "are you", "aren't you"], correct: "do you" },
+        { text: "She finished the project on time, ______?", options: ["didn't she", "did she", "wasn't she", "isn't she"], correct: "didn't she" },
+        { text: "We are going to be late, ______?", options: ["aren't we", "are we", "don't we", "won't we"], correct: "aren't we" },
+        { text: "He doesn't speak French, ______?", options: ["does he", "doesn't he", "is he", "isn't he"], correct: "does he" },
+        { text: "You remember my name, ______?", options: ["don't you", "do you", "aren't you", "isn't it"], correct: "don't you" }
+    ];
+
+    // ======================== SECTION 4: POEMS (30) ========================
+    const poemPool = [
+        { text: "A Haiku has ______ syllables in the second line.", options: ["5", "7", "8", "2"], correct: "7" },
+        { text: "The first line of a Haiku has how many syllables?", options: ["5", "7", "2", "4"], correct: "5" },
+        { text: "The last line of a Haiku has how many syllables?", options: ["5", "7", "2", "8"], correct: "5" },
+        { text: "An Acrostic poem spells a word using the ______ letter of each line.", options: ["first", "last", "middle", "second"], correct: "first" },
+        { text: "A Limerick has how many lines?", options: ["5", "3", "4", "6"], correct: "5" },
+        { text: "The rhyme scheme of a Limerick is ______.", options: ["AABBA", "ABAB", "ABBA", "AAAA"], correct: "AABBA" },
+        { text: "A Cinquain has how many lines?", options: ["5", "3", "4", "6"], correct: "5" },
+        { text: "The syllable pattern of a Cinquain is ______.", options: ["2-4-6-8-2", "5-7-5", "4-6-8-4", "3-5-7-3"], correct: "2-4-6-8-2" },
+        { text: "Limericks are usually ______.", options: ["funny", "sad", "serious", "romantic"], correct: "funny" },
+        { text: "Haiku poems originate from which country?", options: ["Japan", "China", "England", "USA"], correct: "Japan" },
+        { text: "The hidden word in an Acrostic poem appears ______.", options: ["vertically", "horizontally", "diagonally", "backwards"], correct: "vertically" },
+        { text: "What type of poem has a 5-7-5 syllable structure?", options: ["Haiku", "Limerick", "Cinquain", "Acrostic"], correct: "Haiku" },
+        { text: "Which poem type is often rude or silly?", options: ["Limerick", "Haiku", "Cinquain", "Acrostic"], correct: "Limerick" },
+        { text: "A Cinquain's first and last lines have how many syllables?", options: ["2", "4", "6", "8"], correct: "2" },
+        { text: "Which poem type is described as 'elegant but simple'?", options: ["Haiku", "Limerick", "Acrostic", "Cinquain"], correct: "Haiku" },
+        { text: "An Acrostic poem can express any topic, such as friendship, nature, or ______.", options: ["emotions", "only math", "only science", "numbers"], correct: "emotions" },        { text: "The third line of a Haiku has ______ syllables.", options: ["5", "7", "2", "4"], correct: "5" },
+        { text: "Limericks have ______ long lines and ______ short lines.", options: ["3 long, 2 short", "2 long, 3 short", "4 long, 1 short", "1 long, 4 short"], correct: "3 long, 2 short" },
+        { text: "A Cinquain does not need to ______.", options: ["rhyme", "have syllables", "make sense", "be short"], correct: "rhyme" },
+        { text: "The word 'Acrostic' comes from the Greek word 'akrostikhis', where 'stikhos' means ______.", options: ["line of verse", "hidden word", "funny poem", "first letter"], correct: "line of verse" },        { text: "A Haiku traditionally focuses on ______.", options: ["nature", "love", "friendship", "war"], correct: "nature" },
+        { text: "The fourth line of a Cinquain has how many syllables?", options: ["8", "6", "4", "2"], correct: "8" },
+        { text: "Limericks are named after a city in which country?", options: ["Ireland", "England", "Scotland", "Wales"], correct: "Ireland" },
+        { text: "A Cinquain's second line has ______ syllables.", options: ["4", "2", "6", "8"], correct: "4" },
+        { text: "Which poem type has the rhyme scheme AABBA?", options: ["Limerick", "Haiku", "Cinquain", "Acrostic"], correct: "Limerick" },
+        { text: "The third line of a Cinquain has ______ syllables.", options: ["6", "4", "2", "8"], correct: "6" },
+        { text: "Haiku poems often use simple ______.", options: ["language", "vocabulary", "rhymes", "long sentences"], correct: "language" },
+        { text: "In an Acrostic poem, the hidden word is usually the ______.", options: ["topic", "author", "rhyme scheme", "last word"], correct: "topic" },
+        { text: "A Limerick's last line is usually the ______.", options: ["punchline", "introduction", "longest", "shortest"], correct: "punchline" },
+        { text: "Cinquain poems were created by which American poet?", options: ["Adelaide Crapsey", "Emily Dickinson", "Robert Frost", "Walt Whitman"], correct: "Adelaide Crapsey" }
+    ];
+
+// ======================== SECTION 5: READING COMPREHENSION (30) ========================
+    const readingPool = [
+        { text: "According to the text, the school wants to ban ______.", options: ["best friends", "homework", "sports", "mobile phones"], correct: "best friends" },
+        { text: "Who wrote the news article?", options: ["David Rossi", "Ryan", "Sara", "The headteacher"], correct: "David Rossi" },
+        { text: "When was the article published?", options: ["14 December", "15 January", "1 March", "20 April"], correct: "14 December" },
+        { text: "Ryan thinks school is mainly for ______.", options: ["learning", "chatting", "playing", "eating"], correct: "learning" },
+        { text: "Sara believes best friends ______ together.", options: ["work well", "argue a lot", "get bored", "waste time"], correct: "work well" },
+        { text: "Ryan says it's better to be friends with ______.", options: ["everyone", "only one person", "teachers", "older students"], correct: "everyone" },
+        { text: "Sara thinks a best friend can be useful for ______.", options: ["doing schoolwork together", "playing sports", "eating lunch", "talking to teachers"], correct: "doing schoolwork together" },
+        { text: "Ryan prefers to work with ______ every day.", options: ["the same people", "different people", "no one", "only his best friend"], correct: "the same people" },
+        { text: "Both Ryan and Sara agree the ban might work best at ______.", options: ["lunchtime and break time", "during class", "after school", "on weekends"], correct: "lunchtime and break time" },
+        { text: "Ryan thinks having best friends can make other students feel ______.", options: ["left out", "happy", "excited", "proud"], correct: "left out" },
+        { text: "Sara says best friends help each other with their ______.", options: ["schoolwork", "sports equipment", "lunch money", "uniform"], correct: "schoolwork" },
+        { text: "The article is from which section of the newspaper?", options: ["Local News", "World News", "Sports", "Events"], correct: "Local News" },
+        { text: "Ryan believes that having only one best friend can make other students feel ______.", options: ["excluded", "helpful", "necessary", "motivated"], correct: "excluded" },
+        { text: "Sara thinks losing best friends would make school ______.", options: ["sad", "fun", "exciting", "easy"], correct: "sad" },
+        { text: "The ban would separate best friends during ______ time.", options: ["break and lunch", "class only", "homework", "weekends"], correct: "break and lunch" },
+        { text: "Sara disagrees with Ryan because she values ______.", options: ["close friendships", "independence", "alone time", "sports"], correct: "close friendships" },
+        { text: "Ryan thinks the ban will help students ______ more.", options: ["study", "socialize", "play", "sleep"], correct: "study" },
+        { text: "Sara says best friends can share ______.", options: ["secrets", "lunches", "books", "pens"], correct: "secrets" },
+        { text: "Ryan is worried that best friends ______ too much.", options: ["talk", "study", "play", "eat"], correct: "talk" },
+        { text: "Sara thinks the ban is a ______ idea.", options: ["bad", "good", "interesting", "strange"], correct: "bad" },
+        { text: "Ryan thinks the ban is a ______ idea.", options: ["good", "bad", "confusing", "silly"], correct: "good" },
+        { text: "Sara gives an example of best friends helping each other with ______.", options: ["schoolwork", "sports practice", "cooking", "drawing"], correct: "schoolwork" },
+        { text: "Sara believes best friends can motivate each other to ______.", options: ["do better", "give up", "compete", "fight"], correct: "do better" },
+        { text: "According to Ryan, best friends sometimes stop other people from ______.", options: ["joining in", "learning", "eating", "sleeping"], correct: "joining in" },
+        { text: "Ryan likes working with different people because he can learn new ______.", options: ["things", "friends", "games", "sports"], correct: "things" },
+        { text: "Sara thinks teachers can ask best friends to ______ each other.", options: ["help", "ignore", "compete with", "avoid"], correct: "help" },
+        { text: "Ryan thinks it is important to include ______ in group activities.", options: ["everyone", "only close friends", "only teachers", "older students"], correct: "everyone" },
+        { text: "Sara believes that without best friends, school would be less ______.", options: ["enjoyable", "difficult", "boring", "easy"], correct: "enjoyable" },
+        { text: "Ryan thinks that friendships should not ______ other students.", options: ["exclude", "include", "help", "motivate"], correct: "exclude" },
+        { text: "Sara argues that best friends make the school experience more ______.", options: ["positive", "difficult", "competitive", "stressful"], correct: "positive" }
+    ];
+
+    function getRandomItems(pool, n) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, n);
+    }
+
+    let currentVocab = [], currentPrep = [], currentTag = [], currentPoem = [], currentReading = [];
+    let vocabAnswers = [], prepAnswers = [], tagAnswers = [], poemAnswers = [], readingAnswers = [];
+    let evaluated = false;
+
+    function renderVocab() {
+        const container = document.getElementById('vocab-questions');
+        container.innerHTML = '';
+        currentVocab.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `vocab-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="vocab_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(vocabAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="vocab_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === vocabAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) vocabAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderPrepositions() {
+        const container = document.getElementById('preposition-questions');
+        container.innerHTML = '';
+        currentPrep.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `prep-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="prep_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(prepAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="prep_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === prepAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) prepAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderTags() {
+        const container = document.getElementById('tag-questions');
+        container.innerHTML = '';
+        currentTag.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `tag-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="tag_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(tagAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="tag_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === tagAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) tagAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderPoems() {
+        const container = document.getElementById('poem-questions');
+        container.innerHTML = '';
+        currentPoem.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `poem-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="poem_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(poemAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="poem_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === poemAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) poemAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderReading() {
+        const container = document.getElementById('listening-questions');
+        container.innerHTML = '';
+        
+        // Agregar el texto de lectura al inicio de la sección
+        const readingTextDiv = document.createElement('div');
+        readingTextDiv.className = 'reading-text';
+        readingTextDiv.style.cssText = 'background:#e8eaf6; padding:1.2rem; border-radius:24px; margin-bottom:1.5rem; border-left:5px solid #667eea;';
+        readingTextDiv.innerHTML = `
+            <h3 style="color:#1e2a5e; margin-bottom:0.8rem;"><i class="fas fa-newspaper"></i> Read the news article:</h3>
+            <div style="font-size:0.95rem; line-height:1.6;">
+                <p><strong>Daily News</strong> — <em>Local News | 14 December</em></p>
+                <p style="font-size:1.1rem; font-weight:bold; margin:10px 0;">🏫 Local school will ban best friends</p>
+                <p><em>By David Rossi</em></p>
+                <p>A local school has announced a new rule: students cannot have best friends. The school says that best friends often talk too much in class and leave other students out of activities.</p>
+                <p>Ryan, a student at the school, agrees with the ban. "School is for learning, not for chatting," he says. "It's better to be friends with everyone. When you only have one best friend, other people feel left out."</p>
+                <p>Sara, another student, disagrees. "Best friends work well together and help each other with schoolwork," she says. "Teachers can even ask best friends to help in class. Without best friends, school would be sad."</p>
+                <p>Both students agree that the ban might work best during lunchtime and break time, but they have different opinions about the rest of the day. The new rule will start next term.</p>
+            </div>
+        `;
+        container.appendChild(readingTextDiv);
+        
+        // Agregar las preguntas
+        currentReading.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `reading-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="reading_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(readingAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="reading_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === readingAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) readingAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderAll() {
+        renderVocab();
+        renderPrepositions();
+        renderTags();
+        renderPoems();
+        renderReading();
+    }
+
+    function showCorrectAnswers() {
+        const sections = [
+            { current: currentVocab, answers: vocabAnswers, prefix: 'vocab', getCorrect: (q) => q.correct },
+            { current: currentPrep, answers: prepAnswers, prefix: 'prep', getCorrect: (q) => q.correct },
+            { current: currentTag, answers: tagAnswers, prefix: 'tag', getCorrect: (q) => q.correct },
+            { current: currentPoem, answers: poemAnswers, prefix: 'poem', getCorrect: (q) => q.correct },
+            { current: currentReading, answers: readingAnswers, prefix: 'reading', getCorrect: (q) => q.correct }
+        ];
+        sections.forEach(section => {
+            section.current.forEach((q, idx) => {
+                const card = document.getElementById(`${section.prefix}-card-${idx}`);
+                if(!card) return;
+                const isCorrect = section.answers[idx] === q.correct;
+                card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+                if(!card.querySelector('.correct-answer-display')) {
+                    const correctDiv = document.createElement('div');
+                    correctDiv.className = 'correct-answer-display';
+                    correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Correct answer: ${q.correct}`;
+                    card.appendChild(correctDiv);
+                }
+            });
+        });
+    }
+
+    function calculateAndShowResults() {
+        let totalCorrect = 0;
+        for(let i=0; i<currentVocab.length; i++) {
+            if(vocabAnswers[i] && vocabAnswers[i] === currentVocab[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentPrep.length; i++) {
+            if(prepAnswers[i] && prepAnswers[i] === currentPrep[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentTag.length; i++) {
+            if(tagAnswers[i] && tagAnswers[i] === currentTag[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentPoem.length; i++) {
+            if(poemAnswers[i] && poemAnswers[i] === currentPoem[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentReading.length; i++) {
+            if(readingAnswers[i] && readingAnswers[i] === currentReading[i].correct) totalCorrect++;
+        }
+        const maxPoints = 50;
+        const grade = 1 + (6 * (totalCorrect / maxPoints));
+        const finalGrade = grade.toFixed(1);
+        document.getElementById('scoreDisplay').innerHTML = `Score: ${totalCorrect} / ${maxPoints}`;
+        document.getElementById('gradeDisplay').innerHTML = `Grade: ${finalGrade} (1.0 to 7.0)`;
+        const passMsg = totalCorrect >= 30 ? '✅ PASSED! (Grade ≥ 4.0)' : '❌ NOT PASSED. Need at least 30 correct answers.';
+        document.getElementById('passDisplay').innerHTML = passMsg;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('actionButtons').style.display = 'flex';
+        showCorrectAnswers();
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.style.transition = 'box-shadow 0.3s';
+        resultsSection.style.boxShadow = '0 0 0 3px #f6ad55';
+        setTimeout(() => { resultsSection.style.boxShadow = 'none'; }, 1000);
+    }
+
+    function evaluateTest() {
+        if(evaluated) return;
+        evaluated = true;
+        calculateAndShowResults();
+    }
+
+    function restartTest() {
+        currentVocab = getRandomItems(vocabPool, 10);
+        currentPrep = getRandomItems(prepositionPool, 10);
+        currentTag = getRandomItems(tagPool, 10);
+        currentPoem = getRandomItems(poemPool, 10);
+        currentReading = getRandomItems(readingPool, 10);
+        vocabAnswers = new Array(10).fill(null);
+        prepAnswers = new Array(10).fill(null);
+        tagAnswers = new Array(10).fill(null);
+        poemAnswers = new Array(10).fill(null);
+        readingAnswers = new Array(10).fill(null);
+        evaluated = false;
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+        renderAll();
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if(btn.id !== 'evaluateBtnSidebar') {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        }
+    });
+
+    document.getElementById('evaluateBtnSidebar').addEventListener('click', evaluateTest);
+    document.getElementById('restartBtn').addEventListener('click', restartTest);
+    document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_5_Ingles.html');
+    document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Ingles.html');
+
+    restartTest();
+</script>
+</body>
+</html>

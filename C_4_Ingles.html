@@ -1,0 +1,585 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Grammar Class: Comparatives, Superlatives & Adverbs of Degree</title>
+    <!-- Google Fonts for better readability -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 (free CDN) for icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f0f4f8;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+            position: relative;
+        }
+
+        /* main slide container */
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 100vh;
+            max-height: 700px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 20px 35px -10px rgba(0,0,0,0.1);
+            background: #ffffff;
+            border-radius: 32px;
+            margin-top: 20px;
+            margin-bottom: 20px;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: white;
+            border-radius: 32px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        /* custom scroll for slide content */
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #adb5bd;
+            border-radius: 8px;
+        }
+
+        /* typography */
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e2a5e, #2b4f8c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #1e2a5e;
+            border-left: 6px solid #f4a261;
+            padding-left: 1rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #2c3e66;
+            margin-top: 1rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .badge {
+            background: #e9f0fa;
+            color: #1e4a76;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            display: inline-block;
+            width: fit-content;
+            margin-bottom: 1rem;
+        }
+
+        .example-box {
+            background: #fef9e6;
+            border-left: 5px solid #f4a261;
+            padding: 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .grammar-rule {
+            background: #eef2ff;
+            padding: 1rem 1.2rem;
+            border-radius: 24px;
+            margin: 1rem 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 1rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            border: 1px solid #e2e8f0;
+        }
+
+        .highlight {
+            background: #d9e6f5;
+            font-weight: bold;
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        /* navigation buttons */
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: all 0.2s ease;
+            color: #1e2a5e;
+        }
+
+        .nav-btn:hover {
+            background: #1e2a5e;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        /* page buttons (Ingles.html / C_4A_Ingles.html) */
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: #2c3e66;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .action i {
+            font-size: 1rem;
+        }
+
+        .action:hover {
+            background: #1f2c48;
+            transform: translateY(-2px);
+        }
+
+        /* slide indicators (dots) */
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 12px;
+            z-index: 20;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dot.active-dot {
+            background: #1e2a5e;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 8px;
+            color: #6c757d;
+        }
+
+        @media (max-width: 680px) {
+            .slide {
+                padding: 1.5rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.5rem;
+            }
+            .grid-2 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            .nav-btn {
+                width: 42px;
+                height: 42px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        <!-- SLIDE 0 - TITLE & INTRO -->
+        <div class="slide active" data-index="0">
+            <div class="badge">📘 7th Grade • English Class</div>
+            <h1>Comparatives, Superlatives <br> & Adverbs of Degree</h1>
+            <p style="font-size: 1.2rem; margin-top: 0.5rem;">Let's learn how to compare people, things, and describe them better!</p>
+            <div class="example-box" style="margin-top: 2rem;">
+                🌟 <strong>Examples we will learn:</strong><br>
+                ➜ My brother is <span class="highlight">older than</span> me. (comparative)<br>
+                ➜ I'm the <span class="highlight">oldest</span> of my friends. (superlative)<br>
+                ➜ He's <span class="highlight">very shy</span>. (adverb of degree)
+            </div>
+            <div style="margin-top: auto; text-align: center; padding: 1rem;">
+                <i class="fas fa-arrow-right" style="color: #f4a261;"></i> Press ▶ or swipe to continue
+            </div>
+        </div>
+
+        <!-- SLIDE 1 - COMPARATIVES (short & long adjectives) -->
+        <div class="slide" data-index="1">
+            <div class="badge">📖 GRAMMAR PART 1</div>
+            <h2>🔍 COMPARATIVES</h2>
+            <p>We use comparatives to compare <strong>TWO</strong> things or people.</p>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-ruler" style="color:#f4a261;"></i>
+                    <h3>Short adjectives</h3>
+                    <p>adjective + <strong>-er + than</strong></p>
+                    <p><em>old → older</em><br> <span class="highlight">My brother is older than me.</span></p>
+                    <p><em>tall → taller</em><br> <span class="highlight">Tom is taller than Sam.</span></p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-balance-scale" style="color:#2b4f8c;"></i>
+                    <h3>Long adjectives</h3>
+                    <p><strong>more + adjective + than</strong></p>
+                    <p><em>expensive → more expensive</em><br> <span class="highlight">Roller skates are more expensive than chocolates!</span></p>
+                    <p><em>intelligent → more intelligent</em><br> <span class="highlight">She is more intelligent than her brother.</span></p>
+                </div>
+            </div>
+            <div class="grammar-rule">
+                💡 <strong>Remember:</strong> one-syllable = add -er / two or more syllables = more + adj
+            </div>
+        </div>
+
+        <!-- SLIDE 2 - SUPERLATIVES -->
+        <div class="slide" data-index="2">
+            <div class="badge">🏆 GRAMMAR PART 2</div>
+            <h2>⭐ SUPERLATIVES</h2>
+            <p>We use superlatives to compare <strong>ONE</strong> person/thing to the whole group (the most, the best...).</p>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Short adjectives</h3>
+                    <p><strong>the + adjective + -est</strong></p>
+                    <p><span class="highlight">I'm the oldest of my friends.</span></p>
+                    <p><span class="highlight">She is the tallest in the class.</span></p>
+                </div>
+                <div class="card">
+                    <h3>Long adjectives</h3>
+                    <p><strong>the most + adjective</strong></p>
+                    <p><span class="highlight">He is the most intelligent 17-year-old in the school!</span></p>
+                    <p><span class="highlight">This is the most interesting photo.</span></p>
+                </div>
+            </div>
+            <div class="example-box">
+                ⚡ Irregular forms: good → better → best / bad → worse → worst
+            </div>
+        </div>
+                <!-- SLIDE 3 - ADVERBS: COMPARATIVE & SUPERLATIVE FORMS (TABLE) -->
+        <div class="slide" data-index="3">
+            <div class="badge">📊 GRAMMAR REFERENCE</div>
+            <h2>📋 Adverbs: Comparative & Superlative Forms</h2>
+            <p>Some adverbs also change to compare actions! (how someone does something)</p>
+            <div style="overflow-x: auto; margin: 1rem 0;">
+                <table style="width: 100%; border-collapse: collapse; background: #f8fafc; border-radius: 24px; overflow: hidden;">
+                    <thead>
+                        <tr><th style="background: #1e2a5e; color: white; padding: 12px; text-align: left;">Adverb</th>
+                            <th style="background: #1e2a5e; color: white; padding: 12px; text-align: left;">Comparative</th>
+                            <th style="background: #1e2a5e; color: white; padding: 12px; text-align: left;">Superlative</th>
+                            <th style="background: #1e2a5e; color: white; padding: 12px; text-align: left;">Example</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px;"><strong>fast</strong></td><td style="padding: 10px;">faster</td><td style="padding: 10px;">fastest</td><td style="padding: 10px;">He runs <em>fastest</em> of all.</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #f1f5f9;"><td style="padding: 10px;"><strong>hard</strong></td><td style="padding: 10px;">harder</td><td style="padding: 10px;">hardest</td><td style="padding: 10px;">She works <em>harder than</em> me.</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px;"><strong>early</strong></td><td style="padding: 10px;">earlier</td><td style="padding: 10px;">earliest</td><td style="padding: 10px;">I wake up <em>earliest</em> in my family.</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #f1f5f9;"><td style="padding: 10px;"><strong>late</strong></td><td style="padding: 10px;">later</td><td style="padding: 10px;">latest</td><td style="padding: 10px;">He arrived <em>later than</em> us.</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px;"><strong>high</strong></td><td style="padding: 10px;">higher</td><td style="padding: 10px;">highest</td><td style="padding: 10px;">The bird flew <em>highest</em>.</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #f1f5f9;"><td style="padding: 10px;"><strong>low</strong></td><td style="padding: 10px;">lower</td><td style="padding: 10px;">lowest</td><td style="padding: 10px;">She scored <em>lower than</em> before.</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px;"><strong>carefully</strong> (long)</td><td style="padding: 10px;">more carefully</td><td style="padding: 10px;">most carefully</td><td style="padding: 10px;">Drive <em>more carefully</em> in rain.</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #f1f5f9;"><td style="padding: 10px;"><strong>quietly</strong> (long)</td><td style="padding: 10px;">more quietly</td><td style="padding: 10px;">most quietly</td><td style="padding: 10px;">She speaks <em>most quietly</em> of all.</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 10px;"><strong>happily</strong></td><td style="padding: 10px;">more happily</td><td style="padding: 10px;">most happily</td><td style="padding: 10px;">He smiled <em>more happily</em> today.</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0; background: #f1f5f9;"><td style="padding: 10px;"><strong>loudly</strong> (long)</td><td style="padding: 10px;">more loudly</td><td style="padding: 10px;">most loudly</td><td style="padding: 10px;">Cheer <em>most loudly</em> for your team!</td></tr>
+                        <tr><td style="padding: 10px;"><strong>politely</strong> (long)</td><td style="padding: 10px;">more politely</td><td style="padding: 10px;">most politely</td><td style="padding: 10px;">Ask <em>more politely</em> next time.</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="grammar-rule">
+                📌 <strong>Remember:</strong> Short adverbs = add -er/-est (fast→faster→fastest)<br>
+                📌 Long adverbs (ending -ly) = more / most (carefully→more carefully→most carefully)
+            </div>
+        </div>
+        <!-- SLIDE 3 - ADVERBS OF DEGREE (very, quite, a bit, extremely) -->
+        <div class="slide" data-index="4">
+            <div class="badge">🎯 ADVERBS OF DEGREE</div>
+            <h2>📈 Make adjectives stronger or weaker</h2>
+            <p>Adverbs of degree tell us <strong>HOW MUCH</strong>. They go <strong>BEFORE</strong> the adjective.</p>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-plus-circle"></i>
+                    <h3>Stronger meaning</h3>
+                    <p><strong>very / extremely</strong></p>
+                    <p>✔️ He's <span class="highlight">very shy</span>.<br>✔️ She's <span class="highlight">extremely generous</span>.</p>
+                    <p><i>My best friend is very kind.</i></p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-minus-circle"></i>
+                    <h3>Weaker meaning</h3>
+                    <p><strong>a bit / quite</strong></p>
+                    <p>✔️ I'm <span class="highlight">a bit tired</span>.<br>✔️ He's <span class="highlight">quite funny</span>.</p>
+                    <p><i>Sometimes he's quite shy.</i></p>
+                </div>
+            </div>
+            <div class="grammar-rule">
+                🔹 <strong>Order:</strong> adverb + adjective <br> Example: extremely beautiful / a bit nervous / very smart
+            </div>
+        </div>
+
+        <!-- SLIDE 4 - EXAMPLES & CONTEXT (mix of both topics) -->
+        <div class="slide" data-index="5">
+            <div class="badge">✨ REAL EXAMPLES</div>
+            <h2>📸 Describing friends & photos</h2>
+            <div class="example-box">
+                <i class="fas fa-camera-retro"></i> <strong>Photo wall vs Computer:</strong><br>
+                "Photos on your wall are <span class="highlight">better than</span> photos on your computer." <br>
+                "It's <span class="highlight">cheaper</span> to print in black and white, but colour looks <span class="highlight">more beautiful</span>."
+            </div>
+            <div class="example-box">
+                <i class="fas fa-users"></i> <strong>Personality adjectives + degree:</strong><br>
+                • She's <span class="highlight">really generous</span> — she always buys presents.<br>
+                • He's <span class="highlight">quite shy</span> — only two close friends.<br>
+                • My friend is <span class="highlight">extremely funny</span>!<br>
+                • I'm not <span class="highlight">very confident</span> telling jokes.
+            </div>
+            <p style="margin-top: 0.5rem;"><i class="fas fa-lightbulb"></i> Tip: Use "a bit" to make an adjective weaker, "very" to make it stronger.</p>
+        </div>
+                <!-- SLIDE 5 - ADVERBS OF DEGREE: COMPLETE LIST WITH EXAMPLES -->
+        <div class="slide" data-index="6">
+            <div class="badge">🎯 ADVERBS OF DEGREE</div>
+            <h2>📚 10 Common Adverbs of Degree</h2>
+            <p>They modify adjectives or other adverbs → placed <strong>BEFORE</strong> the word they modify.</p>
+            <div style="display: flex; flex-direction: column; gap: 12px; margin: 1rem 0;">
+                <div class="card"><strong>1. extremely</strong> — <em>This test is <span class="highlight">extremely difficult</span>.</em></div>
+                <div class="card"><strong>2. very</strong> — <em>My cat is <span class="highlight">very friendly</span>.</em></div>
+                <div class="card"><strong>3. quite</strong> — <em>The movie was <span class="highlight">quite interesting</span>.</em></div>
+                <div class="card"><strong>4. a bit</strong> — <em>I’m <span class="highlight">a bit tired</span> today.</em></div>
+                <div class="card"><strong>5. really</strong> — <em>She is <span class="highlight">really kind</span> to everyone.</em></div>
+                <div class="card"><strong>6. almost</strong> — <em>It’s <span class="highlight">almost impossible</span> to win.</em></div>
+                <div class="card"><strong>7. absolutely</strong> — <em>That’s <span class="highlight">absolutely perfect</span>!</em></div>
+                <div class="card"><strong>8. completely</strong> — <em>I’m <span class="highlight">completely sure</span> about my answer.</em></div>
+                <div class="card"><strong>9. too</strong> — <em>The coffee is <span class="highlight">too hot</span> to drink.</em></div>
+                <div class="card"><strong>10. enough</strong> — <em>She isn’t <span class="highlight">tall enough</span> to reach.</em> (goes AFTER adjective)</div>
+            </div>
+            <div class="grammar-rule">
+                💡 <strong>Exception:</strong> "enough" goes <strong>AFTER</strong> the adjective (big enough, fast enough).
+            </div>
+        </div>
+        <!-- SLIDE 5 - SUMMARY & QUICK PRACTICE (interactive sample) -->
+        <div class="slide" data-index="7">
+            <div class="badge">📝 LET'S REVIEW</div>
+            <h2>✅ What did we learn?</h2>
+            <ul style="margin-left: 1.5rem; line-height: 1.7;">
+                <li><strong>Comparative</strong> → compare 2 things: <em>older than, more expensive than</em></li>
+                <li><strong>Superlative</strong> → compare to whole group: <em>the oldest, the most intelligent</em></li>
+                <li><strong>Adverbs of degree</strong> → before adjectives: <em>very, quite, a bit, extremely</em></li>
+            </ul>
+            <div class="grammar-rule" style="background: #e2f0e6;">
+                🌟 <strong>Challenge yourself:</strong><br>
+                "My best friend is _______ (funny) person I know." <br>
+                (Answer: the funniest)<br><br>
+                "I am _______ (a bit / very) tired, but I can study."
+            </div>
+            <p style="margin-top: 1rem;">🗂️ Next: go to exercises page and practice more!</p>
+        </div>
+    </div>
+
+    <!-- navigation arrows + dots -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="dots" id="dotsContainer"></div>
+
+    <!-- Two required buttons: back to course (Ingles.html) and exercises (C_4A_Ingles.html) -->
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Course</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Exercises</button>
+    </div>
+</div>
+<footer>← → arrow keys to navigate • 6 slides</footer>
+
+<script>
+    // slides data
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;  // 6 slides (0 to 5)
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+    }
+
+    function nextSlide() {
+        if(currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        } else {
+            // optional: loop or just stop
+        }
+    }
+
+    function prevSlide() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    // dynamic dots
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        if(!dotsContainer) return;
+        dotsContainer.innerHTML = '';
+        for(let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    // event listeners for buttons
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    // keyboard navigation
+    window.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if(e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    // Two important links: 
+    // go to "Ingles.html" (returns to course) and "C_4A_Ingles.html" (exercises page)
+    const courseBtn = document.getElementById('goToCourseBtn');
+    const exercisesBtn = document.getElementById('goToExercisesBtn');
+
+    courseBtn.addEventListener('click', () => {
+        window.location.href = 'Ingles.html';
+    });
+
+    exercisesBtn.addEventListener('click', () => {
+        window.location.href = 'C_4A_Ingles.html';
+    });
+
+    // initialize dots on load
+    updateDots();
+
+    // touch/swipe support for mobile (simple)
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if(touchEndX < touchStartX - 40) nextSlide();
+        if(touchEndX > touchStartX + 40) prevSlide();
+    });
+</script>
+</body>
+</html>
