@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Class: The Murders in the Rue Morgue - Edgar Allan Poe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 85vh;
+            max-height: 750px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.5);
+            background: #0f0f1a;
+            border-radius: 32px;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: #0f0f1a;
+            border-radius: 32px;
+            color: #e2e8f0;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #e94560;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #ff6b6b;
+            border-left: 5px solid #e94560;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #facc15;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .badge {
+            background: #e94560;
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .badge-dark {
+            background: #1e293b;
+            color: #facc15;
+            border: 1px solid #facc15;
+        }
+
+        .info-box {
+            background: #1e293b;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            border-left: 4px solid #e94560;
+        }
+
+        .text-extract {
+            background: #16213e;
+            border-left: 5px solid #facc15;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            font-family: 'Georgia', serif;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #cbd5e1;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid #334155;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #e94560;
+        }
+
+        .card i {
+            font-size: 1.8rem;
+            color: #facc15;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #e94560;
+            color: white;
+            font-weight: bold;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+        }
+
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: #1e293b;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: all 0.2s ease;
+            color: #e2e8f0;
+        }
+
+        .nav-btn:hover {
+            background: #e94560;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action:hover {
+            background: #e94560;
+            transform: translateY(-2px);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #334155;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #e94560;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        .quote {
+            font-style: italic;
+            font-size: 1rem;
+            padding: 1rem;
+            background: #0f0f1a;
+            border-radius: 20px;
+            border: 1px solid #e94560;
+            color: #facc15;
+        }
+
+        @media (max-width: 680px) {
+            .slide {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        
+        <!-- SLIDE 0 - PORTADA -->
+        <div class="slide active" data-index="0">
+            <div class="badge">📘 English Literature - 7th Grade</div>
+            <h1>The Murders in the Rue Morgue</h1>
+            <p style="font-size: 1.2rem; margin-top: 0.5rem; color: #cbd5e1;">by <strong>Edgar Allan Poe</strong> (1841)</p>
+            <div class="info-box" style="margin-top: 2rem;">
+                <i class="fas fa-star-of-life"></i> <strong>The First Detective Story in History!</strong><br><br>
+                This story introduced the world to the fictional detective — a brilliant, eccentric genius who solves crimes using logic and observation.
+            </div>
+            <div class="quote" style="margin-top: 1rem;">
+                <i class="fas fa-quote-left"></i> "The force of his busy mind was like a bright light in my soul."
+            </div>
+            <div style="margin-top: auto; text-align: center; padding: 1rem;">
+                <i class="fas fa-arrow-right"></i> Press ▶ or swipe to continue
+            </div>
+        </div>
+
+        <!-- SLIDE 1 - AUTHOR & CONTEXT -->
+        <div class="slide" data-index="1">
+            <div class="badge">📖 ABOUT THE AUTHOR</div>
+            <h2>Edgar Allan Poe (1809-1849)</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-skull"></i>
+                    <h3>Master of Horror</h3>
+                    <p>Famous for dark, mysterious stories and poems like "The Raven" and "The Tell-Tale Heart."</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-search"></i>
+                    <h3>Father of Detective Fiction</h3>
+                    <p>Created the first fictional detective: C. Auguste Dupin.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <h3>American Writer</h3>
+                    <p>Born in Boston, died in Baltimore under mysterious circumstances.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Published 1841</h3>
+                    <p>Appeared in Graham's Magazine in Philadelphia.</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i> <strong>Did you know?</strong> Poe's detective Dupin inspired Arthur Conan Doyle to create Sherlock Holmes nearly 50 years later!
+            </div>
+        </div>
+
+        <!-- SLIDE 2 - MAIN CHARACTERS -->
+        <div class="slide" data-index="2">
+            <div class="badge">👥 CHARACTERS</div>
+            <h2>Who is in the story?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-user-graduate"></i>
+                    <h3>🕵️ C. Auguste Dupin</h3>
+                    <p><strong>The First Detective</strong> — brilliant, eccentric, poor but happy with books. Lives in Paris with the narrator.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-user-friends"></i>
+                    <h3>📝 The Narrator (unnamed)</h3>
+                    <p>Dupin's friend and roommate. He admires Dupin's genius and tells the story.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-user-tie"></i>
+                    <h3>⚓ The Sailor</h3>
+                    <p>Owner of the orangutan. Innocent but terrified. Confesses the truth.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-female"></i>
+                    <h3>👵 Madame L'Espanaye</h3>
+                    <p>Old woman. Killed brutally. Her head is almost cut off.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-female"></i>
+                    <h3>👩 Mademoiselle L'Espanaye</h3>
+                    <p>The daughter. Strangled and stuffed inside the chimney.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-paw"></i>
+                    <h3>🦧 The Orangutan</h3>
+                    <p>A large, powerful ape from Borneo. The real killer — but not guilty by intention.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3 - DUPIN'S REASONING POWER -->
+        <div class="slide" data-index="3">
+            <div class="badge">🧠 DUPIN'S GENIUS</div>
+            <h2>How Dupin Reads Minds</h2>
+            <div class="text-extract">
+                <i class="fas fa-quote-left"></i> "Most men have windows over their hearts; through these he could see into their souls."
+            </div>
+            <p><strong>The famous "Fruit-seller" example:</strong></p>
+            <div class="info-box">
+                <strong>Thought chain Dupin followed:</strong><br><br>
+                1. Fruit-seller with apples → 2. Cobblestones → 3. Stereotomy (stone-cutting) → 4. Epicurus (Greek philosopher) → 5. Orion (stars) → 6. Chantilly (short actor)
+            </div>
+            <div class="quote">
+                <i class="fas fa-lightbulb"></i> <strong>Lesson:</strong> Dupin observes tiny details and connects them logically. This is called <strong>ratiocination</strong> — logical reasoning.
+            </div>
+        </div>
+
+        <!-- SLIDE 4 - THE CRIME (Part 2) -->
+        <div class="slide" data-index="4">
+            <div class="badge">🔪 THE CRIME</div>
+            <h2>The Murders on Rue Morgue</h2>
+            <div class="text-extract">
+                <i class="fas fa-newspaper"></i> <strong>Newspaper Report (July 7, 1840):</strong><br><br>
+                Two women were found dead in their home. The daughter's body was stuffed inside the chimney. The mother's head was nearly cut off. The room was in chaos — furniture broken, blood everywhere.
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-money-bill-wave"></i>
+                    <h3>💰 Money Left Behind</h3>
+                    <p>Gold and valuables were found in the room — not stolen. So robbery was NOT the motive.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-door-closed"></i>
+                    <h3>🔒 Locked Room</h3>
+                    <p>The door was locked from inside. Windows were closed. No way in or out — or so it seemed.</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-question-circle"></i> <strong>Mystery:</strong> If the room was locked from inside, how did the killer escape?
+            </div>
+        </div>
+
+        <!-- SLIDE 5 - THE INVESTIGATION (Parts 3-4) -->
+        <div class="slide" data-index="5">
+            <div class="badge">🔍 DUPIN'S INVESTIGATION</div>
+            <h2>What the Police Missed</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-window-maximize"></i>
+                    <h3>🪟 The Windows</h3>
+                    <p>One window had a broken nail. The nail only looked like it held the window closed. The window had a hidden lock!</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>⚡ The Lightning Rod</h3>
+                    <p>A metal pole outside the building. Someone (or something) could climb it to reach the window.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-hand-fist"></i>
+                    <h3>💪 Inhuman Strength</h3>
+                    <p>The daughter's body was stuffed high up in the chimney. Only tremendous strength could do that.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-microphone-alt"></i>
+                    <h3>🗣️ The Voices</h3>
+                    <p>One voice spoke French. The other voice — high and strange — no one could understand.</p>
+                </div>
+            </div>
+            <div class="quote">
+                <i class="fas fa-quote-left"></i> "What seemed to be not possible we have proved to be possible."
+            </div>
+        </div>
+
+        <!-- SLIDE 6 - THE SOLUTION (Part 5) -->
+        <div class="slide" data-index="6">
+            <div class="badge">🦧 THE SOLUTION</div>
+            <h2>The Killer is NOT Human!</h2>
+            <div class="text-extract">
+                <i class="fas fa-paw"></i> <strong>The Clues:</strong><br><br>
+                • Hair found in the victim's hand — gray, coarse, NOT human hair.<br>
+                • Handprint on daughter's neck — too large for any human hand.<br>
+                • The voice no one could understand — not a human language.<br>
+                • The wild, chaotic room — like an animal in a frenzy.<br>
+                • The incredible strength — more than any human.
+            </div>
+            <div class="info-box" style="margin-top: 1rem;">
+                <i class="fas fa-lightbulb"></i> <strong>Conclusion:</strong> The killer was an <strong>ORANGUTAN</strong> — a large, powerful ape from Borneo.
+            </div>
+        </div>
+
+        <!-- SLIDE 7 - THE SAILOR'S CONFESSION (Part 6) -->
+        <div class="slide" data-index="7">
+            <div class="badge">⚓ THE CONFESSION</div>
+            <h2>The Sailor's Story</h2>
+            <div class="text-extract">
+                <i class="fas fa-quote-left"></i> "It was that animal! The orangutan!"<br><br>
+                • The sailor caught the orangutan in Borneo.<br>
+                • He brought it to Paris.<br>
+                • The animal escaped, climbed the lightning rod, and entered the window.<br>
+                • The sailor followed but could not stop the killings.<br>
+                • He watched in horror as the animal killed both women.<br>
+                • He ran away in fear.
+            </div>
+            <div class="quote">
+                <i class="fas fa-hand-peace"></i> <strong>The sailor is innocent!</strong> He did not commit the murders. The animal acted out of fear and confusion.
+            </div>
+        </div>
+
+        <!-- SLIDE 8 - WHY IS THIS STORY IMPORTANT? -->
+        <div class="slide" data-index="8">
+            <div class="badge">🏆 LITERARY IMPORTANCE</div>
+            <h2>Why "The Murders in the Rue Morgue" Changed Literature</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-detective"></i>
+                    <h3>First Detective Story</h3>
+                    <p>Created the fictional detective genre. Dupin is the prototype for Sherlock Holmes, Hercule Poirot, and all others.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-door-open"></i>
+                    <h3>Locked-Room Mystery</h3>
+                    <p>Invented the "impossible crime" subgenre. A crime committed in a room locked from inside.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Ratiocination</h3>
+                    <p>Introduced logical reasoning as the method to solve mysteries. The detective uses observation and logic.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-users"></i>
+                    <h3>Inspired Many Writers</h3>
+                    <p>Arthur Conan Doyle (Sherlock Holmes), Agatha Christie, and countless others.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9 - THEMES -->
+        <div class="slide" data-index="9">
+            <div class="badge">💡 THEMES</div>
+            <h2>What Does the Story Teach Us?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-balance-scale"></i>
+                    <h3>Reason vs. Imagination</h3>
+                    <p>Dupin uses logic. The police use imagination and fail. True answers come from careful reasoning.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-mask"></i>
+                    <h3>Appearance vs. Reality</h3>
+                    <p>Things are not always what they seem. The locked room had a hidden opening; the killer seemed human but was an animal.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-dog"></i>
+                    <h3>Nature vs. Civilization</h3>
+                    <p>The orangutan represents wild, uncontrolled nature. It is an innocent killer — it didn't know it was wrong.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-gavel"></i>
+                    <h3>Justice vs. Injustice</h3>
+                    <p>The innocent sailor is terrified but not guilty. Dupin helps the truth come out.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 - VOCABULARY -->
+        <div class="slide" data-index="10">
+            <div class="badge">📝 KEY VOCABULARY</div>
+            <h2>Important Words to Know</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Rue</h3>
+                    <p>French word for "street"</p>
+                </div>
+                <div class="card">
+                    <h3>Orangutan</h3>
+                    <p>Large ape from Borneo</p>
+                </div>
+                <div class="card">
+                    <h3>Reasoning</h3>
+                    <p>Thinking logically</p>
+                </div>
+                <div class="card">
+                    <h3>Infer</h3>
+                    <p>Conclude from evidence</p>
+                </div>
+                <div class="card">
+                    <h3>Locked room</h3>
+                    <p>Room sealed from inside</p>
+                </div>
+                <div class="card">
+                    <h3>Lightning rod</h3>
+                    <p>Metal pole on buildings</p>
+                </div>
+                <div class="card">
+                    <h3>Chimney</h3>
+                    <p>Smoke pipe from fireplace</p>
+                </div>
+                <div class="card">
+                    <h3>Frenzy</h3>
+                    <p>Wild, crazy behavior</p>
+                </div>
+                <div class="card">
+                    <h3>Motive</h3>
+                    <p>Reason for a crime</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11 - DUPIN vs. HOLMES -->
+        <div class="slide" data-index="11">
+            <div class="badge">⚔️ COMPARISON</div>
+            <h2>Dupin vs. Sherlock Holmes</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-crown"></i>
+                    <h3>Auguste Dupin (1841)</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>First fictional detective</li>
+                        <li>Lives in Paris</li>
+                        <li>Unnamed narrator friend</li>
+                        <li>Uses "ratiocination" (logic)</li>
+                        <li>Solitary, eccentric</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <i class="fas fa-search"></i>
+                    <h3>Sherlock Holmes (1887)</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>Most famous detective</li>
+                        <li>Lives in London</li>
+                        <li>Dr. Watson as narrator</li>
+                        <li>Uses "deductive reasoning"</li>
+                        <li>Brilliant, eccentric</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="quote" style="margin-top: 1rem;">
+                <i class="fas fa-quote-left"></i> Arthur Conan Doyle was directly inspired by Poe's Dupin when creating Sherlock Holmes!
+            </div>
+        </div>
+
+        <!-- SLIDE 12 - SUMMARY -->
+        <div class="slide" data-index="12">
+            <div class="badge">✅ SUMMARY</div>
+            <h2>What We Learned Today</h2>
+            <ul style="margin-left: 1.5rem; line-height: 1.8;">
+                <li><strong>Edgar Allan Poe</strong> wrote the first detective story in 1841.</li>
+                <li><strong>C. Auguste Dupin</strong> is the first fictional detective — brilliant, logical, eccentric.</li>
+                <li>The murders were committed by an <strong>orangutan</strong>, not a human.</li>
+                <li>The killer escaped through a <strong>window</strong> that seemed locked, using a <strong>lightning rod</strong>.</li>
+                <li>Dupin solved the mystery using <strong>logic and observation</strong> — not guesses or imagination.</li>
+                <li>This story created the <strong>locked-room mystery</strong> genre.</li>
+                <li>It inspired <strong>Sherlock Holmes</strong> and all later detective fiction.</li>
+            </ul>
+            <div class="info-box" style="margin-top: 1rem;">
+                🎯 <strong>Next:</strong> Practice with the exercises page to test your understanding!
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="dots" id="dotsContainer"></div>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Course</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Exercises</button>
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+    }
+
+    function nextSlide() {
+        if(currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        dotsContainer.innerHTML = '';
+        for(let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if(e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Ingles.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_6A_Ingles.html';
+    });
+
+    // Swipe para móviles
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if(touchEndX < touchStartX - 40) nextSlide();
+        if(touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    updateDots();
+</script>
+</body>
+</html>

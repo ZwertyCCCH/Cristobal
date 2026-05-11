@@ -1,0 +1,1049 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Exercises - The Murders in the Rue Morgue | Reading Comprehension</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #0f0f1a;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            min-width: 200px;
+            background: #1e293b;
+            border-right: 2px solid #334155;
+            gap: 8px;
+            padding: 24px 12px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            cursor: pointer;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.3rem;
+        }
+
+        .tab-btn span {
+            font-size: 0.7rem;
+        }
+
+        .tab-btn.active {
+            background: #e94560;
+            color: white;
+            box-shadow: 0 2px 8px rgba(233,69,96,0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-evaluate-sidebar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-evaluate-sidebar i {
+            font-size: 1.3rem;
+        }
+
+        .btn-evaluate-sidebar:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        .question-card {
+            background: #1e293b;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #334155;
+            transition: all 0.2s;
+        }
+
+        .question-card.correct-highlight {
+            border-left: 6px solid #22c55e;
+            background: #14532d;
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 6px solid #ef4444;
+            background: #7f1d1d;
+        }
+
+        .section-header {
+            background: #1e293b;
+            padding: 1rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #e94560;
+        }
+
+        .section-header i {
+            font-size: 2rem;
+            color: #facc15;
+        }
+
+        .section-header h3 {
+            color: #facc15;
+            margin: 0;
+        }
+
+        .section-header p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+        }
+
+        .correct-answer-display {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #0f172a;
+            border-radius: 16px;
+            color: #facc15;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: #0f172a;
+            border-radius: 60px;
+            border: 1px solid #334155;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #cbd5e1;
+        }
+
+        .option:hover {
+            background: #e94560;
+            color: white;
+        }
+
+        input[type="radio"], input[type="text"], select {
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="text"], select {
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #334155;
+            font-size: 0.9rem;
+            width: 100%;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .word-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 15px 0;
+        }
+
+        .word-btn {
+            background: #0f172a;
+            border: 1px solid #334155;
+            padding: 12px 18px;
+            border-radius: 40px;
+            font-weight: 500;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #e2e8f0;
+        }
+
+        .word-btn.selected {
+            background: #e94560;
+            color: white;
+            border-color: #e94560;
+        }
+
+        .sentence-builder {
+            background: #0f172a;
+            padding: 15px;
+            border-radius: 20px;
+            margin: 10px 0;
+            font-size: 1.1rem;
+            min-height: 70px;
+            color: #facc15;
+            border: 1px solid #334155;
+        }
+
+        .match-item {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 15px;
+            margin-bottom: 15px;
+            border: 1px solid #334155;
+        }
+
+        .match-left {
+            font-weight: 700;
+            color: #facc15;
+            margin-bottom: 10px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid #e94560;
+            display: inline-block;
+        }
+
+        .match-select {
+            width: 100%;
+            padding: 12px;
+            border-radius: 40px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            margin-top: 8px;
+        }
+
+        .match-item.correct-highlight {
+            border-left: 6px solid #22c55e;
+            background: #14532d;
+        }
+
+        .match-item.wrong-highlight {
+            border-left: 6px solid #ef4444;
+            background: #7f1d1d;
+        }
+
+        .reading-fragment {
+            background: #0f172a;
+            border: 1px solid #e94560;
+            border-radius: 24px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Georgia', serif;
+            line-height: 1.6;
+            color: #cbd5e1;
+        }
+
+        .reading-fragment h4 {
+            color: #facc15;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #e94560, #ff6b6b);
+            color: white;
+            padding: 24px 20px;
+            border-radius: 24px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .results-section p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #facc15;
+            color: #1a1a2e;
+        }
+
+        .btn-secondary {
+            background: #e94560;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #e94560;
+            color: #e94560;
+        }
+
+        .clear-btn {
+            margin-top: 8px;
+            padding: 6px 16px;
+            border-radius: 40px;
+            border: 1px solid #334155;
+            background: #0f172a;
+            color: #cbd5e1;
+            cursor: pointer;
+            font-size: 0.85rem;
+        }
+
+        .clear-btn:hover {
+            background: #e94560;
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .tabs {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding: 12px;
+            }
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                width: auto;
+                padding: 10px 14px;
+            }
+            .btn-evaluate-sidebar {
+                flex-direction: row;
+                margin-top: 0;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1"><i class="fas fa-check-circle"></i><span> MCQ</span></button>
+        <button class="tab-btn" data-tab="tab2"><i class="fas fa-pen"></i><span> Gap Fill</span></button>
+        <button class="tab-btn" data-tab="tab3"><i class="fas fa-sort-amount-down"></i><span> Word Order</span></button>
+        <button class="tab-btn" data-tab="tab4"><i class="fas fa-link"></i><span> Matching</span></button>
+        <button class="tab-btn" data-tab="tab5"><i class="fas fa-quote-right"></i><span> Fragment</span></button>
+        <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar"><i class="fas fa-check-double"></i><span> Evaluate</span></button>
+    </div>
+
+    <div class="tab-content-container">
+        <div id="tab1" class="tab-content active">
+            <div class="section-header">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>📝 Section 1: Multiple Choice</h3>
+                    <p>Choose the correct answer for each question.</p>
+                </div>
+            </div>
+            <div id="mcq-questions"></div>
+        </div>
+        <div id="tab2" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-pen"></i>
+                <div>
+                    <h3>✏️ Section 2: Gap Fill</h3>
+                    <p>Complete the sentence with the missing word(s).</p>
+                </div>
+            </div>
+            <div id="gapfill-questions"></div>
+        </div>
+        <div id="tab3" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-sort-amount-down"></i>
+                <div>
+                    <h3>🔄 Section 3: Word Order</h3>
+                    <p>Tap the words in the correct order to form a sentence.</p>
+                </div>
+            </div>
+            <div id="order-questions"></div>
+        </div>
+        <div id="tab4" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-link"></i>
+                <div>
+                    <h3>🔗 Section 4: Matching</h3>
+                    <p>Match the left column with the correct option.</p>
+                </div>
+            </div>
+            <div id="match-questions"></div>
+        </div>
+        <div id="tab5" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-quote-right"></i>
+                <div>
+                    <h3>📖 Section 5: Fragment Analysis</h3>
+                    <p>Read the passage and answer the multiple choice questions.</p>
+                </div>
+            </div>
+            <div id="fragment-questions"></div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-chart-line"></i> Your Results</h3>
+            <p id="scoreDisplay">Score: -- / 50</p>
+            <p id="gradeDisplay">Grade: -- (1.0 to 7.0)</p>
+            <p id="passDisplay"></p>
+        </div>
+
+        <div class="action-buttons" id="actionButtons">
+            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-sync-alt"></i> Restart Test</button>
+            <button class="btn btn-secondary" id="backToClassBtn"><i class="fas fa-chalkboard"></i> Back to Class</button>
+            <button class="btn btn-outline" id="backToCourseBtn"><i class="fas fa-book-open"></i> Back to Course</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// ======================== SECTION 1: MULTIPLE CHOICE (30 POOL) ========================
+const mcqPool = [
+    { text: "In which city does the story take place?", options: ["London", "Paris", "New York", "Rome"], correct: "Paris" },
+    { text: "Who is the narrator's roommate and friend?", options: ["C. Auguste Dupin", "The Prefect of Police", "The Sailor", "Chantilly"], correct: "C. Auguste Dupin" },
+    { text: "What was the name of the old woman who was killed?", options: ["Madame L'Espanaye", "Pauline Dubourg", "Marie Rogêt", "Madame Deluc"], correct: "Madame L'Espanaye" },
+    { text: "Where was the daughter's body found?", options: ["In the bedroom", "Inside the fireplace chimney", "Outside the house", "Under the bed"], correct: "Inside the fireplace chimney" },
+    { text: "What weapon was found on the floor of the room?", options: ["A gun", "A razor covered with blood", "A rope", "A hammer"], correct: "A razon covered with blood" },
+    { text: "What language did the low, soft voice speak?", options: ["English", "Spanish", "French", "Italian"], correct: "French" },
+    { text: "What did Dupin love to do at night?", options: ["Sleep", "Read books", "Walk the streets of Paris", "Write stories"], correct: "Walk the streets of Paris" },
+    { text: "Where did the sailor catch the orangutan?", options: ["Africa", "Borneo", "India", "South America"], correct: "Borneo" },
+    { text: "How did the orangutan enter the apartment?", options: ["Through the door", "Through the window using a lightning rod", "Through the chimney", "Through the wall"], correct: "Through the window using a lightning rod" },
+    { text: "What did the orangutan hold in its hand when it entered?", options: ["A gun", "A razor", "A rope", "A stick"], correct: "A razor" },
+    { text: "What did the orangutan do to the daughter?", options: ["Stabbed her", "Strangled her with its hands", "Cut her head off", "Threw her out the window"], correct: "Strangled her with its hands" },
+    { text: "What was found in the box under the bed covers?", options: ["Money", "Jewelry", "Old letters and papers", "Weapons"], correct: "Old letters and papers" },
+    { text: "What did Dupin place in the newspaper to find the owner?", options: ["A reward notice", "A description of the orangutan", "An ad saying the orangutan was caught", "A warning"], correct: "An ad saying the orangutan was caught" },
+    { text: "What did the sailor carry when he came to Dupin's apartment?", options: ["A gun", "A large, heavy piece of wood", "A rope", "A razor"], correct: "A large, heavy piece of wood" },
+    { text: "What did Dupin lock after the sailor entered?", options: ["The window", "The door", "The drawer", "The closet"], correct: "The door" },
+    { text: "What did Dupin place on the table to protect himself?", options: ["A knife", "A gun", "A book", "A candle"], correct: "A gun" },
+    { text: "What happened to the sailor's friend who helped catch the orangutan?", options: ["He returned to Borneo", "He died", "He sold the animal", "He disappeared"], correct: "He died" },
+    { text: "Where did the sailor watch the murders from?", options: ["Inside the room", "From the lightning rod outside the window", "From the street", "From the rooftop"], correct: "From the lightning rod outside the window" },
+    { text: "Who pulled the daughter's body out of the chimney?", options: ["Dupin alone", "The narrator alone", "Four or five people", "The police chief"], correct: "Four or five people" },
+    { text: "What is Dupin's special ability?", options: ["He can read minds magically", "He can reason and observe better than anyone", "He can see the future", "He can talk to animals"], correct: "He can reason and observe better than anyone" },
+    { text: "Is the sailor guilty of the murders?", options: ["Yes, he killed them", "No, he is innocent but scared", "Yes, he helped the orangutan", "No, he was not there"], correct: "No, he is innocent but scared" },
+    { text: "What does the police chief think about Dupin solving the case?", options: ["He is grateful", "He is not happy", "He gives Dupin a medal", "He arrests Dupin"], correct: "He is not happy" },
+    { text: "Why is this story important in literary history?", options: ["It is the first love story", "It is the first detective story", "It is the first horror story", "It is the first adventure story"], correct: "It is the first detective story" },
+    { text: "Who was inspired by Poe's Dupin?", options: ["Charles Dickens", "Arthur Conan Doyle", "Mark Twain", "H.G. Wells"], correct: "Arthur Conan Doyle" },
+    { text: "What happened to the money in the room?", options: ["It was stolen", "It was left untouched", "It was hidden", "It was burned"], correct: "It was left untouched" },
+    { text: "Why did none of the witnesses agree on the language of the high, hard voice?", options: ["Because it was too quiet", "Because it was not a human language at all", "Because they all spoke different languages", "Because the window was closed"], correct: "Because it was not a human language at all" },
+    { text: "What was the crucial detail Dupin discovered about the nail in the second window?", options: ["It was missing", "It was new", "It was broken but looked intact", "It had been replaced"], correct: "It was broken but looked intact" },
+    { text: "Why did the orangutan become more frantic when it saw the sailor's face at the window?", options: ["It recognised the sailor and feared punishment", "It was hungry", "It had never seen a human before", "It wanted to escape"], correct: "It recognised the sailor and feared punishment" },
+    { text: "What does Dupin's method of reasoning reveal about the police's failure?", options: ["The police were corrupt", "The police lacked the ability to observe and reason logically", "The police had the wrong equipment", "The police refused to investigate"], correct: "The police lacked the ability to observe and reason logically" },
+    { text: "What does the term 'ratiocination' refer to in the context of the story?", options: ["Physical strength used to solve crimes", "Logical, step-by-step reasoning from observed evidence", "The use of informants to gather clues", "Random guessing based on instinct"], correct: "Logical, step-by-step reasoning from observed evidence" }
+];
+
+// ======================== SECTION 2: GAP FILL (30 POOL) ========================
+const gapFillPool = [
+    { text: "C. Auguste Dupin is widely considered the first __________ detective in the history of fiction.", answer: "fictional" },
+    { text: "The story takes place in __________, France.", answer: "paris" },
+    { text: "Madame L'Espanaye and her daughter lived on the fourth floor of a house on Rue __________.", answer: "morgue" },
+    { text: "The daughter's body was found stuffed inside the __________.", answer: "chimney" },
+    { text: "A sharp __________ covered with blood was found on the floor.", answer: "razor" },
+    { text: "The low, soft voice spoke in __________.", answer: "french" },
+    { text: "The high, hard voice could not be understood; it was not a human __________.", answer: "language" },
+    { text: "Dupin and the narrator first met in a __________.", answer: "bookstore" },
+    { text: "Dupin demonstrated his reasoning by reading the narrator's thoughts about the actor __________.", answer: "chantilly" },
+    { text: "The killer escaped through a window by using a __________ rod on the outside wall.", answer: "lightning" },
+    { text: "The nail in the window was __________; it only appeared to hold the window closed.", answer: "broken" },
+    { text: "The __________ was a large, powerful ape from Borneo.", answer: "orangutan" },
+    { text: "The sailor caught the orangutan on the island of __________.", answer: "borneo" },
+    { text: "The daughter was __________ to death by the orangutan's powerful hands.", answer: "strangled" },
+    { text: "Dupin placed an __________ in the newspaper to find the orangutan's owner.", answer: "ad" },
+    { text: "The sailor was __________, not guilty of the murders.", answer: "innocent" },
+    { text: "The Paris police worked hard but had no real __________.", answer: "method" },
+    { text: "Dupin's reasoning power is called __________ — a process of logical thinking.", answer: "ratiocination" },
+    { text: "Edgar Allan Poe wrote 'The Murders in the Rue Morgue' in __________.", answer: "1841" },
+    { text: "Arthur Conan Doyle was inspired by Dupin to create __________ Holmes.", answer: "sherlock" },
+    { text: "The room was in wild __________ with broken furniture everywhere.", answer: "disorder" },
+    { text: "The daughter's body was found head down above the __________.", answer: "fireplace" },
+    { text: "Gray __________ with blood and skin was found on the floor.", answer: "hair" },
+    { text: "The old woman had taken a large amount of money from the bank three __________ before the murders.", answer: "days" },
+    { text: "The special __________ inside the window held it firmly closed after the murderer left.", answer: "lock" },
+    { text: "The sailor watched the murders from the __________ rod, unable to stop them.", answer: "lightning" },
+    { text: "Dupin locked the __________ after the sailor entered to prevent him from escaping.", answer: "door" },
+    { text: "The mother's body was found outside, __________ the house.", answer: "behind" },
+    { text: "Witnesses described the high voice differently because it was the sound of an __________, not a person.", answer: "animal" },
+    { text: "The key clue that Dupin used to identify the murderer was the shape of the __________ marks on the daughter's throat.", answer: "finger" }
+];
+
+// ======================== SECTION 3: WORD ORDER (30 POOL) ========================
+const orderPool = [
+    { words: ["dupin", "is", "detective", "first", "the", "fictional"], correct: "dupin is the first fictional detective" },
+    { words: ["paris", "takes", "in", "story", "place", "the"], correct: "the story takes place in paris" },
+    { words: ["the", "chimney", "body", "daughter's", "was", "in", "found"], correct: "the daughter's body was found in the chimney" },
+    { words: ["razor", "floor", "bloody", "the", "on", "was", "a"], correct: "a bloody razor was on the floor" },
+    { words: ["two", "voices", "heard", "were", "from", "house", "the"], correct: "two voices were heard from the house" },
+    { words: ["low", "french", "voice", "spoke", "soft", "the"], correct: "the low soft voice spoke french" },
+    { words: ["high", "understand", "voice", "could", "no", "the", "one"], correct: "no one could understand the high voice" },
+    { words: ["bookstore", "dupin", "met", "narrator", "the", "in", "a"], correct: "dupin met the narrator in a bookstore" },
+    { words: ["killer", "lightning", "used", "rod", "a", "the"], correct: "the killer used a lightning rod" },
+    { words: ["window", "escape", "through", "the", "killer", "the", "did"], correct: "the killer did escape through the window" },
+    { words: ["broken", "nail", "was", "the", "window", "in"], correct: "the nail in the window was broken" },
+    { words: ["orangutan", "the", "killer", "was", "the"], correct: "the killer was the orangutan" },
+    { words: ["borneo", "from", "orangutan", "came", "the"], correct: "the orangutan came from borneo" },
+    { words: ["sailor", "the", "innocent", "was"], correct: "the sailor was innocent" },
+    { words: ["newspaper", "ad", "an", "dupin", "placed", "in", "the"], correct: "dupin placed an ad in the newspaper" },
+    { words: ["door", "the", "sailor", "dupin", "entered", "locked", "after", "the"], correct: "dupin locked the door after the sailor entered" },
+    { words: ["gun", "table", "dupin", "on", "a", "placed", "the"], correct: "dupin placed a gun on the table" },
+    { words: ["mother's", "behind", "body", "the", "house", "was", "found", "the"], correct: "the mother's body was found behind the house" },
+    { words: ["died", "sailor's", "friend", "the"], correct: "the sailor's friend died" },
+    { words: ["sherlock", "dupin", "inspired", "holmes"], correct: "dupin inspired sherlock holmes" },
+    { words: ["police", "no", "the", "method", "had", "real"], correct: "the police had no real method" },
+    { words: ["floor", "gold", "and", "the", "on", "money", "were", "found"], correct: "money and gold were found on the floor" },
+    { words: ["fear", "out", "the", "animal", "acted", "of"], correct: "the animal acted out of fear" },
+    { words: ["room", "was", "locked", "from", "the", "inside"], correct: "the room was locked from the inside" },
+    { words: ["windows", "the", "were", "closed", "all"], correct: "all the windows were closed" },
+    { words: ["witnesses", "screamed", "horror", "the", "with", "terror", "and"], correct: "the witnesses screamed with terror and horror" },
+    { words: ["throat", "marks", "finger", "on", "were", "her", "found"], correct: "finger marks were found on her throat" },
+    { words: ["lock", "window", "inside", "closed", "special", "it"], correct: "special lock inside closed it" },
+    { words: ["sailor", "punishment", "feared", "orangutan", "from", "him"], correct: "orangutan feared punishment from him" },
+    { words: ["reasoning", "logical", "ratiocination", "called", "is", "dupin's"], correct: "dupin's logical reasoning is called ratiocination" }
+];
+
+// ======================== SECTION 4: MATCHING (30 POOL) ========================
+const matchPool = [
+    { left: "C. Auguste Dupin", right: "The first fictional detective" },
+    { left: "The narrator", right: "Dupin's unnamed friend and roommate" },
+    { left: "Madame L'Espanaye", right: "The old woman who was killed" },
+    { left: "The daughter", right: "Found stuffed inside the chimney" },
+    { left: "The sailor", right: "Owner of the orangutan" },
+    { left: "The orangutan", right: "A large ape from Borneo" },
+    { left: "The Prefect of Police", right: "Was not happy Dupin solved the case" },
+    { left: "Edgar Allan Poe", right: "Author of the story" },
+    { left: "Arthur Conan Doyle", right: "Created Sherlock Holmes, inspired by Dupin" },
+    { left: "Paris", right: "City where the story takes place" },
+    { left: "Rue Morgue", right: "Street where the murders occurred" },
+    { left: "The lightning rod", right: "Used to climb up to the window" },
+    { left: "The broken nail", right: "Only seemed to hold the window closed" },
+    { left: "The razor", right: "Weapon found covered in blood on the floor" },
+    { left: "The gold and money", right: "Left completely untouched in the room" },
+    { left: "1841", right: "Year the story was published" },
+    { left: "Borneo", right: "Island where the orangutan was caught" },
+    { left: "The ad in the newspaper", right: "How Dupin found the sailor" },
+    { left: "The bookstore", right: "Where Dupin and the narrator first met" },
+    { left: "Chantilly", right: "The actor Dupin read about in the narrator's mind" },
+    { left: "The fruit-seller", right: "Caused the narrator to step on cobblestones" },
+    { left: "The locked room", right: "The impossible crime subgenre" },
+    { left: "Ratiocination", right: "Logical, step-by-step reasoning from evidence" },
+    { left: "July 7, 1840", right: "Date of the murders" },
+    { left: "Behind the house", right: "Where the mother's body was found" },
+    { left: "The high voice", right: "No one could understand it — it was not human" },
+    { left: "The low voice", right: "Spoke French and said 'My God!'" },
+    { left: "The special lock", right: "What truly kept the window closed from inside" },
+    { left: "Finger marks on the throat", right: "The key clue that identified the killer" },
+    { left: "The daughter's chimney", right: "Dupin needed four or five people to retrieve the body" }
+];
+
+// ======================== SECTION 5: FRAGMENT ANALYSIS (30 POOL) ========================
+const passageText = `It was a hot summer night. When the murderer first arrived he found that window open, open to let some of the fresh night air come in. Through the open window the murderer went in and came out again. As he came out he closed the window, perhaps with a purpose to do so, perhaps by chance. The special lock inside the window held the window firmly closed. The nail only seemed to be holding it closed. And that which was possible looked not possible.
+"When you and I first came to the house on the Rue Morgue we walked around the house. At that time I noted a long, thin metal pole which went from the top of the building to the ground — a lightning rod, put there to carry down to the ground a charge of electricity that might come out of the clouds during a bad summer storm. Here, I thought, is a way for someone to go up or down the wall, and then to go in or out the window. He would have to be very strong. Although certain animals could easily go up the pole, not every man could do it — only a man with very special strength and special training. This told me more about what the murderer was like."`;
+
+const fragmentPool = [
+    { text: "According to the passage, why was the window open when the murderer arrived?", options: ["The murderer opened it to enter", "It was open to let fresh night air in", "It had been broken earlier", "The wind had forced it open"], correct: "It was open to let fresh night air in" },
+    { text: "What did the murderer do with the window after leaving the room?", options: ["Left it open deliberately", "Broke it to prevent re-entry", "Closed it, either deliberately or by chance", "Removed it from the frame"], correct: "Closed it, either deliberately or by chance" },
+    { text: "What actually held the window firmly closed after the murderer left?", options: ["The nail driven into the frame", "The special lock inside the window", "A piece of furniture pushed against it", "The weight of the glass"], correct: "The special lock inside the window" },
+    { text: "What was the significance of the nail according to Dupin?", options: ["It was the murder weapon", "It only appeared to lock the window but was broken", "It had been removed before the crime", "It proved the window was never opened"], correct: "It only appeared to lock the window but was broken" },
+    { text: "What did Dupin observe on the outside of the building during his investigation?", options: ["A rope hanging from the roof", "A long, thin metal lightning rod running from top to ground", "A series of handholds carved into the stone", "A ladder left by the murderer"], correct: "A long, thin metal lightning rod running from top to ground" },
+    { text: "What is the actual function of a lightning rod?", options: ["To allow people to climb buildings", "To carry electrical charges from storm clouds safely to the ground", "To hold window frames in place", "To protect the building from wind"], correct: "To carry electrical charges from storm clouds safely to the ground" },
+    { text: "Why did Dupin conclude that not every man could have used the lightning rod?", options: ["It was too far from the window", "It required extraordinary physical strength and training", "It was too thin to hold a person's weight", "It was protected by a lock"], correct: "It required extraordinary physical strength and training" },
+    { text: "What type of being does the passage suggest could easily climb the lightning rod?", options: ["Any athletic human", "Only trained soldiers", "Certain animals with exceptional agility and strength", "Children due to their light weight"], correct: "Certain animals with exceptional agility and strength" },
+    { text: "What does the phrase 'that which was possible looked not possible' reveal about the crime?", options: ["It was committed by a supernatural being", "The solution was hidden in plain sight but appeared impossible", "The police had fabricated evidence", "The crime was never actually solved"], correct: "The solution was hidden in plain sight but appeared impossible" },
+    { text: "Why did Dupin walk around the house before presenting his theory?", options: ["He was looking for an escape route for himself", "He was systematically searching for physical evidence of entry and exit", "He wanted to confuse the police", "He had already identified the killer"], correct: "He was systematically searching for physical evidence of entry and exit" },
+    { text: "What does Dupin's analysis of the lightning rod reveal about his investigative method?", options: ["He relies on witness testimony above all", "He draws conclusions from physical evidence using logical reasoning", "He uses supernatural intuition", "He copies the methods of the police"], correct: "He draws conclusions from physical evidence using logical reasoning" },
+    { text: "Why is the detail about the hot summer night important to the passage's logic?", options: ["It sets an atmosphere of horror", "It provides a rational explanation for why the window was left open", "It suggests the murderer was affected by the heat", "It shows the story takes place in summer"], correct: "It provides a rational explanation for why the window was left open" },
+    { text: "What does Dupin mean when he says the murderer's profile 'told me more about what the murderer was like'?", options: ["The physical requirements of climbing the rod narrowed down the type of killer", "He had already seen the orangutan before", "The police had given him a description", "A witness had described the murderer"], correct: "The physical requirements of climbing the rod narrowed down the type of killer" },
+    { text: "What logical flaw did the police make regarding the window?", options: ["They assumed it was locked when it was actually open", "They believed the nail secured the window, not realising the real lock had closed it automatically", "They never examined the window at all", "They correctly identified how the murderer escaped"], correct: "They believed the nail secured the window, not realising the real lock had closed it automatically" },
+    { text: "What does the passage suggest about the relationship between the apparent and the real in the crime?", options: ["Things were exactly as they appeared", "The true explanation was concealed beneath misleading appearances", "The police understood the situation perfectly", "Nothing in the room had any significance"], correct: "The true explanation was concealed beneath misleading appearances" },
+    { text: "How does Dupin's reasoning about the lightning rod demonstrate the concept of ratiocination?", options: ["He guesses randomly and happens to be right", "He moves systematically from physical observation to logical conclusion", "He relies entirely on the sailor's confession", "He asks witnesses to reconstruct the scene"], correct: "He moves systematically from physical observation to logical conclusion" },
+    { text: "What does the passage imply about the relationship between physical ability and the identity of the killer?", options: ["Any person in Paris could have committed the crime", "The extraordinary strength required points to a non-human killer", "Only the sailor had the required strength", "The lightning rod was too easy to climb to narrow anything down"], correct: "The extraordinary strength required points to a non-human killer" },
+    { text: "Why does Dupin mention 'certain animals' specifically?", options: ["To suggest the police should search for wild animals in Paris", "To hint at the true nature of the killer without stating it directly yet", "To compare humans unfavourably to animals", "To explain why the sailor owned a pet"], correct: "To hint at the true nature of the killer without stating it directly yet" },
+    { text: "What contrast does Dupin draw between human capability and animal capability on the lightning rod?", options: ["Humans are stronger but animals are smarter", "Most humans could not climb it, but certain animals could do so easily", "Both could climb it with equal difficulty", "Animals were slower but more careful"], correct: "Most humans could not climb it, but certain animals could do so easily" },
+    { text: "What does Dupin's phrase 'perhaps with a purpose to do so, perhaps by chance' suggest about the murderer?", options: ["The murderer was highly organised and planned every detail", "The murderer may not have been acting with full rational intent", "The murder was completely accidental", "The murderer wanted to be caught"], correct: "The murderer may not have been acting with full rational intent" },
+    { text: "Which word in the passage best describes how the window appeared to the police?", options: ["Open", "Broken", "Impossible to close", "Locked"], correct: "Locked" },
+    { text: "What does Dupin's investigation of the building's exterior suggest about great detectives?", options: ["They only work indoors", "They look beyond the obvious and examine all physical surroundings", "They trust witnesses more than evidence", "They only analyse documents and papers"], correct: "They look beyond the obvious and examine all physical surroundings" },
+    { text: "Why is it significant that the murderer closed the window after leaving?", options: ["It showed the murderer wanted to hide the crime", "It caused the lock to engage, making the room appear sealed from inside", "It was an act of kindness toward the victims", "It made no difference to the investigation"], correct: "It caused the lock to engage, making the room appear sealed from inside" },
+    { text: "What does the passage reveal about the role of chance in the locked-room mystery?", options: ["Everything was carefully planned by the murderer", "The window closing may have been accidental, yet created the impossible room effect", "The police set up the locked room deliberately", "Dupin planned the locked room himself"], correct: "The window closing may have been accidental, yet created the impossible room effect" },
+    { text: "What does the description of the lightning rod as 'long, thin' tell us about the skill required?", options: ["It was easy to grip and required no special ability", "It was difficult to hold and demanded exceptional physical control", "It could support many people at once", "It was wide enough to walk on"], correct: "It was difficult to hold and demanded exceptional physical control" },
+    { text: "In the context of the passage, what does 'special training' most likely refer to?", options: ["Military combat training", "The natural agility and physical conditioning of a non-human animal", "A course in lockpicking", "Experience as a sailor or climber"], correct: "The natural agility and physical conditioning of a non-human animal" },
+    { text: "What is the deeper implication of Dupin walking around the house rather than entering immediately?", options: ["He did not want to disturb the evidence inside", "He believed the solution lay outside, not inside the room", "He was afraid to enter the crime scene", "He was waiting for the police to give him permission"], correct: "He believed the solution lay outside, not inside the room" },
+    { text: "What does the passage suggest about the importance of the summer storm season in relation to the lightning rod?", options: ["It explains why the rod was installed, establishing its presence as ordinary and unnoticed", "It caused the storm that distracted the sailor", "It explains why the window was broken", "It has no significance to the crime"], correct: "It explains why the rod was installed, establishing its presence as ordinary and unnoticed" },
+    { text: "How does the detail about the broken nail contribute to Dupin's overall argument?", options: ["It proves the sailor entered through the window", "It shows that the locked appearance of the window was an illusion, not a real barrier", "It identifies the murder weapon", "It explains how the daughter was killed"], correct: "It shows that the locked appearance of the window was an illusion, not a real barrier" },
+    { text: "What literary technique does Poe use in this passage when Dupin says 'and that which was possible looked not possible'?", options: ["Simile", "Paradox", "Metaphor", "Alliteration"], correct: "Paradox" }
+];
+
+    function getRandomItems(pool, n) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, n);
+    }
+
+    let currentMcq = [], currentGap = [], currentOrder = [], currentMatch = [], currentFragment = [];
+    let mcqAnswers = [], gapAnswers = [], orderAnswers = [], matchAnswers = [], fragmentAnswers = [];
+    let evaluated = false;
+
+    function renderMcq() {
+        const container = document.getElementById('mcq-questions');
+        container.innerHTML = '';
+        currentMcq.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `mcq-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="mcq_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(mcqAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="mcq_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === mcqAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) mcqAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderGapFill() {
+        const container = document.getElementById('gapfill-questions');
+        container.innerHTML = '';
+
+        // Obtener las respuestas correctas actuales (10 palabras)
+        const correctAnswers = currentGap.map(q => q.answer.toLowerCase());
+        
+        // Obtener todas las posibles respuestas del pool completo para usar como distractores
+        const allPossibleAnswers = gapFillPool.map(q => q.answer.toLowerCase());
+        
+        // Filtrar las que NO son correctas para usarlas como distractores
+        const possibleDistractors = allPossibleAnswers.filter(ans => !correctAnswers.includes(ans));
+        
+        // Mezclar y tomar 10 distractores únicos
+        const shuffledDistractors = [...new Set(possibleDistractors)].sort(() => Math.random() - 0.5);
+        const selectedDistractors = shuffledDistractors.slice(0, 10);
+        
+        // Combinar las 10 correctas + 10 distractores = 20 palabras en total
+        const wordBank = [...correctAnswers, ...selectedDistractors];
+        
+        // Mezclar el banco de palabras final
+        const finalWordBank = wordBank.sort(() => Math.random() - 0.5);
+
+        // Crear el banco de palabras en la parte superior
+        const bankDiv = document.createElement('div');
+        bankDiv.className = 'question-card';
+        bankDiv.style.marginBottom = '20px';
+        bankDiv.innerHTML = `
+            <div class="question-text" style="margin-bottom:12px;">📚 WORD BANK — Use these words to complete the sentences:</div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                ${finalWordBank.map(word => `
+                    <span style="
+                        background:#1e293b;
+                        color:#e2e8f0;
+                        border:1px solid #e94560;
+                        border-radius:20px;
+                        padding:6px 14px;
+                        font-size:0.85rem;
+                        font-weight:500;
+                        font-family:monospace;
+                    ">${word}</span>
+                `).join('')}
+            </div>
+        `;
+        container.appendChild(bankDiv);
+
+        // Renderizar preguntas
+        currentGap.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `gap-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <input type="text" class="gap-input" data-idx="${idx}" placeholder="Type a word from the Word Bank..." value="${gapAnswers[idx] || ''}">
+            `;
+            container.appendChild(div);
+            const input = div.querySelector('.gap-input');
+            input.addEventListener('input', (e) => { 
+                if(!evaluated) gapAnswers[idx] = e.target.value.trim().toLowerCase(); 
+            });
+        });
+    }
+
+    function renderOrder() {
+        const container = document.getElementById('order-questions');
+        container.innerHTML = '';
+        currentOrder.forEach((q, idx) => {
+            const shuffledWords = [...q.words].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `order-card-${idx}`;
+            
+            // Contar frecuencias de cada palabra en la frase correcta
+            const correctWordCount = {};
+            q.correct.toLowerCase().split(' ').forEach(word => {
+                correctWordCount[word] = (correctWordCount[word] || 0) + 1;
+            });
+            
+            // Estado: array de palabras seleccionadas (permite duplicados)
+            let selectedWords = orderAnswers[idx] ? orderAnswers[idx].split(' ') : [];
+            
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. Tap the words in correct order:</div>
+                <div class="word-buttons" data-order-idx="${idx}">
+                    ${shuffledWords.map(word => `<button class="word-btn" data-word="${word}">${word}</button>`).join('')}
+                </div>
+                <div class="sentence-builder" id="sentence-${idx}"></div>
+                <button class="clear-btn" data-idx="${idx}">🔄 Clear</button>
+            `;
+            container.appendChild(div);
+            
+            const builder = div.querySelector(`#sentence-${idx}`);
+            
+            function updateBuilder() { 
+                builder.innerHTML = selectedWords.join(' ') || 'Click words in correct order...'; 
+            }
+            updateBuilder();
+            
+            // Función para actualizar el estado visual de los botones
+            function updateButtonStates() {
+                // Contar cuántas veces se ha usado cada palabra en la selección actual
+                const usedCount = {};
+                selectedWords.forEach(word => {
+                    usedCount[word] = (usedCount[word] || 0) + 1;
+                });
+                
+                // Actualizar cada botón
+                div.querySelectorAll('.word-btn').forEach(btn => {
+                    const word = btn.getAttribute('data-word');
+                    const maxAllowed = correctWordCount[word] || 0;
+                    const currentUsed = usedCount[word] || 0;
+                    
+                    // Deshabilitar si ya se usaron todas las necesarias
+                    if (maxAllowed > 0 && currentUsed >= maxAllowed) {
+                        btn.disabled = true;
+                        btn.style.opacity = '0.4';
+                        btn.style.cursor = 'not-allowed';
+                    } else {
+                        btn.disabled = false;
+                        btn.style.opacity = '1';
+                        btn.style.cursor = 'pointer';
+                    }
+                });
+            }
+            
+            const btns = div.querySelectorAll('.word-btn');
+            btns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    if(evaluated) return;
+                    const word = btn.getAttribute('data-word');
+                    const maxAllowed = correctWordCount[word] || 1;
+                    const currentUsed = selectedWords.filter(w => w === word).length;
+                    
+                    // Permitir agregar si aún no se ha alcanzado el límite
+                    if (currentUsed < maxAllowed) {
+                        selectedWords.push(word);
+                        orderAnswers[idx] = selectedWords.join(' ');
+                        updateBuilder();
+                        updateButtonStates();
+                    }
+                });
+            });
+            
+            const clearBtn = div.querySelector('.clear-btn');
+            clearBtn.addEventListener('click', () => {
+                if(evaluated) return;
+                selectedWords = [];
+                orderAnswers[idx] = '';
+                updateBuilder();
+                updateButtonStates();
+            });
+            
+            // Inicializar estados visuales si hay respuestas guardadas
+            if(orderAnswers[idx]) {
+                const stored = orderAnswers[idx].split(' ');
+                selectedWords = stored;
+                updateBuilder();
+                updateButtonStates();
+            } else {
+                updateButtonStates();
+            }
+        });
+    }
+
+    function renderMatch() {
+        const container = document.getElementById('match-questions');
+        container.innerHTML = '';
+        currentMatch.forEach((q, idx) => {
+            const correctOption = q.right;
+            const otherOptions = currentMatch.filter(item => item.right !== correctOption).map(item => item.right);
+            const shuffledOthers = [...otherOptions].sort(() => Math.random() - 0.5);
+            const incorrectOptions = shuffledOthers.slice(0, 4);
+            let allOptions = [correctOption, ...incorrectOptions];
+            allOptions = allOptions.sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'match-item';
+            div.id = `match-card-${idx}`;
+            div.innerHTML = `
+                <div class="match-left">📌 ${q.left}</div>
+                <select class="match-select" data-idx="${idx}">
+                    <option value="">-- Select the correct match --</option>
+                    ${allOptions.map(opt => `<option value="${opt}" ${matchAnswers[idx] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                </select>
+            `;
+            container.appendChild(div);
+            const sel = div.querySelector('.match-select');
+            sel.addEventListener('change', (e) => { if(!evaluated) matchAnswers[idx] = e.target.value; });
+        });
+    }
+
+    function renderFragment() {
+        const container = document.getElementById('fragment-questions');
+        container.innerHTML = '';
+        const passageDiv = document.createElement('div');
+        passageDiv.className = 'reading-fragment';
+        passageDiv.innerHTML = `
+            <h4><i class="fas fa-quote-left"></i> Read the passage carefully:</h4>
+            <p>${passageText}</p>
+        `;
+        container.appendChild(passageDiv);
+        currentFragment.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `fragment-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="fragment_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(fragmentAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="fragment_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === fragmentAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) fragmentAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderAll() {
+        renderMcq();
+        renderGapFill();
+        renderOrder();
+        renderMatch();
+        renderFragment();
+    }
+
+    function showCorrectAnswers() {
+        const sections = [
+            { current: currentMcq, answers: mcqAnswers, prefix: 'mcq', getCorrect: (q) => q.correct },
+            { current: currentGap, answers: gapAnswers, prefix: 'gap', getCorrect: (q) => q.answer.toLowerCase() },
+            { current: currentOrder, answers: orderAnswers, prefix: 'order', getCorrect: (q) => q.correct.toLowerCase() },
+            { current: currentMatch, answers: matchAnswers, prefix: 'match', getCorrect: (q) => q.right },
+            { current: currentFragment, answers: fragmentAnswers, prefix: 'fragment', getCorrect: (q) => q.correct }
+        ];
+        sections.forEach(section => {
+            section.current.forEach((q, idx) => {
+                const card = document.getElementById(`${section.prefix}-card-${idx}`);
+                if(!card) return;
+                const isCorrect = section.answers[idx] === section.getCorrect(q);
+                card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+                if(!card.querySelector('.correct-answer-display')) {
+                    const correctDiv = document.createElement('div');
+                    correctDiv.className = 'correct-answer-display';
+                    correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Correct answer: ${section.getCorrect(q)}`;
+                    card.appendChild(correctDiv);
+                }
+            });
+        });
+    }
+
+    function calculateAndShowResults() {
+        let totalCorrect = 0;
+        const maxPoints = 50;
+        for(let i=0; i<currentMcq.length; i++) {
+            if(mcqAnswers[i] && mcqAnswers[i] === currentMcq[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentGap.length; i++) {
+            if(gapAnswers[i] && gapAnswers[i] === currentGap[i].answer.toLowerCase()) totalCorrect++;
+        }
+        for(let i=0; i<currentOrder.length; i++) {
+            if(orderAnswers[i] && orderAnswers[i].toLowerCase() === currentOrder[i].correct.toLowerCase()) totalCorrect++;
+        }
+        for(let i=0; i<currentMatch.length; i++) {
+            if(matchAnswers[i] && matchAnswers[i] === currentMatch[i].right) totalCorrect++;
+        }
+        for(let i=0; i<currentFragment.length; i++) {
+            if(fragmentAnswers[i] && fragmentAnswers[i] === currentFragment[i].correct) totalCorrect++;
+        }
+        const grade = 1 + (6 * (totalCorrect / maxPoints));
+        const finalGrade = grade.toFixed(1);
+        document.getElementById('scoreDisplay').innerHTML = `Score: ${totalCorrect} / ${maxPoints}`;
+        document.getElementById('gradeDisplay').innerHTML = `Grade: ${finalGrade} (1.0 to 7.0)`;
+        const passMsg = totalCorrect >= 30 ? '✅ PASSED! (Grade ≥ 4.0 - 60%)' : '❌ NOT PASSED. Need at least 30 correct answers.';
+        document.getElementById('passDisplay').innerHTML = passMsg;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('actionButtons').style.display = 'flex';
+        showCorrectAnswers();
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.style.transition = 'box-shadow 0.3s';
+        resultsSection.style.boxShadow = '0 0 0 3px #facc15';
+        setTimeout(() => { resultsSection.style.boxShadow = 'none'; }, 1000);
+    }
+
+    function evaluateTest() {
+        if(evaluated) return;
+        evaluated = true;
+        calculateAndShowResults();
+    }
+
+    function restartTest() {
+        currentMcq = getRandomItems(mcqPool, 10);
+        currentGap = getRandomItems(gapFillPool, 10);
+        currentOrder = getRandomItems(orderPool, 10);
+        currentMatch = getRandomItems(matchPool, 10);
+        currentFragment = getRandomItems(fragmentPool, 10);
+        mcqAnswers = new Array(10).fill(null);
+        gapAnswers = new Array(10).fill('');
+        orderAnswers = new Array(10).fill('');
+        matchAnswers = new Array(10).fill('');
+        fragmentAnswers = new Array(10).fill(null);
+        evaluated = false;
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+        renderAll();
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if(btn.id !== 'evaluateBtnSidebar') {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        }
+    });
+
+    document.getElementById('evaluateBtnSidebar').addEventListener('click', evaluateTest);
+    document.getElementById('restartBtn').addEventListener('click', restartTest);
+    document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_6_Ingles.html');
+    document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Ingles.html');
+
+    restartTest();
+</script>
+</body>
+</html>
