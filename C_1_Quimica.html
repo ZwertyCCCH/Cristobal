@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Clase: Procesos de Separación de Mezclas - Ciencias 7° básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 85vh;
+            max-height: 750px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3);
+            background: #ffffff;
+            border-radius: 32px;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: white;
+            border-radius: 32px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #0f766e;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f766e;
+            border-left: 5px solid #14b8a6;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0f766e;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .badge {
+            background: #ccfbf1;
+            color: #0f766e;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .info-box {
+            background: #f0fdf4;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            border-left: 4px solid #14b8a6;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: #f7fafc;
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #14b8a6;
+        }
+
+        .card i {
+            font-size: 2rem;
+            color: #14b8a6;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #ccfbf1;
+            font-weight: bold;
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+        }
+
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: all 0.2s ease;
+            color: #0f766e;
+        }
+
+        .nav-btn:hover {
+            background: #0f766e;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: #2d3748;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action:hover {
+            background: #1a202c;
+            transform: translateY(-2px);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #0f766e;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        .comparacion {
+            background: #e6f7f5;
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        @media (max-width: 680px) {
+            .slide {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        
+        <!-- SLIDE 0 - PORTADA -->
+        <div class="slide active" data-index="0">
+            <div class="badge">🧪 Ciencias Naturales - 7° básico</div>
+            <h1>Procesos de Separación de Mezclas</h1>
+            <p style="font-size: 1.2rem; margin-top: 0.5rem;">Aprende a separar los componentes de una mezcla</p>
+            <div class="info-box" style="margin-top: 2rem;">
+                <i class="fas fa-flask"></i> <strong>En esta clase aprenderás:</strong><br>
+                ➜ ¿Qué es una mezcla y cómo se clasifica?<br>
+                ➜ Los 10 principales métodos de separación<br>
+                ➜ Ejemplos cotidianos de cada proceso<br>
+                ➜ Cuándo usar cada método según el tipo de mezcla
+            </div>
+            <div style="margin-top: auto; text-align: center; padding: 1rem;">
+                <i class="fas fa-arrow-right"></i> Presiona ▶ o desliza para continuar
+            </div>
+        </div>
+
+        <!-- SLIDE 1 - ¿Qué es una mezcla? -->
+        <div class="slide" data-index="1">
+            <div class="badge">📖 CONCEPTOS BÁSICOS</div>
+            <h2>¿Qué es una mezcla?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-cubes"></i>
+                    <h3>Definición</h3>
+                    <p>Una <strong>mezcla</strong> es la combinación de dos o más sustancias donde cada una conserva sus propiedades.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3>Clasificación</h3>
+                    <p><strong>Homogéneas:</strong> No se distinguen sus componentes (ej: agua con sal).<br><strong>Heterogéneas:</strong> Se distinguen sus componentes (ej: agua con aceite).</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i> <strong>Ejemplo cotidiano:</strong> Cuando preparas un té, mezclas agua caliente con las hojas de té. El azúcar que agregas también forma parte de la mezcla.
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-question-circle"></i> <strong>Pregunta para reflexionar:</strong> ¿La leche es una mezcla homogénea o heterogénea? (Respuesta: Es una mezcla homogénea de agua, grasas, proteínas y vitaminas)
+            </div>
+        </div>
+
+        <!-- SLIDE 2 - TAMIZACIÓN (TAMIZADO) -->
+        <div class="slide" data-index="2">
+            <div class="badge">🔬 MÉTODO 1</div>
+            <h2>Tamización (Tamizado)</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-filter"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar partículas sólidas de diferentes tamaños usando un <strong>tamiz</strong> o colador. Las partículas más pequeñas pasan por los poros, mientras que las más grandes quedan retenidas.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Colar harina para quitar grumos<br>➜ Separar la arena de las piedras<br>➜ Un colador de pasta</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas heterogéneas sólido-sólido</strong>. El tamaño de los poros del tamiz determina qué partículas pasan.
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Experimento en casa:</strong> Toma un puñado de arena de playa (contiene piedritas pequeñas y conchas trituradas) y pásala por un colador. ¿Qué pasa?
+            </div>
+        </div>
+
+        <!-- SLIDE 3 - FILTRACIÓN -->
+        <div class="slide" data-index="3">
+            <div class="badge">🔬 MÉTODO 2</div>
+            <h2>Filtración</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-tint"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar un <strong>sólido</strong> de un <strong>líquido</strong> haciendo pasar la mezcla a través de un material poroso (papel filtro, tela, arena).</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Cafetera (separa el café molido del líquido)<br>➜ Purificador de agua<br>➜ Colar jugo para quitar pulpa</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas heterogéneas sólido-líquido</strong>. El material filtrante retiene las partículas sólidas.
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Experimento en casa:</strong> Mezcla arena con agua y pásala por un filtro de papel (o un paño limpio). ¿Qué observas en el filtro y en el agua filtrada?
+            </div>
+        </div>
+
+        <!-- SLIDE 4 - DECANTACIÓN -->
+        <div class="slide" data-index="4">
+            <div class="badge">🔬 MÉTODO 3</div>
+            <h2>Decantación</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-beer"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar dos líquidos <strong>inmiscibles</strong> (que no se mezclan) aprovechando sus diferentes densidades. El más denso queda abajo y el menos denso arriba.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Separar agua y aceite<br>➜ Decantar vino (separar del sedimento)<br>➜ Separar agua y gasolina</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas heterogéneas líquido-líquido</strong>. Se vierte cuidadosamente el líquido superior (menos denso) o se usa un embudo de decantación.
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Experimento en casa:</strong> Mezcla agua y aceite en una botella. Deja reposar y observa cómo se separan. ¿Cuál queda arriba? ¿Por qué?
+            </div>
+        </div>
+
+        <!-- SLIDE 5 - EVAPORACIÓN -->
+        <div class="slide" data-index="5">
+            <div class="badge">🔬 MÉTODO 4</div>
+            <h2>Evaporación</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-sun"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar un <strong>sólido disuelto</strong> de un <strong>líquido</strong> calentando la mezcla hasta que el líquido se convierte en vapor y el sólido queda como residuo.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Obtener sal a partir de agua de mar<br>➜ Cuando se seca una mancha de agua en el suelo<br>➜ Preparar leche condensada</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas homogéneas sólido-líquido</strong>. El punto de ebullición del líquido debe ser menor que el del sólido.
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Experimento en casa:</strong> Coloca agua con sal en una olla y caliéntala hasta que el agua se evapore. ¿Qué queda en el fondo?
+            </div>
+        </div>
+
+        <!-- SLIDE 6 - DESTILACIÓN -->
+        <div class="slide" data-index="6">
+            <div class="badge">🔬 MÉTODO 5</div>
+            <h2>Destilación</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-wine-bottle"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar dos o más líquidos <strong>miscibles</strong> (que se mezclan) aprovechando sus diferentes <strong>puntos de ebullición</strong>. El líquido con menor punto de ebullición se evapora primero y luego se condensa.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Purificar agua (eliminar sales)<br>➜ Producción de bebidas alcohólicas<br>➜ Refinerías de petróleo</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas homogéneas líquido-líquido</strong>. Requiere un equipo de destilación (matraz, condensador, termómetro).
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Dato curioso:</strong> El agua hierve a 100°C, mientras que el alcohol hierve a 78°C. Por eso se puede separar el alcohol del agua por destilación.
+            </div>
+        </div>
+
+        <!-- SLIDE 7 - CENTRIFUGACIÓN -->
+        <div class="slide" data-index="7">
+            <div class="badge">🔬 MÉTODO 6</div>
+            <h2>Centrifugación</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-sync-alt"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar componentes de una mezcla usando la <strong>fuerza centrífuga</strong> (movimiento de rotación rápido). Las partículas más densas se van al fondo del tubo.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Separar la crema de la leche<br>➜ Análisis de sangre en laboratorios<br>➜ Secar ropa en lavadora (centrifugado)</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas heterogéneas sólido-líquido</strong> con partículas muy pequeñas (como sangre o leche). La centrifugadora alcanza miles de revoluciones por minuto.
+            </div>
+        </div>
+
+        <!-- SLIDE 8 - CROMATOGRAFÍA -->
+        <div class="slide" data-index="8">
+            <div class="badge">🔬 MÉTODO 7</div>
+            <h2>Cromatografía</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-palette"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar los componentes de una mezcla haciendo que se muevan a diferentes velocidades a través de un <strong>material adsorbente</strong> (papel, gel, gas).</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Separar colores de una tinta<br>➜ Identificar componentes de un perfume<br>➜ Análisis de pesticidas en alimentos</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas homogéneas</strong> de componentes muy similares. Es una técnica analítica (no industrial).
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Experimento en casa (¡favorito de los niños!):</strong> Toma un papel filtro de café, dibuja un círculo con un marcador negro, luego pon una gota de alcohol en el centro. ¡Verás cómo el color negro se separa en varios colores!
+            </div>
+        </div>
+
+        <!-- SLIDE 9 - IMANTACIÓN (SEPARACIÓN MAGNÉTICA) -->
+        <div class="slide" data-index="9">
+            <div class="badge">🔬 MÉTODO 8</div>
+            <h2>Imantación (Separación Magnética)</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-magnet"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar materiales <strong>magnéticos</strong> (como el hierro) de materiales <strong>no magnéticos</strong> usando un imán.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Separar clips de metal de arena<br>➜ Reciclar metales (separar hierro de otros residuos)<br>➜ Industria minera</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas heterogéneas</strong> donde un componente es atraído por un imán (hierro, níquel, cobalto).
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Experimento en casa:</strong> Mezcla arena con clips de metal (o alfileres). Usa un imán para separar los clips. ¿Funciona?
+            </div>
+        </div>
+
+        <!-- SLIDE 10 - SEDIMENTACIÓN -->
+        <div class="slide" data-index="10">
+            <div class="badge">🔬 MÉTODO 9</div>
+            <h2>Sedimentación</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-water"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar un <strong>sólido</strong> de un <strong>líquido</strong> por acción de la <strong>gravedad</strong>. Las partículas sólidas, más densas, se van al fondo del recipiente.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Purificar agua dejando reposar la arena<br>➜ El barro se asienta al fondo de un río<br>➜ Posos del café en la taza</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas heterogéneas sólido-líquido</strong>. Es un proceso lento que depende de la densidad y tamaño de las partículas.
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Experimento en casa:</strong> Mezcla tierra con agua en un frasco. Deja reposar 24 horas. ¿Qué observas en el fondo?
+            </div>
+        </div>
+
+        <!-- SLIDE 11 - LEVIGACIÓN -->
+        <div class="slide" data-index="11">
+            <div class="badge">🔬 MÉTODO 10</div>
+            <h2>Levigación</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-water"></i>
+                    <h3>¿En qué consiste?</h3>
+                    <p>Separar partículas sólidas por diferencias de <strong>densidad</strong> usando una <strong>corriente de agua</strong>. Las partículas más livianas son arrastradas por el agua, mientras que las más densas quedan.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <p>➜ Lavar arroz (se separan las cáscaras)<br>➜ Buscar oro (se separa de la arena)<br>➜ Separar arcilla de arena</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-microscope"></i> <strong>Detalles técnicos:</strong> Se usa para <strong>mezclas heterogéneas sólido-sólido</strong>. La corriente de agua arrastra las partículas menos densas.
+            </div>
+            <div class="comparacion">
+                <i class="fas fa-chalkboard-teacher"></i> <strong>Dato histórico:</strong> En la fiebre del oro, los buscadores usaban la levigación (en bateas) para separar el oro de la arena del río.
+            </div>
+        </div>
+
+        <!-- SLIDE 12 - TABLA RESUMEN -->
+        <div class="slide" data-index="12">
+            <div class="badge">📊 RESUMEN</div>
+            <h2>Tabla comparativa de métodos</h2>
+            <div style="overflow-x: auto;">
+                <table style="width:100%; border-collapse: collapse; background: #f8fafc; border-radius: 20px; overflow: hidden;">
+                    <thead>
+                        <tr style="background: #0f766e; color: white;">
+                            <th style="padding: 10px;">Método</th>
+                            <th style="padding: 10px;">Tipo de mezcla</th>
+                            <th style="padding: 10px;">Principio</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px;">Tamización</td><td>Sólido-sólido</td><td>Tamaño de partícula</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px;">Filtración</td><td>Sólido-líquido</td><td>Porosidad del filtro</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px;">Decantación</td><td>Líquido-líquido</td><td>Densidad</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px;">Evaporación</td><td>Homogénea s-l</td><td>Punto de ebullición</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px;">Destilación</td><td>Homogénea l-l</td><td>Punto de ebullición</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px;">Centrifugación</td><td>Sólido-líquido</td><td>Fuerza centrífuga</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px;">Cromatografía</td><td>Homogénea</td><td>Adsorción diferencial</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px;">Imantación</td><td>Sólido-sólido</td><td>Magnetismo</td></tr>
+                        <tr style="border-bottom: 1px solid #e2e8f0;"><td style="padding: 8px;">Sedimentación</td><td>Sólido-líquido</td><td>Gravedad</td></tr>
+                        <tr><td style="padding: 8px;">Levigación</td><td>Sólido-sólido</td><td>Densidad + agua</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- SLIDE 13 - SÍNTESIS Y CIERRE -->
+        <div class="slide" data-index="13">
+            <div class="badge">✅ SÍNTESIS</div>
+            <h2>¿Qué aprendiste hoy?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Conceptos clave</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>Mezcla = combinación de sustancias</li>
+                        <li>Homogéneas (no se distinguen)</li>
+                        <li>Heterogéneas (sí se distinguen)</li>
+                        <li>10 métodos de separación</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Métodos aprendidos</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>Tamización, filtración, decantación</li>
+                        <li>Evaporación, destilación, centrifugación</li>
+                        <li>Cromatografía, imantación</li>
+                        <li>Sedimentación, levigación</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 1rem;">
+                🎯 <strong>Próxima clase:</strong> Practicarás con ejercicios para cada método de separación.
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="dots" id="dotsContainer"></div>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Curso</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Ejercicios</button>
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+    }
+
+    function nextSlide() {
+        if(currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        dotsContainer.innerHTML = '';
+        for(let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if(e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Quimica.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_1A_Quimica.html';
+    });
+
+    // Swipe para móviles
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if(touchEndX < touchStartX - 40) nextSlide();
+        if(touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    updateDots();
+</script>
+</body>
+</html>

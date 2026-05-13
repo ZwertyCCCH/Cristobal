@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Ejercicios - Procesos de Separación de Mezclas | Ciencias 7° básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 220px;
+            min-width: 220px;
+            background: #f1f5f9;
+            border-right: 2px solid #e2e8f0;
+            gap: 8px;
+            padding: 24px 12px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #475569;
+            cursor: pointer;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.3rem;
+        }
+
+        .tab-btn span {
+            font-size: 0.7rem;
+        }
+
+        .tab-btn.active {
+            background: #0f766e;
+            color: white;
+            box-shadow: 0 2px 8px rgba(15,118,110,0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-evaluate-sidebar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-evaluate-sidebar i {
+            font-size: 1.3rem;
+        }
+
+        .btn-evaluate-sidebar:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        .question-card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .question-card.correct-highlight {
+            border-left: 6px solid #22c55e;
+            background: #f0fdf4;
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 6px solid #ef4444;
+            background: #fef2f2;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #0f766e;
+        }
+
+        .section-header i {
+            font-size: 2rem;
+            color: #0f766e;
+        }
+
+        .section-header h3 {
+            color: #0f766e;
+            margin: 0;
+        }
+
+        .section-header p {
+            color: #475569;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .correct-answer-display {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #e6f7f5;
+            border-radius: 16px;
+            color: #0f766e;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            background: #ccfbf1;
+        }
+
+        input[type="radio"], input[type="checkbox"], input[type="text"], select {
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="text"], select {
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            width: 100%;
+            background: white;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            color: white;
+            padding: 24px 20px;
+            border-radius: 24px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .results-section p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #facc15;
+            color: #1e293b;
+        }
+
+        .btn-secondary {
+            background: #0f766e;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #0f766e;
+            color: #0f766e;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 20px;
+            border: 1px solid #cbd5e1;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .word-count {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .keywords-list {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .tabs {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding: 12px;
+            }
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                width: auto;
+                padding: 10px 14px;
+            }
+            .btn-evaluate-sidebar {
+                flex-direction: row;
+                margin-top: 0;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1"><i class="fas fa-check-circle"></i><span> MCQ Básico</span></button>
+        <button class="tab-btn" data-tab="tab2"><i class="fas fa-pen"></i><span> Completar</span></button>
+        <button class="tab-btn" data-tab="tab3"><i class="fas fa-check-double"></i><span> Selección Múltiple</span></button>
+        <button class="tab-btn" data-tab="tab4"><i class="fas fa-list"></i><span> Lista desplegable</span></button>
+        <button class="tab-btn" data-tab="tab5"><i class="fas fa-edit"></i><span> Respuesta escrita</span></button>
+        <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar"><i class="fas fa-check-double"></i><span> Evaluar</span></button>
+    </div>
+
+    <div class="tab-content-container">
+        <div id="tab1" class="tab-content active">
+            <div class="section-header">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>📝 Sección 1: Selección Múltiple - Conceptos básicos</h3>
+                    <p>Elige la opción correcta para cada pregunta.</p>
+                </div>
+            </div>
+            <div id="mcq-questions"></div>
+        </div>
+        <div id="tab2" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-pen"></i>
+                <div>
+                    <h3>✏️ Sección 2: Completar frases</h3>
+                    <p>Escribe la palabra que falta en cada oración.</p>
+                </div>
+            </div>
+            <div id="gapfill-questions"></div>
+        </div>
+        <div id="tab3" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-check-double"></i>
+                <div>
+                    <h3>✅ Sección 3: Selección Múltiple (2 o 3 respuestas correctas)</h3>
+                    <p>Selecciona TODAS las opciones correctas. La pregunta vale 1 punto solo si seleccionas todas las correctas.</p>
+                </div>
+            </div>
+            <div id="multiselect-questions"></div>
+        </div>
+        <div id="tab4" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-list"></i>
+                <div>
+                    <h3>📋 Sección 4: Selección de respuesta de una lista</h3>
+                    <p>Elige la opción correcta en cada menú desplegable.</p>
+                </div>
+            </div>
+            <div id="dropdown-questions"></div>
+        </div>
+        <div id="tab5" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-edit"></i>
+                <div>
+                    <h3>📝 Sección 5: Respuesta escrita</h3>
+                    <p>Lee la situación y explica cómo resolverías el problema.</p>
+                </div>
+            </div>
+            <div id="essay-questions"></div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-chart-line"></i> Your Results</h3>
+            <p id="scoreDisplay">Puntaje: -- / 50</p>
+            <p id="gradeDisplay">Nota: -- (1.0 a 7.0)</p>
+            <p id="passDisplay"></p>
+        </div>
+
+        <div class="action-buttons" id="actionButtons">
+            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-sync-alt"></i> Reiniciar</button>
+            <button class="btn btn-secondary" id="backToClassBtn"><i class="fas fa-chalkboard"></i> Volver a la clase</button>
+            <button class="btn btn-outline" id="backToCourseBtn"><i class="fas fa-book-open"></i> Volver al curso</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ======================== SECTION 1: MCQ BÁSICO (30 POOL) ========================
+    const mcqPool = [
+        { text: "¿Qué tipo de mezcla es aquella en la que NO se distinguen sus componentes a simple vista?", options: ["Heterogénea", "Homogénea", "Suspensión", "Coloide"], correct: "Homogénea" },
+        { text: "¿Qué método se usa para separar un sólido de un líquido usando un material poroso?", options: ["Decantación", "Filtración", "Destilación", "Evaporación"], correct: "Filtración" },
+        { text: "¿Qué método aprovecha la diferencia de densidades para separar dos líquidos inmiscibles?", options: ["Filtración", "Destilación", "Decantación", "Cromatografía"], correct: "Decantación" },
+        { text: "¿Qué método separa partículas sólidas de diferentes tamaños usando un colador o tamiz?", options: ["Filtración", "Tamizado", "Sedimentación", "Levigación"], correct: "Tamizado" },
+        { text: "¿Qué método separa un sólido disuelto de un líquido calentando hasta que el líquido se evapora?", options: ["Destilación", "Evaporación", "Filtración", "Centrifugación"], correct: "Evaporación" },
+        { text: "¿Qué método separa dos líquidos miscibles aprovechando sus diferentes puntos de ebullición?", options: ["Evaporación", "Decantación", "Destilación", "Cromatografía"], correct: "Destilación" },
+        { text: "¿Qué método usa la fuerza centrífuga para separar componentes de una mezcla?", options: ["Sedimentación", "Centrifugación", "Levigación", "Imantación"], correct: "Centrifugación" },
+        { text: "¿Qué método separa materiales magnéticos de no magnéticos usando un imán?", options: ["Levigación", "Cromatografía", "Imantación", "Tamizado"], correct: "Imantación" },
+        { text: "¿Qué método separa partículas sólidas dejándolas reposar para que la gravedad las haga caer al fondo?", options: ["Filtración", "Decantación", "Sedimentación", "Centrifugación"], correct: "Sedimentación" },
+        { text: "¿Qué método separa partículas por diferencia de densidad usando una corriente de agua?", options: ["Levigación", "Tamizado", "Flotación", "Sedimentación"], correct: "Levigación" },
+        { text: "¿Qué método se usa para separar los colores de una tinta o los componentes de una mezcla mediante un material adsorbente?", options: ["Cromatografía", "Destilación", "Filtración", "Evaporación"], correct: "Cromatografía" },
+        { text: "¿Una mezcla de agua y aceite es un ejemplo de qué tipo de mezcla?", options: ["Homogénea", "Heterogénea", "Solución", "Aleación"], correct: "Heterogénea" },
+        { text: "¿Una mezcla de sal disuelta en agua es un ejemplo de qué tipo de mezcla?", options: ["Heterogénea", "Suspensión", "Homogénea", "Coloide"], correct: "Homogénea" },
+        { text: "¿Qué propiedad física permite separar componentes por tamizado?", options: ["Densidad", "Tamaño de partícula", "Punto de ebullición", "Magnetismo"], correct: "Tamaño de partícula" },
+        { text: "¿Qué propiedad física permite separar componentes por decantación?", options: ["Tamaño de partícula", "Magnetismo", "Densidad", "Solubilidad"], correct: "Densidad" },
+        { text: "¿Qué propiedad física permite separar componentes por destilación?", options: ["Densidad", "Tamaño de partícula", "Punto de ebullición", "Magnetismo"], correct: "Punto de ebullición" },
+        { text: "¿Qué método usarías para separar arena y agua?", options: ["Decantación", "Filtración", "Destilación", "Cromatografía"], correct: "Filtración" },
+        { text: "¿Qué método usarías para separar agua y alcohol?", options: ["Decantación", "Filtración", "Destilación", "Evaporación"], correct: "Destilación" },
+        { text: "¿Qué método usarías para separar limaduras de hierro de arena?", options: ["Tamizado", "Imantación", "Levigación", "Centrifugación"], correct: "Imantación" },
+        { text: "¿Qué método usarías para obtener sal a partir de agua de mar?", options: ["Filtración", "Destilación", "Evaporación", "Decantación"], correct: "Evaporación" },
+        { text: "¿Qué método usarías para separar los componentes de una tinta negra?", options: ["Filtración", "Destilación", "Cromatografía", "Evaporación"], correct: "Cromatografía" },
+        { text: "¿Qué método usarías para separar la crema de la leche?", options: ["Decantación", "Centrifugación", "Filtración", "Tamizado"], correct: "Centrifugación" },
+        { text: "¿Qué método usarías para separar piedras de la harina?", options: ["Filtración", "Tamizado", "Levigación", "Sedimentación"], correct: "Tamizado" },
+        { text: "¿Qué método usarías para separar el barro del agua en un río?", options: ["Filtración", "Sedimentación", "Destilación", "Cromatografía"], correct: "Sedimentación" },
+        { text: "¿Qué método usarías para separar el oro de la arena en un río?", options: ["Imantación", "Levigación", "Tamizado", "Destilación"], correct: "Levigación" },
+        { text: "¿Qué nombre recibe la mezcla donde se pueden distinguir sus componentes?", options: ["Homogénea", "Heterogénea", "Solución", "Mezcla uniforme"], correct: "Heterogénea" },
+        { text: "¿Qué nombre recibe la mezcla donde NO se pueden distinguir sus componentes?", options: ["Heterogénea", "Suspensión", "Homogénea", "Coloide"], correct: "Homogénea" },
+        { text: "¿Qué método separa componentes por diferencia de velocidad de movimiento en un material adsorbente?", options: ["Destilación", "Cromatografía", "Electroforesis", "Centrifugación"], correct: "Cromatografía" },
+        { text: "¿Qué método es más rápido que la sedimentación porque usa movimiento rotatorio?", options: ["Filtración", "Decantación", "Centrifugación", "Tamizado"], correct: "Centrifugación" },
+        { text: "¿En qué tipo de mezcla se usa la decantación?", options: ["Sólido-sólido", "Líquido-líquido inmiscible", "Gas-gas", "Homogénea sólido-líquido"], correct: "Líquido-líquido inmiscible" }
+    ];
+
+    // ======================== SECTION 2: GAP FILL (30 POOL) ========================
+    const gapFillPool = [
+        { text: "Una mezcla ______________ es aquella en la que NO se distinguen sus componentes a simple vista.", answer: "homogénea" },
+        { text: "Una mezcla ______________ es aquella en la que SÍ se distinguen sus componentes.", answer: "heterogénea" },
+        { text: "El método de ______________ se usa para separar un sólido de un líquido usando un material poroso como un filtro.", answer: "filtración" },
+        { text: "La ______________ separa dos líquidos inmiscibles aprovechando sus diferentes densidades.", answer: "decantación" },
+        { text: "El ______________ separa partículas sólidas de diferentes tamaños usando un colador o tamiz.", answer: "tamizado" },
+        { text: "La ______________ separa un sólido disuelto de un líquido calentando hasta que el líquido se evapora.", answer: "evaporación" },
+        { text: "La ______________ separa dos líquidos miscibles aprovechando sus diferentes puntos de ebullición.", answer: "destilación" },
+        { text: "La ______________ usa la fuerza centrífuga para separar componentes de una mezcla.", answer: "centrifugación" },
+        { text: "La ______________ separa materiales magnéticos de no magnéticos usando un imán.", answer: "imantación" },
+        { text: "La ______________ separa partículas sólidas dejándolas reposar para que la gravedad las haga caer al fondo.", answer: "sedimentación" },
+        { text: "La ______________ separa partículas por diferencia de densidad usando una corriente de agua.", answer: "levigación" },
+        { text: "La ______________ separa componentes de una mezcla mediante un material adsorbente que los arrastra a diferentes velocidades.", answer: "cromatografía" },
+        { text: "El agua con sal es un ejemplo de mezcla ______________.", answer: "homogénea" },
+        { text: "El agua con aceite es un ejemplo de mezcla ______________.", answer: "heterogénea" },
+        { text: "La propiedad física que permite separar componentes por tamizado es el ______________ de partícula.", answer: "tamaño" },
+        { text: "La propiedad física que permite separar componentes por decantación es la ______________.", answer: "densidad" },
+        { text: "La propiedad física que permite separar componentes por destilación es el punto de ______________.", answer: "ebullición" },
+        { text: "Para separar arena y agua se recomienda usar el método de ______________.", answer: "filtración" },
+        { text: "Para separar agua y alcohol se recomienda usar el método de ______________.", answer: "destilación" },
+        { text: "Para separar limaduras de hierro de arena se recomienda usar la ______________.", answer: "imantación" },
+        { text: "Para obtener sal a partir de agua de mar se recomienda usar la ______________.", answer: "evaporación" },
+        { text: "Para separar los colores de una tinta se recomienda usar la ______________.", answer: "cromatografía" },
+        { text: "Para separar la crema de la leche se recomienda usar la ______________.", answer: "centrifugación" },
+        { text: "Para separar piedras de la harina se recomienda usar el ______________.", answer: "tamizado" },
+        { text: "Para separar el barro del agua en un río (dejando reposar) se recomienda usar la ______________.", answer: "sedimentación" },
+        { text: "Para separar el oro de la arena en un río se recomienda usar la ______________.", answer: "levigación" },
+        { text: "La ______________ es una técnica analítica que separa componentes según su afinidad con un material adsorbente.", answer: "cromatografía" },
+        { text: "La ______________ es el método más rápido para separar partículas sólidas muy pequeñas suspendidas en un líquido.", answer: "centrifugación" },
+        { text: "La ______________ es el método más simple para separar un sólido de un líquido por acción de la gravedad.", answer: "sedimentación" },
+        { text: "El método de ______________ es muy usado en la industria minera para separar minerales según su densidad.", answer: "levigación" }
+    ];
+
+    // ======================== SECTION 3: MULTISELECT (30 POOL) ========================
+    const multiselectPool = [
+        { text: "¿Cuáles de los siguientes métodos se usan para separar mezclas heterogéneas sólido-líquido?", options: ["Filtración", "Destilación", "Sedimentación", "Cromatografía", "Decantación"], correct: ["Filtración", "Sedimentación"] },
+        { text: "¿Qué métodos se basan en la diferencia de densidades?", options: ["Decantación", "Destilación", "Levigación", "Tamizado", "Centrifugación"], correct: ["Decantación", "Levigación"] },
+        { text: "¿Qué métodos se usan para separar mezclas homogéneas?", options: ["Evaporación", "Filtración", "Destilación", "Tamizado", "Decantación"], correct: ["Evaporación", "Destilación"] },
+        { text: "¿Cuáles de los siguientes son métodos de separación para mezclas sólido-sólido?", options: ["Tamizado", "Imantación", "Levigación", "Filtración", "Decantación"], correct: ["tamizado", "Imantación", "Levigación"] },
+        { text: "¿Qué métodos permiten separar un sólido disuelto de un líquido?", options: ["Evaporación", "Destilación", "Filtración", "Decantación", "Tamizado"], correct: ["Evaporación", "Destilación"] },
+        { text: "¿Cuáles son ejemplos cotidianos de filtración?", options: ["Cafetera", "Colar pasta", "Separar agua y aceite", "Obtener sal del mar", "Purificador de agua"], correct: ["Cafetera", "Colar pasta", "Purificador de agua"] },
+        { text: "¿Qué métodos se basan en el punto de ebullición?", options: ["Evaporación", "Destilación", "Decantación", "Cromatografía", "Sedimentación"], correct: ["Evaporación", "Destilación"] },
+        { text: "¿Cuáles son métodos que NO requieren calentamiento?", options: ["Filtración", "Decantación", "Evaporación", "Tamizado", "Destilación"], correct: ["Filtración", "Decantación", "tamizado"] },
+        { text: "¿Qué métodos se pueden usar en una cocina doméstica?", options: ["Tamizado", "Filtración", "Destilación industrial", "Decantación", "Cromatografía"], correct: ["Tamizado", "Filtración", "Decantación"] },
+        { text: "¿Qué métodos permiten separar mezclas de líquidos?", options: ["Decantación", "Destilación", "Filtración", "Tamizado", "Centrifugación"], correct: ["Decantación", "Destilación"] },
+        { text: "¿Qué métodos se basan en el tamaño de las partículas?", options: ["Tamizado", "Filtración", "Destilación", "Cromatografía", "Decantación"], correct: ["Tamizado", "Filtración"] },
+        { text: "¿Cuáles son mezclas homogéneas?", options: ["Agua con sal", "Agua con aceite", "Aire", "Agua con arena", "Aleación metálica"], correct: ["Agua con sal", "Aire", "Aleación metálica"] },
+        { text: "¿Cuáles son mezclas heterogéneas?", options: ["Agua con aceite", "Agua con sal", "Agua con arena", "Aire", "Granito"], correct: ["Agua con aceite", "Agua con arena", "Granito"] },
+        { text: "¿Qué métodos usan la gravedad como principio?", options: ["Sedimentación", "Decantación", "Centrifugación", "Filtración", "Tamizado"], correct: ["Sedimentación", "Decantación"] },
+        { text: "¿Qué métodos son más rápidos que la sedimentación simple?", options: ["Centrifugación", "Filtración al vacío", "Decantación", "Evaporación", "Tamizado"], correct: ["Centrifugación", "Filtración al vacío"] },
+        { text: "¿Qué métodos se usan en la industria alimentaria?", options: ["Filtración de jugos", "Destilación de bebidas", "Tamizado de harina", "Cromatografía de tintas", "Centrifugación de leche"], correct: ["Filtración de jugos", "Tamizado de harina", "Centrifugación de leche"] },
+        { text: "¿Qué métodos se basan en la solubilidad o afinidad química?", options: ["Cromatografía", "Extracción", "Filtración", "Destilación", "Decantación"], correct: ["Cromatografía", "Extracción"] },
+        { text: "¿Qué métodos son útiles para purificar agua?", options: ["Destilación", "Filtración", "Decantación", "Cromatografía", "Levigación"], correct: ["Destilación", "Filtración"] },
+        { text: "¿Cuáles son métodos de separación que usan agua?", options: ["Levigación", "Decantación", "Cromatografía", "Imantación", "Tamizado"], correct: ["Levigación", "Decantación"] },
+        { text: "¿Qué métodos separan sólidos de líquidos sin calentar?", options: ["Filtración", "Sedimentación", "Centrifugación", "Evaporación", "Destilación"], correct: ["Filtración", "Sedimentación", "Centrifugación"] },
+        { text: "¿Qué materiales se pueden separar por imantación?", options: ["Hierro", "Níquel", "Cobre", "Aluminio", "Cobalto"], correct: ["Hierro", "Níquel", "Cobalto"] },
+        { text: "¿Qué métodos son apropiados para separar una mezcla de agua, arena y sal?", options: ["Filtración (arena)", "Evaporación (sal)", "Destilación", "Decantación", "Cromatografía"], correct: ["Filtración (arena)", "Evaporación (sal)"] },
+        { text: "¿Qué métodos se usan para separar gases?", options: ["Destilación fraccionada", "Absorción", "Filtración", "Decantación", "Tamizado molecular"], correct: ["Destilación fraccionada", "Absorción", "Tamizado molecular"] },
+        { text: "¿Qué propiedades físicas usa la cromatografía?", options: ["Adsorción", "Solubilidad", "Densidad", "Tamaño", "Magnetismo"], correct: ["Adsorción", "Solubilidad"] },
+        { text: "¿Qué métodos requieren equipo especializado de laboratorio?", options: ["Destilación", "Cromatografía", "Centrifugación", "Tamizado casera", "Filtración simple"], correct: ["Destilación", "Cromatografía", "Centrifugación"] },
+        { text: "¿Qué separaciones se pueden hacer en una planta de tratamiento de aguas?", options: ["Sedimentación", "Filtración", "Decantación", "Destilación", "Cromatografía"], correct: ["Sedimentación", "Filtración", "Decantación"] },
+        { text: "¿Qué métodos separan componentes basándose en el magnetismo?", options: ["Imantación", "Separación magnética", "Levigación", "Decantación", "Filtración"], correct: ["Imantación", "Separación magnética"] },
+        { text: "¿Qué métodos son adecuados para separar componentes de una mezcla de líquidos miscibles?", options: ["Destilación", "Cromatografía", "Decantación", "Filtración", "Evaporación"], correct: ["Destilación", "Cromatografía"] },
+        { text: "¿Qué afirmaciones sobre la filtración son correctas?", options: ["Retiene partículas sólidas", "Usa un material poroso", "Separa líquidos miscibles", "Aprovecha la densidad", "Requiere calentamiento"], correct: ["Retiene partículas sólidas", "Usa un material poroso"] },
+        { text: "¿Qué afirmaciones sobre la destilación son correctas?", options: ["Aprovecha puntos de ebullición", "Separa líquidos miscibles", "Usa un condensador", "Separa sólidos grandes", "Requiere un imán"], correct: ["Aprovecha puntos de ebullición", "Separa líquidos miscibles", "Usa un condensador"] }
+    ];
+
+    // ======================== SECTION 4: DROPDOWN (30 POOL) ========================
+    const dropdownPool = [
+        { text: "El método de ______________ se usa para separar un sólido de un líquido usando un filtro.", options: ["Decantación", "Filtración", "Destilación", "Evaporación", "Tamizado"], correct: "Filtración" },
+        { text: "La ______________ separa dos líquidos inmiscibles como agua y aceite.", options: ["Filtración", "Decantación", "Destilación", "Cromatografía", "Imantación"], correct: "Decantación" },
+        { text: "Para separar arena de piedras grandes se usa la ______________.", options: ["Filtración", "Tamizado", "Levigación", "Sedimentación", "Centrifugación"], correct: "Tamizado" },
+        { text: "Para obtener sal a partir de agua de mar se usa la ______________.", options: ["Destilación", "Evaporación", "Filtración", "Decantación", "Cromatografía"], correct: "Evaporación" },
+        { text: "Para separar agua y alcohol se usa la ______________.", options: ["Decantación", "Destilación", "Filtración", "Evaporación", "Tamizado"], correct: "Destilación" },
+        { text: "Para separar la crema de la leche se usa la ______________.", options: ["Decantación", "Centrifugación", "Filtración", "Destilación", "Evaporación"], correct: "Centrifugación" },
+        { text: "Para separar limaduras de hierro de arena se usa la ______________.", options: ["Tamizado", "Imantación", "Levigación", "Filtración", "Decantación"], correct: "Imantación" },
+        { text: "La ______________ separa componentes por diferencia de velocidad en un material adsorbente.", options: ["Cromatografía", "Destilación", "Filtración", "Evaporación", "Decantación"], correct: "Cromatografía" },
+        { text: "Para separar el barro del agua dejándolo reposar se usa la ______________.", options: ["Filtración", "Sedimentación", "Centrifugación", "Decantación", "Tamizado"], correct: "Sedimentación" },
+        { text: "Para separar el oro de la arena usando agua se usa la ______________.", options: ["Imantación", "Levigación", "Tamizado", "Filtración", "Decantación"], correct: "Levigación" },
+        { text: "Una mezcla de agua y sal es un ejemplo de mezcla ______________.", options: ["Heterogénea", "Homogénea", "Suspensión", "Coloide", "Emulsión"], correct: "Homogénea" },
+        { text: "Una mezcla de agua y aceite es un ejemplo de mezcla ______________.", options: ["Homogénea", "Heterogénea", "Solución", "Aleación", "Mezcla gaseosa"], correct: "Heterogénea" },
+        { text: "El método de ______________ separa por tamaño de partícula.", options: ["Decantación", "Tamizado", "Destilación", "Cromatografía", "Imantación"], correct: "Tamizado" },
+        { text: "El método de ______________ separa por diferencia de densidad.", options: ["Filtración", "Decantación", "Evaporación", "Destilación", "Cromatografía"], correct: "Decantación" },
+        { text: "El método de ______________ separa por diferencia de punto de ebullición.", options: ["Evaporación", "Destilación", "Decantación", "Filtración", "Tamizado"], correct: "Destilación" },
+        { text: "Para separar una mezcla de agua con arena se recomienda primero la ______________ y luego la evaporación si hay sal disuelta.", options: ["Destilación", "Filtración", "Decantación", "Cromatografía", "Levigación"], correct: "Filtración" },
+        { text: "En una cafetera se usa el método de ______________ para separar el café molido del líquido.", options: ["Destilación", "Filtración", "Decantación", "Evaporación", "Tamizado"], correct: "Filtración" },
+        { text: "Al colar la pasta, estamos usando el método de ______________.", options: ["Decantación", "Tamizado", "Filtración", "Levigación", "Sedimentación"], correct: "Filtración" },
+        { text: "Cuando la tierra se asienta en el fondo de un río, ocurre el proceso de ______________.", options: ["Filtración", "Sedimentación", "Decantación", "Evaporación", "Tamizado"], correct: "Sedimentación" },
+        { text: "La ______________ es una técnica analítica que permite identificar los componentes de una mezcla.", options: ["Filtración", "Cromatografía", "Destilación", "Decantación", "Imantación"], correct: "Cromatografía" },
+        { text: "Para separar el agua del alcohol en una mezcla, se usa la ______________ porque el alcohol hierve a menor temperatura.", options: ["Evaporación", "Destilación", "Filtración", "Decantación", "Cromatografía"], correct: "Destilación" },
+        { text: "En una lavadora, el centrifugado separa el agua de la ropa por ______________.", options: ["Gravedad", "Fuerza centrífuga", "Tamaño", "Densidad", "Magnetismo"], correct: "Fuerza centrífuga" },
+        { text: "Para separar una mezcla de arena, agua y sal, el primer paso es ______________ para retener la arena.", options: ["Evaporación", "Filtración", "Destilación", "Decantación", "Cromatografía"], correct: "Filtración" },
+        { text: "Después de filtrar la arena, para obtener la sal disuelta se usa la ______________.", options: ["Destilación", "Evaporación", "Filtración", "Decantación", "Cromatografía"], correct: "Evaporación" },
+        { text: "Para separar una mezcla de dos líquidos miscibles se puede usar la ______________.", options: ["Decantación", "Destilación", "Filtración", "Tamizado", "Imantación"], correct: "Destilación" },
+        { text: "El método de ______________ se basa en la diferente velocidad de movimiento de los componentes sobre un papel.", options: ["Cromatografía", "Destilación", "Filtración", "Evaporación", "Decantación"], correct: "Cromatografía" },
+        { text: "Una mezcla de granito (con diferentes minerales) puede separarse por ______________ si los minerales tienen diferentes densidades.", options: ["Levigación", "Tamizado", "Imantación", "Filtración", "Destilación"], correct: "Levigación" },
+        { text: "Para separar un sólido disuelto en agua, como el azúcar, se puede usar la ______________.", options: ["Filtración", "Evaporación", "Decantación", "Tamizado", "Cromatografía"], correct: "Evaporación" },
+        { text: "La ______________ es el método más simple para separar un sólido de un líquido por acción de la gravedad.", options: ["Filtración", "Sedimentación", "Centrifugación", "Decantación", "Tamizado"], correct: "Sedimentación" },
+        { text: "En la minería, para separar minerales valiosos de la ganga (material estéril) se usa a veces la ______________ con agua.", options: ["Imantación", "Levigación", "Destilación", "Cromatografía", "Filtración"], correct: "Levigación" }
+    ];
+
+    // ======================== SECTION 5: ESSAY (Situación) ========================
+    const essaySituation = {
+        text: "📋 SITUACIÓN PROBLEMA:\n\nUn estudiante tiene una mezcla compuesta por los siguientes materiales:\n• Agua\n• Aceite de cocina\n• Arena\n• Sal de mesa (disuelta en el agua)\n\nEl estudiante necesita separar CADA UNO de estos componentes por separado. Debe obtener: agua pura, aceite, arena seca y sal sólida.\n\nEXPLICA paso a paso cómo lo harías. Menciona qué métodos de separación usarías en cada etapa y por qué.\n\nRequisitos:\n✓ Tu respuesta debe tener al menos 60 palabras.\n✓ Si tu respuesta tiene menos de 60 palabras, el puntaje automático es 0.",
+        keywords: ["filtración", "decantación", "evaporación", "destilación", "mezcla", "heterogénea", "homogénea", "densidad", "tamizado", "sedimentación"],
+        idealAnswer: "La mezcla presentada es heterogénea porque se pueden distinguir sus componentes a simple vista. El agua con sal, por otro lado, forma una mezcla homogénea porque la sal se disuelve completamente y no se puede distinguir. Primero, usaría el método de decantación para separar el aceite del agua, ya que el aceite tiene menor densidad y flota sobre el agua. Luego, aplicaría filtración para separar la arena del agua, usando un filtro de papel que retiene las partículas sólidas de arena. También podría usar sedimentación antes de la filtración para dejar reposar la arena y que se vaya al fondo, facilitando el proceso. Después, para separar la sal disuelta en el agua, usaría evaporación, calentando el agua hasta que se evapore y quede la sal sólida en el recipiente. Si necesitara recuperar el agua pura en lugar de evaporarla, usaría destilación, que permite condensar el vapor de agua y obtener agua pura separada de la sal. No sería necesario usar tamización ni levigación en esta mezcla particular."
+    };
+
+    function getRandomItems(pool, n) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, n);
+    }
+
+    let currentMcq = [], currentGap = [], currentMultiselect = [], currentDropdown = [];
+    let mcqAnswers = [], gapAnswers = [], multiselectAnswers = [], dropdownAnswers = [];
+    let essayAnswer = "";
+    let evaluated = false;
+
+    // Render functions
+    function renderMcq() {
+        const container = document.getElementById('mcq-questions');
+        container.innerHTML = '';
+        currentMcq.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `mcq-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="mcq_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(mcqAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="mcq_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === mcqAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) mcqAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderGapFill() {
+        const container = document.getElementById('gapfill-questions');
+        container.innerHTML = '';
+        const correctAnswers = currentGap.map(q => q.answer.toLowerCase());
+        const allPossibleAnswers = gapFillPool.map(q => q.answer.toLowerCase());
+        const possibleDistractors = allPossibleAnswers.filter(ans => !correctAnswers.includes(ans));
+        const shuffledDistractors = [...new Set(possibleDistractors)].sort(() => Math.random() - 0.5);
+        const selectedDistractors = shuffledDistractors.slice(0, 10);
+        const wordBank = [...correctAnswers, ...selectedDistractors].sort(() => Math.random() - 0.5);
+        
+        const bankDiv = document.createElement('div');
+        bankDiv.className = 'question-card';
+        bankDiv.style.marginBottom = '20px';
+        bankDiv.innerHTML = `
+            <div class="question-text" style="margin-bottom:12px;">📚 BANCO DE PALABRAS — Usa algunas estas palabras para completar:</div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                ${wordBank.map(word => `
+                    <span style="background:#ccfbf1; color:#0f766e; border-radius:20px; padding:6px 14px; font-size:0.85rem; font-weight:500; font-family:monospace;">${word}</span>
+                `).join('')}
+            </div>
+        `;
+        container.appendChild(bankDiv);
+        
+        currentGap.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `gap-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <input type="text" class="gap-input" data-idx="${idx}" placeholder="Escribe la palabra que falta..." value="${gapAnswers[idx] || ''}">
+            `;
+            container.appendChild(div);
+            const input = div.querySelector('.gap-input');
+            input.addEventListener('input', (e) => { if(!evaluated) gapAnswers[idx] = e.target.value.trim().toLowerCase(); });
+        });
+    }
+
+    function renderMultiselect() {
+        const container = document.getElementById('multiselect-questions');
+        container.innerHTML = '';
+        currentMultiselect.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `multiselect-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text} (Selecciona TODAS las correctas)</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="checkbox" name="multiselect_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(multiselectAnswers[idx]) {
+                const checkboxes = div.querySelectorAll(`input[type="checkbox"]`);
+                checkboxes.forEach(cb => {
+                    if(multiselectAnswers[idx].includes(cb.value)) cb.checked = true;
+                });
+            }
+            div.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    if(evaluated) return;
+                    const current = multiselectAnswers[idx] || [];
+                    if(e.target.checked) {
+                        if(!current.includes(e.target.value)) {
+                            multiselectAnswers[idx] = [...current, e.target.value];
+                        }
+                    } else {
+                        multiselectAnswers[idx] = current.filter(v => v !== e.target.value);
+                    }
+                });
+            });
+        });
+    }
+
+    function renderDropdown() {
+        const container = document.getElementById('dropdown-questions');
+        container.innerHTML = '';
+        currentDropdown.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `dropdown-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <select class="dropdown-select" data-idx="${idx}">
+                    <option value="">-- Selecciona una opción --</option>
+                    ${q.options.map(opt => `<option value="${opt}" ${dropdownAnswers[idx] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                </select>
+            `;
+            container.appendChild(div);
+            const sel = div.querySelector('.dropdown-select');
+            sel.addEventListener('change', (e) => { if(!evaluated) dropdownAnswers[idx] = e.target.value; });
+        });
+    }
+
+    function renderEssay() {
+        const container = document.getElementById('essay-questions');
+        container.innerHTML = '';
+        const div = document.createElement('div');
+        div.className = 'question-card';
+        div.innerHTML = `
+            <div class="question-text">${essaySituation.text.replace(/\n/g, '<br>')}</div>
+            <textarea id="essay-textarea" rows="10" placeholder="Escribe tu respuesta aquí...">${essayAnswer}</textarea>
+            <div class="word-count" id="word-count">Palabras: 0</div>
+
+        `;
+        container.appendChild(div);
+        const textarea = document.getElementById('essay-textarea');
+        const wordCountSpan = document.getElementById('word-count');
+        textarea.addEventListener('input', (e) => {
+            if(!evaluated) {
+                essayAnswer = e.target.value;
+                const words = essayAnswer.trim().split(/\s+/).filter(w => w.length > 0);
+                wordCountSpan.innerHTML = `Palabras: ${words.length} ${words.length < 60 ? '(Mínimo 60 palabras requeridas)' : '✅'}`;
+            }
+        });
+        if(essayAnswer) {
+            textarea.value = essayAnswer;
+            const words = essayAnswer.trim().split(/\s+/).filter(w => w.length > 0);
+            wordCountSpan.innerHTML = `Palabras: ${words.length} ${words.length < 60 ? '(Mínimo 60 palabras requeridas)' : '✅'}`;
+        }
+    }
+
+    function renderAll() {
+        renderMcq();
+        renderGapFill();
+        renderMultiselect();
+        renderDropdown();
+        renderEssay();
+    }
+
+    function calculateEssayScore() {
+        const words = essayAnswer.trim().split(/\s+/).filter(w => w.length > 0);
+        if(words.length < 60) return 0;
+        let keywordScore = 0;
+        const lowerAnswer = essayAnswer.toLowerCase();
+        for(const kw of essaySituation.keywords) {
+            if(lowerAnswer.includes(kw.toLowerCase())) keywordScore++;
+        }
+        return keywordScore;
+    }
+
+    function showCorrectAnswers() {
+        // MCQ
+        currentMcq.forEach((q, idx) => {
+            const card = document.getElementById(`mcq-card-${idx}`);
+            if(!card) return;
+            const isCorrect = mcqAnswers[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.correct}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Gap Fill
+        currentGap.forEach((q, idx) => {
+            const card = document.getElementById(`gap-card-${idx}`);
+            if(!card) return;
+            const isCorrect = gapAnswers[idx] === q.answer.toLowerCase();
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.answer}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Multiselect
+        currentMultiselect.forEach((q, idx) => {
+            const card = document.getElementById(`multiselect-card-${idx}`);
+            if(!card) return;
+            const userAnswers = multiselectAnswers[idx] || [];
+            const isCorrect = userAnswers.length === q.correct.length && q.correct.every(c => userAnswers.includes(c));
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuestas correctas: ${q.correct.join(', ')}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Dropdown
+        currentDropdown.forEach((q, idx) => {
+            const card = document.getElementById(`dropdown-card-${idx}`);
+            if(!card) return;
+            const isCorrect = dropdownAnswers[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.correct}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Essay - mostrar respuesta ideal
+        const essayCard = document.querySelector('#essay-questions .question-card');
+        if(essayCard && !essayCard.querySelector('.correct-answer-display')) {
+            const correctDiv = document.createElement('div');
+            correctDiv.className = 'correct-answer-display';
+            correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> <strong>Respuesta ideal sugerida:</strong><br><br>${essaySituation.idealAnswer}`;
+            essayCard.appendChild(correctDiv);
+        }
+    }
+
+    function calculateAndShowResults() {
+        let totalCorrect = 0;
+        const maxPoints = 50;
+        // MCQ (10 pts)
+        for(let i=0; i<currentMcq.length; i++) {
+            if(mcqAnswers[i] && mcqAnswers[i] === currentMcq[i].correct) totalCorrect++;
+        }
+        // Gap Fill (10 pts)
+        for(let i=0; i<currentGap.length; i++) {
+            if(gapAnswers[i] && gapAnswers[i] === currentGap[i].answer.toLowerCase()) totalCorrect++;
+        }
+        // Multiselect (10 pts)
+        for(let i=0; i<currentMultiselect.length; i++) {
+            const userAnswers = multiselectAnswers[i] || [];
+            const correct = currentMultiselect[i].correct;
+            if(userAnswers.length === correct.length && correct.every(c => userAnswers.includes(c))) totalCorrect++;
+        }
+        // Dropdown (10 pts)
+        for(let i=0; i<currentDropdown.length; i++) {
+            if(dropdownAnswers[i] && dropdownAnswers[i] === currentDropdown[i].correct) totalCorrect++;
+        }
+        // Essay (10 pts)
+        const essayScore = calculateEssayScore();
+        totalCorrect += essayScore;
+        
+        const grade = 1 + (6 * (totalCorrect / maxPoints));
+        const finalGrade = grade.toFixed(1);
+        document.getElementById('scoreDisplay').innerHTML = `Puntaje: ${totalCorrect} / ${maxPoints}`;
+        document.getElementById('gradeDisplay').innerHTML = `Nota: ${finalGrade} (1.0 a 7.0)`;
+        const passMsg = totalCorrect >= 30 ? '✅ APROBADO (Nota ≥ 4.0 - 60%)' : '❌ NO APROBADO. Necesitas al menos 30 puntos.';
+        document.getElementById('passDisplay').innerHTML = passMsg;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('actionButtons').style.display = 'flex';
+        showCorrectAnswers();
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.style.transition = 'box-shadow 0.3s';
+        resultsSection.style.boxShadow = '0 0 0 3px #facc15';
+        setTimeout(() => { resultsSection.style.boxShadow = 'none'; }, 1000);
+    }
+
+    function evaluateTest() {
+        if(evaluated) return;
+        evaluated = true;
+        calculateAndShowResults();
+    }
+
+    function restartTest() {
+        currentMcq = getRandomItems(mcqPool, 10);
+        currentGap = getRandomItems(gapFillPool, 10);
+        currentMultiselect = getRandomItems(multiselectPool, 10);
+        currentDropdown = getRandomItems(dropdownPool, 10);
+        mcqAnswers = new Array(10).fill(null);
+        gapAnswers = new Array(10).fill('');
+        multiselectAnswers = new Array(10).fill([]);
+        dropdownAnswers = new Array(10).fill('');
+        essayAnswer = "";
+        evaluated = false;
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+        renderAll();
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if(btn.id !== 'evaluateBtnSidebar') {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        }
+    });
+
+    document.getElementById('evaluateBtnSidebar').addEventListener('click', evaluateTest);
+    document.getElementById('restartBtn').addEventListener('click', restartTest);
+    document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_1_Quimica.html');
+    document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Quimica.html');
+
+    restartTest();
+</script>
+</body>
+</html>
