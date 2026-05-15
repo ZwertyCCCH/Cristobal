@@ -433,13 +433,13 @@
         // Ejemplo: Clase 1 -> C_1_Matematicas.html, Clase 2 -> C_2_Matematicas.html, etc.
         // ------------------------------------------------------------------
         let clasesPredefinidas = [
-            // 👇 Agrega aquí tus clases. Ejemplo:
+            { date: "2026-05-15", topic: "Potencias. Introducción" },
             // { date: "2026-04-20", topic: "Unidad 1: Operaciones con números enteros" },
             // { date: "2026-04-27", topic: "Unidad 1: Fracciones y decimales" },
         ];
 
         // Variable que almacenará las clases (cargadas desde localStorage o desde el arreglo predefinido)
-        let classes = [];
+        let classes = [ ];
 
         // Función para inicializar/cargar datos: SIEMPRE usa las clasesPredefinidas como fuente de verdad (solo lectura)
         function loadClassesFromSource() {

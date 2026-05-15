@@ -1,0 +1,801 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Clase: Potencias - Matemáticas 7° básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b82f6 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 85vh;
+            max-height: 750px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3);
+            background: #ffffff;
+            border-radius: 32px;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: white;
+            border-radius: 32px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e3a5f, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            border-left: 5px solid #3b82f6;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .badge {
+            background: #dbeafe;
+            color: #1e3a5f;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+            text-align: center;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #3b82f6;
+        }
+
+        .card i {
+            font-size: 1.8rem;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #dbeafe;
+            font-weight: bold;
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 1.1rem;
+        }
+
+        .math-example {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 16px;
+            font-family: monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+
+        .formula {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            text-align: center;
+            padding: 0.5rem;
+            background: #e0e7ff;
+            border-radius: 12px;
+        }
+
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: all 0.2s ease;
+            color: #1e3a5f;
+        }
+
+        .nav-btn:hover {
+            background: #3b82f6;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: #1e293b;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action:hover {
+            background: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #3b82f6;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        .table-powers {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f8fafc;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .table-powers th, .table-powers td {
+            padding: 10px;
+            text-align: center;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .table-powers th {
+            background: #1e3a5f;
+            color: white;
+        }
+
+        @media (max-width: 680px) {
+            .slide {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        
+        <!-- SLIDE 0 - PORTADA -->
+        <div class="slide active" data-index="0">
+            <div class="badge">📐 Matemáticas - 7° básico</div>
+            <h1>Potencias</h1>
+            <p style="font-size: 1.2rem; margin-top: 0.5rem;">Aprende a simplificar multiplicaciones con potencias</p>
+            <div class="info-box" style="margin-top: 2rem;">
+                <i class="fas fa-calculator"></i> <strong>En esta clase aprenderás:</strong><br>
+                ➜ ¿Qué es una potencia y cómo se calcula?<br>
+                ➜ Operaciones básicas con potencias<br>
+                ➜ Usos y aplicaciones en la vida real<br>
+                ➜ Trucos con potencias de base 10<br>
+                ➜ Descomposición de potencias y notación científica
+            </div>
+            <div style="margin-top: auto; text-align: center; padding: 1rem;">
+                <i class="fas fa-arrow-right"></i> Presiona ▶ o desliza para continuar
+            </div>
+        </div>
+
+        <!-- SLIDE 1 - ¿Qué es una potencia? -->
+        <div class="slide" data-index="1">
+            <div class="badge">📖 CONCEPTO BÁSICO</div>
+            <h2>¿Qué es una potencia?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-calculator"></i>
+                    <h3>Definición</h3>
+                    <p>Una <strong>potencia</strong> es una forma de escribir una multiplicación repetida de un número por sí mismo.</p>
+                    <div class="math-example">aⁿ = a × a × a × ... × a (n veces)</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-tag"></i>
+                    <h3>Partes de una potencia</h3>
+                    <p><strong>Base:</strong> El número que se multiplica.<br>
+                    <strong>Exponente:</strong> El número de veces que se multiplica la base.</p>
+                    <div class="math-example">3⁴ = 3 × 3 × 3 × 3 = 81</div>
+                    <p>Base: 3 | Exponente: 4 | Potencia: 81</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i> <strong>Recuerda:</strong> ¡El exponente indica CUÁNTAS VECES se multiplica la base, no por cuánto se multiplica!
+            </div>
+        </div>
+
+        <!-- SLIDE 2 - Cálculo básico de potencias -->
+        <div class="slide" data-index="2">
+            <div class="badge">🔢 CÁLCULO BÁSICO</div>
+            <h2>¿Cómo se calcula una potencia?</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <h3>Ejemplo 1</h3>
+                    <div class="math-example">2³ = 2 × 2 × 2 = 8</div>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 2</h3>
+                    <div class="math-example">5² = 5 × 5 = 25</div>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 3</h3>
+                    <div class="math-example">4³ = 4 × 4 × 4 = 64</div>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 4</h3>
+                    <div class="math-example">10⁴ = 10 × 10 × 10 × 10 = 10,000</div>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 5</h3>
+                    <div class="math-example">1⁷ = 1 × 1 × 1 × 1 × 1 × 1 × 1 = 1</div>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 6</h3>
+                    <div class="math-example">0⁵ = 0 × 0 × 0 × 0 × 0 = 0</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-star"></i> <strong>Casos especiales:</strong><br>
+                • Cualquier número elevado a 1 es el mismo número: a¹ = a<br>
+                • Cualquier número (distinto de 0) elevado a 0 es 1: a⁰ = 1<br>
+                • 0 elevado a 0 es una indeterminación (no se define)
+            </div>
+        </div>
+
+        <!-- SLIDE 3 - Tabla de potencias básicas -->
+        <div class="slide" data-index="3">
+            <div class="badge">📊 TABLA DE POTENCIAS</div>
+            <h2>Potencias básicas que debes recordar</h2>
+            <table class="table-powers">
+                <thead>
+                    <tr><th>Base</th><th>² (cuadrado)</th><th>³ (cubo)</th><th>⁴</th><th>⁵</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                    <tr><td>2</td><td>4</td><td>8</td><td>16</td><td>32</td></tr>
+                    <tr><td>3</td><td>9</td><td>27</td><td>81</td><td>243</td></tr>
+                    <tr><td>4</td><td>16</td><td>64</td><td>256</td><td>1,024</td></tr>
+                    <tr><td>5</td><td>25</td><td>125</td><td>625</td><td>3,125</td></tr>
+                    <tr><td>6</td><td>36</td><td>216</td><td>1,296</td><td>7,776</td></tr>
+                    <tr><td>7</td><td>49</td><td>343</td><td>2,401</td><td>16,807</td></tr>
+                    <tr><td>8</td><td>64</td><td>512</td><td>4,096</td><td>32,768</td></tr>
+                    <tr><td>9</td><td>81</td><td>729</td><td>6,561</td><td>59,049</td></tr>
+                    <tr><td>10</td><td>100</td><td>1,000</td><td>10,000</td><td>100,000</td></tr>
+                </tbody>
+            </table>
+            <div class="info-box" style="margin-top: 1rem;">
+                <i class="fas fa-memory"></i> <strong>Tip:</strong> ¡Memorizar los cuadrados (base²) del 1 al 10 te ayudará muchísimo!
+            </div>
+        </div>
+
+        <!-- SLIDE 4 - Operaciones básicas con potencias (suma y resta) -->
+        <div class="slide" data-index="4">
+            <div class="badge">🧮 OPERACIONES BÁSICAS</div>
+            <h2>Suma y resta con potencias</h2>
+            <div class="info-box">
+                <p><strong>⚠️ Importante:</strong> Para sumar o restar potencias, primero debes calcular el valor de cada potencia y luego operar.</p>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-plus-circle"></i>
+                    <h3>Suma</h3>
+                    <div class="math-example">3² + 4² = 9 + 16 = 25</div>
+                    <div class="math-example">2³ + 5² = 8 + 25 = 33</div>
+                    <div class="math-example">10² + 10² = 100 + 100 = 200</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-minus-circle"></i>
+                    <h3>Resta</h3>
+                    <div class="math-example">5² - 3² = 25 - 9 = 16</div>
+                    <div class="math-example">4³ - 2⁴ = 64 - 16 = 48</div>
+                    <div class="math-example">10³ - 10² = 1,000 - 100 = 900</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-exclamation-triangle"></i> <strong>¡Cuidado!</strong> No se puede sumar 2³ + 2² como si fuera 2⁵. Primero calcula: 8 + 4 = 12
+            </div>
+        </div>
+
+        <!-- SLIDE 5 - Multiplicación y división con potencias (cálculo básico) -->
+        <div class="slide" data-index="5">
+            <div class="badge">🧮 OPERACIONES BÁSICAS</div>
+            <h2>Multiplicación y división con potencias</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-times-circle"></i>
+                    <h3>Multiplicación</h3>
+                    <div class="math-example">2³ × 2² = 8 × 4 = 32</div>
+                    <div class="math-example">3² × 4² = 9 × 16 = 144</div>
+                    <div class="math-example">5² × 5² = 25 × 25 = 625</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-divide"></i>
+                    <h3>División</h3>
+                    <div class="math-example">2⁵ ÷ 2² = 32 ÷ 4 = 8</div>
+                    <div class="math-example">3⁴ ÷ 3² = 81 ÷ 9 = 9</div>
+                    <div class="math-example">10³ ÷ 10² = 1,000 ÷ 100 = 10</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i> <strong>Observa:</strong> Cuando multiplicamos potencias con la misma base, el resultado es una potencia con la misma base y la suma de los exponentes:<br>
+                <div class="math-example">aᵐ × aⁿ = aᵐ⁺ⁿ</div>
+                ¡Pero primero aprendamos a calcular paso a paso!
+            </div>
+        </div>
+
+        <!-- SLIDE 6 - Usos y aplicaciones de las potencias -->
+        <div class="slide" data-index="6">
+            <div class="badge">🌎 USOS Y APLICACIONES</div>
+            <h2>¿Dónde usamos las potencias?</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <i class="fas fa-microchip"></i>
+                    <h3>Computación</h3>
+                    <p>Los bytes y megabytes usan potencias de 2.</p>
+                    <div class="math-example">1 KB = 2¹⁰ = 1,024 bytes</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Interés compuesto</h3>
+                    <p>El dinero invertido crece con potencias.</p>
+                    <div class="math-example">Capital × (1 + tasa)ⁿ</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-shapes"></i>
+                    <h3>Geometría</h3>
+                    <p>Áreas (2D) y volúmenes (3D) usan cuadrados y cubos.</p>
+                    <div class="math-example">Área cuadrado = lado²<br>Volumen cubo = lado³</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-dna"></i>
+                    <h3>Biología</h3>
+                    <p>El crecimiento de bacterias es exponencial (potencias).</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Astronomía</h3>
+                    <p>Distancias en el universo se expresan con potencias de 10.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-simple"></i>
+                    <h3>Terremotos</h3>
+                    <p>La escala Richter usa potencias (logaritmos).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 - Trucos con potencias de base 10 -->
+        <div class="slide" data-index="7">
+            <div class="badge">✨ TRUCOS MATEMÁTICOS</div>
+            <h2>Potencias de base 10</h2>
+            <div class="info-box">
+                <p>Las potencias de 10 son las más fáciles de calcular: ¡el exponente indica cuántos ceros acompañan al 1!</p>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Base 10</h3>
+                    <div class="math-example">10⁰ = 1</div>
+                    <div class="math-example">10¹ = 10</div>
+                    <div class="math-example">10² = 100</div>
+                    <div class="math-example">10³ = 1,000</div>
+                    <div class="math-example">10⁴ = 10,000</div>
+                    <div class="math-example">10⁵ = 100,000</div>
+                </div>
+                <div class="card">
+                    <h3>Potencias con exponente negativo</h3>
+                    <div class="math-example">10⁻¹ = 0,1 (un décimo)</div>
+                    <div class="math-example">10⁻² = 0,01 (un centésimo)</div>
+                    <div class="math-example">10⁻³ = 0,001 (un milésimo)</div>
+                    <div class="math-example">10⁻⁴ = 0,0001</div>
+                    <div class="math-example">10⁻⁵ = 0,00001</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-magic"></i> <strong>Truco:</strong> Para multiplicar un número por 10ⁿ, solo tienes que mover la coma decimal "n" lugares a la derecha.
+            </div>
+        </div>
+
+        <!-- SLIDE 8 - Descomposición de potencias -->
+        <div class="slide" data-index="8">
+            <div class="badge">📊 DESCOMPOSICIÓN</div>
+            <h2>Descomposición de potencias</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-project-diagram"></i>
+                    <h3>¿Qué es descomponer?</h3>
+                    <p>Escribir una potencia como producto de factores o como suma de potencias.</p>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo: 2⁵</h3>
+                    <div class="math-example">2⁵ = 2 × 2 × 2 × 2 × 2 = 32</div>
+                    <div class="math-example">2⁵ = 2³ × 2² = 8 × 4 = 32</div>
+                    <div class="math-example">2⁵ = 2⁴ × 2 = 16 × 2 = 32</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>Descomposición con potencias de 10:</strong><br>
+                5,432 = 5 × 10³ + 4 × 10² + 3 × 10¹ + 2 × 10⁰<br>
+                = 5,000 + 400 + 30 + 2
+            </div>
+        </div>
+
+        <!-- SLIDE 9 - Notación científica -->
+        <div class="slide" data-index="9">
+            <div class="badge">🔬 NOTACIÓN CIENTÍFICA</div>
+            <h2>¿Qué es la notación científica?</h2>
+            <div class="info-box">
+                <p>La <strong>notación científica</strong> es una forma de escribir números muy grandes o muy pequeños usando potencias de 10.</p>
+                <div class="formula">a × 10ⁿ</div>
+                <p>donde 1 ≤ a < 10 y n es un número entero.</p>
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Números grandes</h3>
+                    <div class="math-example">300,000,000 = 3 × 10⁸</div>
+                    <div class="math-example">6,370,000 = 6.37 × 10⁶</div>
+                </div>
+                <div class="card">
+                    <h3>Números pequeños</h3>
+                    <div class="math-example">0.0005 = 5 × 10⁻⁴</div>
+                    <div class="math-example">0.0000002 = 2 × 10⁻⁷</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 - Ejemplos de notación científica -->
+        <div class="slide" data-index="10">
+            <div class="badge">🔬 EJEMPLOS</div>
+            <h2>Notación científica en la vida real</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-globe-americas"></i>
+                    <h3>Distancia Tierra-Sol</h3>
+                    <div class="math-example">149,600,000 km = 1.496 × 10⁸ km</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-atom"></i>
+                    <h3>Tamaño de un átomo</h3>
+                    <div class="math-example">0.0000000001 m = 1 × 10⁻¹⁰ m</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Población mundial</h3>
+                    <div class="math-example">7,900,000,000 = 7.9 × 10⁹</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-microscope"></i>
+                    <h3>Bacteria E. coli</h3>
+                    <div class="math-example">0.000002 m = 2 × 10⁻⁶ m</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11 - Cómo convertir a notación científica -->
+        <div class="slide" data-index="11">
+            <div class="badge">🔬 CONVERSIÓN</div>
+            <h2>¿Cómo convertir un número?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>▶ Números grandes</h3>
+                    <p>1. Mueve la coma hasta tener un número entre 1 y 10<br>
+                    2. Cuenta cuántos lugares moviste la coma<br>
+                    3. Escribe × 10ⁿ (n positivo)</p>
+                    <div class="math-example">93,000,000 = 9.3 × 10⁷</div>
+                </div>
+                <div class="card">
+                    <h3>▶ Números pequeños</h3>
+                    <p>1. Mueve la coma hasta tener un número entre 1 y 10<br>
+                    2. Cuenta cuántos lugares moviste la coma<br>
+                    3. Escribe × 10⁻ⁿ (n negativo)</p>
+                    <div class="math-example">0.00056 = 5.6 × 10⁻⁴</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i> <strong>Ejercicio:</strong> ¿Cómo se escribe 0.000045 en notación científica?<br>
+                Respuesta: 4.5 × 10⁻⁵
+            </div>
+        </div>
+
+        <!-- SLIDE 12 - Operaciones con notación científica -->
+        <div class="slide" data-index="12">
+            <div class="badge">🔬 OPERACIONES</div>
+            <h2>Multiplicación y división en notación científica</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-times-circle"></i>
+                    <h3>Multiplicación</h3>
+                    <div class="math-example">(3 × 10⁵) × (2 × 10⁴) = (3 × 2) × 10⁵⁺⁴</div>
+                    <div class="math-example">= 6 × 10⁹</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-divide"></i>
+                    <h3>División</h3>
+                    <div class="math-example">(6 × 10⁷) ÷ (2 × 10³) = (6 ÷ 2) × 10⁷⁻³</div>
+                    <div class="math-example">= 3 × 10⁴</div>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-calculator"></i> <strong>Regla:</strong><br>
+                • Multiplicación: (a × 10ᵐ) × (b × 10ⁿ) = (a × b) × 10ᵐ⁺ⁿ<br>
+                • División: (a × 10ᵐ) ÷ (b × 10ⁿ) = (a ÷ b) × 10ᵐ⁻ⁿ
+            </div>
+        </div>
+
+        <!-- SLIDE 13 - SÍNTESIS Y CIERRE -->
+        <div class="slide" data-index="13">
+            <div class="badge">✅ SÍNTESIS</div>
+            <h2>¿Qué aprendiste hoy?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Conceptos clave</h3>
+                    <ul style="text-align: left; margin-left: 1rem;">
+                        <li>Potencia = multiplicación repetida</li>
+                        <li>Base y exponente</li>
+                        <li>Cálculo paso a paso</li>
+                        <li>Operaciones básicas</li>
+                        <li>Potencias de base 10</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Aplicaciones</h3>
+                    <ul style="text-align: left; margin-left: 1rem;">
+                        <li>Computación, geometría, biología</li>
+                        <li>Notación científica</li>
+                        <li>Números muy grandes y pequeños</li>
+                        <li>Mundo real: astronomía, medicina</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 1rem;">
+                🎯 <strong>Próxima clase:</strong> Practicarás con ejercicios de potencias y notación científica.
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="dots" id="dotsContainer"></div>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Curso</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Ejercicios</button>
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+    }
+
+    function nextSlide() {
+        if(currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        dotsContainer.innerHTML = '';
+        for(let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if(e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Matematicas.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_1A_Matematicas.html';
+    });
+
+    // Swipe para móviles
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if(touchEndX < touchStartX - 40) nextSlide();
+        if(touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    updateDots();
+</script>
+</body>
+</html>

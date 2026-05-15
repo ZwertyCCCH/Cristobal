@@ -1,0 +1,700 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Ejercicios - Potencias y Notación Científica | Matemáticas 7° básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b82f6 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 200px;
+            min-width: 200px;
+            background: #f1f5f9;
+            border-right: 2px solid #e2e8f0;
+            gap: 8px;
+            padding: 24px 12px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #475569;
+            cursor: pointer;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.3rem;
+        }
+
+        .tab-btn span {
+            font-size: 0.7rem;
+        }
+
+        .tab-btn.active {
+            background: #1e3a5f;
+            color: white;
+            box-shadow: 0 2px 8px rgba(30,58,95,0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-evaluate-sidebar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, #1e3a5f, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-evaluate-sidebar i {
+            font-size: 1.3rem;
+        }
+
+        .btn-evaluate-sidebar:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        .question-card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .question-card.correct-highlight {
+            border-left: 6px solid #22c55e;
+            background: #f0fdf4;
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 6px solid #ef4444;
+            background: #fef2f2;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #1e3a5f;
+        }
+
+        .section-header i {
+            font-size: 2rem;
+            color: #1e3a5f;
+        }
+
+        .section-header h3 {
+            color: #1e3a5f;
+            margin: 0;
+        }
+
+        .section-header p {
+            color: #475569;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .math-text {
+            font-family: monospace;
+            font-size: 1.1rem;
+            background: #e2e8f0;
+            padding: 0.2rem 0.5rem;
+            border-radius: 8px;
+        }
+
+        .correct-answer-display {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #dbeafe;
+            border-radius: 16px;
+            color: #1e3a5f;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            background: #dbeafe;
+        }
+
+        input[type="radio"], input[type="checkbox"], input[type="text"] {
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="text"] {
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            width: 100%;
+            background: white;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #1e3a5f, #3b82f6);
+            color: white;
+            padding: 24px 20px;
+            border-radius: 24px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .results-section p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #facc15;
+            color: #1e293b;
+        }
+
+        .btn-secondary {
+            background: #1e3a5f;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #1e3a5f;
+            color: #1e3a5f;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .tabs {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding: 12px;
+            }
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                width: auto;
+                padding: 10px 14px;
+            }
+            .btn-evaluate-sidebar {
+                flex-direction: row;
+                margin-top: 0;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1"><i class="fas fa-calculator"></i><span> Calcular Potencias</span></button>
+        <button class="tab-btn" data-tab="tab2"><i class="fas fa-check-circle"></i><span> Notación Científica</span></button>
+        <button class="tab-btn" data-tab="tab3"><i class="fas fa-check-double"></i><span> Múltiples formas</span></button>
+        <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar"><i class="fas fa-check-double"></i><span> Evaluar</span></button>
+    </div>
+
+    <div class="tab-content-container">
+        <div id="tab1" class="tab-content active">
+            <div class="section-header">
+                <i class="fas fa-calculator"></i>
+                <div>
+                    <h3>📝 Sección 1: Calcular potencias</h3>
+                    <p>Escribe el resultado de cada potencia (solo el número). Cada respuesta correcta vale 1 punto.</p>
+                </div>
+            </div>
+            <div id="calc-questions"></div>
+        </div>
+        <div id="tab2" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>✅ Sección 2: Notación científica y operaciones</h3>
+                    <p>Selecciona la opción correcta (solo una respuesta correcta por pregunta).</p>
+                </div>
+            </div>
+            <div id="mcq-questions"></div>
+        </div>
+        <div id="tab3" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-check-double"></i>
+                <div>
+                    <h3>🔄 Sección 3: Múltiples formas de una potencia</h3>
+                    <p>Selecciona TODAS las opciones que representen correctamente el número indicado. La pregunta vale 1 punto solo si seleccionas todas las correctas.</p>
+                </div>
+            </div>
+            <div id="multiform-questions"></div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-chart-line"></i> Tus Resultados</h3>
+            <p id="scoreDisplay">Puntaje: -- / 50</p>
+            <p id="gradeDisplay">Nota: -- (1.0 a 7.0)</p>
+            <p id="passDisplay"></p>
+        </div>
+
+        <div class="action-buttons" id="actionButtons">
+            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-sync-alt"></i> Reiniciar</button>
+            <button class="btn btn-secondary" id="backToClassBtn"><i class="fas fa-chalkboard"></i> Volver a la clase</button>
+            <button class="btn btn-outline" id="backToCourseBtn"><i class="fas fa-book-open"></i> Volver al curso</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ======================== SECTION 1: CALCULAR POTENCIAS (50 POOL) ========================
+    const calcPool = [
+        { text: "2²", answer: "4" }, { text: "2³", answer: "8" }, { text: "2⁴", answer: "16" }, { text: "2⁵", answer: "32" }, { text: "2⁶", answer: "64" },
+        { text: "3²", answer: "9" }, { text: "3³", answer: "27" }, { text: "3⁴", answer: "81" }, { text: "3⁵", answer: "243" }, { text: "3⁶", answer: "729" },
+        { text: "4²", answer: "16" }, { text: "4³", answer: "64" }, { text: "4⁴", answer: "256" }, { text: "4⁵", answer: "1024" }, { text: "5²", answer: "25" },
+        { text: "5³", answer: "125" }, { text: "5⁴", answer: "625" }, { text: "6²", answer: "36" }, { text: "6³", answer: "216" }, { text: "7²", answer: "49" },
+        { text: "7³", answer: "343" }, { text: "8²", answer: "64" }, { text: "8³", answer: "512" }, { text: "9²", answer: "81" }, { text: "9³", answer: "729" },
+        { text: "10²", answer: "100" }, { text: "10³", answer: "1000" }, { text: "10⁴", answer: "10000" }, { text: "10⁵", answer: "100000" }, { text: "10⁶", answer: "1000000" },
+        { text: "1²⁰", answer: "1" }, { text: "0¹⁰", answer: "0" }, { text: "2⁷", answer: "128" }, { text: "2⁸", answer: "256" }, { text: "2⁹", answer: "512" },
+        { text: "3⁷", answer: "2187" }, { text: "4⁶", answer: "4096" }, { text: "5⁵", answer: "3125" }, { text: "6⁴", answer: "1296" }, { text: "7⁴", answer: "2401" },
+        { text: "8⁴", answer: "4096" }, { text: "9⁴", answer: "6561" }, { text: "12²", answer: "144" }, { text: "13²", answer: "169" }, { text: "14²", answer: "196" },
+        { text: "15²", answer: "225" }, { text: "16²", answer: "256" }, { text: "20²", answer: "400" }, { text: "25²", answer: "625" }, { text: "30²", answer: "900" }
+    ];
+
+    // ======================== SECTION 2: NOTACIÓN CIENTÍFICA Y OPERACIONES (50 POOL) ========================
+    const mcqPool = [
+        { text: "¿Cómo se escribe 5.000.000 en notación científica?", options: ["5 × 10⁵", "5 × 10⁶", "5 × 10⁷", "50 × 10⁵"], correct: "5 × 10⁶" },
+        { text: "¿Cómo se escribe 0,0003 en notación científica?", options: ["3 × 10⁻³", "3 × 10⁻⁴", "3 × 10⁴", "3 × 10³"], correct: "3 × 10⁻⁴" },
+        { text: "¿Cuánto es 2⁵ × 2³?", options: ["256", "32.768", "65.536", "4"], correct: "256" },
+        { text: "¿Cuánto es 3⁴ ÷ 3²?", options: ["729", "9", "6.561", "1"], correct: "9" },
+        { text: "¿Cómo se escribe 0,0000007 en notación científica?", options: ["7 × 10⁻⁶", "7 × 10⁻⁷", "7 × 10⁷", "7 × 10⁶"], correct: "7 × 10⁻⁷" },
+        { text: "¿Cuánto es (5 × 10⁴) × (2 × 10³)?", options: ["1 × 10⁸", "1 × 10¹³", "7 × 10⁷", "1 × 10⁷"], correct: "1 × 10⁸" },
+        { text: "¿Cómo se escribe 93.000.000 en notación científica?", options: ["9,3 × 10⁷", "93 × 10⁶", "9,3 × 10⁸", "9,3 × 10⁹"], correct: "9,3 × 10⁷" },
+        { text: "¿Cuánto es 10⁴ × 10⁵?", options: ["10⁹", "10²⁰", "10²", "100⁹"], correct: "10⁹" },
+        { text: "¿Cómo se escribe 0,00045 en notación científica?", options: ["4,5 × 10⁻⁴", "45 × 10⁻⁵", "4,5 × 10⁴", "45 × 10⁻⁴"], correct: "4,5 × 10⁻⁴" },
+        { text: "¿Cuánto es 7⁵ ÷ 7³?", options: ["7¹⁵", "7⁸", "7² = 49", "7³ = 343"], correct: "7² = 49" },
+        { text: "¿Cómo se escribe 1.200.000 en notación científica?", options: ["1,2 × 10⁵", "1,2 × 10⁶", "12 × 10⁵", "1,2 × 10⁷"], correct: "1,2 × 10⁶" },
+        { text: "¿Cuánto es 2³ + 2²?", options: ["32", "12", "64", "8"], correct: "12" },
+        { text: "¿Cómo se escribe 0,0000025 en notación científica?", options: ["2,5 × 10⁻⁵", "2,5 × 10⁻⁶", "2,5 × 10⁶", "25 × 10⁻⁷"], correct: "2,5 × 10⁻⁶" },
+        { text: "¿Cuánto es 4³ × 4²?", options: ["4.096", "1.024", "1.048.576", "4"], correct: "1024" },
+        { text: "¿Cómo se escribe 8.500.000.000 en notación científica?", options: ["8,5 × 10⁹", "85 × 10⁸", "8,5 × 10¹⁰", "8,5 × 10⁸"], correct: "8,5 × 10⁹" },
+        { text: "¿Cuánto es 6⁴ ÷ 6²?", options: ["6⁶", "6² = 36", "6⁸", "3² = 9"], correct: "6² = 36" },
+        { text: "¿Cómo se escribe 0,000001 en notación científica?", options: ["1 × 10⁻⁵", "1 × 10⁻⁶", "1 × 10⁶", "10⁻⁵"], correct: "1 × 10⁻⁶" },
+        { text: "¿Cuánto es 5² × 5³?", options: ["3125", "15625", "625", "5"], correct: "3125" },
+        { text: "¿Cómo se escribe 450.000 en notación científica?", options: ["4,5 × 10⁴", "4,5 × 10⁵", "45 × 10⁴", "4,5 × 10⁶"], correct: "4,5 × 10⁵" },
+        { text: "¿Cuánto es 9² + 9²?", options: ["6561", "162", "324", "162"], correct: "162" },
+        { text: "¿Cómo se escribe 0,000000005 en notación científica?", options: ["5 × 10⁻⁹", "5 × 10⁻⁸", "5 × 10⁹", "5 × 10⁻¹⁰"], correct: "5 × 10⁻⁹" },
+        { text: "¿Cuánto es 10⁶ × 10⁻³?", options: ["1.000", "1.000.000.000", "100", "10.000"], correct: "1.000" },
+        { text: "¿Cómo se escribe 0,0000000006 en notación científica?", options: ["6 × 10⁻¹⁰", "6 × 10⁻⁹", "6 × 10⁻¹¹", "6 × 10⁻⁸"], correct: "6 × 10⁻¹⁰" },
+        { text: "¿Cuánto es 8⁵ × 8²?", options: ["8⁷", "8¹⁰", "64⁷", "8³"], correct: "8⁷" },
+        { text: "¿Cómo se escribe 60.000.000.000 en notación científica?", options: ["6 × 10¹⁰", "60 × 10⁹", "6 × 10⁹", "6 × 10¹¹"], correct: "6 × 10¹⁰" },
+        { text: "¿Cuánto es 4³ + 4²?", options: ["1024", "80", "4096", "24"], correct: "80" },
+        { text: "¿Cómo se escribe 0,00002 en notación científica?", options: ["2 × 10⁻⁵", "2 × 10⁻⁴", "2 × 10⁵", "20 × 10⁻⁶"], correct: "2 × 10⁻⁵" },
+        { text: "¿Cuánto es 10⁵ ÷ 10⁸?", options: ["0,001", "0,0001", "1.000", "0,0000001"], correct: "0,001" },
+        { text: "¿Cómo se escribe 0,0000000003 en notación científica?", options: ["3 × 10⁻¹⁰", "3 × 10⁻⁹", "3 × 10⁻¹¹", "3 × 10⁻⁸"], correct: "3 × 10⁻¹⁰" },
+        { text: "¿Cuánto es 2⁵ + 2⁴?", options: ["512", "48", "2²⁰", "4⁹"], correct: "48" },
+        { text: "¿Cómo se escribe 0,00015 en notación científica?", options: ["1,5 × 10⁻⁴", "15 × 10⁻⁵", "1,5 × 10⁴", "1,5 × 10⁻⁵"], correct: "1,5 × 10⁻⁴" },
+        { text: "¿Cuánto es 6³ ÷ 6?", options: ["36", "1296", "216", "36"], correct: "36" },
+        { text: "¿Cómo se escribe 99.000.000 en notación científica?", options: ["9,9 × 10⁷", "99 × 10⁶", "9,9 × 10⁸", "9,9 × 10⁹"], correct: "9,9 × 10⁷" },
+        { text: "¿Cuánto es 7³ - 7²?", options: ["7", "294", "16807", "42"], correct: "294" },
+        { text: "¿Cómo se escribe 0,0000000045 en notación científica?", options: ["4,5 × 10⁻⁹", "4,5 × 10⁻¹⁰", "45 × 10⁻¹⁰", "4,5 × 10⁻⁸"], correct: "4,5 × 10⁻⁹" },
+        { text: "¿Cuánto es 9² + 3²?", options: ["144", "90", "6561", "729"], correct: "90" },
+        { text: "¿Cómo se escribe 0,00000000008 en notación científica?", options: ["8 × 10⁻¹¹", "8 × 10⁻¹⁰", "8 × 10⁹", "8 × 10⁻¹²"], correct: "8 × 10⁻¹¹" },
+        { text: "¿Cuánto es 10³ + 10²?", options: ["100000", "1100", "1000000", "110"], correct: "1100" },
+        { text: "¿Cómo se escribe 0,00000000025 en notación científica?", options: ["2,5 × 10⁻¹⁰", "2,5 × 10⁻⁹", "25 × 10⁻¹¹", "2,5 × 10⁻¹¹"], correct: "2,5 × 10⁻¹⁰" },
+        { text: "¿Cuánto es 8² × 2³?", options: ["8⁵", "512", "64", "256"], correct: "512" },
+        { text: "¿Cómo se escribe 5,4 × 10⁴ en forma decimal?", options: ["0,00054", "54.000", "5.400", "540.000"], correct: "54.000" },
+        { text: "¿Cuánto es 2³ + 2³ + 2³?", options: ["512", "24", "64", "64"], correct: "24" },
+        { text: "¿Cómo se escribe 3,2 × 10⁻³ en forma decimal?", options: ["3.200", "0,0032", "0,032", "0,00032"], correct: "0,0032" },
+        { text: "¿Cuánto es 12² - 10²?", options: ["4", "44", "484", "120"], correct: "44" },
+        { text: "¿Cómo se escribe 7.8 × 10⁶ en forma decimal?", options: ["78.000", "7.800.000", "780.000", "78.000.000"], correct: "7.800.000" },
+        { text: "¿Cuánto es 4³ - 3³?", options: ["1", "37", "343", "1728"], correct: "37" },
+        { text: "¿Cómo se escribe 6,02 × 10²³ en forma decimal? (aproximadamente)", options: ["602.000.000.000.000.000.000.000", "60.200.000.000.000.000.000.000", "6.020.000.000.000.000.000.000", "602.000.000.000.000.000.000"], correct: "602.000.000.000.000.000.000.000" },
+        { text: "¿Cuánto es 10³ - 10²?", options: ["10", "900", "1000000", "100000"], correct: "900" },
+        { text: "¿Cómo se escribe 9,99 × 10¹ en forma decimal?", options: ["9,99", "99,9", "999", "0,999"], correct: "99,9" },
+        { text: "¿Cuánto es 5³ + 5²?", options: ["3125", "150", "15625", "30"], correct: "150" }
+    ];
+
+    // ======================== SECTION 3: MÚLTIPLES FORMAS DE UNA POTENCIA (30 POOL) ========================
+    const multiformPool = [
+        { text: "¿Cuáles de las siguientes potencias son iguales a 64?", options: ["8²", "4³", "2⁶", "16²", "32²"], correct: ["8²", "4³", "2⁶"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 81?", options: ["9²", "3⁴", "27²", "81¹", "3⁵"], correct: ["9²", "3⁴", "81¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 16?", options: ["4²", "2⁴", "8²", "16¹", "32²"], correct: ["4²", "2⁴", "16¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 27?", options: ["3³", "9³", "27¹", "81²", "3⁹"], correct: ["3³", "27¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 32?", options: ["2⁵", "4³", "8²", "32¹", "16²"], correct: ["2⁵", "32¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 125?", options: ["5³", "25²", "125¹", "5⁴", "25³"], correct: ["5³", "125¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 256?", options: ["16²", "4⁴", "2⁸", "8³", "32²"], correct: ["16²", "4⁴", "2⁸"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 36?", options: ["6²", "2² × 3²", "36¹", "12²", "18²"], correct: ["6²", "2² × 3²", "36¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 100?", options: ["10²", "100¹", "5² × 4", "20²", "50²"], correct: ["10²", "100¹", "5² × 4"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 49?", options: ["7²", "49¹", "14²", "7³", "49²"], correct: ["7²", "49¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 8?", options: ["2³", "8¹", "4²", "2⁴", "16½"], correct: ["2³", "8¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 9?", options: ["3²", "9¹", "27³", "81²", "3³"], correct: ["3²", "9¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 25?", options: ["5²", "25¹", "125²", "5³", "25²"], correct: ["5²", "25¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 216?", options: ["6³", "216¹", "3⁵", "2⁸", "12²"], correct: ["6³", "216¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 343?", options: ["7³", "343¹", "49²", "7⁴", "14³"], correct: ["7³", "343¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 1.000?", options: ["10³", "1.000¹", "100²", "10⁴", "5³ × 8"], correct: ["10³", "1.000¹", "5³ × 8"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 144?", options: ["12²", "144¹", "2⁴ × 3²", "24²", "36²"], correct: ["12²", "144¹", "2⁴ × 3²"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 169?", options: ["13²", "169¹", "14²", "13³", "26²"], correct: ["13²", "169¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 196?", options: ["14²", "196¹", "2² × 7²", "28²", "7³"], correct: ["14²", "196¹", "2² × 7²"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 225?", options: ["15²", "225¹", "3² × 5²", "25²", "45²"], correct: ["15²", "225¹", "3² × 5²"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 400?", options: ["20²", "400¹", "2⁴ × 5²", "40²", "10² × 4"], correct: ["20²", "400¹", "2⁴ × 5²"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 512?", options: ["8³", "2⁹", "512¹", "4⁵", "16³"], correct: ["8³", "2⁹", "512¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 729?", options: ["9³", "3⁶", "27²", "729¹", "81²"], correct: ["9³", "3⁶", "27²", "729¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 1.024?", options: ["2¹⁰", "32²", "4⁵", "1.024¹", "8⁴"], correct: ["2¹⁰", "32²", "4⁵", "1.024¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 2.401?", options: ["7⁴", "49²", "2.401¹", "7³", "14⁴"], correct: ["7⁴", "49²", "2.401¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 6.561?", options: ["9⁴", "3⁸", "81²", "6.561¹", "27³"], correct: ["9⁴", "3⁸", "81²", "6.561¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 40.000?", options: ["2⁴ × 5⁴", "20² × 10²", "200²", "40.000¹", "4⁴ × 5⁴"], correct: ["2⁴ × 5⁴", "20² × 10²", "200²", "40.000¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 360.000?", options: ["6² × 10⁴", "360.000¹", "60² × 10²", "36 × 10⁴", "600²"], correct: ["6² × 10⁴", "360.000¹", "60² × 10²", "36 × 10⁴"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 1.000.000?", options: ["10⁶", "100³", "1.000²", "10⁵ × 10", "1.000.000¹"], correct: ["10⁶", "100³", "1.000²", "1.000.000¹"] },
+        { text: "¿Cuáles de las siguientes potencias son iguales a 10.000.000?", options: ["10⁷", "100³ × 10", "10⁵ × 10²", "10,000,000¹", "10⁸"], correct: ["10⁷", "100³ × 10", "10⁵ × 10²", "10.000.000¹"] }
+    ];
+
+    function getRandomItems(pool, n) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, n);
+    }
+
+    let currentCalc = [], currentMcq = [], currentMultiform = [];
+    let calcAnswers = [], mcqAnswers = [], multiformAnswers = [];
+    let evaluated = false;
+
+    function renderCalc() {
+        const container = document.getElementById('calc-questions');
+        container.innerHTML = '';
+        currentCalc.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `calc-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. Calcular: <span class="math-text">${q.text}</span> = ?</div>
+                <input type="text" class="calc-input" data-idx="${idx}" placeholder="Escribe el resultado..." value="${calcAnswers[idx] || ''}">
+            `;
+            container.appendChild(div);
+            const input = div.querySelector('.calc-input');
+            input.addEventListener('input', (e) => { if(!evaluated) calcAnswers[idx] = e.target.value.trim(); });
+        });
+    }
+
+    function renderMcq() {
+        const container = document.getElementById('mcq-questions');
+        container.innerHTML = '';
+        currentMcq.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `mcq-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="mcq_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(mcqAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="mcq_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === mcqAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) mcqAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderMultiform() {
+        const container = document.getElementById('multiform-questions');
+        container.innerHTML = '';
+        currentMultiform.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `multiform-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="checkbox" name="multiform_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(multiformAnswers[idx]) {
+                const checkboxes = div.querySelectorAll(`input[type="checkbox"]`);
+                checkboxes.forEach(cb => {
+                    if(multiformAnswers[idx].includes(cb.value)) cb.checked = true;
+                });
+            }
+            div.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    if(evaluated) return;
+                    const current = multiformAnswers[idx] || [];
+                    if(e.target.checked) {
+                        if(!current.includes(e.target.value)) {
+                            multiformAnswers[idx] = [...current, e.target.value];
+                        }
+                    } else {
+                        multiformAnswers[idx] = current.filter(v => v !== e.target.value);
+                    }
+                });
+            });
+        });
+    }
+
+    function renderAll() {
+        renderCalc();
+        renderMcq();
+        renderMultiform();
+    }
+
+    function showCorrectAnswers() {
+        // Calc
+        currentCalc.forEach((q, idx) => {
+            const card = document.getElementById(`calc-card-${idx}`);
+            if(!card) return;
+            const isCorrect = calcAnswers[idx] === q.answer;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.answer}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // MCQ
+        currentMcq.forEach((q, idx) => {
+            const card = document.getElementById(`mcq-card-${idx}`);
+            if(!card) return;
+            const isCorrect = mcqAnswers[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.correct}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Multiform
+        currentMultiform.forEach((q, idx) => {
+            const card = document.getElementById(`multiform-card-${idx}`);
+            if(!card) return;
+            const userAnswers = multiformAnswers[idx] || [];
+            const isCorrect = userAnswers.length === q.correct.length && q.correct.every(c => userAnswers.includes(c));
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuestas correctas: ${q.correct.join(', ')}`;
+                card.appendChild(correctDiv);
+            }
+        });
+    }
+
+    function calculateAndShowResults() {
+        let totalCorrect = 0;
+        const maxPoints = 50;
+
+        // Calc (20 pts)
+        for(let i=0; i<currentCalc.length; i++) {
+            if(calcAnswers[i] && calcAnswers[i] === currentCalc[i].answer) totalCorrect++;
+        }
+        // MCQ (20 pts)
+        for(let i=0; i<currentMcq.length; i++) {
+            if(mcqAnswers[i] && mcqAnswers[i] === currentMcq[i].correct) totalCorrect++;
+        }
+        // Multiform (10 pts)
+        for(let i=0; i<currentMultiform.length; i++) {
+            const userAnswers = multiformAnswers[i] || [];
+            const correct = currentMultiform[i].correct;
+            if(userAnswers.length === correct.length && correct.every(c => userAnswers.includes(c))) totalCorrect++;
+        }
+
+        const grade = 1 + (6 * (totalCorrect / maxPoints));
+        const finalGrade = grade.toFixed(1);
+        document.getElementById('scoreDisplay').innerHTML = `Puntaje: ${totalCorrect} / ${maxPoints}`;
+        document.getElementById('gradeDisplay').innerHTML = `Nota: ${finalGrade} (1.0 a 7.0)`;
+        const passMsg = totalCorrect >= 30 ? '✅ APROBADO (Nota ≥ 4.0 - 60%)' : '❌ NO APROBADO. Necesitas al menos 30 puntos.';
+        document.getElementById('passDisplay').innerHTML = passMsg;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('actionButtons').style.display = 'flex';
+        showCorrectAnswers();
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.style.transition = 'box-shadow 0.3s';
+        resultsSection.style.boxShadow = '0 0 0 3px #facc15';
+        setTimeout(() => { resultsSection.style.boxShadow = 'none'; }, 1000);
+    }
+
+    function evaluateTest() {
+        if(evaluated) return;
+        evaluated = true;
+        calculateAndShowResults();
+    }
+
+    function restartTest() {
+        currentCalc = getRandomItems(calcPool, 20);
+        currentMcq = getRandomItems(mcqPool, 20);
+        currentMultiform = getRandomItems(multiformPool, 10);
+        calcAnswers = new Array(20).fill('');
+        mcqAnswers = new Array(20).fill(null);
+        multiformAnswers = new Array(10).fill([]);
+        evaluated = false;
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+        renderAll();
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if(btn.id !== 'evaluateBtnSidebar') {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+            });
+        }
+    });
+
+    document.getElementById('evaluateBtnSidebar').addEventListener('click', evaluateTest);
+    document.getElementById('restartBtn').addEventListener('click', restartTest);
+    document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_1_Matematicas.html');
+    document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Matematicas.html');
+
+    restartTest();
+</script>
+</body>
+</html>
