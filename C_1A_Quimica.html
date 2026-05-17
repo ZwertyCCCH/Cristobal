@@ -337,7 +337,7 @@
         <button class="tab-btn" data-tab="tab2"><i class="fas fa-pen"></i><span> Completar</span></button>
         <button class="tab-btn" data-tab="tab3"><i class="fas fa-check-double"></i><span> Selección Múltiple</span></button>
         <button class="tab-btn" data-tab="tab4"><i class="fas fa-list"></i><span> Lista desplegable</span></button>
-        <button class="tab-btn" data-tab="tab5"><i class="fas fa-edit"></i><span> Respuesta escrita</span></button>
+        <button class="tab-btn" data-tab="tab5"><i class="fas fa-edit"></i><span> Orden de procesos</span></button>
         <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar"><i class="fas fa-check-double"></i><span> Evaluar</span></button>
     </div>
 
@@ -384,13 +384,13 @@
         </div>
         <div id="tab5" class="tab-content">
             <div class="section-header">
-                <i class="fas fa-edit"></i>
+                <i class="fas fa-sort-amount-down"></i>
                 <div>
-                    <h3>📝 Sección 5: Respuesta escrita</h3>
-                    <p>Lee la situación y explica cómo resolverías el problema.</p>
+                    <h3>🔄 Sección 5: Ordenar los pasos de separación</h3>
+                    <p>Escribe el número 1, 2, 3, 4, 5 al lado de cada paso según el orden correcto.</p>
                 </div>
             </div>
-            <div id="essay-questions"></div>
+            <div id="ordering-questions"></div>
         </div>
 
         <div class="results-section" id="resultsSection">
@@ -545,12 +545,109 @@
         { text: "En la minería, para separar minerales valiosos de la ganga (material estéril) se usa a veces la ______________ con agua.", options: ["Imantación", "Levigación", "Destilación", "Cromatografía", "Filtración"], correct: "Levigación" }
     ];
 
-    // ======================== SECTION 5: ESSAY (Situación) ========================
-    const essaySituation = {
-        text: "📋 SITUACIÓN PROBLEMA:\n\nUn estudiante tiene una mezcla compuesta por los siguientes materiales:\n• Agua\n• Aceite de cocina\n• Arena\n• Sal de mesa (disuelta en el agua)\n\nEl estudiante necesita separar CADA UNO de estos componentes por separado. Debe obtener: agua pura, aceite, arena seca y sal sólida.\n\nEXPLICA paso a paso cómo lo harías. Menciona qué métodos de separación usarías en cada etapa y por qué.\n\nRequisitos:\n✓ Tu respuesta debe tener al menos 60 palabras.\n✓ Si tu respuesta tiene menos de 60 palabras, el puntaje automático es 0.",
-        keywords: ["filtración", "decantación", "evaporación", "destilación", "mezcla", "heterogénea", "homogénea", "densidad", "tamizado", "sedimentación"],
-        idealAnswer: "La mezcla presentada es heterogénea porque se pueden distinguir sus componentes a simple vista. El agua con sal, por otro lado, forma una mezcla homogénea porque la sal se disuelve completamente y no se puede distinguir. Primero, usaría el método de decantación para separar el aceite del agua, ya que el aceite tiene menor densidad y flota sobre el agua. Luego, aplicaría filtración para separar la arena del agua, usando un filtro de papel que retiene las partículas sólidas de arena. También podría usar sedimentación antes de la filtración para dejar reposar la arena y que se vaya al fondo, facilitando el proceso. Después, para separar la sal disuelta en el agua, usaría evaporación, calentando el agua hasta que se evapore y quede la sal sólida en el recipiente. Si necesitara recuperar el agua pura en lugar de evaporarla, usaría destilación, que permite condensar el vapor de agua y obtener agua pura separada de la sal. No sería necesario usar tamización ni levigación en esta mezcla particular."
-    };
+    // ======================== SECTION 5: ORDENAR PASOS (10 ejercicios pool, se muestran 2 aleatorios) ========================
+    const orderingPool = [
+        {
+            situation: "Mezcla de agua, aceite y arena. ¿Cómo separarías cada componente?",
+            steps: [
+                { text: "Filtrar la mezcla para separar la arena del líquido.", order: 1 },
+                { text: "Verter el líquido filtrado en un embudo de decantación.", order: 2 },
+                { text: "Dejar reposar hasta que el aceite suba a la superficie.", order: 3 },
+                { text: "Abrir la llave del embudo para drenar el agua por abajo.", order: 4 },
+                { text: "Recoger el aceite que queda en la parte superior.", order: 5 }
+            ]
+        },
+        {
+            situation: "Obtener agua pura y sal sólida a partir de agua de mar.",
+            steps: [
+                { text: "Filtrar el agua de mar para eliminar impurezas grandes.", order: 1 },
+                { text: "Verter el agua filtrada en un recipiente y calentar.", order: 2 },
+                { text: "El agua se evapora dejando la sal en el recipiente.", order: 3 },
+                { text: "El vapor pasa por un condensador y se enfría.", order: 4 },
+                { text: "Recoger el agua destilada en otro recipiente limpio.", order: 5 }
+            ]
+        },
+        {
+            situation: "Separar una mezcla de limaduras de hierro, arena y sal.",
+            steps: [
+                { text: "Acercar un imán a la mezcla para atraer las limaduras de hierro.", order: 1 },
+                { text: "Retirar las limaduras de hierro adheridas al imán.", order: 2 },
+                { text: "Agregar agua a la mezcla restante (arena + sal) y agitar.", order: 3 },
+                { text: "Filtrar para separar la arena (no se disuelve en agua).", order: 4 },
+                { text: "Evaporar el agua del filtrado para recuperar la sal.", order: 5 }
+            ]
+        },
+        {
+            situation: "Separar los colores de una tinta negra mediante cromatografía en papel.",
+            steps: [
+                { text: "Cortar una tira de papel filtro y colocarla verticalmente.", order: 1 },
+                { text: "Dibujar una línea con la tinta negra cerca del extremo inferior.", order: 2 },
+                { text: "Introducir el extremo inferior en un poco de agua o alcohol.", order: 3 },
+                { text: "Esperar a que el solvente suba por capilaridad arrastrando los pigmentos.", order: 4 },
+                { text: "Observar las bandas de colores separadas en el papel.", order: 5 }
+            ]
+        },
+        {
+            situation: "Separar una mezcla de piedras, arena y agua.",
+            steps: [
+                { text: "Verter la mezcla sobre un tamiz de malla gruesa.", order: 1 },
+                { text: "Agitar el tamiz para que pasen la arena y el agua.", order: 2 },
+                { text: "Recoger las piedras que quedan retenidas en el tamiz.", order: 3 },
+                { text: "Verter el líquido con arena en un recipiente y dejar reposar.", order: 4 },
+                { text: "Decantar el agua clara dejando la arena sedimentada en el fondo.", order: 5 }
+            ]
+        },
+        {
+            situation: "Separar una mezcla de agua y alcohol (etanol) por destilación.",
+            steps: [
+                { text: "Verter la mezcla agua-alcohol en el matraz del destilador.", order: 1 },
+                { text: "Calentar la mezcla de forma controlada con un mechero.", order: 2 },
+                { text: "El alcohol hierve primero (78°C) y se evapora antes que el agua.", order: 3 },
+                { text: "El vapor de alcohol pasa por el condensador y se enfría.", order: 4 },
+                { text: "Recoger el alcohol líquido en un recipiente aparte.", order: 5 }
+            ]
+        },
+        {
+            situation: "Separar la crema de la leche fresca usando centrifugación.",
+            steps: [
+                { text: "Verter la leche fresca en los tubos de la centrífuga.", order: 1 },
+                { text: "Encender la centrífuga y girar a alta velocidad.", order: 2 },
+                { text: "La fuerza centrífuga separa los componentes por densidad.", order: 3 },
+                { text: "La crema (menos densa) queda en la parte superior.", order: 4 },
+                { text: "Recoger la crema separada de la leche descremada.", order: 5 }
+            ]
+        },
+        {
+            situation: "Separar oro y arena de un río usando levigación (bateo).",
+            steps: [
+                { text: "Recoger la mezcla de arena y oro del fondo del río con una batea.", order: 1 },
+                { text: "Agregar agua a la batea y agitar circularmente.", order: 2 },
+                { text: "La arena más liviana es arrastrada por el agua hacia el borde.", order: 3 },
+                { text: "El oro, más denso, se hunde y queda en el centro de la batea.", order: 4 },
+                { text: "Repetir hasta que solo quede el oro en la batea.", order: 5 }
+            ]
+        },
+        {
+            situation: "Purificar agua turbia con barro mediante un filtro casero.",
+            steps: [
+                { text: "Cortar una botella plástica por la mitad e invertir la parte superior.", order: 1 },
+                { text: "Colocar capas de algodón, carbón activado y arena dentro del filtro.", order: 2 },
+                { text: "Verter el agua turbia lentamente por la parte superior del filtro.", order: 3 },
+                { text: "El agua atraviesa las capas que retienen impurezas y bacterias.", order: 4 },
+                { text: "Recoger el agua filtrada y más clara en el recipiente inferior.", order: 5 }
+            ]
+        },
+        {
+            situation: "Separar una mezcla de harina y azúcar.",
+            steps: [
+                { text: "Colocar la mezcla de harina y azúcar sobre un tamiz fino.", order: 1 },
+                { text: "Agitar el tamiz suavemente sobre un recipiente.", order: 2 },
+                { text: "La harina, de partículas más finas, pasa a través del tamiz.", order: 3 },
+                { text: "El azúcar, de partículas más gruesas, queda retenido en el tamiz.", order: 4 },
+                { text: "Recoger la harina del recipiente y el azúcar del tamiz por separado.", order: 5 }
+            ]
+        }
+    ];
 
     function getRandomItems(pool, n) {
         const shuffled = [...pool];
@@ -561,9 +658,9 @@
         return shuffled.slice(0, n);
     }
 
-    let currentMcq = [], currentGap = [], currentMultiselect = [], currentDropdown = [];
-    let mcqAnswers = [], gapAnswers = [], multiselectAnswers = [], dropdownAnswers = [];
-    let essayAnswer = "";
+    let currentMcq = [], currentGap = [], currentMultiselect = [], currentDropdown = [], currentOrdering = [];
+    let mcqAnswers = [], gapAnswers = [], multiselectAnswers = [], dropdownAnswers = [], orderingAnswers = [];
+    let orderingShuffledRef = [];
     let evaluated = false;
 
     // Render functions
@@ -696,32 +793,56 @@
         });
     }
 
-    function renderEssay() {
-        const container = document.getElementById('essay-questions');
+    function renderOrdering() {
+        const container = document.getElementById('ordering-questions');
         container.innerHTML = '';
-        const div = document.createElement('div');
-        div.className = 'question-card';
-        div.innerHTML = `
-            <div class="question-text">${essaySituation.text.replace(/\n/g, '<br>')}</div>
-            <textarea id="essay-textarea" rows="10" placeholder="Escribe tu respuesta aquí...">${essayAnswer}</textarea>
-            <div class="word-count" id="word-count">Palabras: 0</div>
 
-        `;
-        container.appendChild(div);
-        const textarea = document.getElementById('essay-textarea');
-        const wordCountSpan = document.getElementById('word-count');
-        textarea.addEventListener('input', (e) => {
-            if(!evaluated) {
-                essayAnswer = e.target.value;
-                const words = essayAnswer.trim().split(/\s+/).filter(w => w.length > 0);
-                wordCountSpan.innerHTML = `Palabras: ${words.length} ${words.length < 60 ? '(Mínimo 60 palabras requeridas)' : '✅'}`;
-            }
+        currentOrdering.forEach((exercise, exIdx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `ordering-card-${exIdx}`;
+
+            // Mezclar los pasos para mostrarlos desordenados, guardando referencia al orden correcto
+            const shuffledSteps = [...exercise.steps].sort(() => Math.random() - 0.5);
+
+            let stepsHtml = shuffledSteps.map((step, displayIdx) => {
+                const savedValue = (orderingAnswers[exIdx] && orderingAnswers[exIdx][displayIdx] !== undefined)
+                    ? orderingAnswers[exIdx][displayIdx] : '';
+                return `
+                    <div style="margin-bottom:12px; display:flex; align-items:center; gap:10px; flex-wrap:wrap;"
+                        data-correct-order="${step.order}">
+                        <input type="number" class="order-input"
+                            data-exidx="${exIdx}" data-displayidx="${displayIdx}"
+                            style="width:65px; padding:8px; border-radius:12px; border:1px solid #cbd5e1; text-align:center; font-size:1rem;"
+                            placeholder="N°" min="1" max="5" value="${savedValue}">
+                        <span style="flex:1;">${step.text}</span>
+                    </div>`;
+            }).join('');
+
+            div.innerHTML = `
+                <div class="question-text">
+                    <strong>📋 Situación ${exIdx + 1}:</strong> ${exercise.situation}
+                </div>
+                <div style="margin:12px 0; padding:10px; background:#e6f7f5; border-radius:16px; font-size:0.9rem;">
+                    <strong>✏️ Instrucción:</strong> Escribe el número <strong>1, 2, 3, 4 o 5</strong> 
+                    en cada casilla según el orden correcto de los pasos.
+                </div>
+                ${stepsHtml}`;
+            container.appendChild(div);
+
+            // Guardar referencia al orden desordenado mostrado
+            if (!orderingShuffledRef[exIdx]) orderingShuffledRef[exIdx] = shuffledSteps;
+
+            div.querySelectorAll('.order-input').forEach(input => {
+                input.addEventListener('input', () => {
+                    if (evaluated) return;
+                    const eIdx = parseInt(input.dataset.exidx);
+                    const dIdx = parseInt(input.dataset.displayidx);
+                    if (!orderingAnswers[eIdx]) orderingAnswers[eIdx] = {};
+                    orderingAnswers[eIdx][dIdx] = parseInt(input.value);
+                });
+            });
         });
-        if(essayAnswer) {
-            textarea.value = essayAnswer;
-            const words = essayAnswer.trim().split(/\s+/).filter(w => w.length > 0);
-            wordCountSpan.innerHTML = `Palabras: ${words.length} ${words.length < 60 ? '(Mínimo 60 palabras requeridas)' : '✅'}`;
-        }
     }
 
     function renderAll() {
@@ -729,7 +850,7 @@
         renderGapFill();
         renderMultiselect();
         renderDropdown();
-        renderEssay();
+        renderOrdering();
     }
 
     function calculateEssayScore() {
@@ -797,14 +918,35 @@
                 card.appendChild(correctDiv);
             }
         });
-        // Essay - mostrar respuesta ideal
-        const essayCard = document.querySelector('#essay-questions .question-card');
-        if(essayCard && !essayCard.querySelector('.correct-answer-display')) {
-            const correctDiv = document.createElement('div');
-            correctDiv.className = 'correct-answer-display';
-            correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> <strong>Respuesta ideal sugerida:</strong><br><br>${essaySituation.idealAnswer}`;
-            essayCard.appendChild(correctDiv);
-        }
+        // Ordering
+        currentOrdering.forEach((exercise, exIdx) => {
+            const card = document.getElementById(`ordering-card-${exIdx}`);
+            if (!card) return;
+            const shuffledSteps = orderingShuffledRef[exIdx] || [];
+            const userOrder = orderingAnswers[exIdx] || {};
+            let allCorrect = true;
+
+            const inputs = card.querySelectorAll('.order-input');
+            inputs.forEach((input, displayIdx) => {
+                const correctValue = shuffledSteps[displayIdx] ? shuffledSteps[displayIdx].order : null;
+                const userValue = userOrder[displayIdx];
+                const isStepCorrect = userValue === correctValue;
+                if (!isStepCorrect) allCorrect = false;
+                input.style.background = isStepCorrect ? '#dcfce7' : '#fee2e2';
+                input.style.borderColor = isStepCorrect ? '#22c55e' : '#ef4444';
+            });
+
+            card.classList.add(allCorrect ? 'correct-highlight' : 'wrong-highlight');
+
+            if (!card.querySelector('.correct-answer-display')) {
+                const sorted = [...exercise.steps].sort((a, b) => a.order - b.order);
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> <strong>Orden correcto:</strong><br>` +
+                    sorted.map(s => `<div>${s.order}. ${s.text}</div>`).join('');
+                card.appendChild(correctDiv);
+            }
+        });
     }
 
     function calculateAndShowResults() {
@@ -828,9 +970,14 @@
         for(let i=0; i<currentDropdown.length; i++) {
             if(dropdownAnswers[i] && dropdownAnswers[i] === currentDropdown[i].correct) totalCorrect++;
         }
-        // Essay (10 pts)
-        const essayScore = calculateEssayScore();
-        totalCorrect += essayScore;
+        // Ordering (10 pts: 2 ejercicios × 5 pasos = 10 puntos)
+        for (let i = 0; i < currentOrdering.length; i++) {
+            const shuffledSteps = orderingShuffledRef[i] || [];
+            const userOrder = orderingAnswers[i] || {};
+            shuffledSteps.forEach((step, displayIdx) => {
+                if (parseInt(userOrder[displayIdx]) === step.order) totalCorrect++;
+            });
+        }
         
         const grade = 1 + (6 * (totalCorrect / maxPoints));
         const finalGrade = grade.toFixed(1);
@@ -859,11 +1006,13 @@
         currentGap = getRandomItems(gapFillPool, 10);
         currentMultiselect = getRandomItems(multiselectPool, 10);
         currentDropdown = getRandomItems(dropdownPool, 10);
+        currentOrdering = getRandomItems(orderingPool, 2);  // 2 ejercicios aleatorios de 10
         mcqAnswers = new Array(10).fill(null);
         gapAnswers = new Array(10).fill('');
         multiselectAnswers = new Array(10).fill([]);
         dropdownAnswers = new Array(10).fill('');
-        essayAnswer = "";
+        orderingAnswers = new Array(2).fill({});
+        orderingShuffledRef = [];
         evaluated = false;
         document.getElementById('resultsSection').style.display = 'none';
         document.getElementById('actionButtons').style.display = 'none';
