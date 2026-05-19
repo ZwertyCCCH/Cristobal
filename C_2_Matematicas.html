@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Clase: Lenguaje Algebraico - Matemáticas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b82f6 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 85vh;
+            max-height: 750px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3);
+            background: #ffffff;
+            border-radius: 32px;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: white;
+            border-radius: 32px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e3a5f, #3b82f6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #1e3a5f;
+            border-left: 5px solid #3b82f6;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #1e3a5f;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .badge {
+            background: #dbeafe;
+            color: #1e3a5f;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            border-left: 4px solid #3b82f6;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: #f8fafc;
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #3b82f6;
+        }
+
+        .card i {
+            font-size: 1.8rem;
+            color: #3b82f6;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #dbeafe;
+            font-weight: bold;
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+            font-family: monospace;
+            font-size: 1rem;
+        }
+
+        .math-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f8fafc;
+            border-radius: 16px;
+            overflow: hidden;
+        }
+
+        .math-table th, .math-table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .math-table th {
+            background: #1e3a5f;
+            color: white;
+        }
+
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: all 0.2s ease;
+            color: #1e3a5f;
+        }
+
+        .nav-btn:hover {
+            background: #3b82f6;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: #1e293b;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action:hover {
+            background: #0f172a;
+            transform: translateY(-2px);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #3b82f6;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 680px) {
+            .slide {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            .math-table th, .math-table td {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        
+        <!-- SLIDE 0 - PORTADA -->
+        <div class="slide active" data-index="0">
+            <div class="badge">📐 Matemáticas - Álgebra</div>
+            <h1>Lenguaje Algebraico</h1>
+            <p style="font-size: 1.2rem; margin-top: 0.5rem;">Aprendiendo a traducir del español al lenguaje de las matemáticas</p>
+            <div class="info-box" style="margin-top: 2rem;">
+                <i class="fas fa-calculator"></i> <strong>En esta clase aprenderás:</strong><br>
+                ➜ ¿Qué es el álgebra y el lenguaje algebraico?<br>
+                ➜ Cómo traducir expresiones del lenguaje natural al algebraico<br>
+                ➜ Términos algebraicos (coeficiente, factor literal, grado)<br>
+                ➜ Clasificación de expresiones (monomio, binomio, trinomio, polinomio)<br>
+                ➜ Reducción de términos semejantes y eliminación de paréntesis<br>
+                ➜ Multiplicación de monomios y evaluación de expresiones
+            </div>
+            <div style="margin-top: auto; text-align: center; padding: 1rem;">
+                <i class="fas fa-arrow-right"></i> Presiona ▶ o desliza para continuar
+            </div>
+        </div>
+
+        <!-- SLIDE 1 - ¿QUÉ ES EL ÁLGEBRA? -->
+        <div class="slide" data-index="1">
+            <div class="badge">📖 CONCEPTO BÁSICO</div>
+            <h2>¿Qué es el álgebra?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-superscript"></i>
+                    <h3>Definición</h3>
+                    <p>El <strong>álgebra</strong> es la rama de las matemáticas que generaliza la aritmética usando <strong>letras</strong> (variables) para representar números.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-language"></i>
+                    <h3>Lenguaje algebraico</h3>
+                    <p>Es la forma de escribir expresiones matemáticas usando números, letras y signos de operaciones.</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i> <strong>Ejemplo:</strong> En lugar de escribir "un número más 5", escribimos <span class="highlight">x + 5</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 - TRADUCCIÓN: NÚMEROS Y OPERACIONES BÁSICAS -->
+        <div class="slide" data-index="2">
+            <div class="badge">🔄 TRADUCCIÓN</div>
+            <h2>Del lenguaje natural al algebraico</h2>
+            <div class="info-box">
+                <strong>Frases comunes y su expresión algebraica:</strong>
+            </div>
+            <table class="math-table">
+                <thead>
+                    <tr><th>Lenguaje natural</th><th>Lenguaje algebraico</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>Un número</td><td class="highlight">x</td></tr>
+                    <tr><td>Un número aumentado en 4</td><td class="highlight">x + 4</td></tr>
+                    <tr><td>Un número disminuido en 8</td><td class="highlight">x - 8</td></tr>
+                    <tr><td>El doble de un número</td><td class="highlight">2x</td></tr>
+                    <tr><td>El triple de un número</td><td class="highlight">3x</td></tr>
+                    <tr><td>La mitad de un número</td><td class="highlight">x/2</td></tr>
+                    <tr><td>Un número par</td><td class="highlight">2x</td></tr>
+                    <tr><td>Un número impar</td><td class="highlight">2x + 1  o  2x - 1</td></tr>
+                    <tr><td>El sucesor de un número</td><td class="highlight">x + 1</td></tr>
+                    <tr><td>El antecesor de un número</td><td class="highlight">x - 1</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SLIDE 3 - MÁS TRADUCCIONES -->
+        <div class="slide" data-index="3">
+            <div class="badge">🔄 TRADUCCIÓN</div>
+            <h2>Más expresiones comunes</h2>
+            <table class="math-table">
+                <thead>
+                    <tr><th>Lenguaje natural</th><th>Lenguaje algebraico</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td>El cuádruple de un número</td><td class="highlight">4x</td></tr>
+                    <tr><td>El quíntuple de un número</td><td class="highlight">5x</td></tr>
+                    <tr><td>La tercera parte de un número</td><td class="highlight">x/3</td></tr>
+                    <tr><td>La cuarta parte de un número</td><td class="highlight">x/4</td></tr>
+                    <tr><td>La décima parte de un número</td><td class="highlight">x/10</td></tr>
+                    <tr><td>El sucesor de un número par</td><td class="highlight">2x + 1</td></tr>
+                    <tr><td>El antecesor de un número par</td><td class="highlight">2x - 1</td></tr>
+                    <tr><td>El sucesor par de un número par</td><td class="highlight">2x + 2</td></tr>
+                    <tr><td>Un número aumentado en 100</td><td class="highlight">x + 100</td></tr>
+                    <tr><td>Un número disminuido en 5</td><td class="highlight">x - 5</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- SLIDE 4 - TÉRMINOS ALGEBRAICOS -->
+        <div class="slide" data-index="4">
+            <div class="badge">📊 TÉRMINOS ALGEBRAICOS</div>
+            <h2>¿Qué es un término algebraico?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-cube"></i>
+                    <h3>Partes de un término</h3>
+                    <p>Un <strong>término algebraico</strong> puede ser un número, una letra o una combinación de ambos mediante multiplicación y/o división.</p>
+                    <div class="info-box" style="margin-top: 0.5rem;">
+                        <span class="highlight">3x²y</span> = <strong>3</strong> · <strong>x²</strong> · <strong>y</strong><br>
+                        Coeficiente · Factor literal
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Grado de un término</h3>
+                    <p>El <strong>grado</strong> es la suma de los exponentes de las variables.</p>
+                    <div class="info-box" style="margin-top: 0.5rem;">
+                        <span class="highlight">5x²</span> → grado 2<br>
+                        <span class="highlight">x³y</span> → grado 4 (3+1)<br>
+                        <span class="highlight">x²y³z</span> → grado 6 (2+3+1)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 - CLASIFICACIÓN DE EXPRESIONES -->
+        <div class="slide" data-index="5">
+            <div class="badge">📊 CLASIFICACIÓN</div>
+            <h2>Tipos de expresiones algebraicas</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <i class="fas fa-circle"></i>
+                    <h3>Monomio</h3>
+                    <p>1 término</p>
+                    <p class="highlight">x, y, xy, 3x, 2x²y</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-plus-circle"></i>
+                    <h3>Binomio</h3>
+                    <p>2 términos</p>
+                    <p class="highlight">x + y, x - y, 3x + 5y²</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-layer-group"></i>
+                    <h3>Trinomio</h3>
+                    <p>3 términos</p>
+                    <p class="highlight">2x + 3y - 4z, x² + 3x - 7</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-simple"></i>
+                    <h3>Polinomio</h3>
+                    <p>2 o más términos</p>
+                    <p class="highlight">x + 3y, x² - y² + z³ + 1</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-info-circle"></i> <strong>Nota:</strong> Un monomio con coeficiente 0 es el término nulo. No se considera un término.
+            </div>
+        </div>
+
+        <!-- SLIDE 6 - TÉRMINOS SEMEJANTES -->
+        <div class="slide" data-index="6">
+            <div class="badge">➕ REDUCCIÓN</div>
+            <h2>Términos semejantes</h2>
+            <div class="info-box">
+                <strong>¿Qué son?</strong><br>
+                Son términos que tienen <strong>igual factor literal</strong> (mismas letras con mismos exponentes).
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>✅ Ejemplos de términos semejantes</h3>
+                    <p class="highlight">3x² y 5x²</p>
+                    <p class="highlight">-2xy³ y 7xy³</p>
+                    <p class="highlight">4a²b y -a²b</p>
+                </div>
+                <div class="card">
+                    <h3>❌ NO son semejantes</h3>
+                    <p class="highlight">3x² y 3x³ (diferente exponente)</p>
+                    <p class="highlight">5xy y 5x²y (diferente exponente)</p>
+                    <p class="highlight">2ab y 2ac (diferente letra)</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-plus-circle"></i> <strong>Reducción:</strong> Se suman o restan los <strong>coeficientes</strong> y se mantiene el <strong>factor literal</strong>.<br>
+                <span class="highlight">3x + 5x = 8x</span>&nbsp;&nbsp;&nbsp;<span class="highlight">7y² - 2y² = 5y²</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 - ELIMINACIÓN DE PARÉNTESIS -->
+        <div class="slide" data-index="7">
+            <div class="badge">📝 OPERACIONES</div>
+            <h2>Eliminación de paréntesis</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-plus"></i>
+                    <h3>Signo + antes del paréntesis</h3>
+                    <p>Se elimina el paréntesis sin cambiar los signos.</p>
+                    <div class="info-box" style="margin-top: 0.5rem;">
+                        <span class="highlight">a + (b + c) = a + b + c</span><br>
+                        <span class="highlight">(3x + 2) + (4x - 1) = 3x + 2 + 4x - 1 = 7x + 1</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-minus"></i>
+                    <h3>Signo - antes del paréntesis</h3>
+                    <p>Se elimina el paréntesis <strong>cambiando</strong> los signos de los términos dentro.</p>
+                    <div class="info-box" style="margin-top: 0.5rem;">
+                        <span class="highlight">a - (b + c) = a - b - c</span><br>
+                        <span class="highlight">(5x - 3) - (2x + 4) = 5x - 3 - 2x - 4 = 3x - 7</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 - MULTIPLICACIÓN DE MONOMIOS -->
+        <div class="slide" data-index="8">
+            <div class="badge">✖️ OPERACIONES</div>
+            <h2>Multiplicación de monomios</h2>
+            <div class="info-box">
+                <strong>Regla:</strong> Se multiplican los <strong>coeficientes</strong> y se multiplican los <strong>factores literales</strong> (sumando exponentes de igual base).
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Ejemplo 1</h3>
+                    <p><span class="highlight">(3a²b³) · (2a⁵c) = 6a⁷b³c</span></p>
+                    <p>3 × 2 = 6 (coeficiente)<br>a² × a⁵ = a⁷<br>b³ se mantiene<br>c aparece</p>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 2</h3>
+                    <p><span class="highlight">( -5x³y) · (2xy²) = -10x⁴y³</span></p>
+                    <p>-5 × 2 = -10<br>x³ × x = x⁴<br>y × y² = y³</p>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 3</h3>
+                    <p><span class="highlight">(2x²) · (3x³) = 6x⁵</span></p>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 4</h3>
+                    <p><span class="highlight">(4ab) · (5a²b³) = 20a³b⁴</span></p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i> <strong>Recuerda:</strong> x = x¹ (exponente 1 invisible)
+            </div>
+        </div>
+
+        <!-- SLIDE 9 - EVALUACIÓN DE EXPRESIONES ALGEBRAICAS -->
+        <div class="slide" data-index="9">
+            <div class="badge">📊 EVALUACIÓN</div>
+            <h2>Evaluar una expresión algebraica</h2>
+            <div class="info-box">
+                <strong>¿Qué significa evaluar?</strong><br>
+                Sustituir las variables por números y calcular el resultado.
+            </div>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Ejemplo 1</h3>
+                    <p>Evaluar <span class="highlight">3x + 5</span> para <strong>x = 2</strong></p>
+                    <p>3(2) + 5 = 6 + 5 = <strong>11</strong></p>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 2</h3>
+                    <p>Evaluar <span class="highlight">x² - 4x + 3</span> para <strong>x = 1</strong></p>
+                    <p>1 - 4 + 3 = <strong>0</strong></p>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 3</h3>
+                    <p>Evaluar <span class="highlight">2x + 3y</span> para <strong>x = 3, y = 2</strong></p>
+                    <p>2(3) + 3(2) = 6 + 6 = <strong>12</strong></p>
+                </div>
+                <div class="card">
+                    <h3>Ejemplo 4</h3>
+                    <p>Evaluar <span class="highlight">a² + b²</span> para <strong>a = 4, b = 3</strong></p>
+                    <p>16 + 9 = <strong>25</strong></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 - EJEMPLOS DE REDUCCIÓN -->
+        <div class="slide" data-index="10">
+            <div class="badge">➕ EJEMPLOS</div>
+            <h2>Más ejemplos de reducción</h2>
+            <div class="card">
+                <h3>Ejemplo 1</h3>
+                <p>Reducir: <span class="highlight">5x + 2y - 3x + 7y</span></p>
+                <p>Paso 1: Agrupar semejantes: (5x - 3x) + (2y + 7y)</p>
+                <p>Paso 2: Sumar: <span class="highlight">2x + 9y</span></p>
+            </div>
+            <div class="card">
+                <h3>Ejemplo 2</h3>
+                <p>Reducir: <span class="highlight">4a² + 3ab - a² + 5ab - 2b²</span></p>
+                <p>Agrupar: (4a² - a²) + (3ab + 5ab) - 2b²</p>
+                <p>Resultado: <span class="highlight">3a² + 8ab - 2b²</span></p>
+            </div>
+            <div class="card">
+                <h3>Ejemplo 3</h3>
+                <p>Reducir: <span class="highlight">(3x + 4) + (2x - 1) - (x + 5)</span></p>
+                <p>Eliminar paréntesis: 3x + 4 + 2x - 1 - x - 5</p>
+                <p>Agrupar: (3x + 2x - x) + (4 - 1 - 5)</p>
+                <p>Resultado: <span class="highlight">4x - 2</span></p>
+            </div>
+        </div>
+
+        <!-- SLIDE 11 - EJERCICIOS GUIADOS -->
+        <div class="slide" data-index="11">
+            <div class="badge">✏️ PRACTICA</div>
+            <h2>Ejercicios para practicar</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <h3>Traduce al lenguaje algebraico:</h3>
+                    <p>1. El doble de un número aumentado en 3</p>
+                    <p>2. La mitad de un número menos 7</p>
+                    <p>3. El cuadrado de un número más su doble</p>
+                </div>
+                <div class="card">
+                    <h3>Reduce los términos semejantes:</h3>
+                    <p>4. 7x + 3x - 2x = <span class="highlight">8x</span></p>
+                    <p>5. 5a² + 2a - 3a² + 4a = <span class="highlight">2a² + 6a</span></p>
+                    <p>6. (4x + 3) + (2x - 5) = <span class="highlight">6x - 2</span></p>
+                </div>
+                <div class="card">
+                    <h3>Evalúa para x = 2, y = 3:</h3>
+                    <p>7. 3x + 4y = <span class="highlight">6 + 12 = 18</span></p>
+                    <p>8. x² + y² = <span class="highlight">4 + 9 = 13</span></p>
+                    <p>9. 2xy = <span class="highlight">2·2·3 = 12</span></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12 - SÍNTESIS Y CIERRE -->
+        <div class="slide" data-index="12">
+            <div class="badge">✅ SÍNTESIS</div>
+            <h2>¿Qué aprendiste hoy?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Conceptos clave</h3>
+                    <ul style="text-align: left; margin-left: 1rem;">
+                        <li>Lenguaje algebraico (traducción)</li>
+                        <li>Término algebraico (coeficiente, factor literal, grado)</li>
+                        <li>Clasificación: monomio, binomio, trinomio, polinomio</li>
+                        <li>Términos semejantes</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <i class="fas fa-tools"></i>
+                    <h3>Operaciones aprendidas</h3>
+                    <ul style="text-align: left; margin-left: 1rem;">
+                        <li>Reducción de términos semejantes</li>
+                        <li>Eliminación de paréntesis (+ y -)</li>
+                        <li>Multiplicación de monomios</li>
+                        <li>Evaluación de expresiones</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 1rem;">
+                🎯 <strong>Próxima clase:</strong> Practicarás con ejercicios de lenguaje algebraico.
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="dots" id="dotsContainer"></div>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Curso</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Ejercicios</button>
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+    }
+
+    function nextSlide() {
+        if(currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        dotsContainer.innerHTML = '';
+        for(let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if(e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Matematicas.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_2A_Matematicas.html';
+    });
+
+    // Swipe para móviles
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if(touchEndX < touchStartX - 40) nextSlide();
+        if(touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    updateDots();
+</script>
+</body>
+</html>

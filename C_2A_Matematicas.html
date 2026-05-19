@@ -1,0 +1,967 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Ejercicios - Lenguaje Algebraico | Matemáticas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- KaTeX CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.css">
+    <!-- KaTeX JS -->
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.10/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, {
+        delimiters: [
+            {left: '$$', right: '$$', display: true},
+            {left: '$', right: '$', display: false},
+            {left: '\\(', right: '\\)', display: false},
+            {left: '\\[', right: '\\]', display: true}
+        ],
+        throwOnError: false
+    });"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1e3a5f 0%, #3b82f6 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 220px;
+            min-width: 220px;
+            background: #f1f5f9;
+            border-right: 2px solid #e2e8f0;
+            gap: 8px;
+            padding: 24px 12px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #475569;
+            cursor: pointer;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.3rem;
+        }
+
+        .tab-btn span {
+            font-size: 0.7rem;
+        }
+
+        .tab-btn.active {
+            background: #1e3a5f;
+            color: white;
+            box-shadow: 0 2px 8px rgba(30,58,95,0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-evaluate-sidebar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, #1e3a5f, #3b82f6);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-evaluate-sidebar i {
+            font-size: 1.3rem;
+        }
+
+        .btn-evaluate-sidebar:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        .question-card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .question-card.correct-highlight {
+            border-left: 6px solid #22c55e;
+            background: #f0fdf4;
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 6px solid #ef4444;
+            background: #fef2f2;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #1e3a5f;
+        }
+
+        .section-header i {
+            font-size: 2rem;
+            color: #1e3a5f;
+        }
+
+        .section-header h3 {
+            color: #1e3a5f;
+            margin: 0;
+        }
+
+        .section-header p {
+            color: #475569;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .correct-answer-display {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #dbeafe;
+            border-radius: 16px;
+            color: #1e3a5f;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            background: #dbeafe;
+        }
+
+        input[type="radio"], input[type="checkbox"] {
+            margin-right: 8px;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #1e3a5f, #3b82f6);
+            color: white;
+            padding: 24px 20px;
+            border-radius: 24px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .results-section p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #facc15;
+            color: #1e293b;
+        }
+
+        .btn-secondary {
+            background: #1e3a5f;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #1e3a5f;
+            color: #1e3a5f;
+        }
+        
+        /* Estilo para fórmulas KaTeX inline */
+        .katex {
+            font-size: 1.05em;
+        }
+        
+        .option .katex-display {
+            margin: 0;
+            display: inline-block;
+        }
+        
+        .option span:has(.katex) {
+            display: inline-flex;
+            align-items: center;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .tabs {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding: 12px;
+            }
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                width: auto;
+                padding: 10px 14px;
+            }
+            .btn-evaluate-sidebar {
+                flex-direction: row;
+                margin-top: 0;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1"><i class="fas fa-check-circle"></i><span> Expresiones</span></button>
+        <button class="tab-btn" data-tab="tab2"><i class="fas fa-calculator"></i><span> Coeficientes y Grados</span></button>
+        <button class="tab-btn" data-tab="tab3"><i class="fas fa-balance-scale"></i><span> Verdadero/Falso</span></button>
+        <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar"><i class="fas fa-check-double"></i><span> Evaluar</span></button>
+    </div>
+
+    <div class="tab-content-container">
+        <div id="tab1" class="tab-content active">
+            <div class="section-header">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>📝 Sección 1: Traducción a expresiones algebraicas</h3>
+                    <p>Selecciona la expresión algebraica que corresponde a cada frase.</p>
+                </div>
+            </div>
+            <div id="expresiones-questions"></div>
+        </div>
+        <div id="tab2" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-calculator"></i>
+                <div>
+                    <h3>📊 Sección 2: Coeficientes, grados y factores literales</h3>
+                    <p>Selecciona la opción correcta. Puede haber 1 o más respuestas correctas.</p>
+                </div>
+            </div>
+            <div id="coef-questions"></div>
+        </div>
+        <div id="tab3" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-balance-scale"></i>
+                <div>
+                    <h3>✅ Sección 3: Verdadero o Falso</h3>
+                    <p>Determina si cada afirmación es verdadera o falsa.</p>
+                </div>
+            </div>
+            <div id="vf-questions"></div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-chart-line"></i> Tus Resultados</h3>
+            <p id="scoreDisplay">Puntaje: -- / 60</p>
+            <p id="gradeDisplay">Nota: -- (1.0 a 7.0)</p>
+            <p id="passDisplay"></p>
+        </div>
+
+        <div class="action-buttons" id="actionButtons">
+            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-sync-alt"></i> Reiniciar</button>
+            <button class="btn btn-secondary" id="backToClassBtn"><i class="fas fa-chalkboard"></i> Volver a la clase</button>
+            <button class="btn btn-outline" id="backToCourseBtn"><i class="fas fa-book-open"></i> Volver al curso</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // Función para convertir expresiones a formato LaTeX (especialmente fracciones)
+    function toLatex(expr) {
+        // Convertir fracciones como "x/2" a "\frac{x}{2}"
+        let latex = expr.replace(/([a-zA-Z0-9()]+)\/([a-zA-Z0-9()]+)/g, '\\frac{$1}{$2}');
+        // Convertir "x/2" también cuando hay variables con coeficientes
+        latex = latex.replace(/([a-zA-Z0-9()]+)\s*\/\s*([a-zA-Z0-9()]+)/g, '\\frac{$1}{$2}');
+        // Manejar casos como "3x/2" -> "\\frac{3x}{2}"
+        latex = latex.replace(/(\d*[a-zA-Z]?\d*)\/(\d+)/g, '\\frac{$1}{$2}');
+        // Asegurar que los números y variables se vean bien
+        latex = latex.replace(/\*/g, '');
+        // Para que "2(x+5)" se vea bien
+        latex = latex.replace(/\(([^)]+)\)/g, '($1)');
+        // Para potencias
+        latex = latex.replace(/\^(\d+)/g, '^{$1}');
+        // Para raíz cuadrada
+        latex = latex.replace(/√([a-zA-Z0-9()]+)/g, '\\sqrt{$1}');
+        // Valor absoluto
+        latex = latex.replace(/\|([^|]+)\|/g, '\\lvert $1 \\rvert');
+        return latex;
+    }
+    
+    // Función para renderizar una opción con LaTeX si contiene fracción o símbolos especiales
+    function formatOption(opt) {
+        if (opt.includes('/') || opt.includes('√') || opt.includes('^') || opt.includes('|')) {
+            return `<span>$${toLatex(opt)}$</span>`;
+        }
+        // Para expresiones normales como "2x", "x+5", etc.
+        // Mejorar presentación de multiplicación implícita
+        let displayOpt = opt.replace(/(\d)([a-zA-Z])/g, '$1$2');
+        return `<span>${displayOpt}</span>`;
+    }
+    
+    // Función para renderizar el texto de la pregunta (traducción) con LaTeX si es necesario
+    function formatQuestionText(text) {
+        // Si el texto contiene expresiones matemáticas, las ponemos en LaTeX
+        let formatted = text;
+        // Detectar fracciones en texto como "x/2"
+        formatted = formatted.replace(/([a-zA-Z0-9()]+)\/([a-zA-Z0-9()]+)/g, '$$\\frac{$1}{$2}$$');
+        // Detectar potencias en texto
+        formatted = formatted.replace(/\^(\d+)/g, '^{$1}');
+        // Detectar "x²" y similares
+        formatted = formatted.replace(/²/g, '^2');
+        formatted = formatted.replace(/³/g, '^3');
+        // Si quedó con formato LaTeX, lo envolvemos
+        if (formatted.includes('\\frac') || formatted.includes('^')) {
+            formatted = formatted.replace(/\$\$([^$]+)\$\$/g, '<span class="math-inline">$$$1$$</span>');
+        }
+        return formatted;
+    }
+
+    // ======================== SECTION 1: EXPRESIONES ALGEBRAICAS (70 POOL) ========================
+    const expresionesPool = [
+        { text: "El doble de un número", options: ["2x", "x^2", "x + 2", "2 + x"], correct: "2x" },
+        { text: "Un número aumentado en 5", options: ["5x", "x + 5", "x - 5", "x/5"], correct: "x + 5" },
+        { text: "La mitad de un número", options: ["x/2", "2x", "x^2", "x - 2"], correct: "x/2" },
+        { text: "El triple de un número disminuido en 4", options: ["3x - 4", "3(x - 4)", "3x + 4", "x - 12"], correct: "3x - 4" },
+        { text: "Un número impar", options: ["2x", "2x + 1", "x + 2", "2x - 2"], correct: "2x + 1" },
+        { text: "El sucesor de un número", options: ["x - 1", "x + 1", "2x", "x/2"], correct: "x + 1" },
+        { text: "La suma de dos números consecutivos", options: ["x + (x+1)", "2x", "x^2", "x + 2"], correct: "x + (x+1)" },
+        { text: "El cuadrado de un número", options: ["2x", "x^2", "√x", "x/2"], correct: "x^2" },
+        { text: "El doble de un número aumentado en 3", options: ["2x + 3", "2(x + 3)", "2x - 3", "x + 6"], correct: "2x + 3" },
+        { text: "La diferencia entre dos números", options: ["x + y", "x - y", "xy", "x/y"], correct: "x - y" },
+        { text: "El producto de dos números", options: ["x + y", "x - y", "xy", "x/y"], correct: "xy" },
+        { text: "El cociente entre dos números", options: ["x + y", "x - y", "xy", "x/y"], correct: "x/y" },
+        { text: "La tercera parte de un número", options: ["x/3", "3x", "x - 3", "x + 3"], correct: "x/3" },
+        { text: "El cuádruple de un número", options: ["4x", "x^4", "x + 4", "4/x"], correct: "4x" },
+        { text: "El antecesor de un número", options: ["x - 1", "x + 1", "2x", "x/2"], correct: "x - 1" },
+        { text: "Un número par", options: ["2x", "2x + 1", "x + 2", "x^2"], correct: "2x" },
+        { text: "El doble de la suma de un número y 5", options: ["2x + 5", "2(x + 5)", "2x + 10", "x + 10"], correct: "2(x + 5)" },
+        { text: "La suma de un número y su doble", options: ["x + 2x", "3x", "x + 2", "2x^2"], correct: "x + 2x" },
+        { text: "El cuadrado de la suma de dos números", options: ["x^2 + y^2", "(x + y)^2", "x^2 + y", "x + y^2"], correct: "(x + y)^2" },
+        { text: "La diferencia de los cuadrados de dos números", options: ["(x - y)^2", "x^2 - y^2", "x - y^2", "x^2 - y"], correct: "x^2 - y^2" },
+        { text: "El cubo de un número", options: ["3x", "x^3", "x/3", "3x^2"], correct: "x^3" },
+        { text: "La quinta parte de un número", options: ["x/5", "5x", "x - 5", "x + 5"], correct: "x/5" },
+        { text: "El sucesor de un número par", options: ["2x + 1", "2x + 2", "2x - 1", "x + 1"], correct: "2x + 1" },
+        { text: "El antecesor de un número impar", options: ["2x", "2x - 1", "2x + 1", "x - 1"], correct: "2x" },
+        { text: "El triple de la mitad de un número", options: ["3x/2", "3/(2x)", "3x + 2", "x/6"], correct: "3x/2" },
+        { text: "La suma de tres números consecutivos", options: ["x + (x+1) + (x+2)", "3x", "x^3", "3x + 3"], correct: "x + (x+1) + (x+2)" },
+        { text: "El producto de un número y su sucesor", options: ["x(x+1)", "x^2 + x", "x^2 + 1", "2x + 1"], correct: "x(x+1)" },
+        { text: "La mitad del doble de un número", options: ["x", "2x", "x/2", "4x"], correct: "x" },
+        { text: "El cuadrado del doble de un número", options: ["2x^2", "4x^2", "(2x)^2", "4x^2"], correct: "(2x)^2" },
+        { text: "El doble del cuadrado de un número", options: ["2x^2", "(2x)^2", "4x^2", "2x^2"], correct: "2x^2" },
+        { text: "La décima parte de un número", options: ["x/10", "10x", "x - 10", "x + 10"], correct: "x/10" },
+        { text: "El triple de un número aumentado en su mitad", options: ["3x + x/2", "3.5x", "7x/2", "3x/2"], correct: "3x + x/2" },
+        { text: "La edad de Juan si tiene el doble de la edad de Pedro", options: ["2p", "p + 2", "p/2", "2 + p"], correct: "2p" },
+        { text: "El área de un cuadrado de lado x", options: ["x^2", "4x", "2x", "x^3"], correct: "x^2" },
+        { text: "El perímetro de un cuadrado de lado x", options: ["4x", "x^2", "2x", "x/4"], correct: "4x" },
+        { text: "El área de un rectángulo de base x y altura y", options: ["xy", "2(x+y)", "x + y", "x^2 y"], correct: "xy" },
+        { text: "El perímetro de un rectángulo de base x y altura y", options: ["2(x+y)", "xy", "x + y", "x^2 + y^2"], correct: "2(x+y)" },
+        { text: "El volumen de un cubo de arista x", options: ["x^3", "3x", "6x^2", "x^2"], correct: "x^3" },
+        { text: "La suma de un número y su cuadrado", options: ["x + x^2", "x^2 + x", "x^3", "2x^2"], correct: "x + x^2" },
+        { text: "El producto de un número y su mitad", options: ["x·x/2", "x^2/2", "x/2", "2x"], correct: "x^2/2" },
+        { text: "El doble de la diferencia entre un número y 3", options: ["2(x - 3)", "2x - 3", "2x - 6", "x - 6"], correct: "2(x - 3)" },
+        { text: "La raíz cuadrada de un número", options: ["√x", "x^2", "2x", "x/2"], correct: "√x" },
+        { text: "El triple del cuadrado de un número", options: ["3x^2", "9x^2", "(3x)^2", "3x^2"], correct: "3x^2" },
+        { text: "La mitad de la suma de dos números", options: ["(x + y)/2", "x/2 + y", "x + y/2", "x/2 + y/2"], correct: "(x + y)/2" },
+        { text: "El cuadrado de la diferencia de dos números", options: ["(x - y)^2", "x^2 - y^2", "x^2 - y", "x - y^2"], correct: "(x - y)^2" },
+        { text: "El sucesor par de un número par", options: ["2x + 2", "2x + 1", "2x - 2", "x + 2"], correct: "2x + 2" },
+        { text: "El antecesor par de un número par", options: ["2x - 2", "2x - 1", "2x", "x - 2"], correct: "2x - 2" },
+        { text: "El quíntuple de un número", options: ["5x", "x^5", "x + 5", "5/x"], correct: "5x" },
+        { text: "La sexta parte de un número", options: ["x/6", "6x", "x - 6", "x + 6"], correct: "x/6" },
+        { text: "El triple de un número disminuido en su mitad", options: ["3x - x/2", "5x/2", "2.5x", "3x/2"], correct: "3x - x/2" },
+        { text: "La edad de María si tiene 5 años más que Pedro", options: ["p + 5", "5p", "p - 5", "p/5"], correct: "p + 5" },
+        { text: "La edad de Ana si tiene el triple de la edad de Luis", options: ["3l", "l + 3", "l/3", "3 + l"], correct: "3l" },
+        { text: "La suma de un número y su consecutivo", options: ["x + (x+1)", "2x + 1", "2x", "x^2 + 1"], correct: "x + (x+1)" },
+        { text: "El producto de un número y su antecesor", options: ["x(x-1)", "x^2 - x", "x^2 - 1", "2x - 1"], correct: "x(x-1)" },
+        { text: "El cuadrado de un número aumentado en 1", options: ["x^2 + 1", "(x+1)^2", "x^2 + x", "x + 1"], correct: "x^2 + 1" },
+        { text: "La suma de los cuadrados de dos números", options: ["x^2 + y^2", "(x+y)^2", "x^2 + y", "x + y^2"], correct: "x^2 + y^2" },
+        { text: "El cuadrado de la suma de un número y 2", options: ["(x+2)^2", "x^2 + 4", "x^2 + 2", "x^2 + 4x + 4"], correct: "(x+2)^2" },
+        { text: "La diferencia de un número y su cuadrado", options: ["x - x^2", "x^2 - x", "x(1-x)", "x(1-x)"], correct: "x - x^2" },
+        { text: "El cociente entre el doble de un número y 3", options: ["2x/3", "3x/2", "2/3x", "x/6"], correct: "2x/3" },
+        { text: "La semisuma de dos números", options: ["(x + y)/2", "x/2 + y", "x + y/2", "x/2 + y/2"], correct: "(x + y)/2" },
+        { text: "El producto de un número y el triple de otro", options: ["x·3y", "3xy", "xy/3", "3x + y"], correct: "3xy" },
+        { text: "La cuarta parte del doble de un número", options: ["2x/4", "x/2", "x/4", "2x"], correct: "x/2" },
+        { text: "El doble del cubo de un número", options: ["2x^3", "(2x)^3", "8x^3", "x^6"], correct: "2x^3" },
+        { text: "El cubo del doble de un número", options: ["(2x)^3", "8x^3", "2x^3", "x^6"], correct: "(2x)^3" },
+        { text: "La suma de un número y su recíproco", options: ["x + 1/x", "x + x", "1/x", "x/1"], correct: "x + 1/x" },
+        { text: "El inverso aditivo de un número", options: ["-x", "1/x", "x", "0"], correct: "-x" },
+        { text: "El inverso multiplicativo de un número", options: ["1/x", "-x", "x", "0"], correct: "1/x" },
+        { text: "El valor absoluto de un número", options: ["|x|", "x^2", "√x", "x"], correct: "|x|" }
+    ];
+
+    // ======================== SECTION 2: COEFICIENTES, GRADOS Y FACTORES LITERALES (70 POOL) ========================
+    const coefPool = [
+        { text: "¿Cuál es el coeficiente del término $5x^3$?", options: ["5", "x^3", "3", "5x^3"], correct: ["5"] },
+        { text: "¿Cuál es el factor literal del término $7a^2b^3$?", options: ["7", "a^2b^3", "a^2", "b^3"], correct: ["a^2b^3"] },
+        { text: "¿Cuál es el grado del término $4x^5$?", options: ["4", "5", "x^5", "4x^5"], correct: ["5"] },
+        { text: "¿Cuáles de los siguientes términos tienen grado 3?", options: ["x^3", "2x^2y", "3xy^2", "4xyz"], correct: ["x^3", "2x^2y", "3xy^2", "4xyz"] },
+        { text: "¿Cuáles de los siguientes términos son semejantes a $5x^2y$?", options: ["3x^2y", "-2x^2y", "5xy^2", "x^2y"], correct: ["3x^2y", "-2x^2y", "x^2y"] },
+        { text: "¿Cuál es el coeficiente del término $-8ab^2$?", options: ["-8", "8", "ab^2", "-ab^2"], correct: ["-8"] },
+        { text: "¿Cuál es el grado del término $2x^2y^3z$?", options: ["2", "3", "5", "6"], correct: ["6"] },
+        { text: "¿Cuáles de los siguientes términos son monomios?", options: ["5x", "3x + 2", "7", "x^2y"], correct: ["5x", "7", "x^2y"] },
+        { text: "¿Cuáles de los siguientes términos tienen factor literal $xy$?", options: ["3xy", "5x^2y", "-2xy", "xy^2"], correct: ["3xy", "-2xy"] },
+        { text: "¿Cuál es el grado del término $7$?", options: ["0", "1", "7", "no tiene"], correct: ["0"] },
+        { text: "¿Cuál es el coeficiente del término $x^3$?", options: ["1", "0", "x", "3"], correct: ["1"] },
+        { text: "¿Cuáles de los siguientes términos tienen grado 4?", options: ["x^4", "2x^3y", "3x^2y^2", "4xy^3"], correct: ["x^4", "2x^3y", "3x^2y^2", "4xy^3"] },
+        { text: "¿Cuáles de los siguientes términos son semejantes a $-3ab^2$?", options: ["5ab^2", "-2ab^2", "3a^2b", "ab^2"], correct: ["5ab^2", "-2ab^2", "ab^2"] },
+        { text: "¿Cuál es el factor literal del término $9x^4y^2$?", options: ["9", "x^4y^2", "x^4", "y^2"], correct: ["x^4y^2"] },
+        { text: "¿Cuál es el grado del término $5x^3y^2$?", options: ["3", "2", "5", "6"], correct: ["5"] },
+        { text: "¿Cuáles de los siguientes son binomios?", options: ["x + y", "2x - 3", "3x^2 + 5x - 1", "x^2 - y^2"], correct: ["x + y", "2x - 3", "x^2 - y^2"] },
+        { text: "¿Cuáles de los siguientes son trinomios?", options: ["x + y + z", "2x^2 - 3x + 1", "a + b", "x^3 - y^3 + z^3"], correct: ["x + y + z", "2x^2 - 3x + 1", "x^3 - y^3 + z^3"] },
+        { text: "¿Cuál es el coeficiente del término $-x^2y$?", options: ["-1", "1", "-x^2", "x^2y"], correct: ["-1"] },
+        { text: "¿Cuál es el grado del término $10$?", options: ["0", "1", "10", "no tiene"], correct: ["0"] },
+        { text: "¿Cuáles de los siguientes términos tienen grado 2?", options: ["x^2", "2xy", "3x", "4y^2"], correct: ["x^2", "2xy", "4y^2"] },
+        { text: "¿Cuáles de los siguientes términos son semejantes a $7m^2n$?", options: ["-2m^2n", "5m^2n", "3mn^2", "m^2n"], correct: ["-2m^2n", "5m^2n", "m^2n"] },
+        { text: "¿Cuál es el factor literal del término $12x^5$?", options: ["12", "x^5", "x", "5"], correct: ["x^5"] },
+        { text: "¿Cuál es el grado del término $8x^2y^3z^4$?", options: ["2", "3", "4", "9"], correct: ["9"] },
+        { text: "¿Cuáles de los siguientes son polinomios?", options: ["x^2 + 2x + 1", "3x - 5", "5", "x^3 + y^3"], correct: ["x^2 + 2x + 1", "3x - 5", "5", "x^3 + y^3"] },
+        { text: "¿Cuál es el coeficiente del término $4ab^2c^3$?", options: ["4", "ab^2c^3", "4ab^2", "c^3"], correct: ["4"] },
+        { text: "¿Cuáles de los siguientes términos tienen factor literal $ab$?", options: ["3ab", "5a^2b", "-2ab", "ab^2"], correct: ["3ab", "-2ab"] },
+        { text: "¿Cuál es el grado del término $x^2y^2z^2$?", options: ["2", "4", "6", "8"], correct: ["6"] },
+        { text: "¿Cuáles de los siguientes términos son semejantes a $2x^3y^2$?", options: ["x^3y^2", "-4x^3y^2", "2x^2y^3", "5x^3y^2"], correct: ["x^3y^2", "-4x^3y^2", "5x^3y^2"] },
+        { text: "¿Cuál es el coeficiente del término $0.5x^2$?", options: ["0.5", "1/2", "x^2", "2"], correct: ["0.5"] },
+        { text: "¿Cuál es el grado del término $3x^3y$?", options: ["3", "1", "4", "5"], correct: ["4"] },
+        { text: "¿Cuáles de los siguientes son monomios de grado 3?", options: ["x^3", "2x^2y", "3xy^2", "4xyz"], correct: ["x^3", "2x^2y", "3xy^2", "4xyz"] },
+        { text: "¿Cuál es el factor literal del término $15p^2q^2$?", options: ["15", "p^2q^2", "p^2", "q^2"], correct: ["p^2q^2"] },
+        { text: "¿Cuáles de los siguientes términos son binomios?", options: ["a + b", "2x - 5", "x^2 + 2x + 1", "x^2 - y^2"], correct: ["a + b", "2x - 5", "x^2 - y^2"] },
+        { text: "¿Cuál es el grado del término $0$?", options: ["0", "1", "indefinido", "no tiene"], correct: ["indefinido"] },
+        { text: "¿Cuáles de los siguientes términos tienen grado 5?", options: ["x^5", "2x^3y^2", "3x^2y^3", "4xy^4"], correct: ["x^5", "2x^3y^2", "3x^2y^3", "4xy^4"] },
+        { text: "¿Cuál es el coeficiente del término $-2xy^3$?", options: ["-2", "2", "xy^3", "-xy^3"], correct: ["-2"] },
+        { text: "¿Cuáles de los siguientes términos son semejantes a $-3p^2q$?", options: ["5p^2q", "-2p^2q", "3pq^2", "p^2q"], correct: ["5p^2q", "-2p^2q", "p^2q"] },
+        { text: "¿Cuál es el grado del término $4x^3y^3$?", options: ["3", "6", "9", "12"], correct: ["6"] },
+        { text: "¿Cuáles de los siguientes términos son trinomios?", options: ["x^2 + 2x + 1", "a + b + c", "3x - 5", "x^3 - y^3"], correct: ["x^2 + 2x + 1", "a + b + c"] },
+        { text: "¿Cuál es el factor literal del término $2x$?", options: ["2", "x", "2x", "1"], correct: ["x"] },
+        { text: "¿Cuál es el grado del término $5x^2y^3z$?", options: ["2", "3", "5", "6"], correct: ["6"] },
+        { text: "¿Cuáles de los siguientes términos tienen coeficiente negativo?", options: ["-3x", "-2y^2", "5z", "-ab"], correct: ["-3x", "-2y^2", "-ab"] },
+        { text: "¿Cuál es el coeficiente del término $x^2y^3$?", options: ["1", "0", "x", "y"], correct: ["1"] },
+        { text: "¿Cuáles de los siguientes términos son semejantes a $4r^4s^3$?", options: ["r^4s^3", "-2r^4s^3", "4r^3s^4", "5r^4s^3"], correct: ["r^4s^3", "-2r^4s^3", "5r^4s^3"] },
+        { text: "¿Cuál es el grado del término $2x^8$?", options: ["2", "8", "10", "16"], correct: ["8"] },
+        { text: "¿Cuáles de los siguientes son polinomios de grado 2?", options: ["x^2 + x + 1", "2x^2 - 5x + 3", "x^3 + 1", "x + 5"], correct: ["x^2 + x + 1", "2x^2 - 5x + 3"] },
+        { text: "¿Cuál es el factor literal del término $-7ab^4$?", options: ["-7", "ab^4", "a", "b^4"], correct: ["ab^4"] },
+        { text: "¿Cuál es el coeficiente del término $\\frac{2}{3} x^2y$?", options: ["2/3", "x^2y", "2", "3"], correct: ["2/3"] },
+        { text: "¿Cuáles de los siguientes términos tienen grado 1?", options: ["2x", "3y", "4", "xy"], correct: ["2x", "3y"] },
+        { text: "¿Cuál es el grado del término $6x^2y^2z^2$?", options: ["2", "4", "6", "8"], correct: ["6"] },
+        { text: "¿Cuáles de los siguientes términos son monomios?", options: ["5", "x", "2x + 3", "xy"], correct: ["5", "x", "xy"] },
+        { text: "¿Cuál es el coeficiente del término $-5ab^2c^3$?", options: ["-5", "5", "ab^2c^3", "-ab^2c^3"], correct: ["-5"] },
+        { text: "¿Cuáles de los siguientes términos son semejantes a $6m^3n^2$?", options: ["-2m^3n^2", "4m^3n^2", "6m^2n^3", "m^3n^2"], correct: ["-2m^3n^2", "4m^3n^2", "m^3n^2"] },
+        { text: "¿Cuál es el grado del término $9x^4$?", options: ["4", "9", "36", "5"], correct: ["4"] },
+        { text: "¿Cuáles de los siguientes términos tienen factor literal $xy^2$?", options: ["3xy^2", "-2xy^2", "5x^2y", "xy^2"], correct: ["3xy^2", "-2xy^2", "xy^2"] },
+        { text: "¿Cuál es el factor literal del término $10x^3y^4$?", options: ["10", "x^3y^4", "x^3", "y^4"], correct: ["x^3y^4"] },
+        { text: "¿Cuál es el coeficiente del término $x^5$?", options: ["1", "0", "5", "x"], correct: ["1"] },
+        { text: "¿Cuáles de los siguientes términos tienen grado 0?", options: ["5", "-2", "0", "x"], correct: ["5", "-2"] },
+        { text: "¿Cuál es el grado del término $4x^3y$?", options: ["3", "1", "4", "5"], correct: ["4"] },
+        { text: "¿Cuáles de los siguientes son binomios de grado 2?", options: ["x^2 + y^2", "2x^2 - 3x", "x + 1", "x^2 - 4"], correct: ["x^2 + y^2", "2x^2 - 3x", "x^2 - 4"] },
+        { text: "¿Cuál es el coeficiente del término $0.25x^3$?", options: ["0.25", "1/4", "x^3", "0.25x^3"], correct: ["0.25"] },
+        { text: "¿Cuáles de los siguientes términos son semejantes a $-2p^5q$?", options: ["p^5q", "-3p^5q", "4pq^5", "2p^5q"], correct: ["p^5q", "-3p^5q", "2p^5q"] },
+        { text: "¿Cuál es el grado del término $7x^5y^4$?", options: ["5", "4", "9", "20"], correct: ["9"] },
+        { text: "¿Cuál es el factor literal del término $4x^3$?", options: ["4", "x^3", "3", "4x^3"], correct: ["x^3"] },
+        { text: "¿Cuáles de los siguientes términos tienen coeficiente mayor que 5?", options: ["6x", "7y^2", "5z", "10ab"], correct: ["6x", "7y^2", "10ab"] }
+    ];
+
+    // ======================== SECTION 3: VERDADERO O FALSO (70 POOL) ========================
+    const vfPool = [
+        { text: "La expresión 'el doble de un número' se escribe como $2x$.", answer: true },
+        { text: "La expresión 'un número aumentado en 5' se escribe como $5x$.", answer: false },
+        { text: "Un número impar se puede escribir como $2x + 1$.", answer: true },
+        { text: "El sucesor de un número es $x - 1$.", answer: false },
+        { text: "La expresión 'la mitad de un número' se escribe como $\\frac{x}{2}$.", answer: true },
+        { text: "En el término $5x^3$, el coeficiente es 5 y el exponente es 3.", answer: true },
+        { text: "El grado del término $3x^2y^3$ es 5.", answer: true },
+        { text: "Los términos $4x^2y$ y $-2xy^2$ son semejantes.", answer: false },
+        { text: "Un binomio está formado por dos términos algebraicos.", answer: true },
+        { text: "El cuadrado de un número se escribe como $2x$.", answer: false },
+        { text: "La expresión 'el triple de un número disminuido en 4' es $3x - 4$.", answer: true },
+        { text: "La suma de dos números consecutivos es $x + (x+1)$.", answer: true },
+        { text: "El término $7$ tiene grado 1.", answer: false },
+        { text: "El término $0.5x^2$ tiene coeficiente 0.5.", answer: true },
+        { text: "Un monomio puede tener solo un término.", answer: true },
+        { text: "La expresión 'el producto de dos números' es $xy$.", answer: true },
+        { text: "La expresión 'el cociente entre dos números' es $\\frac{x}{y}$.", answer: true },
+        { text: "El término $5x^2y$ tiene factor literal $x^2y$.", answer: true },
+        { text: "El grado del término $4x^3y^2z$ es 6.", answer: true },
+        { text: "Los términos $3ab$ y $-2ba$ son semejantes.", answer: true },
+        { text: "Un polinomio puede tener 2 o más términos.", answer: true },
+        { text: "El cuadrado de la suma de dos números es $x^2 + y^2$.", answer: false },
+        { text: "La diferencia de cuadrados es $(x+y)(x-y)$.", answer: true },
+        { text: "El sucesor de un número par es $2x + 1$.", answer: true },
+        { text: "El antecesor de un número impar es $2x$.", answer: true },
+        { text: "El término $0$ no tiene grado definido.", answer: true },
+        { text: "El coeficiente del término $-x^3$ es $-1$.", answer: true },
+        { text: "La expresión 'la tercera parte de un número' es $\\frac{x}{3}$.", answer: true },
+        { text: "Un trinomio tiene exactamente 3 términos.", answer: true },
+        { text: "El cubo de un número se escribe como $3x$.", answer: false },
+        { text: "La expresión 'el doble del cuadrado de un número' es $2x^2$.", answer: true },
+        { text: "Los términos $5x^2y^3$ y $5x^3y^2$ son semejantes.", answer: false },
+        { text: "El grado del término $8$ es 0.", answer: true },
+        { text: "La expresión 'el cuádruple de un número' es $4x$.", answer: true },
+        { text: "La expresión 'la quinta parte de un número' es $\\frac{x}{5}$.", answer: true },
+        { text: "Un número par se puede escribir como $2x$.", answer: true },
+        { text: "El producto de un número y su sucesor es $x^2 + x$.", answer: true },
+        { text: "La expresión 'el doble de la suma de un número y 3' es $2x + 6$.", answer: true },
+        { text: "El área de un cuadrado de lado $x$ es $4x$.", answer: false },
+        { text: "El perímetro de un cuadrado de lado $x$ es $4x$.", answer: true },
+        { text: "El volumen de un cubo de arista $x$ es $x^3$.", answer: true },
+        { text: "El inverso aditivo de $x$ es $-x$.", answer: true },
+        { text: "El inverso multiplicativo de $x$ es $\\frac{1}{x}$ (con $x \\neq 0$).", answer: true },
+        { text: "La raíz cuadrada de un número se escribe como $\\sqrt{x}$.", answer: true },
+        { text: "La expresión 'el triple de la mitad de un número' es $\\frac{3x}{2}$.", answer: true },
+        { text: "El término $0.25x^4$ tiene coeficiente $\\frac{1}{4}$.", answer: true },
+        { text: "Un polinomio puede tener términos con coeficientes negativos.", answer: true },
+        { text: "La expresión 'la semisuma de dos números' es $\\frac{x+y}{2}$.", answer: true },
+        { text: "El grado del término $5x^5y^5$ es 10.", answer: true },
+        { text: "Los monomios son expresiones de un solo término.", answer: true },
+        { text: "La expresión 'el doble de un número aumentado en su mitad' es $2x + \\frac{x}{2}$.", answer: true },
+        { text: "El coeficiente del término $x^2y$ es 1.", answer: true },
+        { text: "El factor literal de $-3x^2y^3$ es $x^2y^3$.", answer: true },
+        { text: "Un número aumentado en 100 se escribe como $x + 100$.", answer: true },
+        { text: "Un número disminuido en 8 se escribe como $x - 8$.", answer: true },
+        { text: "La décima parte de un número es $\\frac{x}{10}$.", answer: true },
+        { text: "El término $2x^3$ tiene coeficiente 2 y grado 3.", answer: true },
+        { text: "Los términos $4a^2b$ y $-3ba^2$ son semejantes.", answer: true },
+        { text: "El grado del polinomio $3x^2 + 2x + 1$ es 2.", answer: true },
+        { text: "La expresión 'el triple del cuadrado de un número' es $3x^2$.", answer: true },
+        { text: "El cuadrado de la diferencia de dos números es $x^2 - y^2$.", answer: false },
+        { text: "El sucesor par de un número par es $2x + 2$.", answer: true },
+        { text: "El producto de un número y su antecesor es $x^2 - x$.", answer: true },
+        { text: "La suma de los cuadrados de dos números es $x^2 + y^2$.", answer: true },
+        { text: "El término $0.75x^5$ tiene coeficiente $\\frac{3}{4}$.", answer: true },
+        { text: "El grado del término $2x^3y^2z$ es 6.", answer: true },
+        { text: "Los binomios tienen 2 términos.", answer: true },
+        { text: "Los trinomios tienen 3 términos.", answer: true },
+        { text: "El término $5x^0$ es igual a 5.", answer: true },
+        { text: "La expresión 'el doble del cubo de un número' es $2x^3$.", answer: true },
+        { text: "El cubo del doble de un número es $8x^3$.", answer: true }
+    ];
+
+    function getRandomItems(pool, n) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, n);
+    }
+
+    let currentExpresiones = [], currentCoef = [], currentVF = [];
+    let expresionesAnswers = [], coefAnswers = [], vfAnswers = [];
+    let evaluated = false;
+
+    // Función para renderizar una opción con formato LaTeX si contiene matemáticas
+    function renderOptionText(opt) {
+        // Detectar si necesita LaTeX
+        if (opt.includes('/') || opt.includes('^') || opt.includes('√') || opt.includes('|') || opt.includes('frac')) {
+            // Convertir a formato LaTeX
+            let latex = opt.replace(/([a-zA-Z0-9()]+)\/([a-zA-Z0-9()]+)/g, '\\frac{$1}{$2}');
+            latex = latex.replace(/\^(\d+)/g, '^{$1}');
+            latex = latex.replace(/√([a-zA-Z0-9()]+)/g, '\\sqrt{$1}');
+            latex = latex.replace(/\|([^|]+)\|/g, '\\lvert $1 \\rvert');
+            return `<span>$${latex}$</span>`;
+        }
+        // Para multiplicación implícita, mantener como está
+        return `<span>${opt}</span>`;
+    }
+
+    // Función para renderizar el texto de la pregunta
+    function renderQuestionText(text) {
+        // Si ya contiene $, es porque tiene LaTeX explícito
+        if (text.includes('$')) return text;
+        // Convertir expresiones matemáticas dentro del texto
+        let processed = text.replace(/([a-zA-Z0-9()]+)\/([a-zA-Z0-9()]+)/g, '$$\\frac{$1}{$2}$$');
+        processed = processed.replace(/\^(\d+)/g, '^{$1}');
+        processed = processed.replace(/√([a-zA-Z0-9()]+)/g, '\\sqrt{$1}');
+        // Si contiene alguna expresión convertida, la envolvemos
+        if (processed.includes('\\frac') || processed.includes('^{')) {
+            processed = processed.replace(/\$\$([^$]+)\$\$/g, '<span class="math-inline">$$$1$$</span>');
+        }
+        return processed;
+    }
+
+    function renderExpresiones() {
+        const container = document.getElementById('expresiones-questions');
+        container.innerHTML = '';
+        currentExpresiones.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `expresiones-card-${idx}`;
+            // Formatear texto de la pregunta
+            const questionHtml = renderQuestionText(q.text);
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${questionHtml}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="expresiones_${idx}" value="${opt.replace(/"/g, '&quot;')}">
+                            ${renderOptionText(opt)}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(expresionesAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="expresiones_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === expresionesAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) expresionesAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderCoef() {
+        const container = document.getElementById('coef-questions');
+        container.innerHTML = '';
+        currentCoef.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `coef-card-${idx}`;
+            // Procesar texto de pregunta (puede contener $...$)
+            let questionText = q.text;
+            if (!questionText.includes('$')) {
+                questionText = questionText.replace(/([a-zA-Z0-9()]+)\/([a-zA-Z0-9()]+)/g, '$$\\frac{$1}{$2}$$');
+                questionText = questionText.replace(/\^(\d+)/g, '^{$1}');
+            }
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${questionText}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="checkbox" name="coef_${idx}" value="${opt.replace(/"/g, '&quot;')}">
+                            ${renderOptionText(opt)}
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(coefAnswers[idx]) {
+                const checkboxes = div.querySelectorAll(`input[type="checkbox"]`);
+                checkboxes.forEach(cb => {
+                    if(coefAnswers[idx].includes(cb.value)) cb.checked = true;
+                });
+            }
+            div.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    if(evaluated) return;
+                    const current = coefAnswers[idx] || [];
+                    if(e.target.checked) {
+                        if(!current.includes(e.target.value)) {
+                            coefAnswers[idx] = [...current, e.target.value];
+                        }
+                    } else {
+                        coefAnswers[idx] = current.filter(v => v !== e.target.value);
+                    }
+                });
+            });
+        });
+    }
+
+    function renderVF() {
+        const container = document.getElementById('vf-questions');
+        container.innerHTML = '';
+        currentVF.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `vf-card-${idx}`;
+            // Procesar texto de la afirmación (puede contener $...$)
+            let statementText = q.text;
+            if (!statementText.includes('$')) {
+                statementText = statementText.replace(/([a-zA-Z0-9()]+)\/([a-zA-Z0-9()]+)/g, '$$\\frac{$1}{$2}$$');
+                statementText = statementText.replace(/\^(\d+)/g, '^{$1}');
+                statementText = statementText.replace(/√([a-zA-Z0-9()]+)/g, '\\sqrt{$1}');
+            }
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${statementText}</div>
+                <div class="options">
+                    <label class="option">
+                        <input type="radio" name="vf_${idx}" value="true">
+                        <span>Verdadero</span>
+                    </label>
+                    <label class="option">
+                        <input type="radio" name="vf_${idx}" value="false">
+                        <span>Falso</span>
+                    </label>
+                </div>
+            `;
+            container.appendChild(div);
+            if(vfAnswers[idx] !== undefined) {
+                const radios = div.querySelectorAll(`input[name="vf_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === (vfAnswers[idx] ? "true" : "false")) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) vfAnswers[idx] = e.target.value === "true"; });
+            });
+        });
+    }
+
+    function renderAll() {
+        renderExpresiones();
+        renderCoef();
+        renderVF();
+        // Forzar renderizado de KaTeX después de cargar el DOM
+        if (typeof renderMathInElement !== 'undefined') {
+            setTimeout(() => {
+                renderMathInElement(document.body, {
+                    delimiters: [
+                        {left: '$$', right: '$$', display: true},
+                        {left: '$', right: '$', display: false},
+                        {left: '\\(', right: '\\)', display: false},
+                        {left: '\\[', right: '\\]', display: true}
+                    ],
+                    throwOnError: false
+                });
+            }, 50);
+        }
+    }
+
+    function showCorrectAnswers() {
+        // Expresiones
+        currentExpresiones.forEach((q, idx) => {
+            const card = document.getElementById(`expresiones-card-${idx}`);
+            if(!card) return;
+            const isCorrect = expresionesAnswers[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                const correctLatex = renderOptionText(q.correct);
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${correctLatex}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Coeficientes
+        currentCoef.forEach((q, idx) => {
+            const card = document.getElementById(`coef-card-${idx}`);
+            if(!card) return;
+            const userAnswers = coefAnswers[idx] || [];
+            const isCorrect = userAnswers.length === q.correct.length && q.correct.every(c => userAnswers.includes(c));
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                const correctLatexList = q.correct.map(c => renderOptionText(c)).join(', ');
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuestas correctas: ${correctLatexList}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Verdadero/Falso
+        currentVF.forEach((q, idx) => {
+            const card = document.getElementById(`vf-card-${idx}`);
+            if(!card) return;
+            const isCorrect = vfAnswers[idx] === q.answer;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.answer ? "Verdadero" : "Falso"}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Re-renderizar KaTeX para los nuevos elementos
+        if (typeof renderMathInElement !== 'undefined') {
+            renderMathInElement(document.body, {
+                delimiters: [
+                    {left: '$$', right: '$$', display: true},
+                    {left: '$', right: '$', display: false},
+                    {left: '\\(', right: '\\)', display: false},
+                    {left: '\\[', right: '\\]', display: true}
+                ],
+                throwOnError: false
+            });
+        }
+    }
+
+    function calculateAndShowResults() {
+        let totalCorrect = 0;
+        const maxPoints = 60;
+
+        for(let i=0; i<currentExpresiones.length; i++) {
+            if(expresionesAnswers[i] && expresionesAnswers[i] === currentExpresiones[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentCoef.length; i++) {
+            const userAnswers = coefAnswers[i] || [];
+            const correct = currentCoef[i].correct;
+            if(userAnswers.length === correct.length && correct.every(c => userAnswers.includes(c))) totalCorrect++;
+        }
+        for(let i=0; i<currentVF.length; i++) {
+            if(vfAnswers[i] === currentVF[i].answer) totalCorrect++;
+        }
+
+        const grade = 1 + (6 * (totalCorrect / maxPoints));
+        const finalGrade = grade.toFixed(1);
+        document.getElementById('scoreDisplay').innerHTML = `Puntaje: ${totalCorrect} / ${maxPoints}`;
+        document.getElementById('gradeDisplay').innerHTML = `Nota: ${finalGrade} (1.0 a 7.0)`;
+        const passMsg = totalCorrect >= 36 ? '✅ APROBADO (Nota ≥ 4.0 - 60%)' : '❌ NO APROBADO. Necesitas al menos 36 puntos.';
+        document.getElementById('passDisplay').innerHTML = passMsg;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('actionButtons').style.display = 'flex';
+        showCorrectAnswers();
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.style.transition = 'box-shadow 0.3s';
+        resultsSection.style.boxShadow = '0 0 0 3px #facc15';
+        setTimeout(() => { resultsSection.style.boxShadow = 'none'; }, 1000);
+    }
+
+    function evaluateTest() {
+        if(evaluated) return;
+        evaluated = true;
+        calculateAndShowResults();
+    }
+
+    function restartTest() {
+        currentExpresiones = getRandomItems(expresionesPool, 25);
+        currentCoef = getRandomItems(coefPool, 25);
+        currentVF = getRandomItems(vfPool, 10);
+        expresionesAnswers = new Array(25).fill(null);
+        coefAnswers = new Array(25).fill([]);
+        vfAnswers = new Array(10).fill(undefined);
+        evaluated = false;
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+        renderAll();
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if(btn.id !== 'evaluateBtnSidebar') {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                
+                const contentContainer = document.querySelector('.tab-content-container');
+                if(contentContainer) {
+                    contentContainer.scrollTo({
+                        top: 0,
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        }
+    });
+
+    document.getElementById('evaluateBtnSidebar').addEventListener('click', evaluateTest);
+    document.getElementById('restartBtn').addEventListener('click', restartTest);
+    document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_2_Matematicas.html');
+    document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Matematicas.html');
+
+    restartTest();
+</script>
+</body>
+</html>
