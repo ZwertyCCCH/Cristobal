@@ -1,0 +1,847 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Ejercicios - Sismos y Volcanes | Física 7° básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #0f0f1a;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 220px;
+            min-width: 220px;
+            background: #1e293b;
+            border-right: 2px solid #334155;
+            gap: 8px;
+            padding: 24px 12px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #94a3b8;
+            cursor: pointer;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.3rem;
+        }
+
+        .tab-btn span {
+            font-size: 0.7rem;
+        }
+
+        .tab-btn.active {
+            background: #f97316;
+            color: white;
+            box-shadow: 0 2px 8px rgba(249,115,22,0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-evaluate-sidebar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, #f97316, #fb923c);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-evaluate-sidebar i {
+            font-size: 1.3rem;
+        }
+
+        .btn-evaluate-sidebar:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        .question-card {
+            background: #1e293b;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #334155;
+            transition: all 0.2s;
+        }
+
+        .question-card.correct-highlight {
+            border-left: 6px solid #22c55e;
+            background: #14532d;
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 6px solid #ef4444;
+            background: #7f1d1d;
+        }
+
+        .section-header {
+            background: #1e293b;
+            padding: 1rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #f97316;
+        }
+
+        .section-header i {
+            font-size: 2rem;
+            color: #f97316;
+        }
+
+        .section-header h3 {
+            color: #f97316;
+            margin: 0;
+        }
+
+        .section-header p {
+            color: #94a3b8;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #e2e8f0;
+        }
+
+        .correct-answer-display {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #0f172a;
+            border-radius: 16px;
+            color: #f97316;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: #0f172a;
+            border-radius: 60px;
+            border: 1px solid #334155;
+            cursor: pointer;
+            transition: all 0.2s;
+            color: #cbd5e1;
+        }
+
+        .option:hover {
+            background: #f97316;
+            color: white;
+        }
+
+        input[type="radio"], input[type="text"], select {
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="text"], select {
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #334155;
+            font-size: 0.9rem;
+            width: 100%;
+            background: #0f172a;
+            color: #e2e8f0;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #f97316, #fb923c);
+            color: white;
+            padding: 24px 20px;
+            border-radius: 24px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .results-section p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #facc15;
+            color: #1a1a2e;
+        }
+
+        .btn-secondary {
+            background: #f97316;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #f97316;
+            color: #f97316;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .tabs {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding: 12px;
+            }
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                width: auto;
+                padding: 10px 14px;
+            }
+            .btn-evaluate-sidebar {
+                flex-direction: row;
+                margin-top: 0;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1"><i class="fas fa-question-circle"></i><span> Conceptos Básicos</span></button>
+        <button class="tab-btn" data-tab="tab2"><i class="fas fa-waveform"></i><span> Sismos</span></button>
+        <button class="tab-btn" data-tab="tab3"><i class="fas fa-fire"></i><span> Volcanes</span></button>
+        <button class="tab-btn" data-tab="tab4"><i class="fas fa-chart-line"></i><span> Escalas y Medidas</span></button>
+        <button class="tab-btn" data-tab="tab5"><i class="fas fa-shield-alt"></i><span> Prevención</span></button>
+        <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar"><i class="fas fa-check-double"></i><span> Evaluar</span></button>
+    </div>
+
+    <div class="tab-content-container">
+        <div id="tab1" class="tab-content active">
+            <div class="section-header">
+                <i class="fas fa-question-circle"></i>
+                <div>
+                    <h3>📝 Sección 1: Conceptos básicos</h3>
+                    <p>Preguntas sobre definiciones fundamentales de sismos y volcanes.</p>
+                </div>
+            </div>
+            <div id="conceptos-questions"></div>
+        </div>
+        <div id="tab2" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-waveform"></i>
+                <div>
+                    <h3>🌍 Sección 2: Sismos y terremotos</h3>
+                    <p>Preguntas sobre causas, partes, ondas y sismos históricos.</p>
+                </div>
+            </div>
+            <div id="sismos-questions"></div>
+        </div>
+        <div id="tab3" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-fire"></i>
+                <div>
+                    <h3>🌋 Sección 3: Volcanes y erupciones</h3>
+                    <p>Preguntas sobre tipos de volcanes, erupciones y materiales volcánicos.</p>
+                </div>
+            </div>
+            <div id="volcanes-questions"></div>
+        </div>
+        <div id="tab4" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-chart-line"></i>
+                <div>
+                    <h3>📊 Sección 4: Escalas y mediciones</h3>
+                    <p>Preguntas sobre magnitud, intensidad y escalas de medición.</p>
+                </div>
+            </div>
+            <div id="escalas-questions"></div>
+        </div>
+        <div id="tab5" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-shield-alt"></i>
+                <div>
+                    <h3>🛡️ Sección 5: Prevención y seguridad</h3>
+                    <p>Preguntas sobre cómo actuar antes, durante y después de un sismo.</p>
+                </div>
+            </div>
+            <div id="prevencion-questions"></div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-chart-line"></i> Tus Resultados</h3>
+            <p id="scoreDisplay">Puntaje: -- / 50</p>
+            <p id="gradeDisplay">Nota: -- (1.0 a 7.0)</p>
+            <p id="passDisplay"></p>
+        </div>
+
+        <div class="action-buttons" id="actionButtons">
+            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-sync-alt"></i> Reiniciar</button>
+            <button class="btn btn-secondary" id="backToClassBtn"><i class="fas fa-chalkboard"></i> Volver a la clase</button>
+            <button class="btn btn-outline" id="backToCourseBtn"><i class="fas fa-book-open"></i> Volver al curso</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ======================== SECCIÓN 1: CONCEPTOS BÁSICOS (40 preguntas pool, 10 aleatorias) ========================
+    const conceptosPool = [
+        { text: "¿Qué es un sismo?", options: ["Una erupción volcánica", "Una vibración de la tierra por liberación de energía", "Un tsunami", "Un huracán"], correct: "Una vibración de la tierra por liberación de energía" },
+        { text: "¿Qué es un volcán?", options: ["Una montaña normal", "Una abertura en la corteza terrestre por donde sale magma", "Un cráter lunar", "Un glaciar"], correct: "Una abertura en la corteza terrestre por donde sale magma" },
+        { text: "¿Cuál es la principal causa de los sismos?", options: ["El viento", "El movimiento de las placas tectónicas", "La lluvia", "El calor del sol"], correct: "El movimiento de las placas tectónicas" },
+        { text: "¿Dónde ocurren la mayoría de los sismos y volcanes?", options: ["En el centro de los continentes", "En los bordes de placas tectónicas", "En los polos", "En el fondo del mar solamente"], correct: "En los bordes de placas tectónicas" },
+        { text: "¿Qué nombre recibe el material fundido dentro del volcán?", options: ["Lava", "Magma", "Ceniza", "Roca sólida"], correct: "Magma" },
+        { text: "¿Qué nombre recibe el magma cuando sale a la superficie?", options: ["Magma", "Lava", "Ceniza", "Gases"], correct: "Lava" },
+        { text: "¿Qué es el Cinturón de Fuego del Pacífico?", options: ["Una zona con muchos incendios", "Una zona con alta actividad sísmica y volcánica", "Un desierto caliente", "Una cadena montañosa"], correct: "Una zona con alta actividad sísmica y volcánica" },
+        { text: "¿En qué país ocurrió el terremoto más fuerte registrado en la historia?", options: ["Japón", "Chile", "Estados Unidos", "Indonesia"], correct: "Chile" },
+        { text: "¿Qué año ocurrió el terremoto de Valdivia?", options: ["1985", "2010", "1960", "1995"], correct: "1960" },
+        { text: "¿Qué magnitud tuvo el terremoto de Valdivia?", options: ["7.5", "8.8", "9.5", "6.5"], correct: "9.5" },
+        { text: "¿Cuál de estos países NO está en el Cinturón de Fuego?", options: ["Chile", "Japón", "España", "Perú"], correct: "España" },
+        { text: "¿Qué porcentaje de sismos ocurren en el Cinturón de Fuego?", options: ["50%", "70%", "90%", "30%"], correct: "90%" },
+        { text: "¿Qué porcentaje de volcanes activos hay en el Cinturón de Fuego?", options: ["50%", "75%", "90%", "40%"], correct: "75%" },
+        { text: "¿Qué placas tectónicas interactúan frente a las costas de Chile?", options: ["Nazca y Sudamericana", "Pacífica y Norteamericana", "Indoaustraliana y Euroasiática", "Antártica y Africana"], correct: "Nazca y Sudamericana" },
+        { text: "¿Cómo se llama el movimiento donde una placa se hunde bajo otra?", options: ["Subducción", "Deriva", "Expansión", "Fricción"], correct: "Subducción" },
+        { text: "¿Qué es la litósfera?", options: ["La capa externa y rígida de la Tierra", "El núcleo terrestre", "La atmósfera", "Los océanos"], correct: "La capa externa y rígida de la Tierra" },
+        { text: "¿Qué instrumento mide los sismos?", options: ["Barómetro", "Termómetro", "Sismógrafo", "Anemómetro"], correct: "Sismógrafo" },
+        { text: "¿Qué registra un sismógrafo?", options: ["La temperatura", "Las ondas sísmicas", "La presión atmosférica", "La humedad"], correct: "Las ondas sísmicas" },
+        { text: "¿Qué es un tsunami?", options: ["Un terremoto", "Una ola gigante causada por un sismo submarino", "Una erupción volcánica", "Un huracán"], correct: "Una ola gigante causada por un sismo submarino" },
+        { text: "¿Qué sismo chileno generó un tsunami que llegó a Japón y Hawái?", options: ["Valdivia 1960", "Maule 2010", "Iquique 2014", "Coquimbo 2015"], correct: "Valdivia 1960" },
+        { text: "¿Cuál es la capa de la Tierra donde se originan los sismos?", options: ["Corteza", "Manto", "Núcleo externo", "Núcleo interno"], correct: "Corteza" },
+        { text: "¿Qué energía se libera durante un sismo?", options: ["Energía química", "Energía nuclear", "Energía sísmica", "Energía solar"], correct: "Energía sísmica" },
+        { text: "¿Qué ocurre en una zona de subducción?", options: ["Una placa se hunde bajo otra", "Dos placas se separan", "Dos placas chocan", "Dos placas se deslizan lateralmente"], correct: "Una placa se hunde bajo otra" },
+        { text: "¿Qué país tiene la mayor cantidad de volcanes activos?", options: ["Chile", "Indonesia", "Japón", "Estados Unidos"], correct: "Indonesia" },
+        { text: "¿Qué es una falla geológica?", options: ["Una grieta en la corteza terrestre", "Un volcán", "Un tsunami", "Un terremoto"], correct: "Una grieta en la corteza terrestre" },
+        { text: "¿Qué es la sismología?", options: ["El estudio de los volcanes", "El estudio de los sismos", "El estudio de los tsunamis", "El estudio de las placas tectónicas"], correct: "El estudio de los sismos" },
+        { text: "¿Qué es la vulcanología?", options: ["El estudio de los sismos", "El estudio de los volcanes", "El estudio de los tsunamis", "El estudio de las placas tectónicas"], correct: "El estudio de los volcanes" },
+        { text: "¿Qué nombre recibe el punto en el interior de la Tierra donde se origina un sismo?", options: ["Epicentro", "Hipocentro", "Foco sísmico", "Magnitud"], correct: "Hipocentro" },
+        { text: "¿Qué nombre recibe el punto en la superficie sobre el hipocentro?", options: ["Hipocentro", "Foco", "Epicentro", "Magnitud"], correct: "Epicentro" },
+        { text: "¿Cuál es la diferencia entre un sismo y un terremoto?", options: ["Son lo mismo", "Terremoto es más fuerte", "Sismo es más fuerte", "No hay diferencia práctica"], correct: "Terremoto es más fuerte" },
+        { text: "¿Qué es una réplica sísmica?", options: ["Un sismo después de otro más grande", "Un sismo antes de otro", "Un tsunami", "Una erupción volcánica"], correct: "Un sismo después de otro más grande" },
+        { text: "¿Qué volcán chileno entró en erupción en 2015?", options: ["Villarrica", "Calbuco", "Chaitén", "Llaima"], correct: "Calbuco" },
+        { text: "¿Qué ciudad chilena fue evacuada por una erupción volcánica en 2008?", options: ["Villarrica", "Chaitén", "Puerto Montt", "Temuco"], correct: "Chaitén" },
+        { text: "¿Qué tipo de volcán es el Villarrica?", options: ["Escudo", "Estratovolcán", "Cono de escorias", "Caldera"], correct: "Estratovolcán" },
+        { text: "¿Qué es la ceniza volcánica?", options: ["Polvo de carbón", "Fragmentos de roca pulverizada", "Arena", "Hollín"], correct: "Fragmentos de roca pulverizada" },
+        { text: "¿Qué es un lahar?", options: ["Flujo de lava", "Flujo de lodo volcánico", "Ceniza volcánica", "Gas tóxico"], correct: "Flujo de lodo volcánico" },
+        { text: "¿Qué volcán es conocido como el 'coloso rojo' de La Araucanía?", options: ["Llaima", "Villarrica", "Calbuco", "Osorno"], correct: "Llaima" },
+        { text: "¿Qué es la cámara magmática?", options: ["El cráter del volcán", "El depósito de magma dentro del volcán", "La lava enfriada", "Las fumarolas"], correct: "El depósito de magma dentro del volcán" },
+        { text: "¿Qué es la chimenea volcánica?", options: ["El conducto por donde sube el magma", "El cráter", "La lava", "La ceniza"], correct: "El conducto por donde sube el magma" }
+    ];
+
+    // ======================== SECCIÓN 2: SISMOS (40 preguntas pool, 10 aleatorias) ========================
+    const sismosPool = [
+        { text: "¿Cómo se llama el punto en el interior de la Tierra donde se origina un sismo?", options: ["Epicentro", "Hipocentro", "Magnitud", "Intensidad"], correct: "Hipocentro" },
+        { text: "¿Cómo se llama el punto en la superficie directamente sobre el hipocentro?", options: ["Hipocentro", "Epicentro", "Foco", "Magnitud"], correct: "Epicentro" },
+        { text: "¿Qué tipo de ondas sísmicas son las más rápidas?", options: ["Ondas S", "Ondas P", "Ondas superficiales", "Ondas L"], correct: "Ondas P" },
+        { text: "¿Qué tipo de ondas sísmicas son las más destructivas?", options: ["Ondas P", "Ondas S", "Ondas superficiales", "Todas son iguales"], correct: "Ondas superficiales" },
+        { text: "¿Qué tipo de ondas sísmicas son las segundas en llegar después de las P?", options: ["Ondas superficiales", "Ondas S", "Ondas L", "Ondas R"], correct: "Ondas S" },
+        { text: "¿Qué terremoto chileno ocurrió el 27 de febrero de 2010?", options: ["Valdivia", "Maule", "Iquique", "Coquimbo"], correct: "Maule" },
+        { text: "¿Qué magnitud tuvo el terremoto del Maule (2010)?", options: ["7.5", "8.8", "9.5", "8.2"], correct: "8.8" },
+        { text: "¿Cuánto duró aproximadamente el terremoto del Maule (2010)?", options: ["30 segundos", "1 minuto", "3 minutos", "10 minutos"], correct: "3 minutos" },
+        { text: "¿Qué magnitud tuvo el terremoto de Iquique (2014)?", options: ["7.5", "8.2", "8.8", "9.0"], correct: "8.2" },
+        { text: "¿Qué magnitud tuvo el terremoto de Coquimbo (2015)?", options: ["7.5", "8.2", "8.3", "9.0"], correct: "8.3" },
+        { text: "¿Qué fenómeno puede generar un sismo submarino?", options: ["Tsunami", "Huracán", "Tornado", "Inundación"], correct: "Tsunami" },
+        { text: "¿Qué ondas sísmicas son las primeras en ser registradas por un sismógrafo?", options: ["Ondas P", "Ondas S", "Ondas superficiales", "Ondas R"], correct: "Ondas P" },
+        { text: "¿Las ondas P son ondas de tipo...", options: ["Compresión", "Corte", "Superficial", "Radial"], correct: "Compresión" },
+        { text: "¿Las ondas S son ondas de tipo...", options: ["Compresión", "Corte", "Superficial", "Radial"], correct: "Corte" },
+        { text: "¿Qué ocurre con la diferencia de tiempo entre ondas P y S al aumentar la distancia al epicentro?", options: ["Aumenta", "Disminuye", "Se mantiene igual", "Desaparece"], correct: "Aumenta" },
+        { text: "¿Qué sismo chileno tuvo una duración aproximada de 10 minutos?", options: ["Maule 2010", "Valdivia 1960", "Iquique 2014", "Coquimbo 2015"], correct: "Valdivia 1960" },
+        { text: "¿Qué sismo chileno provocó un tsunami que afectó a Hawái y Japón?", options: ["Maule 2010", "Valdivia 1960", "Iquique 2014", "Coquimbo 2015"], correct: "Valdivia 1960" },
+        { text: "¿Cuántas personas fallecieron aproximadamente en el terremoto de Valdivia (1960)?", options: ["500", "1,600", "5,000", "10,000"], correct: "1,600" },
+        { text: "¿Cuántas personas fallecieron aproximadamente en el terremoto del Maule (2010)?", options: ["150", "300", "525", "1,000"], correct: "525" },
+        { text: "¿Qué sismo chileno tuvo una evacuación exitosa que evitó muchas víctimas?", options: ["Valdivia 1960", "Maule 2010", "Iquique 2014", "Coquimbo 2015"], correct: "Iquique 2014" },
+        { text: "¿Qué altura alcanzó la ola del tsunami en el terremoto de Coquimbo (2015)?", options: ["2 m", "3 m", "4.5 m", "6 m"], correct: "4.5 m" },
+        { text: "¿Qué tipo de ondas NO pueden viajar a través de líquidos?", options: ["Ondas P", "Ondas S", "Ondas superficiales", "Todas pueden"], correct: "Ondas S" },
+        { text: "¿Qué nos permite calcular la distancia al epicentro?", options: ["La diferencia de tiempo entre ondas P y S", "La magnitud del sismo", "La intensidad reportada", "La profundidad del hipocentro"], correct: "La diferencia de tiempo entre ondas P y S" },
+        { text: "¿Qué es un enjambre sísmico?", options: ["Una serie de pequeños sismos", "Un gran terremoto", "Un tsunami", "Una erupción volcánica"], correct: "Una serie de pequeños sismos" },
+        { text: "¿Qué relación tienen los enjambres sísmicos con los volcanes?", options: ["Pueden indicar una próxima erupción", "No tienen relación", "Indican que el volcán se extinguió", "Son causados por la lava"], correct: "Pueden indicar una próxima erupción" },
+        { text: "¿Qué es la deformación de la corteza terrestre?", options: ["Cambios en la forma del terreno", "Un terremoto", "Un tsunami", "Una erupción"], correct: "Cambios en la forma del terreno" },
+        { text: "¿Qué instrumento mide la deformación de la corteza?", options: ["Sismógrafo", "GPS geodésico", "Barómetro", "Termómetro"], correct: "GPS geodésico" },
+        { text: "¿Qué es una falla geológica activa?", options: ["Una falla que ha tenido sismos recientemente", "Una falla sin actividad", "Un volcán", "Un tsunami"], correct: "Una falla que ha tenido sismos recientemente" },
+        { text: "¿En qué año ocurrió el terremoto de Valparaíso (conocido como el 'del siglo')?", options: ["1906", "1920", "1950", "1985"], correct: "1906" },
+        { text: "¿Qué magnitud aproximada tuvo el terremoto de Valparaíso de 1906?", options: ["7.5", "8.2", "8.6", "9.0"], correct: "8.2" }
+    ];
+
+    // ======================== SECCIÓN 3: VOLCANES (40 preguntas pool, 10 aleatorias) ========================
+    const volcanesPool = [
+        { text: "¿Cuál es la parte más alta de un volcán?", options: ["Chimenea", "Cráter", "Cono", "Cámara magmática"], correct: "Cráter" },
+        { text: "¿Cómo se llama el conducto por donde sube el magma?", options: ["Cráter", "Chimenea", "Cono", "Caldera"], correct: "Chimenea" },
+        { text: "¿Qué tipo de volcán tiene forma cónica y laderas empinadas?", options: ["Escudo", "Estratovolcán", "Cono de escorias", "Caldera"], correct: "Estratovolcán" },
+        { text: "¿Qué tipo de volcán tiene forma ancha y baja con laderas suaves?", options: ["Estratovolcán", "Escudo", "Cono de escorias", "Caldera"], correct: "Escudo" },
+        { text: "¿Qué tipo de erupción es violenta y lanza cenizas a gran altura?", options: ["Efusiva", "Explosiva", "Estromboliana", "Hawaiana"], correct: "Explosiva" },
+        { text: "¿Qué tipo de erupción es tranquila con lava fluida?", options: ["Explosiva", "Efusiva", "Pliniana", "Freatomagmática"], correct: "Efusiva" },
+        { text: "¿Qué volcán chileno entró en erupción en 2008 destruyendo la ciudad cercana?", options: ["Villarrica", "Chaitén", "Calbuco", "Llaima"], correct: "Chaitén" },
+        { text: "¿Qué volcán chileno es conocido por tener un lago de lava en su interior?", options: ["Llaima", "Villarrica", "Osorno", "Calbuco"], correct: "Villarrica" },
+        { text: "¿Qué son las fumarolas?", options: ["Emisiones de gases volcánicos", "Flujos de lava", "Cenizas", "Lahares"], correct: "Emisiones de gases volcánicos" },
+        { text: "¿Qué tipo de erupción lleva el nombre de un volcán italiano?", options: ["Pliniana", "Estromboliana", "Vulcaniana", "Hawaiana"], correct: "Estromboliana" },
+        { text: "¿Qué tipo de erupción lleva el nombre de un naturalista romano?", options: ["Estromboliana", "Pliniana", "Vulcaniana", "Hawaiana"], correct: "Pliniana" },
+        { text: "¿Qué erupción chilena fue de tipo pliniano?", options: ["Chaitén 2008", "Villarrica 2015", "Calbuco 2015", "Llaima 2008"], correct: "Chaitén 2008" },
+        { text: "¿Qué volcán chileno entró en erupción en abril de 2015?", options: ["Villarrica", "Calbuco", "Chaitén", "Osorno"], correct: "Calbuco" },
+        { text: "¿Qué ciudad chilena fue cubierta por ceniza tras la erupción del Calbuco?", options: ["Puerto Montt", "Temuco", "Valdivia", "Osorno"], correct: "Puerto Montt" },
+        { text: "¿Qué volcán chileno es el más alto de Chile?", options: ["Ojos del Salado", "Llaima", "Villarrica", "Osorno"], correct: "Ojos del Salado" },
+        { text: "¿El volcán Ojos del Salado está activo o inactivo?", options: ["Activo", "Inactivo", "Extinto", "Durmiendo"], correct: "Activo" },
+        { text: "¿Qué tipo de roca se forma al enfriarse la lava?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca caliza"], correct: "Roca ígnea" },
+        { text: "¿Qué es la piedra pómez?", options: ["Una roca volcánica porosa", "Una roca sedimentaria", "Un mineral", "Un fósil"], correct: "Una roca volcánica porosa" },
+        { text: "¿Qué gas volcánico es tóxico y puede ser mortal?", options: ["Dióxido de carbono (CO₂)", "Oxígeno (O₂)", "Nitrógeno (N₂)", "Hidrógeno (H₂)"], correct: "Dióxido de carbono (CO₂)" },
+        { text: "¿Qué efecto tienen los volcanes en el clima global?", options: ["Enfrían el planeta por las cenizas", "Calientan el planeta", "No tienen efecto", "Solo afectan localmente"], correct: "Enfrían el planeta por las cenizas" },
+        { text: "¿Qué es un volcán submarino?", options: ["Un volcán en el fondo del mar", "Un volcán bajo tierra", "Un volcán en la Antártica", "Un volcán extinto"], correct: "Un volcán en el fondo del mar" },
+        { text: "¿Qué es una dorsal oceánica?", options: ["Una cadena de volcanes submarinos", "Un tsunami", "Un terremoto", "Un glaciar"], correct: "Una cadena de volcanes submarinos" },
+        { text: "¿Qué tipo de erupción ocurre cuando el magma interactúa con agua?", options: ["Freatomagmática", "Efusiva", "Pliniana", "Estromboliana"], correct: "Freatomagmática" },
+        { text: "¿Qué es un domo de lava?", options: ["Acumulación de lava viscosa cerca del cráter", "Un lago de lava", "Un flujo de lava rápido", "Una columna de ceniza"], correct: "Acumulación de lava viscosa cerca del cráter" },
+        { text: "¿Qué volcán chileno es considerado uno de los más activos de Sudamérica?", options: ["Villarrica", "Llaima", "Calbuco", "Osorno"], correct: "Villarrica" },
+        { text: "¿Qué volcán chileno tuvo una erupción en 2008-2009?", options: ["Chaitén", "Llaima", "Villarrica", "Calbuco"], correct: "Llaima" },
+        { text: "¿Qué es un cono parásito?", options: ["Un pequeño volcán en las faldas de uno más grande", "Un volcán extinto", "Un cráter", "Una fumarola"], correct: "Un pequeño volcán en las faldas de uno más grande" },
+        { text: "¿Qué es un volcán activo?", options: ["Que ha hecho erupción en los últimos 10,000 años", "Que nunca ha hecho erupción", "Que está en erupción ahora", "Que está durmiendo"], correct: "Que ha hecho erupción en los últimos 10,000 años" },
+        { text: "¿Qué es un volcán inactivo?", options: ["No ha hecho erupción en miles de años", "Está en erupción ahora", "Acaba de hacer erupción", "Nunca ha hecho erupción"], correct: "No ha hecho erupción en miles de años" },
+        { text: "¿Qué es un volcán extinto?", options: ["No se espera que vuelva a hacer erupción", "Está en erupción", "Está durmiendo", "Es pequeño"], correct: "No se espera que vuelva a hacer erupción" }
+    ];
+
+    // ======================== SECCIÓN 4: ESCALAS Y MEDICIONES (30 preguntas pool, 10 aleatorias) ========================
+    const escalasPool = [
+        { text: "¿Qué mide la escala de Richter?", options: ["La intensidad", "La magnitud", "Los daños", "La duración"], correct: "La magnitud" },
+        { text: "¿Qué mide la escala de Mercalli?", options: ["La magnitud", "La intensidad (daños y efectos)", "La profundidad", "La duración"], correct: "La intensidad (daños y efectos)" },
+        { text: "¿La escala de Richter es lineal o logarítmica?", options: ["Lineal", "Logarítmica", "Exponencial", "Constante"], correct: "Logarítmica" },
+        { text: "¿Cuántas veces más energía libera un sismo de magnitud 6 comparado con uno de 5?", options: ["10 veces", "20 veces", "32 veces", "100 veces"], correct: "32 veces" },
+        { text: "¿Qué escala va del I al XII?", options: ["Richter", "Mercalli", "Ambas", "Ninguna"], correct: "Mercalli" },
+        { text: "¿Qué intensidad en Mercalli corresponde a 'destrucción total'?", options: ["IX", "X", "XI", "XII"], correct: "XII" },
+        { text: "¿Qué intensidad en Mercalli corresponde a 'sentido por casi todos, objetos caídos'?", options: ["III", "IV", "V", "VI"], correct: "VI" },
+        { text: "¿Qué magnitud en Richter es considerada un 'gran terremoto'?", options: ["5.0", "6.0", "7.0", "8.0"], correct: "8.0" },
+        { text: "¿Qué magnitud en Richter es considerada 'moderada'?", options: ["3.0-3.9", "4.0-4.9", "5.0-5.9", "6.0-6.9"], correct: "5.0-5.9" },
+        { text: "¿Qué magnitud tuvo el terremoto de Valdivia en la escala de Richter?", options: ["8.5", "8.8", "9.5", "9.0"], correct: "9.5" },
+        { text: "¿Qué magnitud tuvo el terremoto del Maule (2010)?", options: ["7.5", "8.8", "9.5", "8.2"], correct: "8.8" },
+        { text: "¿Qué magnitud tuvo el terremoto de Iquique (2014)?", options: ["7.5", "8.2", "8.8", "9.5"], correct: "8.2" },
+        { text: "¿Qué magnitud tuvo el terremoto de Coquimbo (2015)?", options: ["7.5", "8.2", "8.3", "8.8"], correct: "8.3" },
+        { text: "¿Qué instrumento mide la magnitud de un sismo?", options: ["Sismógrafo", "Barómetro", "Termómetro", "Anemómetro"], correct: "Sismógrafo" },
+        { text: "¿La escala de Mercalli es la misma para todo el sismo o varía?", options: ["Es la misma", "Varía según la distancia al epicentro", "Solo depende del suelo", "No se usa"], correct: "Varía según la distancia al epicentro" },
+        { text: "¿Qué escala es objetiva (medible con instrumentos)?", options: ["Richter", "Mercalli", "Ambas", "Ninguna"], correct: "Richter" },
+        { text: "¿Qué escala es subjetiva (basada en percepciones y daños)?", options: ["Richter", "Mercalli", "Ambas", "Ninguna"], correct: "Mercalli" },
+        { text: "¿Qué información entrega el sismógrafo?", options: ["La magnitud y la ubicación aproximada", "Solo la magnitud", "Solo la ubicación", "Solo la profundidad"], correct: "La magnitud y la ubicación aproximada" },
+        { text: "¿Qué es la magnitud de un sismo?", options: ["La energía liberada", "Los daños causados", "La duración", "La profundidad"], correct: "La energía liberada" },
+        { text: "¿Qué es la intensidad de un sismo?", options: ["Los efectos y daños", "La energía liberada", "La profundidad", "La duración"], correct: "Los efectos y daños" },
+        { text: "¿Un sismo de magnitud 8 libera cuántas veces más energía que uno de magnitud 6?", options: ["32 veces", "64 veces", "1,000 veces", "10,000 veces"], correct: "1,000 veces" },
+        { text: "¿Cuál es la magnitud máxima teórica en la escala de Richter?", options: ["10", "9.5", "8.5", "No tiene límite"], correct: "No tiene límite" },
+        { text: "¿Qué intensidad en Mercalli corresponde a 'daños estructurales graves'?", options: ["VI", "VII", "VIII", "IX"], correct: "IX" },
+        { text: "¿Qué intensidad en Mercalli corresponde a 'sentido por pocos en reposo'?", options: ["I", "II", "III", "IV"], correct: "II" },
+        { text: "¿Qué intensidad en Mercalli corresponde a 'sentido por muchos, despertar de durmientes'?", options: ["III", "IV", "V", "VI"], correct: "IV" },
+        { text: "¿Qué magnitud en Richter se considera 'fuerte'?", options: ["4.0-4.9", "5.0-5.9", "6.0-6.9", "7.0-7.9"], correct: "6.0-6.9" },
+        { text: "¿Qué magnitud en Richter se considera 'mayor'?", options: ["4.0-4.9", "5.0-5.9", "6.0-6.9", "7.0-7.9"], correct: "7.0-7.9" },
+        { text: "¿Qué magnitud en Richter se considera 'gran terremoto'?", options: ["6.0-6.9", "7.0-7.9", "8.0 o más", "5.0-5.9"], correct: "8.0 o más" }
+    ];
+
+    // ======================== SECCIÓN 5: PREVENCIÓN (40 preguntas pool, 10 aleatorias) ========================
+    const prevencionPool = [
+        { text: "¿Cuál es la primera acción que debes tomar durante un sismo?", options: ["Correr", "Agacharte", "Gritar", "Salir de la casa"], correct: "Agacharte" },
+        { text: "¿Cuál es la segunda acción de la regla de las 3 'S'?", options: ["Sujetarte", "Saltar", "Salir", "Socorrer"], correct: "Sujetarte" },
+        { text: "¿Cuál es la tercera acción de la regla de las 3 'S'?", options: ["Sujetar tu cabeza", "Salir", "Saltar", "Socorrer"], correct: "Sujetar tu cabeza" },
+        { text: "¿Qué debes hacer si estás dentro de un edificio durante un sismo?", options: ["Quedarte dentro, lejos de ventanas", "Salir corriendo", "Usar el ascensor", "Saltar por la ventana"], correct: "Quedarte dentro, lejos de ventanas" },
+        { text: "¿Qué debes evitar usar durante un sismo?", options: ["Ascensor", "Escaleras", "Puertas", "Muebles"], correct: "Ascensor" },
+        { text: "¿Qué debes hacer si estás en la calle durante un sismo?", options: ["Alejarte de edificios y postes", "Correr a un edificio", "Quedarte debajo de un árbol", "Saltar"], correct: "Alejarte de edificios y postes" },
+        { text: "¿Qué debe contener una mochila de emergencia?", options: ["Agua, alimentos, linterna, botiquín", "Juguetes, ropa, zapatos", "Computador, libros, cuadernos", "Cámara, teléfono, cargador"], correct: "Agua, alimentos, linterna, botiquín" },
+        { text: "¿Cuántos litros de agua por persona se recomienda en la mochila de emergencia?", options: ["1 litro", "2 litros", "3 litros", "4 litros"], correct: "2 litros" },
+        { text: "¿Qué tipo de alimentos se recomiendan para la mochila de emergencia?", options: ["No perecibles (enlatados, barras energéticas)", "Frescos", "Congelados", "Preparados"], correct: "No perecibles (enlatados, barras energéticas)" },
+        { text: "¿Qué debes hacer antes de un sismo?", options: ["Preparar una mochila de emergencia", "Correr", "Gritar", "Llamar a familiares"], correct: "Preparar una mochila de emergencia" },
+        { text: "¿Qué debes hacer después de un sismo?", options: ["Revisar si hay heridos y cortar servicios", "Quedarte donde estás", "Subir al techo", "Usar el ascensor"], correct: "Revisar si hay heridos y cortar servicios" },
+        { text: "¿Qué debes revisar después de un sismo por posibles fugas?", options: ["Gas y electricidad", "Agua", "Teléfono", "Internet"], correct: "Gas y electricidad" },
+        { text: "¿Qué debes NO hacer después de un sismo?", options: ["Propagar rumores", "Ayudar a heridos", "Cortar servicios", "Revisar daños"], correct: "Propagar rumores" },
+        { text: "¿Dónde es más seguro ubicarse durante un sismo dentro de una casa?", options: ["Bajo una mesa firme", "Junto a una ventana", "En el ascensor", "En la escalera"], correct: "Bajo una mesa firme" },
+        { text: "¿Qué es la simulación de evacuación?", options: ["Un ejercicio para practicar qué hacer en emergencias", "Un terremoto falso", "Un juego", "Una reunión"], correct: "Un ejercicio para practicar qué hacer en emergencias" },
+        { text: "¿Qué son las zonas de seguridad?", options: ["Lugares identificados como seguros en la casa o colegio", "Lugares lejanos", "Lugares con agua", "Lugares con comida"], correct: "Lugares identificados como seguros en la casa o colegio" },
+        { text: "¿Qué debes hacer si estás en la playa y sientes un sismo fuerte?", options: ["Evacuar a zonas altas por posible tsunami", "Quedarte en la playa", "Meterte al mar", "Subir a un árbol"], correct: "Evacuar a zonas altas por posible tsunami" },
+        { text: "¿Qué debes hacer con los muebles altos antes de un sismo?", options: ["Fijarlos a la pared", "Dejarlos sueltos", "Ponerlos en el centro", "Desarmarlos"], correct: "Fijarlos a la pared" },
+        { text: "¿Qué objetos pueden caer y causar daños durante un sismo?", options: ["Cuadros y lámparas", "Alfombras", "Cortinas", "Pisos"], correct: "Cuadros y lámparas" },
+        { text: "¿Qué número de emergencia debes llamar en Chile?", options: ["131", "133", "911", "132"], correct: "133" },
+        { text: "¿Qué debes hacer si estás manejando durante un sismo?", options: ["Detenerte en un lugar seguro", "Acelerar", "Saltar del auto", "Ignorar"], correct: "Detenerte en un lugar seguro" },
+        { text: "¿Qué debes evitar colgar en lugares altos?", options: ["Objetos pesados que puedan caer", "Cuadros livianos", "Adornos pequeños", "Fotos"], correct: "Objetos pesados que puedan caer" },
+        { text: "¿Qué debes hacer con los vidrios y espejos?", options: ["Asegurarlos o reubicarlos", "Dejarlos como están", "Sacarlos todos", "Cubrirlos con tela"], correct: "Asegurarlos o reubicarlos" },
+        { text: "¿Qué documento es importante tener en la mochila de emergencia?", options: ["Fotocopia de cédula de identidad", "Libros", "Cuadernos", "Revistas"], correct: "Fotocopia de cédula de identidad" },
+        { text: "¿Qué debes tener en tu mochila de emergencia para comunicación?", options: ["Radio con pilas", "Teléfono fijo", "Computador", "Tablet"], correct: "Radio con pilas" },
+        { text: "¿Qué herramienta debe incluir la mochila de emergencia?", options: ["Linterna", "Martillo", "Taladro", "Sierra"], correct: "Linterna" },
+        { text: "¿Qué elemento de primeros auxilios es esencial en la mochila?", options: ["Botiquín", "Jabón", "Shampoo", "Crema"], correct: "Botiquín" },
+        { text: "¿Qué debes NO hacer si hay una réplica?", options: ["Mantener la calma", "Buscar zonas seguras", "Salir corriendo sin precaución", "Seguir protocolos"], correct: "Salir corriendo sin precaución" },
+        { text: "¿Qué debes hacer si alguien está herido después de un sismo?", options: ["Prestar primeros auxilios básicos", "Moverlo inmediatamente", "Ignorarlo", "Correr"], correct: "Prestar primeros auxilios básicos" }
+    ];
+
+    function getRandomItems(pool, n) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, n);
+    }
+
+    let currentConceptos = [], currentSismos = [], currentVolcanes = [], currentEscalas = [], currentPrevencion = [];
+    let conceptosAnswers = [], sismosAnswers = [], volcanesAnswers = [], escalasAnswers = [], prevencionAnswers = [];
+    let evaluated = false;
+
+    function renderConceptos() {
+        const container = document.getElementById('conceptos-questions');
+        container.innerHTML = '';
+        currentConceptos.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `conceptos-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="conceptos_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(conceptosAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="conceptos_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === conceptosAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) conceptosAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderSismos() {
+        const container = document.getElementById('sismos-questions');
+        container.innerHTML = '';
+        currentSismos.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `sismos-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="sismos_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(sismosAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="sismos_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === sismosAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) sismosAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderVolcanes() {
+        const container = document.getElementById('volcanes-questions');
+        container.innerHTML = '';
+        currentVolcanes.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `volcanes-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="volcanes_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(volcanesAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="volcanes_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === volcanesAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) volcanesAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderEscalas() {
+        const container = document.getElementById('escalas-questions');
+        container.innerHTML = '';
+        currentEscalas.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `escalas-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="escalas_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(escalasAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="escalas_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === escalasAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) escalasAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderPrevencion() {
+        const container = document.getElementById('prevencion-questions');
+        container.innerHTML = '';
+        currentPrevencion.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `prevencion-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="prevencion_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(prevencionAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="prevencion_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === prevencionAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) prevencionAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderAll() {
+        renderConceptos();
+        renderSismos();
+        renderVolcanes();
+        renderEscalas();
+        renderPrevencion();
+    }
+
+    function showCorrectAnswers() {
+        const sections = [
+            { current: currentConceptos, answers: conceptosAnswers, prefix: 'conceptos' },
+            { current: currentSismos, answers: sismosAnswers, prefix: 'sismos' },
+            { current: currentVolcanes, answers: volcanesAnswers, prefix: 'volcanes' },
+            { current: currentEscalas, answers: escalasAnswers, prefix: 'escalas' },
+            { current: currentPrevencion, answers: prevencionAnswers, prefix: 'prevencion' }
+        ];
+        sections.forEach(section => {
+            section.current.forEach((q, idx) => {
+                const card = document.getElementById(`${section.prefix}-card-${idx}`);
+                if(!card) return;
+                const isCorrect = section.answers[idx] === q.correct;
+                card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+                if(!card.querySelector('.correct-answer-display')) {
+                    const correctDiv = document.createElement('div');
+                    correctDiv.className = 'correct-answer-display';
+                    correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.correct}`;
+                    card.appendChild(correctDiv);
+                }
+            });
+        });
+    }
+
+    function calculateAndShowResults() {
+        let totalCorrect = 0;
+        const maxPoints = 50;
+
+        for(let i=0; i<currentConceptos.length; i++) {
+            if(conceptosAnswers[i] && conceptosAnswers[i] === currentConceptos[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentSismos.length; i++) {
+            if(sismosAnswers[i] && sismosAnswers[i] === currentSismos[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentVolcanes.length; i++) {
+            if(volcanesAnswers[i] && volcanesAnswers[i] === currentVolcanes[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentEscalas.length; i++) {
+            if(escalasAnswers[i] && escalasAnswers[i] === currentEscalas[i].correct) totalCorrect++;
+        }
+        for(let i=0; i<currentPrevencion.length; i++) {
+            if(prevencionAnswers[i] && prevencionAnswers[i] === currentPrevencion[i].correct) totalCorrect++;
+        }
+
+        const grade = 1 + (6 * (totalCorrect / maxPoints));
+        const finalGrade = grade.toFixed(1);
+        
+        document.getElementById('scoreDisplay').innerHTML = `Puntaje: ${totalCorrect} / ${maxPoints}`;
+        document.getElementById('gradeDisplay').innerHTML = `Nota: ${finalGrade} (1.0 a 7.0)`;
+        const passMsg = totalCorrect >= 30 ? '✅ APROBADO (Nota ≥ 4.0 - 60%)' : '❌ NO APROBADO. Necesitas al menos 30 puntos.';
+        document.getElementById('passDisplay').innerHTML = passMsg;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('actionButtons').style.display = 'flex';
+        showCorrectAnswers();
+        
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.style.transition = 'box-shadow 0.3s';
+        resultsSection.style.boxShadow = '0 0 0 3px #facc15';
+        setTimeout(() => { resultsSection.style.boxShadow = 'none'; }, 1000);
+    }
+
+    function evaluateTest() {
+        if(evaluated) return;
+        evaluated = true;
+        calculateAndShowResults();
+    }
+
+    function restartTest() {
+        currentConceptos = getRandomItems(conceptosPool, 10);
+        currentSismos = getRandomItems(sismosPool, 10);
+        currentVolcanes = getRandomItems(volcanesPool, 10);
+        currentEscalas = getRandomItems(escalasPool, 10);
+        currentPrevencion = getRandomItems(prevencionPool, 10);
+        conceptosAnswers = new Array(10).fill(null);
+        sismosAnswers = new Array(10).fill(null);
+        volcanesAnswers = new Array(10).fill(null);
+        escalasAnswers = new Array(10).fill(null);
+        prevencionAnswers = new Array(10).fill(null);
+        evaluated = false;
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+        renderAll();
+    }
+
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if(btn.id !== 'evaluateBtnSidebar') {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const tabId = btn.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                
+                const contentContainer = document.querySelector('.tab-content-container');
+                if(contentContainer) {
+                    contentContainer.scrollTo({ top: 0, behavior: 'smooth' });
+                }
+            });
+        }
+    });
+
+    document.getElementById('evaluateBtnSidebar').addEventListener('click', evaluateTest);
+    document.getElementById('restartBtn').addEventListener('click', restartTest);
+    document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_1_Fisica.html');
+    document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Fisica.html');
+
+    restartTest();
+</script>
+</body>
+</html>

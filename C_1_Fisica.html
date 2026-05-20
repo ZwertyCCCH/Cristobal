@@ -1,0 +1,966 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Clase: Sismos y Volcanes - Física 7° básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 85vh;
+            max-height: 750px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.4);
+            background: #0f0f1a;
+            border-radius: 32px;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: #0f0f1a;
+            border-radius: 32px;
+            color: #e2e8f0;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #1e293b;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #f97316;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f97316, #fb923c);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #fb923c;
+            border-left: 5px solid #f97316;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #facc15;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .badge {
+            background: #f97316;
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .info-box {
+            background: #1e293b;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            border-left: 4px solid #f97316;
+        }
+
+        .example-box {
+            background: #422006;
+            border-left: 5px solid #f97316;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid #334155;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #f97316;
+        }
+
+        .card i {
+            font-size: 2rem;
+            color: #f97316;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #f97316;
+            color: white;
+            font-weight: bold;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+        }
+
+        .magnitude-scale {
+            background: #1e293b;
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .magnitude-item {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: #0f172a;
+            border-radius: 12px;
+        }
+
+        .magnitude-value {
+            width: 60px;
+            font-weight: bold;
+            color: #facc15;
+        }
+
+        .magnitude-bar {
+            flex: 1;
+            height: 20px;
+            background: #334155;
+            border-radius: 10px;
+            margin: 0 1rem;
+            overflow: hidden;
+        }
+
+        .magnitude-fill {
+            height: 100%;
+            background: #f97316;
+            border-radius: 10px;
+        }
+
+        .magnitude-effect {
+            width: 200px;
+            font-size: 0.8rem;
+        }
+
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: #1e293b;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.3);
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: all 0.2s ease;
+            color: #e2e8f0;
+        }
+
+        .nav-btn:hover {
+            background: #f97316;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: #1e293b;
+            color: #e2e8f0;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action:hover {
+            background: #f97316;
+            transform: translateY(-2px);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #334155;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #f97316;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        .volcano-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin: 1rem 0;
+        }
+
+        .volcano-parts {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .part {
+            background: #334155;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            font-size: 0.75rem;
+        }
+
+        @media (max-width: 680px) {
+            .slide {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            .magnitude-effect {
+                width: 100px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        
+        <!-- SLIDE 0 - PORTADA -->
+        <div class="slide active" data-index="0">
+            <div class="badge">🌋 Física - 7° básico</div>
+            <h1>Sismos y Volcanes</h1>
+            <p style="font-size: 1.2rem; margin-top: 0.5rem;">La energía de la Tierra en movimiento</p>
+            <div class="info-box" style="margin-top: 2rem;">
+                <i class="fas fa-fire"></i> <strong>En esta clase aprenderás:</strong><br>
+                ➜ ¿Qué son los sismos y por qué ocurren?<br>
+                ➜ La escala de magnitud y sus efectos<br>
+                ➜ ¿Qué son los volcanes y cómo se forman?<br>
+                ➜ Tipos de erupciones volcánicas<br>
+                ➜ Relación entre sismos y volcanes<br>
+                ➜ Cómo protegernos ante un sismo
+            </div>
+            <div style="margin-top: auto; text-align: center; padding: 1rem;">
+                <i class="fas fa-arrow-right"></i> Presiona ▶ o desliza para continuar
+            </div>
+        </div>
+
+        <!-- SLIDE 1 - ¿QUÉ SON LOS SISMOS? -->
+        <div class="slide" data-index="1">
+            <div class="badge">🌍 SISMOS</div>
+            <h2>¿Qué es un sismo o terremoto?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-waveform"></i>
+                    <h3>Definición</h3>
+                    <p>Un <strong>sismo</strong> es la vibración de la tierra causada por la liberación repentina de energía acumulada en el interior del planeta.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-mountain"></i>
+                    <h3>Causa principal</h3>
+                    <p>El movimiento de las <strong>placas tectónicas</strong>. Cuando chocan o se separan, liberan energía en forma de ondas sísmicas.</p>
+                </div>
+            </div>
+            <div class="example-box">
+                <i class="fas fa-lightbulb"></i> <strong>Ejemplo histórico:</strong><br>
+                El terremoto de Valdivia (Chile, 1960) fue el más fuerte registrado en la historia: magnitud 9.5. Duró aproximadamente 10 minutos.
+            </div>
+            <div class="info-box">
+                <i class="fas fa-question-circle"></i> <strong>Dato curioso:</strong> Cada año ocurren más de 500,000 sismos en el mundo, pero la mayoría son tan pequeños que solo los detectan instrumentos especiales.
+            </div>
+        </div>
+
+        <!-- SLIDE 2 - PARTES DE UN SISMO -->
+        <div class="slide" data-index="2">
+            <div class="badge">📍 SISMOS</div>
+            <h2>Partes de un sismo</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-location-dot"></i>
+                    <h3>Hipocentro (Foco)</h3>
+                    <p>Es el punto <strong>dentro de la Tierra</strong> donde se libera la energía. Puede estar a varios kilómetros de profundidad.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-map-pin"></i>
+                    <h3>Epicentro</h3>
+                    <p>Es el punto en la <strong>superficie terrestre</strong> directamente sobre el hipocentro. Es donde el sismo se siente con mayor intensidad.</p>
+                </div>
+            </div>
+            <div class="example-box">
+                <i class="fas fa-chart-simple"></i> <strong>Ejemplo:</strong> Terremoto de Valdivia (1960)<br>
+                Hipocentro: ~33 km de profundidad<br>
+                Epicentro: Cerca de Lumaco, Región de La Araucanía
+            </div>
+            <div class="info-box">
+                <i class="fas fa-ruler"></i> <strong>Profundidad:</strong> Los sismos se clasifican en:
+                • Superficiales: &lt; 70 km<br>
+                • Intermedios: 70 - 300 km<br>
+                • Profundos: &gt; 300 km
+            </div>
+        </div>
+
+        <!-- SLIDE 3 - ESCALA DE MAGNITUD -->
+        <div class="slide" data-index="3">
+            <div class="badge">📊 SISMOS</div>
+            <h2>Escala de Magnitud (Richter)</h2>
+            <div class="info-box">
+                <p>La <strong>magnitud</strong> mide la energía liberada en el hipocentro. Es una escala <strong>logarítmica</strong>: cada punto representa 32 veces más energía.</p>
+            </div>
+            <div class="magnitude-scale">
+                <div class="magnitude-item">
+                    <span class="magnitude-value">&lt; 2.0</span>
+                    <div class="magnitude-bar"><div class="magnitude-fill" style="width: 10%; background: #22c55e;"></div></div>
+                    <span class="magnitude-effect">Microsismo - Solo instrumentos</span>
+                </div>
+                <div class="magnitude-item">
+                    <span class="magnitude-value">2.0 - 3.9</span>
+                    <div class="magnitude-bar"><div class="magnitude-fill" style="width: 25%; background: #84cc16;"></div></div>
+                    <span class="magnitude-effect">Muy leve - Apenas perceptible</span>
+                </div>
+                <div class="magnitude-item">
+                    <span class="magnitude-value">4.0 - 4.9</span>
+                    <div class="magnitude-bar"><div class="magnitude-fill" style="width: 45%; background: #eab308;"></div></div>
+                    <span class="magnitude-effect">Ligero - Se siente, sin daños</span>
+                </div>
+                <div class="magnitude-item">
+                    <span class="magnitude-value">5.0 - 5.9</span>
+                    <div class="magnitude-bar"><div class="magnitude-fill" style="width: 65%; background: #f97316;"></div></div>
+                    <span class="magnitude-effect">Moderado - Daños leves</span>
+                </div>
+                <div class="magnitude-item">
+                    <span class="magnitude-value">6.0 - 6.9</span>
+                    <div class="magnitude-bar"><div class="magnitude-fill" style="width: 80%; background: #ef4444;"></div></div>
+                    <span class="magnitude-effect">Fuerte - Daños significativos</span>
+                </div>
+                <div class="magnitude-item">
+                    <span class="magnitude-value">7.0 - 7.9</span>
+                    <div class="magnitude-bar"><div class="magnitude-fill" style="width: 95%; background: #dc2626;"></div></div>
+                    <span class="magnitude-effect">Mayor - Daños graves</span>
+                </div>
+                <div class="magnitude-item">
+                    <span class="magnitude-value">≥ 8.0</span>
+                    <div class="magnitude-bar"><div class="magnitude-fill" style="width: 100%; background: #b91c1c;"></div></div>
+                    <span class="magnitude-effect">Gran terremoto - Devastador</span>
+                </div>
+            </div>
+            <div class="example-box">
+                <i class="fas fa-history"></i> <strong>Ejemplo:</strong> Terremoto de Valdivia (1960) - Magnitud <span class="highlight">9.5</span> - El más fuerte de la historia.
+            </div>
+        </div>
+
+        <!-- SLIDE 4 - ESCALA DE INTENSIDAD (Mercalli) -->
+        <div class="slide" data-index="4">
+            <div class="badge">📊 SISMOS</div>
+            <h2>Escala de Intensidad (Mercalli)</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-waveform"></i>
+                    <h3>¿Qué mide?</h3>
+                    <p>La <strong>intensidad</strong> mide los <strong>efectos y daños</strong> del sismo en personas, construcciones y el terreno. Va del I al XII.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-building"></i>
+                    <h3>Diferencia con magnitud</h3>
+                    <p>La magnitud es <strong>una sola</strong> por sismo. La intensidad es <strong>variable</strong> según la distancia al epicentro y las condiciones del suelo.</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <strong>📋 Niveles de intensidad (resumen):</strong><br>
+                I-III: No se siente o apenas perceptible<br>
+                IV-V: Se siente, objetos se mueven<br>
+                VI-VII: Caída de objetos, grietas en muros<br>
+                VIII-IX: Daños estructurales graves<br>
+                X-XII: Destrucción total
+            </div>
+            <div class="example-box">
+                <i class="fas fa-map"></i> <strong>Ejemplo Chile:</strong> En el terremoto de 2010 (Maule, 8.8), la intensidad fue mayor en Concepción que en Santiago, por estar más cerca del epicentro.
+            </div>
+        </div>
+
+        <!-- SLIDE 5 - TIPOS DE ONDAS SÍSMICAS -->
+        <div class="slide" data-index="5">
+            <div class="badge">📡 SISMOS</div>
+            <h2>Ondas Sísmicas</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-arrow-right"></i>
+                    <h3>Ondas P (Primarias)</h3>
+                    <p>Son las <strong>más rápidas</strong>. Viajan comprimiendo y expandiendo el terreno (como un resorte). Llegan primero.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-arrow-up"></i>
+                    <h3>Ondas S (Secundarias)</h3>
+                    <p>Más lentas que las P. Mueven el terreno <strong>perpendicularmente</strong> a la dirección de viaje. Llegan después.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-bolt"></i>
+                    <h3>Ondas Superficiales</h3>
+                    <p>Son las <strong>más lentas pero las más destructivas</strong>. Viajan por la superficie y causan los mayores daños.</p>
+                </div>
+            </div>
+            <div class="info-box">
+                <i class="fas fa-clock"></i> <strong>Diferencia de tiempo:</strong> La diferencia entre la llegada de las ondas P y S permite calcular la distancia al epicentro.
+            </div>
+        </div>
+
+        <!-- SLIDE 6 - ¿QUÉ SON LOS VOLCANES? -->
+        <div class="slide" data-index="6">
+            <div class="badge">🌋 VOLCANES</div>
+            <h2>¿Qué es un volcán?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-fire"></i>
+                    <h3>Definición</h3>
+                    <p>Un <strong>volcán</strong> es una abertura en la corteza terrestre por donde sale magma, gases y cenizas desde el interior de la Tierra.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-temperature-high"></i>
+                    <h3>Magma vs Lava</h3>
+                    <p><strong>Magma:</strong> roca fundida dentro del volcán.<br>
+                    <strong>Lava:</strong> magma que ha salido a la superficie.</p>
+                </div>
+            </div>
+            <div class="volcano-diagram">
+                <i class="fas fa-mountain" style="font-size: 5rem; color: #f97316;"></i>
+                <div class="volcano-parts">
+                    <span class="part">📌 Cráter</span>
+                    <span class="part">📌 Chimenea</span>
+                    <span class="part">📌 Cámara magmática</span>
+                    <span class="part">📌 Cono volcánico</span>
+                    <span class="part">📌 Fumarolas</span>
+                </div>
+            </div>
+            <div class="example-box">
+                <i class="fas fa-globe-americas"></i> <strong>Ejemplo en Chile:</strong> Volcán Villarrica (Región de La Araucanía) - Uno de los más activos de Sudamérica.
+            </div>
+        </div>
+
+        <!-- SLIDE 7 - TIPOS DE VOLCANES -->
+        <div class="slide" data-index="7">
+            <div class="badge">🌋 VOLCANES</div>
+            <h2>Tipos de volcanes</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <i class="fas fa-mountain"></i>
+                    <h3>Estratovolcán</h3>
+                    <p>Forma cónica, laderas empinadas. Alternan erupciones explosivas y efusivas.</p>
+                    <p><strong>Ejemplo:</strong> Volcán Osorno, Villarrica</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-water"></i>
+                    <h3>Escudo</h3>
+                    <p>Forma ancha y baja. Erupciones tranquilas de lava fluida.</p>
+                    <p><strong>Ejemplo:</strong> Volcanes de Hawái</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-circle"></i>
+                    <h3>Cono de escorias</h3>
+                    <p>Pequeños, con laderas empinadas. Formados por fragmentos de roca expulsados.</p>
+                    <p><strong>Ejemplo:</strong> Conos parásitos del Llaima</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-tint"></i>
+                    <h3>Caldera</h3>
+                    <p>Gran depresión formada tras una erupción masiva.</p>
+                    <p><strong>Ejemplo:</strong> Caldera del volcán Chaitén</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 - TIPOS DE ERUPCIONES -->
+        <div class="slide" data-index="8">
+            <div class="badge">🌋 VOLCANES</div>
+            <h2>Tipos de erupciones volcánicas</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-tint"></i>
+                    <h3>Efusiva (Hawaiana)</h3>
+                    <p>Lava muy fluida. No es violenta. La lava fluye como ríos de fuego.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-cloud-upload-alt"></i>
+                    <h3>Explosiva (Pliniana)</h3>
+                    <p>Lava muy viscosa. Violenta. Lanza cenizas, gases y rocas a gran altura.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-gas-pump"></i>
+                    <h3>Estromboliana</h3>
+                    <p>Moderada. Lanza fragmentos de lava incandescente en pulsos regulares.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-water"></i>
+                    <h3>Freatomagmática</h3>
+                    <p>Interacción del magma con agua. Produce grandes nubes de vapor y ceniza.</p>
+                </div>
+            </div>
+            <div class="example-box">
+                <i class="fas fa-history"></i> <strong>Ejemplo en Chile:</strong> Erupción del Chaitén (2008) - Tipo pliniano, evacuó a toda la ciudad.
+            </div>
+        </div>
+
+        <!-- SLIDE 9 - MATERIALES VOLCÁNICOS -->
+        <div class="slide" data-index="9">
+            <div class="badge">🌋 VOLCANES</div>
+            <h2>Materiales expulsados por un volcán</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <i class="fas fa-fire"></i>
+                    <h3>🌋 Lava</h3>
+                    <p>Roca fundida que fluye por las laderas. Puede alcanzar los 1,200°C.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-cloud"></i>
+                    <h3>💨 Gases</h3>
+                    <p>Vapor de agua, CO₂, SO₂. Pueden ser tóxicos y afectan el clima global.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-dust"></i>
+                    <h3>🌫️ Cenizas</h3>
+                    <p>Fragmentos de roca pulverizada. Pueden viajar miles de kilómetros.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-rocket"></i>
+                    <h3>🔴 Bombas volcánicas</h3>
+                    <p>Fragmentos de lava solidificada expulsados durante erupciones explosivas.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-flask"></i>
+                    <h3>🪨 Escorias</h3>
+                    <p>Fragmentos porosos de roca volcánica (parecen piedra pómez oscura).</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-meteor"></i>
+                    <h3>⚠️ Lahares</h3>
+                    <p>Flujos de lodo volcánico (mezcla de ceniza, agua y escombros). Muy destructivos.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 - RELACIÓN ENTRE SISMOS Y VOLCANES -->
+        <div class="slide" data-index="10">
+            <div class="badge">🔄 RELACIÓN</div>
+            <h2>¿Cómo se relacionan sismos y volcanes?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-globe"></i>
+                    <h3>Placas tectónicas</h3>
+                    <p>Tanto sismos como volcanes ocurren principalmente en los <strong>bordes de placas</strong> (zonas de subducción, dorsales oceánicas, fallas transformantes).</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-chart-line"></i>
+                    <h3>Sismicidad volcánica</h3>
+                    <p>Antes de una erupción, el magma asciende y provoca <strong>pequeños sismos</strong> (enjambres sísmicos) que sirven como alerta temprana.</p>
+                </div>
+            </div>
+            <div class="example-box">
+                <i class="fas fa-map-marked-alt"></i> <strong>Chile:</strong> Está en el <strong>Cinturón de Fuego del Pacífico</strong>, donde convergen las placas de Nazca y Sudamericana. Por eso tenemos tantos sismos y volcanes.
+            </div>
+            <div class="info-box">
+                <i class="fas fa-chart-simple"></i> <strong>Dato:</strong> El 90% de los sismos del mundo ocurren en el Cinturón de Fuego del Pacífico, que alberga el 75% de los volcanes activos.
+            </div>
+        </div>
+
+        <!-- SLIDE 11 - CÓMO PROTEGERSE ANTE UN SISMO -->
+        <div class="slide" data-index="11">
+            <div class="badge">🛡️ PREVENCIÓN</div>
+            <h2>¿Cómo actuar durante un sismo?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-baby-carriage"></i>
+                    <h3>✅ Regla de las 3 "S"</h3>
+                    <p><strong>S</strong>uelo (agáchate)<br>
+                    <strong>S</strong>ujétate (a una estructura firme)<br>
+                    <strong>S</strong>ujeta tu cabeza (protégela con los brazos)</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-door-open"></i>
+                    <h3>🚫 NO hacer</h3>
+                    <p>❌ No corras<br>
+                    ❌ No uses ascensores<br>
+                    ❌ No te pares bajo ventanas o lámparas<br>
+                    ❌ No uses encendedores (puede haber fugas de gas)</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-home"></i>
+                    <h3>🏠 Antes del sismo</h3>
+                    <p>• Prepara una mochila de emergencia<br>
+                    • Fija muebles altos a la pared<br>
+                    • Conoce las zonas seguras de tu casa</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-hand-holding-heart"></i>
+                    <h3>📦 Mochila de emergencia</h3>
+                    <p>• Agua (2 litros/persona)<br>
+                    • Comida no perecible<br>
+                    • Linterna, radio, pilas<br>
+                    • Botiquín y documentos importantes</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12 - SISMOS FAMOSOS EN CHILE -->
+        <div class="slide" data-index="12">
+            <div class="badge">📜 HISTORIA</div>
+            <h2>Grandes sismos en Chile</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Valdivia 1960</h3>
+                    <p><strong>Magnitud:</strong> 9.5<br>
+                    <strong>Tsunami:</strong> Afectó a Hawái, Japón y Filipinas<br>
+                    <strong>Muertos:</strong> ~1,600</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Maule 2010</h3>
+                    <p><strong>Magnitud:</strong> 8.8<br>
+                    <strong>Duración:</strong> 3 minutos<br>
+                    <strong>Muertos:</strong> ~525<br>
+                    <strong>Tsunami:</strong> Destruyó varias localidades costeras</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Iquique 2014</h3>
+                    <p><strong>Magnitud:</strong> 8.2<br>
+                    <strong>Evacuación:</strong> Exitosa (evitó muchas víctimas)<br>
+                    <strong>Altura ola tsunami:</strong> 2 m</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-calendar-alt"></i>
+                    <h3>Coquimbo 2015</h3>
+                    <p><strong>Magnitud:</strong> 8.3<br>
+                    <strong>Tsunami:</strong> 4.5 m en Coquimbo<br>
+                    <strong>Muertos:</strong> 15</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13 - VOLCANES FAMOSOS EN CHILE -->
+        <div class="slide" data-index="13">
+            <div class="badge">🗺️ HISTORIA</div>
+            <h2>Volcanes activos en Chile</h2>
+            <div class="grid-3">
+                <div class="card">
+                    <i class="fas fa-fire"></i>
+                    <h3>🌋 Villarrica</h3>
+                    <p>Región de La Araucanía.<br>
+                    Uno de los más activos de Sudamérica.<br>
+                    Última erupción: 2015.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-fire"></i>
+                    <h3>🌋 Llaima</h3>
+                    <p>Región de La Araucanía.<br>
+                    Erupciones frecuentes.<br>
+                    Altura: 3,125 m.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-fire"></i>
+                    <h3>🌋 Calbuco</h3>
+                    <p>Región de Los Lagos.<br>
+                    Erupción sorpresiva en 2015.<br>
+                    Evacuó a 4,000 personas.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-fire"></i>
+                    <h3>🌋 Chaitén</h3>
+                    <p>Región de Los Lagos.<br>
+                    Erupción pliniana en 2008.<br>
+                    Ciudad de Chaitén fue evacuada y destruida.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-fire"></i>
+                    <h3>🌋 Osorno</h3>
+                    <p>Región de Los Lagos.<br>
+                    Estratovolcán emblemático.<br>
+                    Considerado "dormido" pero activo.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-fire"></i>
+                    <h3>🌋 Láscar</h3>
+                    <p>Región de Antofagasta.<br>
+                    El más activo del norte de Chile.<br>
+                    Erupciones frecuentes de ceniza.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14 - PREGUNTAS PARA PENSAR -->
+        <div class="slide" data-index="14">
+            <div class="badge">💭 REFLEXIÓN</div>
+            <h2>Preguntas para pensar</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>1</h3>
+                    <p>¿Por qué Chile tiene tantos sismos y volcanes?</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>2</h3>
+                    <p>¿Cuál es la diferencia entre magnitud e intensidad?</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>3</h3>
+                    <p>¿Qué debes hacer durante un sismo?</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-question-circle"></i>
+                    <h3>4</h3>
+                    <p>¿Qué relación hay entre sismos y volcanes?</p>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 1rem;">
+                🎯 <strong>Reflexiona y comparte tus respuestas con tu profesor o compañeros.</strong>
+            </div>
+        </div>
+
+        <!-- SLIDE 15 - SÍNTESIS Y CIERRE -->
+        <div class="slide" data-index="15">
+            <div class="badge">✅ SÍNTESIS</div>
+            <h2>¿Qué aprendiste hoy?</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Sismos</h3>
+                    <ul style="text-align: left; margin-left: 1rem;">
+                        <li>Liberación de energía por placas tectónicas</li>
+                        <li>Hipocentro (interior) y epicentro (superficie)</li>
+                        <li>Magnitud (Richter) vs Intensidad (Mercalli)</li>
+                        <li>Ondas P, S y superficiales</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <i class="fas fa-check-circle"></i>
+                    <h3>Volcanes</h3>
+                    <ul style="text-align: left; margin-left: 1rem;">
+                        <li>Abertura en la corteza por donde sale magma</li>
+                        <li>Tipos: estratovolcán, escudo, cono de escorias</li>
+                        <li>Erupciones: efusivas, explosivas</li>
+                        <li>Materiales: lava, gases, cenizas, lahares</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="info-box" style="margin-top: 1rem;">
+                🎯 <strong>Próxima clase:</strong> Practicarás con ejercicios sobre sismos y volcanes.
+            </div>
+        </div>
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="dots" id="dotsContainer"></div>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Curso</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Ejercicios</button>
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+    }
+
+    function nextSlide() {
+        if(currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        dotsContainer.innerHTML = '';
+        for(let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if(e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Fisica.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_1A_Fisica.html';
+    });
+
+    // Swipe para móviles
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if(touchEndX < touchStartX - 40) nextSlide();
+        if(touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    updateDots();
+</script>
+</body>
+</html>
