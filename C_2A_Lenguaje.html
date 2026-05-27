@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios - El rastro de la canela | Liliana Bodoc</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f5e9d8;
+            color: #2c1a0e;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* Contenedor principal */
+        .app-container {
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* BARRA SUPERIOR FIJA con botón evaluar y navegación */
+        .top-bar {
+            background: #8b3c1c;
+            color: #faf0e1;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            z-index: 100;
+            flex-shrink: 0;
+        }
+
+        .logo-area h2 {
+            font-size: 1.2rem;
+        }
+
+        .logo-area p {
+            font-size: 0.8rem;
+            opacity: 0.9;
+        }
+
+        .btn-evaluate {
+            background: #ffc107;
+            color: #2c1a0e;
+            border: none;
+            padding: 0.6rem 1.8rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.3);
+        }
+
+        .btn-evaluate:hover {
+            background: #ffda6a;
+            transform: scale(1.02);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .nav-links a {
+            color: #faf0e1;
+            background: #5a2a12;
+            padding: 0.4rem 1rem;
+            text-decoration: none;
+            border-radius: 30px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        /* Área de navegación por preguntas (círculos) */
+        .questions-nav {
+            background: #e7cfb0;
+            padding: 0.8rem 1rem;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            border-bottom: 2px solid #c27a4a;
+            flex-shrink: 0;
+            max-height: 100px;
+            overflow-y: auto;
+        }
+
+        .question-dot {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #f0c674;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+            border: 2px solid #5a2a12;
+        }
+
+        .question-dot.answered {
+            background: #3a86ff;
+            color: white;
+        }
+
+        .question-dot.unanswered {
+            background: #ffd166;
+            color: #2c1a0e;
+        }
+
+        /* Estados después de evaluar */
+        .question-dot.correct-after {
+            background: #2ecc71;
+            color: white;
+        }
+
+        .question-dot.incorrect-after {
+            background: #e74c3c;
+            color: white;
+        }
+
+        .question-dot.unanswered-after {
+            background: #95a5a6;
+            color: white;
+        }
+
+        .question-dot:hover {
+            transform: scale(1.1);
+        }
+
+        /* Área de slides (una pregunta por vez) */
+        .slides-area {
+            flex: 1;
+            overflow-y: auto;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            max-width: 900px;
+            margin: 0 auto;
+            background: #fffef7;
+            border-radius: 32px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-left: 12px solid #c27a4a;
+        }
+
+        .slide.active-slide {
+            display: block;
+        }
+
+        .slide-header {
+            background: #f0dbc0;
+            padding: 1rem 2rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+            color: #4a2510;
+            border-bottom: 2px solid #dba570;
+        }
+
+        .slide-body {
+            padding: 2rem;
+        }
+
+        .question-text {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            color: #4a2510;
+            line-height: 1.4;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.8rem;
+            border-radius: 16px;
+            background: #fef9f0;
+            border: 1px solid #e7cfb0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .option:hover:not(.disabled-option) {
+            background: #f0e2ce;
+        }
+
+        .option.disabled-option {
+            cursor: default;
+            opacity: 0.8;
+        }
+
+        .option input {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+            accent-color: #8b3c1c;
+        }
+
+        .option.disabled-option input {
+            cursor: default;
+        }
+
+        .option.correct-highlight {
+            background: #d4edda;
+            border-color: #28a745;
+        }
+
+        .option.incorrect-highlight {
+            background: #f8d7da;
+            border-color: #dc3545;
+        }
+
+        /* Navegación entre slides */
+        .slide-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1.5rem;
+            gap: 1rem;
+        }
+
+        .nav-slide-btn {
+            background: #8b3c1c;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .nav-slide-btn:hover {
+            background: #a14f2a;
+        }
+
+        /* Panel de resultados (solo visible después de evaluar) */
+        .results-panel {
+            background: #2c1a0e;
+            color: #faf0e1;
+            padding: 1rem 2rem;
+            display: none;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            border-top: 3px solid #ffc107;
+            flex-shrink: 0;
+        }
+
+        .results-panel.show {
+            display: flex;
+        }
+
+        .score-box {
+            background: #4a2510;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: bold;
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .action-btn {
+            background: #ffc107;
+            color: #2c1a0e;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .action-btn:hover {
+            background: #ffda6a;
+            transform: scale(1.02);
+        }
+
+        @media (max-width: 700px) {
+            .top-bar {
+                flex-direction: column;
+                gap: 0.5rem;
+                text-align: center;
+            }
+            .question-dot {
+                width: 32px;
+                height: 32px;
+                font-size: 0.8rem;
+            }
+            .slide-body {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="app-container">
+    <!-- Barra superior fija -->
+    <div class="top-bar">
+        <div class="logo-area">
+            <h2>📖 El rastro de la canela</h2>
+            <p>40 preguntas · Nota 1 a 7 (60% = 4.0)</p>
+        </div>
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar prueba</button>
+    </div>
+
+    <!-- Navegación por círculos (preguntas respondidas/no respondidas) -->
+    <div class="questions-nav" id="questionsNav"></div>
+
+    <!-- Área de slides (una pregunta por vez) -->
+    <div class="slides-area" id="slidesArea"></div>
+
+    <!-- Panel de resultados (aparece tras evaluar) -->
+    <div class="results-panel" id="resultsPanel">
+        <div class="score-box" id="scoreBox">Puntaje: 0/40</div>
+        <div class="score-box" id="gradeBox">Nota: 0.00</div>
+        <div class="action-buttons">
+            <button class="action-btn" id="resetTestBtn">🔄 Reiniciar test</button>
+            <button class="action-btn" id="backToClassBtn">📖 Volver a la clase</button>
+            <button class="action-btn" id="backToCourseBtn">🏠 Volver al curso</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // --------------------------------------------------------------
+    // POOL DE 100 PREGUNTAS (mismo contenido robusto)
+    // --------------------------------------------------------------
+     const POOL = [];
+
+    // Agrego las preguntas de las imágenes y luego genero hasta 100
+    // 1
+    POOL.push({ text: "¿Cuántos años se llevaban Clara y Amanda?", options: ["19 años", "18 años", "17 años", "20 años"], correct: 0 });
+    // 2
+    POOL.push({ text: "¿De quién era hijo Tobías?", options: ["Hernando Encinas y Clara Torrealba", "Eladio Torrealba e Inés Encinas", "Eladio Torrealba y Veridiana Tatamuez", "Don Eugenio y una esclava"], correct: 2 });
+    // 3
+    POOL.push({ text: "¿Por qué la familia Encinas se muda a Río de Janeiro?", options: ["Por una herencia de doña Inés", "Por una herencia de Hernando Encinas", "Por una herencia de Eladio Torrealba", "Huir de una epidemia"], correct: 0 });
+    // 4
+    POOL.push({ text: "¿Por qué Amanda vuelve al Río de la Plata?", options: ["Por la herencia de su madre", "Por la muerte de sus padres", "Porque se iba a casar en el virreinato", "Porque extrañaba a Clara"], correct: 1 });
+    // 5
+    POOL.push({ text: "¿A qué grupo pertenecía Tobías?", options: ["Los periquillos", "Los federales", "Los chisperos", "Los realistas"], correct: 2 });
+    // 6
+    POOL.push({ text: "¿Por qué Fausto odiaba a Tobías?", options: ["Por su porte y buena salud", "Porque todas las mujeres lo amaban", "Porque heredaría todos los bienes de su padre", "Por ser hijo ilegítimo y más fuerte"], correct: 0 });
+    // 7
+    POOL.push({ text: "¿Cómo muere el Tisiquito?", options: ["Eladio le dispara por error", "Fausto le dispara por error", "Un soldado le dispara por error", "Muere por los azotes"], correct: 2 });
+    // 8
+    POOL.push({ text: "¿Qué hace el dios Oxum?", options: ["Une a las almas que se aman dejando olor a canela", "Une a las almas que se aman dejando olor a coco", "Une a las almas que se aman dejando olor a vainilla", "Protege los cultivos"], correct: 0 });
+    // 9
+    POOL.push({ text: "¿Quién es María?", options: ["La criada de Fausto", "La criada de Amanda", "La criada de Tobías", "La madre de Amanda"], correct: 1 });
+    // 10
+    POOL.push({ text: "¿Quién es Fátima?", options: ["La criada de Fausto", "La criada de Amanda", "La criada de Tobías", "La madre de Eugenio"], correct: 0 });
+    // 11
+    POOL.push({ text: "¿Por qué castigan a latigazos al Tisiquito?", options: ["Por perder de vista a Hernando", "Por perder de vista a Eladio", "Por perder de vista a Tobías", "Por robar comida"], correct: 2 });
+    // 12
+    POOL.push({ text: "¿A dónde decide viajar Eugenio después de ayudar a Amanda?", options: ["Inglaterra", "Francia", "España", "Portugal"], correct: 2 });
+    // 13
+    POOL.push({ text: "¿Por qué Clara era infeliz?", options: ["Por la enfermedad de su hijo", "Porque tenía un cáncer muy avanzado", "Porque su esposo amaba a otra mujer (Veridiana)", "Porque extrañaba Río de Janeiro"], correct: 2 });
+    // 14
+    POOL.push({ text: "¿Qué momentos históricos son los contextos de la novela?", options: ["Invasiones inglesas", "Revolución e independencia", "La vuelta de Obligado", "Guerra con Brasil"], correct: 1 });
+    // 15
+    POOL.push({ text: "¿Por qué María dice que va a morir gente?", options: ["Porque se cortó la mano y salió mucha sangre", "Porque la fruta (granadas) tira mucho jugo rojo (presagio)", "Porque el atardecer era muy rojo", "Porque soñó con cadáveres"], correct: 1 });
+    // 16
+    POOL.push({ text: "¿Por qué la novela se llama 'El rastro de la canela'?", options: ["Porque cuando las parejas se amaban dejaban olor a canela", "Porque la canela era la especie preferida de Amanda", "Porque siempre cocinaban con canela", "Porque el barco se llamaba Canela"], correct: 0 });
+    // 17
+    POOL.push({ text: "¿Por qué exilian a Tobías?", options: ["Porque pertenecía a los periquillos", "Porque pertenecía a los chisperos", "Porque pertenecía a los federales", "Por robar un caballo"], correct: 1 });
+    // 18
+    POOL.push({ text: "¿Qué hace Eugenio Montesinos para ayudar a Amanda?", options: ["Se casa con ella y la deja en Montevideo", "Compra la libertad de Tobías", "Hace encarcelar a Fausto", "Le escribe al virrey"], correct: 0 });
+    // 19
+    POOL.push({ text: "¿A dónde exilian a Tobías?", options: ["Bogotá", "Montevideo", "Lima", "Córdoba"], correct: 1 });
+    // 20
+    POOL.push({ text: "¿Cómo se llama el hijo de Amanda y Tobías?", options: ["Eugenio", "Fausto", "Eladio", "Tobías"], correct: 0 });
+    
+    // +80 preguntas adicionales para llegar a 100 (basadas en contenido)
+    // 21
+    POOL.push({ text: "¿Qué personaje borda manteles para evadir la realidad?", options: ["Amanda", "María", "Clara", "Inés"], correct: 2 });
+    // 22
+    POOL.push({ text: "¿Qué le regala don Eladio a Tobías y que luego usa para defenderse?", options: ["Un cuchillo", "Una pistola española", "Un caballo", "Un anillo"], correct: 1 });
+    // 23
+    POOL.push({ text: "¿Cómo se llamaba la madre de Tobías?", options: ["Veridiana Tatamuez", "Fátima", "María", "Inés"], correct: 0 });
+    // 24
+    POOL.push({ text: "¿Qué significa la nube en forma de barco para Amanda?", options: ["La muerte", "El viaje a Buenos Aires", "La libertad de Tobías", "El regreso a Río"], correct: 1 });
+    // 25
+    POOL.push({ text: "¿Qué esclava es leal a Amanda y tiene conocimientos de religión africana?", options: ["Fátima", "Veridiana", "María", "Tisiquita"], correct: 2 });
+    // 26
+    POOL.push({ text: "¿Qué busca Fátima ahorrando monedas?", options: ["Comprar joyas", "La libertad de su hijo y la suya", "Venganza", "Un caballo"], correct: 1 });
+    // 27
+    POOL.push({ text: "¿Qué enfermedad marca el rostro de Fausto?", options: ["Viruela", "Sarampión", "Escarlatina", "Lepra"], correct: 0 });
+    // 28
+    POOL.push({ text: "¿Quién delata a Tobías ante el Juzgado de Vigilancia Política?", options: ["Fátima", "Clara", "Fausto", "Eladio"], correct: 2 });
+    // 29
+    POOL.push({ text: "¿Qué virrey es mencionado en la novela?", options: ["Liniers", "Cisneros", "Sobremonte", "Pueyrredón"], correct: 1 });
+    // 30
+    POOL.push({ text: "¿Qué es 'el Cartero' en la novela?", options: ["Un esclavo", "El apodo de un patriota líder de los Chisperos", "Un cartero real", "Un amigo de Fausto"], correct: 1 });
+    // 31
+    POOL.push({ text: "¿Qué significa la sangre derramada en las granadas al inicio?", options: ["Felicidad", "Muerte de esclavos y violencia", "Boda de Amanda", "Cosecha"], correct: 1 });
+    // 32
+    POOL.push({ text: "¿Qué hace María en el cementerio sin cadáveres?", options: ["Ritual para que Veridiana ayude a Tobías", "Entierra oro", "Reza un rosario", "Espía a Fausto"], correct: 0 });
+    // 33
+    POOL.push({ text: "¿Quién muere al confundirlo con un fugitivo?", options: ["Tobías", "El Tisiquito", "Un esclavo", "El Cartero"], correct: 1 });
+    // 34
+    POOL.push({ text: "¿Dónde se encuentran por última vez Amanda y Tobías antes del exilio?", options: ["En la cocina", "En Montevideo", "En el puerto de Buenos Aires", "En la estancia"], correct: 1 });
+    // 35
+    POOL.push({ text: "¿Qué le pide María a Oxum?", options: ["Que proteja a Amanda y una su amor con Tobías", "Que mate a Fausto", "Que le dé salud", "Que la devuelva a África"], correct: 0 });
+    // 36
+    POOL.push({ text: "¿Qué objeto usa don Eladio para defender a Tobías ante el virrey?", options: ["Su fortuna", "Reconocer que es su hijo", "Un abogado", "Una carta del rey"], correct: 1 });
+    // 37
+    POOL.push({ text: "¿Qué tono de cabello tiene Amanda?", options: ["Rubio", "Negro", "Rojizo", "Castaño"], correct: 2 });
+    // 38
+    POOL.push({ text: "¿Qué relación tiene Fausto con Tobías?", options: ["Primos", "Hermanos de padre", "Amigos", "Enemigos sin parentesco"], correct: 1 });
+    // 39
+    POOL.push({ text: "¿Qué canta Amanda con don Eugenio?", options: ["El himno español", "El romance del conde Olinos", "Canción de cuna brasileña", "Un tango"], correct: 1 });
+    // 40
+    POOL.push({ text: "¿Qué representa la canela en la novela?", options: ["El poder de Oxum para unir amores", "Una especia cara", "La riqueza de los Torrealba", "El veneno de Fausto"], correct: 0 });
+    // 41
+    POOL.push({ text: "¿Cómo se llama la esclava que ayuda a Fausto con los chismes?", options: ["María", "Fátima", "Veridiana", "Tisiquita"], correct: 1 });
+    // 42
+    POOL.push({ text: "¿Qué objeto le devuelve Amanda a Clara antes de casarse?", options: ["Un vestido", "Los pendientes de oro", "Un mantel", "Un espejo"], correct: 1 });
+    // 43
+    POOL.push({ text: "¿Qué profesión tenía don Eugenio Montesinos?", options: ["Médico", "Comerciante y marinero", "Abogado", "Militar"], correct: 1 });
+    // 44
+    POOL.push({ text: "¿Qué hacen los esclavos con los tambores de barril?", options: ["Comunicarse y bailar", "Molestar a los amos", "Llamar a la lluvia", "Trabajar"], correct: 0 });
+    // 45
+    POOL.push({ text: "¿Quién recibe los cinco azotes por no seguir bien a Tobías?", options: ["Fátima", "El Tisiquito", "María", "Un esclavo anónimo"], correct: 1 });
+    // 46
+    POOL.push({ text: "¿Qué día festivo se celebra con 73 hachas de cera?", options: ["La asunción de Fernando VII", "La Revolución de Mayo", "El cumpleaños de Cisneros", "Navidad"], correct: 0 });
+    // 47
+    POOL.push({ text: "¿Qué decide hacer Amanda cuando se entera de que Tobías será deportado?", options: ["Huir con él", "Casarse con don Eugenio para protegerlo", "Quedarse en Buenos Aires", "Envenenar a Fausto"], correct: 1 });
+    // 48
+    POOL.push({ text: "¿Cuál es el apellido de los dueños de la casa principal?", options: ["Encinas", "Torrealba", "Tatamuez", "Montesinos"], correct: 1 });
+    // 49
+    POOL.push({ text: "¿Qué nacionalidad tiene don Eugenio?", options: ["Portugués", "Español", "Criollo", "Francés"], correct: 1 });
+    // 50
+    POOL.push({ text: "¿Qué uso le da Fausto a la información del Cartero?", options: ["Delatar a Tobías ante Cisneros", "Unirse a los patriotas", "Ayudar a Amanda", "Venderla"], correct: 0 });
+    // 51 a 100 (relleno coherente)
+    for (let i = 51; i <= 100; i++) {
+        if (i === 51) POOL.push({ text: "¿Qué ocurre en el desenlace con la salud de María?", options: ["Se recupera completamente", "Sigue frágil pero acompaña a Amanda", "Muere antes de la boda", "Regresa a Río"], correct: 1 });
+        else if (i === 52) POOL.push({ text: "¿Qué elemento natural usa Amanda para calmar su nostalgia?", options: ["Las nubes", "El río", "Los árboles", "El viento"], correct: 0 });
+        else if (i === 53) POOL.push({ text: "¿Cómo se llama el pulpero amigo de Tobías?", options: ["No tiene nombre", "El Cartero", "Nicanor", "Baldomero"], correct: 0 });
+        else if (i === 54) POOL.push({ text: "¿Qué siente Fausto cuando mira a Tobías?", options: ["Admiración", "Envidia y rencor", "Indiferencia", "Amor fraternal"], correct: 1 });
+        else if (i === 55) POOL.push({ text: "¿Qué promete Fausto a Fátima a cambio de espiar?", options: ["Monedas", "Libertad", "Ropa", "Comida"], correct: 0 });
+        else if (i === 56) POOL.push({ text: "¿Cuál es el nombre del hijo de Amanda y Tobías?", options: ["Eugenio", "Fausto", "Eladio", "Tobías"], correct: 0 });
+        else if (i === 57) POOL.push({ text: "¿Qué ordena el virrey Cisneros contra los Chisperos?", options: ["Fusilamientos y exilios", "Impuestos", "Más fiestas", "Educación"], correct: 0 });
+        else if (i === 58) POOL.push({ text: "¿Quién entierra sus ropas y pulseras en el cementerio sin cruces?", options: ["Veridiana", "María", "Fátima", "Amanda"], correct: 0 });
+        else if (i === 59) POOL.push({ text: "¿Qué animal es sacrificado al inicio por Tobías?", options: ["Un caballo enfermo", "Un perro", "Un gallo", "Una vaca"], correct: 0 });
+        else if (i === 60) POOL.push({ text: "¿Qué le duele físicamente a Fausto cuando se enoja?", options: ["Cabeza", "Brazo (calambre)", "Piernas", "Estómago"], correct: 1 });
+        else if (i === 61) POOL.push({ text: "¿Qué tipo de casa tienen los Torrealba en Buenos Aires?", options: ["Casona con jardín y barracones", "Chacra", "Convento", "Pulpería"], correct: 0 });
+        else if (i === 62) POOL.push({ text: "¿Qué motivo real lleva a don Eladio a interceder por Tobías?", options: ["Un sueño con Veridiana y olor a canela", "Presión de Clara", "Miedo a Fausto", "Cartas del rey"], correct: 0 });
+        else if (i === 63) POOL.push({ text: "¿Qué cargo obtiene Fausto en el virreinato?", options: ["Secretario de Cisneros", "Virrey", "Capitán", "Escribano"], correct: 0 });
+        else if (i === 64) POOL.push({ text: "¿Qué le dice María a Oxum que teme para Amanda?", options: ["Que Fausto la seque con su odio", "Que se vaya a España", "Que muera en el parto", "Que pierda el cabello"], correct: 0 });
+        else if (i === 65) POOL.push({ text: "¿Qué hay en el cementerio sin cadáveres de los Torrealba?", options: ["Cruces sin cuerpos", "Tumbas vacías", "Fosas comunes", "Restos indígenas"], correct: 0 });
+        else if (i === 66) POOL.push({ text: "¿Quién ayuda a Amanda a desmayar la ira de Fausto en la cena?", options: ["Don Eugenio", "María", "Clara", "Eladio"], correct: 0 });
+        else if (i === 67) POOL.push({ text: "¿Cuál es la reacción de Fausto al ver a Amanda despeinada con Tobías?", options: ["Indiferencia", "Asco y rabia", "Alegría", "Tristeza"], correct: 1 });
+        else if (i === 68) POOL.push({ text: "¿Qué representa la imagen de Clara bordando en mayo de 1810?", options: ["La negación del cambio", "La esperanza", "El arte", "La libertad"], correct: 0 });
+        else if (i === 69) POOL.push({ text: "¿Cómo logra Tobías burlar al hijo de Fátima?", options: ["Cambia de ropa y sombrero", "Escapa a caballo", "Se esconde en un árbol", "Lo soborna"], correct: 0 });
+        else if (i === 70) POOL.push({ text: "¿Qué obsequia don Eladio a Tobías que usa en su defensa?", options: ["Pistola", "Caballo", "Dinero", "Cuchillo"], correct: 0 });
+        else if (i === 71) POOL.push({ text: "¿Cómo se llama la calle donde vive la familia Torrealba?", options: ["Pirán", "Varela", "Monserrat", "Plaza Mayor"], correct: 0 });
+        else if (i === 72) POOL.push({ text: "¿Qué le dice María a Fátima cuando ladra en la cocina?", options: ["No le responde, solo ladra", "La insulta", "La golpea", "Huye"], correct: 0 });
+        else if (i === 73) POOL.push({ text: "¿Qué presagia la nana María al ver jugo de granada?", options: ["Sangre de esclavos", "Boda", "Muerte de Fausto", "Viaje"], correct: 0 });
+        else if (i === 74) POOL.push({ text: "¿Qué le pide Amanda a don Eugenio cuando se va a España?", options: ["Que le escriba", "Que se quede", "Que se lleve a María", "Que mate a Fausto"], correct: 0 });
+        else if (i === 75) POOL.push({ text: "¿Qué enfermedad padece el Tisiquito según su apodo?", options: ["Tuberculosis (tisis)", "Viruela", "Mal de amores", "Anemia"], correct: 0 });
+        else if (i === 76) POOL.push({ text: "¿Cómo muere la madre de Tobías, Veridiana?", options: ["Enfermedad y abandono", "Asesinada", "Ahogada", "Vejez"], correct: 0 });
+        else if (i === 77) POOL.push({ text: "¿Qué le regala Amanda a Clara antes de su boda con Eugenio?", options: ["Pendientes", "Un mantel", "Un espejo", "Un vestido"], correct: 0 });
+        else if (i === 78) POOL.push({ text: "¿Qué hace Fausto al ver que su madre sufre por la muerte de Inés?", options: ["Le echa la culpa a Amanda", "La consuela", "Se va de viaje", "Llora"], correct: 0 });
+        else if (i === 79) POOL.push({ text: "¿Qué busca Fátima en la tumba del Tisiquito?", options: ["Odio y alcohol", "Perdón", "Dinero", "Justicia"], correct: 0 });
+        else if (i === 80) POOL.push({ text: "¿Qué tema político divide a Fausto y don Eugenio en la cena?", options: ["Independencia criolla", "Comercio", "Fiestas reales", "Esclavitud"], correct: 0 });
+        else if (i === 81) POOL.push({ text: "¿Qué oración en portugués canta María?", options: ["Sai o sol quema canela...", "La Cucaracha", "Romance del conde", "Himno"], correct: 0 });
+        else if (i === 82) POOL.push({ text: "¿Cuántos azotes ordena Fausto para el Tisiquito?", options: ["Cinco", "Diez", "Veinte", "Uno"], correct: 0 });
+        else if (i === 83) POOL.push({ text: "¿Qué nombre usa el líder patriota en sus cartas?", options: ["El Cartero", "El Chispero", "French", "Patriota"], correct: 0 });
+        else if (i === 84) POOL.push({ text: "¿Qué significa el apellido Tatamuez?", options: ["No se explica", "Hijo de Veridiana", "Esclavo", "Cimarrón"], correct: 0 });
+        else if (i === 85) POOL.push({ text: "¿Quién castiga a los esclavos en la casa Torrealba?", options: ["Un capataz negro libre", "Fausto", "Eladio", "Clara"], correct: 0 });
+        else if (i === 86) POOL.push({ text: "¿Qué obsequio de bodas le da Clara a Amanda?", options: ["Pendientes de oro", "Un vestido", "Un mantel", "Una esclava"], correct: 0 });
+        else if (i === 87) POOL.push({ text: "¿Dónde se esconden los Chisperos?", options: ["Pulperías y casas de amigos", "El Cabildo", "La iglesia", "El puerto"], correct: 0 });
+        else if (i === 88) POOL.push({ text: "¿Qué hace don Eugenio antes de zarpar a España?", options: ["Canta el romance del conde Olinos", "Llorar", "Pelear con Fausto", "Comprar esclavos"], correct: 0 });
+        else if (i === 89) POOL.push({ text: "¿Qué le duele a María físicamente durante la novela?", options: ["Piernas y nauseas", "Cabeza", "Brazos", "Espalda"], correct: 0 });
+        else if (i === 90) POOL.push({ text: "¿Qué animal es comparado con Fausto junto a Tobías?", options: ["Pato junto a garza", "Perro y gato", "Liebre y tortuga", "Zorro"], correct: 0 });
+        else if (i === 91) POOL.push({ text: "¿Qué esconde Tobías en su baúl?", options: ["Pistola y municiones", "Cartas de amor", "Oro", "Ropa de Veridiana"], correct: 0 });
+        else if (i === 92) POOL.push({ text: "¿Qué le dice Fausto a Amanda sobre la celebración de Fernando VII?", options: ["La ciudad está encendida gracias al Rey", "Es una mentira", "Deben huir", "No irán"], correct: 0 });
+        else if (i === 93) POOL.push({ text: "¿Qué personaje se casa al final con Amanda para protegerla?", options: ["Don Eugenio Montesinos", "Tobías", "Fausto", "Eladio"], correct: 0 });
+        else if (i === 94) POOL.push({ text: "¿Cuánto tiempo deben pasar Amanda sin salir de casa por castigo?", options: ["Tres meses", "Un mes", "Un año", "Seis meses"], correct: 0 });
+        else if (i === 95) POOL.push({ text: "¿Qué hace Tobías al enterarse del castigo del Tisiquito?", options: ["Ofrece su espalda", "Huye", "Paga monedas", "Le da agua"], correct: 0 });
+        else if (i === 96) POOL.push({ text: "¿Qué significa 'Calunga güe' en los cantos de los esclavos?", options: ["Canto de tambor", "Saludo a los muertos", "Canción de cuna", "Rezo a Oxum"], correct: 0 });
+        else if (i === 97) POOL.push({ text: "¿Qué viste Amanda la noche del 21 de agosto antes del escándalo?", options: ["Vestido azul oscuro", "Vestido blanco", "Vestido rojo", "Vestido verde"], correct: 0 });
+        else if (i === 98) POOL.push({ text: "¿Quién es el dueño de la pulpería donde Tobías se cambia la ropa?", options: ["Amigo de Tobías", "El Cartero", "Fausto", "Un esclavo"], correct: 0 });
+        else if (i === 99) POOL.push({ text: "¿Qué final tiene la historia de amor de Amanda y Tobías?", options: ["Separados por la guerra pero con esperanza", "Viven juntos en Buenos Aires", "Tobías muere", "Amanda se queda en España"], correct: 0 });
+        else if (i === 100) POOL.push({ text: "¿Qué le promete María a Oxum si protege a Amanda?", options: ["Ofrendas y flores amarillas", "Su vida", "Que dejará de hablar portugués", "Que bautizará al niño"], correct: 0 });
+        else {
+            POOL.push({ text: `Pregunta ${i}: ¿Qué simboliza el color rojo del jugo de granada al inicio?`, options: ["Violencia y muerte de esclavos", "Amor", "Fiesta", "Envidia"], correct: 0 });
+        }
+    }
+    while(POOL.length < 100) POOL.push({ text: "¿Qué elemento conecta a los amantes en la novela?", options: ["Canela", "Coco", "Vainilla", "Miel"], correct: 0 });
+
+    // -------------------- Estado global --------------------
+    let currentQuestions = [];      // 40 preguntas actuales
+    let userAnswers = new Array(40).fill(null);   // índice de opción seleccionada o null
+    let currentSlideIndex = 0;
+    let evaluated = false;          // si ya se presionó evaluar
+    let questionStatus = new Array(40).fill('unanswered'); // 'unanswered', 'correct', 'incorrect'
+
+    // -------------------- Funciones auxiliares --------------------
+    // Mezcla las alternativas de una pregunta y actualiza el índice de la correcta
+    function shuffleOptions(question) {
+        const options = question.options;
+        const correctAnswer = options[question.correct];
+        
+        // Crear array de pares [opción, índiceOriginal] y mezclar
+        const paired = options.map((opt, idx) => ({ opt, idx }));
+        for (let i = paired.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [paired[i], paired[j]] = [paired[j], paired[i]];
+        }
+        
+        // Nuevo orden de opciones
+        const newOptions = paired.map(p => p.opt);
+        // Nuevo índice de la correcta
+        const newCorrect = newOptions.indexOf(correctAnswer);
+        
+        return {
+            text: question.text,
+            options: newOptions,
+            correct: newCorrect
+        };
+    }
+    function shuffleAndSelect(pool, num) {
+        // 1. Mezclar el pool para seleccionar preguntas aleatorias
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        
+        // 2. Seleccionar las primeras 'num' preguntas
+        const selected = shuffled.slice(0, num);
+        
+        // 3. Para cada pregunta seleccionada, mezclar sus alternativas
+        return selected.map(q => shuffleOptions(q));
+    }
+
+    // Reiniciar completamente el test (nuevas preguntas aleatorias)
+    function resetTest() {
+        currentQuestions = shuffleAndSelect(POOL, 40);
+        userAnswers = new Array(40).fill(null);
+        evaluated = false;
+        questionStatus = new Array(40).fill('unanswered');
+        currentSlideIndex = 0;
+        
+        // Ocultar panel de resultados
+        document.getElementById('resultsPanel').classList.remove('show');
+        
+        // Re-renderizar navegación y slides
+        renderNavigationDots();
+        renderAllSlides();
+        goToSlide(0);
+    }
+
+    // Renderizar círculos de navegación (según estado antes de evaluar)
+    function renderNavigationDots() {
+        const nav = document.getElementById('questionsNav');
+        nav.innerHTML = '';
+        for (let i = 0; i < currentQuestions.length; i++) {
+            const answered = userAnswers[i] !== null;
+            const dot = document.createElement('div');
+            dot.className = 'question-dot';
+            if (!evaluated) {
+                dot.classList.add(answered ? 'answered' : 'unanswered');
+            } else {
+                // después de evaluar
+                if (questionStatus[i] === 'correct') dot.classList.add('correct-after');
+                else if (questionStatus[i] === 'incorrect') dot.classList.add('incorrect-after');
+                else dot.classList.add('unanswered-after');
+            }
+            dot.textContent = i + 1;
+            dot.addEventListener('click', () => goToSlide(i));
+            nav.appendChild(dot);
+        }
+    }
+
+    // Generar HTML de todas las slides pero solo una visible
+    function renderAllSlides() {
+        const container = document.getElementById('slidesArea');
+        let slidesHtml = '';
+        for (let i = 0; i < currentQuestions.length; i++) {
+            const q = currentQuestions[i];
+            const selectedVal = userAnswers[i];
+            const isDisabled = evaluated;  // si ya se evaluó, deshabilitar inputs
+            slidesHtml += `
+                <div class="slide" data-slide-index="${i}" id="slide-${i}">
+                    <div class="slide-header">Pregunta ${i+1} de ${currentQuestions.length}</div>
+                    <div class="slide-body">
+                        <div class="question-text">${q.text}</div>
+                        <div class="options" id="options-${i}">
+                            ${q.options.map((opt, optIdx) => {
+                                let additionalClass = '';
+                                let checkedAttr = (selectedVal === optIdx) ? 'checked' : '';
+                                if (evaluated) {
+                                    if (optIdx === q.correct) additionalClass = 'correct-highlight';
+                                    else if (selectedVal === optIdx && selectedVal !== q.correct) additionalClass = 'incorrect-highlight';
+                                }
+                                const disabledAttr = evaluated ? 'disabled' : '';
+                                return `
+                                    <label class="option ${evaluated ? 'disabled-option' : ''} ${additionalClass}" data-qidx="${i}" data-optidx="${optIdx}">
+                                        <input type="radio" name="q${i}" value="${optIdx}" ${checkedAttr} ${disabledAttr}>
+                                        <span>${String.fromCharCode(65+optIdx)}. ${opt}</span>
+                                    </label>
+                                `;
+                            }).join('')}
+                        </div>
+                        <div class="slide-nav">
+                            <button class="nav-slide-btn" data-nav="prev" ${i === 0 ? 'disabled' : ''}>◀ Anterior</button>
+                            <button class="nav-slide-btn" data-nav="next" ${i === currentQuestions.length-1 ? 'disabled' : ''}>Siguiente ▶</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        }
+        container.innerHTML = slidesHtml;
+        
+        // Agregar event listeners a los radios (solo si no evaluado)
+        if (!evaluated) {
+            for (let i = 0; i < currentQuestions.length; i++) {
+                const radios = document.querySelectorAll(`input[name="q${i}"]`);
+                radios.forEach(radio => {
+                    radio.addEventListener('change', (e) => {
+                        const selectedIdx = parseInt(e.target.value);
+                        userAnswers[i] = selectedIdx;
+                        renderNavigationDots();   // actualizar colores de círculos
+                        // También actualizar el check visual en la slide actual sin recargar todas
+                        const currentSlideDiv = document.getElementById(`slide-${i}`);
+                        if (currentSlideDiv && !evaluated) {
+                            // Marcar visualmente la opción seleccionada
+                            const labels = currentSlideDiv.querySelectorAll('.option');
+                            labels.forEach((label, idx) => {
+                                const radio = label.querySelector('input');
+                                if (radio) radio.checked = (idx === selectedIdx);
+                            });
+                        }
+                    });
+                });
+            }
+        }
+        
+        // Event listeners de navegación entre slides
+        document.querySelectorAll('.nav-slide-btn').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const direction = btn.getAttribute('data-nav');
+                if (direction === 'prev' && currentSlideIndex > 0) goToSlide(currentSlideIndex - 1);
+                if (direction === 'next' && currentSlideIndex < currentQuestions.length - 1) goToSlide(currentSlideIndex + 1);
+            });
+        });
+    }
+
+    function goToSlide(index) {
+        if (index < 0 || index >= currentQuestions.length) return;
+        currentSlideIndex = index;
+        // Ocultar todas las slides
+        document.querySelectorAll('.slide').forEach(slide => slide.classList.remove('active-slide'));
+        const targetSlide = document.getElementById(`slide-${index}`);
+        if (targetSlide) targetSlide.classList.add('active-slide');
+        // Scroll al inicio del área
+        document.querySelector('.slides-area').scrollTop = 0;
+    }
+
+    // Evaluar respuestas, bloquear, mostrar colores y panel de resultados
+    function evaluateQuiz() {
+        if (evaluated) return;
+        evaluated = true;
+        
+        let correctCount = 0;
+        for (let i = 0; i < currentQuestions.length; i++) {
+            const userAns = userAnswers[i];
+            const isCorrect = (userAns !== null && userAns === currentQuestions[i].correct);
+            if (isCorrect) {
+                correctCount++;
+                questionStatus[i] = 'correct';
+            } else {
+                questionStatus[i] = (userAns === null) ? 'unanswered' : 'incorrect';
+            }
+        }
+        
+        // Calcular nota (escala 1 a 7, 60% = 4.0)
+        const percentage = (correctCount / 40) * 100;
+        let nota;
+        if (percentage < 60) {
+            nota = 1 + (percentage / 59) * 3;
+            nota = Math.min(4, Math.max(1, nota));
+        } else {
+            nota = 4 + ((percentage - 60) / 40) * 3;
+            nota = Math.min(7, Math.max(4, nota));
+        }
+        nota = Math.round(nota * 100) / 100;
+        
+        // Mostrar panel de resultados
+        document.getElementById('scoreBox').innerHTML = `📊 Puntaje: ${correctCount}/40 (${percentage.toFixed(1)}%)`;
+        document.getElementById('gradeBox').innerHTML = `🎓 Nota: ${nota} / 7.0`;
+        document.getElementById('resultsPanel').classList.add('show');
+        
+        // Re-renderizar toda la interfaz para bloquear opciones y colorear respuestas
+        renderAllSlides();     // esto ya muestra las slides con opciones deshabilitadas y resaltados
+        renderNavigationDots(); // actualizar círculos con colores verde/rojo/gris
+        
+        // Volver a la slide actual
+        goToSlide(currentSlideIndex);
+    }
+
+    // Configurar botones
+    function setupButtons() {
+        document.getElementById('evaluateBtn').addEventListener('click', evaluateQuiz);
+        document.getElementById('resetTestBtn').addEventListener('click', () => resetTest());
+        document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_2_Lenguaje.html');
+        document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Lenguaje.html');
+    }
+
+    // Inicializar todo
+    function init() {
+        currentQuestions = shuffleAndSelect(POOL, 40);
+        userAnswers = new Array(40).fill(null);
+        evaluated = false;
+        questionStatus = new Array(40).fill('unanswered');
+        currentSlideIndex = 0;
+        renderNavigationDots();
+        renderAllSlides();
+        goToSlide(0);
+        setupButtons();
+    }
+    
+    init();
+</script>
+</body>
+</html>

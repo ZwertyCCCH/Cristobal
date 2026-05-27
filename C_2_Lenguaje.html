@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase: El rastro de la canela - Liliana Bodoc</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #2c1a0e;
+            color: #2c1a0e;
+            overflow: hidden; /* Oculta scroll para pantalla completa */
+            height: 100vh;
+        }
+
+        /* Encabezado fijo en la parte superior */
+        .header {
+            background: #8b3c1c;
+            color: #faf0e1;
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+        }
+
+        .header h1 {
+            font-size: 1.4rem;
+            letter-spacing: 1px;
+        }
+
+        .nav-links a {
+            color: #faf0e1;
+            background: #5a2a12;
+            padding: 0.4rem 1rem;
+            text-decoration: none;
+            margin-left: 1rem;
+            border-radius: 30px;
+            transition: 0.3s;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .nav-links a:hover {
+            background: #c26a3a;
+            color: #2c1a0e;
+        }
+
+        /* Contenedor de slides - estilo carrusel */
+        .slides-container {
+            height: 100vh;
+            width: 100%;
+            overflow: hidden;
+            position: relative;
+            margin-top: 0;
+        }
+
+        .slides-wrapper {
+            display: flex;
+            transition: transform 0.5s ease-in-out;
+            height: 100%;
+        }
+
+        /* Cada slide ocupa el 100% del ancho */
+        .slide {
+            min-width: 100%;
+            height: 100%;
+            overflow-y: auto;
+            background: #f5e9d8;
+            padding: 5rem 3rem 3rem 3rem;
+            box-sizing: border-box;
+            border-left: none;
+            border-radius: 0;
+        }
+
+        /* Scroll bonito dentro de cada slide */
+        .slide::-webkit-scrollbar {
+            width: 8px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #e7cfb0;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #8b3c1c;
+            border-radius: 10px;
+        }
+
+        .slide-content {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fffef7;
+            border-radius: 32px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            overflow: hidden;
+            border-left: 12px solid #c27a4a;
+        }
+
+        .slide-title {
+            background: #f0dbc0;
+            padding: 1rem 2rem;
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #4a2510;
+            border-bottom: 2px solid #dba570;
+        }
+
+        .slide-body {
+            padding: 2rem;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+        }
+
+        .text-block {
+            flex: 2;
+            min-width: 250px;
+        }
+
+        .text-block p {
+            margin-bottom: 1rem;
+            font-size: 1.05rem;
+        }
+
+        .highlight {
+            background: #fce9d4;
+            padding: 0.2rem 0.4rem;
+            border-radius: 8px;
+            font-weight: 600;
+            color: #a14418;
+        }
+
+        .quote {
+            font-style: italic;
+            border-left: 5px solid #b95f2a;
+            padding-left: 1.2rem;
+            margin: 1rem 0;
+            color: #5a341c;
+            background: #fef4e8;
+            border-radius: 12px;
+            padding: 1rem;
+        }
+
+        .character-card, .symbol-card {
+            background: #f9efdf;
+            border-radius: 24px;
+            padding: 1rem;
+            margin-top: 0.8rem;
+            border: 1px solid #e7cfb0;
+        }
+
+        .grid-2col {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .col {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        ul, .list-styled {
+            margin-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        .image-symbol {
+            flex: 1;
+            min-width: 180px;
+            background: #e7d5bc;
+            border-radius: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .symbol-icon {
+            font-size: 4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Navegación de flechas */
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(139, 60, 28, 0.7);
+            color: white;
+            border: none;
+            font-size: 2.5rem;
+            cursor: pointer;
+            padding: 0.8rem 1.2rem;
+            border-radius: 50%;
+            z-index: 200;
+            transition: 0.3s;
+            font-weight: bold;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-arrow:hover {
+            background: #8b3c1c;
+            transform: translateY(-50%) scale(1.1);
+        }
+
+        .prev {
+            left: 20px;
+        }
+
+        .next {
+            right: 20px;
+        }
+
+        /* Indicadores de progreso (puntos) */
+        .dots-container {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            z-index: 200;
+            background: rgba(0,0,0,0.5);
+            padding: 8px 16px;
+            border-radius: 40px;
+            width: fit-content;
+            margin: 0 auto;
+            backdrop-filter: blur(4px);
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: #d9c2a7;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .dot.active {
+            background: #f0dbc0;
+            transform: scale(1.3);
+            box-shadow: 0 0 6px #ffb469;
+        }
+
+        /* Contador de slide */
+        .slide-counter {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            color: #f0dbc0;
+            padding: 6px 14px;
+            border-radius: 30px;
+            font-size: 0.9rem;
+            font-weight: bold;
+            z-index: 200;
+            backdrop-filter: blur(4px);
+        }
+
+        footer {
+            display: none;
+        }
+
+        @media (max-width: 780px) {
+            .slide {
+                padding: 5rem 1rem 2rem 1rem;
+            }
+            .slide-title {
+                font-size: 1.3rem;
+            }
+            .nav-arrow {
+                font-size: 1.5rem;
+                padding: 0.5rem 0.8rem;
+            }
+            .header h1 {
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>📖 El rastro de la canela</h1>
+    <div class="nav-links">
+        <a href="C_2A_Lenguaje.html">📝 Ir a ejercicios</a>
+        <a href="Lenguaje.html">🏠 Volver al curso</a>
+    </div>
+</div>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+        <!-- SLIDE 1 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">🌎 Contexto histórico y social: Buenos Aires 1808-1810</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>La novela transcurre en el <span class="highlight">Virreinato del Río de la Plata</span>, durante los años previos a la Revolución de Mayo. La autora reconstruye con precisión una sociedad colonial estratificada: <strong>españoles peninsulares, criollos, esclavos africanos y mulatos</strong>.</p>
+                        <p>El relato se sitúa entre las <strong>fiestas por Fernando VII</strong> (1808) y la creación del <strong>Juzgado de Vigilancia Política</strong> (1809), que persigue a los "afrancesados" o patriotas. En este clima de opresión y descontento germinan los ideales independentistas.</p>
+                        <div class="quote">"Se gastaron dos mil pesos… setenta y tres hachas de cera dispuestas para iluminar el frente del cabildo, el 21 de agosto de 1808." — La opulencia real frente a la miseria de los esclavos.</div>
+                        <p>La <strong>esclavitud</strong> y las <strong>jerarquías raciales</strong> son ejes centrales: los esclavos duermen en barracones, son azotados por faltas leves, y sus cuerpos pertenecen al amo. Sin embargo, Bodoc muestra la resistencia cultural a través de tambores, cantos y religiones africanas (candomblé, orixás).</p>
+                    </div>
+                    <div class="image-symbol">
+                        <div class="symbol-icon">⚓🇪🇸</div>
+                        <div>Virreinato<br>de la Plata</div>
+                        <small>1808 – 1810</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 2 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">👥 Personajes: amores, odios y lealtades</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <div class="grid-2col">
+                            <div class="col">
+                                <div class="character-card"><strong>✨ Amanda Encinas</strong><br>Joven de cabello rojizo, criada en Río de Janeiro con libertad. Se debate entre las reglas sociales impuestas por su hermana Clara y su amor prohibido por Tobías. Evoluciona de "animalito salvaje" a mujer decidida.</div>
+                                <div class="character-card"><strong>⚔️ Tobías Tatamuez</strong><br>Mulato, hijo ilegítimo de don Eladio. Hombre orgulloso, libre aunque esclavo de origen, se une a los <span class="highlight">Chisperos</span> (patriotas). Su pasión por Amanda y su lucha por la justicia social lo ponen en peligro.</div>
+                            </div>
+                            <div class="col">
+                                <div class="character-card"><strong>👿 Fausto Torrealba</strong><br>Hijo legítimo, enfermizo, resentido y colaborador del virrey. Delata a su propio hermano mestizo por celos y por su naturaleza rencorosa. Representa la sumisión al orden colonial y la mezquindad.</div>
+                                <div class="character-card"><strong>🧑‍🦳 Doña Clara</strong><br>Hermana mayor de Amanda, atrapada en un matrimonio sin amor, borda para no sentir. Personifica la represión femenina y la rigidez de la elite.</div>
+                                <div class="character-card"><strong>🌿 María (Nana)</strong><br>Esclava africana, protectora y guía espiritual de Amanda. Conecta con los orixás (Oxum, Oxalá) y con la sabiduría ancestral.</div>
+                            </div>
+                        </div>
+                        <p><strong>Don Eugenio Montesinos</strong>: comerciante español, viudo, tolerante y bondadoso. Facilita la huida de Tobías y se casa con Amanda para protegerla.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 3 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">🌿 Canela, sangre y orixás: simbolismo central</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p><span class="highlight">La canela</span> no es solo una especia: es el aroma del amor, la memoria y el poder de <strong>Oxum</strong>, diosa del agua dulce, del oro y del amor. María invoca a Oxum para proteger a Amanda y unirla con Tobías.</p>
+                        <div class="quote">"Oxum guardó para sí el secreto de la canela. Con él tiene el poder de unir o separar a los que se aman."</div>
+                        <p>En la escena inicial, María corta granadas y ve <strong>"sangre sobre la fruta"</strong> (presagio de violencia y muerte de esclavos). Las <strong>nubes</strong> (que Amanda usa para entender el mundo), las <strong>cruces sin cadáveres</strong> y <strong>el rastro de la canela</strong> como hilo invisible que conecta a los amantes.</p>
+                    </div>
+                    <div class="image-symbol">
+                        <div class="symbol-icon">🌺✨</div>
+                        <div>Oxum – Orixá del amor</div>
+                        <div style="font-size: 0.9rem;">"Sai o sol quema canela..."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">💔 Amor prohibido: Amanda y Tobías frente al racismo</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>La relación entre Amanda (criolla blanca) y Tobías (mulato) transgrede todas las normas sociales. Bodoc describe: <span class="highlight">"En el año 1808, el amor debía atenerse a ciertas normas... Si él es un mulato, no camines a su lado"</span>.</p>
+                        <p>El escándalo se desata cuando Amanda regresa tarde del paseo con Tobías, despeinada y con el vestido sucio. La reacción de Clara y Fausto evidencia la hipocresía de una sociedad que castiga el amor genuino entre razas.</p>
+                        <div class="quote">"Tú, mulato, eres la deshonra de mi familia. Tú, señorito, eres un bordado en el mantel de doña Clara."</div>
+                        <p>Don Eladio, aunque padre de Tobías, nunca lo reconoce abiertamente hasta que intercede para salvarle la vida.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 5 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">🔥 Los Chisperos: semillas de la Independencia</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p><strong>"El Cartero"</strong> (alusión a French) organiza reuniones secretas donde criollos, mulatos y negros libres discuten libertad e igualdad. Tobías es miembro activo.</p>
+                        <p>Fausto intercepta una carta firmada <span class="highlight">"Tu amigo y compañero. El Cartero"</span> y la usa para delatar a Tobías, desencadenando la captura y la muerte del Tisiquito.</p>
+                        <div class="quote">"Perseguir. La peor palabra ha sido pronunciada. Y escrita." — La creación del Juzgado de Vigilancia Política.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 6 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">💧 Inocencia sacrificada: el Tisiquito y Fátima</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>El Tisiquito (hijo de Fátima) es enviado a seguir a Tobías. Fallido, Fausto ordena <strong>cinco azotes</strong>. Durante la captura de Tobías, un soldado mata al niño confundiéndolo con un fugitivo.</p>
+                        <div class="quote">"El camisón es un niño que se desmorona sin un quejido. Tobías lo ve caer. Y la furia lo hace cometer un error."</div>
+                        <p>Fátima se transforma en <span class="highlight">"puro odio"</span>, alcoholizada y destruida. Su tragedia representa el costo humano de la esclavitud.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 7 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">🎶 Cultura oral: canciones, rezos y romance</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>Bodoc integra tradiciones orales: la canción portuguesa <span class="highlight">"Sai o sol quema canela"</span>, los rezos a Oxum, y el romance español <strong>"Del conde Olinos"</strong> que don Eugenio enseña a Amanda.</p>
+                        <div class="quote">"Que si mata al conde Olinos, juntos nos han de enterrar… Crece uno, crece el otro, los dos se van a juntar."</div>
+                        <p>Simboliza que el amor verdadero vence a la muerte y a las separaciones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 8 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">🍊 Presagios: granadas, nubes y cementerio sin cuerpos</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>Desde la primera escena con <strong>sangre en las granadas</strong>, la novela está tejida de señales. Las nubes adquieren formas que ayudan a Amanda a procesar el dolor.</p>
+                        <p>El <strong>cementerio sin cadáveres</strong> (donde los esclavos entierran ropas de sus muertos) revela la adaptación cultural africana. Allí María realiza rituales para pedir ayuda.</p>
+                        <div class="quote">"María se hincará ante la única tumba que tiene nombre: 'Veridiana Tatamuez', escrito con trazos infantiles."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 9 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">📆 25 de mayo de 1810: revolución e inmovilidad</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>Mientras el pueblo exige un gobierno patrio, <strong>doña Clara borda</strong> obstinadamente: "Borda un pájaro y no quiere que vuele. Borda un hijo para que no crezca." Es la negación del cambio histórico.</p>
+                        <p>Amanda, Tobías y María escapan a Montevideo gracias a don Eugenio. Tobías parte al Alto Perú a luchar por la independencia.</p>
+                        <div class="quote">"El 25 de mayo lluvioso. Día en que algunos salieron con paraguas ingleses. Y muchos otros, mal cubiertos con capotes de hule."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 10 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">👩‍🦰 Mujeres en la colonia: sumisión y rebeldía</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>Bodoc retrata un abanico de mujeres: <strong>Clara</strong> (encerrada en el bordado), <strong>Amanda</strong> (amor libre), <strong>María</strong> (poder espiritual), <strong>Veridiana</strong> (muerta por abandono) y <strong>Fátima</strong> (maternidad destrozada).</p>
+                        <p>La novela muestra que esclavitud y patriarcado operan juntos. Amanda rompe esquemas al casarse con un anciano para salvar a su amado.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 11 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">✉️ Cartas que cruzan el tiempo</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>La novela está estructurada con insertos epistolares: cartas entre Clara y sus padres, el recado interceptado, y la correspondencia final entre Amanda, Tobías y don Eugenio.</p>
+                        <div class="quote">"Tobías Tatamuez no lee con soltura. ¿Cómo podría hacerlo si aprendió de a pedazos y siendo mayor?"</div>
+                        <p>Las cartas reflejan distancias y el poder de la palabra escrita para mantener la esperanza.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 12 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">🏠 Geografías del poder: cocinas, barracones y salones</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>La casa se divide en espacios jerarquizados: la <strong>sala</strong> (poder), la <strong>cocina</strong> (chisme y resistencia), los <strong>barracones</strong> (castigo) y el <strong>monte</strong> (libertad).</p>
+                        <p>Las lomas con tierra suelta son el escenario del primer beso de Amanda y Tobías, y también el escondite de los chisperos.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 13 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">🔗 La lucha por la libertad</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>En la novela la libertad tiene múltiples capas: <strong>política</strong> (independencia), <strong>personal</strong> (abolición de la esclavitud) y <strong>amorosa</strong> (derecho a amar sin casta).</p>
+                        <p>Fátima atesora monedas para comprar dos libertades, pero el sistema las arrebata. Tobías es perseguido por su origen y sus ideas.</p>
+                        <div class="quote">"La patria es el hijo de Fátima. A él le ofrendo estas batallas." — Tobías resignifica la lucha independentista.</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14 -->
+        <div class="slide">
+            <div class="slide-content">
+                <div class="slide-title">🧠 Reflexiones finales</div>
+                <div class="slide-body">
+                    <div class="text-block">
+                        <p>Liliana Bodoc narra con crudeza la violencia colonial, pero también la ternura y la resistencia. <strong>El rastro de la canela</strong> invita a preguntarnos:</p>
+                        <ul>
+                            <li>¿Cómo se construyen las identidades raciales en la literatura histórica?</li>
+                            <li>¿Qué papel cumplen las mujeres y los esclavos en los procesos de independencia?</li>
+                            <li>¿Puede el amor privado ser un acto de subversión política?</li>
+                            <li>¿Cómo sobreviven las creencias africanas en América?</li>
+                        </ul>
+                        <p>Una lectura imprescindible para entender las raíces de nuestra identidad americana.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Botones de navegación -->
+<button class="nav-arrow prev" id="prevSlide">◀</button>
+<button class="nav-arrow next" id="nextSlide">▶</button>
+
+<!-- Indicadores de progreso -->
+<div class="dots-container" id="dotsContainer"></div>
+<div class="slide-counter" id="slideCounter">1 / 14</div>
+
+<script>
+    const slidesWrapper = document.getElementById('slidesWrapper');
+    const slides = document.querySelectorAll('.slide');
+    const prevBtn = document.getElementById('prevSlide');
+    const nextBtn = document.getElementById('nextSlide');
+    const dotsContainer = document.getElementById('dotsContainer');
+    const counterSpan = document.getElementById('slideCounter');
+    
+    let currentIndex = 0;
+    const totalSlides = slides.length;
+
+    // Función para actualizar la posición del carrusel
+    function updateSlidePosition() {
+        slidesWrapper.style.transform = `translateX(-${currentIndex * 100}%)`;
+        updateDots();
+        updateCounter();
+    }
+
+    // Crear puntos indicadores
+    function createDots() {
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === currentIndex) dot.classList.add('active');
+            dot.addEventListener('click', () => {
+                currentIndex = i;
+                updateSlidePosition();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    function updateDots() {
+        const dots = document.querySelectorAll('.dot');
+        dots.forEach((dot, idx) => {
+            if (idx === currentIndex) {
+                dot.classList.add('active');
+            } else {
+                dot.classList.remove('active');
+            }
+        });
+    }
+
+    function updateCounter() {
+        counterSpan.textContent = `${currentIndex + 1} / ${totalSlides}`;
+    }
+
+    function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+            currentIndex++;
+            updateSlidePosition();
+        } else {
+            // Opcional: loop al primero (comentar si no quieres loop)
+            // currentIndex = 0;
+            // updateSlidePosition();
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateSlidePosition();
+        } else {
+            // Opcional: loop al último
+            // currentIndex = totalSlides - 1;
+            // updateSlidePosition();
+        }
+    }
+
+    // Eventos de teclado (flechas)
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+        }
+    });
+
+    // Eventos de botones
+    prevBtn.addEventListener('click', prevSlide);
+    nextBtn.addEventListener('click', nextSlide);
+
+    // Inicializar
+    createDots();
+    updateSlidePosition();
+
+    // Ajustar altura en móviles (evitar problemas con header)
+    function adjustHeight() {
+        const vh = window.innerHeight;
+        document.querySelector('.slides-container').style.height = `${vh}px`;
+    }
+    window.addEventListener('resize', adjustHeight);
+    adjustHeight();
+</script>
+
+</body>
+</html>
