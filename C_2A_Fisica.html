@@ -1,0 +1,734 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prueba: Capas Tierra, Sismos y Volcanes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1724 0%, #1a2a3a 100%);
+            color: #eef2ff;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: rgba(20, 30, 45, 0.9);
+            backdrop-filter: blur(3px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 145, 77, 0.3);
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #0f2a3a;
+            padding: 0.8rem 1.5rem;
+            border-radius: 3rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .info-item {
+            font-weight: bold;
+        }
+
+        .info-item span {
+            color: #ff914d;
+        }
+
+        /* Navegación por círculos */
+        .nav-circles {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            margin-bottom: 1.5rem;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+            background: #2c3e50;
+            color: white;
+            border: 2px solid #ff914d55;
+        }
+
+        .circle:hover {
+            transform: scale(1.1);
+            border-color: #ff914d;
+        }
+
+        .circle.active {
+            background: #ff914d;
+            color: white;
+            border-color: #ff914d;
+            box-shadow: 0 0 10px rgba(255, 145, 77, 0.5);
+        }
+
+        .circle.answered {
+            background: #2980b9;
+            border-color: #3498db;
+        }
+
+        .circle.not-answered {
+            background: #f1c40f;
+            color: #1a1a2e;
+            border-color: #f39c12;
+        }
+
+        .circle.correct-result {
+            background: #27ae60;
+            border-color: #2ecc71;
+        }
+
+        .circle.incorrect-result {
+            background: #c0392b;
+            border-color: #e74c3c;
+        }
+
+        .circle.not-answered-result {
+            background: #7f8c8d;
+            border-color: #95a5a6;
+        }
+
+        /* Contenedor de slides con navegación lateral */
+        .slide-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .nav-arrow {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background: #ff6b35;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            flex-shrink: 0;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .nav-arrow:hover:not(:disabled) {
+            background: #ff914d;
+            transform: scale(1.05);
+        }
+
+        .nav-arrow:disabled {
+            background: #555;
+            cursor: not-allowed;
+            opacity: 0.5;
+        }
+
+        .slides-container {
+            flex: 1;
+            min-height: 300px;
+        }
+
+        .question-slide {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .question-slide.active-slide {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .question {
+            background: rgba(15, 35, 55, 0.7);
+            border-radius: 1.2rem;
+            padding: 0.8rem;
+            border-left: 5px solid #ff914d;
+            transition: all 0.2s ease;
+        }
+
+        .question.correct-highlight {
+            border-left: 5px solid #2ecc71;
+            background: rgba(46, 204, 113, 0.15);
+            box-shadow: 0 0 8px rgba(46, 204, 113, 0.3);
+        }
+
+        .question.incorrect-highlight {
+            border-left: 5px solid #e74c3c;
+            background: rgba(231, 76, 60, 0.15);
+            box-shadow: 0 0 8px rgba(231, 76, 60, 0.3);
+        }
+
+        .question-number {
+            display: inline-block;
+            background: #ff6b35;
+            padding: 0.2rem 0.8rem;
+            border-radius: 2rem;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 0.6rem;
+        }
+
+        .question-text {
+            font-size: 1.1rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+            line-height: 1.4;
+        }
+
+        .options {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .options li {
+            margin: 0.5rem 0;
+            padding: 0.3rem 0.6rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(255, 145, 77, 0.3);
+        }
+
+        .correct-answer-hint {
+            margin-top: 0.6rem;
+            padding: 0.4rem 0.8rem;
+            background: rgba(231, 76, 60, 0.25);
+            border-radius: 0.6rem;
+            font-size: 0.85rem;
+            color: #ffaa88;
+            border-left: 3px solid #e74c3c;
+        }
+
+        .correct-answer-hint strong {
+            color: #ff914d;
+        }
+
+        input[type="radio"] {
+            margin-right: 10px;
+            transform: scale(1);
+            accent-color: #ff914d;
+        }
+
+        label {
+            cursor: pointer;
+            font-size: 0.95rem;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 280px;
+            margin: 1.5rem auto 1rem;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 3rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-align: center;
+        }
+
+        .btn-evaluate:hover {
+            background: #ff914d;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.2rem;
+            background: #0f2a2f;
+            border-radius: 1.2rem;
+            display: none;
+            border: 2px solid #ff914d;
+        }
+
+        .results h3 {
+            color: #ffb347;
+            margin-bottom: 0.8rem;
+        }
+
+        .score-box {
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 0.8rem 0;
+        }
+
+        .grade-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            border-radius: 1rem;
+        }
+
+        .approved {
+            background: #1e4a2e;
+            color: #8bc34a;
+        }
+
+        .failed {
+            background: #7a2e2e;
+            color: #ff8a80;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #2c5a6e;
+            color: white;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 2rem;
+            font-size: 0.95rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #3a7a8e;
+            transform: scale(1.02);
+        }
+
+        .progress-info {
+            text-align: center;
+            margin-top: 0.8rem;
+            font-size: 0.85rem;
+            color: #ffb347;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            opacity: 0.4;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .question-text {
+                font-size: 0.95rem;
+            }
+            label {
+                font-size: 0.85rem;
+            }
+            .circle {
+                width: 32px;
+                height: 32px;
+                font-size: 0.75rem;
+            }
+            .nav-arrow {
+                width: 40px;
+                height: 40px;
+                font-size: 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="info-bar">
+        <div class="info-item">📋 <span id="total-questions">30</span> preguntas</div>
+        <div class="info-item">✅ Exigencia: <span>60%</span> (18 correctas = nota 4.0)</div>
+        <div class="info-item">🎯 Nota máxima: <span>7.0</span></div>
+    </div>
+
+    <!-- Círculos de navegación -->
+    <div id="nav-circles" class="nav-circles"></div>
+
+    <form id="examForm">
+        <div class="slide-wrapper">
+            <button type="button" class="nav-arrow" id="prevBtn">◀</button>
+            <div id="slides-container" class="slides-container"></div>
+            <button type="button" class="nav-arrow" id="nextBtn">▶</button>
+        </div>
+        <div class="progress-info" id="progressInfo"></div>
+        
+        <button type="button" class="btn-evaluate" id="evaluateBtn">✅ Evaluar</button>
+    </form>
+
+    <div id="results" class="results"></div>
+    <div class="footer">
+        Prueba de Ciencias - Capas de la Tierra, Sismos y Volcanes
+    </div>
+</div>
+
+<script>
+    // ==================== POOL DE 60 PREGUNTAS ====================
+    const POOL = [
+        { text: "¿En qué capa de la Tierra se encuentran las placas tectónicas?", options: ["a. En la corteza.", "b. En el manto.", "c. En el núcleo.", "d. En todas las anteriores."], correct: "a" },
+        { text: "¿Cuál es la capa más externa de la Tierra?", options: ["a. El manto", "b. El núcleo", "c. La corteza", "d. La astenosfera"], correct: "c" },
+        { text: "¿Cuál es la capa de la Tierra que presenta la temperatura más alta (6000°C)?", options: ["a. Corteza", "b. Manto", "c. Núcleo", "d. Litosfera"], correct: "c" },
+        { text: "¿El núcleo externo de la Tierra es sólido o líquido?", options: ["a. Sólido", "b. Líquido", "c. Gaseoso", "d. Plasmático"], correct: "b" },
+        { text: "¿El núcleo interno de la Tierra es sólido o líquido?", options: ["a. Sólido", "b. Líquido", "c. Gaseoso", "d. Plasmático"], correct: "a" },
+        { text: "¿Qué metal es abundante en el núcleo terrestre?", options: ["a. Aluminio", "b. Silicio", "c. Hierro y níquel", "d. Cobre"], correct: "c" },
+        { text: "¿Qué ocurre con la temperatura a medida que se profundiza en la Tierra?", options: ["a. Disminuye", "b. Aumenta", "c. Se mantiene constante", "d. Varía aleatoriamente"], correct: "b" },
+        { text: "¿Qué capa de la Tierra está fragmentada en placas tectónicas?", options: ["a. Núcleo interno", "b. Núcleo externo", "c. Manto inferior", "d. Corteza y parte del manto (litosfera)"], correct: "d" },
+        { text: "¿Qué es la litosfera?", options: ["a. El núcleo terrestre", "b. La capa líquida del manto", "c. La capa rígida formada por corteza y manto superior", "d. La atmósfera"], correct: "c" },
+        { text: "¿Qué es la astenosfera?", options: ["a. Capa rígida superior", "b. Capa del manto con material plástico donde flotan las placas", "c. El núcleo externo líquido", "d. La corteza oceánica"], correct: "b" },
+        { text: "Las placas tectónicas que inciden en la sismicidad de Chile son:", options: ["a. Placa Euroasiática y Placa de Nazca.", "b. Placa Africana y Placa Sudamericana.", "c. Placa Euroasiática y Placa Sudamericana.", "d. Placa de Nazca y Placa Sudamericana."], correct: "d" },
+        { text: "¿Cuál corresponde a una frontera DIVERGENTE?", options: ["a. Es del tipo constructiva", "b. Se produce cuando las placas chocan", "c. Genera fosas marinas", "d. Es del tipo destructiva"], correct: "a" },
+        { text: "¿Con qué tipo de frontera se forman principalmente los volcanes?", options: ["a. Convergente", "b. Divergente", "c. Transformante", "d. Vibrante"], correct: "a" },
+        { text: "¿Qué ocurre en un límite de placas divergente?", options: ["a. Las placas chocan", "b. Las placas se separan", "c. Las placas deslizan lateralmente", "d. Se forman montañas"], correct: "b" },
+        { text: "¿Qué ocurre en un límite de placas convergente?", options: ["a. Las placas se separan", "b. Las placas chocan o una subduce bajo la otra", "c. Las placas deslizan lateralmente", "d. Se forma nueva corteza"], correct: "b" },
+        { text: "¿Qué ocurre en un límite de placas transformante?", options: ["a. Las placas chocan", "b. Las placas se separan", "c. Las placas deslizan lateralmente", "d. Se forman volcanes"], correct: "c" },
+        { text: "¿Qué nombre reciben las corrientes que mueven las placas tectónicas?", options: ["a. Corrientes marinas", "b. Corrientes de convección", "c. Corrientes de viento", "d. Corrientes eléctricas"], correct: "b" },
+        { text: "¿Qué es una dorsal oceánica?", options: ["a. Una fosa marina profunda", "b. Un límite divergente bajo el mar", "c. Un tipo de volcán", "d. Una falla transformante"], correct: "b" },
+        { text: "¿Qué es una fosa marina?", options: ["a. Un límite convergente donde una placa subduce", "b. Un límite divergente", "c. Un volcán submarino", "d. Un tipo de tsunami"], correct: "a" },
+        { text: "¿Qué fenómeno ocurre cuando una placa oceánica se hunde bajo una continental?", options: ["a. Dorsal oceánica", "b. Subducción", "c. Falla transformante", "d. Rift continental"], correct: "b" },
+        { text: "La Placa de Nazca y la Placa Sudamericana convergen formando un límite:", options: ["a. Divergente", "b. Transformante", "c. Convergente con subducción", "d. Constructivo"], correct: "c" },
+        { text: "¿Cuál de estos NO es un tipo de límite de placas?", options: ["a. Divergente", "b. Convergente", "c. Estacionario", "d. Transformante"], correct: "c" },
+        { text: "¿Qué tipo de límite tiene la Falla de San Andrés en California?", options: ["a. Divergente", "b. Convergente", "c. Transformante", "d. Subductivo"], correct: "c" },
+        { text: "¿Qué nombre recibe el proceso por el cual se genera nueva corteza oceánica en dorsales?", options: ["a. Subducción", "b. Expansión del fondo oceánico", "c. Orogenia", "d. Falla"], correct: "b" },
+        { text: "¿Dónde hay mayor actividad sísmica en el mundo?", options: ["a. En el centro de las placas", "b. En los bordes o límites de placas", "c. En los polos", "d. En el núcleo"], correct: "b" },
+        { text: "¿Cómo se llama el punto dentro de la Tierra donde se origina un sismo?", options: ["a. Ondas superficiales", "b. Hipocentro", "c. Epicentro", "d. Falla"], correct: "b" },
+        { text: "¿Qué nombre recibe el punto en la superficie sobre el hipocentro?", options: ["a. Foco", "b. Epicentro", "c. Zona de ruptura", "d. Plano de falla"], correct: "b" },
+        { text: "¿Cuál es la diferencia entre hipocentro y epicentro?", options: ["a. Hipocentro en superficie, epicentro profundo", "b. Hipocentro es origen profundo, epicentro en superficie", "c. Son lo mismo", "d. Hipocentro mide intensidad"], correct: "b" },
+        { text: "¿Qué es un sismo?", options: ["a. Erupción volcánica", "b. Movimiento brusco de la corteza por liberación de energía", "c. Formación de montañas", "d. Corriente de convección"], correct: "b" },
+        { text: "¿Qué tipo de ondas se generan en un sismo?", options: ["a. Ondas sísmicas", "b. Ondas de radio", "c. Ondas de luz", "d. Ondas electromagnéticas"], correct: "a" },
+        { text: "¿Qué es un tsunami?", options: ["a. Un tipo de volcán", "b. Una ola gigante causada por sismo submarino", "c. Un tipo de falla", "d. Un instrumento de medición"], correct: "b" },
+        { text: "Respecto a los sismos, ¿cuál afirmación es correcta?", options: ["a. En los límites de placas hay menor actividad sísmica", "b. El punto de origen se denomina Epicentro", "c. Si el epicentro ocurre en zona costera, puede ocurrir un tsunami", "d. El epicentro es donde se percibe con menor intensidad"], correct: "c" },
+        { text: "¿Qué es la magnitud de un sismo?", options: ["a. Los daños causados", "b. La energía liberada", "c. La duración", "d. La profundidad"], correct: "b" },
+        { text: "¿Qué es la intensidad de un sismo?", options: ["a. La energía liberada", "b. Los efectos y daños en personas y construcciones", "c. La profundidad", "d. La velocidad de las ondas"], correct: "b" },
+        { text: "¿Qué instrumento mide los movimientos telúricos?", options: ["a. ONEMI", "b. Midiográfo", "c. Sismógrafo", "d. Pascalómetro"], correct: "c" },
+        { text: "La escala de Richter mide:", options: ["a. Los daños en construcciones", "b. La intensidad percibida", "c. La magnitud o energía liberada", "d. La duración del sismo"], correct: "c" },
+        { text: "La escala de Mercalli Modificada mide:", options: ["a. La magnitud del sismo", "b. La energía liberada", "c. La intensidad y efectos del sismo", "d. La profundidad del hipocentro"], correct: "c" },
+        { text: "¿Cuántos grados tiene la escala de Mercalli Modificada?", options: ["a. 10", "b. 12", "c. 8", "d. 15"], correct: "b" },
+        { text: "¿Qué significa grado I en la escala de Mercalli?", options: ["a. Destrucción total", "b. No sentido, solo registrado por instrumentos", "c. Daños graves", "d. Tsunami"], correct: "b" },
+        { text: "¿Qué significa grado XII en la escala de Mercalli?", options: ["a. Sismo leve", "b. Destrucción total, objetos lanzados al aire", "c. Solo lo sienten algunas personas", "d. No causa daños"], correct: "b" },
+        { text: "¿Qué estructura del volcán es el conducto por donde asciende el magma?", options: ["a. Cono", "b. Cráter", "c. Chimenea", "d. Cámara magmática"], correct: "c" },
+        { text: "¿Qué es la cámara magmática?", options: ["a. El conducto del volcán", "b. La abertura superior", "c. El depósito de magma profundo", "d. La acumulación de ceniza"], correct: "c" },
+        { text: "¿Qué es el cráter de un volcán?", options: ["a. El conducto interno", "b. La abertura en la cima", "c. El reservorio de magma", "d. El cono de ceniza"], correct: "b" },
+        { text: "¿Qué es la lava?", options: ["a. Magma que ha llegado a la superficie", "b. Gas volcánico", "c. Ceniza volcánica", "d. Roca sólida"], correct: "a" },
+        { text: "¿Qué es una fumarola?", options: ["a. Lava fundida", "b. Nube de humo, gases y ceniza expulsada por un volcán", "c. El cráter del volcán", "d. La chimenea volcánica"], correct: "b" },
+        { text: "¿Cuál es una consecuencia inmediata de una fumarola volcánica?", options: ["a. Destrucción del suelo", "b. Contaminación del aire", "c. Sequía de ríos", "d. Daño en infraestructura"], correct: "b" },
+        { text: "¿Qué es un volcán activo?", options: ["a. Nunca ha hecho erupción", "b. Ha hecho erupción en tiempos históricos y puede volver a hacerlo", "c. Ya no hará erupción nunca", "d. Está en erupción permanente"], correct: "b" },
+        { text: "¿Qué es un volcán extinto?", options: ["a. Ha hecho erupción recientemente", "b. No tiene actividad volcánica en el futuro previsible", "c. Está en erupción ahora", "d. Tiene fumarolas"], correct: "b" },
+        { text: "¿Qué tipo de roca se forma al enfriarse la lava?", options: ["a. Sedimentaria", "b. Metamórfica", "c. Ígnea volcánica", "d. Orgánica"], correct: "c" },
+        { text: "¿Qué material sale por la chimenea de un volcán?", options: ["a. Agua subterránea", "b. Magma o lava", "c. Rocas sedimentarias", "d. Hielo"], correct: "b" },
+        { text: "¿Cuál es el nombre del único continente existente en la prehistoria?", options: ["a. Lauriacia", "b. Pangea", "c. Gondwana", "d. Rodinia"], correct: "b" },
+        { text: "¿Qué científico propuso la teoría de la Deriva Continental?", options: ["a. Charles Darwin", "b. Isaac Newton", "c. Alfred Wegener", "d. Albert Einstein"], correct: "c" },
+        { text: "¿Qué evidencias apoyan la teoría de la Deriva Continental?", options: ["a. Forma de los continentes", "b. Fósiles iguales en distintos continentes", "c. Depósitos minerales similares", "d. Todas las anteriores"], correct: "d" },
+        { text: "¿Qué nombre recibió el supercontinente del que se separó Sudamérica y África?", options: ["a. Pangea", "b. Gondwana", "c. Laurasia", "d. Rodinia"], correct: "a" },
+        { text: "¿Qué fenómeno explica que existan los mismos depósitos de diamantes en África y Sudamérica?", options: ["a. El oleaje de los océanos", "b. El movimiento de placas tectónicas", "c. Las modificaciones del manto", "d. Las variaciones de temperatura interna"], correct: "b" },
+        { text: "¿Cómo se llama el proceso por el cual los continentes se mueven a través del tiempo?", options: ["a. Tectónica de placas", "b. Deriva Continental", "c. Subducción", "d. Orogenia"], correct: "b" },
+        { text: "¿Hace aproximadamente cuántos años existía Pangea?", options: ["a. 100 millones de años", "b. 300 millones de años", "c. 50 millones de años", "d. 1000 millones de años"], correct: "b" },
+        { text: "¿Qué dos grandes masas terrestres se formaron tras la fragmentación de Pangea?", options: ["a. Eurasia y América", "b. Laurasia y Gondwana", "c. África y Asia", "d. Pacífico y Atlántico"], correct: "b" },
+        { text: "¿En qué año ocurrió el terremoto de Valdivia (el más grande registrado en la historia)?", options: ["a. 2010", "b. 1985", "c. 1960", "d. 1939"], correct: "c" },
+        { text: "¿Cuál es el terremoto de mayor magnitud registrado en la historia?", options: ["a. Japón 2011", "b. Chile 1960 (Valdivia)", "c. San Francisco 1906", "d. Indonesia 2004"], correct: "b" }
+    ];
+
+    let currentQuestions = [];
+    let currentIndex = 0;
+    let userAnswers = [];
+    let evaluated = false;
+    let evaluationResults = [];
+
+    function getRandomQuestions(pool, count = 30) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+    }
+
+    function updateCircles() {
+        const container = document.getElementById('nav-circles');
+        container.innerHTML = '';
+        
+        for (let i = 0; i < currentQuestions.length; i++) {
+            const circle = document.createElement('div');
+            circle.className = 'circle';
+            circle.textContent = i + 1;
+            
+            if (evaluated) {
+                if (evaluationResults[i] === true) {
+                    circle.classList.add('correct-result');
+                } else if (evaluationResults[i] === false && userAnswers[i] !== null && userAnswers[i] !== undefined) {
+                    circle.classList.add('incorrect-result');
+                } else {
+                    circle.classList.add('not-answered-result');
+                }
+            } else {
+                if (userAnswers[i] !== null && userAnswers[i] !== undefined) {
+                    circle.classList.add('answered');
+                } else {
+                    circle.classList.add('not-answered');
+                }
+            }
+            
+            if (i === currentIndex) {
+                circle.classList.add('active');
+            }
+            
+            circle.addEventListener('click', () => {
+                goToQuestion(i);
+            });
+            
+            container.appendChild(circle);
+        }
+    }
+
+    function updateProgressInfo() {
+        const info = document.getElementById('progressInfo');
+        info.textContent = `Pregunta ${currentIndex + 1} de ${currentQuestions.length}`;
+    }
+
+    function updateNavigationButtons() {
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === currentQuestions.length - 1;
+    }
+
+    function goToQuestion(index) {
+        if (index >= 0 && index < currentQuestions.length) {
+            currentIndex = index;
+            renderCurrentSlide();
+            updateCircles();
+            updateNavigationButtons();
+            updateProgressInfo();
+        }
+    }
+
+    function nextQuestion() {
+        if (currentIndex < currentQuestions.length - 1) {
+            currentIndex++;
+            renderCurrentSlide();
+            updateCircles();
+            updateNavigationButtons();
+            updateProgressInfo();
+        }
+    }
+
+    function prevQuestion() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            renderCurrentSlide();
+            updateCircles();
+            updateNavigationButtons();
+            updateProgressInfo();
+        }
+    }
+
+    function saveAnswer(questionIndex, value) {
+        userAnswers[questionIndex] = value;
+        updateCircles();
+    }
+
+    function renderCurrentSlide() {
+        const container = document.getElementById('slides-container');
+        const q = currentQuestions[currentIndex];
+        
+        const selectedValue = userAnswers[currentIndex] || null;
+        
+        let highlightClass = '';
+        let hintHtml = '';
+        
+        if (evaluated) {
+            const isCorrect = evaluationResults[currentIndex];
+            highlightClass = isCorrect ? 'correct-highlight' : 'incorrect-highlight';
+            if (!isCorrect) {
+                const correctOptionText = getFullCorrectOptionText(q);
+                hintHtml = `<div class="correct-answer-hint"><strong>🔍 Respuesta correcta:</strong> ${correctOptionText}</div>`;
+            }
+        }
+        
+        const optionsHtml = q.options.map(opt => {
+            const optLetter = opt.charAt(0);
+            const isChecked = (selectedValue === optLetter);
+            return `
+                <li>
+                    <input type="radio" name="currentQuestion" value="${optLetter}" id="opt_${optLetter}" ${isChecked ? 'checked' : ''} ${evaluated ? 'disabled' : ''}>
+                    <label for="opt_${optLetter}">${opt}</label>
+                </li>
+            `;
+        }).join('');
+        
+        const slideHtml = `
+            <div class="question ${highlightClass}">
+                <div class="question-number">Pregunta ${currentIndex + 1}</div>
+                <div class="question-text">${q.text}</div>
+                <ul class="options">
+                    ${optionsHtml}
+                </ul>
+                ${hintHtml}
+            </div>
+        `;
+        
+        container.innerHTML = slideHtml;
+        
+        if (!evaluated) {
+            const radios = document.querySelectorAll('input[name="currentQuestion"]');
+            radios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    saveAnswer(currentIndex, e.target.value);
+                });
+            });
+        }
+    }
+
+    function getFullCorrectOptionText(questionObj) {
+        const correctLetter = questionObj.correct;
+        const optionFound = questionObj.options.find(opt => opt.startsWith(correctLetter + '.') || opt.startsWith(correctLetter + ')') || opt.charAt(0) === correctLetter);
+        if (optionFound) return optionFound;
+        return `${correctLetter}. Respuesta correcta`;
+    }
+
+    function evaluateExam() {
+        evaluated = true;
+        evaluationResults = [];
+        let correct = 0;
+        const total = currentQuestions.length;
+        
+        for (let i = 0; i < total; i++) {
+            const userValue = userAnswers[i];
+            const correctValue = currentQuestions[i].correct;
+            const isCorrect = (userValue === correctValue);
+            evaluationResults[i] = isCorrect;
+            if (isCorrect) correct++;
+        }
+        
+        const percentage = (correct / total) * 100;
+        const passingPercentage = 60;
+        let grade = 0;
+        
+        if (percentage >= passingPercentage) {
+            grade = 4.0 + ((percentage - passingPercentage) / (100 - passingPercentage)) * 3.0;
+        } else {
+            grade = 1.0 + (percentage / passingPercentage) * 3.0;
+        }
+        
+        grade = Math.round(grade * 100) / 100;
+        
+        const resultsDiv = document.getElementById('results');
+        const isApproved = grade >= 4.0;
+        
+        resultsDiv.innerHTML = `
+            <h3>📊 Resultados</h3>
+            <div class="score-box">✅ Respuestas correctas: ${correct} de ${total} (${Math.round(percentage)}%)</div>
+            <div class="score-box">📈 Logro académico: ${Math.round(percentage)}%</div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}">
+                ${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}<br>
+                <strong>NOTA FINAL: ${grade}</strong>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartBtn">🔄 Reiniciar Test</button>
+                <button class="action-btn" id="goToClassBtn">📚 Volver a la Clase</button>
+                <button class="action-btn" id="goToCourseBtn">🏠 Volver al Curso</button>
+            </div>
+        `;
+        
+        resultsDiv.style.display = 'block';
+        renderCurrentSlide();
+        updateCircles();
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        
+        // Event listeners para los nuevos botones
+        document.getElementById('restartBtn').addEventListener('click', restartTest);
+        document.getElementById('goToClassBtn').addEventListener('click', () => {
+            window.location.href = 'C_2_Fisica.html';
+        });
+        document.getElementById('goToCourseBtn').addEventListener('click', () => {
+            window.location.href = 'Fisica.html';
+        });
+    }
+    
+    function restartTest() {
+        currentQuestions = getRandomQuestions(POOL, 30);
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentIndex = 0;
+        evaluated = false;
+        evaluationResults = [];
+        
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('total-questions').textContent = currentQuestions.length;
+        
+        renderCurrentSlide();
+        updateCircles();
+        updateNavigationButtons();
+        updateProgressInfo();
+    }
+
+    // Inicializar
+    function init() {
+        currentQuestions = getRandomQuestions(POOL, 30);
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        currentIndex = 0;
+        evaluated = false;
+        evaluationResults = [];
+        
+        document.getElementById('total-questions').textContent = currentQuestions.length;
+        
+        renderCurrentSlide();
+        updateCircles();
+        updateNavigationButtons();
+        updateProgressInfo();
+    }
+    
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateExam);
+    document.getElementById('prevBtn').addEventListener('click', prevQuestion);
+    document.getElementById('nextBtn').addEventListener('click', nextQuestion);
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevQuestion();
+        } else if (e.key === 'ArrowRight') {
+            nextQuestion();
+        }
+    });
+    
+    init();
+</script>
+</body>
+</html>

@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>C_2_Fisica - Capas de la Tierra, Sismos y Volcanes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a1a2e;
+            color: #eee;
+            overflow-x: hidden;
+        }
+
+        .nav-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 0;
+            right: 0;
+            text-align: center;
+            z-index: 100;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            border-radius: 40px;
+            width: fit-content;
+            margin: 0 auto;
+            backdrop-filter: blur(5px);
+        }
+
+        .nav-btn {
+            background: #ff6b35;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            margin: 0 10px;
+            border-radius: 30px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: 0.3s;
+        }
+
+        .nav-btn:hover {
+            background: #ff914d;
+            transform: scale(1.05);
+        }
+
+        .slide {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            scroll-snap-align: start;
+            border-bottom: 3px solid #ff6b35;
+        }
+
+        .slide-content {
+            max-width: 1000px;
+            width: 100%;
+            margin: 0 auto;
+            background: rgba(30, 30, 50, 0.85);
+            border-radius: 30px;
+            padding: 50px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.4);
+        }
+
+        h1 {
+            font-size: 3rem;
+            color: #ff914d;
+            margin-bottom: 20px;
+        }
+
+        h2 {
+            font-size: 2rem;
+            color: #ffb347;
+            margin-bottom: 20px;
+            border-left: 5px solid #ff6b35;
+            padding-left: 20px;
+        }
+
+        h3 {
+            font-size: 1.5rem;
+            margin: 20px 0 10px;
+            color: #ffaa66;
+        }
+
+        .grid-2 {
+            display: flex;
+            gap: 25px;
+            flex-wrap: wrap;
+            margin: 25px 0;
+        }
+
+        .card {
+            background: #0f3460;
+            padding: 20px;
+            border-radius: 20px;
+            flex: 1;
+            min-width: 220px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            background: #0f3460;
+            border-radius: 15px;
+            overflow: hidden;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid #ff914d;
+        }
+
+        th {
+            background: #ff6b35;
+        }
+
+        .image-container {
+            margin: 25px 0;
+            text-align: center;
+        }
+
+        .image-container img {
+            max-width: 100%;
+            border-radius: 20px;
+            border: 2px solid #ff914d;
+        }
+
+        .image-placeholder {
+            background: #2a2a4a;
+            border: 2px dashed #ff914d;
+            border-radius: 20px;
+            padding: 40px;
+            text-align: center;
+            margin: 25px 0;
+            color: #ffaa66;
+            font-family: monospace;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #ff6b35;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            margin-bottom: 20px;
+        }
+
+        .footer-slide {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid #ff914d55;
+        }
+
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 25px;
+            }
+            h1 { font-size: 2rem; }
+            h2 { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="nav-bar">
+    <button class="nav-btn" onclick="prevSlide()">◀ Anterior</button>
+    <span id="slide-counter" style="margin: 0 15px;">Slide 1 / 13</span>
+    <button class="nav-btn" onclick="nextSlide()">Siguiente ▶</button>
+</div>
+
+<div id="slides-container">
+    <!-- SLIDE 1: PORTADA -->
+    <div class="slide">
+        <div class="slide-content" style="text-align: center;">
+            <span class="badge">C_2_Fisica</span>
+            <h1>🌍 Capas de la Tierra<br>Placas Tectónicas • Sismos • Volcanes</h1>
+            <p style="font-size: 1.2rem; margin: 20px 0;">Clase de repaso • 7° Básico • Ciencias Naturales</p>
+            <div class="image-container" id="img-portada">
+                <!-- IMAGEN PORTADA: Tierra desde el espacio -->
+                <img src="https://i.ibb.co/ym20XSRz/image.png" alt="Tierra desde el espacio" style="max-width: 80%;">
+            </div>
+            <p style="margin-top: 30px;">📌 Usa los botones de abajo para navegar entre diapositivas</p>
+        </div>
+    </div>
+
+    <!-- SLIDE 2: CAPAS DE LA TIERRA -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 2</span>
+            <h2>📚 Las capas de la Tierra</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <strong>🌎 Corteza</strong><br><br>
+                    Capa externa sólida.<br>
+                    Está fragmentada en <strong>placas tectónicas</strong>.<br>
+                    Puede ser <strong>continental</strong> (más gruesa) u <strong>oceánica</strong> (más delgada).<br>
+                    Espesor: 5 a 70 km.
+                </div>
+                <div class="card">
+                    <strong>🔥 Manto</strong><br><br>
+                    Capa intermedia.<br>
+                    Roca parcialmente fundida llamada <strong>magma</strong>.<br>
+                    Presenta corrientes de <strong>convección</strong> que mueven las placas.<br>
+                    Temperatura: hasta 3700°C.
+                </div>
+                <div class="card">
+                    <strong>⚙️ Núcleo</strong><br><br>
+                    Capa más interna.<br>
+                    Dividido en <strong>núcleo interno</strong> (sólido) y <strong>núcleo externo</strong> (líquido).<br>
+                    Temperatura máxima: <strong>6000°C</strong>.<br>
+                    Genera el campo magnético terrestre.
+                </div>
+            </div>
+            <div class="image-container" id="img-capas">
+                <!-- IMAGEN CAPAS DE LA TIERRA: Diagrama con Corteza, Manto, Núcleo -->
+                <img src="https://i.ibb.co/tps6tkzq/image.png" alt="Diagrama de las capas de la Tierra" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 3: PLACAS TECTÓNICAS -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 3</span>
+            <h2>🌊 Placas tectónicas</h2>
+            <div class="card">
+                <p>La <strong>litosfera</strong> (corteza + parte superior del manto) está fragmentada en grandes bloques llamados <strong>placas tectónicas</strong>.</p>
+                <p>Estas placas <strong>flotan</strong> sobre el material del manto y se mueven lentamente debido a las <strong>corrientes de convección</strong>.</p>
+                <p>El movimiento de las placas es el responsable de:</p>
+                <ul style="margin-left: 25px; margin-top: 10px;">
+                    <li>Terremotos y sismos</li>
+                    <li>Formación de volcanes</li>
+                    <li>Formación de montañas</li>
+                    <li>Deriva continental</li>
+                </ul>
+            </div>
+            <div class="image-container" id="img-placas-mundo">
+                <!-- IMAGEN MAPA DE PLACAS TECTÓNICAS DEL MUNDO -->
+                <img src="https://i.ibb.co/HD2vfHdh/image.png" alt="Mapa mundial de placas tectónicas" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 4: PLACAS QUE AFECTAN A CHILE -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 4</span>
+            <h2>🇨🇱 Placas tectónicas en Chile</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <strong>Placa de Nazca</strong><br><br>
+                    Es una placa <strong>oceánica</strong>.<br>
+                    Se mueve hacia el este.
+                </div>
+                <div class="card">
+                    <strong>Placa Sudamericana</strong><br><br>
+                    Es una placa <strong>continental</strong>.<br>
+                    Se mueve hacia el oeste.
+                </div>
+            </div>
+            <div class="card">
+                <strong>📌 ¿Qué ocurre en Chile?</strong><br><br>
+                La Placa de Nazca <strong>subduce</strong> (se hunde) debajo de la Placa Sudamericana.<br>
+                Este proceso se llama <strong>convergencia o subducción</strong>.<br>
+                Es la causa principal de <strong>sismos y volcanes</strong> en todo Chile.
+            </div>
+            <div class="image-container" id="img-placas-chile">
+                <!-- IMAGEN MAPA PLACA NAZCA Y SUDAMERICANA (con flecha de subducción) -->
+                <img src="https://i.ibb.co/4gVvxBfF/image.png" alt="Placa de Nazca y Placa Sudamericana" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 5: TIPOS DE FRONTERAS O LÍMITES -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 5</span>
+            <h2>🧩 Tipos de fronteras entre placas</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <strong>🔁 Divergente (Constructiva)</strong><br><br>
+                    Las placas se <strong>separan</strong>.<br>
+                    Se <strong>abre la corteza</strong> y asciende magma.<br>
+                    Ejemplo: <strong>Dorsales oceánicas</strong>.
+                </div>
+                <div class="card">
+                    <strong>💥 Convergente (Destructiva)</strong><br><br>
+                    Las placas <strong>chocan</strong>.<br>
+                    Una se hunde bajo la otra (subducción).<br>
+                    Genera <strong>fosas marinas, montañas y volcanes</strong>.
+                </div>
+                <div class="card">
+                    <strong>↔️ Transformante</strong><br><br>
+                    Las placas <strong>deslizan lateralmente</strong>.<br>
+                    No crean ni destruyen corteza.<br>
+                    Ejemplo: <strong>Falla de San Andrés</strong>.
+                </div>
+            </div>
+            <div class="image-container" id="img-fronteras">
+                <!-- IMAGEN ESQUEMA DE LOS 3 TIPOS DE FRONTERAS -->
+                <img src="https://i.ibb.co/CpKmjW2n/image.png" alt="Tipos de bordes de placas: divergente, convergente, transformante" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 6: PARTES DE UN VOLCÁN -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 6</span>
+            <h2>🌋 Estructura de un volcán</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <strong>① Cámara magmática</strong><br>
+                    Reservorio de magma en el interior de la Tierra.
+                </div>
+                <div class="card">
+                    <strong>② Chimenea</strong><br>
+                    Conducto por donde <strong>asciende el magma</strong> hacia la superficie.
+                </div>
+                <div class="card">
+                    <strong>③ Cráter</strong><br>
+                    Abertura en la cima del volcán por donde sale el material.
+                </div>
+                <div class="card">
+                    <strong>④ Cono volcánico</strong><br>
+                    Acumulación de lava, ceniza y materiales alrededor del cráter.
+                </div>
+            </div>
+            <div class="image-container" id="img-volcan-partes">
+                <!-- IMAGEN VOLCÁN CON SUS PARTES ETIQUETADAS -->
+                <img src="https://i.ibb.co/VYbxVH8T/image.png" alt="Partes de un volcán: cráter, chimenea, cámara magmática, cono" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 7: MATERIALES EXPULSADOS POR UN VOLCÁN -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 7</span>
+            <h2>💨 Materiales volcánicos</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <strong>🌋 Lava</strong><br>
+                    Magma que sale a la superficie y fluye.
+                </div>
+                <div class="card">
+                    <strong>💨 Fumarola</strong><br>
+                    Nube de <strong>humo, gases y ceniza</strong> expulsada durante la actividad volcánica.
+                </div>
+                <div class="card">
+                    <strong>🪨 Piroclastos</strong><br>
+                    Fragmentos sólidos expulsados (cenizas, lapilli, bombas volcánicas).
+                </div>
+            </div>
+            <div class="image-container" id="img-fumarola">
+                <!-- IMAGEN VOLCÁN ERUPTANDO CON FUMAROLA -->
+                <img src="https://i.ibb.co/C5kFMGbH/image.png" alt="Volcán eruptando con fumarola de humo y ceniza" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 8: SISMOS - HIPOCENTRO Y EPICENTRO -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 8</span>
+            <h2>📈 Sismos: Hipocentro y Epicentro</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <strong>📍 Hipocentro o Foco</strong><br><br>
+                    Es el punto <strong>dentro de la Tierra</strong> donde se <strong>origina el sismo</strong>.<br>
+                    Allí se libera la energía acumulada.
+                </div>
+                <div class="card">
+                    <strong>📍 Epicentro</strong><br><br>
+                    Es el punto en la <strong>superficie terrestre</strong> ubicado <strong>directamente sobre el hipocentro</strong>.<br>
+                    Es donde el sismo se siente con mayor intensidad.
+                </div>
+            </div>
+            <div class="image-container" id="img-hipocentro-epicentro">
+                <!-- IMAGEN DIAGRAMA HIPOCENTRO Y EPICENTRO -->
+                <img src="https://i.ibb.co/hFPgmQTT/image.png" alt="Diagrama de hipocentro y epicentro de un sismo" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 9: ESCALAS SÍSMICAS -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 9</span>
+            <h2>📊 Escalas sísmicas</h2>
+            <div class="grid-2">
+                <div class="card">
+                    <strong>📏 Escala de Richter</strong><br><br>
+                    Mide la <strong>magnitud</strong> del sismo.<br>
+                    Es la <strong>energía liberada</strong> en el hipocentro.<br>
+                    Es una escala <strong>numérica</strong> (ej: 5.2, 7.8, 8.8).<br>
+                    Se calcula con <strong>instrumentos</strong> (sismógrafos).
+                </div>
+                <div class="card">
+                    <strong>🏚️ Escala de Mercalli Modificada</strong><br><br>
+                    Mide la <strong>intensidad</strong> del sismo.<br>
+                    Evalúa los <strong>efectos y daños</strong> en personas, construcciones y terreno.<br>
+                    Tiene <strong>12 grados</strong> (I a XII).<br>
+                    Ejemplo: "Grado V" = Mercalli.
+                </div>
+            </div>
+            <div class="image-container" id="img-escalas">
+                <!-- IMAGEN COMPARATIVA ESCALA RICHTER Y MERCALLI -->
+                <img src="https://i.ibb.co/qY5fJVWZ/image.png" alt="Comparación escala Richter y Mercalli" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 10: INSTRUMENTO DE MEDICIÓN (SISMÓGRAFO) -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 10</span>
+            <h2>📟 Sismógrafo</h2>
+            <div class="card">
+                <strong>¿Qué es?</strong><br><br>
+                Es el <strong>instrumento</strong> que mide y registra los <strong>movimientos telúricos</strong> (sismos y terremotos).<br><br>
+                Registra las <strong>ondas sísmicas</strong> y permite calcular la <strong>magnitud</strong> del sismo (Escala de Richter).
+            </div>
+            <div class="image-container" id="img-sismografo">
+                <!-- IMAGEN SISMÓGRAFO REGISTRANDO -->
+                <img src="https://i.ibb.co/G1Sh65h/image.png" alt="Sismógrafo registrando un sismo" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 11: PANGEA Y DERIVA CONTINENTAL -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 11</span>
+            <h2>🧭 Pangea y la Deriva Continental</h2>
+            <div class="card">
+                <strong>Pangea</strong><br><br>
+                Hace aproximadamente <strong>300 millones de años</strong>, todos los continentes estaban unidos en un solo supercontinente llamado <strong>Pangea</strong>.<br><br>
+                Con el tiempo, Pangea se <strong>fragmentó</strong> debido al <strong>movimiento de las placas tectónicas</strong>, dando origen a los continentes actuales.<br><br>
+                Esto se conoce como <strong>Deriva Continental</strong>, teoría propuesta por <strong>Alfred Wegener</strong>.
+            </div>
+            <div class="image-container" id="img-pangea">
+                <!-- IMAGEN PANGEA SUPERCONTINENTE -->
+                <img src="https://i.ibb.co/whWWVzRH/image.png" alt="Pangea supercontinente" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 12: EJEMPLO DE MOVIMIENTO DE PLACAS (ÁFRICA Y AMÉRICA) -->
+    <div class="slide">
+        <div class="slide-content">
+            <span class="badge">Diapositiva 12</span>
+            <h2>💎 Evidencia del movimiento de placas</h2>
+            <div class="card">
+                <strong>Depósitos de diamantes en África y América</strong><br><br>
+                Existen los <strong>mismos tipos de depósitos de diamantes</strong> en África y en América del Sur.<br><br>
+                Esto se explica porque <strong>ambos continentes estuvieron unidos</strong> en el pasado (Pangea) y luego se <strong>separaron</strong> debido al <strong>movimiento de las placas tectónicas</strong>.<br><br>
+                Es una de las pruebas de la <strong>Deriva Continental</strong>.
+            </div>
+            <div class="image-container" id="img-diamantes">
+                <!-- IMAGEN MAPA DEPÓSITOS DIAMANTES ÁFRICA Y AMÉRICA -->
+                <img src="https://i.ibb.co/4wc3PxXW/image.png" alt="Depósitos de diamantes en África y Sudamérica" style="max-width: 100%;">
+            </div>
+        </div>
+    </div>
+
+    <!-- SLIDE 13: CIERRE Y ENLACES -->
+    <div class="slide">
+        <div class="slide-content" style="text-align: center;">
+            <span class="badge">¡Listo!</span>
+            <h2>🎯 Has repasado toda la materia</h2>
+            <p style="font-size: 1.2rem; margin: 20px 0;">Ahora puedes ir a la sesión de preguntas</p>
+            <div style="display: flex; gap: 20px; justify-content: center; flex-wrap: wrap; margin: 30px 0;">
+                <a href="C_2A_Fisica.html" style="background: #ff6b35; color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold;">📝 Ir a Ejercicios</a>
+                <a href="Fisica.html" style="background: #2c3e66; color: white; padding: 12px 30px; border-radius: 30px; text-decoration: none; font-weight: bold;">🏠 Volver a Fisica.html</a>
+            </div>
+            <div class="footer-slide">
+                <p>Clase de repaso • 7° Básico • Ciencias Naturales</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let currentSlide = 0;
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const counter = document.getElementById('slide-counter');
+
+    function updateSlides() {
+        slides.forEach((slide, index) => {
+            slide.style.display = index === currentSlide ? 'flex' : 'none';
+        });
+        counter.textContent = `Slide ${currentSlide + 1} / ${totalSlides}`;
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) {
+            currentSlide++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) {
+            currentSlide--;
+            updateSlides();
+        }
+    }
+
+    updateSlides();
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') nextSlide();
+        if (e.key === 'ArrowLeft') prevSlide();
+    });
+</script>
+</body>
+</html>
