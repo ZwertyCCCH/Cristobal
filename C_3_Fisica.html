@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase: Dinámica Terrestre | Capas de la Tierra, Placas Tectónicas y Deriva Continental</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1724 0%, #1a2a3a 100%);
+            color: #eef2ff;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(20, 30, 45, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 145, 77, 0.3);
+            flex: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #ff914d55;
+            padding-bottom: 1rem;
+        }
+
+        .logo {
+            font-size: 0.85rem;
+            color: #ffb347;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #ff914d;
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            color: #ffb347;
+            font-size: 1rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            background: #0f2a3a;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        /* Navegación por slides */
+        .slides-container {
+            position: relative;
+            min-height: 500px;
+        }
+
+        .section {
+            background: rgba(15, 35, 55, 0.6);
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            border-left: 4px solid #ff914d;
+            transition: 0.2s;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active-slide {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .section:hover {
+            background: rgba(25, 50, 75, 0.7);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #ffb347;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #ff914d55;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title span {
+            font-size: 1.8rem;
+        }
+
+        .subsection {
+            margin: 1.2rem 0 1rem 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid #ff914d88;
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            color: #ffaa66;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .concept-box {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid #ff914d44;
+        }
+
+        .card h4 {
+            color: #ff914d;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid #ff914d66;
+            padding: 0.6rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #ff914d33;
+            color: #ffb347;
+        }
+
+        .highlight {
+            color: #ff914d;
+            font-weight: bold;
+        }
+
+        .evidence-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .evidence-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .evidence-list li::before {
+            content: "🔬";
+            position: absolute;
+            left: 0;
+        }
+
+        /* Navegación con círculos */
+        .nav-circles {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            margin: 1.5rem 0 1rem;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            background: #2c3e50;
+            color: white;
+            border: 2px solid #ff914d55;
+        }
+
+        .circle:hover {
+            transform: scale(1.1);
+            border-color: #ff914d;
+        }
+
+        .circle.active {
+            background: #ff914d;
+            color: white;
+            border-color: #ff914d;
+            box-shadow: 0 0 10px rgba(255, 145, 77, 0.5);
+        }
+
+        /* Botones de navegación flotantes */
+        .slide-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+
+        .nav-arrow-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-arrow-btn:hover {
+            background: #ff914d;
+            transform: scale(1.02);
+        }
+
+        .nav-arrow-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-info {
+            text-align: center;
+            margin: 0.8rem 0;
+            font-size: 0.85rem;
+            color: #ffb347;
+        }
+
+        /* Footer fijo con botones */
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 20, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            border-top: 1px solid #ff914d;
+            z-index: 1000;
+        }
+
+        .footer-btn {
+            background: #2c5a6e;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.8rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .footer-btn:hover {
+            background: #3a7a8e;
+            transform: scale(1.02);
+        }
+
+        .footer-btn.primary {
+            background: #ff6b35;
+        }
+
+        .footer-btn.primary:hover {
+            background: #ff914d;
+        }
+
+        body {
+            padding-bottom: 80px;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 1rem 1rem 80px 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: 1.2rem;
+            }
+            th, td {
+                font-size: 0.75rem;
+                padding: 0.4rem;
+            }
+            .circle {
+                width: 32px;
+                height: 32px;
+                font-size: 0.75rem;
+            }
+            .footer-btn {
+                padding: 0.4rem 1.2rem;
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">CPV | PROVIDENCIA</div>
+        <h1>🌍 Dinámica Terrestre</h1>
+        <div class="subtitle">Colegio Pedro de Valdivia - Providencia</div>
+    </div>
+
+    <div class="meta-info">
+        <span>📖 <strong>Curso:</strong> 7° Básico</span>
+        <span>🎯 <strong>Objetivo:</strong> Conocer la Tierra y los distintos modelos que existen para describirla</span>
+        <span>⌨️ <strong>Navegación:</strong> ← → o clic en círculos</span>
+    </div>
+
+    <!-- Círculos de navegación -->
+    <div id="nav-circles" class="nav-circles"></div>
+
+    <!-- Contenedor de slides -->
+    <div id="slides-container" class="slides-container"></div>
+
+    <!-- Botones de navegación -->
+    <div class="slide-nav">
+        <button class="nav-arrow-btn" id="prevSlideBtn">◀ Anterior</button>
+        <button class="nav-arrow-btn" id="nextSlideBtn">Siguiente ▶</button>
+    </div>
+    <div class="progress-info" id="progressInfo"></div>
+</div>
+
+<!-- Footer fijo con botones -->
+<div class="fixed-footer">
+    <button class="footer-btn" id="backToFisicaBtn">🏠 Volver a Física</button>
+    <button class="footer-btn primary" id="exercisesBtn">📝 Ejercicios</button>
+</div>
+
+<script>
+    // ==================== DEFINICIÓN DE LAS SLIDES ====================
+    const slides = [
+        { // Slide 0 - Origen de la Tierra
+            title: "🌌 Origen del Sistema Solar y la Tierra",
+            content: `
+                <p>Hace unos <strong class="highlight">4.600 millones de años</strong>, todo comenzó con una gran nube de polvo y gas en el espacio. Por efecto de la gravedad, ese material empezó a juntarse y formar cuerpos cada vez más grandes.</p>
+                <div class="subsection">
+                    <div class="subsection-title">📡 Teoría Nebular</div>
+                    <p>La teoría nebular explica que el Sistema Solar se formó a partir de una gran nube de gas y polvo llamada <strong>nebulosa</strong>. Esta nube comenzó a contraerse debido a la <strong>gravedad</strong>, haciéndose girar más rápido y aplanándose hasta formar un <strong>disco</strong>.</p>
+                    <ul style="margin: 0.8rem 0 0 1.5rem;">
+                        <li>En el centro se acumuló la mayor cantidad de materia, formando el <strong>Sol</strong>.</li>
+                        <li>En el disco restante, el material siguió girando alrededor del Sol.</li>
+                        <li>Ocurrió el proceso de <strong>acreción</strong>: partículas pequeñas se unieron formando <strong>planetesimales</strong>, luego <strong>protoplanetas</strong> y finalmente los planetas actuales.</li>
+                        <li>Planetas <strong>rocosos</strong> (cercanos al Sol) y <strong>gigantes gaseosos</strong> (lejanos).</li>
+                    </ul>
+                </div>
+                <div class="subsection">
+                    <div class="subsection-title">🔥 Formación de la Tierra</div>
+                    <p>Al principio, la <strong>Tierra era muy caliente y estaba fundida</strong>, pero con el tiempo se enfrió, formando su superficie sólida. La corteza terrestre comenzó a formarse hace aproximadamente <strong class="highlight">4.400 a 4.550 millones de años</strong>, con una protocorteza inestable que evolucionó hasta convertirse en la corteza actual.</p>
+                </div>
+            `
+        },
+        { // Slide 1 - Modelos de la Tierra
+            title: "🪨 Modelos de la Tierra",
+            content: `
+                <p>Los científicos han creado modelos que ayudan a entender la estructura interna de la Tierra basándose en estudios como terremotos, ondas sísmicas y experimentos con rocas.</p>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>📊 Modelo Estático (Geoquímico)</h4>
+                        <p>Se basa en la <strong>composición química</strong> de las capas internas. Divide la Tierra en tres capas principales:</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                            <li><strong>Corteza</strong> - Capa externa y delgada</li>
+                            <li><strong>Manto</strong> - Capa intermedia gruesa</li>
+                            <li><strong>Núcleo</strong> - Capa más interna</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>⚙️ Modelo Dinámico (Mecánico)</h4>
+                        <p>Se basa en las <strong>propiedades físicas</strong> y el comportamiento de los materiales (sólido rígido, plástico o líquido). Divide la Tierra en cuatro capas:</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                            <li><strong>Litosfera</strong> - Rígida</li>
+                            <li><strong>Astenosfera</strong> - Plástica</li>
+                            <li><strong>Mesosfera</strong> - Rígida profunda</li>
+                            <li><strong>Endosfera</strong> - Núcleo</li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        },
+        { // Slide 2 - Capas Modelo Estático
+            title: "🌍 Capas de la Tierra - Modelo Estático",
+            content: `
+                <table>
+                    <thead><tr><th>Capa</th><th>Características</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Corteza</strong></td><td>Capa más externa y delgada (5-70 km). Formada por rocas sólidas. Se divide en <strong>corteza continental</strong> (tierra firme, más gruesa y antigua) y <strong>corteza oceánica</strong> (fondo del mar, más delgada y joven).</td></tr>
+                        <tr><td><strong>Manto</strong></td><td>Debajo de la corteza, espesor de hasta 2.900 km. Rocas calientes y sólidas que pueden fluir lentamente. Parte superior: <strong>litosfera</strong> (rígida); debajo: <strong>astenosfera</strong> (blanda, permite movimiento de placas).</td></tr>
+                        <tr><td><strong>Núcleo</strong></td><td>Capa más interna. <strong>Núcleo externo</strong>: líquido, hierro y níquel. <strong>Núcleo interno</strong>: sólido, muy caliente (más de 6.000°C), hierro y níquel. Responsable del <strong>campo magnético terrestre</strong>.</td></tr>
+                    </tbody>
+                </table>
+            `
+        },
+        { // Slide 3 - Capas Modelo Dinámico
+            title: "🌐 Capas de la Tierra - Modelo Dinámico",
+            content: `
+                <table>
+                    <thead><tr><th>Capa</th><th>Características</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Litosfera</strong></td><td>Capa más externa y <strong>rígida</strong>. Formada por la corteza y la parte superior del manto. Espesor de 100 a 250 km. Fragmentada en <strong>placas tectónicas</strong> que se mueven sobre la astenosfera.</td></tr>
+                        <tr><td><strong>Astenosfera</strong></td><td>Justo debajo de la litosfera. Capa <strong>blanda y plástica</strong>. Las rocas están calientes y pueden fluir lentamente. <strong>Permite el movimiento de las placas tectónicas</strong>.</td></tr>
+                        <tr><td><strong>Mesosfera</strong></td><td>Parte más profunda y <strong>rígida del manto</strong>. Aunque es sólida, puede deformarse muy lentamente debido a altas presiones y temperaturas.</td></tr>
+                        <tr><td><strong>Endosfera</strong></td><td>Corresponde al <strong>núcleo</strong>. Núcleo externo (líquido) que genera el campo magnético, y núcleo interno (sólido por la enorme presión).</td></tr>
+                    </tbody>
+                </table>
+            `
+        },
+        { // Slide 4 - Placas Tectónicas
+            title: "🧩 Placas Tectónicas",
+            content: `
+                <p>La <strong>teoría de las placas tectónicas</strong> dice que la corteza terrestre no es una sola pieza sólida, sino que está dividida en grandes fragmentos llamados <strong class="highlight">placas tectónicas</strong>. Estas placas se mueven lentamente sobre la <strong>astenosfera</strong> (manto superior blando).</p>
+                <p>El movimiento de estas placas provoca fenómenos geológicos como la formación de montañas, terremotos, volcanes y la creación de océanos.</p>
+                <div class="concept-box">
+                    <p>💡 <strong>Causa del movimiento:</strong> Las <strong>corrientes de convección</strong> en el manto terrestre empujan y arrastran las placas sobre la superficie de la Tierra.</p>
+                </div>
+            `
+        },
+        { // Slide 5 - Tipos de Movimiento
+            title: "⬇️ Tipos de Movimiento de las Placas",
+            content: `
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>➡️ Convergente</h4>
+                        <p>Las placas <strong>chocan</strong> entre sí.</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                            <li>Continental-continental → formación de <strong>montañas</strong> (ej. Himalaya).</li>
+                            <li>Oceánica-continental → <strong>subducción</strong> (la oceánica se hunde), formando volcanes y fosas oceánicas (ej. Los Andes).</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>⬅️ Divergente</h4>
+                        <p>Las placas <strong>se separan</strong>.</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                            <li>Asciende magma y forma <strong>nueva corteza oceánica</strong>.</li>
+                            <li>Ocurre en las <strong>dorsales oceánicas</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>🔄 Transformante</h4>
+                        <p>Las placas <strong>se deslizan lateralmente</strong>.</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                            <li>No crea ni destruye corteza.</li>
+                            <li>Genera <strong>fallas tectónicas</strong> y terremotos (ej. Falla de San Andrés).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="subsection">
+                    <div class="subsection-title">📉 Subducción y Obducción</div>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Subducción:</strong> Placa oceánica densa se hunde bajo otra → volcanes y sismos.</li>
+                        <li><strong>Obducción:</strong> Corteza continental es empujada sobre otra.</li>
+                    </ul>
+                </div>
+            `
+        },
+        { // Slide 6 - Procesos Geológicos
+            title: "⛰️ Procesos Geológicos",
+            content: `
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>🔥 Procesos Internos</h4>
+                        <p>Ocurren en el <strong>interior de la Tierra</strong>. Impulsados por energía interna.</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                            <li>Actividad volcánica</li>
+                            <li>Formación de montañas</li>
+                            <li>Terremotos</li>
+                            <li>Movimiento de placas</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>🌬️ Procesos Externos</h4>
+                        <p>Ocurren en la <strong>superficie</strong>. Causados por agua, viento, hielo, gravedad.</p>
+                        <ul style="margin-top: 0.5rem; margin-left: 1rem;">
+                            <li><strong>Erosión</strong> - Desgaste del relieve</li>
+                            <li><strong>Meteorización</strong> - Descomposición de rocas</li>
+                            <li><strong>Transporte de sedimentos</strong></li>
+                        </ul>
+                        <p class="highlight" style="margin-top: 0.5rem;">No forman montañas; modifican el paisaje desgastándolo.</p>
+                    </div>
+                </div>
+            `
+        },
+        { // Slide 7 - Deriva Continental
+            title: "🗺️ Deriva Continental (Alfred Wegener)",
+            content: `
+                <p>El científico <strong class="highlight">Alfred Wegener</strong> propuso que todos los continentes estuvieron unidos en un solo supercontinente llamado <strong>Pangea</strong> (hace <strong class="highlight">300 millones de años</strong>). Con el tiempo, se fue separando hasta las posiciones actuales.</p>
+                <div class="subsection">
+                    <div class="subsection-title">🔬 Evidencias de Wegener</div>
+                    <ul class="evidence-list">
+                        <li><strong>Geométricas:</strong> Los continentes encajan como rompecabezas.</li>
+                        <li><strong>Paleontológicas:</strong> Fósiles idénticos en continentes separados.</li>
+                        <li><strong>Geológicas:</strong> Formaciones rocosas coincidentes.</li>
+                        <li><strong>Climáticas:</strong> Evidencias de glaciaciones en zonas tropicales.</li>
+                    </ul>
+                </div>
+                <div class="subsection">
+                    <div class="subsection-title">🌎 Evolución de Pangea</div>
+                    <p><strong>Pangea</strong> → <strong>Laurasia</strong> (norte) y <strong>Gondwana</strong> (sur) → continentes actuales.</p>
+                    <p>Hipótesis <strong>inicialmente rechazada</strong> (no se sabía cómo se movían). Hoy la <strong>tectónica de placas</strong> la confirma.</p>
+                </div>
+            `
+        },
+        { // Slide 8 - Evolución Corteza y Resumen
+            title: "⏳ Evolución de la Corteza Terrestre",
+            content: `
+                <ul style="margin-left: 1.5rem;">
+                    <li>La corteza comenzó a formarse hace <strong>~4.400-4.550 millones de años</strong> (protocorteza inestable).</li>
+                    <li><strong>Corteza oceánica:</strong> Más <strong>delgada y joven</strong>. Se forma en dorsales oceánicas.</li>
+                    <li><strong>Corteza continental:</strong> Más <strong>gruesa y antigua</strong> (>3.700 millones de años).</li>
+                    <li>La corteza se mantiene en constante <strong>renovación</strong> por tectónica de placas, subducción, actividad volcánica, erosión y sedimentación.</li>
+                </ul>
+                <div class="concept-box" style="margin-top:1rem;">
+                    <h4 style="color:#ff914d; margin-bottom:0.5rem;">📌 Resumen Rápido</h4>
+                    <ul style="margin-left:1rem;">
+                        <li><strong>Litosfera</strong> = Corteza + manto superior (rígida)</li>
+                        <li><strong>Astenosfera</strong> = Capa plástica (movimiento de placas)</li>
+                        <li><strong>Subducción</strong> = Placa oceánica se hunde bajo continental</li>
+                        <li><strong>Pangea</strong> = Supercontinente unido</li>
+                        <li><strong>Wegener</strong> = Padre de la deriva continental</li>
+                    </ul>
+                </div>
+            `
+        }
+    ];
+
+    let currentIndex = 0;
+
+    function renderCircles() {
+        const container = document.getElementById('nav-circles');
+        container.innerHTML = '';
+        for (let i = 0; i < slides.length; i++) {
+            const circle = document.createElement('div');
+            circle.className = 'circle';
+            circle.textContent = i + 1;
+            if (i === currentIndex) circle.classList.add('active');
+            circle.addEventListener('click', () => goToSlide(i));
+            container.appendChild(circle);
+        }
+    }
+
+    function renderCurrentSlide() {
+        const container = document.getElementById('slides-container');
+        const slide = slides[currentIndex];
+        container.innerHTML = `
+            <div class="section active-slide">
+                <div class="section-title">
+                    <span>${slide.title.split(' ')[0]}</span> ${slide.title.substring(slide.title.indexOf(' '))}
+                </div>
+                ${slide.content}
+            </div>
+        `;
+        
+        // Actualizar círculos
+        document.querySelectorAll('.circle').forEach((circle, idx) => {
+            if (idx === currentIndex) circle.classList.add('active');
+            else circle.classList.remove('active');
+        });
+        
+        // Actualizar info de progreso
+        document.getElementById('progressInfo').innerHTML = `📖 Slide ${currentIndex + 1} de ${slides.length}`;
+        
+        // Actualizar botones
+        const prevBtn = document.getElementById('prevSlideBtn');
+        const nextBtn = document.getElementById('nextSlideBtn');
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === slides.length - 1;
+    }
+
+    function goToSlide(index) {
+        if (index >= 0 && index < slides.length) {
+            currentIndex = index;
+            renderCurrentSlide();
+        }
+    }
+
+    function nextSlide() {
+        if (currentIndex < slides.length - 1) {
+            currentIndex++;
+            renderCurrentSlide();
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            renderCurrentSlide();
+        }
+    }
+
+    // Inicializar
+    renderCircles();
+    renderCurrentSlide();
+
+    // Event listeners
+    document.getElementById('prevSlideBtn').addEventListener('click', prevSlide);
+    document.getElementById('nextSlideBtn').addEventListener('click', nextSlide);
+    
+    // Navegación con teclado
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+        }
+    });
+
+    // Botones del footer fijo
+    document.getElementById('backToFisicaBtn').addEventListener('click', () => {
+        window.location.href = 'Fisica.html';
+    });
+    
+    document.getElementById('exercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_3A_Fisica.html';
+    });
+</script>
+</body>
+</html>

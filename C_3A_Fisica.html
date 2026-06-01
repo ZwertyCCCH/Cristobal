@@ -1,0 +1,580 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Dinámica Terrestre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1724 0%, #1a2a3a 100%);
+            color: #eef2ff;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(20, 30, 45, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 145, 77, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #ff914d55;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #ff914d;
+        }
+
+        .subtitle {
+            color: #ffb347;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #0f2a3a;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+        }
+
+        .section {
+            background: rgba(15, 35, 55, 0.6);
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 4px solid #ff914d;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #ffb347;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 1rem;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(255, 145, 77, 0.2);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #ff914d;
+        }
+
+        .match-table, .truefalse-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .match-table th, .match-table td,
+        .truefalse-table th, .truefalse-table td {
+            border: 1px solid #ff914d66;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .match-table th, .truefalse-table th {
+            background: #ff914d33;
+            color: #ffb347;
+        }
+
+        select {
+            background: #0f2a3a;
+            color: white;
+            border: 1px solid #ff914d;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1a2a3a;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #ff914d;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #0f2a2f;
+            border-radius: 1rem;
+            display: none;
+            border: 2px solid #ff914d;
+        }
+
+        .score-box {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 1rem;
+        }
+
+        .approved {
+            background: #1e4a2e;
+            color: #8bc34a;
+        }
+
+        .failed {
+            background: #7a2e2e;
+            color: #ff8a80;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #2c5a6e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #3a7a8e;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
+
+        .correct-row {
+            background: rgba(46, 204, 113, 0.25);
+        }
+
+        .incorrect-row {
+            background: rgba(231, 76, 60, 0.25);
+        }
+
+        .tf-correct {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝Ejercicios</h1>
+        <div class="subtitle">Dinámica Terrestre | Capas de la Tierra, Placas Tectónicas y Deriva Continental</div>
+        <div class="subtitle">Colegio Pedro de Valdivia - Providencia | 7° Básico</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (10) + Relación de Columnas (8) + Verdadero/Falso (8)</div>
+        <div>✅ Exigencia: 60%</div>
+        <div>🎯 Nota máxima: 7.0</div>
+    </div>
+
+    <div id="examContent">
+        <!-- SECCIÓN I: SELECCIÓN MÚLTIPLE -->
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple</div>
+            <p>Lee cada pregunta y marca la alternativa correcta.</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <!-- SECCIÓN II: RELACIÓN DE COLUMNAS -->
+        <div class="section">
+            <div class="section-title">🔗 II. Relación de Columnas</div>
+            <p>Selecciona el término correcto para cada descripción.</p>
+            <table class="match-table" id="matchTable">
+                <thead>
+                    <tr><th style="width:60%">Descripción</th><th style="width:40%">Término</th></tr>
+                </thead>
+                <tbody id="matchBody"></tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN III: VERDADERO O FALSO -->
+        <div class="section">
+            <div class="section-title">⚖️ III. Verdadero o Falso</div>
+            <p>Selecciona Verdadero (V) o Falso (F) para cada afirmación.</p>
+            <table class="truefalse-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar Ejercicios</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Dinámica Terrestre | CPV - Providencia</div>
+</div>
+
+<script>
+    // ==================== DATOS DE PREGUNTAS ====================
+    // Preguntas de selección múltiple
+    const multipleChoiceQuestions = [
+        { text: "¿Cuál es la capa más externa de la Tierra según el modelo estático?", options: ["a. Núcleo", "b. Manto", "c. Corteza", "d. Endosfera"], correct: "c" },
+        { text: "¿Qué capa del modelo dinámico está formada por la corteza y parte del manto superior?", options: ["a. Astenosfera", "b. Litosfera", "c. Mesosfera", "d. Endosfera"], correct: "b" },
+        { text: "¿Qué tipo de corteza es más delgada y joven?", options: ["a. Continental", "b. Oceánica", "c. Interna", "d. Estática"], correct: "b" },
+        { text: "¿Qué proceso ocurre cuando una placa oceánica se hunde bajo una continental?", options: ["a. Obducción", "b. Transformación", "c. Subducción", "d. Divergencia"], correct: "c" },
+        { text: "¿Qué característica distingue al núcleo externo?", options: ["a. Es sólido y frío", "b. Es líquido y genera el campo magnético", "c. Está formado por magma", "d. Es parte de la corteza"], correct: "b" },
+        { text: "¿Qué modelo divide la Tierra según su composición química?", options: ["a. Modelo dinámico", "b. Modelo físico", "c. Modelo estático", "d. Modelo tectónico"], correct: "c" },
+        { text: "¿Qué capa permite el movimiento de las placas tectónicas?", options: ["a. Corteza", "b. Núcleo", "c. Astenosfera", "d. Mesosfera"], correct: "c" },
+        { text: "¿Qué tipo de movimiento tectónico forma montañas como el Himalaya?", options: ["a. Divergente", "b. Transformante", "c. Convergente", "d. Erosivo"], correct: "c" },
+        { text: "¿Qué científico propuso la hipótesis de la deriva continental?", options: ["a. Charles Darwin", "b. Alfred Wegener", "c. Isaac Newton", "d. Galileo Galilei"], correct: "b" },
+        { text: "¿Qué evidencia apoyó la hipótesis de Wegener?", options: ["a. Cambios climáticos", "b. Fósiles y formaciones geológicas similares en distintos continentes", "c. Actividad volcánica", "d. Observación satelital"], correct: "b" }
+    ];
+
+    // Datos para relación de columnas
+    const matchItems = [
+        { description: "Capa externa y rígida formada por la corteza y parte del manto superior.", correct: "Litosfera" },
+        { description: "Capa plástica del manto que permite el movimiento de las placas.", correct: "Astenosfera" },
+        { description: "Capa más interna de la Tierra, dividida en núcleo externo e interno.", correct: "Endosfera" },
+        { description: "Proceso donde una placa oceánica se hunde bajo otra.", correct: "Subducción" },
+        { description: "Capa sólida y delgada donde vivimos.", correct: "Corteza" },
+        { description: "Teoría que explica el movimiento de las placas tectónicas.", correct: "Teoría de placas tectónicas" },
+        { description: "Científico que propuso la teoría de la deriva continental.", correct: "Alfred Wegener" },
+        { description: "Movimiento donde las placas se separan y se forma nueva corteza oceánica.", correct: "Movimiento divergente" }
+    ];
+
+    const matchOptionsList = [
+        "Corteza", "Litosfera", "Astenosfera", "Mesosfera", "Endosfera",
+        "Subducción", "Obducción", "Movimiento convergente", "Movimiento divergente", "Movimiento transformante",
+        "Alfred Wegener", "Teoría de placas tectónicas", "Modelo estático", "Modelo dinámico"
+    ];
+
+    // Datos para verdadero/falso
+    const tfItems = [
+        { text: "La corteza oceánica es más antigua que la continental.", correct: "F" },
+        { text: "El núcleo externo es líquido y genera el campo magnético terrestre.", correct: "V" },
+        { text: "La litosfera está fragmentada en placas tectónicas.", correct: "V" },
+        { text: "La mesosfera es una capa gaseosa del planeta.", correct: "F" },
+        { text: "La teoría de la deriva continental fue inicialmente rechazada.", correct: "V" },
+        { text: "Los procesos geológicos externos forman montañas.", correct: "F" },
+        { text: "La astenosfera permite el movimiento de las placas tectónicas.", correct: "V" },
+        { text: "La corteza terrestre se formó hace más de 4.000 millones de años.", correct: "V" }
+    ];
+
+    // Variables para almacenar respuestas
+    let mcAnswers = new Array(multipleChoiceQuestions.length).fill(null);
+    let matchAnswers = new Array(matchItems.length).fill("");
+    let tfAnswers = new Array(tfItems.length).fill(null);
+
+    let evaluated = false;
+
+    // Renderizar selección múltiple
+    function renderMultipleChoice() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        multipleChoiceQuestions.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${q.options.map(opt => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${opt.charAt(0)}" id="mc_${idx}_${opt.charAt(0)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${opt.charAt(0)}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div style="font-size:0.8rem; margin-top:0.3rem;">${mcAnswers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta correcta: ' + q.correct}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => {
+                        mcAnswers[idx] = e.target.value;
+                    });
+                });
+            }
+        });
+    }
+
+    // Renderizar relación de columnas
+    function renderMatch() {
+        const tbody = document.getElementById('matchBody');
+        tbody.innerHTML = '';
+        matchItems.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            row.setAttribute('data-idx', idx);
+            const cellDesc = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellDesc.innerHTML = `${idx+1}. ${item.description}`;
+            
+            const select = document.createElement('select');
+            select.id = `match_${idx}`;
+            select.disabled = evaluated;
+            
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione...";
+            select.appendChild(defaultOpt);
+            
+            matchOptionsList.forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt;
+                option.textContent = opt;
+                if (!evaluated && matchAnswers[idx] === opt) option.selected = true;
+                select.appendChild(option);
+            });
+            
+            select.addEventListener('change', (e) => {
+                matchAnswers[idx] = e.target.value;
+            });
+            
+            cellSelect.appendChild(select);
+            
+            if (evaluated) {
+                const isCorrect = matchAnswers[idx] === item.correct;
+                row.classList.add(isCorrect ? 'correct-row' : 'incorrect-row');
+                if (!isCorrect) {
+                    const feedback = document.createElement('div');
+                    feedback.style.fontSize = '0.75rem';
+                    feedback.style.marginTop = '0.3rem';
+                    feedback.style.color = '#ffaa88';
+                    feedback.innerHTML = `Correcta: ${item.correct}`;
+                    cellSelect.appendChild(feedback);
+                }
+            }
+        });
+    }
+
+    // Renderizar verdadero/falso
+    function renderTrueFalse() {
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+        tfItems.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellText.innerHTML = `${idx+1}. ${item.text}`;
+            
+            const select = document.createElement('select');
+            select.id = `tf_${idx}`;
+            select.disabled = evaluated;
+            
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+            
+            const optV = document.createElement('option');
+            optV.value = "V";
+            optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option');
+            optF.value = "F";
+            optF.textContent = "Falso (F)";
+            
+            select.appendChild(optV);
+            select.appendChild(optF);
+            
+            if (!evaluated && tfAnswers[idx]) {
+                if (tfAnswers[idx] === "V") optV.selected = true;
+                else if (tfAnswers[idx] === "F") optF.selected = true;
+            }
+            
+            select.addEventListener('change', (e) => {
+                tfAnswers[idx] = e.target.value;
+            });
+            
+            cellSelect.appendChild(select);
+            
+            if (evaluated) {
+                const isCorrect = tfAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correct}`;
+                feedback.className = isCorrect ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+    }
+
+    // Evaluar todo
+    function evaluateAll() {
+        evaluated = true;
+        
+        // Calcular puntajes
+        let mcCorrect = 0;
+        let matchCorrect = 0;
+        let tfCorrect = 0;
+        
+        // Evaluar múltiple choice
+        for (let i = 0; i < multipleChoiceQuestions.length; i++) {
+            if (mcAnswers[i] === multipleChoiceQuestions[i].correct) mcCorrect++;
+        }
+        
+        // Evaluar match
+        for (let i = 0; i < matchItems.length; i++) {
+            if (matchAnswers[i] === matchItems[i].correct) matchCorrect++;
+        }
+        
+        // Evaluar verdadero/falso
+        for (let i = 0; i < tfItems.length; i++) {
+            if (tfAnswers[i] === tfItems[i].correct) tfCorrect++;
+        }
+        
+        const totalQuestions = multipleChoiceQuestions.length + matchItems.length + tfItems.length;
+        const totalCorrect = mcCorrect + matchCorrect + tfCorrect;
+        const percentage = (totalCorrect / totalQuestions) * 100;
+        
+        let grade = 0;
+        const passingPercentage = 60;
+        
+        if (percentage >= passingPercentage) {
+            grade = 4.0 + ((percentage - passingPercentage) / (100 - passingPercentage)) * 3.0;
+        } else {
+            grade = 1.0 + (percentage / passingPercentage) * 3.0;
+        }
+        grade = Math.round(grade * 100) / 100;
+        
+        const resultsDiv = document.getElementById('results');
+        const isApproved = grade >= 4.0;
+        
+        resultsDiv.innerHTML = `
+            <h3 style="color:#ffb347; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Respuestas correctas: ${totalCorrect} de ${totalQuestions} (${Math.round(percentage)}%)</div>
+            <div class="score-box">📊 Detalle:</div>
+            <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Selección Múltiple: ${mcCorrect}/${multipleChoiceQuestions.length}</div>
+                <div>🔗 Relación: ${matchCorrect}/${matchItems.length}</div>
+                <div>⚖️ V/F: ${tfCorrect}/${tfItems.length}</div>
+            </div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}">
+                ${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}<br>
+                <strong>NOTA FINAL: ${grade}</strong>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartBtn">🔄 Reiniciar Ejercicios</button>
+                <button class="action-btn" id="goToClassBtn">📚 Volver a la Clase</button>
+            </div>
+        `;
+        
+        resultsDiv.style.display = 'block';
+        
+        // Re-renderizar todo con modo evaluación
+        renderMultipleChoice();
+        renderMatch();
+        renderTrueFalse();
+        
+        // Event listeners para botones
+        document.getElementById('restartBtn')?.addEventListener('click', restartExam);
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => {
+            window.location.href = 'C_3_Fisica.html';
+        });
+        
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    function restartExam() {
+        evaluated = false;
+        mcAnswers = new Array(multipleChoiceQuestions.length).fill(null);
+        matchAnswers = new Array(matchItems.length).fill("");
+        tfAnswers = new Array(tfItems.length).fill(null);
+        
+        document.getElementById('results').style.display = 'none';
+        
+        renderMultipleChoice();
+        renderMatch();
+        renderTrueFalse();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    // Inicializar
+    renderMultipleChoice();
+    renderMatch();
+    renderTrueFalse();
+    
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>
