@@ -1,0 +1,660 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Neolítico, Civilizaciones y Grecia | Historia 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fffdf9;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9dfcf;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e6b450;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #7a4b1d;
+        }
+
+        .subtitle {
+            color: #9b6e3e;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #faf6eb;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #e2cfb0;
+            color: #5d431f;
+        }
+
+        .section {
+            background: #fefcf7;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #e6b450;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf7;
+            border-radius: 1rem;
+            border: 1px solid #ede3d2;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3b2b1a;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(230, 180, 80, 0.15);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #b47c44;
+        }
+
+        .match-table, .truefalse-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .match-table th, .match-table td,
+        .truefalse-table th, .truefalse-table td {
+            border: 1px solid #e2cfb0;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .match-table th, .truefalse-table th {
+            background: #faf0e1;
+            color: #7a4b1d;
+            font-weight: 600;
+        }
+
+        select {
+            background: #fffaf2;
+            color: #2d4029;
+            border: 1px solid #d4c1a4;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #b47c44;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef8ef;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #e6b450;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3b2b1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #e2cfb0;
+            color: #5d431f;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #d4b883;
+            color: #3b2b1a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .correct-row {
+            background: rgba(100, 160, 80, 0.12);
+        }
+
+        .incorrect-row {
+            background: rgba(200, 90, 70, 0.1);
+        }
+
+        .tf-correct {
+            color: #2d6a2d;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #b33;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 Ejercicios de Historia</h1>
+        <div class="subtitle">Neolítico · Primeras Civilizaciones · Grecia Clásica</div>
+        <div class="subtitle">7° Básico | Basado en texto oficial SM Chile</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (15) + Relación de Columnas (15) + Verdadero/Falso (15)</div>
+        <div>✅ Exigencia: 60% | Nota máxima: 7.0</div>
+        <div>🔄 Cada vez que reinicies, las preguntas se renuevan aleatoriamente desde un banco de 50 por sección.</div>
+    </div>
+
+    <div id="examContent">
+        <!-- SECCIÓN I -->
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple</div>
+            <p>Selecciona la opción correcta.</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <!-- SECCIÓN II -->
+        <div class="section">
+            <div class="section-title">🔗 II. Relación de Columnas</div>
+            <p>Elige el término que mejor corresponde a cada descripción.</p>
+            <table class="match-table" id="matchTable">
+                <thead><tr><th style="width:65%">Descripción</th><th style="width:35%">Término</th></tr></thead>
+                <tbody id="matchBody"></tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN III -->
+        <div class="section">
+            <div class="section-title">⚖️ III. Verdadero o Falso</div>
+            <p>Selecciona Verdadero (V) o Falso (F).</p>
+            <table class="truefalse-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Historia 7° Básico | Unidades 1 y 2: Neolítico · Primeras Civilizaciones · Grecia</div>
+</div>
+
+<script>
+    // ==================== POOL DE PREGUNTAS (50 por cada sección) ====================
+    
+    // ----- Banco de Selección Múltiple (bloques: Neolítico, Civilizaciones, Grecia)
+    const bankMultipleChoice = [
+        // Neolítico (1-17)
+        { text: "¿Qué nombre recibe el periodo en que los seres humanos domesticaron plantas y animales?", options: ["a. Paleolítico", "b. Neolítico", "c. Mesolítico", "d. Edad de los Metales"], correct: "b" },
+        { text: "¿Qué tipo de economía predominó durante el Neolítico?", options: ["a. Depredadora", "b. Recolectora", "c. Productora", "d. Nómada"], correct: "c" },
+        { text: "¿Cuál de los siguientes fue un foco pionero de la agricultura?", options: ["a. Patagonia", "b. Cercano Oriente", "c. Siberia", "d. Australia"], correct: "b" },
+        { text: "¿Qué técnica reemplazó al tallado de piedra en el Neolítico?", options: ["a. Piedra pulida", "b. Cincelado", "c. Fundición", "d. Termoformado"], correct: "a" },
+        { text: "¿Qué permitió el desarrollo de la cerámica en el Neolítico?", options: ["a. Mejorar la caza", "b. Almacenar y conservar alimentos", "c. Construir templos", "d. Crear monedas"], correct: "b" },
+        { text: "¿Cómo se denomina el proceso por el cual las comunidades se establecen en un lugar fijo?", options: ["a. Sedentarización", "b. Nómade", "c. Éxodo", "d. Colonización"], correct: "a" },
+        { text: "¿Qué animales fueron domesticados primero en el Creciente Fértil?", options: ["a. Caballos y camellos", "b. Cabras y ovejas", "c. Elefantes", "d. Aves exóticas"], correct: "b" },
+        { text: "¿Qué construcción megalítica destaca en Inglaterra como centro astronómico y ceremonial?", options: ["a. Zigurat", "b. Pirámide", "c. Stonehenge", "d. Coliseo"], correct: "c" },
+        { text: "¿Qué actividad caracterizó la economía neolítica?", options: ["a. Caza exclusiva", "b. Agricultura y ganadería", "c. Navegación", "d. Minería intensiva"], correct: "b" },
+        { text: "¿Qué innovación permitió almacenar excedentes durante el Neolítico?", options: ["a. Alfarería", "b. Herreria", "c. Escritura", "d. Telar"], correct: "a" },
+        { text: "¿Cuál fue una consecuencia de la sedentarización?", options: ["a. Aumento de la movilidad", "b. Disminución de la población", "c. Aparición de las aldeas", "d. Desaparición del comercio"], correct: "c" },
+        { text: "¿Qué región americana fue foco de domesticación del maíz?", options: ["a. Patagonia", "b. Mesoamérica", "c. Amazonia", "d. Grandes Llanuras"], correct: "b" },
+        { text: "¿Qué producto agrícola fue domesticado en los Andes Centrales?", options: ["a. Trigo", "b. Papa", "c. Arroz", "d. Cebada"], correct: "b" },
+        { text: "¿Qué tipo de relaciones permitió el comercio neolítico?", options: ["a. Intercambio de ideas y tecnología", "b. Esclavitud", "c. Colonización violenta", "d. Imperialismo"], correct: "a" },
+        { text: "¿Qué elementos definen una aldea neolítica?", options: ["a. Viviendas estables y producción agrícola", "b. Murallas gigantes", "c. Escritura compleja", "d. Moneda oficial"], correct: "a" },
+        { text: "¿Qué fenómeno climático favoreció el inicio del Neolítico?", options: ["a. Era de hielo", "b. Calentamiento postglaciar", "c. Huracanes", "d. Sequía extrema"], correct: "b" },
+        { text: "¿Cómo se llama el proceso de modificación de especies vegetales mediante selección humana?", options: ["a. Domesticación", "b. Erosión", "c. Mutación espontánea", "d. Intemperismo"], correct: "a" },
+        // Primeras Civilizaciones (18-34)
+        { text: "¿Qué río fue fundamental para la civilización egipcia?", options: ["a. Tigris", "b. Éufrates", "c. Nilo", "d. Indo"], correct: "c" },
+        { text: "¿Cuál fue la primera forma de escritura desarrollada en Mesopotamia?", options: ["a. Jeroglífica", "b. Cuneiforme", "c. Alfabética", "d. Ideográfica"], correct: "b" },
+        { text: "¿Cómo se denomina la máxima autoridad política y religiosa en el Antiguo Egipto?", options: ["a. Rey", "b. Emperador", "c. Faraón", "d. Sumo sacerdote"], correct: "c" },
+        { text: "¿Qué civilización destacó por ser grandes navegantes y fundar Cartago?", options: ["a. Minoicos", "b. Fenicios", "c. Hititas", "d. Asirios"], correct: "b" },
+        { text: "¿Qué tipo de construcción religiosa caracterizó a Mesopotamia?", options: ["a. Pirámide", "b. Zigurat", "c. Templo griego", "d. Menhir"], correct: "b" },
+        { text: "¿Qué imperio unificó por primera vez gran parte de Mesopotamia?", options: ["a. Acadio", "b. Asirio", "c. Persa", "d. Neo babilónico"], correct: "a" },
+        { text: "¿Qué metal representó un gran avance tecnológico en la antigüedad al ser más duro que el cobre?", options: ["a. Bronce", "b. Oro", "c. Plata", "d. Aluminio"], correct: "a" },
+        { text: "¿Qué civilización mesoamericana es considerada 'cultura madre'?", options: ["a. Maya", "b. Azteca", "c. Olmeca", "d. Zapoteca"], correct: "c" },
+        { text: "¿Qué cultura andina precedió a los incas y destacó por su centro ceremonial Chavín de Huántar?", options: ["a. Nazca", "b. Moche", "c. Chavín", "d. Tiwanaku"], correct: "c" },
+        { text: "¿Qué material utilizaban los escribas egipcios para escribir?", options: ["a. Tablillas de arcilla", "b. Papiro", "c. Pergamino", "d. Seda"], correct: "b" },
+        { text: "¿Cuál es uno de los códigos legales más antiguos de la humanidad?", options: ["a. Código de Justiniano", "b. Código de Hammurabi", "c. Ley de las XII Tablas", "d. Edicto de Milán"], correct: "b" },
+        { text: "¿Qué civilización del Indo destacó por su urbanismo planificado?", options: ["a. Tebas", "b. Menfis", "c. Mohenjo-Daro", "d. Babilonia"], correct: "c" },
+        { text: "¿Qué dinastía china construyó la primera Gran Muralla?", options: ["a. Shang", "b. Zhou", "c. Qin", "d. Han"], correct: "c" },
+        { text: "¿Qué tipo de escritura desarrollaron los fenicios?", options: ["a. Cuneiforme", "b. Jeroglífica", "c. Alfabética", "d. Silábica"], correct: "c" },
+        { text: "¿Qué función tenían los zigurats en Mesopotamia?", options: ["a. Mercado", "b. Templo y centro administrativo", "c. Palacio real", "d. Fortaleza militar"], correct: "b" },
+        { text: "¿Qué significa que una civilización era 'teocrática'?", options: ["a. Gobierno de militares", "b. Gobierno de comerciantes", "c. Gobierno basado en la religión", "d. Ausencia de gobierno"], correct: "c" },
+        { text: "¿Qué invento permitió la difusión del conocimiento en Egipto?", options: ["a. Imprenta", "b. Papiro y tinta", "c. Pergamino de cuero", "d. Códice"], correct: "b" },
+        // Grecia (35-50)
+        { text: "¿Cómo se denominaban las ciudades-estado griegas?", options: ["a. Polis", "b. Urbes", "c. Civitas", "d. Demos"], correct: "a" },
+        { text: "¿Quién es considerado el padre de la democracia ateniense?", options: ["a. Pericles", "b. Solón", "c. Clístenes", "d. Dracón"], correct: "c" },
+        { text: "¿Qué institución ateniense reunía a todos los ciudadanos para votar leyes?", options: ["a. Bulé", "b. Areópago", "c. Ekklesía", "d. Heliea"], correct: "c" },
+        { text: "¿Qué medida tomó Pericles para permitir la participación de los pobres en la política?", options: ["a. Ostracismo", "b. Mistoforia (pago por cargos)", "c. Esclavitud por deudas", "d. Sorteo de reyes"], correct: "b" },
+        { text: "¿Qué guerra enfrentó a griegos y persas?", options: ["a. Guerra del Peloponeso", "b. Guerras Médicas", "c. Guerras Púnicas", "d. Guerras Macedónicas"], correct: "b" },
+        { text: "¿Qué filósofo griego fue maestro de Alejandro Magno?", options: ["a. Sócrates", "b. Platón", "c. Aristóteles", "d. Epicuro"], correct: "c" },
+        { text: "¿Qué templo ateniense dedicado a Atenea se ubica en la Acrópolis?", options: ["a. Erecteión", "b. Partenón", "c. Templo de Zeus", "d. Ágora"], correct: "b" },
+        { text: "¿Qué poeta escribió la Ilíada y la Odisea?", options: ["a. Hesíodo", "b. Homero", "c. Safo", "d. Píndaro"], correct: "b" },
+        { text: "¿Qué concepto griego significa 'igualdad ante la ley'?", options: ["a. Isegoría", "b. Isonomía", "c. Mistoforia", "d. Ostracismo"], correct: "b" },
+        { text: "¿Cuál era el principal cultivo de la agricultura griega?", options: ["a. Trigo", "b. Olivo y vid", "c. Maíz", "d. Arroz"], correct: "b" },
+        { text: "¿Qué héroe griego protagoniza la Odisea?", options: ["a. Aquiles", "b. Agamenón", "c. Odiseo", "d. Héctor"], correct: "c" },
+        { text: "¿Quién fue el historiador de la Guerra del Peloponeso?", options: ["a. Heródoto", "b. Tucídides", "c. Jenofonte", "d. Polibio"], correct: "b" },
+        { text: "¿Qué diosa era protectora de Atenas?", options: ["a. Afrodita", "b. Hera", "c. Atenea", "d. Artemisa"], correct: "c" },
+        { text: "¿Qué deporte nació en Grecia en el 776 a.C. ?", options: ["a. Maratón", "b. Juegos Olímpicos", "c. Lucha grecorromana", "d. Carrera de carros"], correct: "b" },
+        { text: "¿Qué escuela filosófica fundó Platón?", options: ["a. Liceo", "b. Academia", "c. Estoicismo", "d. Epicureísmo"], correct: "b" },
+        { text: "¿Qué estratega ateniense lideró la edad de oro de la democracia?", options: ["a. Temístocles", "b. Pericles", "c. Alcibíades", "d. Cimón"], correct: "b" }
+    ];
+    
+    // ----- Banco Relación de Columnas (50 items)
+    const bankMatch = [
+        { description: "Periodo en que surge la agricultura y la ganadería.", correct: "Neolítico" },
+        { description: "Proceso de modificación genética de especies por selección humana.", correct: "Domesticación" },
+        { description: "Foco de domesticación del trigo y la cebada en Asia sudoccidental.", correct: "Creciente Fértil" },
+        { description: "Construcción megalítica en Inglaterra con función astronómica y ritual.", correct: "Stonehenge" },
+        { description: "Templo piramidal característico de Mesopotamia.", correct: "Zigurat" },
+        { description: "Río que fertilizaba Egipto y permitió su desarrollo agrícola.", correct: "Nilo" },
+        { description: "Primer código de leyes escrito de la historia (Mesopotamia).", correct: "Código de Hammurabi" },
+        { description: "Civilización madre de Mesoamérica, famosa por cabezas colosales.", correct: "Olmeca" },
+        { description: "Civilización andina que precedió a los incas, centro ceremonial en Chavín.", correct: "Chavín" },
+        { description: "Innovación tecnológica que permitió almacenar alimentos en el Neolítico.", correct: "Cerámica" },
+        { description: "Tipo de economía basada en la producción de alimentos.", correct: "Economía productora" },
+        { description: "Institución central de la democracia ateniense, asamblea de ciudadanos.", correct: "Ekklesía" },
+        { description: "Consejo de 500 ciudadanos que preparaba las leyes en Atenas.", correct: "Bulé" },
+        { description: "Pago por la participación en cargos públicos establecido por Pericles.", correct: "Mistoforia" },
+        { description: "Destierro por 10 años de quien amenazara la democracia ateniense.", correct: "Ostracismo" },
+        { description: "Guerras entre griegos y persas durante el siglo V a.C.", correct: "Guerras Médicas" },
+        { description: "Filósofo que desarrolló el método mayéutico.", correct: "Sócrates" },
+        { description: "Escultura que representa las proporciones ideales del cuerpo humano según Policleto.", correct: "Canon" },
+        { description: "Poeta autor de la Ilíada y la Odisea.", correct: "Homero" },
+        { description: "Templo griego más representativo del periodo clásico en Atenas.", correct: "Partenón" },
+        { description: "Río de la India donde floreció una civilización urbana planificada.", correct: "Indo" },
+        { description: "Metal que al alearse con estaño produce bronce.", correct: "Cobre" },
+        { description: "Escritura desarrollada por los sumerios sobre tablillas de arcilla.", correct: "Cuneiforme" },
+        { description: "Máxima autoridad política y religiosa en el Antiguo Egipto.", correct: "Faraón" },
+        { description: "Ciudad fenicia más importante del norte de África.", correct: "Cartago" },
+        { description: "Proceso de hundimiento de una placa oceánica bajo otra (aunque es geología, lo usamos para conectar conceptos).", correct: "Subducción" },
+        { description: "Primer metal utilizado para fabricar herramientas en la antigüedad.", correct: "Cobre" },
+        { description: "Escritura sagrada egipcia tallada en monumentos.", correct: "Jeroglífica" },
+        { description: "Civilización que desarrolló el alfabeto fonético de 22 signos.", correct: "Fenicios" },
+        { description: "Estructura social jerarquizada típica de las primeras civilizaciones.", correct: "Estratificación" },
+        { description: "Concepto griego que significa 'igualdad de palabra o derecho a hablar'", correct: "Isegoría" },
+        { description: "Dios principal del panteón griego, padre de dioses y hombres.", correct: "Zeus" },
+        { description: "Batalla naval decisiva donde los griegos vencieron a los persas (480 a.C.)", correct: "Salamina" },
+        { description: "Historiador griego considerado 'padre de la historia'.", correct: "Heródoto" },
+        { description: "Edificio donde se reunía la Asamblea en Atenas.", correct: "Pnyx" },
+        { description: "Grupo social excluido de la ciudadanía ateniense que vivía en Atenas sin derechos políticos.", correct: "Meteco" },
+        { description: "Animal domesticado en los Andes centrales utilizado como carga.", correct: "Llama" },
+        { description: "Cereal domesticado en Mesoamérica base de la alimentación prehispánica.", correct: "Maíz" },
+        { description: "Técnica agrícola neolítica que consistía en pulir la piedra.", correct: "Piedra pulida" },
+        { description: "Nombre que recibían los campesinos en el Antiguo Egipto.", correct: "Campesinado" }, // simplificado
+        { description: "Río que junto al Éufrates bañaba Mesopotamia.", correct: "Tigris" },
+        { description: "Escritura fenicia que influyó en el alfabeto griego y latino.", correct: "Alfabeto fonético" },
+        { description: "Género teatral griego que mostraba grandes conflictos humanos.", correct: "Tragedia" },
+        { description: "Filósofo que escribió 'La República'.", correct: "Platón" },
+        { description: "Competencia atlética celebrada en Olimpia cada cuatro años.", correct: "Juegos Olímpicos" },
+        { description: "Término que designaba a los extranjeros sin derechos en Atenas.", correct: "Meteco" },
+        { description: "Arquitecto del Partenón (nombre emblemático).", correct: "Fidias" },
+        { description: "Batalla donde 300 espartanos resistieron frente a los persas.", correct: "Termópilas" }
+    ];
+    
+    // ----- Banco Verdadero/Falso (50 items)
+    const bankTF = [
+        { text: "El Neolítico se caracteriza por una economía depredadora.", correct: "F" },
+        { text: "La domesticación de plantas y animales ocurrió por primera vez en el Cercano Oriente.", correct: "V" },
+        { text: "La piedra pulida es una técnica típica del Paleolítico.", correct: "F" },
+        { text: "Los megalitos como Stonehenge evidencian organización colectiva y creencias.", correct: "V" },
+        { text: "La escritura cuneiforme fue desarrollada por los egipcios.", correct: "F" },
+        { text: "El río Nilo fue fundamental para el desarrollo de la civilización egipcia.", correct: "V" },
+        { text: "El Código de Hammurabi es uno de los primeros conjuntos de leyes escritas.", correct: "V" },
+        { text: "Los fenicios destacaron por su agricultura y no por el comercio marítimo.", correct: "F" },
+        { text: "La civilización olmeca se desarrolló en los Andes Centrales.", correct: "F" },
+        { text: "La democracia ateniense incluía a mujeres y extranjeros como ciudadanos.", correct: "F" },
+        { text: "Pericles instauró el pago por cargos públicos (mistoforia).", correct: "V" },
+        { text: "La Ekklesía era el tribunal popular en Atenas.", correct: "F" },
+        { text: "Las Guerras Médicas enfrentaron a griegos y persas.", correct: "V" },
+        { text: "Aristóteles fue maestro de Alejandro Magno.", correct: "V" },
+        { text: "El Partenón fue un templo dedicado al dios Poseidón.", correct: "F" },
+        { text: "La cerámica permitió almacenar excedentes durante el Neolítico.", correct: "V" },
+        { text: "Los zigurats eran templos escalonados mesopotámicos.", correct: "V" },
+        { text: "La escritura jeroglífica egipcia era de tipo alfabético.", correct: "F" },
+        { text: "Los minoicos se desarrollaron en la isla de Creta.", correct: "V" },
+        { text: "La Hélade era el nombre que los griegos daban a su territorio.", correct: "V" },
+        { text: "El ostracismo consistía en premiar a los mejores ciudadanos.", correct: "F" },
+        { text: "La Bulé estaba compuesta por 500 ciudadanos sorteados anualmente.", correct: "V" },
+        { text: "Sócrates escribió numerosos libros de política.", correct: "F" },
+        { text: "La Iliada narra la guerra de Troya.", correct: "V" },
+        { text: "Los juegos olímpicos se realizaban en honor a Zeus.", correct: "V" },
+        { text: "La economía productora apareció en el Paleolítico.", correct: "F" },
+        { text: "El maíz fue domesticado en Mesoamérica.", correct: "V" },
+        { text: "El bronce es una aleación de cobre y estaño.", correct: "V" },
+        { text: "Los faraones egipcios eran considerados dioses vivientes.", correct: "V" },
+        { text: "La civilización del Indo no tenía planificación urbana.", correct: "F" },
+        { text: "El concepto 'isonomía' significa igualdad ante la ley en Atenas.", correct: "V" },
+        { text: "La acrópolis era la parte baja de la ciudad griega.", correct: "F" },
+        { text: "Heródoto es considerado el padre de la historia.", correct: "V" },
+        { text: "La cerámica neolítica solo tenía función utilitaria, sin valor estético.", correct: "F" },
+        { text: "La sedimentación fue clave para la revolución neolítica.", correct: "F" },
+        { text: "Los andenes de cultivo fueron una técnica inca, no neolítica. (Asociación inca, pero no es del bloque, usamos falso conceptual)", correct: "F" },
+        { text: "El surgimiento de las ciudades estado en Sumeria fue una forma de organización política.", correct: "V" },
+        { text: "Los fenicios crearon el primer alfabeto fonético.", correct: "V" },
+        { text: "El faraón Akenatón intentó imponer el culto a un solo dios (Atón).", correct: "V" },
+        { text: "Las primeras civilizaciones americanas no desarrollaron escritura.", correct: "F" },
+        { text: "La democracia ateniense era directa y participativa para los ciudadanos varones.", correct: "V" },
+        { text: "El Ágora era el mercado y plaza pública en Grecia.", correct: "V" },
+        { text: "La tragedia griega surgió en honor al dios Dionisos.", correct: "V" },
+        { text: "Los metecos tenían plenos derechos políticos en Atenas.", correct: "F" },
+        { text: "La Guerra del Peloponeso enfrentó a Atenas y Esparta.", correct: "V" },
+        { text: "El bronce fue el primer metal utilizado por el ser humano.", correct: "F" },
+        { text: "La escritura se inventó para registrar asuntos administrativos y comerciales.", correct: "V" },
+        { text: "Los romanos copiaron sin originalidad todo el arte griego.", correct: "F" },
+        { text: "La Hélade era el nombre del ejército espartano.", correct: "F" },
+        { text: "La teoría de la deriva continental fue propuesta por Wegener.", correct: "V" }
+    ];
+    
+    // Función para obtener 15 elementos aleatorios de un array
+    function getRandomItems(arr, count) {
+        const shuffled = [...arr];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+    }
+    
+    // Variables dinámicas
+    let currentMC = [];
+    let currentMatch = [];
+    let currentTF = [];
+    
+    let mcAnswers = [];
+    let matchAnswers = [];
+    let tfAnswers = [];
+    
+    let evaluated = false;
+    
+    // Renderizar todo
+    function renderMultipleChoice() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        currentMC.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${q.options.map(opt => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${opt.charAt(0)}" id="mc_${idx}_${opt.charAt(0)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${opt.charAt(0)}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div style="font-size:0.8rem; margin-top:0.3rem;">${mcAnswers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta: ' + q.correct}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => {
+                        mcAnswers[idx] = e.target.value;
+                    });
+                });
+            }
+        });
+    }
+    
+    function renderMatch() {
+        const tbody = document.getElementById('matchBody');
+        tbody.innerHTML = '';
+        currentMatch.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            row.setAttribute('data-idx', idx);
+            const cellDesc = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellDesc.innerHTML = `${idx+1}. ${item.description}`;
+            
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione...";
+            select.appendChild(defaultOpt);
+            
+            // opciones únicas de este set (agregamos además las correctas de todo el pool)
+            const allOptions = [...new Set(currentMatch.map(i => i.correct).concat(["Corteza", "Litosfera", "Astenosfera", "Mesosfera", "Paleolítico", "Neolítico", "Domesticación", "Sedentarización", "Polis", "Ekklesía", "Bulé", "Mistoforia", "Ostracismo", "Faraón", "Cuneiforme", "Jeroglífica", "Zigurat", "Partenón", "Stonehenge", "Creciente Fértil", "Código de Hammurabi", "Olmeca", "Chavín", "Cerámica", "Economía productora", "Guerras Médicas", "Sócrates", "Homero", "Indo", "Cobre", "Cartago", "Fenicios", "Estratificación", "Isegoría", "Zeus", "Heródoto", "Meteco", "Maíz"]))];
+            allOptions.sort().forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt;
+                option.textContent = opt;
+                if (!evaluated && matchAnswers[idx] === opt) option.selected = true;
+                select.appendChild(option);
+            });
+            
+            select.addEventListener('change', (e) => {
+                matchAnswers[idx] = e.target.value;
+            });
+            cellSelect.appendChild(select);
+            
+            if (evaluated) {
+                const isCorrect = matchAnswers[idx] === item.correct;
+                row.classList.add(isCorrect ? 'correct-row' : 'incorrect-row');
+                if (!isCorrect) {
+                    const feedback = document.createElement('div');
+                    feedback.style.fontSize = '0.75rem';
+                    feedback.style.marginTop = '0.3rem';
+                    feedback.style.color = '#b47c44';
+                    feedback.innerHTML = `Correcta: ${item.correct}`;
+                    cellSelect.appendChild(feedback);
+                }
+            }
+        });
+    }
+    
+    function renderTrueFalse() {
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+        currentTF.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellText.innerHTML = `${idx+1}. ${item.text}`;
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+            const optV = document.createElement('option'); optV.value = "V"; optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option'); optF.value = "F"; optF.textContent = "Falso (F)";
+            select.appendChild(optV); select.appendChild(optF);
+            if (!evaluated && tfAnswers[idx]) {
+                if (tfAnswers[idx] === "V") optV.selected = true;
+                else if (tfAnswers[idx] === "F") optF.selected = true;
+            }
+            select.addEventListener('change', (e) => { tfAnswers[idx] = e.target.value; });
+            cellSelect.appendChild(select);
+            if (evaluated) {
+                const isCorrect = tfAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correct}`;
+                feedback.className = isCorrect ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+    }
+    
+    function resetTest() {
+        evaluated = false;
+        currentMC = getRandomItems(bankMultipleChoice, 15);
+        currentMatch = getRandomItems(bankMatch, 15);
+        currentTF = getRandomItems(bankTF, 15);
+        mcAnswers = new Array(15).fill(null);
+        matchAnswers = new Array(15).fill("");
+        tfAnswers = new Array(15).fill(null);
+        document.getElementById('results').style.display = 'none';
+        renderMultipleChoice();
+        renderMatch();
+        renderTrueFalse();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function evaluateAll() {
+        evaluated = true;
+        let mcCorrect = 0, matchCorrect = 0, tfCorrect = 0;
+        for (let i = 0; i < currentMC.length; i++) if (mcAnswers[i] === currentMC[i].correct) mcCorrect++;
+        for (let i = 0; i < currentMatch.length; i++) if (matchAnswers[i] === currentMatch[i].correct) matchCorrect++;
+        for (let i = 0; i < currentTF.length; i++) if (tfAnswers[i] === currentTF[i].correct) tfCorrect++;
+        const total = currentMC.length + currentMatch.length + currentTF.length;
+        const totalCorrect = mcCorrect + matchCorrect + tfCorrect;
+        const percentage = (totalCorrect / total) * 100;
+        let grade = 0;
+        const passing = 60;
+        if (percentage >= passing) grade = 4.0 + ((percentage - passing) / (100 - passing)) * 3.0;
+        else grade = 1.0 + (percentage / passing) * 3.0;
+        grade = Math.round(grade * 100) / 100;
+        const isApproved = grade >= 4.0;
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#a5662a; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrect} de ${total} (${Math.round(percentage)}%)</div>
+            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Múltiple: ${mcCorrect}/${currentMC.length}</div><div>🔗 Relación: ${matchCorrect}/${currentMatch.length}</div><div>⚖️ V/F: ${tfCorrect}/${currentTF.length}</div>
+            </div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}"><strong>${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>NOTA: ${grade}</div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+        renderMultipleChoice(); renderMatch(); renderTrueFalse();
+        document.getElementById('restartTestBtn')?.addEventListener('click', resetTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Historia.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_2_Historia.html');
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    // Inicializar
+    resetTest();
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>

@@ -1,0 +1,703 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase Completa: Neolítico, Primeras Civilizaciones y Grecia | Historia 7° Básico</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffdf9;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            scrollbar-width: thin;
+            background: #fffdf9;
+            color: #2c3e2f;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #ede6db; }
+        .slide::-webkit-scrollbar-thumb { background: #c2aa82; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #7a4b1d;
+            border-left: 7px solid #e6b450;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #6b3f1a;
+            margin: 1rem 0 0.6rem 0;
+            border-bottom: 2px solid #f0dfc0;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+            color: #2d4029;
+            text-align: justify;
+        }
+
+        ul, .custom-list {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #fef0cf;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #b65717;
+        }
+
+        .info-card {
+            background: #faf6eb;
+            border-left: 6px solid #e6b450;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .question-sample {
+            background: #eef0e4;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            margin: 1.2rem 0 0.5rem;
+            border-left: 5px solid #c59a5b;
+        }
+
+        .badge {
+            background: #c38b44;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #d4c9b5;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+            background: #fefcf7;
+        }
+        th {
+            background: #e8dfcf;
+            font-weight: 600;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf2;
+            border-top: 1px solid #e9dfcf;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #b47c44; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #e9dfcf;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #5d431f;
+            font-weight: 500;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(180, 140, 90, 0.5);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #3b2b1a;
+            transition: 0.2s;
+            z-index: 90;
+        }
+        .nav-arrow:hover { background: #c99f65; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        .img-placeholder {
+            background: #eae2d2;
+            border-radius: 20px;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            text-align: center;
+            font-style: italic;
+            color: #7f684a;
+            border: 1px dashed #cfbe9e;
+        }
+        .img-placeholder img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+            <!-- SLIDE 1: Neolítico introducción (pág.34-35) -->
+            <div class="slide">
+                <h1>🌾 El Neolítico, un periodo de cambios</h1>
+                <p>Hace unos <strong>12 000 años</strong>, tras el fin de la última glaciación, las temperaturas del planeta se elevaron de manera gradual, lo que provocó importantes cambios medioambientales, entre ellos, la extinción y la dispersión de ciertas especies de animales y de vegetales.</p>
+                <p>Para enfrentar estos desafíos del entorno, los seres humanos movilizaron sus notables capacidades adaptativas. Para ello crearon nuevas actividades de subsistencia e idearon novedosos artefactos, con los que modificaron sus modos de vida y su relación con el entorno, aspectos que marcan el inicio de nuevo periodo de la historia de la humanidad, el <span class="highlight">Neolítico</span>.</p>
+                <p>Fue tan profunda esta transformación que para algunos investigadores es factible hablar de una <strong>revolución neolítica</strong>.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Neolítico:</strong> periodo que continúa al Paleolítico. Su nombre apela a un cambio tecnológico en el uso de la piedra (del griego <em>néos</em>: nuevo y <em>lithos</em>: piedra).<br><strong>Revolución:</strong> cambio o transformación profunda al interior de una sociedad.</div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/zHsYFLHZ/image.png" alt="Tell es-Sultan, Jericó, Palestina. Restos de uno de los poblados sedentarios más antiguos del mundo."><br><span>Tell es-Sultan, Jericó, Palestina. Entre el 8 500 y el 7 500 a.C. sus habitantes ya vivían de las nuevas actividades neolíticas.</span></div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Por qué los cambios del Neolítico son considerados una "revolución" a pesar de haber ocurrido durante milenios?</p><p><strong>Respuesta:</strong> Porque transformaron radicalmente la relación ser humano-entorno: se pasó de una economía depredadora (caza y recolección) a una economía productora (agricultura y ganadería), lo que generó sedentarización, excedentes alimenticios, crecimiento demográfico y nuevas formas de organización social. El término "revolución" enfatiza la magnitud y las consecuencias de estos cambios, no su velocidad.</p></div>
+            </div>
+
+            <!-- SLIDE 2: Tiempo y espacio neolítico (pág.36-37) -->
+            <div class="slide">
+                <h2>🗺️ Tiempo y espacio del desarrollo neolítico</h2>
+                <p>Los conocimientos del medio y los desarrollos alcanzados previamente posibilitaron que ciertas comunidades iniciaran un lento proceso de experimentación y domesticación de plantas y de animales, lo que permitió el desarrollo de nuevas actividades de subsistencia: la agricultura y la ganadería.</p>
+                <p>Este fenómeno tuvo varios focos de desarrollo, en los que cada comunidad inició este proceso bajo condiciones muy distintas, en cuanto a entornos, recursos, tiempos y velocidades.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Domesticación:</strong> proceso de modificación de las características de especies vegetales y animales, producto de la intervención y selección humana.</div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/yc3XRvn9/image.png" alt="Mapa: Los inicios de la agricultura y de la ganadería"><br><span>Mapa con los principales focos de domesticación de plantas y animales en el mundo. Simbología: 🌾 Zonas de domesticación de plantas, 🐑 Zonas de domesticación de animales, ➡️ Posibles rutas de difusión.</span></div>
+                <p>La región del <strong>Cercano Oriente</strong> (Creciente Fértil) fue uno de los focos más tempranos de neolitización, con la domesticación del trigo, la cebada, las cabras y las ovejas. En el <strong>Lejano Oriente</strong> se domesticó el arroz y el mijo. En <strong>Mesoamérica</strong> destacó el maíz, el frijol y la calabaza, mientras que en los <strong>Andes Centrales</strong> se domesticaron la papa, la quinoa y la llama.</p>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Qué regiones del mundo fueron pioneras en el desarrollo de la agricultura y la ganadería?</p><p><strong>Respuesta:</strong> Las regiones pioneras fueron el Cercano Oriente o Creciente Fértil (trigo, cebada, cabras, ovejas), el Lejano Oriente (arroz, mijo), Mesoamérica (maíz, frijol, calabaza) y los Andes Centrales (papa, quinoa, llama). Cada una domesticó especies nativas de su entorno de manera autónoma.</p></div>
+            </div>
+
+            <!-- SLIDE 3: Domesticación del medio (pág.38-39) -->
+            <div class="slide">
+                <h2>🌱 La domesticación del medio: el nacimiento de la agricultura y la ganadería</h2>
+                <p>Tanto la "invención" de la agricultura como la de la ganadería, debió consistir en una serie de pequeños descubrimientos e innovaciones, que fueron ensayados y perfeccionados durante miles de años.</p>
+                <p>La base de este proceso fue la selección que hicieron los seres humanos de ejemplares de ciertas especies, con la intención de preservar algunas de sus características. Esto con el fin de obtener con el tiempo plantas de mayor tamaño y más resistentes, y animales más dóciles que dieran más carne o leche y que fueran menos vulnerables a enfermedades.</p>
+                <p>Con el desarrollo de ambas actividades, los seres humanos transitaron de una <strong>economía depredadora</strong> a una <strong>economía productora</strong>, proceso que provocó una serie de otros cambios, entre ellos, una nueva relación con el entorno y la consolidación de nuevos modos de vida.</p>
+                <p>Según los vestigios, es en el <strong>Cercano Oriente u Oriente Próximo</strong> donde parece hallarse el más antiguo foco de neolitización. Desde este y otros focos originarios, las nuevas actividades se expandieron por el resto del mundo.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Economía productora:</strong> tipo de economía en la que se crean bienes, por ejemplo alimentos, mediante distintas actividades productivas.<br><strong>Cercano Oriente u Oriente Próximo:</strong> región de Asia sudoccidental cercana al mar Mediterráneo.<br><strong>Neolitización:</strong> proceso mediante el cual una comunidad o grupo logra domesticar plantas y animales para transformar sus modos de vida.</div>
+                <div class="info-card">💬 <strong>Cita destacada - Isaac Asimov (1968):</strong><br>"Durante muchos miles de años, los seres humanos recolectaban frutos o cazaban animales para alimentarse. Más tarde, por un proceso gradual, aprendieron a almacenar alimentos para usarlos en el futuro. En vez de cazar animales y matarlos en el lugar, mantenían algunos vivos y los cuidaban. [...] De cazadores y recolectores de alimentos, los grupos humanos se convirtieron en pastores y agricultores."</div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/JRTWRDD0/image.png" alt="Plantación actual de maíz"><br><span>Algunos de los primeros cultivos fueron cereales: maíz en América, arroz en el Lejano Oriente, trigo en Medio Oriente y cebada en África. Hoy son las plantas más cultivadas a nivel mundial y base de la alimentación de parte importante del mundo.</span></div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿En qué consistió el tránsito de una economía depredadora a una economía productora?</p><p><strong>Respuesta:</strong> La economía depredadora se basaba en la caza, la pesca y la recolección de recursos que la naturaleza entregaba de manera natural. La economía productora, en cambio, implicó la domesticación de plantas y animales, lo que permitió a los seres humanos <strong>producir sus propios alimentos</strong> mediante la agricultura y la ganadería. Este cambio significó dejar de ser dependientes pasivos del medio para transformarlo activamente.</p></div>
+            </div>
+
+            <!-- SLIDE 4: Vida sedentaria y aldeas (pág.40-41) -->
+            <div class="slide">
+                <h2>🏡 La vida sedentaria y las sociedades neolíticas</h2>
+                <p>El desarrollo de la agricultura y la ganadería incentivó a los seres humanos a cambiar sus modos de vida. Para poder cultivar plantas y criar ganado se comenzaron a establecer paulatinamente en lugares fijos, iniciándose así procesos de <strong>sedentarización</strong>.</p>
+                <p>Desde el surgimiento de los primeros asentamientos fijos se produjo un largo proceso que derivó en la conformación de <strong>aldeas</strong>. En estos espacios, se desarrollaron nuevas técnicas y artefactos (cerámica, textiles, herramientas, entre otros) y se consolidó un fenómeno que ya se venía gestando previamente: el incremento paulatino de la población.</p>
+                <p>Los estudios estiman que debido a estos fenómenos, en la aldea neolítica se entablaron formas de convivencia más complejas y estructuradas y diferencias sociales entre individuos y grupos.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Sedentarización:</strong> proceso mediante el cual una comunidad o grupo adoptan formas de vida sedentarias, es decir, vivir de forma permanente en un lugar.<br><strong>Aldea:</strong> poblado formado por un conjunto pequeño de viviendas y otras construcciones y en el que se desarrollan actividades económicas.</div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/0pFkfc6C/image.png" alt="Representación de la vida cotidiana durante el Neolítico"><br><span>Gracias a yacimientos arqueológicos ubicados en distintas partes del mundo se ha podido reconstruir la vida durante el Neolítico. Por ejemplo, Ba'ja, en el sur de Jordania (8700 a.C.) y Skara Brae, en el norte de Escocia (3100-2500 a.C.).</span></div>
+                <div class="info-card">💬 <strong>Fuente B - Juan Vicent (1991):</strong> "Lo que caracteriza a una aldea es la transformación de los campos cultivables que rodean a un sitio [...] en el recurso de subsistencia fundamental e insustituible de un grupo."</div>
+                <div class="info-card">💬 <strong>Fuente D - Vere Gordon Childe (1942):</strong> "Cada casa neolítica cultivaba y preparaba sus alimentos, elaboraba sus vasijas, ropas, herramientas y otros elementos. Las mujeres labraban las parcelas, molían y cocinaban los granos, hilaban, tejían y confeccionaban ropas... Los hombres, por su parte, construían las chozas, cuidaban del ganado, cazaban y fabricaban las herramientas y armas necesarias."</div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Cómo impactó la vida sedentaria en la organización social de las comunidades neolíticas?</p><p><strong>Respuesta:</strong> La vida sedentaria permitió la formación de aldeas, espacios donde las personas vivían de forma permanente. Esto trajo consigo formas de convivencia más complejas y estructuradas, una incipiente división del trabajo (diferenciándose tareas entre hombres y mujeres), el desarrollo de nuevas técnicas y artefactos (cerámica, textiles), y un paulatino incremento de la población. Con el tiempo, comenzaron a surgir también las primeras diferencias sociales entre individuos y grupos.</p></div>
+            </div>
+
+            <!-- SLIDE 5: Creaciones neolíticas y comercio (pág.42-43) -->
+            <div class="slide">
+                <h2>🏺 Creaciones neolíticas y desarrollo del comercio</h2>
+                <p>Junto a la sedentarización y la capacidad de producir su propio alimento, las sociedades neolíticas conquistaron un conjunto de avances técnicos que les permitieron paulatinamente mejorar su calidad de vida y aumentar su capacidad de controlar y modificar el entorno.</p>
+                <p>Una de las creaciones más importantes fue la <strong>alfarería</strong> y con ella la <strong>cerámica</strong>, actividad que al igual que la agricultura y la ganadería hizo aparición en distintas regiones del mundo. Con respecto a su origen, muchos expertos consideran que fue la necesidad de almacenar y conservar comida lo que movilizó dicha creación.</p>
+                <p>También en esta época se desarrollan textiles y cestos, y se perfecciona el trabajo en cuero y piedra. Con respecto a esta última, la antigua técnica del tallado será reemplazada paulatinamente por la técnica de la <strong>piedra pulida</strong>.</p>
+                <p>Según la evidencia arqueológica, varias de las nuevas creaciones neolíticas habrían viajado grandes distancias, lo que indicaría un incipiente desarrollo del <strong>comercio</strong>, actividad que habría posibilitado el intercambio de ideas y de tecnologías entre distintas comunidades.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Alfarería:</strong> actividad que se dedica a la elaboración de objetos en base a barro cocido.<br><strong>Cerámica:</strong> conjunto de objetos creados a partir de arcilla, resultado de complejas técnicas de cocción, pulido, tallado y pintado.<br><strong>Piedra pulida:</strong> técnica que consiste en pulir la piedra frotándola con materiales más rugosos y duros, obteniendo herramientas con filos más regulares y duraderos.</div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/TD0fxYb0/image.png" alt="Cuenco de cerámica, 8 000 años a.C., Siria"><br><span>Cuenco de cerámica. 8 000 años a.C., Siria.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/SwXwGt0F/image.png" alt="Jarrón de cerámica con dos 'orejas', 6 000 a 5 200 a.C., China"><br><span>Jarrón de cerámica con dos 'orejas', 6 000 a 5 200 a.C., China.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/SXy15PvC/image.png" alt="Recipiente de cerámica pintado, 6 000 a.C., Bulgaria"><br><span>Recipiente de cerámica pintado, 6 000 a.C., Bulgaria.</span></div>
+                <div class="info-card">💬 <strong>Fuente D - Rita Alazraki (1998):</strong> "Aunque todas estas modalidades surgen para satisfacer las actividades prácticas, a diferencia del periodo Paleolítico, en el Neolítico se les dota de una significancia estética... los objetos debían ser bellos y sus creadores no escatimaron su fascinación por las formas."</div>
+                <div class="info-card">💬 <strong>Fuente E - Mario Mas Fenollar (2013):</strong> "Los últimos hallazgos arqueológicos ponen de manifiesto la existencia de rutas comerciales bien implantadas, al menos en el Próximo Oriente, que permiten imaginar fácilmente cómo las nuevas ideas del Neolítico pudieron viajar realmente lejos."</div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Qué importancia tuvieron la cerámica y el comercio durante el periodo Neolítico?</p><p><strong>Respuesta:</strong> La <strong>cerámica</strong> fue fundamental porque permitió almacenar y conservar los excedentes de alimentos, además de adquirir un valor estético y cultural. El <strong>comercio incipiente</strong>, por su parte, posibilitó el intercambio de productos (como cerámica, herramientas y materias primas) entre comunidades distantes, lo que a su vez facilitó la difusión de ideas, conocimientos y avances técnicos, conectando a distintos focos de desarrollo neolítico.</p></div>
+            </div>
+
+            <!-- SLIDE 6: Pensamiento neolítico y megalitos (pág.44-45) -->
+            <div class="slide">
+                <h2>🪨 Pensamiento, arte y religiosidad en el Neolítico</h2>
+                <p>Los estudios de vestigios materiales, especialmente los vinculados al arte rupestre y al arte desplegado sobre objetos cotidianos, han permitido conocer en alguna medida las ideas, preocupaciones y creencias de algunos de los grupos humanos desarrollados durante el periodo Neolítico.</p>
+                <p>Una de las manifestaciones que surge durante esta etapa histórica fue la construcción de grandes estructuras de piedra denominadas <strong>megalitos</strong>, las que habrían requerido del trabajo conjunto y organizado de muchos seres humanos. Si bien se sabe que algunos de ellos fueron utilizados como monumentos fúnebres, acerca de otros existe mayor desconocimiento sobre sus usos y suponen posibles funciones religiosas o de observación astronómica.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Megalito:</strong> antiguas construcciones realizadas en grandes bloques de piedra. Su nombre procede del griego <em>mega</em> (grande) y <em>lithos</em> (piedra).</div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/VpzVczRv/image.png" alt="Pintura rupestre del Neolítico africano (8 000 a 4 000 a.C.) encontrada en la meseta de Tassili n'Ajjer, Argelia"><br><span>Pintura rupestre del Neolítico africano (8 000 a 4 000 a.C.). Encontrada en la meseta de Tassili n'Ajjer (Argelia).</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/ccpbq5Rn/image.png" alt="Mujer o diosa sentada (6 000 a.C.), estatuilla de arcilla encontrada en Catal Hüyük, Anatolia"><br><span>Mujer o diosa sentada (6 000 a.C.). Estatuilla de arcilla encontrada en Catal Hüyük, Anatolia.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/XZnGc2kM/image.png" alt="Stonehenge, conjunto megalítico situado en Inglaterra (3 100 a 2 500 a.C.)"><br><span>Stonehenge, conjunto megalítico situado en Inglaterra (3 100 a 2 500 a.C.). Corresponde a un crómlech: conjunto de estructuras compuestas por dólmenes y menhires.</span></div>
+                <div class="info-card">💬 <strong>Fuente D - Ian Hodder (2014):</strong> "Hoy en día, reflexiones [...] provenientes de una variedad de disciplinas sugieren que [...] la religión no fue el producto de los cambios en el mundo material, sino un ingrediente más en la transformación de la mente humana que hizo la revolución neolítica posible."</div>
+                <div class="info-card">💬 <strong>Fuente E - Riane Eisler (1997):</strong> "Uno de los aspectos más impactantes del arte neolítico es lo que no se representa. [...] No hay imágenes de 'nobles guerreros' o escenas de batallas. Tampoco hay huellas de 'heroicos conquistadores' [...] Lo que sí encontramos es una gran cantidad de símbolos de la naturaleza."</div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Qué importancia tienen los megalitos y el arte rupestre para comprender el pensamiento neolítico?</p><p><strong>Respuesta:</strong> Los megalitos (como Stonehenge) y el arte rupestre evidencian que las sociedades neolíticas desarrollaron un pensamiento simbólico complejo, creencias religiosas y la capacidad de organizar el trabajo colectivo para grandes construcciones. Estas manifestaciones reflejan una cosmovisión donde la naturaleza, la fertilidad y posiblemente la observación astronómica tenían un lugar central, así como rituales funerarios que indican una preocupación por la vida después de la muerte.</p></div>
+            </div>
+
+            <!-- SLIDE 7: Surgimiento de las primeras civilizaciones (pág.48-49) -->
+            <div class="slide">
+                <h2>🏛️ El surgimiento de las primeras civilizaciones</h2>
+                <p>Los cambios experimentados por la humanidad durante el Neolítico pavimentaron el camino para el surgimiento de las primeras civilizaciones.</p>
+                <p>Surgidas en entornos geográficos diferentes y algunas de ellas separadas por siglos, las primeras civilizaciones presentaron, a ojos de los investigadores, una serie de <strong>rasgos comunes</strong> que permiten distinguirlas de otras realidades sociales y culturales.</p>
+                <table><th>Ámbito</th><th>Rasgos característicos</th></tr>
+                <tr><td><strong>Político</strong></td><td>Centralización del poder, surgimiento del Estado, gobiernos teocráticos o monárquicos</td></tr>
+                <tr><td><strong>Económico</strong></td><td>Excedentes agrícolas, comercio, división del trabajo, tributos</td></tr>
+                <tr><td><strong>Social</strong></td><td>Estratificación social, desigualdades, grupos privilegiados y no privilegiados</td></tr>
+                <tr><td><strong>Cultural</strong></td><td>Escritura, avances científicos (matemáticas, astronomía), monumentos religiosos, arte</td></tr>
+                </table>
+                <div class="info-card">💬 <strong>Fuente B - Fernand Braudel (1970):</strong> "Una civilización es, en primer lugar, un espacio, un 'área cultural'. Imagínese en el interior de un espacio, más o menos amplio, un conjunto de rasgos culturales. [...] Si a esta se le añade una permanencia en el tiempo, entonces nos enfrentamos a una civilización o cultura."</div>
+                <div class="info-card">💬 <strong>Fuente C - Arthur Cotterell (1980):</strong> "De forma progresiva y gradual, el ser humano ha creado en torno a él un medio que ha servido de mediador entre él mismo y la naturaleza. [...] No se trata tan solo de cambios en sus condiciones materiales. La cultura humana como conjunto lo es mucho más cuando se realiza la vida urbana, la aparición de la civilización y la formación del Estado."</div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Qué rasgos comunes presentaron las primeras civilizaciones a pesar de haberse desarrollado en diferentes regiones y épocas?</p><p><strong>Respuesta:</strong> Las primeras civilizaciones compartieron rasgos como: la <strong>centralización del poder político</strong> (surgimiento del Estado y gobiernos teocráticos o monárquicos), una <strong>economía basada en excedentes agrícolas</strong> y comercio, una <strong>sociedad estratificada</strong> con marcadas diferencias sociales, y <strong>desarrollos culturales</strong> notables como la escritura, avances científicos (matemáticas, astronomía), la construcción de monumentos y sistemas religiosos organizados.</p></div>
+            </div>
+
+            <!-- SLIDE 8: Espacio y tiempo de las primeras civilizaciones (pág.50-51) -->
+            <div class="slide">
+                <h2>🌍 Espacio y tiempo de las primeras civilizaciones</h2>
+                <p>Según diversos estudios, las primeras civilizaciones surgieron a partir de sociedades neolíticas, mediante la evolución de su cultura de aldea hacia una cultura de civilización urbana.</p>
+                <p>Estas se desarrollaron en distintos momentos y espacios geográficos del mundo y, de manera bastante autónoma, es decir, sin contacto con otras civilizaciones.</p>
+                <div class="img-placeholder"><img src="https://i.ibb.co/RT5J50Bv/image.png" alt="Mapa: Marco espacial de las primeras civilizaciones"><br><span>Archivo cartográfico SM.</span></div>
+                <table><th>Civilización</th><th>Ubicación geográfica</th><th>Periodo aproximado</th></tr>
+                <tr><td>Mesopotamia</td><td>Entre los ríos Tigris y Éufrates (Cercano Oriente)</td><td>3500 - 500 a.C.</td></tr>
+                <tr><td>Egipto</td><td>Valle del río Nilo (noreste de África)</td><td>3100 - 31 a.C.</td></tr>
+                <tr><td>Civilización del Indo</td><td>Valle del río Indo (actual Pakistán e India)</td><td>2700 - 1500 a.C.</td></tr>
+                <tr><td>Antigua China</td><td>Valles de los ríos Amarillo y Azul</td><td>2000 - 221 a.C.</td></tr>
+                <tr><td>Civilización minoica</td><td>Isla de Creta (mar Mediterráneo)</td><td>2700 - 1450 a.C.</td></tr>
+                <tr><td>Civilización fenicia</td><td>Costas del actual Líbano y Siria</td><td>1300 - 146 a.C.</td></tr>
+                <tr><td>Civilización olmeca</td><td>Mesoamérica (actual México)</td><td>1500 - 100 a.C.</td></tr>
+                <tr><td>Civilización chavín</td><td>Andes Centrales (actual Perú)</td><td>1200 - 200 a.C.</td></tr>
+                </table>
+                <div class="img-placeholder"><img src="https://i.ibb.co/PGnKVqQS/image.png" alt="Marco temporal de las primeras civilizaciones"><br><span>Archivo cartográfico SM.</span></div>
+                <p>Las civilizaciones más antiguas de la historia se desarrollaron en grandes valles fluviales, siendo conocidas en su conjunto como <strong>civilizaciones fluviales</strong>: Mesopotamia (Tigris y Éufrates), Egipto (Nilo), India (Indo) y China (ríos Amarillo y Azul).</p>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Dónde y cuándo aparecieron las primeras civilizaciones? ¿Qué tienen en común sus ubicaciones geográficas?</p><p><strong>Respuesta:</strong> Las primeras civilizaciones aparecieron en diferentes momentos entre el 3500 a.C. y el 1200 a.C. en regiones como Mesopotamia, Egipto, el valle del Indo, China, Creta, Fenicia, Mesoamérica y los Andes Centrales. Su principal característica común es que la mayoría se desarrollaron en <strong>valles fluviales</strong> (cercanas a grandes ríos), lo que les proporcionaba tierras fértiles para la agricultura, agua para el riego y vías de comunicación y transporte.</p></div>
+            </div>
+
+            <!-- SLIDE 9: Entornos de las primeras civilizaciones (pág.52-54) -->
+            <div class="slide">
+                <h2>🌊 Entornos que posibilitaron el surgimiento de las primeras civilizaciones</h2>
+                <p>Para comprender cómo surgieron las primeras civilizaciones es importante conocer el entorno en que estas se desarrollaron. Asentadas en espacios que tenían las condiciones óptimas para el desarrollo agrícola, estas sociedades se vieron enfrentadas a grandes desafíos, por ejemplo, controlar las aguas de los ríos y prepararse para las sequías. Frente a ellos, reaccionaron dando respuestas creativas: grandes obras hidráulicas y perfeccionamiento de las técnicas agrícolas.</p>
+                
+                <h3>El Creciente Fértil y el Lejano Oriente</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/bMPSQDFj/image.png" alt="Mapa: Civilizaciones del Creciente Fértil y del Lejano Oriente"><br><span>Las civilizaciones más antiguas se desarrollaron en estas regiones, siendo conocidas como civilizaciones fluviales.</span></div>
+                <p>El <strong>Creciente Fértil</strong> es un espacio geográfico ubicado entre Asia y África que por sus condiciones naturales favoreció tempranamente el desarrollo agrícola. Allí se desarrollaron <strong>Mesopotamia</strong> (ríos Tigris y Éufrates) y <strong>Egipto</strong> (río Nilo). En el <strong>Lejano Oriente</strong> se desarrollaron la civilización india (río Indo) y la china (ríos Amarillo y Azul).</p>
+                
+                <h3>Las civilizaciones del mar Mediterráneo</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/Fq09KXpW/image.png" alt="Mapa: Civilizaciones del mar Mediterráneo (fenicios y minoicos)"><br><span>El mar Mediterráneo fue un espacio donde surgieron importantes civilizaciones.</span></div>
+                <p>Los <strong>fenicios</strong> y los <strong>minoicos</strong> son dos de las civilizaciones más antiguas surgidas en el Mediterráneo. Debido a su posición estratégica, se avocaron al mar, convirtiéndose en grandes navegantes y comerciantes.</p>
+                
+                <h3>Las civilizaciones en América</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/ycSGJ6VV/image.png" alt="Mapa: Civilizaciones de Mesoamérica y los Andes Centrales (olmeca y chavín)"><br><span>En América hubo dos áreas donde surgieron civilizaciones: Mesoamérica y los Andes Centrales.</span></div>
+                <p><strong>Mesoamérica</strong> fue el área donde se originó la civilización <strong>olmeca</strong> en un entorno de densas selvas y abundantes recursos hídricos. En los <strong>Andes Centrales</strong> se desarrolló la civilización <strong>chavín</strong>, un espacio cordillerano con sierras, cuencas y valles. Ambas son consideradas <strong>civilizaciones madres</strong> de sus respectivas áreas.</p>
+                
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Cómo influyó el entorno natural en el desarrollo de las primeras civilizaciones?</p><p><strong>Respuesta:</strong> El entorno fue fundamental. Las primeras civilizaciones surgieron en espacios con condiciones óptimas para la agricultura (valles fluviales fértiles como el Creciente Fértil, las costas del Mediterráneo, Mesoamérica y los Andes). Sin embargo, estos entornos también presentaban desafíos como las crecidas de los ríos, sequías o terrenos montañosos. Para superarlos, estas sociedades desarrollaron <strong>grandes obras hidráulicas</strong> (canales, diques), perfeccionaron sus técnicas agrícolas y, en el caso de fenicios y minoicos, se volcaron al mar convirtiéndose en grandes navegantes y comerciantes.</p></div>
+            </div>
+
+            <!-- SLIDE 10: La ciudad centro de la civilización (pág.54-55) -->
+            <div class="slide">
+                <h2>🏙️ La ciudad, centro de la civilización</h2>
+                <p>El inicio de la vida urbana y el origen de la civilización están estrechamente relacionados. Si bien existe evidencia de ciudades que existieron con anterioridad al surgimiento de las primeras civilizaciones (como Jericó en el 8000 a.C. o Çatal Hüyük en el 6500 a.C.), son las grandes ciudades surgidas con posterioridad las que serían el centro desde que se desarrollaron y organizaron las civilizaciones antiguas.</p>
+                <p>Al interior de estos espacios se consolidaron fenómenos como el aumento de la población, la diversificación de las actividades productivas y el surgimiento de distintos grupos sociales, los que produjeron formas más complejas de relaciones y de organización al interior de la sociedad.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Actividades productivas:</strong> labores dedicadas a crear productos a partir de materias primas.</div>
+                <p>En términos generales, las ciudades antiguas se estructuraron bajo un patrón común. Tenían en su centro los edificios donde se concentraba el poder político y religioso. En la zona contigua, los espacios destinados a labores como el comercio y la artesanía. Y a las afueras, las tierras dedicadas a la agricultura y la ganadería.</p>
+                <div class="img-placeholder"><img src="https://i.ibb.co/fVRmY8PZ/image.png" alt="Zigurat de Ur, construido en honor al dios lunar Nannar"><br><span>Zigurat de Ur. A partir del III milenio a.C. se alzaron los primeros zigurats en Sumeria, símbolos del poder político y religioso.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/cc1JZ7y4/image.png" alt="Ruinas de la ciudad de Mohenjo-Daro, India"><br><span>Ruinas de Mohenjo-Daro (2600-1800 a.C.). Destacó por su excelente planificación urbana, calles pavimentadas y obras hidráulicas.</span></div>
+                <div class="info-card">💬 <strong>Fuente C - Lewis Mumford (1961):</strong> "En el nuevo plano, los antiguos elementos de la aldea fueron conservados e incorporados a la nueva unidad urbana. [...] La ciudad incentivó el desplazamiento de la mano de obra, el control de los transportes con largos recorridos, la intensificación de la comunicación a largas distancias."</div>
+                <div class="info-card">💬 <strong>Fuente D - Charles Redman (1990):</strong> "La cualidad más importante que define a una ciudad es la complejidad y la forma de integración. Las ciudades no sólo constan de un gran número de habitantes, sino que la población está diversificada con muchas actividades. [...] La ciudad es el elemento dominante en el sistema de asentamiento de la civilización."</div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Qué importancia tuvieron las ciudades en el surgimiento y desarrollo de las primeras civilizaciones?</p><p><strong>Respuesta:</strong> Las ciudades fueron el centro de las primeras civilizaciones porque concentraban el poder político, religioso y económico. En ellas se consolidaron fenómenos como el aumento de la población, la diversificación de las actividades productivas (comercio, artesanía), el surgimiento de distintos grupos sociales y la construcción de monumentos. Las ciudades también funcionaron como núcleos desde los cuales se organizaba el territorio circundante (tierras agrícolas y aldeas) y se gestionaban los excedentes, el comercio y la administración del Estado.</p></div>
+            </div>
+
+            <!-- SLIDE 11: Estratificación social y centralización política (pág.56-57) -->
+            <div class="slide">
+                <h2>⚖️ Estratificación social y centralización política</h2>
+                <p>Las sociedades urbanas lograron consolidar un fenómeno que se comenzó a gestar lentamente en el periodo Neolítico: contar con <strong>excedentes alimenticios</strong>, es decir, producir más alimentos de lo que se necesitaba.</p>
+                <p>Esto permitió almacenar productos para temporadas de escasez, intercambiarlos por otros bienes y permitir que algunos grupos se dedicaran de modo exclusivo a nuevos oficios (alfareros, orfebres, tejedores, etc.). Lo anterior conllevó una creciente especialización y, con ello, una <strong>división del trabajo</strong>.</p>
+                <p>En este contexto, un grupo minoritario aumentó su poder y se situó por sobre el resto de la sociedad, lo que produjo una creciente <strong>estratificación y jerarquización social</strong>. A partir de estos fenómenos surgiría la primera forma de Estado en la historia: las <strong>ciudades-estado sumerias</strong>, al sur de Mesopotamia. Muchas de estas ciudades se enfrentarían entre sí por el control de pueblos, territorios y recursos, afán expansivo que terminó por crear una nueva organización política: el <strong>imperio</strong>.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Ciudad estado:</strong> contaban con leyes propias, administradores, ejércitos y autoridades, organizadas bajo un poder centralizado.<br><strong>Imperio:</strong> organización política donde un conjunto de Estados o territorios están sometidos a otro.</div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/1SJgQ9j/image.png" alt="Representación del orden social en las antiguas civilizaciones - pirámide social"><br><span>Representación del orden social en las antiguas civilizaciones: máxima autoridad política y su familia, sacerdotes y altos funcionarios, comerciantes y artesanado, población campesina, población esclava.</span></div>
+                <div class="info-card">💬 <strong>Fuente A - Marvin Harris (1991):</strong> "El paso de una sociedad igualitaria a otra jerárquica fue un paso tan revolucionario como el que condujo al Neolítico. Esta nueva sociedad se caracterizaba por la desigualdad hereditaria, la presencia de centros ceremoniales regionales, la pérdida de autonomía de las aldeas y el empleo de una gran cantidad de mano de obra en la construcción de edificaciones públicas."</div>
+                <div class="info-card">💬 <strong>Fuente B - Mario Liverani (1991):</strong> "La especialización laboral lleva a una estratificación socioeconómica. Esta estratificación es vertical, porque los distintos grupos acceden de forma desigual al reparto de los recursos y a la toma de decisiones. En el nivel más alto se sitúa el grupo dirigente. Dicho grupo monopoliza el poder de decisión y reside en la ciudad, en la gran 'organización central'."</div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/DPD9Sy0N/image.png" alt="Relieve en el que se observa al faraón Akenatón y su esposa Nefertiti"><br><span>En las primeras civilizaciones la situación de las mujeres fue dispar. Mientras en algunas sociedades fueron relegadas, en otras como la egipcia lograron detentar poder político, económico y social.</span></div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Cómo se organizaron social y políticamente las primeras civilizaciones?</p><p><strong>Respuesta:</strong> Socialmente, las primeras civilizaciones desarrollaron una marcada <strong>estratificación y jerarquización social</strong> (representada en una pirámide), con una cúspide conformada por la autoridad política (rey o faraón con carácter divino) y los sacerdotes, seguidos por funcionarios, comerciantes y artesanos, mientras que la base la constituían los campesinos (mayoría de la población libre) y los esclavos (sin derechos). Políticamente, surgió la primera forma de Estado: la <strong>ciudad-estado</strong> (como en Sumeria), con poder centralizado. Posteriormente, el afán expansivo llevó a la creación de <strong>imperios</strong> que sometían a otros territorios y pueblos.</p></div>
+            </div>
+
+            <!-- SLIDE 12: Sistemas religiosos (pág.58-59) -->
+            <div class="slide">
+                <h2>🛐 Los sistemas religiosos en las primeras civilizaciones</h2>
+                <p>Si bien las manifestaciones religiosas se originan de manera muy temprana entre los seres humanos, los investigadores plantean que con el desarrollo de las primeras civilizaciones surge la <strong>religión</strong>.</p>
+                <p>En estas sociedades, un grupo liberado de la producción de alimentos dedicó un tiempo exclusivo a estudiar y dar respuestas a antiguas preocupaciones, por ejemplo, el origen del mundo, los fenómenos de la vida y de la muerte, las fuerzas de la naturaleza, etc. Quienes estudiaban tales fenómenos terminaron por crear modelos generales de interpretación sobre el mundo, en los que vincularon las manifestaciones de la realidad con la voluntad de poderosos dioses. Las primeras religiones fueron de carácter <strong>politeísta</strong>.</p>
+                <p>En las primeras civilizaciones no existía una clara división entre los poderes político y religioso. Esta concentración de poder facilitó el control sobre los habitantes comunes, quienes creían que los gobernantes tenían un origen divino.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Politeísta:</strong> religiones organizadas en torno a la creencia de múltiples divinidades, normalmente ordenadas de modo jerárquico.</div>
+                <div class="info-card">💬 <strong>Fuente A - Víctor Fernández (2007):</strong> "Sorprende observar ciertas regularidades de los primeros Estados [...]. Reyes e individuos dominantes aparecían siempre en lugares elevados y con ornamentos únicos; al rey se le solía identificar con el sol [...] su mismo poder se representaba por elevamientos artificiales (túmulos, pirámides, torres, etc.)."</div>
+                <div class="info-card">💬 <strong>Fuente B - Peter L. Berger (2006):</strong> "La estructura política no es más que la extensión, a la esfera humana, del poder del cosmos divino. La autoridad política, concebida como una delegación de los dioses, o hasta idealizada como una encarnación divina."</div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/m5FKfwQL/image.png" alt="Estandarte de Ur, Cara de la paz (2600 a.C.)"><br><span>Estandarte de Ur, Cara de la paz (2600 a.C.). En esta obra se observa un desfile de distintos grupos sociales que llevan tributos ante un rey. Los reyes sumerios eran considerados intermediarios entre los dioses y las personas.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/Fk48Dyzn/image.png" alt="Sarcófago minoico de Hagia Triada (1400 a.C.)"><br><span>Sarcófago minoico de Hagia Triada (1400 a.C.). Las caras principales muestran escenas rituales, probablemente una procesión dedicada a un sacerdote o un difunto divinizado.</span></div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Cómo influyó la religión en la consolidación de las primeras civilizaciones?</p><p><strong>Respuesta:</strong> La religión fue fundamental para la consolidación de las primeras civilizaciones porque legitimaba el poder político (gobernantes considerados divinos o intermediarios de los dioses), unificaba a la población en torno a creencias y normas comunes, y justificaba la estratificación social. Además, los sacerdotes, al ser los intérpretes de la voluntad divina, controlaban el conocimiento (astronomía, calendarios, escritura) y los rituales, lo que reforzaba su poder y el del Estado.</p></div>
+            </div>
+
+            <!-- SLIDE 13: Nuevas técnicas y conocimientos (pág.60-61) -->
+            <div class="slide">
+                <h2>📜 Nuevas técnicas y conocimientos: escritura y metalurgia</h2>
+                <p>El surgimiento de las sociedades urbanas permitió que ciertos grupos de la población liberados de ciertas actividades se dedicaran al estudio y perfeccionamiento de nuevas técnicas y conocimientos. Gran parte de los avances creados bajo la nueva organización se pusieron al servicio de la administración y de las nuevas necesidades, siendo algunos de los más importantes la <strong>metalurgia</strong> y los sistemas de contabilidad y <strong>escritura</strong>.</p>
+                <p>Fue en <strong>Mesopotamia</strong> donde se desarrolló el primer sistema de escritura, considerado como uno de los logros culturales más importantes en la historia de la humanidad. Es tal la importancia de este hito, que ha sido utilizado tradicionalmente para marcar el inicio de la <strong>Edad Antigua</strong>.</p>
+                
+                <h3>Desarrollo de la metalurgia</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/fGdK5260/image.png" alt="Desarrollo de la metalurgia en Europa y en el Cercano y Lejano Oriente"><br><span>El cobre, bronce y hierro se desarrollaron en distintos focos y períodos.</span></div>
+                <ul>
+                    <li><strong>Cobre:</strong> primer metal utilizado. Al ser blando, se usó principalmente para adornos y utensilios.</li>
+                    <li><strong>Bronce:</strong> aleación de cobre y estaño. Por su mayor resistencia, supuso un gran avance en armas, utensilios y herramientas agrícolas.</li>
+                    <li><strong>Hierro:</strong> más duro y resistente, pero más difícil de trabajar. Influyó de manera importante en la guerra, utilizado especialmente para armas.</li>
+                </ul>
+                
+                <div class="info-card">💬 <strong>Yuval Noah Harari (2015):</strong> "A medida que aumentaba el número de habitantes, también lo hacía la cantidad de información necesaria para coordinar sus asuntos. Entre 3500 y 3000 a.C., algunos genios sumerios anónimos inventaron un sistema para almacenar y procesar información fuera de su cerebro [...] El sistema de procesamiento de datos que los sumerios inventaron se llama «escritura»."</div>
+                
+                <h3>Tipos de escritura</h3>
+                <table><th>Tipo de escritura</th><th>Civilización</th><th>Características</th></tr>
+                <tr><td><strong>Cuneiforme</strong></td><td>Sumerios (Mesopotamia)</td><td>Signos que representaban números y objetos concretos (pictogramas). Sobre tablillas de arcilla con punzones o cuñas.</td></tr>
+                <tr><td><strong>Jeroglífica</strong></td><td>Egipcios</td><td>Complejo sistema de símbolos que representaban sonidos, ideas y otros elementos.</td></tr>
+                <tr><td><strong>Alfabética</strong></td><td>Fenicios</td><td>Cada signo representaba un sonido. Solo veinte signos (sin vocales). Base del alfabeto actual.</td></tr>
+                </table>
+                <div class="img-placeholder"><img src="https://i.ibb.co/gFQw0ww1/image.png" alt="Papiro con textos jeroglíficos (1050 a.C.)"><br><span>Escritura jeroglífica egipcia, tallada o pintada en papiros, muros y monumentos.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/prsJXBTj/image.png" alt="Inscripción en fenicio (variante púnica o cartaginés) y en griego clásico (siglo II a.C.)"><br><span>El alfabeto fonético fenicio fue adoptado y modificado luego por griegos y romanos, siendo la base del que utilizamos hasta el día de hoy.</span></div>
+                
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Qué motivó el desarrollo de nuevas técnicas y conocimientos en las primeras civilizaciones y cuáles fueron los más importantes?</p><p><strong>Respuesta:</strong> El surgimiento de las sociedades urbanas liberó a ciertos grupos de la producción de alimentos, permitiéndoles dedicarse al estudio y perfeccionamiento de nuevas técnicas. Los avances más importantes fueron la <strong>metalurgia</strong> (cobre, bronce y hierro, que mejoraron armas, herramientas y utensilios) y la <strong>escritura</strong> (cuneiforme en Mesopotamia, jeroglífica en Egipto y alfabética en Fenicia). La escritura fue fundamental para la administración, el registro de leyes, el comercio y la transmisión del conocimiento, marcando tradicionalmente el inicio de la Edad Antigua.</p></div>
+            </div>
+
+            <!-- SLIDE 14: Las primeras civilizaciones del mundo (pág.62-63) -->
+            <div class="slide">
+                <h2>🏛️ Las primeras civilizaciones del mundo: una mirada particular</h2>
+                <p>Si bien todas las civilizaciones antiguas presentaron rasgos comunes (ciudades, organización centralizada, sociedad jerárquica, sistemas religiosos, avances tecnológicos y científicos), cada uno de estos rasgos se presentó con ciertas particularidades en cada civilización.</p>
+                <p>No hay que olvidar que cada una de ellas se originó de modo autónomo en distintas regiones del mundo, forjando por ello una historia y una cultura particulares, cuestión que no impidió que avanzado su desarrollo, algunas de ellas mantuvieran contactos y realizaran intercambios culturales.</p>
+                
+                <div class="img-placeholder"><img src="https://i.ibb.co/9HCdRNZY/image.png" alt="Ruinas de la ciudad india de Harappa"><br><span>Harappa, uno de los principales centros urbanos de la Civilización del Indo.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/rGtkLrch/image.png" alt="Ruinas de la ciudad fenicia de Tiro"><br><span>Tiro, una de las principales ciudades fenicias, destacada por su comercio marítimo.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/JFcLMhms/image.png" alt="Pirámides de Giza, Egipto, 2500 a.C."><br><span>Las pirámides de Guiza, símbolo del poder y la organización del Imperio Antiguo egipcio.</span></div>
+                
+                <h3>Fichas de civilizaciones</h3>
+                <ul>
+                    <li><strong>Mesopotamia:</strong> Durante más de 3000 años se sucedieron culturas y pueblos: ciudades-estado sumerias e imperios (acadio, babilonio, asirio, neobabilónico).</li>
+                    <li><strong>Civilización india:</strong> La Civilización del Indo (2700-1500 a.C.) desarrolló grandes centros urbanos antes de dividirse en reinos e imperios.</li>
+                    <li><strong>Fenicia:</strong> A partir del 1300 a.C. fundaron ciudades, destacando como navegantes y comerciantes. Fundaron colonias, una de ellas Cartago.</li>
+                    <li><strong>Antiguo Egipto:</strong> Abarca unos 3000 años: Imperio Antiguo (3000-2420 a.C.), Medio (2160-1778 a.C.), Nuevo (1580-1085 a.C.) y Baja época (1085-333 a.C.).</li>
+                    <li><strong>Civilización minoica:</strong> En Creta, destacó en comercio marítimo. Periodos: antiguo, medio y reciente.</li>
+                    <li><strong>Antigua China:</strong> Dinastía Xia (primera), y desde el 221 a.C. un poderoso imperio.</li>
+                    <li><strong>Chavín de Huántar:</strong> (1200-200 a.C.) consolidó procesos culturales en los Andes.</li>
+                    <li><strong>Civilización olmeca:</strong> (1500-100 a.C.) construyó importantes centros urbanos con rol ceremonial.</li>
+                </ul>
+                
+                <div class="img-placeholder"><img src="https://i.ibb.co/hFf0KFrQ/image.png" alt="La Gran Muralla China, construcción iniciada en el siglo V a.C."><br><span>La Gran Muralla, símbolo de la unificación y defensa del imperio chino.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/jPHSL2G4/image.png" alt="Cabeza colosal olmeca, 1200 al 900 a.C."><br><span>Cabezas colosales olmecas, esculpidas en basalto, representan gobernantes o guerreros.</span></div>
+                
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Qué particularidades presentaron las primeras civilizaciones a pesar de compartir rasgos comunes?</p><p><strong>Respuesta:</strong> Aunque todas las primeras civilizaciones compartían rasgos como ciudades, Estado centralizado, estratificación social, sistemas religiosos y avances tecnológicos, cada una tuvo particularidades según su entorno, historia y cultura. Por ejemplo, mientras Egipto se unificó en un solo Estado bajo un faraón divino, Mesopotamia fue una sucesión de ciudades-estado e imperios en pugna. Los fenicios y minoicos se volcaron al comercio marítimo, mientras que olmecas y chavín desarrollaron centros ceremoniales en selvas y montañas andinas respectivamente.</p></div>
+            </div>
+
+            <!-- SLIDE 15: Democracia ateniense inicio (pág.69-71) -->
+            <div class="slide">
+                <h2>🏛️ La democracia ateniense: una creación original de la Antigua Grecia</h2>
+                <div class="img-placeholder"><img src="https://i.ibb.co/k6Gkq2xG/image.png" alt="Erecteión, templo griego ubicado en la Acrópolis de Atenas, construido en el siglo V a.C."><br><span>El Erecteión, templo griego en la Acrópolis de Atenas, construido en el siglo V a.C. en honor a Atenea, Poseidón y Erecteo.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/4nhz7TVD/image.png" alt="Anfiteatro Flavio, conocido como Coliseo romano, construido en el siglo I"><br><span>El Coliseo romano, ejemplo del legado arquitectónico y cultural del mundo clásico.</span></div>
+                <p>Debido a la originalidad de sus creaciones culturales, y por la influencia que estas han ejercido a lo largo de la historia, la civilización griega es considerada por muchos como una civilización excepcional.</p>
+                <p>Parte de esta valoración se vincula con los procesos experimentados en Atenas durante su época de mayor esplendor. Esta ciudad logró durante un tiempo ser la mayor potencia política, económica y militar de la Antigua Grecia, sitial que posibilitó, luego de un largo proceso de experimentación política, consolidar una de las mayores creaciones de la civilización griega, la <strong>democracia</strong>.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Democracia:</strong> forma de gobierno en la cual el poder político se distribuye entre los ciudadanos y las decisiones se toman según la opinión de las mayorías.</div>
+                <div class="info-card">💬 <strong>Fuente A - Françoise Ruzé y Marie-Claire Amouretti (1992):</strong> "Las relaciones entre regiones eran difíciles. [...] Hasta época muy reciente, carretas y carros eran poco útiles para el transporte y el recorrido de los senderos montañosos [...] En realidad, Grecia pedía al mar las comunicaciones que su relieve le vedaba."</div>
+                <div class="info-card">💬 <strong>Fuente B - María José Hidalgo (1998):</strong> "La vida política se concentra en un lugar determinado, la ciudad, que es el centro religioso, político y económico del territorio. Geográficamente comprendía el núcleo urbano y el territorio con sus hábitats agrupados o dispersos."</div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Por qué la democracia ateniense es considerada una creación original y excepcional de la civilización griega?</p><p><strong>Respuesta:</strong> La democracia ateniense es considerada original y excepcional porque, a diferencia de otras civilizaciones de la antigüedad que se organizaban bajo monarquías, aristocracias o imperios teocráticos, Atenas desarrolló un sistema donde el poder político se distribuía entre los ciudadanos y las decisiones se tomaban según la opinión de las mayorías. Este sistema surgió tras un largo proceso de experimentación política (monarquía → aristocracia → tiranía → democracia) y sentó las bases para los conceptos de igualdad ante la ley, participación ciudadana y soberanía popular que influyen hasta hoy.</p></div>
+            </div>
+
+            <!-- SLIDE 16: Mar Mediterráneo espacio ecúmene (pág.72-73) -->
+            <div class="slide">
+                <h2>🌊 El mar Mediterráneo, un espacio ecúmene</h2>
+                <p>Desde el origen mismo de la civilización, el mar Mediterráneo ha tenido un importante rol en la historia de la humanidad. Su condición de <strong>mar interior</strong> (rodeado de tierra), y el hecho de que en él se conecten Asia, África y Europa, lo convirtieron en un espacio <strong>ecúmene</strong>, es decir, un espacio poblado en forma permanente por distintas culturas.</p>
+                <p>Durante milenios, por este espacio han circulado millones de personas, mercaderías e ideas, siendo allí donde se desarrollaron importantes civilizaciones para la historia de la humanidad, entre ellas, la griega y la romana.</p>
+                
+                <h3>Principales características naturales del mar Mediterráneo</h3>
+                <ul>
+                    <li><strong>Las aguas mediterráneas:</strong> Al ser un mar con escasa profundidad y muy pocas corrientes marinas, facilitó la navegación, la pesca y el contacto entre pueblos.</li>
+                    <li><strong>El clima:</strong> Cuatro estaciones muy marcadas, con veranos secos y calurosos, primaveras y otoños lluviosos e inviernos fríos.</li>
+                    <li><strong>Las tierras:</strong> Sus suelos y condiciones climáticas permitieron la agricultura y la ganadería.</li>
+                </ul>
+                
+                <div class="img-placeholder"><img src="https://i.ibb.co/8DksPQW3/image.png" alt="Mapa: El Mediterráneo en la antigüedad; ciudades y civilizaciones"><br><span>El mar Mediterráneo conectó grandes civilizaciones: griega, romana, fenicia y egipcia, entre otras.</span></div>
+                
+                <h3>Civilizaciones del Mediterráneo</h3>
+                <table><th>Civilización</th><th>Periodo</th><th>Características</th></tr>
+                <tr><td><strong>Romano</strong></td><td>753 a.C. - 476 d.C.</td><td>Pequeña ciudad de la península itálica que se transformó en uno de los imperios más grandes, llamando al Mediterráneo <em>Mare Nostrum</em>.</td></tr>
+                <tr><td><strong>Griego</strong></td><td>2600 - 146 a.C.</td><td>Surgió en el sur de la península Balcánica y las islas del Egeo; fundaron colonias y comerciaron.</td></tr>
+                <tr><td><strong>Fenicio</strong></td><td>1300 - 146 a.C.</td><td>Grandes navegantes y comerciantes. Fundaron colonias como Cartago.</td></tr>
+                <tr><td><strong>Egipcio</strong></td><td>3000 - 31 a.C.</td><td>Edificada en torno al Nilo, comerció a través del Mediterráneo.</td></tr>
+                </table>
+                
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Qué características del mar Mediterráneo posibilitaron que distintas culturas se relacionaran e influenciaran entre sí?</p><p><strong>Respuesta:</strong> El mar Mediterráneo es un mar interior rodeado de tierra que conecta Asia, África y Europa. Sus características naturales —escasa profundidad, pocas corrientes marinas, clima templado y suelos fértiles en sus costas— facilitaron la navegación, la pesca, la agricultura y el contacto permanente entre los pueblos asentados en sus riberas. Esto permitió el intercambio de mercaderías, ideas y tradiciones culturales, convirtiéndolo en un espacio ecúmene donde florecieron grandes civilizaciones.</p></div>
+            </div>
+
+            <!-- SLIDE 17: Grecia y su entorno geográfico (pág.74-75) -->
+            <div class="slide">
+                <h2>🏔️ La Antigua Grecia y su entorno geográfico</h2>
+                <p>La cultura griega se desarrolló en sus inicios en el noreste de la cuenca mediterránea, fundamentalmente en la península de los Balcanes, en las costas de Asia Menor y en varias islas del mar Egeo.</p>
+                <p>Si bien la civilización griega nunca formó un solo imperio o estado unificado, la noción de unidad cultural predominó en ella. Los antiguos griegos se organizaron en <strong>polis</strong>, se llamaron a sí mismos <strong>helenos</strong>, mientras que a su territorio lo denominaron <strong>Hélade</strong>, espacio común en donde confluían sus similitudes lingüísticas y culturales.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Polis:</strong> ciudad-Estado griega. Eran autónomas y se conformaban de un núcleo urbano, el espacio rural circundante y la comunidad de habitantes.</div>
+                <p>La península de los Balcanes se caracteriza por presentar cordones montañosos que forman valles aislados, y por sus accidentadas costas. Su cercanía al mar permitió que los griegos se desarrollaran como grandes navegantes y comerciantes marítimos.</p>
+                <p>Producto del relieve, el desarrollo de la agricultura no fue fácil, concentrándose en la zona sur de la península. Sus principales cultivos fueron olivos, vides y trigo. También desarrollaron la ganadería, especialmente de cabras y ovejas. La minería fue otra actividad económica importante, especialmente la explotación de cobre, plata, hierro y oro.</p>
+                <div class="img-placeholder"><img src="https://i.ibb.co/35PChMPJ/image.png" alt="Mapa: El territorio griego - península de los Balcanes, islas del Egeo y costa de Asia Menor"><br><span>El territorio griego se extendía por el sur de la península Balcánica, las islas del mar Egeo y la costa occidental de Asia Menor.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/7xdKWZfB/image.png" alt="Atenas en la actualidad. La Acrópolis en primer plano y el mar Egeo al fondo"><br><span>Atenas en la actualidad. La Acrópolis en primer plano y el mar Egeo al fondo, mostrando la cercanía geográfica que marcó el desarrollo griego.</span></div>
+                <div class="info-card">💬 <strong>Fuente B - Gustave Glotz (1928):</strong> "El rasgo más sobresaliente de la Grecia antigua es que estaba dividida en una infinidad de ciudades-estado independientes (polis). [...] En realidad, las condiciones geográficas contribuyeron mucho a darle a Grecia su aspecto histórico, en especial el relieve montañoso."</div>
+                <div class="info-card">💬 <strong>Fuente C - Francisco Gómez (2011):</strong> "Los griegos habitaban una península situada en medio del mar Egeo, un mar plagado de islas. Dicha península se encontraba, además, en la proximidad de florecientes civilizaciones, como Anatolia, Egipto y el Próximo Oriente."</div>
+                <div class="info-card">💬 <strong>Fuente E - Moses Finley (1966):</strong> "Todos aquellos griegos tan diseminados por lejanos confines tenían conciencia de pertenecer a una cultura común. [...] A todos los demás hombres, a cuantos no tenían el griego como lengua materna, les agrupaban bajo la categoría única de 'bárbaro'."</div>
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Cómo influyó el entorno geográfico en el desarrollo de la civilización griega?</p><p><strong>Respuesta:</strong> El relieve montañoso de la península de los Balcanes y la fragmentación del territorio en valles aislados favorecieron la formación de <strong>polis</strong> independientes (ciudades-Estado) en lugar de un imperio unificado. La cercanía al mar Mediterráneo y el mar Egeo impulsó a los griegos a convertirse en <strong>grandes navegantes y comerciantes</strong>, facilitando el contacto con otras civilizaciones (fenicios, egipcios). La escasez de tierras cultivables limitó la agricultura (principalmente olivo, vid y trigo) y promovió la <strong>expansión colonial</strong> hacia otras costas del Mediterráneo, difundiendo su cultura.</p></div>
+            </div>
+
+            <!-- SLIDE 18: Evolución política de Atenas (pág.76-77) -->
+            <div class="slide">
+                <h2>📜 Evolución política de Atenas: de la monarquía a la democracia</h2>
+                <p>Atenas, ubicada en la península del Ática, pasó de ser una pequeña aldea a convertirse en una de las más importantes, prósperas, poderosas e influyentes polis de toda la Antigua Grecia.</p>
+                <p>En sus orígenes, Atenas se organizó mediante una <strong>monarquía</strong>. Sin embargo, durante la primera mitad del siglo VIII a.C., el poder del monarca fue debilitándose hasta perder sus atribuciones políticas, dando paso a un régimen <strong>aristocrático</strong> liderado por los <strong>eupátridas</strong> (nobles terratenientes).</p>
+                <p>Durante el siglo VII a.C. Atenas experimentó un progreso económico sin precedentes, impulsado especialmente por el desarrollo naval y por el comercio marítimo. En este contexto, grupos sociales que se vieron beneficiados por el auge económico comenzaron a presionar por mayor participación política, situación que obligó a los aristócratas a hacer concesiones.</p>
+                <div class="info-card"><strong>📘 Glosario:</strong><br><strong>Monarquía:</strong> forma de Estado en que la jefatura suprema es ejercida por un monarca por vía hereditaria.<br><strong>Aristocracia:</strong> grupo social privilegiado que recibe por herencia tierras, títulos y poder económico.<br><strong>Plutocracia:</strong> forma de gobierno en la que el poder se concentra en el grupo más rico de la sociedad.</div>
+                
+                <h3>Funcionamiento del sistema aristocrático ateniense</h3>
+                <p><strong>Ekklesia</strong> (Asamblea formada por eupátridas) → elegía a los 9 <strong>Arcontes</strong> (magistrados anuales) → al dejar sus cargos pasaban a formar parte del <strong>Areópago</strong> (Consejo de ancianos vitalicio).</p>
+                <p>Bajo este sistema eran considerados ciudadanos solo los hombres eupátridas, quedando excluidos: metecos o extranjeros, comerciantes, artesanado, campesinado, esclavos y mujeres.</p>
+                
+                <h3>Transformaciones al sistema aristocrático</h3>
+                <ul>
+                    <li><strong>Dracón:</strong> redactó el primer código de leyes escritas, caracterizadas por su gran severidad. Antes, las leyes eran orales y estaban sometidas a la interpretación exclusiva de los eupátridas.</li>
+                    <li><strong>Solón:</strong> redactó un nuevo código que abolió las deudas de los pequeños agricultores y prohibió la esclavitud por endeudamiento. Creó el Consejo de ciudadanos (Bulé) y el Tribunal popular (Heliea). Con estos cambios se amplió la participación, generalmente de los ciudadanos más ricos, creando una plutocracia.</li>
+                    <li><strong>Pisístrato:</strong> lideró una tiranía (gobierno ilegítimo), repartió tierras entre los campesinos y emprendió numerosas obras públicas. Murió antes de poder concretar las reformas democráticas.</li>
+                </ul>
+                
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Cómo era el gobierno de Atenas antes de la democracia y qué transformaciones experimentó?</p><p><strong>Respuesta:</strong> Atenas pasó de una <strong>monarquía</strong> (rey) a una <strong>aristocracia</strong> gobernada por los eupátridas (nobles terratenientes), donde solo ellos eran ciudadanos y ocupaban los cargos públicos. Las tensiones sociales llevaron a reformas: <strong>Dracón</strong> escribió el primer código de leyes (severas, pero por escrito); <strong>Solón</strong> abolió la esclavitud por deudas, creó la Bulé y la Heliea, aunque el poder quedó en manos de los más ricos (plutocracia); y <strong>Pisístrato</strong> instauró una tiranía, repartió tierras y realizó obras públicas. Estos cambios prepararon el camino para la democracia de Clístenes.</p></div>
+            </div>
+
+            <!-- SLIDE 19: Sistema democrático ateniense (pág.78-79) -->
+            <div class="slide">
+                <h2>⚙️ El sistema democrático ateniense</h2>
+                <p>Apoyado por numerosos ciudadanos, el aristócrata <strong>Clístenes</strong> inició a partir del 508 a.C. una profunda reforma política en Atenas, que permitió a sus habitantes crear la <strong>primera democracia de la historia</strong>.</p>
+                <p>Durante su gobierno fue aplicada la <strong>isonomía</strong> o igualdad de todos los ciudadanos ante la ley. Este principio se fundamentó en la reorganización del territorio ateniense, la cual situó al <strong>demo</strong> como el elemento central. También instauró el <strong>ostracismo</strong>, castigo que consistía en desterrar por diez años a cualquier sospechoso de atentar contra el orden democrático.</p>
+                <p>A partir del año 461 a.C., <strong>Pericles</strong> continuó la senda reformadora, consolidando el sistema democrático. Eliminó los privilegios del Areópago (última institución exclusivamente aristocrática) e instauró la <strong>mistoforia</strong> o pago a los ciudadanos que ejercían algún cargo político.</p>
+                
+                <div class="img-placeholder"><img src="https://i.ibb.co/k2kV6k5W/image.png" alt="Foltz, Philipp (1877). Representación del Discurso fúnebre de Pericles"><br><span>Representación del Discurso fúnebre de Pericles. En un contexto de guerra, Pericles realiza un retrato idealizado de la democracia ateniense.</span></div>
+                
+                <h3>Instituciones de la democracia ateniense (siglo V a.C.)</h3>
+                <ul>
+                    <li><strong>Ekklesía (Asamblea):</strong> Reunión de todos los ciudadanos (unos 40 000). Aprobaba leyes, declaraba la guerra, elegía estrategas.</li>
+                    <li><strong>Bulé (Consejo de 500):</strong> 50 ciudadanos por cada una de las 10 tribus; preparaban los temas a debatir. Elegidos por sorteo anual.</li>
+                    <li><strong>Heliea (Tribunal popular):</strong> 6000 jurados sorteados impartían justicia.</li>
+                    <li><strong>Estrategas:</strong> 10 militares elegidos por voto; Pericles fue estratega durante décadas.</li>
+                </ul>
+                
+                <div class="info-card">💬 <strong>Fuente B - Discurso fúnebre de Pericles (Tucídides):</strong> "Disfrutamos de un régimen político que no imita las leyes de los vecinos; [...] a este régimen se lo ha llamado democracia; respecto a las leyes, todos gozan de iguales derechos en la defensa de sus intereses particulares."</div>
+                <div class="info-card">💬 <strong>Fuente C - Pseudo Jenofonte (440-420 a.C.):</strong> "Allí constituye un derecho el que los pobres y el pueblo tengan más poder que los nobles y los ricos [...] parece justo que todos participen de los cargos por sorteo y por votación a mano alzada y que cualquier ciudadano pueda hablar."</div>
+                
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Cómo se constituyó la democracia en Atenas y en qué se diferencia de las democracias actuales?</p><p><strong>Respuesta:</strong> La democracia ateniense fue instaurada por <strong>Clístenes</strong> (508 a.C.) con principios como la <em>isonomía</em> (igualdad ante la ley), la reorganización territorial en <em>demos</em> y el <strong>ostracismo</strong>. <strong>Pericles</strong> la consolidó eliminando privilegios aristocráticos e instaurando la <em>mistoforia</em> (pago por cargos públicos). Se diferenciaba de las democracias actuales en que era <strong>directa</strong> (los ciudadanos votaban personalmente las leyes en la Asamblea), utilizaba el <strong>sorteo</strong> para muchos cargos, y la ciudadanía era <strong>restringida</strong> (solo varones atenienses mayores de edad, excluyendo mujeres, esclavos y extranjeros). Hoy la democracia es representativa, con sufragio universal.</p></div>
+            </div>
+
+            <!-- SLIDE 20: Derechos políticos de los ciudadanos (pág.80-81) -->
+            <div class="slide">
+                <h2>👥 Los derechos políticos de los ciudadanos atenienses</h2>
+                <p>El modelo de la democracia ateniense fue el sistema político de la antigüedad que otorgó los mayores espacios de participación política a personas excluidas tradicionalmente del poder político.</p>
+                <p>Era una <strong>democracia directa</strong> que se ejercía mediante la participación directa de los ciudadanos en las instituciones. Sin embargo, era también una <strong>democracia restringida</strong>, pues los ciudadanos eran un sector reducido de la población.</p>
+                <p>Ser ciudadano significó poder participar de manera estable en el poder político, teniendo la posibilidad de asumir cargos públicos, deliberar en la asamblea y tomar decisiones en ella.</p>
+                
+                <div class="img-placeholder"><img src="https://i.ibb.co/VWB1DLRL/image.png" alt="Fragmento de cerámica (óstraca) con un nombre inscrito para votación de ostracismo"><br><span>Los ciudadanos atenienses, para aplicar el ostracismo, inscribían el nombre del candidato a ser desterrado sobre un fragmento de cerámica o en una concha de ostra.</span></div>
+                
+                <div class="info-card">💬 <strong>Fuente D - Paulette Dieterlen (2003):</strong> "La idea central de la democracia ateniense fue la supresión de la distinción entre ciudadanos y gobernantes, entre Estado y sociedad. [...] Ahora bien, no olvidemos que el gobierno ateniense excluía a las mujeres, a los extranjeros y a los esclavos."</div>
+                <div class="info-card">💬 <strong>Fuente C - Pierre Vidal-Naquet y Michel Austin (1986):</strong> "Paralelamente a la noción de ciudadano se desarrollan las contrarias, es decir las de no ciudadano, la de extranjero dentro de la comunidad política, y sobre todo la de esclavo [...] la noción de ciudadano es pues, inclusiva y exclusiva."</div>
+                <div class="info-card">💬 <strong>Fuente E - Mario Levi (1968):</strong> "El concepto que guió la política ateniense fue el de hacer posible la participación del trabajador en las asambleas y en la vida pública. Tal posibilidad había que encontrarla en una compensación económica por la asistencia a la misma asamblea."</div>
+                
+                <h3>Grupos excluidos de la ciudadanía ateniense</h3>
+                <table><th>Grupo excluido</th><th>Razón de exclusión</th></tr>
+                <tr><td>Mujeres</td><td>Sin derechos políticos, relegadas al ámbito doméstico</td></tr>
+                <tr><td>Metecos (extranjeros)</td><td>Residentes libres pero sin derechos políticos</td></tr>
+                <tr><td>Esclavos</td><td>Considerados propiedad, sin libertad ni derechos</td></tr>
+                </table>
+                
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Qué significaba ser ciudadano en la democracia ateniense y cuáles eran los límites de este sistema?</p><p><strong>Respuesta:</strong> Ser ciudadano en Atenas significaba poder participar de manera estable en el poder político: asistir y votar en la Asamblea (Ekklesía), postular a cargos públicos (por sorteo o elección), y ser juez en los tribunales populares (Heliea). Sin embargo, la democracia ateniense era <strong>restringida</strong>: solo los varones atenienses mayores de edad, hijos de padre y madre ateniense, eran ciudadanos. Quedaban excluidas las <strong>mujeres</strong> (sin derechos políticos), los <strong>metecos</strong> (extranjeros libres residentes) y los <strong>esclavos</strong> (privados de libertad). Esto significa que solo alrededor del 10-15% de la población tenía derechos políticos.</p></div>
+            </div>
+
+            <!-- SLIDE 21: Otras formas de gobierno (pág.82-83) -->
+            <div class="slide">
+                <h2>⚔️ La democracia ateniense frente a otros sistemas de gobierno</h2>
+                <p>A lo largo de su historia, Atenas mantuvo estrechos vínculos con otras polis y civilizaciones, mediante el comercio, el intercambio cultural y también la guerra.</p>
+                <p>Entre los conflictos bélicos destacan las <strong>Guerras Médicas (490-479 a.C.)</strong>, donde el mundo griego se unió en una coalición liderada por Atenas y Esparta para enfrentar al Imperio persa, y la <strong>Guerra del Peloponeso</strong>, donde Atenas y Esparta se enfrentaron por el control de la Hélade.</p>
+                
+                <h3>Sistema político del Imperio persa</h3>
+                <ul>
+                    <li><strong>Rey:</strong> Autoridad de poder absoluto, representante de Ahura Mazda.</li>
+                    <li><strong>Nobleza real:</strong> Cancillería imperial, altos funcionarios, sacerdotes y ejército real.</li>
+                    <li><strong>Nobleza provincial:</strong> Asentada en las satrapías, con funciones administrativas, religiosas y militares.</li>
+                    <li><strong>Élites locales:</strong> Grupos acomodados de cada satrapía con influencia política local.</li>
+                    <li><strong>Pueblo y esclavos:</strong> Pueblo libre sin injerencia política; esclavos sin libertad.</li>
+                </ul>
+                <div class="info-card">💬 <strong>Jorge Pisa (2011):</strong> "Uno de los elementos que diferenciaban al monarca persa de sus predecesores era el hecho de que no se le consideraba un rey dios, sino tan solo un representante en la Tierra de Ahura Mazda."</div>
+                
+                <h3>Sistema político de Esparta</h3>
+                <div class="info-card">💬 <strong>Sarah Pomeroy (1999):</strong> "Si atendemos a su composición, la asamblea era el órgano más democrático del gobierno espartano, pues pertenecían a ella todos los ciudadanos varones mayores de treinta años. Sin embargo, a diferencia de la asamblea ateniense, en Esparta no se sostenían debates; los ciudadanos escuchaban las propuestas de la gerousía y se limitaban a votar."</div>
+                
+                <h3>Tabla comparativa</h3>
+                <table><th>Aspecto</th><th>Atenas (Democracia)</th><th>Esparta (Oligarquía)</th><th>Imperio Persa (Monarquía)</th></tr>
+                <tr><td>Gobernante</td><td>Asamblea de ciudadanos</td><td>Dos reyes y gerousía</td><td>Rey con poder absoluto</td></tr>
+                <tr><td>Participación</td><td>Ciudadanos varones atenienses</td><td>Ciudadanos espartanos (mayores de 30 años)</td><td>Solo el rey y la nobleza</td></tr>
+                <tr><td>Toma de decisiones</td><td>Debate y votación</td><td>Sin debate, solo votación</td><td>Decisiones unipersonales</td></tr>
+                <tr><td>Debate público</td><td>Libre participación (isegoría)</td><td>No permitido</td><td>Inexistente</td></tr>
+                <tr><td>Grupos excluidos</td><td>Mujeres, esclavos, metecos</td><td>Mujeres, esclavos, periecos</td><td>Mayoría de la población</td></tr>
+                </table>
+                
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Cuáles fueron las principales diferencias entre la democracia ateniense y otros sistemas de gobierno de la antigüedad (Esparta y el Imperio persa)?</p><p><strong>Respuesta:</strong> La <strong>democracia ateniense</strong> se caracterizaba por la participación de los ciudadanos en la Asamblea, el debate público (<em>isegoría</em>), el sorteo de cargos y la igualdad ante la ley (<em>isonomía</em>). <strong>Esparta</strong> tenía un sistema oligárquico-militar donde no se permitía el debate y los ciudadanos solo votaban propuestas. El <strong>Imperio persa</strong> era una monarquía absoluta sin participación ciudadana. Mientras Atenas valoraba la libertad de expresión, Esparta priorizaba la obediencia y Persia la sumisión al rey.</p></div>
+            </div>
+
+            <!-- SLIDE 22: Manifestaciones culturales griegas (pág.84-85) -->
+            <div class="slide">
+                <h2>🎭 Manifestaciones de la cultura griega</h2>
+                <p>Durante el llamado <strong>periodo Clásico (499-336 a.C.)</strong>, las polis griegas, y en particular Atenas, experimentaron la etapa de mayor esplendor cultural de toda su historia. Esta etapa fue conocida como la <strong>"edad de oro"</strong> o el <strong>"siglo de oro de Pericles"</strong>.</p>
+                <p>Fue en paralelo a la consolidación de la democracia que se impulsaron las artes, la arquitectura y el pensamiento, hecho que situó a Atenas como el principal foco de atracción e irradiación cultural de Grecia.</p>
+                
+                <h3>Pintura y escultura</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/1Yq02g5m/image.png" alt="Interior de kílix o copa típica griega (480 a. C.)"><br><span>Interior de kílix o copa típica griega (480 a. C.).Se aprecia hoplita griego y un soldado persa combatiendo.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/q3BpKD6S/image.png" alt="Discóbolo, copia romana del siglo II d.C."><br><span>Discóbolo (lanzador de disco), ejemplo del canon de belleza griego que buscaba representar el cuerpo humano en movimiento con proporciones ideales.</span></div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/NgmT9Nyw/image.png" alt="Boxeador en reposo, escultura griega, siglo III a.C."><br><span>Boxeador en reposo, mostrando el realismo y la expresividad de la escultura helenística.</span></div>
+                <p>En la escultura dominó el llamado <strong>Canon</strong>, atribuido a Policleto, que establecía las proporciones ideales del cuerpo humano. Lograron que los rostros ganaran en expresividad y manifestaran sensación de movimiento.</p>
+                
+                <h3>Deporte</h3>
+                <p>Los griegos asignaron un alto valor a la preparación física y al deporte. Los <strong>Juegos Olímpicos</strong> se realizaban cada cuatro años en Olimpia en honor a Zeus. Su primera versión fue en el 776 a.C. y se convirtieron en una forma de medir el tiempo entre los griegos.</p>
+                
+                <h3>Literatura y teatro</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/qYWP1p1Q/image.png" alt="Vasija griega que muestra a la poetisa Safo leyendo poemas al compás de una lira (440-430 a.C.)"><br><span>Vasija griega que muestra a la poetisa Safo leyendo poemas al compás de una lira.</span></div>
+                <p>Los griegos desarrollaron la literatura en torno a tres grandes géneros: la <strong>épica</strong>, la <strong>lírica</strong> y el <strong>drama</strong>. Los primeros testimonios escritos corresponden a los poemas atribuidos a <strong>Homero</strong> (siglo VIII a.C.), la <em>Ilíada</em> y la <em>Odisea</em>. El teatro tiene su origen en las danzas en honor al dios Dionisos. Dos géneros teatrales: la <strong>tragedia</strong> (grandes sentimientos y conflictos humanos) y la <strong>comedia</strong> (sátira de la vida cotidiana). Autores destacados: Sófocles, Eurípides, Esquilo (tragedia) y Aristófanes (comedia).</p>
+                
+                <h3>Ciencias, filosofía e historia</h3>
+                <p>La filosofía surgió hacia el siglo VII a.C. Aportes destacados: <strong>física</strong> (Arquímedes), <strong>medicina</strong> (Hipócrates), <strong>geografía</strong> (Eratóstenes), <strong>historia</strong> (Heródoto y Tucídides). Los filósofos más influyentes fueron <strong>Sócrates, Platón y Aristóteles</strong>.</p>
+                
+                <h3>Arquitectura</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/h1TbBFVm/image.png" alt="El Partenón (447-432 a.C.), edificio dedicado a la diosa Atenea"><br><span>El Partenón (447-432 a.C.), dedicado a la diosa Atenea. Su construcción se inició bajo el gobierno de Pericles. Es un símbolo del poder alcanzado por Atenas y del desarrollo en las artes y la arquitectura.</span></div>
+                <p>Los principales edificios griegos fueron los <strong>templos</strong>, construcciones rectangulares rodeadas de columnas, considerados la morada de los dioses. El <strong>Partenón</strong> es el más destacado, junto con el Erecteión y el Templo de Atenea Niké.</p>
+                
+                <div class="question-sample"><p>❓ <strong>Pregunta:</strong> ¿Cuáles fueron las principales manifestaciones culturales de la Antigua Grecia durante el periodo Clásico?</p><p><strong>Respuesta:</strong> Durante el periodo Clásico o "Siglo de Oro de Pericles", los griegos destacaron en múltiples áreas: en <strong>escultura</strong>, con el canon de Policleto y obras como el Discóbolo; en <strong>arquitectura</strong>, con templos como el Partenón; en <strong>literatura y teatro</strong>, con la épica de Homero, la tragedia (Sófocles, Eurípides, Esquilo) y la comedia (Aristófanes); en <strong>filosofía</strong>, con Sócrates, Platón y Aristóteles; en <strong>ciencia</strong>, con Hipócrates (medicina) y Arquímedes (física); en <strong>historia</strong>, con Heródoto y Tucídides; y en <strong>deporte</strong>, con los Juegos Olímpicos (desde 776 a.C.). La cultura griega puso al ser humano en el centro de sus preocupaciones (antropocentrismo) y buscó la belleza ideal, la armonía y la razón.</p></div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 22</div>
+    </div>
+
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slideCounterSpan.innerText = `Slide ${currentIndex+1} / ${totalSlides}`;
+    }
+    function nextSlide() { if (currentIndex < totalSlides-1) { currentIndex++; updateSlidePosition(); } }
+    function prevSlide() { if (currentIndex > 0) { currentIndex--; updateSlidePosition(); } }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { nextSlide(); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { prevSlide(); e.preventDefault(); }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => { window.location.href = 'Historia.html'; });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => { window.location.href = 'C_2A_Historia.html'; });
+    updateSlidePosition();
+</script>
+</body>
+</html>
