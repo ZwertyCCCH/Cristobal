@@ -1,0 +1,505 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Quiz · Clima y Tiempo Atmosférico · Historia 7° Básico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    :root {
+      --bg: #eef2f5;
+      --surface: #ffffff;
+      --navy: #1a5f7a;
+      --navy2: #2c7a5e;
+      --amber: #f4c542;
+      --amber-light: #fef9e6;
+      --green: #1a7f5a;
+      --green-light: #e3f5ed;
+      --red: #c0392b;
+      --red-light: #fdecea;
+      --muted: #7a8899;
+      --border: #dce5ec;
+      --radius: 18px;
+      --shadow: 0 8px 32px rgba(26,95,122,0.10);
+    }
+
+    body {
+      font-family: 'Syne', sans-serif;
+      background: var(--bg);
+      min-height: 100vh;
+      color: var(--navy);
+    }
+
+    .app-header {
+      background: var(--navy);
+      padding: 0 28px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+    }
+    .app-header h1 { font-size: 0.85rem; font-weight: 700; color: #c8dce5; letter-spacing: 0.3px; }
+    .app-header h1 em { color: var(--amber); font-style: normal; }
+
+    .timer-wrap {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--navy2);
+      border-radius: 40px;
+      padding: 6px 16px;
+    }
+    .timer-display {
+      font-family: 'Literata', serif;
+      font-size: 1.3rem;
+      font-weight: 500;
+      color: white;
+      letter-spacing: 2px;
+      min-width: 58px;
+      text-align: center;
+    }
+    .timer-wrap.warning { background: #c87209; }
+    .timer-wrap.danger { background: var(--red); animation: pulse 1s infinite; }
+    @keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.75; } }
+
+    .progress-track { height: 5px; background: var(--border); }
+    .progress-fill { height: 100%; background: linear-gradient(90deg, var(--amber), #e0a82b); transition: width 0.4s ease; }
+
+    .quiz-wrap { max-width: 760px; margin: 0 auto; padding: 32px 20px 60px; }
+    .q-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .q-counter { font-size: 0.78rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1.5px; color: var(--muted); }
+    .q-dots { display: flex; gap: 5px; flex-wrap: wrap; justify-content: flex-end; max-width: 420px; }
+    .dot { width: 9px; height: 9px; border-radius: 50%; background: var(--border); transition: background 0.2s; cursor: pointer; }
+    .dot.answered { background: var(--amber); }
+    .dot.current { background: var(--navy); transform: scale(1.3); }
+
+    .question-card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 36px 36px 28px;
+      margin-bottom: 20px;
+      animation: slideCard 0.3s ease;
+    }
+    @keyframes slideCard { from { opacity:0; transform: translateY(12px); } to { opacity:1; transform: translateY(0); } }
+
+    .q-topic {
+      display: inline-block;
+      background: var(--amber-light);
+      color: var(--amber);
+      font-size: 0.7rem;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 1.5px;
+      padding: 4px 12px;
+      border-radius: 40px;
+      margin-bottom: 16px;
+    }
+    .q-text {
+      font-family: 'Literata', serif;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      color: var(--navy);
+      margin-bottom: 28px;
+      padding-left: 16px;
+      border-left: 3px solid var(--amber);
+    }
+    .options { display: flex; flex-direction: column; gap: 10px; }
+    .option {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 13px 18px;
+      cursor: pointer;
+      transition: all 0.18s;
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: var(--navy);
+    }
+    .option:hover:not(.locked) { border-color: var(--navy2); background: #e3eef5; transform: translateX(3px); }
+    .option.selected { background: var(--navy); border-color: var(--navy); color: white; }
+    .opt-letter {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      background: var(--border);
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.72rem;
+      font-weight: 800;
+    }
+    .option.selected .opt-letter { background: var(--amber); color: var(--navy); }
+
+    .btn {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      border: none;
+      border-radius: 50px;
+      cursor: pointer;
+      transition: all 0.18s;
+      padding: 11px 26px;
+      font-size: 0.9rem;
+    }
+    .btn-prev { background: var(--border); color: var(--navy); }
+    .btn-prev:hover { background: #ccd5e4; transform: translateY(-2px); }
+    .btn-next { background: var(--navy); color: white; box-shadow: 0 4px 14px rgba(26,95,122,0.2); }
+    .btn-next:hover { background: var(--navy2); transform: translateY(-2px); }
+    .btn-submit { background: var(--amber); color: var(--navy); }
+    .btn-submit:hover { background: #e0a82b; transform: translateY(-2px); }
+
+    .unanswered-warning { font-size: 0.8rem; color: var(--red); font-weight: 600; text-align: center; opacity: 0; transition: opacity 0.3s; }
+    .unanswered-warning.show { opacity: 1; }
+
+    #resultsSection { display: none; }
+    .results-hero {
+      background: var(--navy);
+      border-radius: var(--radius);
+      padding: 40px 32px;
+      text-align: center;
+      margin-bottom: 20px;
+      position: relative;
+      overflow: hidden;
+    }
+    .grade-num { font-family: 'Literata', serif; font-size: 6rem; font-weight: 700; line-height: 1; color: white; margin-bottom: 6px; }
+    .grade-num.pass { color: #4dd9a0; }
+    .grade-num.fail { color: #ff7c72; }
+    .stats-row { display: flex; justify-content: center; gap: 14px; flex-wrap: wrap; margin-bottom: 24px; }
+    .stat-chip {
+      background: rgba(255,255,255,0.08);
+      border: 1px solid rgba(255,255,255,0.12);
+      border-radius: 14px;
+      padding: 14px 20px;
+      min-width: 100px;
+    }
+    .stat-chip .snum { font-family: 'Literata', serif; font-size: 2rem; font-weight: 700; color: white; display: block; line-height: 1; margin-bottom: 4px; }
+    .stat-chip.s-green .snum { color: #4dd9a0; }
+    .stat-chip.s-red .snum { color: #ff7c72; }
+    .stat-chip.s-amber .snum { color: var(--amber); }
+    .time-badge { display: inline-block; padding: 8px 20px; border-radius: 40px; font-size: 0.85rem; font-weight: 700; margin-bottom: 20px; }
+    .time-badge.excellent { background: rgba(77,217,160,0.15); color: #4dd9a0; border: 1px solid rgba(77,217,160,0.3); }
+    .time-badge.good { background: rgba(244,197,66,0.15); color: var(--amber); border: 1px solid rgba(244,197,66,0.3); }
+    .time-badge.slow { background: rgba(255,124,114,0.15); color: #ff7c72; border: 1px solid rgba(255,124,114,0.3); }
+    .verdict { font-size: 1.05rem; font-weight: 700; color: white; }
+
+    .nav-btns-results {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+      margin-top: 20px;
+    }
+    .nbtn {
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      padding: 11px 26px;
+      border-radius: 50px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.18s;
+      border: none;
+      text-decoration: none;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .nbtn:hover { transform: translateY(-2px); }
+    .nbtn-amber { background: var(--amber); color: var(--navy); }
+    .nbtn-outline { background: transparent; border: 2px solid rgba(255,255,255,0.4); color: white; }
+    .nbtn-outline:hover { background: rgba(255,255,255,0.12); border-color: rgba(255,255,255,0.7); }
+    .nbtn-lang { background: #2271b3; color: white; }
+    .nbtn-lang:hover { background: #1a5a8f; }
+    .nbtn-next { background: var(--green); color: white; }
+    .nbtn-next:hover { background: #0e5f43; }
+
+    .review-toggle { text-align: center; margin: 24px 0 12px; }
+    .btn-review {
+      background: var(--surface);
+      border: 2px solid var(--border);
+      color: var(--navy);
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      padding: 10px 24px;
+      border-radius: 50px;
+      cursor: pointer;
+    }
+    #reviewList { display: none; }
+    .review-item {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 20px 24px;
+      margin-bottom: 12px;
+      border-left: 5px solid var(--border);
+    }
+    .review-item.r-correct { border-left-color: var(--green); }
+    .review-item.r-wrong { border-left-color: var(--red); }
+    .r-tag { padding: 4px 12px; border-radius: 40px; font-size: 0.8rem; font-weight: 700; display: inline-block; margin-right: 8px; }
+    .r-tag.user-correct { background: var(--green-light); color: var(--green); }
+    .r-tag.user-wrong { background: var(--red-light); color: var(--red); }
+    .r-tag.correct-ans { background: var(--green-light); color: var(--green); }
+    .r-tag.not-ans { background: var(--red-light); color: var(--red); }
+
+    footer { text-align: center; padding: 16px; font-size: 0.78rem; color: var(--muted); border-top: 1px solid var(--border); margin-top: 20px; }
+
+    @media (max-width: 640px) {
+      .app-header { height: auto; flex-direction: column; align-items: flex-start; gap: 10px; padding: 12px 16px; }
+      .timer-wrap { align-self: flex-end; }
+      .quiz-wrap { padding: 20px 14px 80px; }
+      .q-dots { display: none; }
+      .question-card { padding: 20px 16px 18px; }
+      .q-text { font-size: 1rem; }
+      .option { padding: 14px 14px; }
+      .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; background: var(--bg); border-top: 1px solid var(--border); padding: 10px 16px; z-index: 150; display: flex; gap: 10px; }
+      .btn { flex: 1; text-align: center; padding: 13px 10px; }
+      .grade-num { font-size: 4rem; }
+      .nbtn { padding: 10px 18px; font-size: 0.8rem; }
+      .nav-btns-results { gap: 8px; }
+    }
+  </style>
+</head>
+<body>
+<header class="app-header">
+  <h1>🌍 <em>Clima vs. Tiempo Atmosférico</em> · Historia 7° Básico · Evaluación</h1>
+  <div class="timer-wrap" id="timerWrap"><span class="timer-icon">⏱</span><span class="timer-display" id="timerDisplay">45:00</span></div>
+</header>
+<div class="progress-track"><div class="progress-fill" id="progressFill" style="width:0%"></div></div>
+
+<div class="quiz-wrap" id="quizSection">
+  <div class="q-meta"><div class="q-counter" id="qCounter">Pregunta 1 de 40</div><div class="q-dots" id="qDots"></div></div>
+  <div class="question-card" id="questionCard"></div>
+  <div class="unanswered-warning" id="warnMsg">⚠ Responde antes de continuar.</div>
+  <div class="nav-bar"><button class="btn btn-prev" id="btnPrev">◀ Anterior</button><button class="btn btn-next" id="btnNext">Siguiente ▶</button></div>
+</div>
+
+<div class="quiz-wrap" id="resultsSection">
+  <div class="results-hero">
+    <h2>📊 Tu resultado · Clima e Historia</h2>
+    <div class="grade-num" id="gradeDisplay">—</div>
+    <div class="grade-note" id="gradeNote"></div>
+    <div class="stats-row">
+      <div class="stat-chip s-green"><span class="snum" id="sCorrect">0</span><span class="slabel">Correctas</span></div>
+      <div class="stat-chip s-red"><span class="snum" id="sWrong">0</span><span class="slabel">Incorrectas</span></div>
+      <div class="stat-chip s-amber"><span class="snum" id="sPct">0%</span><span class="slabel">Puntaje</span></div>
+      <div class="stat-chip"><span class="snum" id="sTime">—</span><span class="slabel">Tiempo</span></div>
+    </div>
+    <div class="time-badge" id="timeBadge"></div>
+    <div class="verdict" id="verdict"></div>
+    <div class="nav-btns-results">
+      <button class="nbtn nbtn-amber" onclick="resetQuiz()">🔄 Intentar de nuevo</button>
+      <button class="nbtn nbtn-outline" onclick="toggleReview()">📋 Revisar respuestas</button>
+      <a href="Historia.html" class="nbtn nbtn-lang">📚 Volver a la clase</a>
+      <a href="C_1A_Historia.html" class="nbtn nbtn-next">⏩ Siguiente actividad</a>
+    </div>
+  </div>
+  <div id="reviewList"></div>
+</div>
+<footer>🌡️ 40 preguntas · Clima vs. Tiempo Atmosférico · Historia 7° Básico · Aprobación: 60% (24 correctas)</footer>
+
+<script>
+  // ============================================================
+  // 40 PREGUNTAS SOBRE CLIMA, TIEMPO ATMOSFÉRICO E INFLUENCIA HISTÓRICA
+  // ============================================================
+  const ALL_QUESTIONS = [
+    // Diferencia clima vs tiempo (1-3)
+    { topic: "🌦️ Definiciones", text: "¿Cuál es la diferencia principal entre clima y tiempo atmosférico?", opts: ["El tiempo es promedio de 30 años, el clima es actual","El clima es promedio de largos periodos, el tiempo es el estado actual","Son sinónimos","El clima se mide solo con termómetro"], correct: 1 },
+    { topic: "🌦️ Definiciones", text: "¿Cuántos años de registros se necesitan como mínimo para determinar el clima de una región?", opts: ["5 años","15 años","30 años","100 años"], correct: 2 },
+    { topic: "🌦️ Definiciones", text: "Si alguien dice 'hoy hace calor', ¿se refiere al clima o al tiempo atmosférico?", opts: ["Clima","Tiempo atmosférico","Ambos","Ninguno"], correct: 1 },
+    // Elementos del clima (4-7)
+    { topic: "🌡️ Elementos", text: "¿Cuál de estos NO es un elemento del clima?", opts: ["Temperatura","Humedad","Latitud","Viento"], correct: 2 },
+    { topic: "🌡️ Elementos", text: "¿Qué mide la humedad atmosférica?", opts: ["La presión del aire","La cantidad de vapor de agua en el aire","La velocidad del viento","La temperatura del suelo"], correct: 1 },
+    { topic: "🌡️ Elementos", text: "¿Qué instrumento se utiliza para medir la presión atmosférica?", opts: ["Termómetro","Higrómetro","Barómetro","Pluviómetro"], correct: 2 },
+    { topic: "🌡️ Elementos", text: "¿En qué unidad se miden las precipitaciones?", opts: ["Grados Celsius (°C)","Hectopascales (hPa)","Milímetros (mm)","Kilómetros por hora (km/h)"], correct: 2 },
+    // Instrumentos de medición (8-10)
+    { topic: "🔬 Instrumentos", text: "El anemómetro es el instrumento que mide:", opts: ["La temperatura","La velocidad del viento","La humedad","La presión atmosférica"], correct: 1 },
+    { topic: "🔬 Instrumentos", text: "¿Qué instrumento se usa junto con la veleta para determinar la dirección del viento?", opts: ["Termómetro","Barómetro","Anemómetro","Higrómetro"], correct: 2 },
+    { topic: "🔬 Instrumentos", text: "¿Qué mide el altímetro?", opts: ["La altitud sobre el nivel del mar","La presión atmosférica","La temperatura del aire","La dirección del viento"], correct: 0 },
+    // Factores del clima (11-15)
+    { topic: "🗺️ Factores", text: "¿Cómo influye la latitud en el clima?", opts: ["A mayor altitud, menor temperatura","A mayor cercanía al ecuador, más calor","A mayor cercanía al mar, más extremo","Las montañas bloquean el viento"], correct: 1 },
+    { topic: "🗺️ Factores", text: "¿Qué ocurre con la temperatura a mayor altitud?", opts: ["Aumenta 0,6°C cada 100 metros","Disminuye aproximadamente 0,6°C cada 100 metros","No varía","Solo cambia la presión"], correct: 1 },
+    { topic: "🗺️ Factores", text: "¿Cómo afecta la cercanía al mar a las temperaturas?", opts: ["Las hace más extremas","Las suaviza (inviernos menos fríos, veranos menos calurosos)","No tiene efecto","Solo afecta la humedad"], correct: 1 },
+    { topic: "🗺️ Factores", text: "La corriente de Humboldt que bordea Chile y Perú es una corriente:", opts: ["Cálida","Fría","De aguas profundas","Superficial cálida"], correct: 1 },
+    { topic: "🗺️ Factores", text: "¿Qué fenómeno ocurre cuando una montaña bloquea los vientos húmedos, creando un lado lluvioso y otro seco?", opts: ["Efecto invernadero","Sombra orográfica","Corriente de chorro","Gradiente térmico"], correct: 1 },
+    // Tabla de climas (16-20)
+    { topic: "🌎 Tipos de clima", text: "¿Qué tipo de clima tiene precipitaciones muy escasas (menos de 250 mm/año)?", opts: ["Ecuatorial","Templado","Desértico","Mediterráneo"], correct: 2 },
+    { topic: "🌎 Tipos de clima", text: "¿Qué tipo de clima se caracteriza por temperaturas extremas (-10°C en invierno y 25°C en verano) y escasa humedad?", opts: ["Mediterráneo","Continental","Polar","Tropical"], correct: 1 },
+    { topic: "🌎 Tipos de clima", text: "¿Qué tipo de clima presenta veranos secos y calurosos e inviernos suaves y lluviosos?", opts: ["Ecuatorial","Templado","Mediterráneo","Desértico"], correct: 2 },
+    { topic: "🌎 Tipos de clima", text: "¿Dónde se encuentra típicamente el clima polar?", opts: ["En el ecuador","En latitudes altas (cerca de los polos)","En zonas costeras templadas","En alta montaña cerca del ecuador"], correct: 1 },
+    { topic: "🌎 Tipos de clima", text: "¿Qué tipo de clima tiene temperaturas siempre altas (25-27°C) y humedad muy alta (80-90%)?", opts: ["Tropical","Desértico","Ecuatorial","Polar"], correct: 2 },
+    // Evento 4.2 ka y colapsos (21-24)
+    { topic: "🏛️ Colapsos", text: "¿Qué ocurrió durante el 'Evento 4.2 ka' (hace 4.200 años)?", opts: ["Una era glacial","Una mega sequía global que afectó múltiples civilizaciones","Una gran inundación","El fin de la agricultura"], correct: 1 },
+    { topic: "🏛️ Colapsos", text: "¿Qué civilización NO colapsó durante el Evento 4.2 ka?", opts: ["Imperio Acadio (Mesopotamia)","Imperio Antiguo de Egipto","Civilización del Indo","Imperio Romano"], correct: 3 },
+    { topic: "🏛️ Colapsos", text: "¿Qué fenómeno climático provocó el abandono de ciudades mayas entre 800-1000 d.C.?", opts: ["Inundaciones","Sequías prolongadas","Huracanes","Erupciones volcánicas"], correct: 1 },
+    { topic: "🏛️ Colapsos", text: "¿Por qué los vikingos abandonaron Groenlandia durante la Pequeña Edad de Hielo?", opts: ["Por guerras","El mar se congeló impidiendo la navegación","Por plagas","Por terremotos"], correct: 1 },
+    // Civilizaciones fluviales (25-27)
+    { topic: "🏺 Civilizaciones", text: "¿Qué civilización aprovechó las crecidas del río Nilo para desarrollar un calendario agrícola de 365 días?", opts: ["Mesopotamia","Antiguo Egipto","Civilización del Indo","China"], correct: 1 },
+    { topic: "🏺 Civilizaciones", text: "¿En qué región se desarrolló la tríada mediterránea (trigo, vid, olivo) que permitió el auge de griegos y romanos?", opts: ["Clima desértico","Clima mediterráneo","Clima polar","Clima ecuatorial"], correct: 1 },
+    { topic: "🏺 Civilizaciones", text: "¿Qué civilización desarrolló sistemas de drenaje urbano y almacenamiento de agua para adaptarse al clima monzónico?", opts: ["Egipto","Mesopotamia","Civilización del Indo","Grecia"], correct: 2 },
+    // Pequeña Edad de Hielo (28-30)
+    { topic: "❄️ Pequeña Edad de Hielo", text: "¿Entre qué años aproximadamente ocurrió la Pequeña Edad de Hielo?", opts: ["500-800 d.C.","1000-1200 d.C.","1300-1850 d.C.","1900-2000 d.C."], correct: 2 },
+    { topic: "❄️ Pequeña Edad de Hielo", text: "¿Qué consecuencia directa tuvo la Pequeña Edad de Hielo en Europa?", opts: ["Aumento de la temperatura","Malas cosechas y hambrunas","Descubrimiento de América","Invasión de los hunos"], correct: 1 },
+    { topic: "❄️ Pequeña Edad de Hielo", text: "¿Qué fenómeno ocurrió en el río Támesis durante la Pequeña Edad de Hielo?", opts: ["Se secó por completo","Se congelaba y celebraban ferias de hielo","Cambió de curso","Se volvió navegable todo el año"], correct: 1 },
+    // Migraciones por clima (31-33)
+    { topic: "🚶 Migraciones", text: "¿Qué desastre climático provocó la Gran Hambruna Irlandesa (1845-1852) y la emigración masiva a EE.UU.?", opts: ["Sequía extrema","Un hongo que destruyó la papa favorecido por clima frío y húmedo","Inundaciones","Tormentas de nieve"], correct: 1 },
+    { topic: "🚶 Migraciones", text: "¿Qué fue el Dust Bowl (1930-1936) en Estados Unidos?", opts: ["Una inundación masiva","Sequía extrema + tormentas de polvo que causaron migración","Una erupción volcánica","Un terremoto"], correct: 1 },
+    { topic: "🚶 Migraciones", text: "¿Qué factor climático empujó a los hunos hacia Europa, desencadenando las invasiones bárbaras?", opts: ["Aumento de temperatura","Enfriamiento y sequías en las estepas de Asia Central","Inundaciones","Tifones"], correct: 1 },
+    // Adaptaciones humanas (34-36)
+    { topic: "🛠️ Adaptaciones", text: "¿Qué innovación utilizaron los incas para cultivar en las laderas de los Andes y evitar la erosión?", opts: ["Riego por goteo","Andenes o terrazas de cultivo","Invernaderos","Rotación de cultivos"], correct: 1 },
+    { topic: "🛠️ Adaptaciones", text: "¿Cómo se adaptaron los inuit (esquimales) al clima polar?", opts: ["Casas de madera y ropa de algodón","Igloos de nieve y ropa de piel de foca","Viviendas subterráneas","Casas flotantes"], correct: 1 },
+    { topic: "🛠️ Adaptaciones", text: "¿Qué invento holandés permitió bombear agua y ganar tierras al mar en un clima húmedo?", opts: ["Diques","Molinos de viento","Pólderes","Todas las anteriores"], correct: 3 },
+    // Conceptos clave (37-38)
+    { topic: "📖 Conceptos", text: "¿Qué son los factores del clima?", opts: ["Consecuencias del clima","Causas geográficas y astronómicas que modifican el clima","Instrumentos de medición","Tipos de clima"], correct: 1 },
+    { topic: "📖 Conceptos", text: "Según la tabla de climas, ¿qué clima tiene vientos catabáticos (fuertes que bajan por las laderas)?", opts: ["Templado","Mediterráneo","Polar","Desértico"], correct: 2 },
+    // Conclusión histórica (39-40)
+    { topic: "📜 Conclusión", text: "¿Qué frase resume mejor la influencia del clima en la historia?", opts: ["El clima determina absolutamente el destino","El clima es el escenario que crea oportunidades o dificultades","El clima no influye en absoluto","Solo el clima cálido permite civilizaciones"], correct: 1 },
+    { topic: "📜 Conclusión", text: "¿Qué lección histórica aprendemos sobre la adaptación al clima?", opts: ["Las sociedades más adaptables sobreviven mejor a los cambios climáticos","Todas las civilizaciones colapsan igual","El cambio climático no afecta a las sociedades","No hay lecciones que aprender"], correct: 0 }
+  ];
+
+  const TOTAL = ALL_QUESTIONS.length;
+  const TIME_LIMIT = 45 * 60;
+  let questions = [];
+  let currentQ = 0;
+  let answers = {};
+  let timerInterval = null;
+  let elapsed = 0;
+  let quizDone = false;
+
+  function shuffle(arr) {
+    const a = [...arr];
+    for (let i = a.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [a[i], a[j]] = [a[j], a[i]]; }
+    return a;
+  }
+  function shuffleOptions(questionsArray) {
+    return questionsArray.map(q => {
+      const optsWithIndex = q.opts.map((opt, idx) => ({ text: opt, isCorrect: idx === q.correct }));
+      for (let i = optsWithIndex.length - 1; i > 0; i--) { const j = Math.floor(Math.random()*(i+1)); [optsWithIndex[i], optsWithIndex[j]] = [optsWithIndex[j], optsWithIndex[i]]; }
+      const shuffledOpts = optsWithIndex.map(item => item.text);
+      const newCorrectIndex = optsWithIndex.findIndex(item => item.isCorrect === true);
+      return { ...q, opts: shuffledOpts, correct: newCorrectIndex };
+    });
+  }
+  function formatTime(sec) { const m = Math.floor(sec/60), s = sec%60; return `${String(m).padStart(2,'0')}:${String(s).padStart(2,'0')}`; }
+  function startTimer() {
+    elapsed = 0;
+    clearInterval(timerInterval);
+    timerInterval = setInterval(() => {
+      elapsed++;
+      const remaining = TIME_LIMIT - elapsed;
+      document.getElementById('timerDisplay').textContent = formatTime(remaining>=0?remaining:0);
+      const wrap = document.getElementById('timerWrap');
+      if (remaining <= 0) { clearInterval(timerInterval); document.getElementById('timerDisplay').textContent='00:00'; wrap.className='timer-wrap danger'; if(!quizDone) showResults(); }
+      else if (remaining <= 300) wrap.className = 'timer-wrap danger';
+      else if (remaining <= 600) wrap.className = 'timer-wrap warning';
+      else wrap.className = 'timer-wrap';
+    }, 1000);
+  }
+  function renderDots() {
+    const container = document.getElementById('qDots');
+    if(!container) return;
+    container.innerHTML = '';
+    questions.forEach((_,i) => {
+      const d = document.createElement('span');
+      d.className = 'dot' + (i===currentQ ? ' current' : answers[i]!==undefined ? ' answered' : '');
+      d.onclick = () => goTo(i);
+      container.appendChild(d);
+    });
+  }
+  function renderQuestion() {
+    const q = questions[currentQ];
+    const letters = ['A','B','C','D'];
+    const optsHtml = q.opts.map((opt,idx) => `<button class="option${answers[currentQ]===idx?' selected':''}" onclick="selectAnswer(${idx})"><span class="opt-letter">${letters[idx]}</span>${opt}</button>`).join('');
+    document.getElementById('questionCard').innerHTML = `<span class="q-topic">${q.topic}</span><div class="q-text">${q.text}</div><div class="options">${optsHtml}</div>`;
+    document.getElementById('qCounter').textContent = `Pregunta ${currentQ+1} de ${TOTAL}`;
+    document.getElementById('progressFill').style.width = `${((currentQ+1)/TOTAL)*100}%`;
+    document.getElementById('btnPrev').style.visibility = currentQ>0 ? 'visible' : 'hidden';
+    const nextBtn = document.getElementById('btnNext');
+    nextBtn.textContent = currentQ === TOTAL-1 ? '✅ Finalizar' : 'Siguiente ▶';
+    nextBtn.className = currentQ === TOTAL-1 ? 'btn btn-submit' : 'btn btn-next';
+    document.getElementById('warnMsg').classList.remove('show');
+    renderDots();
+  }
+  window.selectAnswer = function(idx) { answers[currentQ]=idx; renderQuestion(); };
+  function goTo(idx) { if(idx<0 || idx>=TOTAL) return; currentQ=idx; renderQuestion(); }
+  window.handleNext = function() {
+    if(currentQ === TOTAL-1) {
+      const unanswered = TOTAL - Object.keys(answers).length;
+      if(unanswered > 0) { const msg = document.getElementById('warnMsg'); msg.textContent = `⚠ Tienes ${unanswered} pregunta(s) sin responder. Responde todas antes de finalizar.`; msg.classList.add('show'); return; }
+      showResults();
+    } else goTo(currentQ+1);
+  };
+  function calcGrade(correct, total) { const p = correct/total; if(correct===total) return 7.0; if(p>=0.6) return +(4.0+((p-0.6)/0.4)*3.0).toFixed(1); return +(1.0+(p/0.6)*3.0).toFixed(1); }
+  function showResults() {
+    if(quizDone) return;
+    quizDone = true;
+    clearInterval(timerInterval);
+    let correct = 0;
+    questions.forEach((q,idx) => { if(answers[idx]===q.correct) correct++; });
+    const pct = Math.round((correct/TOTAL)*100);
+    const grade = calcGrade(correct, TOTAL);
+    const pass = pct >= 60;
+    document.getElementById('quizSection').style.display = 'none';
+    document.getElementById('resultsSection').style.display = 'block';
+    const gradeEl = document.getElementById('gradeDisplay');
+    gradeEl.textContent = grade.toFixed(1);
+    gradeEl.className = 'grade-num ' + (pass ? 'pass' : 'fail');
+    document.getElementById('gradeNote').textContent = `${correct} de ${TOTAL} correctas · Aprobación: 60% (24 correctas)`;
+    document.getElementById('sCorrect').textContent = correct;
+    document.getElementById('sWrong').textContent = TOTAL - correct;
+    document.getElementById('sPct').textContent = pct + '%';
+    document.getElementById('sTime').textContent = formatTime(elapsed);
+    const timeBadge = document.getElementById('timeBadge');
+    if(elapsed >= TIME_LIMIT) { timeBadge.className='time-badge slow'; timeBadge.textContent='⏰ Tiempo agotado'; }
+    else if(elapsed < 1500) { timeBadge.className='time-badge excellent'; timeBadge.textContent='⚡ Excelente velocidad'; }
+    else if(elapsed < 2700) { timeBadge.className='time-badge good'; timeBadge.textContent='✓ Buen tiempo'; }
+    else { timeBadge.className='time-badge slow'; timeBadge.textContent='🐢 Intenta responder más rápido la próxima vez'; }
+    document.getElementById('verdict').textContent = pass ? '✅ ¡Aprobado! Excelente comprensión de la materia.' : '❌ No aprobado. Revisa el material y vuelve a intentarlo.';
+    buildReviewList();
+    window.scrollTo({ top: 0, behavior:'smooth' });
+  }
+  function buildReviewList() {
+    const container = document.getElementById('reviewList');
+    container.innerHTML = '';
+    questions.forEach((q,i) => {
+      const user = answers[i];
+      const isCorrect = user === q.correct;
+      const div = document.createElement('div');
+      div.className = `review-item ${isCorrect ? 'r-correct' : 'r-wrong'}`;
+      let row = '';
+      if(user === undefined) row = `<span class="r-tag not-ans">❌ No respondida</span><span class="r-tag correct-ans">✓ Correcta: ${q.opts[q.correct]}</span>`;
+      else if(isCorrect) row = `<span class="r-tag user-correct">✓ Tu respuesta: ${q.opts[user]}</span>`;
+      else row = `<span class="r-tag user-wrong">✗ Tu respuesta: ${q.opts[user]}</span><span class="r-tag correct-ans">✓ Correcta: ${q.opts[q.correct]}</span>`;
+      div.innerHTML = `<div class="r-qtext"><strong>${i+1}.</strong> ${q.text}</div><div class="r-answer-row" style="margin-top:10px;">${row}</div>`;
+      container.appendChild(div);
+    });
+  }
+  window.toggleReview = function() { const list = document.getElementById('reviewList'); list.style.display = list.style.display === 'block' ? 'none' : 'block'; };
+  window.resetQuiz = function() {
+    quizDone = false; answers = {}; currentQ = 0;
+    let shuffledQuestions = shuffle(ALL_QUESTIONS);
+    questions = shuffleOptions(shuffledQuestions);
+    document.getElementById('resultsSection').style.display = 'none';
+    document.getElementById('quizSection').style.display = 'block';
+    document.getElementById('timerDisplay').textContent = formatTime(TIME_LIMIT);
+    document.getElementById('timerWrap').className = 'timer-wrap';
+    startTimer(); renderQuestion();
+    window.scrollTo({ top:0 });
+  };
+  window.onload = () => {
+    let shuffled = shuffle(ALL_QUESTIONS);
+    questions = shuffleOptions(shuffled);
+    startTimer();
+    renderQuestion();
+    document.getElementById('btnPrev').onclick = () => goTo(currentQ-1);
+    document.getElementById('btnNext').onclick = () => handleNext();
+  };
+</script>
+</body>
+</html>

@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Clima y Tiempo Atmosférico · Historia 7° Básico</title>
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Literata:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: #eef2f5;
+      font-family: 'Syne', sans-serif;
+      color: #1a2a3a;
+    }
+
+    /* HEADER */
+    .app-header {
+      background: #1a5f7a;
+      padding: 0 28px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      position: sticky;
+      top: 0;
+      z-index: 200;
+      flex-wrap: wrap;
+    }
+
+    .app-header h1 {
+      font-size: 1rem;
+      font-weight: 600;
+      color: #e0f0f5;
+      letter-spacing: 0.5px;
+    }
+
+    .app-header h1 em {
+      color: #f4c542;
+      font-style: normal;
+    }
+
+    .header-buttons {
+      display: flex;
+      gap: 12px;
+    }
+
+    .btn-exercise {
+      background: #f4c542;
+      border: none;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      padding: 8px 18px;
+      border-radius: 40px;
+      font-size: 0.85rem;
+      color: #1a2a3a;
+      cursor: pointer;
+      transition: all 0.2s;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .btn-exercise:hover {
+      background: #ffd966;
+      transform: translateY(-2px);
+    }
+
+    .btn-back {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: transparent;
+      border: 2px solid #f4c542;
+      font-family: 'Syne', sans-serif;
+      font-weight: 700;
+      font-size: 0.85rem;
+      padding: 8px 20px;
+      border-radius: 40px;
+      color: #f4c542;
+      text-decoration: none;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .btn-back:hover {
+      background: #f4c542;
+      color: #1a5f7a;
+      transform: translateY(-2px);
+    }
+
+    /* HERO */
+    .hero {
+      background: linear-gradient(135deg, #2c7a5e 0%, #1a5f7a 100%);
+      padding: 48px 24px;
+      text-align: center;
+      color: white;
+    }
+
+    .hero h2 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.5px;
+    }
+
+    .hero p {
+      font-family: 'Literata', serif;
+      max-width: 700px;
+      margin: 16px auto 0;
+      opacity: 0.9;
+    }
+
+    .container {
+      max-width: 1280px;
+      margin: 40px auto;
+      padding: 0 24px;
+    }
+
+    /* Tarjetas de elementos del clima */
+    .grid-elementos {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+      margin-bottom: 48px;
+    }
+
+    .card-elemento {
+      background: white;
+      border-radius: 24px;
+      padding: 20px;
+      text-align: center;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+      transition: transform 0.2s;
+      border-bottom: 4px solid #f4c542;
+    }
+
+    .card-elemento:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-elemento .emoji {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+    }
+
+    .card-elemento h3 {
+      font-size: 1.3rem;
+      margin-bottom: 8px;
+      color: #1a5f7a;
+    }
+
+    .card-elemento p {
+      font-size: 0.85rem;
+      font-family: 'Literata', serif;
+      color: #3a5a6a;
+    }
+
+    /* Tablas */
+    .tabla-container {
+      background: white;
+      border-radius: 28px;
+      overflow-x: auto;
+      margin: 32px 0;
+      box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.85rem;
+    }
+
+    th {
+      background: #1a5f7a;
+      color: white;
+      padding: 14px 12px;
+      font-weight: 600;
+    }
+
+    td {
+      padding: 12px;
+      border-bottom: 1px solid #dce5ec;
+      font-family: 'Literata', serif;
+    }
+
+    tr:hover {
+      background: #fef9e6;
+    }
+
+    /* Secciones temáticas */
+    .section-card {
+      background: white;
+      border-radius: 28px;
+      padding: 28px 32px;
+      margin: 32px 0;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.05);
+    }
+
+    .section-card h3 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: #1a5f7a;
+      margin-bottom: 20px;
+      border-left: 5px solid #f4c542;
+      padding-left: 18px;
+    }
+
+    .section-card h4 {
+      font-size: 1.2rem;
+      font-weight: 600;
+      color: #2c7a5e;
+      margin: 20px 0 12px 0;
+    }
+
+    .factores-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px;
+      margin: 20px 0;
+    }
+
+    .factor-item {
+      background: #f5f8fa;
+      border-radius: 20px;
+      padding: 18px;
+      border-left: 4px solid #f4c542;
+    }
+
+    .factor-item strong {
+      color: #1a5f7a;
+      font-size: 1rem;
+    }
+
+    .instrumentos-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 15px;
+      margin: 20px 0;
+    }
+
+    .instrumento {
+      background: #fef9e6;
+      border-radius: 16px;
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .instrumento .icono {
+      font-size: 1.8rem;
+    }
+
+    .timeline-ejemplo {
+      background: #eef2f5;
+      border-radius: 20px;
+      padding: 20px;
+      margin: 15px 0;
+    }
+
+    footer {
+      background: #1a5f7a;
+      color: #c8dce5;
+      text-align: center;
+      padding: 28px;
+      margin-top: 60px;
+      font-size: 0.8rem;
+    }
+
+    @media (max-width: 780px) {
+      .app-header {
+        height: auto;
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+        padding: 16px;
+      }
+      .hero h2 { font-size: 1.6rem; }
+      .container { padding: 0 16px; }
+      .section-card { padding: 20px; }
+      th, td { padding: 8px; font-size: 0.75rem; }
+    }
+  </style>
+</head>
+<body>
+
+<header class="app-header">
+  <h1>🌍 <em>Clima vs. Tiempo Atmosférico</em> · Historia 7° Básico</h1>
+  <div class="header-buttons">
+    <a href="Historia.html" class="btn-back">← Volver al inicio</a>
+    <a href="C_1A_Historia.html" class="btn-exercise">📝 EJERCICIOS →</a>
+  </div>
+</header>
+
+<section class="hero">
+  <h2>🌦️ El clima que cambió la historia</h2>
+  <p>Aprende a diferenciar clima y tiempo atmosférico, conoce los elementos, factores, instrumentos de medición y descubre cómo el clima determinó el destino de las civilizaciones.</p>
+</section>
+
+<div class="container">
+  
+  <!-- Definiciones clave -->
+  <div class="section-card">
+    <h3>📖 Definiciones clave</h3>
+    <p style="font-size: 1.1rem; margin-bottom: 20px;"><strong>Tiempo atmosférico:</strong> Estado de la atmósfera en un lugar y momento específico (ej. "hoy está lloviendo"). Es variable y de corta duración.</p>
+    <p style="font-size: 1.1rem;"><strong>Clima:</strong> Promedio de las condiciones atmosféricas registradas durante al menos 30 años en una región. Es estable y de larga duración.</p>
+  </div>
+
+  <!-- Elementos del clima (tarjetas) -->
+  <div class="section-card">
+    <h3>🌡️ Elementos del clima</h3>
+    <div class="grid-elementos">
+      <div class="card-elemento"><div class="emoji">🌡️</div><h3>Temperatura</h3><p>Calor o frío del aire, medido en °C.</p></div>
+      <div class="card-elemento"><div class="emoji">💧</div><h3>Humedad</h3><p>Cantidad de vapor de agua en el aire.</p></div>
+      <div class="card-elemento"><div class="emoji">📊</div><h3>Presión atmosférica</h3><p>Peso del aire sobre la superficie.</p></div>
+      <div class="card-elemento"><div class="emoji">💨</div><h3>Viento</h3><p>Aire en movimiento (velocidad y dirección).</p></div>
+      <div class="card-elemento"><div class="emoji">☔</div><h3>Precipitaciones</h3><p>Lluvia, nieve o granizo.</p></div>
+    </div>
+  </div>
+
+  <!-- Instrumentos de medición -->
+  <div class="section-card">
+    <h3>🔬 ¿Cómo se miden los elementos del clima?</h3>
+    <div class="instrumentos-grid">
+      <div class="instrumento"><span class="icono">🌡️</span><span><strong>Termómetro:</strong> Temperatura (°C)</span></div>
+      <div class="instrumento"><span class="icono">💧📊</span><span><strong>Higrómetro:</strong> Humedad (%)</span></div>
+      <div class="instrumento"><span class="icono">📊</span><span><strong>Barómetro:</strong> Presión (hPa)</span></div>
+      <div class="instrumento"><span class="icono">💨🧭</span><span><strong>Anemómetro+Veleta:</strong> Velocidad y dirección del viento</span></div>
+      <div class="instrumento"><span class="icono">☔📏</span><span><strong>Pluviómetro:</strong> Precipitaciones (mm)</span></div>
+      <div class="instrumento"><span class="icono">⛰️</span><span><strong>Altímetro:</strong> Altitud (metros)</span></div>
+    </div>
+  </div>
+
+  <!-- Tabla comparativa de tipos de climas -->
+  <div class="section-card">
+    <h3>🌎 Tabla comparativa de tipos de climas</h3>
+    <div class="tabla-container">
+      <table>
+        <thead>
+          <tr><th>Tipo de clima</th><th>Temperatura</th><th>Humedad</th><th>Presión</th><th>Vientos</th><th>Precipitaciones</th></tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Ecuatorial</strong></td><td>Alta (25-27°C)</td><td>Muy alta (80-90%)</td><td>Baja</td><td>Débiles</td><td>Muy abundantes (2000-4000 mm/año)</td></tr>
+          <tr><td><strong>Tropical</strong></td><td>Alta (20-25°C)</td><td>Alta (70-80%)</td><td>Baja a moderada</td><td>Monzones y alisios</td><td>500-2000 mm/año</td></tr>
+          <tr><td><strong>Templado</strong></td><td>Moderada (10-20°C)</td><td>Media (50-70%)</td><td>Variable</td><td>Vientos del oeste</td><td>500-1500 mm/año</td></tr>
+          <tr><td><strong>Mediterráneo</strong></td><td>Templado (10-25°C)</td><td>Media (60-70%)</td><td>Alta en verano</td><td>Brisas costeras</td><td>300-800 mm/año</td></tr>
+          <tr><td><strong>Continental</strong></td><td>Extremos (-10 a 25°C)</td><td>Baja-media (40-60%)</td><td>Alta</td><td>Vientos fuertes y secos</td><td>300-700 mm/año</td></tr>
+          <tr><td><strong>Desértico</strong></td><td>Extremos (0 a 45°C)</td><td>Muy baja (10-30%)</td><td>Alta</td><td>Constantes (ej. siroco)</td><td>Muy escasas (<250 mm/año)</td></tr>
+          <tr><td><strong>Polar</strong></td><td>Muy baja (-30 a -50°C)</td><td>Muy baja (20-40%)</td><td>Variable</td><td>Catabáticos</td><td>Nieve (<250 mm/año)</td></tr>
+          <tr><td><strong>Alta montaña</strong></td><td>Baja (disminuye con altura)</td><td>Variable</td><td>Baja</td><td>Locales fuertes</td><td>Nieve o lluvia según altura</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Factores del clima (ampliado) -->
+  <div class="section-card">
+    <h3>🗺️ Factores del clima (causas que modifican el clima)</h3>
+    <div class="factores-grid">
+      <div class="factor-item"><strong>📍 Latitud:</strong> A mayor cercanía al ecuador, más calor. A mayor cercanía a los polos, más frío. Se mide con GPS o sextante.</div>
+      <div class="factor-item"><strong>⛰️ Altitud:</strong> Por cada 100 m suben, la temperatura baja 0,6°C. Se mide con altímetro topográfico.</div>
+      <div class="factor-item"><strong>🌊 Cercanía al mar:</strong> El mar suaviza temperaturas (inviernos menos fríos, veranos menos calurosos). Se mide con mapas de distancia lineal.</div>
+      <div class="factor-item"><strong>🌊 Corrientes marinas:</strong> Transportan calor o frío. Ej: Humboldt (fría) → desierto de Atacama. Se miden con boyas oceanográficas y satélites.</div>
+      <div class="factor-item"><strong>🏔️ Relieve y orientación:</strong> Las montañas bloquean vientos húmedos: ladera de barlovento (lluvias) y sotavento (seco). Se mide con modelos de elevación (DEM).</div>
+      <div class="factor-item"><strong>🌿 Continentalidad:</strong> Lejos del mar, temperaturas extremas por falta de regulación. Se calcula con índices de amplitud térmica.</div>
+    </div>
+  </div>
+
+  <!-- Influencia del clima en la historia (sección extensa) -->
+  <div class="section-card">
+    <h3>🏛️ Influencia del clima en la historia</h3>
+    
+    <h4>🌾 Neolítico (10.000 a.C.) – Nacimiento de la agricultura</h4>
+    <p>El fin de la última glaciación y el aumento de temperatura permitieron el cultivo de cereales en el Creciente Fértil (trigo, cebada), dando origen a las primeras aldeas agrícolas como Jericó.</p>
+    
+    <h4>🏺 Civilizaciones fluviales y climas extremos</h4>
+    <div class="tabla-container">
+      <table>
+        <thead><tr><th>Civilización</th><th>Clima</th><th>Adaptación</th></tr></thead>
+        <tbody>
+          <tr><td>Antiguo Egipto</td><td>Desértico</td><td>Crecidas del Nilo → calendario agrícola de 365 días</td></tr>
+          <tr><td>Mesopotamia</td><td>Árido con lluvias cortas</td><td>Canales de riego, Código de Hammurabi sobre agua</td></tr>
+          <tr><td>Civilización del Indo</td><td>Monzónico</td><td>Drenaje urbano, almacenamiento de agua</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h4>🏛️ Clima mediterráneo y expansión grecorromana</h4>
+    <p>El clima templado y estable permitió la tríada mediterránea (trigo, vid, olivo) y la navegación segura. El Mediterráneo se convirtió en una "autopista líquida" para griegos y romanos.</p>
+
+    <h4>⚠️ Clima y colapso de civilizaciones</h4>
+    <div class="timeline-ejemplo">
+      <p><strong>Evento 4.2 ka (hace 4.200 años):</strong> Una mega sequía global afectó simultáneamente al Imperio Acadio (Mesopotamia), el Imperio Antiguo de Egipto y la civilización del Indo. Todos colapsaron por hambruna.</p>
+      <p><strong>Maya (800-1000 d.C.):</strong> Sequías prolongadas por más de un siglo → abandono de ciudades.</p>
+      <p><strong>Vikingos en Groenlandia:</strong> La Pequeña Edad de Hielo (1350-1450) congeló los mares, impidiendo la navegación → abandono total.</p>
+    </div>
+
+    <h4>❄️ La Pequeña Edad de Hielo (1300-1850 d.C.)</h4>
+    <p>Inviernos extremos, glaciares avanzando y malas cosechas causaron hambrunas (Gran Hambruna de 1315-1317), contribuyeron a la Peste Negra, y la Revolución Francesa (1788: lluvias torrenciales destruyeron cosechas).</p>
+
+    <h4>🚶 Migraciones históricas por clima</h4>
+    <ul style="margin: 15px 0 0 25px; font-family: 'Literata', serif;">
+      <li><strong>Invasiones bárbaras (300-500 d.C.):</strong> Enfriamiento en las estepas empujó a los hunos hacia el oeste, desplazando a godos y vándalos.</li>
+      <li><strong>Gran hambruna irlandesa (1845-1852):</strong> Clima frío y húmedo favoreció un hongo que destruyó la papa → 1 millón de muertos y 1,5 millones emigraron a EE.UU.</li>
+      <li><strong>Dust Bowl (1930-1936):</strong> Sequía extrema + malas prácticas agrícolas → tormentas de polvo → migración masiva a California.</li>
+    </ul>
+
+    <h4>🛠️ Adaptaciones humanas al clima</h4>
+    <div class="factores-grid">
+      <div class="factor-item"><strong>Incas (altura):</strong> Andenes para cultivo en montañas y papa resistente al frío.</div>
+      <div class="factor-item"><strong>Árabes (desierto):</strong> Tiendas de pelo de cabra y rutas de caravanas con pozos.</div>
+      <div class="factor-item"><strong>Inuit (polar):</strong> Igloos de nieve que aíslan, ropa de piel de foca.</div>
+      <div class="factor-item"><strong>Holandeses (humedad):</strong> Molinos de viento para bombear agua y diques.</div>
+    </div>
+
+    <div style="background: #eef2f5; border-radius: 20px; padding: 20px; margin-top: 25px;">
+      <p style="font-weight: 600; font-size: 1rem;">📜 Conclusión histórica:</p>
+      <p style="font-family: 'Literata', serif;">El clima no determina el destino de forma absoluta, pero sí crea oportunidades o dificultades. Las sociedades más adaptables (ingeniería hidráulica, almacenamiento de alimentos, cooperación) sobrevivieron. <em>"El clima no es el destino, pero es el escenario sobre el cual se escribe la obra de la historia humana."</em></p>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <p>🌍 Clima vs. Tiempo Atmosférico · Material didáctico para 7° Básico · Asignatura: Historia, Geografía y Ciencias Sociales</p>
+  <p style="margin-top: 8px;">Factores del clima | Elementos | Tabla comparativa | Influencia climática en civilizaciones | Adaptación humana</p>
+</footer>
+
+</body>
+</html>
