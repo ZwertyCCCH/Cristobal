@@ -1,0 +1,667 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Sistema Inmune | Ciencias Naturales 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica', sans-serif;
+            background: #f0f4f0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fefdf9;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #d0dfc0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #4caf50;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #2a6b3c;
+        }
+
+        .subtitle {
+            color: #3e8a5e;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #e8f5e9;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #c8e6c9;
+            color: #2a5a2a;
+        }
+
+        .section {
+            background: #fefffc;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #66bb6a;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #2a6b3c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefdf9;
+            border-radius: 1rem;
+            border: 1px solid #e0e8dc;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #2a4a32;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(76, 175, 80, 0.1);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #4caf50;
+        }
+
+        .match-table, .truefalse-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .match-table th, .match-table td,
+        .truefalse-table th, .truefalse-table td {
+            border: 1px solid #c8e0c0;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .match-table th, .truefalse-table th {
+            background: #dcedc8;
+            color: #2a6b3c;
+            font-weight: 600;
+        }
+
+        select {
+            background: #fefffc;
+            color: #2a4a32;
+            border: 1px solid #c8e0c0;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #2a6b3c;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #4caf50;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #e8f5e9;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #66bb6a;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #2a4a32;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #c8e6c9;
+            color: #2d6a2d;
+            border: 1px solid #66bb6a;
+        }
+
+        .failed {
+            background: #ffcdd2;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #c8e0c0;
+            color: #2a5a2a;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #aacf9e;
+            color: #1a3a1a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #8aaa7a;
+        }
+
+        .correct-row {
+            background: rgba(76, 175, 80, 0.12);
+        }
+
+        .incorrect-row {
+            background: rgba(200, 90, 70, 0.1);
+        }
+
+        .tf-correct {
+            color: #2d6a2d;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #b33;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 Ejercicios: Sistema Inmune</h1>
+        <div class="subtitle">Lección 7 - ¿Cómo se defiende nuestro cuerpo?</div>
+        <div class="subtitle">7° Básico | Ciencias Naturales (Texto SM Chile)</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (15) + Relación de Columnas (15) + Verdadero/Falso (15)</div>
+        <div>✅ Exigencia: 60% | Nota máxima: 7.0</div>
+        <div>🔄 Cada vez que reinicies, las preguntas se renuevan aleatoriamente desde un banco de 50 por sección.</div>
+    </div>
+
+    <div id="examContent">
+        <!-- SECCIÓN I: SELECCIÓN MÚLTIPLE -->
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple</div>
+            <p>Selecciona la opción correcta para cada pregunta.</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <!-- SECCIÓN II: RELACIÓN DE COLUMNAS -->
+        <div class="section">
+            <div class="section-title">🔗 II. Relación de Columnas</div>
+            <p>Elige el término que mejor corresponde a cada descripción.</p>
+            <table class="match-table" id="matchTable">
+                <thead><tr><th style="width:65%">Descripción</th><th style="width:35%">Término</th></tr></thead>
+                <tbody id="matchBody"></tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN III: VERDADERO O FALSO -->
+        <div class="section">
+            <div class="section-title">⚖️ III. Verdadero o Falso</div>
+            <p>Selecciona Verdadero (V) o Falso (F) para cada afirmación.</p>
+            <table class="truefalse-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Ciencias Naturales 7° Básico | Unidad 3: Sistema Inmune</div>
+</div>
+
+<script>
+    // ==================== POOL DE PREGUNTAS (50 por cada sección) ====================
+    
+    // ----- Banco de Selección Múltiple (Sistema inmune, barreras, vacunas, alteraciones)
+    const bankMultipleChoice = [
+        { text: "¿Qué células son las principales responsables de la producción de anticuerpos?", options: ["a. Linfocitos T citotóxicos", "b. Linfocitos B", "c. Neutrófilos", "d. Macrófagos"], correct: "b" },
+        { text: "¿Cuál de los siguientes es un órgano del sistema inmune donde maduran los linfocitos T?", options: ["a. Médula ósea", "b. Bazo", "c. Timo", "d. Ganglio linfático"], correct: "c" },
+        { text: "¿Qué barrera defensiva corresponde a la primera línea de defensa?", options: ["a. Inmunidad adaptativa", "b. Barrera terciaria", "c. Barreras primarias (piel y mucosas)", "d. Linfocitos B"], correct: "c" },
+        { text: "¿Qué tipo de inmunidad es la que se adquiere después de una infección o vacunación?", options: ["a. Innata", "b. Adaptativa", "c. Pasiva natural", "d. Inflamatoria"], correct: "b" },
+        { text: "¿Qué células fagocitan patógenos y actúan como células presentadoras de antígenos?", options: ["a. Neutrófilos", "b. Linfocitos B", "c. Macrófagos", "d. Eosinófilos"], correct: "c" },
+        { text: "¿Qué moléculas producidas por los linfocitos B se unen específicamente a los antígenos?", options: ["a. Citocinas", "b. Anticuerpos", "c. Histamina", "d. Perforinas"], correct: "b" },
+        { text: "¿Qué tipo de linfocitos destruyen células infectadas por virus?", options: ["a. Linfocitos B", "b. Linfocitos T colaboradores", "c. Linfocitos T citotóxicos", "d. Macrófagos"], correct: "c" },
+        { text: "¿Cuál es la función principal de las vacunas?", options: ["a. Curar enfermedades ya establecidas", "b. Generar memoria inmunológica sin causar enfermedad", "c. Activar solo la respuesta inflamatoria", "d. Eliminar bacterias del cuerpo"], correct: "b" },
+        { text: "¿Qué sustancia liberan los mastocitos durante una reacción alérgica?", options: ["a. Anticuerpos", "b. Histamina", "c. Lisozimas", "d. Interferón"], correct: "b" },
+        { text: "¿Qué virus ataca específicamente a los linfocitos T colaboradores (CD4+)?", options: ["a. Virus del sarampión", "b. Virus de la influenza", "c. VIH (Virus de Inmunodeficiencia Humana)", "d. Virus del papiloma humano"], correct: "c" },
+        { text: "¿Qué células son responsables de la memoria inmunológica?", options: ["a. Neutrófilos", "b. Linfocitos de memoria (B y T)", "c. Macrófagos", "d. Células plasmáticas"], correct: "b" },
+        { text: "¿Qué barrera defensiva incluye la piel y las mucosas?", options: ["a. Barrera secundaria", "b. Barrera terciaria", "c. Barrera primaria", "d. Inmunidad adaptativa"], correct: "c" },
+        { text: "¿Qué proteínas del sistema de complemento ayudan a destruir patógenos?", options: ["a. Anticuerpos", "b. Enzimas digestivas", "c. Proteínas del complemento", "d. Histamina"], correct: "c" },
+        { text: "¿Qué tipo de inmunidad se transfiere de madre a hijo a través de la leche materna?", options: ["a. Activa natural", "b. Pasiva natural", "c. Activa artificial", "d. Pasiva artificial"], correct: "b" },
+        { text: "¿Qué enfermedad autoinmune afecta las articulaciones causando dolor e inflamación?", options: ["a. Esclerosis múltiple", "b. Lupus", "c. Artritis reumatoide", "d. Diabetes tipo 1"], correct: "c" },
+        { text: "¿Dónde se producen los leucocitos (glóbulos blancos)?", options: ["a. Timo", "b. Bazo", "c. Médula ósea", "d. Ganglios linfáticos"], correct: "c" },
+        { text: "¿Qué órgano almacena linfocitos y filtra la sangre?", options: ["a. Timo", "b. Bazo", "c. Médula ósea", "d. Amígdalas"], correct: "b" },
+        { text: "¿Qué tipo de respuesta inmune actúa rápidamente pero no es específica?", options: ["a. Adaptativa", "b. Humoral", "c. Innata", "d. Celular"], correct: "c" },
+        { text: "¿Qué células secretan grandes cantidades de anticuerpos?", options: ["a. Linfocitos T colaboradores", "b. Células plasmáticas", "c. Macrófagos", "d. Neutrófilos"], correct: "b" },
+        { text: "¿Qué fenómeno explica que al reexponernos a un patógeno la respuesta sea más rápida y potente?", options: ["a. Inflamación", "b. Fiebre", "c. Memoria inmunológica", "d. Fagocitosis"], correct: "c" },
+        { text: "¿Cuál es el principal agente causal del sida?", options: ["a. Bacteria Mycobacterium tuberculosis", "b. Hongo Candida albicans", "c. Virus VIH", "d. Protozoo Toxoplasma gondii"], correct: "c" },
+        { text: "¿Qué nombre reciben las proteínas liberadas por linfocitos T citotóxicos para inducir apoptosis?", options: ["a. Anticuerpos", "b. Histamina", "c. Perforinas y granzimas", "d. Lisozimas"], correct: "c" },
+        { text: "¿Qué células presentan fragmentos de antígenos a los linfocitos T colaboradores?", options: ["a. Neutrófilos", "b. Células presentadoras de antígeno (macrófagos, dendríticas)", "c. Linfocitos B", "d. Eosinófilos"], correct: "b" },
+        { text: "¿Qué medicamento combate infecciones bacterianas?", options: ["a. Antiviral", "b. Antimicótico", "c. Antibiótico", "d. Antihistamínico"], correct: "c" },
+        { text: "¿Qué secreta la piel que tiene acción antibacteriana?", options: ["a. Moco", "b. Lisozimas", "c. Histamina", "d. Perforinas"], correct: "b" },
+        { text: "¿Qué tipo de hipersensibilidad se manifiesta como urticaria, estornudos y picazón?", options: ["a. Autoinmune", "b. Alergia", "c. Inmunodeficiencia", "d. Rechazo a trasplante"], correct: "b" },
+        { text: "¿Qué bacteria forma parte de la microbiota cutánea?", options: ["a. Mycobacterium tuberculosis", "b. Staphylococcus epidermidis", "c. Escherichia coli", "d. Chlamydia trachomatis"], correct: "b" },
+        { text: "¿Qué ocurre durante la fase de inflamación?", options: ["a. Disminuye el flujo sanguíneo", "b. Se produce vasodilatación y llegada de células defensivas", "c. Disminuye la temperatura", "d. Se inhibe la fagocitosis"], correct: "b" },
+        { text: "¿Qué tipo de inmunidad se obtiene al recibir anticuerpos de forma externa (ej. suero)?", options: ["a. Activa natural", "b. Activa artificial", "c. Pasiva artificial", "d. Innata"], correct: "c" },
+        { text: "¿Qué enfermedad autoinmune destruye las células beta del páncreas?", options: ["a. Artritis reumatoide", "b. Esclerosis múltiple", "c. Diabetes tipo 1", "d. Lupus"], correct: "c" },
+        { text: "¿Qué estructura de la mucosa respiratoria atrapa patógenos?", options: ["a. Cilios", "b. Moco", "c. Lisozimas", "d. Anticuerpos"], correct: "b" },
+        { text: "¿Qué tipo de células eliminan parásitos multicelulares?", options: ["a. Neutrófilos", "b. Eosinófilos", "c. Macrófagos", "d. Linfocitos B"], correct: "b" },
+        { text: "¿Qué nombre recibe la capacidad del sistema inmune de recordar antígenos?", options: ["a. Tolerancia", "b. Memoria inmunológica", "c. Especificidad", "d. Autoinmunidad"], correct: "b" },
+        { text: "¿Qué órgano produce linfopoyetina y es donde maduran los linfocitos B?", options: ["a. Timo", "b. Médula ósea", "c. Bazo", "d. Amígdalas"], correct: "b" },
+        { text: "¿Qué sustancia liberan los linfocitos T colaboradores para activar otras células?", options: ["a. Anticuerpos", "b. Citocinas (interleuquinas)", "c. Histamina", "d. Perforinas"], correct: "b" },
+        { text: "¿Qué barrera defensiva incluye la respuesta inflamatoria?", options: ["a. Primaria", "b. Secundaria", "c. Terciaria", "d. Humoral"], correct: "b" },
+        { text: "¿Qué virus causa el herpes genital?", options: ["a. VIH", "b. VPH", "c. Virus herpes simple", "d. Virus influenza"], correct: "c" },
+        { text: "¿Qué células fagocitan bacterias y son las más abundantes en la sangre?", options: ["a. Macrófagos", "b. Neutrófilos", "c. Linfocitos B", "d. Eosinófilos"], correct: "b" },
+        { text: "¿Qué tipo de inmunidad se desarrolla después de una infección natural?", options: ["a. Pasiva artificial", "b. Activa natural", "c. Pasiva natural", "d. Innata"], correct: "b" },
+        { text: "¿Qué estructura permite que los linfocitos T citotóxicos reconozcan células infectadas?", options: ["a. Anticuerpos", "b. Receptores de células T (TCR)", "c. Histamina", "d. Lisozimas"], correct: "b" },
+        { text: "¿Qué enfermedad autoinmune afecta la vaina de mielina de las neuronas?", options: ["a. Lupus", "b. Artritis reumatoide", "c. Esclerosis múltiple", "d. Diabetes tipo 1"], correct: "c" },
+        { text: "¿Qué grupo de microorganismos son los responsables de la microbiota intestinal beneficiosa?", options: ["a. Virus", "b. Bacterias", "c. Protozoos", "d. Hongos patógenos"], correct: "b" },
+        { text: "¿Qué ocurre cuando una persona es alérgica al polen?", options: ["a. Produce anticuerpos IgM", "b. Produce anticuerpos IgE contra el polen", "c. No produce anticuerpos", "d. Se activa la inmunidad celular exclusivamente"], correct: "b" },
+        { text: "¿Qué células son las responsables del rechazo a trasplantes?", options: ["a. Linfocitos B", "b. Linfocitos T", "c. Neutrófilos", "d. Macrófagos"], correct: "b" },
+        { text: "¿Qué tratamiento se usa para reducir el riesgo de rechazo en trasplantes?", options: ["a. Antibióticos", "b. Antivirales", "c. Inmunosupresores", "d. Antihistamínicos"], correct: "c" },
+        { text: "¿Qué microorganismo causa la candidiasis?", options: ["a. Bacteria", "b. Hongo Candida albicans", "c. Virus", "d. Protozoo"], correct: "b" },
+        { text: "¿Qué función tienen los ganglios linfáticos?", options: ["a. Producir anticuerpos", "b. Filtrar la linfa y albergar células inmunitarias", "c. Producir glóbulos rojos", "d. Regular la temperatura"], correct: "b" },
+        { text: "¿Qué tipo de respuesta inmune está mediada por linfocitos T?", options: ["a. Humoral", "b. Celular", "c. Innata", "d. Inflamatoria"], correct: "b" },
+        { text: "¿Qué nombre reciben las proteínas que forman poros en la membrana de células infectadas?", options: ["a. Anticuerpos", "b. Perforinas", "c. Granzimas", "d. Histaminas"], correct: "b" }
+    ];
+
+    // ----- Banco Relación de Columnas (50 items)
+    const bankMatch = [
+        { description: "Célula que produce anticuerpos.", correct: "Linfocito B" },
+        { description: "Órgano donde maduran los linfocitos T.", correct: "Timo" },
+        { description: "Barrera defensiva que incluye piel y mucosas.", correct: "Barrera primaria" },
+        { description: "Proteínas que se unen específicamente a antígenos.", correct: "Anticuerpos" },
+        { description: "Célula que fagocita patógenos y presenta antígenos.", correct: "Macrófago" },
+        { description: "Respuesta inmune rápida e inespecífica.", correct: "Inmunidad innata" },
+        { description: "Virus que ataca los linfocitos T CD4+.", correct: "VIH" },
+        { description: "Linfocito que destruye células infectadas por virus.", correct: "Linfocito T citotóxico" },
+        { description: "Sustancia liberada por mastocitos en alergias.", correct: "Histamina" },
+        { description: "Preparación que genera memoria inmunológica sin causar enfermedad.", correct: "Vacuna" },
+        { description: "Células que secretan grandes cantidades de anticuerpos.", correct: "Células plasmáticas" },
+        { description: "Linfocito que ayuda a activar otras células inmunitarias.", correct: "Linfocito T colaborador" },
+        { description: "Enfermedad autoinmune que afecta articulaciones.", correct: "Artritis reumatoide" },
+        { description: "Órgano donde se producen los leucocitos.", correct: "Médula ósea" },
+        { description: "Capacidad del sistema inmune de recordar antígenos.", correct: "Memoria inmunológica" },
+        { description: "Enfermedad causada por el VIH en etapa avanzada.", correct: "Sida" },
+        { description: "Barrera defensiva que incluye fagocitosis, inflamación y fiebre.", correct: "Barrera secundaria" },
+        { description: "Proteínas del sistema inmunitario que destruyen patógenos.", correct: "Sistema de complemento" },
+        { description: "Célula fagocitaria más abundante en la sangre.", correct: "Neutrófilo" },
+        { description: "Reacción exagerada del sistema inmune a sustancias inofensivas.", correct: "Alergia" },
+        { description: "Enfermedad autoinmune que destruye la mielina neuronal.", correct: "Esclerosis múltiple" },
+        { description: "Órgano que almacena linfocitos y filtra la sangre.", correct: "Bazo" },
+        { description: "Bacteria que forma parte de la microbiota cutánea.", correct: "Staphylococcus epidermidis" },
+        { description: "Hongo que causa la candidiasis.", correct: "Candida albicans" },
+        { description: "Conjunto de microorganismos benéficos que habitan nuestro cuerpo.", correct: "Microbiota" },
+        { description: "Inmunidad que se transfiere de madre a hijo por leche materna.", correct: "Inmunidad pasiva natural" },
+        { description: "Célula presentadora de antígeno por excelencia.", correct: "Célula dendrítica" },
+        { description: "Enfermedad autoinmune que afecta múltiples órganos (piel, riñones).", correct: "Lupus" },
+        { description: "Medicamento que combate infecciones bacterianas.", correct: "Antibiótico" },
+        { description: "Secreción mucosa que atrapa patógenos en vías respiratorias.", correct: "Moco" },
+        { description: "Enzima presente en lágrimas y sudor con acción antibacteriana.", correct: "Lisozima" },
+        { description: "Proteínas liberadas por linfocitos T citotóxicos para inducir apoptosis.", correct: "Perforinas" },
+        { description: "Respuesta inmune específica que genera memoria.", correct: "Inmunidad adaptativa" },
+        { description: "Órgano linfoide ubicado en la garganta.", correct: "Amígdalas" },
+        { description: "Célula inmune que elimina parásitos multicelulares.", correct: "Eosinófilo" },
+        { description: "Inmunidad obtenida mediante vacunación.", correct: "Inmunidad activa artificial" },
+        { description: "Sustancia que desencadena una respuesta alérgica.", correct: "Alérgeno" },
+        { description: "Virus que causa el herpes genital.", correct: "Virus herpes simple" },
+        { description: "Enfermedad autoinmune que destruye las células beta del páncreas.", correct: "Diabetes tipo 1" },
+        { description: "Proceso de englobamiento y digestión de patógenos.", correct: "Fagocitosis" },
+        { description: "Órgano donde los linfocitos B maduran.", correct: "Médula ósea" },
+        { description: "Respuesta local caracterizada por enrojecimiento, calor, hinchazón y dolor.", correct: "Inflamación" },
+        { description: "Célula que libera histamina durante una reacción alérgica.", correct: "Mastocito" },
+        { description: "Proteínas liberadas por linfocitos T citotóxicos para destruir células.", correct: "Granzimas" },
+        { description: "Aumento de temperatura corporal como respuesta defensiva.", correct: "Fiebre" },
+        { description: "Virus que causa verrugas genitales y se asocia a cáncer cervicouterino.", correct: "Virus del papiloma humano (VPH)" },
+        { description: "Célula que reconoce antígenos y se multiplica para dar memoria y plasmáticas.", correct: "Linfocito B" },
+        { description: "Tratamiento que reduce la respuesta inmune en trasplantes.", correct: "Inmunosupresor" },
+        { description: "Célula que destruye células tumorales y células infectadas por virus.", correct: "Linfocito T citotóxico" }
+    ];
+
+    const matchOptionsList = [
+        "Linfocito B", "Linfocito T colaborador", "Linfocito T citotóxico", "Macrófago", "Neutrófilo", "Eosinófilo",
+        "Anticuerpo", "Antígeno", "Histamina", "Perforinas", "Granzimas", "Citocinas", "Lisozima", "Moco",
+        "Sistema de complemento", "Fagocitosis", "Inflamación", "Fiebre", "Memoria inmunológica", "Vacuna",
+        "Inmunidad innata", "Inmunidad adaptativa", "Inmunidad pasiva natural", "Inmunidad activa artificial",
+        "Barrera primaria", "Barrera secundaria", "Barrera terciaria", "Timo", "Médula ósea", "Bazo", "Ganglio linfático",
+        "Amígdalas", "Piel", "Microbiota", "Alergia", "Alérgeno", "Enfermedad autoinmune", "Artritis reumatoide",
+        "Esclerosis múltiple", "Lupus", "Diabetes tipo 1", "VIH", "Sida", "Virus herpes simple", "Virus del papiloma humano",
+        "Candida albicans", "Staphylococcus epidermidis", "Antibiótico", "Inmunosupresor", "Célula plasmática",
+        "Célula dendrítica", "Mastocito"
+    ];
+
+    // ----- Banco Verdadero/Falso (50 items)
+    const bankTF = [
+        { text: "Los linfocitos B producen anticuerpos.", correct: "V" },
+        { text: "El timo es el órgano donde maduran los linfocitos B.", correct: "F" },
+        { text: "La piel es una barrera primaria de defensa.", correct: "V" },
+        { text: "Los anticuerpos son producidos por los linfocitos T citotóxicos.", correct: "F" },
+        { text: "La memoria inmunológica permite una respuesta más rápida ante una segunda exposición al mismo patógeno.", correct: "V" },
+        { text: "Las vacunas generan la enfermedad para activar el sistema inmune.", correct: "F" },
+        { text: "El VIH ataca a los linfocitos T colaboradores (CD4+).", correct: "V" },
+        { text: "La inflamación es una respuesta de la barrera terciaria.", correct: "F" },
+        { text: "Los macrófagos son células fagocitarias.", correct: "V" },
+        { text: "La fiebre es perjudicial y siempre debe ser reducida inmediatamente.", correct: "F" },
+        { text: "La microbiota intestinal ayuda a la digestión y produce vitaminas.", correct: "V" },
+        { text: "Los neutrófilos son los leucocitos más abundantes en la sangre.", correct: "V" },
+        { text: "Las alergias son reacciones exageradas del sistema inmune ante alérgenos.", correct: "V" },
+        { text: "El sida es causado por la bacteria Mycobacterium tuberculosis.", correct: "F" },
+        { text: "Los linfocitos T citotóxicos destruyen células infectadas por virus.", correct: "V" },
+        { text: "La médula ósea produce glóbulos rojos, blancos y plaquetas.", correct: "V" },
+        { text: "Las vacunas solo generan respuesta inmune humoral, no celular.", correct: "F" },
+        { text: "El rechazo a trasplantes es mediado por linfocitos T.", correct: "V" },
+        { text: "La histamina es liberada por los macrófagos durante la inflamación.", correct: "F" },
+        { text: "La inmunidad pasiva natural se adquiere a través de la leche materna.", correct: "V" },
+        { text: "Las enfermedades autoinmunes ocurren cuando el sistema inmune ataca al propio cuerpo.", correct: "V" },
+        { text: "El bazo es un órgano donde se producen los linfocitos T.", correct: "F" },
+        { text: "Los antibióticos son efectivos contra infecciones virales.", correct: "F" },
+        { text: "La lisozima es una enzima antibacteriana presente en lágrimas y sudor.", correct: "V" },
+        { text: "El virus del papiloma humano (VPH) puede causar cáncer cervicouterino.", correct: "V" },
+        { text: "Los linfocitos B maduran en el timo.", correct: "F" },
+        { text: "La respuesta inmune innata es específica para cada patógeno.", correct: "F" },
+        { text: "Los neutrófilos son los primeros en llegar a un sitio de infección.", correct: "V" },
+        { text: "La fagocitosis es un proceso exclusivo de los linfocitos.", correct: "F" },
+        { text: "Las células plasmáticas secretan anticuerpos.", correct: "V" },
+        { text: "El VIH se puede transmitir por compartir utensilios de cocina.", correct: "F" },
+        { text: "La artritis reumatoide es una enfermedad autoinmune.", correct: "V" },
+        { text: "El sistema de complemento está formado por proteínas sanguíneas.", correct: "V" },
+        { text: "La inmunidad adaptativa actúa más rápido que la innata.", correct: "F" },
+        { text: "Las amígdalas son órganos linfoides ubicados en la garganta.", correct: "V" },
+        { text: "Los linfocitos T colaboradores ayudan a activar los linfocitos B.", correct: "V" },
+        { text: "La diabetes tipo 1 es una enfermedad autoinmune que afecta al páncreas.", correct: "V" },
+        { text: "La candidiasis es causada por una bacteria.", correct: "F" },
+        { text: "Los ganglios linfáticos filtran la linfa y albergan células inmunitarias.", correct: "V" },
+        { text: "El moco atrapa patógenos en las vías respiratorias.", correct: "V" },
+        { text: "La esclerosis múltiple afecta las articulaciones.", correct: "F" },
+        { text: "Los macrófagos son células presentadoras de antígeno.", correct: "V" },
+        { text: "Las perforinas forman poros en la membrana de células infectadas.", correct: "V" },
+        { text: "El lupus es una enfermedad autoinmune que puede afectar la piel y los riñones.", correct: "V" },
+        { text: "La inmunidad activa artificial se obtiene mediante la administración de anticuerpos.", correct: "F" },
+        { text: "Los eosinófilos combaten parásitos multicelulares.", correct: "V" },
+        { text: "El Staphylococcus epidermidis forma parte de la microbiota cutánea.", correct: "V" },
+        { text: "La histamina produce vasoconstricción en las alergias.", correct: "F" },
+        { text: "El tratamiento con inmunosupresores se usa para evitar el rechazo en trasplantes.", correct: "V" },
+        { text: "La fiebre puede inhibir la proliferación de algunos patógenos.", correct: "V" }
+    ];
+
+    // Función para obtener elementos aleatorios de un array
+    function getRandomItems(arr, count) {
+        const shuffled = [...arr];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+    }
+
+    // Variables dinámicas
+    let currentMC = [];
+    let currentMatch = [];
+    let currentTF = [];
+    
+    let mcAnswers = [];
+    let matchAnswers = [];
+    let tfAnswers = [];
+    
+    let evaluated = false;
+    
+    function renderMultipleChoice() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        currentMC.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${q.options.map(opt => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${opt.charAt(0)}" id="mc_${idx}_${opt.charAt(0)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${opt.charAt(0)}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div style="font-size:0.8rem; margin-top:0.3rem;">${mcAnswers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta: ' + q.correct}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => {
+                        mcAnswers[idx] = e.target.value;
+                    });
+                });
+            }
+        });
+    }
+    
+    function renderMatch() {
+        const tbody = document.getElementById('matchBody');
+        tbody.innerHTML = '';
+        currentMatch.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            row.setAttribute('data-idx', idx);
+            const cellDesc = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellDesc.innerHTML = `${idx+1}. ${item.description}`;
+            
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione...";
+            select.appendChild(defaultOpt);
+            
+            const allOptions = [...new Set(currentMatch.map(i => i.correct).concat(matchOptionsList))];
+            allOptions.sort().forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt;
+                option.textContent = opt;
+                if (!evaluated && matchAnswers[idx] === opt) option.selected = true;
+                select.appendChild(option);
+            });
+            
+            select.addEventListener('change', (e) => {
+                matchAnswers[idx] = e.target.value;
+            });
+            cellSelect.appendChild(select);
+            
+            if (evaluated) {
+                const isCorrect = matchAnswers[idx] === item.correct;
+                row.classList.add(isCorrect ? 'correct-row' : 'incorrect-row');
+                if (!isCorrect) {
+                    const feedback = document.createElement('div');
+                    feedback.style.fontSize = '0.75rem';
+                    feedback.style.marginTop = '0.3rem';
+                    feedback.style.color = '#6b9e6b';
+                    feedback.innerHTML = `Correcta: ${item.correct}`;
+                    cellSelect.appendChild(feedback);
+                }
+            }
+        });
+    }
+    
+    function renderTrueFalse() {
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+        currentTF.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellText.innerHTML = `${idx+1}. ${item.text}`;
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+            const optV = document.createElement('option'); optV.value = "V"; optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option'); optF.value = "F"; optF.textContent = "Falso (F)";
+            select.appendChild(optV); select.appendChild(optF);
+            if (!evaluated && tfAnswers[idx]) {
+                if (tfAnswers[idx] === "V") optV.selected = true;
+                else if (tfAnswers[idx] === "F") optF.selected = true;
+            }
+            select.addEventListener('change', (e) => { tfAnswers[idx] = e.target.value; });
+            cellSelect.appendChild(select);
+            if (evaluated) {
+                const isCorrect = tfAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correct}`;
+                feedback.className = isCorrect ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+    }
+    
+    function resetTest() {
+        evaluated = false;
+        currentMC = getRandomItems(bankMultipleChoice, 15);
+        currentMatch = getRandomItems(bankMatch, 15);
+        currentTF = getRandomItems(bankTF, 15);
+        mcAnswers = new Array(15).fill(null);
+        matchAnswers = new Array(15).fill("");
+        tfAnswers = new Array(15).fill(null);
+        document.getElementById('results').style.display = 'none';
+        renderMultipleChoice();
+        renderMatch();
+        renderTrueFalse();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+    
+    function evaluateAll() {
+        evaluated = true;
+        let mcCorrect = 0, matchCorrect = 0, tfCorrect = 0;
+        for (let i = 0; i < currentMC.length; i++) if (mcAnswers[i] === currentMC[i].correct) mcCorrect++;
+        for (let i = 0; i < currentMatch.length; i++) if (matchAnswers[i] === currentMatch[i].correct) matchCorrect++;
+        for (let i = 0; i < currentTF.length; i++) if (tfAnswers[i] === currentTF[i].correct) tfCorrect++;
+        const total = currentMC.length + currentMatch.length + currentTF.length;
+        const totalCorrect = mcCorrect + matchCorrect + tfCorrect;
+        const percentage = (totalCorrect / total) * 100;
+        let grade = 0;
+        const passing = 60;
+        if (percentage >= passing) grade = 4.0 + ((percentage - passing) / (100 - passing)) * 3.0;
+        else grade = 1.0 + (percentage / passing) * 3.0;
+        grade = Math.round(grade * 100) / 100;
+        const isApproved = grade >= 4.0;
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#2a6b3c; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrect} de ${total} (${Math.round(percentage)}%)</div>
+            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Múltiple: ${mcCorrect}/${currentMC.length}</div><div>🔗 Relación: ${matchCorrect}/${currentMatch.length}</div><div>⚖️ V/F: ${tfCorrect}/${currentTF.length}</div>
+            </div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}"><strong>${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>NOTA: ${grade}</div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+        renderMultipleChoice(); renderMatch(); renderTrueFalse();
+        document.getElementById('restartTestBtn')?.addEventListener('click', resetTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Biologia.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_2_Biologia.html');
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+    
+    // Inicializar
+    resetTest();
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>

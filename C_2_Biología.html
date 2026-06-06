@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: Sistema Inmune | Ciencias Naturales 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Helvetica', sans-serif;
+            background: #f0f4f0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fefdf9;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            scrollbar-width: thin;
+            background: #fefdf9;
+            color: #1a3a2a;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #e0e8dc; }
+        .slide::-webkit-scrollbar-thumb { background: #9bba8a; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #2a6b3c;
+            border-left: 7px solid #4caf50;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #2a6b3c;
+            margin: 1rem 0 0.6rem 0;
+            border-bottom: 2px solid #c8e6c9;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #3e8a5e;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+            color: #2a4a32;
+            text-align: justify;
+        }
+
+        ul, .custom-list {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #e8f5e9;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #2e7d32;
+        }
+
+        .info-card {
+            background: #f1f8e9;
+            border-left: 6px solid #66bb6a;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .question-sample {
+            background: #e8f0e8;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            margin: 1.2rem 0 0.5rem;
+            border-left: 5px solid #6b9e6b;
+        }
+
+        .badge {
+            background: #4caf50;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #c8e0c0;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+            background: #fefffc;
+        }
+        th {
+            background: #dcedc8;
+            color: #2a6b3c;
+            font-weight: 600;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fefff8;
+            border-top: 1px solid #d0dfc0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #2a6b3c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #4caf50; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #dcedc8;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #2a5a2a;
+            font-weight: 500;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(100, 150, 100, 0.4);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #2a5a2a;
+            transition: 0.2s;
+            z-index: 90;
+        }
+        .nav-arrow:hover { background: #6b9e6b; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        .img-placeholder {
+            background: #eaf4e5;
+            border-radius: 20px;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            text-align: center;
+            font-style: italic;
+            color: #5a7a4a;
+            border: 1px dashed #aacf9e;
+        }
+        .img-placeholder img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+            <!-- SLIDE 1: Portada e introducción al sistema inmune -->
+            <div class="slide">
+                <h1>🛡️ ¿Cómo se defiende nuestro cuerpo?</h1>
+                <p>Nuestro organismo está constantemente expuesto a agentes externos como bacterias, virus, hongos y parásitos que pueden causar enfermedades. Sin embargo, contamos con un complejo y eficiente sistema de defensa: el <span class="highlight">sistema inmune</span>.</p>
+                <div class="info-card">
+                    <strong>📘 Definición:</strong> El sistema inmune es el conjunto de órganos, tejidos, células y moléculas cuya función es identificar y eliminar agentes patógenos (como bacterias, virus, hongos y protozoos) y sustancias extrañas que amenazan nuestra salud.
+                </div>
+                <p>El sistema inmune tiene dos tipos de respuestas: <strong>innatas</strong> (presentes desde el nacimiento, nos protegen de todos los patógenos) y <strong>adaptativas</strong> (se desarrollan durante la vida, son específicas y generan memoria).</p>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión:</strong> ¿Qué crees que ocurriría si nuestro cuerpo no tuviera un sistema de defensa contra los microorganismos?</p>
+                    <p><strong>Respuesta:</strong> Seríamos fácilmente invadidos por patógenos, lo que provocaría infecciones constantes y, probablemente, la muerte prematura. Los microorganismos oportunistas podrían causar enfermedades graves sin control.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: Componentes del sistema inmune -->
+            <div class="slide">
+                <h2>🧬 Componentes del sistema inmune</h2>
+                <div class="img-placeholder"><img src="https://i.ibb.co/fdMVdx01/SI.png" alt="Órganos del sistema inmune: amígdalas, ganglios linfáticos, bazo, médula ósea, timo" height="400 px"></div>
+                <p>El sistema inmune está formado por órganos especializados que producen, almacenan o maduran las células defensivas. Los principales son:</p>
+                <ul>
+                    <li><strong>Médula ósea:</strong> Produce los leucocitos (glóbulos blancos), incluyendo linfocitos y células fagocíticas.</li>
+                    <li><strong>Timo:</strong> Órgano donde maduran los linfocitos T.</li>
+                    <li><strong>Ganglios linfáticos:</strong> Pequeños órganos donde los patógenos entran en contacto con las células defensivas.</li>
+                    <li><strong>Bazo:</strong> Almacena linfocitos y filtra la sangre.</li>
+                    <li><strong>Amígdalas:</strong> Tejidos que contienen células defensivas en la garganta.</li>
+                </ul>
+                <div class="info-card">
+                    <strong>📘 Leucocitos:</strong> Son las células sanguíneas encargadas de la defensa del organismo. Incluyen neutrófilos, macrófagos, linfocitos B y linfocitos T, entre otros.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué la médula ósea es tan importante para el sistema inmune?</p>
+                    <p><strong>Respuesta:</strong> Porque en la médula ósea se producen todos los leucocitos (glóbulos blancos), que son las células responsables de defender el organismo contra infecciones y agentes extraños.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Barreras primarias - Piel -->
+            <div class="slide">
+                <h2>🟤 Barreras primarias: la primera línea de defensa</h2>
+                <p>Las <span class="highlight">barreras primarias</span> son defensas físicas y químicas que impiden la entrada de patógenos al organismo. Actúan desde el nacimiento (innatas) y no son específicas.</p>
+                <h3>La piel</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/ZRTzj8nv/image.png" alt="Estructura de la piel: capas y barrera física"></div>
+                <p>La piel es el órgano más grande del cuerpo y constituye una barrera física que bloquea el paso de microorganismos. Además:</p>
+                <ul>
+                    <li>La capa externa (epidermis) está formada por células muertas compactas que impiden la penetración.</li>
+                    <li>Las glándulas sebáceas secretan sustancias ácidas que eliminan bacterias.</li>
+                    <li>El sudor contiene enzimas (lisozimas) que destruyen paredes bacterianas.</li>
+                </ul>
+                <div class="info-card">💡 <strong>Dato:</strong> La piel alberga también la <strong>microbiota residente</strong> (bacterias beneficiosas) que impide la colonización de patógenos al competir por espacio y nutrientes.</div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué funciones defensivas cumple la piel además de ser una barrera física?</p>
+                    <p><strong>Respuesta:</strong> La piel secreta sustancias antibacterianas (como las lisozimas del sudor y los ácidos grasos del sebo), mantiene un pH ácido que dificulta el crecimiento de patógenos y alberga microbiota benéfica que compite con microorganismos dañinos.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Barreras primarias - Mucosas y microbiota -->
+            <div class="slide">
+                <h2>🫁 Mucosas y microbiota</h2>
+                <h3>Mucosas</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/nsBMPPZX/image.png" alt="Micrografía de mucosa respiratoria con cilios" height="200px"></div>
+                <p>Las <strong>mucosas</strong> recubren las cavidades internas del cuerpo (sistema digestivo, respiratorio, urinario y reproductor). Producen mucus (una sustancia viscosa) que atrapa patógenos y partículas extrañas. En el tracto respiratorio, los <strong>cilios</strong> (microvellosidades) barren el mucus hacia el exterior, eliminándolo mediante la tos o el estornudo.</p>
+                
+                <h3>Microbiota</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/QF8CW111/image.png" alt="Micrografía de Staphylococcus epidermidis, bacteria de la microbiota" height="200px"></div>
+                <p>La <strong>microbiota</strong> es el conjunto de millones de microorganismos (principalmente bacterias) que habitan en nuestro cuerpo de forma natural, en la piel, la boca, el intestino y otras superficies. Estos microorganismos:</p>
+                <ul>
+                    <li>Producen vitaminas (como la vitamina K y algunas del complejo B).</li>
+                    <li>Ayudan en la digestión de nutrientes.</li>
+                    <li>Impiden la colonización de patógenos al competir por espacio y recursos.</li>
+                </ul>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué la microbiota se considera una barrera defensiva?</p>
+                    <p><strong>Respuesta:</strong> Porque al colonizar nuestra piel y mucosas, impide que los patógenos encuentren un lugar donde adherirse y multiplicarse, un fenómeno llamado "exclusión competitiva".</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: Barreras secundarias - Respuesta innata -->
+            <div class="slide">
+                <h2>⚡ Barreras secundarias: respuesta innata</h2>
+                <p>Las <span class="highlight">barreras secundarias</span> se activan cuando los patógenos logran traspasar las barreras primarias. Son <strong>innatas</strong> (actúan rápidamente) y no específicas (reconocen patrones generales de patógenos).</p>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>🔬 Sistema de complemento:</strong> Conjunto de proteínas sanguíneas que alertan la presencia de patógenos y ayudan a destruirlos.
+                    </div>
+                    <div class="info-card">
+                        <strong>🧫 Células fagocitarias:</strong> Células que engloban y digieren patógenos y restos celulares.
+                    </div>
+                </div>
+                <h3>Células fagocitarias</h3>
+                <ul>
+                    <li><strong>Neutrófilos:</strong> Los más abundantes; fagocitan bacterias y hongos.</li>
+                    <li><strong>Macrófagos:</strong> Células grandes que fagocitan patógenos y también presentan fragmentos antigénicos a los linfocitos (actúan como células presentadoras de antígenos).</li>
+                </ul>
+                <div class="img-placeholder"><img src="https://i.ibb.co/1GzJL9TD/image.png" alt="Micrografía de neutrófilo fagocitando bacterias" height="400px"><img src="https://i.ibb.co/1fTLtnxX/image.png" alt="Micrografía de neutrófilo fagocitando bacterias" height="400px"></div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué función cumplen los macrófagos además de fagocitar patógenos?</p>
+                    <p><strong>Respuesta:</strong> Los macrófagos también actúan como <strong>células presentadoras de antígenos</strong>: degradan al patógeno y exponen fragmentos de este en su superficie para activar a los linfocitos T, conectando así la respuesta innata con la adaptativa.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: Inflamación y fiebre -->
+            <div class="slide">
+                <h2>🔥 Inflamación y fiebre</h2>
+                <p>Cuando las células fagocitarias no pueden eliminar la infección por sí solas, se desencadenan respuestas sistémicas:</p>
+                <div class="grid-2">
+                    <div>
+                        <h3>Inflamación</h3>
+                        <p>Respuesta local caracterizada por:</p>
+                        <ul>
+                            <li><strong>Enrojecimiento (rubor):</strong> Aumento del flujo sanguíneo.</li>
+                            <li><strong>Calor:</strong> Aumento de temperatura local.</li>
+                            <li><strong>Hinchazón (tumor):</strong> Acumulación de líquido y células.</li>
+                            <li><strong>Dolor (dolor):</strong> Presión sobre terminaciones nerviosas.</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h3>Fiebre</h3>
+                        <p>Respuesta sistémica que eleva la temperatura corporal. Beneficios:</p>
+                        <ul>
+                            <li>Inhibe la proliferación de algunos patógenos.</li>
+                            <li>Acelera las reacciones inmunitarias.</li>
+                            <li>Estimula la actividad de fagocitos y linfocitos.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="img-placeholder"><img src="https://i.ibb.co/PvHxcpBr/image.png" alt="Proceso inflamatorio: vasodilatación y llegada de células defensivas" height="200px"></div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué la fiebre es considerada un mecanismo de defensa y no parte de la enfermedad?</p>
+                    <p><strong>Respuesta:</strong> La fiebre es una respuesta controlada del sistema inmune que crea un ambiente desfavorable para muchos patógenos (cuyas enzimas funcionan óptimamente a temperaturas normales) y acelera la actividad de las células defensivas, ayudando a combatir la infección.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: Barrera terciaria - Inmunidad humoral (linfocitos B) -->
+            <div class="slide">
+                <h2>🎯 Barrera terciaria: inmunidad adaptativa</h2>
+                <p>La <span class="highlight">barrera terciaria</span> es la última línea de defensa. Es <strong>específica</strong> (reconoce antígenos particulares) y genera <strong>memoria inmunológica</strong>. Se divide en inmunidad humoral e inmunidad celular.</p>
+                
+                <h3>Inmunidad humoral (linfocitos B)</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/Kc4FDX72/LB-mejorada.png" alt="Linfocito B produciendo anticuerpos" height="400px"></div>
+                <p>Los <strong>linfocitos B (LB)</strong> son células que producen <strong>anticuerpos</strong> (inmunoglobulinas). Los anticuerpos son proteínas que se unen específicamente a los antígenos (partes reconocibles de los patógenos) y los neutralizan, marcándolos para su destrucción por fagocitos.</p>
+                <ul>
+                    <li>Cada linfocito B produce anticuerpos contra un antígeno específico.</li>
+                    <li>Al activarse, se multiplican y dan origen a:
+                        <ul>
+                            <li><strong>Células plasmáticas:</strong> Secretan grandes cantidades de anticuerpos.</li>
+                            <li><strong>Células de memoria B:</strong> Permiten una respuesta rápida ante un segundo contacto con el mismo antígeno.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué son los anticuerpos y cómo ayudan a combatir infecciones?</p>
+                    <p><strong>Respuesta:</strong> Los anticuerpos son proteínas que se unen específicamente a los antígenos de los patógenos, neutralizándolos (bloqueando su capacidad de infectar células), aglutinándolos (para facilitar su fagocitosis) o activando el sistema de complemento.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: Inmunidad celular (linfocitos T) -->
+            <div class="slide">
+                <h2>🧫 Inmunidad celular (linfocitos T)</h2>
+                <div class="img-placeholder"><img src="https://i.ibb.co/HTQbtBnS/image.png" alt="Linfocito T citotóxico destruyendo célula infectada" height="400px"></div>
+                <p>La <strong>inmunidad celular</strong> depende de los <strong>linfocitos T (LT)</strong>, que maduran en el timo. Se dividen en dos tipos principales:</p>
+                <ul>
+                    <li><strong>Linfocitos T colaboradores (CD4+):</strong> Activan otras células inmunitarias: ayudan a los linfocitos B a producir anticuerpos y a los macrófagos a destruir patógenos.</li>
+                    <li><strong>Linfocitos T citotóxicos (CD8+):</strong> Destruyen células infectadas por virus o células tumorales, mediante la liberación de perforinas y granzimas que inducen apoptosis (muerte celular programada).</li>
+                </ul>
+                <div class="info-card">
+                    <strong>📘 Antígeno:</strong> Es cualquier molécula o partícula capaz de desencadenar una respuesta inmunitaria adaptativa. Puede ser un fragmento de bacteria, virus, hongo o incluso células propias alteradas (células cancerosas).
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuál es la diferencia entre la inmunidad humoral y la celular?</p>
+                    <p><strong>Respuesta:</strong> La inmunidad humoral es mediada por <strong>anticuerpos</strong> producidos por linfocitos B y combate patógenos extracelulares (bacterias, toxinas). La inmunidad celular es mediada por <strong>linfocitos T</strong> y combate patógenos intracelulares (virus dentro de células) y células tumorales.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: Vacunas - mecanismo de acción -->
+            <div class="slide">
+                <h2>💉 Vacunas: entrenando al sistema inmune</h2>
+                <div class="img-placeholder"><img src="https://i.ibb.co/pB6D9fj3/image.png" alt="Proceso de vacunación: antígeno vacunal activa respuesta inmune con memoria"></div>
+                <p>Las <strong>vacunas</strong> son preparaciones biológicas que contienen antígenos (microorganismos muertos, atenuados o fragmentos) que, al ser administrados, estimulan al sistema inmune a generar una respuesta adaptativa <strong>sin causar la enfermedad</strong>.</p>
+                <p><strong>Mecanismo:</strong></p>
+                <ul>
+                    <li>El sistema inmune detecta el antígeno vacunal como si fuera una infección real.</li>
+                    <li>Se activan linfocitos B y T, produciendo anticuerpos y células de memoria.</li>
+                    <li>Si posteriormente el organismo se expone al patógeno real, la respuesta será rápida, específica y efectiva, evitando el desarrollo de la enfermedad.</li>
+                </ul>
+                <div class="info-card">
+                    <strong>📘 Memoria inmunológica:</strong> Capacidad del sistema inmune de recordar antígenos encontrados previamente, gracias a los linfocitos de memoria, permitiendo una respuesta más rápida y potente ante una segunda exposición.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué es importante vacunarse incluso contra enfermedades que parecen erradicadas?</p>
+                    <p><strong>Respuesta:</strong> Porque si la cobertura de vacunación disminuye, pueden reaparecer brotes de enfermedades que estaban controladas, poniendo en riesgo a personas no vacunadas o inmunodeprimidas. La vacunación colectiva genera "inmunidad de rebaño".</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: Campañas de vacunación y análisis de efectividad -->
+            <div class="slide">
+                <h2>📊 Efectividad de las vacunas</h2>
+                <div class="img-placeholder"><img src="https://i.ibb.co/HDXHNjD5/image.png" alt="Gráfico de efectividad de la vacuna contra la influenza, años 2013-2018"></div>
+                <p>La efectividad de las vacunas puede variar según la temporada y la correspondencia entre las cepas vacunales y las circulantes. Por ejemplo, la vacuna contra la influenza ha mostrado variaciones en su efectividad entre un 20% y un 60% en diferentes años, pero incluso con efectividad moderada reduce significativamente hospitalizaciones y muertes.</p>
+                <div class="info-card">
+                    <strong>📘 Inmunidad de rebaño:</strong> Protección indirecta que ocurre cuando un alto porcentaje de la población está vacunada, dificultando la propagación de una enfermedad y protegiendo a quienes no pueden vacunarse (bebés, inmunodeprimidos).
+                </div>
+                <p>En Chile, existen campañas nacionales de vacunación contra influenza, sarampión, virus del papiloma humano (VPH), entre otras, gestionadas por el Ministerio de Salud.</p>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué factores pueden influir en la efectividad de una vacuna?</p>
+                    <p><strong>Respuesta:</strong> La correspondencia antigénica (qué tan similares son las cepas vacunales a las circulantes), la edad y estado de salud del vacunado, y la correcta conservación y administración de la vacuna.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: Alteraciones del sistema inmune - Alergias -->
+            <div class="slide">
+                <h2>⚠️ Alteraciones del sistema inmune: alergias</h2>
+                <p>El sistema inmune puede funcionar inadecuadamente, causando daño en lugar de protección. Las principales alteraciones son:</p>
+                <h3>Alergias</h3>
+                <div class="img-placeholder"><img src="https://i.ibb.co/b5NM9Zbp/image.png" alt="Proceso de reacción alérgica: mastocitos liberando histamina"></div>
+                <p>Las <strong>alergias</strong> son reacciones <strong>exacerbadas</strong> del sistema inmune frente a sustancias generalmente inofensivas (alérgenos) como polen, ácaros, pelo de animales, alimentos o medicamentos.</p>
+                <ul>
+                    <li>El sistema inmune produce anticuerpos IgE específicos contra el alérgeno.</li>
+                    <li>Al reexponerse, se desencadena la liberación de histamina y otras sustancias inflamatorias por los mastocitos.</li>
+                    <li>Síntomas: estornudos, picazón, urticaria, inflamación, dificultad respiratoria (en casos graves, anafilaxia).</li>
+                </ul>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué una alergia es considerada una "reacción exagerada" del sistema inmune?</p>
+                    <p><strong>Respuesta:</strong> Porque el sistema inmune reacciona de manera desproporcionada ante sustancias que no representan una amenaza real para el organismo (alérgenos), activando respuestas inflamatorias que pueden dañar tejidos propios.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 12: Rechazo a trasplantes y enfermedades autoinmunes -->
+            <div class="slide">
+                <h2>🚫 Rechazo a trasplantes y enfermedades autoinmunes</h2>
+                <h3>Rechazo a trasplantes</h3>
+                <p>Los <strong>trasplantes</strong> de órganos o tejidos pueden ser rechazados porque el sistema inmune reconoce los antígenos del donante (diferentes a los propios) como extraños y ataca el órgano trasplantado. Para evitarlo, se utilizan <strong>inmunosupresores</strong> que reducen la respuesta inmune.</p>
+                
+                <h3>Enfermedades autoinmunes</h3>
+                <p>Ocurren cuando el sistema inmune <strong>confunde las células y tejidos propios</strong> con invasores extraños y los ataca. Ejemplos:</p>
+                <ul>
+                    <li><strong>Artritis reumatoide:</strong> Afecta las articulaciones (dolor, rigidez, inflamación).</li>
+                    <li><strong>Esclerosis múltiple:</strong> Ataca la mielina de las neuronas (fatiga, debilidad, hormigueo).</li>
+                    <li><strong>Lupus eritematoso sistémico:</strong> Afecta múltiples órganos (piel, riñones, articulaciones).</li>
+                    <li><strong>Diabetes tipo 1:</strong> Destrucción de las células beta del páncreas que producen insulina.</li>
+                </ul>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué diferencia una enfermedad autoinmune de una alergia?</p>
+                    <p><strong>Respuesta:</strong> En las alergias, el sistema inmune ataca sustancias externas inofensivas (alérgenos). En las enfermedades autoinmunes, el sistema inmune ataca <strong>componentes propios del cuerpo</strong> (células, tejidos u órganos).</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 13: Inmunodeficiencia - VIH/sida -->
+            <div class="slide">
+                <h2>🦠 Inmunodeficiencia: VIH y sida</h2>
+                <p>Las <strong>inmunodeficiencias</strong> ocurren cuando el sistema inmune tiene una capacidad disminuida para combatir infecciones. Pueden ser congénitas (hereditarias) o adquiridas.</p>
+                <p>El <strong>VIH (Virus de Inmunodeficiencia Humana)</strong> es un virus que ataca específicamente a los <strong>linfocitos T colaboradores (CD4+)</strong>, destruyéndolos progresivamente. Cuando el recuento de linfocitos CD4+ desciende por debajo de un nivel crítico, se desarrolla el <strong>sida (Síndrome de Inmunodeficiencia Adquirida)</strong>, caracterizado por la aparición de infecciones oportunistas (como tuberculosis, neumonía por Pneumocystis, candidiasis) que normalmente no afectarían a una persona con sistema inmune sano.</p>
+                <ul>
+                    <li>Vías de transmisión: relaciones sexuales sin protección, compartir agujas, de madre a hijo durante embarazo/parto/lactancia.</li>
+                    <li>No existe cura, pero los tratamientos antirretrovirales permiten controlar la infección y prevenir la progresión a sida.</li>
+                </ul>
+                <div class="info-card">
+                    <strong>🔬 Dato científico:</strong> La viróloga francesa Françoise Barré-Sinoussi, Premio Nobel de Medicina 2008, logró purificar el virus del VIH, un hito fundamental para el desarrollo de pruebas diagnósticas y tratamientos.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué el VIH es especialmente peligroso para el sistema inmune?</p>
+                    <p><strong>Respuesta:</strong> Porque ataca directamente a los <strong>linfocitos T colaboradores (CD4+)</strong>, que son células clave para coordinar la respuesta inmune adaptativa. Al destruirlos, el organismo queda indefenso frente a infecciones oportunistas.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 14: Síntesis y preguntas finales -->
+            <div class="slide">
+                <h2>📝 Síntesis: ¿Cómo se defiende nuestro cuerpo?</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>🟤 Barreras primarias</strong><br>
+                        Piel, mucosas, microbiota. Impiden la entrada de patógenos.
+                    </div>
+                    <div class="info-card">
+                        <strong>⚡ Barreras secundarias</strong><br>
+                        Respuesta innata: fagocitosis, inflamación, fiebre.
+                    </div>
+                    <div class="info-card">
+                        <strong>🎯 Barrera terciaria</strong><br>
+                        Respuesta adaptativa: linfocitos B (anticuerpos) y linfocitos T (celular). Genera memoria.
+                    </div>
+                    <div class="info-card">
+                        <strong>💉 Vacunas</strong><br>
+                        Entrenan al sistema inmune generando memoria sin causar enfermedad.
+                    </div>
+                    <div class="info-card">
+                        <strong>⚠️ Alteraciones</strong><br>
+                        Alergias, enfermedades autoinmunes, inmunodeficiencias (VIH/sida).
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta integradora:</strong> ¿Cómo se relacionan las tres barreras defensivas entre sí?</p>
+                    <p><strong>Respuesta:</strong> Las barreras primarias impiden la entrada. Si son traspasadas, actúan las secundarias (respuesta rápida e inespecífica). Si la infección persiste, se activa la barrera terciaria (respuesta específica y con memoria), que además es estimulada por las vacunas. Las células presentadoras de antígeno (macrófagos) conectan la respuesta innata con la adaptativa.</p>
+                </div>
+                <p style="margin-top: 1rem; text-align: center;">📚 <strong>Fin de la clase</strong> — Revisa los ejercicios para evaluar tus conocimientos.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 14</div>
+    </div>
+
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slideCounterSpan.innerText = `Slide ${currentIndex+1} / ${totalSlides}`;
+    }
+    function nextSlide() { if (currentIndex < totalSlides-1) { currentIndex++; updateSlidePosition(); } }
+    function prevSlide() { if (currentIndex > 0) { currentIndex--; updateSlidePosition(); } }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { nextSlide(); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { prevSlide(); e.preventDefault(); }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => { window.location.href = 'Biologia.html'; });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => { window.location.href = 'C_2A_Biologia.html'; });
+    updateSlidePosition();
+</script>
+</body>
+</html>
