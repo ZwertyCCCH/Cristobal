@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: Civilizaciones Antiguas | Historia 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffdf9;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            scrollbar-width: thin;
+            background: #fffdf9;
+            color: #2c3e2f;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #ede6db; }
+        .slide::-webkit-scrollbar-thumb { background: #c2aa82; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #7a4b1d;
+            border-left: 7px solid #e6b450;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #6b3f1a;
+            margin: 1rem 0 0.6rem 0;
+            border-bottom: 2px solid #f0dfc0;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+            color: #2d4029;
+            text-align: justify;
+        }
+
+        ul, .custom-list {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #fef0cf;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #b65717;
+        }
+
+        .info-card {
+            background: #faf6eb;
+            border-left: 6px solid #e6b450;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .question-sample {
+            background: #eef0e4;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            margin: 1.2rem 0 0.5rem;
+            border-left: 5px solid #c59a5b;
+        }
+
+        .badge {
+            background: #c38b44;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #d4c9b5;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+            background: #fefcf7;
+        }
+        th {
+            background: #e8dfcf;
+            color: #7a4b1d;
+            font-weight: 600;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf2;
+            border-top: 1px solid #e9dfcf;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #b47c44; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #e9dfcf;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #5d431f;
+            font-weight: 500;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(180, 140, 90, 0.4);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #5d3a1a;
+            transition: 0.2s;
+            z-index: 90;
+        }
+        .nav-arrow:hover { background: #c99f65; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+            <!-- SLIDE 1: Portada -->
+            <div class="slide">
+                <h1>🏛️ Las Grandes Civilizaciones de la Antigüedad</h1>
+                <p>Desde los valles fluviales de Mesopotamia y Egipto hasta los Andes Centrales y Mesoamérica, las primeras civilizaciones desarrollaron complejas formas de organización política, social, económica y religiosa.</p>
+                <div class="info-card">
+                    <strong>📘 En esta clase exploraremos:</strong> Sumeria, Egipto, China, India, Fenicia, Minoica, Olmeca y Chavín. Analizaremos su política, sociedad, economía y religión.
+                </div>
+                <p>Cada civilización surgió en un entorno único y desarrolló características particulares, pero todas compartieron rasgos como la urbanización, la estratificación social, sistemas de escritura y la organización estatal teocrática.</p>
+            </div>
+
+            <!-- SLIDE 2: Civilización Sumeria -->
+            <div class="slide">
+                <h2>🏺 Civilización Sumeria (Mesopotamia)</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>👑 Política</strong><br>
+                        Ciudades-Estado independientes (Ur, Uruk, Lagash). Gobernados por <span class="highlight">reyes-sacerdotes (patesi)</span>.
+                    </div>
+                    <div class="info-card">
+                        <strong>👥 Sociedad</strong><br>
+                        Jerarquizada: nobles, sacerdotes, comerciantes, campesinos, esclavos.
+                    </div>
+                    <div class="info-card">
+                        <strong>💰 Economía</strong><br>
+                        Agricultura (cebada, trigo, legumbres), ganadería, comercio.
+                    </div>
+                    <div class="info-card">
+                        <strong>⛪ Religión</strong><br>
+                        Politeísta. Construcción de <span class="highlight">Zigurats</span> (templos escalonados). Principales dioses: <strong>Anu</strong> (dios del cielo y considerado el padre de los dioses), <strong>Enlil</strong> (dios del viento, las tormentas y el poder), <strong>Utu</strong> (dios del sol y la justicia).
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión:</strong> ¿Cómo influía la religión en el poder político de los sumerios?</p>
+                    <p><strong>Respuesta:</strong> Los gobernantes sumerios eran considerados reyes-sacerdotes (patesi), concentrando el poder político y religioso. Construían zigurats como centros de culto y administración, legitimando su autoridad como representantes de los dioses Anu, Enlil y Utu.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Civilización Egipcia -->
+            <div class="slide">
+                <h2>🇪🇬 Civilización Egipcia</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>👑 Política</strong><br>
+                        <span class="highlight">Monarquía teocrática</span>. El faraón era considerado un dios viviente.
+                    </div>
+                    <div class="info-card">
+                        <strong>👥 Sociedad</strong><br>
+                        Pirámide social: faraón, nobles, escribas, artesanos, campesinos, esclavos.
+                    </div>
+                    <div class="info-card">
+                        <strong>💰 Economía</strong><br>
+                        Agricultura (trigo, lino), ganadería, comercio (oro, piedras preciosas). Aprovechamiento de las crecidas del río Nilo.
+                    </div>
+                    <div class="info-card">
+                        <strong>⛪ Religión</strong><br>
+                        Politeísta. Creencia en la vida después de la muerte, <span class="highlight">momificación</span>. Principales dioses: <strong>Ra</strong> (dios solar, creación, luz y vida), <strong>Osiris</strong> (dios de la muerte y la resurrección, gobernaba el mundo de los muertos), <strong>Isis</strong> (diosa de la maternidad, la magia y la protección), <strong>Horus</strong> (dios del cielo y protector del faraón, representado como halcón).
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión:</strong> ¿Por qué era tan importante la momificación para los egipcios?</p>
+                    <p><strong>Respuesta:</strong> Los egipcios creían en la vida después de la muerte. La momificación preservaba el cuerpo del difunto, permitiendo que su alma (el "ka") pudiera reconocerlo y continuar su existencia en el más allá, bajo el juicio de Osiris.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Civilización China -->
+            <div class="slide">
+                <h2>🐉 Civilización China</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>👑 Política</strong><br>
+                        Dinastías (Xia, Shang, Qin, Han, Qing, entre otras). Poder centralizado con <span class="highlight">emperadores divinos</span>.
+                    </div>
+                    <div class="info-card">
+                        <strong>👥 Sociedad</strong><br>
+                        Jerarquía rígida: emperador, nobles y funcionarios, campesinos, artesanos, comerciantes, esclavos.
+                    </div>
+                    <div class="info-card">
+                        <strong>💰 Economía</strong><br>
+                        Agricultura (arroz, mijo), ganadería, comercio, artesanía (seda, porcelana, té).
+                    </div>
+                    <div class="info-card">
+                        <strong>⛪ Religión</strong><br>
+                        Politeísmo; <span class="highlight">culto a los antepasados</span>, confucianismo, taoísmo. Principales dioses: <strong>Shangdi</strong> (dios supremo asociado al cielo y el orden del universo), <strong>Nüwa</strong> (diosa creadora de la humanidad y reparadora del mundo), <strong>Tian</strong> (culto al cielo).
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión:</strong> ¿Qué importancia tenía el culto a los antepasados en la antigua China?</p>
+                    <p><strong>Respuesta:</strong> El culto a los antepasados era fundamental porque se creía que los espíritus de los ancestros podían influir en la vida de los vivos, protegiendo a la familia y otorgando prosperidad, reforzando la estructura social jerárquica.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: Civilización India -->
+            <div class="slide">
+                <h2>🕉️ Civilización India</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>👑 Política</strong><br>
+                        Reinos y ciudades-Estado. Poder asociado a <span class="highlight">castas</span>.
+                    </div>
+                    <div class="info-card">
+                        <strong>👥 Sociedad</strong><br>
+                        Sistema de <span class="highlight">castas</span>: <strong>Brahmanes</strong> (sacerdotes, maestros y estudiosos), <strong>Kshatriyas</strong> (guerreros y gobernantes), <strong>Vaishyas</strong> (comerciantes), <strong>Shudras</strong> (trabajadores y sirvientes). <strong>Dalits</strong> (también llamados parias): clase social excluida del sistema de castas. Esclavos no formaban parte del sistema de castas.
+                    </div>
+                    <div class="info-card">
+                        <strong>💰 Economía</strong><br>
+                        Agricultura (arroz, especias, aceites vegetales), ganadería, comercio (algodón, marfil, perlas, cerámica).
+                    </div>
+                    <div class="info-card">
+                        <strong>⛪ Religión</strong><br>
+                        Hinduismo, budismo; creencia en el <span class="highlight">karma y la reencarnación</span>. Principales dioses: <strong>Brahma</strong> (creador del mundo), <strong>Vishnu</strong> (dios que protege y mantiene el equilibrio del mundo), <strong>Shiva</strong> (dios de la destrucción y la transformación, asociado también a la renovación).
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión:</strong> ¿Cómo influía el sistema de castas en la organización social de la India antigua?</p>
+                    <p><strong>Respuesta:</strong> El sistema de castas era una estructura jerárquica rígida y hereditaria que determinaba la profesión, derechos, relaciones sociales y estatus de cada persona. No existía movilidad social, y los Dalits (parias) estaban completamente excluidos.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: Civilización Olmeca -->
+            <div class="slide">
+                <h2>🗿 Civilización Olmeca (Mesoamérica)</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>👑 Política</strong><br>
+                        Autoridad teocrática. Centros ceremoniales: <span class="highlight">La Venta, San Lorenzo, Tres Zapotes</span>.
+                    </div>
+                    <div class="info-card">
+                        <strong>👥 Sociedad</strong><br>
+                        Élite gobernante, sacerdotes, artesanos, comerciantes, campesinos. No se dispone de evidencia suficiente sobre la existencia de esclavos.
+                    </div>
+                    <div class="info-card">
+                        <strong>💰 Economía</strong><br>
+                        Agricultura (maíz, frijoles, calabaza, cacao), comercio de jade y obsidiana.
+                    </div>
+                    <div class="info-card">
+                        <strong>⛪ Religión</strong><br>
+                        Politeísta con rituales complejos vinculados al poder político y religioso. Destaca la figura del <span class="highlight">"hombre-jaguar"</span>, una representación sobrenatural asociada al jaguar, que simbolizaba la fuerza, el poder, la fertilidad y la conexión con el mundo espiritual.
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión:</strong> ¿Qué simbolizaba el jaguar para la civilización olmeca?</p>
+                    <p><strong>Respuesta:</strong> El jaguar era un animal sagrado que simbolizaba la fuerza, el poder, la fertilidad y la conexión con el mundo espiritual. La figura del "hombre-jaguar" (ser híbrido entre humano y felino) aparece frecuentemente en su arte.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: Civilización Fenicia -->
+            <div class="slide">
+                <h2>⚓ Civilización Fenicia</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>👑 Política</strong><br>
+                        Ciudades-estado independientes (<span class="highlight">Tiro, Sidón, Biblos</span>). Monarquías.
+                    </div>
+                    <div class="info-card">
+                        <strong>👥 Sociedad</strong><br>
+                        Reyes, nobleza, comerciantes, artesanos, campesinos, esclavos.
+                    </div>
+                    <div class="info-card">
+                        <strong>💰 Economía</strong><br>
+                        Vinculada fundamentalmente al <span class="highlight">comercio marítimo</span> y la navegación. Agricultura (olivos, vid), ganadería. Principales productos: metales, vino, aceite, trigo.
+                    </div>
+                    <div class="info-card">
+                        <strong>⛪ Religión</strong><br>
+                        Politeísta; dioses asociados al mar y la navegación. Principales dioses: <strong>Baal</strong> (dios de las tormentas, lluvia y fertilidad agrícola), <strong>Astarté</strong> (diosa del amor, la fertilidad y la guerra).
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión:</strong> ¿Por qué los fenicios destacaron como grandes navegantes y comerciantes?</p>
+                    <p><strong>Respuesta:</strong> Vivían en una región costera con escasas tierras cultivables, lo que los impulsó a desarrollar la navegación. Construyeron barcos avanzados, establecieron colonias en todo el Mediterráneo (como Cartago) y crearon un alfabeto fonético que facilitó el comercio.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: Civilización Minoica -->
+            <div class="slide">
+                <h2>🏛️ Civilización Minoica (Creta)</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>👑 Política</strong><br>
+                        Monarquía centralizada en torno a <span class="highlight">palacios</span> (<strong>Cnosos</strong>). Los palacios funcionaban como centros políticos, religiosos, económicos y administrativos.
+                    </div>
+                    <div class="info-card">
+                        <strong>👥 Sociedad</strong><br>
+                        Reyes y élite, sacerdotes y sacerdotisas, comerciantes y artesanos. Sociedad avanzada con cierto nivel de igualdad femenina. No existe información completamente documentada sobre la existencia de esclavos.
+                    </div>
+                    <div class="info-card">
+                        <strong>💰 Economía</strong><br>
+                        Principalmente <span class="highlight">comercio marítimo</span>. Agricultura (vino, aceite de oliva, trigo, cebada), ganadería (olivos, uva).
+                    </div>
+                    <div class="info-card">
+                        <strong>⛪ Religión</strong><br>
+                        Politeísta centrada en cultos vinculados a la naturaleza, la fertilidad y el poder simbólico de ciertos animales. Destacan <strong>representaciones femeninas asociadas a la fertilidad</strong>, interpretadas como "diosas madre", así como figuras de <strong>"diosas serpiente"</strong> (protección y regeneración espiritual). El <strong>toro</strong> fue un símbolo importante de fuerza y poder ritual. El llamado <strong>"laberinto"</strong> y su relación con el palacio de Cnosos corresponde a interpretaciones posteriores de la tradición griega.
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión:</strong> ¿Qué papel tenían los palacios en la civilización minoica?</p>
+                    <p><strong>Respuesta:</strong> Los palacios minoicos (como el de Cnosos) no eran solo residencias reales, sino que funcionaban como centros administrativos, económicos (almacenes de productos), religiosos (santuarios) y culturales, siendo el núcleo de la organización política y social.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: Civilización Chavín -->
+            <div class="slide">
+                <h2>⛰️ Civilización Chavín (Andes Centrales)</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>👑 Política</strong><br>
+                        <span class="highlight">Teocracia</span>. Líderes políticos: sacerdotes y líderes religiosos.
+                    </div>
+                    <div class="info-card">
+                        <strong>👥 Sociedad</strong><br>
+                        Sacerdotes como clase dominante, artesanos, agricultores. No existe evidencia sólida sobre la existencia de esclavitud.
+                    </div>
+                    <div class="info-card">
+                        <strong>💰 Economía</strong><br>
+                        Agricultura y ganadería. Principales productos: <span class="highlight">papas, maíz, quinoa, ají</span>.
+                    </div>
+                    <div class="info-card">
+                        <strong>⛪ Religión</strong><br>
+                        Politeísmo. Destacaban representaciones de felinos, especialmente el <span class="highlight">jaguar</span>, asociados al poder, la autoridad religiosa y la fuerza. También aparecen serpientes dentro del simbolismo religioso, integradas en <strong>figuras híbridas</strong> que combinan rasgos humanos y animales, reflejando una cosmovisión centrada en lo sobrenatural y lo sagrado.
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión:</strong> ¿Qué característica principal tenía la organización política de Chavín?</p>
+                    <p><strong>Respuesta:</strong> Chavín era una teocracia, es decir, el poder político estaba en manos de los sacerdotes y líderes religiosos. El centro ceremonial de Chavín de Huántar funcionaba como lugar de peregrinación y culto, donde la élite religiosa controlaba la esfera espiritual, política y económica.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: Cuadro comparativo de todas las civilizaciones -->
+            <div class="slide">
+                <h2>📊 Cuadro comparativo completo</h2>
+                <table>
+                    <tr><th>Civilización</th><th>Organización Política</th><th>Sociedad</th><th>Economía</th><th>Religión</th></tr>
+                    <tr><td><strong>Sumeria</strong></td><td>Ciudades-Estado (Ur, Uruk, Lagash). Reyes-sacerdotes (patesi).</td><td>Nobles, sacerdotes, comerciantes, campesinos, esclavos.</td><td>Agricultura (cebada, trigo), ganadería, comercio.</td><td>Politeísta. Zigurats. Dioses: Anu, Enlil, Utu.</td></tr>
+                    <tr><td><strong>Egipto</strong></td><td>Monarquía teocrática. Faraón dios viviente.</td><td>Faraón, nobles, escribas, artesanos, campesinos, esclavos.</td><td>Agricultura (trigo, lino), comercio (oro, piedras).</td><td>Politeísta. Momificación. Dioses: Ra, Osiris, Isis, Horus.</td></tr>
+                    <tr><td><strong>China</strong></td><td>Dinastías (Xia, Shang, Qin). Emperador divino.</td><td>Emperador, nobles, funcionarios, campesinos, artesanos, comerciantes, esclavos.</td><td>Agricultura (arroz, mijo), seda, porcelana, té.</td><td>Politeísmo, culto antepasados, confucianismo. Dioses: Shangdi, Nüwa, Tian.</td></tr>
+                    <tr><td><strong>India</strong></td><td>Reinos y ciudades-Estado. Poder asociado a castas.</td><td>Brahmanes, Kshatriyas, Vaishyas, Shudras, Dalits, esclavos.</td><td>Agricultura (arroz, especias), comercio (algodón, marfil, perlas).</td><td>Hinduismo, budismo. Karma, reencarnación. Dioses: Brahma, Vishnu, Shiva.</td></tr>
+                    <tr><td><strong>Fenicia</strong></td><td>Ciudades-estado (Tiro, Sidón, Biblos). Monarquías.</td><td>Reyes, nobleza, comerciantes, artesanos, campesinos, esclavos.</td><td>Comercio marítimo, navegación. Metales, vino, aceite, trigo.</td><td>Politeísta. Dioses: Baal, Astarté.</td></tr>
+                    <tr><td><strong>Minoica</strong></td><td>Monarquía palacial (Cnosos).</td><td>Reyes, élite, sacerdotes, comerciantes, artesanos. Igualdad femenina.</td><td>Comercio marítimo. Vino, aceite de oliva, trigo, cebada.</td><td>Diosas madre, diosas serpiente. Culto al toro. Laberinto.</td></tr>
+                    <tr><td><strong>Olmeca</strong></td><td>Teocracia. Centros ceremoniales: La Venta, San Lorenzo, Tres Zapotes.</td><td>Élite, sacerdotes, artesanos, comerciantes, campesinos.</td><td>Agricultura (maíz, frijol, calabaza, cacao), comercio de jade, obsidiana.</td><td>Hombre-jaguar (fuerza, poder, fertilidad, conexión espiritual).</td></tr>
+                    <tr><td><strong>Chavín</strong></td><td>Teocracia (sacerdotes gobernantes).</td><td>Sacerdotes clase dominante, artesanos, agricultores.</td><td>Agricultura (papas, maíz, quinoa, ají), ganadería.</td><td>Felinos (jaguar), serpientes, figuras híbridas (humano-animal).</td></tr>
+                </table>
+                <div class="info-card">
+                    <strong>📘 Conclusión:</strong> Cada civilización desarrolló formas únicas de organización según su entorno y necesidades, pero todas compartieron rasgos como la estratificación social, el desarrollo de sistemas religiosos complejos y la construcción de grandes obras arquitectónicas.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta final integradora:</strong> ¿Qué similitudes encuentras entre las civilizaciones de Sumeria y Egipto? ¿Y entre Olmeca y Chavín?</p>
+                    <p><strong>Respuesta:</strong> Sumeria y Egipto eran <strong>teocráticas</strong> (reyes-sacerdotes o faraones divinos), desarrollaron escritura, construyeron grandes monumentos religiosos (zigurats y pirámides) y tenían sociedades jerarquizadas. Olmeca y Chavín también eran <strong>teocráticas</strong>, con sacerdotes gobernantes, economías agrícolas y religiones que destacaban figuras de felinos (jaguar) como símbolo de poder y conexión espiritual.</p>
+                </div>
+                <p style="margin-top: 1rem; text-align: center;">📚 <strong>Fin de la clase</strong> — Practica con los ejercicios.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 10</div>
+    </div>
+
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slideCounterSpan.innerText = `Slide ${currentIndex+1} / ${totalSlides}`;
+    }
+    function nextSlide() { if (currentIndex < totalSlides-1) { currentIndex++; updateSlidePosition(); } }
+    function prevSlide() { if (currentIndex > 0) { currentIndex--; updateSlidePosition(); } }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { nextSlide(); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { prevSlide(); e.preventDefault(); }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => { window.location.href = 'Historia.html'; });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => { window.location.href = 'C_3A_Historia.html'; });
+    updateSlidePosition();
+</script>
+</body>
+</html>
