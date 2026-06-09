@@ -264,14 +264,12 @@
     </div>
 
     <div id="examContent">
-        <!-- SECCIÓN I: SELECCIÓN MÚLTIPLE -->
         <div class="section">
             <div class="section-title">📌 I. Selección Múltiple</div>
             <p>Selecciona la opción correcta para cada pregunta.</p>
             <div id="multipleChoice"></div>
         </div>
 
-        <!-- SECCIÓN II: RELACIÓN DE COLUMNAS -->
         <div class="section">
             <div class="section-title">🔗 II. Relación de Columnas</div>
             <p>Elige el término que mejor corresponde a cada descripción.</p>
@@ -281,7 +279,6 @@
             </table>
         </div>
 
-        <!-- SECCIÓN III: VERDADERO O FALSO -->
         <div class="section">
             <div class="section-title">⚖️ III. Verdadero o Falso</div>
             <p>Selecciona Verdadero (V) o Falso (F) para cada afirmación.</p>
@@ -300,97 +297,100 @@
 
 <script>
     // ==================== POOL DE PREGUNTAS (40 por cada sección) ====================
+    // SIN PREGUNTAS SOBRE DIOSES (nombres de divinidades eliminados)
 
     // ----- Banco de Selección Múltiple (40 preguntas)
     const bankMultipleChoice = [
         { text: "¿Cómo se llamaban los reyes-sacerdotes que gobernaban las ciudades-estado sumerias?", options: ["a. Faraones", "b. Patesi", "c. Rajas", "d. Califas"], correct: "b" },
         { text: "¿Cuál era la principal actividad económica de los fenicios?", options: ["a. Agricultura", "b. Minería", "c. Comercio marítimo", "d. Ganadería"], correct: "c" },
-        { text: "¿Qué dios egipcio era considerado el dios del sol y la creación?", options: ["a. Osiris", "b. Horus", "c. Ra", "d. Isis"], correct: "c" },
         { text: "¿Qué construcción religiosa característica desarrollaron los sumerios?", options: ["a. Pirámides", "b. Templos griegos", "c. Zigurats", "d. Menhires"], correct: "c" },
         { text: "¿Qué civilización desarrolló el sistema de castas?", options: ["a. China", "b. Egipto", "c. India", "d. Fenicia"], correct: "c" },
         { text: "¿Quiénes eran los Brahmanes en la sociedad india?", options: ["a. Guerreros", "b. Comerciantes", "c. Sacerdotes y maestros", "d. Campesinos"], correct: "c" },
         { text: "¿Qué civilización construyó el palacio de Cnosos, asociado al mito del laberinto?", options: ["a. Fenicia", "b. Minoica", "c. Olmeca", "d. Sumeria"], correct: "b" },
         { text: "¿Qué animal era un símbolo sagrado importante para la civilización minoica?", options: ["a. Jaguar", "b. Serpiente", "c. Toro", "d. Águila"], correct: "c" },
         { text: "¿Cuál de las siguientes era una ciudad-estado fenicia?", options: ["a. Ur", "b. Tebas", "c. Tiro", "d. Mohenjo-Daro"], correct: "c" },
-        { text: "¿Qué diosa fenicia estaba asociada al amor, la fertilidad y la guerra?", options: ["a. Isis", "b. Astarté", "c. Nüwa", "d. Ishtar"], correct: "b" },
         { text: "¿Qué civilización mesoamericana desarrolló las 'cabezas colosales'?", options: ["a. Maya", "b. Azteca", "c. Olmeca", "d. Chavín"], correct: "c" },
         { text: "¿Qué figura sobrenatural era característica de la religión olmeca?", options: ["a. Hombre-jaguar", "b. Hombre-águila", "c. Dios serpiente", "d. Dios del trueno"], correct: "a" },
         { text: "¿Qué civilización andina tuvo su centro ceremonial en Chavín de Huántar?", options: ["a. Nazca", "b. Moche", "c. Chavín", "d. Tiwanaku"], correct: "c" },
         { text: "¿Qué productos agrícolas cultivaba la civilización Chavín?", options: ["a. Trigo y cebada", "b. Arroz y té", "c. Papas, maíz, quinoa y ají", "d. Olivos y vid"], correct: "c" },
         { text: "¿Qué dinastía china fue una de las primeras en gobernar?", options: ["a. Han", "b. Tang", "c. Xia", "d. Ming"], correct: "c" },
-        { text: "¿Qué dios chino era considerado el dios supremo asociado al cielo?", options: ["a. Tian", "b. Shangdi", "c. Nüwa", "d. Buda"], correct: "b" },
         { text: "¿Qué práctica funeraria era característica del Antiguo Egipto?", options: ["a. Cremación", "b. Momificación", "c. Entierro en urnas", "d. Exposición al aire libre"], correct: "b" },
-        { text: "¿Quién era el dios egipcio de la muerte y la resurrección?", options: ["a. Ra", "b. Horus", "c. Osiris", "d. Anubis"], correct: "c" },
         { text: "¿Qué civilización destacó por su alfabeto fonético de 22 signos?", options: ["a. Sumeria", "b. Egipto", "c. Fenicia", "d. China"], correct: "c" },
         { text: "¿Qué grupo social estaba en la cúspide de la pirámide social egipcia?", options: ["a. Sacerdotes", "b. Escribas", "c. Faraón", "d. Nobles"], correct: "c" },
-        { text: "¿Qué dios sumerio era el dios del viento, las tormentas y el poder?", options: ["a. Anu", "b. Enlil", "c. Utu", "d. Marduk"], correct: "b" },
         { text: "¿Qué civilización tenía una sociedad con cierto nivel de igualdad femenina?", options: ["a. Sumeria", "b. Egipto", "c. Minoica", "d. China"], correct: "c" },
         { text: "¿Qué productos comercializaban los fenicios?", options: ["a. Seda y porcelana", "b. Metales, vino, aceite y trigo", "c. Especias y marfil", "d. Jade y obsidiana"], correct: "b" },
-        { text: "¿Qué civilización adoraba a los dioses Brahma, Vishnu y Shiva?", options: ["a. China", "b. India", "c. Egipto", "d. Fenicia"], correct: "b" },
         { text: "¿Qué grupo social estaba excluido del sistema de castas en la India?", options: ["a. Brahmanes", "b. Kshatriyas", "c. Dalits (parias)", "d. Vaishyas"], correct: "c" },
         { text: "¿Qué civilización tenía centros ceremoniales en La Venta, San Lorenzo y Tres Zapotes?", options: ["a. Maya", "b. Olmeca", "c. Azteca", "d. Chavín"], correct: "b" },
         { text: "¿Qué simbolizaba el jaguar para la cultura olmeca y chavín?", options: ["a. La fertilidad agrícola", "b. La fuerza, el poder y la conexión espiritual", "c. La sabiduría", "d. La muerte"], correct: "b" },
         { text: "¿Qué tipo de gobierno tenía el Antiguo Egipto?", options: ["a. Democracia", "b. Monarquía teocrática", "c. República", "d. Oligarquía"], correct: "b" },
         { text: "¿Qué producto chino era muy valorado en el comercio internacional?", options: ["a. Oro", "b. Seda", "c. Especias", "d. Marfil"], correct: "b" },
         { text: "¿Quiénes eran los Kshatriyas en el sistema de castas indio?", options: ["a. Sacerdotes", "b. Comerciantes", "c. Guerreros y gobernantes", "d. Trabajadores"], correct: "c" },
-        { text: "¿Qué diosa egipcia era la diosa de la maternidad, la magia y la protección?", options: ["a. Isis", "b. Neftis", "c. Hathor", "d. Bastet"], correct: "a" },
         { text: "¿Qué civilización creó el primer código de leyes escrito (Código de Hammurabi)?", options: ["a. Egipto", "b. Sumeria", "c. China", "d. India"], correct: "b" },
         { text: "¿Qué civilización desarrolló la escritura cuneiforme?", options: ["a. Egipto", "b. Fenicia", "c. Sumeria", "d. China"], correct: "c" },
-        { text: "¿Qué dios fenicio era el dios de las tormentas, la lluvia y la fertilidad agrícola?", options: ["a. Astarté", "b. Baal", "c. Melqart", "d. El"], correct: "b" },
         { text: "¿Qué civilización creía en el karma y la reencarnación?", options: ["a. Egipto", "b. China", "c. India", "d. Sumeria"], correct: "c" },
         { text: "¿Qué culto era fundamental en la religión china antigua?", options: ["a. Culto al sol", "b. Culto a los antepasados", "c. Culto a la luna", "d. Culto al mar"], correct: "b" },
         { text: "¿Qué característica política tenían las ciudades-estado sumerias?", options: ["a. Eran un imperio unificado", "b. Eran independientes con sus propios gobernantes", "c. Eran colonias fenicias", "d. Eran parte del Imperio Persa"], correct: "b" },
-        { text: "¿Qué civilización utilizaba el sistema de terrazas de cultivo en los Andes?", options: ["a. Olmeca", "b. Chavín", "c. Inca (posterior a Chavín)", "d. Minoica"], correct: "b" }
+        { text: "¿Qué río fue fundamental para el desarrollo de la civilización egipcia?", options: ["a. Tigris", "b. Éufrates", "c. Nilo", "d. Indo"], correct: "c" },
+        { text: "¿Qué tipo de escritura desarrollaron los sumerios?", options: ["a. Jeroglífica", "b. Cuneiforme", "c. Alfabética", "d. Ideográfica"], correct: "b" },
+        { text: "¿Qué civilización construyó grandes pirámides como tumbas para sus gobernantes?", options: ["a. Sumeria", "b. Egipto", "c. China", "d. India"], correct: "b" },
+        { text: "¿Qué material utilizaban los escribas egipcios para escribir?", options: ["a. Tablillas de arcilla", "b. Papiro", "c. Pergamino", "d. Seda"], correct: "b" },
+        { text: "¿Qué civilización del Indo destacó por su urbanismo planificado?", options: ["a. Tebas", "b. Menfis", "c. Mohenjo-Daro", "d. Babilonia"], correct: "c" },
+        { text: "¿Qué dinastía china construyó la primera Gran Muralla?", options: ["a. Shang", "b. Zhou", "c. Qin", "d. Han"], correct: "c" },
+        { text: "¿Qué tipo de construcción religiosa caracterizó a Mesopotamia?", options: ["a. Pirámide", "b. Zigurat", "c. Templo griego", "d. Menhir"], correct: "b" },
+        { text: "¿Qué imperio unificó por primera vez gran parte de Mesopotamia?", options: ["a. Acadio", "b. Asirio", "c. Persa", "d. Neo babilónico"], correct: "a" },
+        { text: "¿Qué metal representó un gran avance tecnológico en la antigüedad al ser más duro que el cobre?", options: ["a. Bronce", "b. Oro", "c. Plata", "d. Aluminio"], correct: "a" },
+        { text: "¿Qué cultura andina precedió a los incas y destacó por su centro ceremonial Chavín de Huántar?", options: ["a. Nazca", "b. Moche", "c. Chavín", "d. Tiwanaku"], correct: "c" }
     ];
 
     // ----- Banco Relación de Columnas (40 ítems)
     const bankMatch = [
         { description: "Gobernante del Antiguo Egipto, considerado un dios viviente.", correct: "Faraón" },
         { description: "Templo escalonado característico de la civilización sumeria.", correct: "Zigurat" },
-        { description: "Dios egipcio del sol y la creación.", correct: "Ra" },
         { description: "Ciudad-estado fenicia famosa por su comercio marítimo.", correct: "Tiro" },
         { description: "Sacerdotes y maestros en el sistema de castas indio.", correct: "Brahmanes" },
         { description: "Palacio minoico asociado al mito del laberinto.", correct: "Cnosos" },
         { description: "Figura sobrenatural olmeca que combinaba rasgos humanos y de felino.", correct: "Hombre-jaguar" },
-        { description: "Dios supremo chino asociado al cielo y el orden del universo.", correct: "Shangdi" },
-        { description: "Diosa egipcia de la maternidad, la magia y la protección.", correct: "Isis" },
+        { description: "Proceso funerario egipcio para preservar el cuerpo.", correct: "Momificación" },
         { description: "Animal sagrado para la civilización minoica, símbolo de fuerza y poder ritual.", correct: "Toro" },
-        { description: "Dios fenicio de las tormentas, la lluvia y la fertilidad agrícola.", correct: "Baal" },
         { description: "Centro ceremonial olmeca ubicado en el actual estado de Tabasco, México.", correct: "La Venta" },
-        { description: "Dios sumerio del sol y la justicia.", correct: "Utu" },
-        { description: "Dios hindú creador del mundo.", correct: "Brahma" },
         { description: "Civilización andina teocrática con centro en Chavín de Huántar.", correct: "Chavín" },
         { description: "Tipo de gobierno donde el poder político está vinculado a la religión.", correct: "Teocracia" },
-        { description: "Dios egipcio protector del faraón, representado como un halcón.", correct: "Horus" },
         { description: "Producto de lujo muy valorado de la antigua China.", correct: "Seda" },
         { description: "Grupo social excluido del sistema de castas en la India.", correct: "Dalits" },
-        { description: "Diosa fenicia del amor, la fertilidad y la guerra.", correct: "Astarté" },
-        { description: "Dios sumerio del cielo, considerado padre de los dioses.", correct: "Anu" },
-        { description: "Proceso funerario egipcio para preservar el cuerpo.", correct: "Momificación" },
         { description: "Guerreros y gobernantes en el sistema de castas indio.", correct: "Kshatriyas" },
-        { description: "Diosa china creadora de la humanidad y reparadora del mundo.", correct: "Nüwa" },
-        { description: "Dios hindú protector y mantenedor del equilibrio del mundo.", correct: "Vishnu" },
-        { description: "Dios hindú de la destrucción y la transformación.", correct: "Shiva" },
-        { description: "Dios sumerio del viento, las tormentas y el poder.", correct: "Enlil" },
+        { description: "Comerciantes en el sistema de castas indio.", correct: "Vaishyas" },
         { description: "Ciudad sumeria importante del periodo arcaico.", correct: "Ur" },
         { description: "Creencia religiosa india sobre la causa y efecto de las acciones.", correct: "Karma" },
-        { description: "Figuras híbridas de la religión chavín que combinaban rasgos humanos y animales.", correct: "Figuras híbridas" },
         { description: "Culto religioso fundamental en la antigua China.", correct: "Culto a los antepasados" },
-        { description: "Dios egipcio de la muerte y la resurrección.", correct: "Osiris" },
         { description: "Río que fue fundamental para el desarrollo de la civilización egipcia.", correct: "Nilo" },
-        { description: "Comerciantes en el sistema de castas indio.", correct: "Vaishyas" },
         { description: "Centro ceremonial chavín ubicado en los Andes peruanos.", correct: "Chavín de Huántar" },
-        { description: "Dios supremo chino asociado al culto celestial.", correct: "Tian" },
-        { description: "Animal sagrado para las culturas olmeca y chavín, símbolo de poder.", correct: "Jaguar" },
         { description: "Trabajadores y sirvientes en el sistema de castas indio.", correct: "Shudras" },
-        { description: "Ciudad fenicia famosa por su industria textil y comercio de púrpura.", correct: "Sidón" }
+        { description: "Ciudad fenicia famosa por su industria textil y comercio de púrpura.", correct: "Sidón" },
+        { description: "Rey-sacerdote que gobernaba las ciudades-estado sumerias.", correct: "Patesi" },
+        { description: "Escritura desarrollada por los sumerios sobre tablillas de arcilla.", correct: "Cuneiforme" },
+        { description: "Máxima autoridad política y religiosa en el Antiguo Egipto.", correct: "Faraón" },
+        { description: "Ciudad fenicia más importante del norte de África.", correct: "Cartago" },
+        { description: "Primer metal utilizado para fabricar herramientas en la antigüedad.", correct: "Cobre" },
+        { description: "Escritura sagrada egipcia tallada en monumentos.", correct: "Jeroglífica" },
+        { description: "Civilización que desarrolló el alfabeto fonético de 22 signos.", correct: "Fenicios" },
+        { description: "Estructura social jerarquizada típica de las primeras civilizaciones.", correct: "Estratificación" },
+        { description: "Batalla naval decisiva donde los griegos vencieron a los persas (480 a.C.)", correct: "Salamina" },
+        { description: "Historiador griego considerado 'padre de la historia'.", correct: "Heródoto" },
+        { description: "Grupo social excluido de la ciudadanía ateniense que vivía en Atenas sin derechos políticos.", correct: "Meteco" },
+        { description: "Animal domesticado en los Andes centrales utilizado como carga.", correct: "Llama" },
+        { description: "Cereal domesticado en Mesoamérica base de la alimentación prehispánica.", correct: "Maíz" },
+        { description: "Técnica agrícola neolítica que consistía en pulir la piedra.", correct: "Piedra pulida" },
+        { description: "Río que junto al Éufrates bañaba Mesopotamia.", correct: "Tigris" },
+        { description: "Escritura fenicia que influyó en el alfabeto griego y latino.", correct: "Alfabeto fonético" },
+        { description: "Género teatral griego que mostraba grandes conflictos humanos.", correct: "Tragedia" }
     ];
 
     const matchOptionsList = [
-        "Faraón", "Zigurat", "Ra", "Tiro", "Brahmanes", "Cnosos", "Hombre-jaguar", "Shangdi", "Isis", "Toro",
-        "Baal", "La Venta", "Utu", "Brahma", "Chavín", "Teocracia", "Horus", "Seda", "Dalits", "Astarté",
-        "Anu", "Momificación", "Kshatriyas", "Nüwa", "Vishnu", "Shiva", "Enlil", "Ur", "Karma", "Figuras híbridas",
-        "Culto a los antepasados", "Osiris", "Nilo", "Vaishyas", "Chavín de Huántar", "Tian", "Jaguar", "Shudras", "Sidón"
+        "Faraón", "Zigurat", "Tiro", "Brahmanes", "Cnosos", "Hombre-jaguar", "Momificación", "Toro",
+        "La Venta", "Chavín", "Teocracia", "Seda", "Dalits", "Kshatriyas", "Vaishyas", "Ur", "Karma",
+        "Culto a los antepasados", "Nilo", "Chavín de Huántar", "Shudras", "Sidón", "Patesi", "Cuneiforme",
+        "Cartago", "Cobre", "Jeroglífica", "Fenicios", "Estratificación", "Salamina", "Heródoto", "Meteco",
+        "Llama", "Maíz", "Piedra pulida", "Tigris", "Alfabeto fonético", "Tragedia"
     ];
 
     // ----- Banco Verdadero/Falso (40 afirmaciones)
@@ -404,39 +404,38 @@
         { text: "El jaguar era un animal sagrado para las culturas olmeca y chavín.", correct: "V" },
         { text: "Chavín de Huántar fue un centro ceremonial teocrático en los Andes.", correct: "V" },
         { text: "Los Brahmanes eran los guerreros en el sistema de castas indio.", correct: "F" },
-        { text: "El dios Ra era el dios del sol en el Antiguo Egipto.", correct: "V" },
         { text: "Los fenicios crearon el primer alfabeto fonético de la historia.", correct: "V" },
         { text: "La civilización minoica tenía una sociedad con igualdad femenina avanzada.", correct: "V" },
         { text: "El culto a los antepasados era importante en la antigua China.", correct: "V" },
-        { text: "El dios Osiris era el dios del sol en Egipto.", correct: "F" },
         { text: "Los zigurats eran templos construidos por los egipcios.", correct: "F" },
         { text: "Las cabezas colosales son un legado de la civilización olmeca.", correct: "V" },
         { text: "El toro era un animal sagrado para la civilización minoica.", correct: "V" },
         { text: "Los Dalits eran la casta más alta en la India.", correct: "F" },
-        { text: "El dios Baal era adorado por los fenicios.", correct: "V" },
         { text: "La momificación era una práctica funeraria exclusiva de Mesopotamia.", correct: "F" },
         { text: "La ciudad de Tiro fue una importante ciudad-estado fenicia.", correct: "V" },
-        { text: "El dios Utu era el dios sumerio del sol y la justicia.", correct: "V" },
         { text: "La civilización Chavín se desarrolló en Mesoamérica.", correct: "F" },
-        { text: "El dios Vishnu es el creador del mundo en el hinduismo.", correct: "F" },
         { text: "El palacio de Cnosos está asociado al mito del laberinto.", correct: "V" },
         { text: "Los Kshatriyas eran los sacerdotes en la India.", correct: "F" },
-        { text: "El dios Anu era el padre de los dioses en Sumeria.", correct: "V" },
         { text: "La seda fue un producto muy valorado de la antigua China.", correct: "V" },
         { text: "Chavín de Huántar se ubica en los Andes peruanos.", correct: "V" },
         { text: "Los olmecas no tenían una organización política teocrática.", correct: "F" },
-        { text: "El dios Horus era representado como un halcón en Egipto.", correct: "V" },
         { text: "La civilización fenicia se desarrolló en el valle del Nilo.", correct: "F" },
-        { text: "El dios Enlil era el dios sumerio del viento y las tormentas.", correct: "V" },
         { text: "Los Shudras eran los comerciantes en el sistema de castas.", correct: "F" },
-        { text: "La diosa Isis era la diosa de la maternidad y la magia en Egipto.", correct: "V" },
         { text: "El hombre-jaguar es una figura sobrenatural olmeca.", correct: "V" },
         { text: "La civilización minoica no tenía palacios centralizados.", correct: "F" },
         { text: "El río Nilo fue fundamental para el desarrollo de Egipto.", correct: "V" },
-        { text: "Los fenicios no establecieron colonias en el Mediterráneo.", correct: "F" }
+        { text: "Los fenicios no establecieron colonias en el Mediterráneo.", correct: "F" },
+        { text: "La escritura cuneiforme fue desarrollada por los sumerios.", correct: "V" },
+        { text: "El Código de Hammurabi es uno de los primeros conjuntos de leyes escritas.", correct: "V" },
+        { text: "Los mayas construyeron las cabezas colosales.", correct: "F" },
+        { text: "La civilización olmeca se desarrolló en los Andes Centrales.", correct: "F" },
+        { text: "El sistema de castas era hereditario y rígido en la India.", correct: "V" },
+        { text: "Los fenicios no desarrollaron un alfabeto fonético.", correct: "F" },
+        { text: "La Gran Muralla China fue construida durante la dinastía Qin.", correct: "V" },
+        { text: "Los minoicos no tenían escritura conocida.", correct: "F" },
+        { text: "La economía fenicia se basaba principalmente en la agricultura.", correct: "F" }
     ];
 
-    // Función para obtener elementos aleatorios de un array
     function getRandomItems(arr, count) {
         const shuffled = [...arr];
         for (let i = shuffled.length - 1; i > 0; i--) {
@@ -446,17 +445,10 @@
         return shuffled.slice(0, count);
     }
 
-    // Variables dinámicas
-    let currentMC = [];
-    let currentMatch = [];
-    let currentTF = [];
-    
-    let mcAnswers = [];
-    let matchAnswers = [];
-    let tfAnswers = [];
-    
+    let currentMC = [], currentMatch = [], currentTF = [];
+    let mcAnswers = [], matchAnswers = [], tfAnswers = [];
     let evaluated = false;
-    
+
     function renderMultipleChoice() {
         const container = document.getElementById('multipleChoice');
         container.innerHTML = '';
@@ -476,19 +468,16 @@
                 ${evaluated ? `<div style="font-size:0.8rem; margin-top:0.3rem;">${mcAnswers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta: ' + q.correct}</div>` : ''}
             `;
             container.appendChild(qDiv);
-            
             if (!evaluated) {
                 const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
                 radios.forEach(radio => {
                     if (mcAnswers[idx] === radio.value) radio.checked = true;
-                    radio.addEventListener('change', (e) => {
-                        mcAnswers[idx] = e.target.value;
-                    });
+                    radio.addEventListener('change', (e) => { mcAnswers[idx] = e.target.value; });
                 });
             }
         });
     }
-    
+
     function renderMatch() {
         const tbody = document.getElementById('matchBody');
         tbody.innerHTML = '';
@@ -498,14 +487,12 @@
             const cellDesc = row.insertCell(0);
             const cellSelect = row.insertCell(1);
             cellDesc.innerHTML = `${idx+1}. ${item.description}`;
-            
             const select = document.createElement('select');
             select.disabled = evaluated;
             const defaultOpt = document.createElement('option');
             defaultOpt.value = "";
             defaultOpt.textContent = "Seleccione...";
             select.appendChild(defaultOpt);
-            
             const allOptions = [...new Set(currentMatch.map(i => i.correct).concat(matchOptionsList))];
             allOptions.sort().forEach(opt => {
                 const option = document.createElement('option');
@@ -514,12 +501,8 @@
                 if (!evaluated && matchAnswers[idx] === opt) option.selected = true;
                 select.appendChild(option);
             });
-            
-            select.addEventListener('change', (e) => {
-                matchAnswers[idx] = e.target.value;
-            });
+            select.addEventListener('change', (e) => { matchAnswers[idx] = e.target.value; });
             cellSelect.appendChild(select);
-            
             if (evaluated) {
                 const isCorrect = matchAnswers[idx] === item.correct;
                 row.classList.add(isCorrect ? 'correct-row' : 'incorrect-row');
@@ -534,7 +517,7 @@
             }
         });
     }
-    
+
     function renderTrueFalse() {
         const tbody = document.getElementById('tfBody');
         tbody.innerHTML = '';
@@ -545,9 +528,7 @@
             cellText.innerHTML = `${idx+1}. ${item.text}`;
             const select = document.createElement('select');
             select.disabled = evaluated;
-            const defaultOpt = document.createElement('option');
-            defaultOpt.value = "";
-            defaultOpt.textContent = "Seleccione";
+            const defaultOpt = document.createElement('option'); defaultOpt.value = ""; defaultOpt.textContent = "Seleccione";
             select.appendChild(defaultOpt);
             const optV = document.createElement('option'); optV.value = "V"; optV.textContent = "Verdadero (V)";
             const optF = document.createElement('option'); optF.value = "F"; optF.textContent = "Falso (F)";
@@ -569,7 +550,7 @@
             }
         });
     }
-    
+
     function resetTest() {
         evaluated = false;
         currentMC = getRandomItems(bankMultipleChoice, 15);
@@ -584,7 +565,7 @@
         renderTrueFalse();
         window.scrollTo({ top: 0, behavior: 'smooth' });
     }
-    
+
     function evaluateAll() {
         evaluated = true;
         let mcCorrect = 0, matchCorrect = 0, tfCorrect = 0;
@@ -621,8 +602,7 @@
         document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_3_Historia.html');
         resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
     }
-    
-    // Inicializar
+
     resetTest();
     document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
 </script>
