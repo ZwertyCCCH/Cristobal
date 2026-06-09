@@ -1,0 +1,518 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: Habilidades Lectoras | Lengua y Literatura 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #fef6f0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffaf6;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            scrollbar-width: thin;
+            background: #fffaf6;
+            color: #3a1f0d;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #f0e0d0; }
+        .slide::-webkit-scrollbar-thumb { background: #c9753c; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #b5431a;
+            border-left: 7px solid #d9531e;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #c4450c;
+            margin: 1rem 0 0.6rem 0;
+            border-bottom: 2px solid #f0cfb0;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #d9672e;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+            color: #3a2a1a;
+            text-align: justify;
+        }
+
+        ul, .custom-list {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #fce4d0;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #c95a1c;
+        }
+
+        .info-card {
+            background: #fef0e6;
+            border-left: 6px solid #d9531e;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .question-sample {
+            background: #fdf0e8;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            margin: 1.2rem 0 0.5rem;
+            border-left: 5px solid #d95b2b;
+        }
+
+        .badge {
+            background: #d9531e;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #f0cfb0;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+            background: #fefcf8;
+        }
+        th {
+            background: #fce4d0;
+            color: #b5431a;
+            font-weight: 600;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf4;
+            border-top: 1px solid #f0cfb0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #d95b2b; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #f0cfb0;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #8a3c10;
+            font-weight: 500;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(200, 100, 50, 0.4);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #8a3c10;
+            transition: 0.2s;
+            z-index: 90;
+        }
+        .nav-arrow:hover { background: #d95b2b; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        .img-placeholder {
+            background: #fef0e6;
+            border-radius: 20px;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            text-align: center;
+            font-style: italic;
+            color: #a57a5a;
+            border: 1px dashed #e0b48a;
+        }
+        .img-placeholder img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            .grid-2 { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+            <!-- SLIDE 1: Portada -->
+            <div class="slide">
+                <h1>📖 Habilidades Lectoras</h1>
+                <p>Leer no es solo decodificar palabras. Es comprender, analizar, interpretar y reflexionar sobre lo que un texto nos dice explícita e implícitamente.</p>
+                <div class="info-card">
+                    <strong>📘 Objetivo de la clase:</strong> Desarrollar habilidades clave para la comprensión profunda de textos literarios y no literarios: identificar tema central y subtemas, caracterizar personajes, analizar la secuencia narrativa, diferenciar entre hecho y opinión, e inferir información implícita.
+                </div>
+                <div class="img-placeholder"><img src="" alt="Ilustración de lectura comprensiva"></div>
+                <p>Utilizaremos fragmentos de <strong>cuentos, poemas y artículos periodísticos</strong> del texto de Lengua y Literatura 7° básico para practicar cada habilidad.</p>
+            </div>
+
+            <!-- SLIDE 2: Habilidad 1 - Identificar tema central y subtemas -->
+            <div class="slide">
+                <h2>🎯 Habilidad 1: Identificar tema central y subtemas</h2>
+                <p>El <span class="highlight">tema central</span> es la idea principal que un texto comunica. Se expresa en una frase breve o un concepto (ej: "la amistad", "la identidad", "la superación"). Los <span class="highlight">subtemas</span> son ideas secundarias que se derivan del tema central y lo desarrollan.</p>
+                <div class="info-card">
+                    <strong>📘 Estrategia:</strong> Para identificar el tema central, pregúntate: ¿De qué trata principalmente este texto? ¿Qué problema o situación humana aborda?
+                </div>
+                <h3>Ejemplo del cuento "El mejor amigo de un muchacho" (Isaac Asimov, pág. 12-17)</h3>
+                <p><em>Fragmento:</em> "—No es un perro de verdad, Jimmy. Robutt tiene un cerebro positrónico muy sencillo y está hecho de acero y circuitos. No está vivo. —Hace todo lo que yo quiero que haga, papi. Me entiende. Te aseguro que está vivo."</p>
+                <ul>
+                    <li><strong>Tema central:</strong> La amistad y el vínculo afectivo más allá de la naturaleza biológica.</li>
+                    <li><strong>Subtemas:</strong> La identidad personal, la diferencia entre lo natural y lo artificial, la lealtad, el amor incondicional.</li>
+                </ul>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de práctica:</strong> ¿Cuál es el tema central del cuento "Amigos por el viento" de Liliana Bodoc (págs. 20-25)?</p>
+                    <p><strong>Respuesta:</strong> El tema central es <strong>la superación de las crisis emocionales a través del encuentro y la empatía</strong> (la protagonista y Juanjo comparten el dolor de la separación de sus padres). Subtemas: la resiliencia, la importancia de abrirse a los demás, el duelo, la amistad como sanación.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Práctica de tema central con "Sara y las goleadoras" -->
+            <div class="slide">
+                <h2>📖 Práctica: Identificar tema central</h2>
+                <h3>Fragmento de "Sara y las goleadoras" (Laura Gallego, págs. 50-57)</h3>
+                <p><em>"—Porque ahí dice MAS-CU-LI-NO, lista. [...] —¿Y por qué no, si puede saberse? —replicó ella, molesta—. ¿Me vas a decir, a estas alturas, que el fútbol es solo para hombres? [...] —Bueno, pero un equipo no está formado por una sola persona —murmuró Bruno por lo bajo—. Y está claro que en el equipo de chicos no puedes jugar porque... —Porque eres una chica —concluyó Lucas, triunfal."</em></p>
+                <ul>
+                    <li><strong>¿Cuál es el tema central de este fragmento?</strong> La lucha contra los estereotipos de género y la defensa de los derechos propios.</li>
+                    <li><strong>¿Qué subtemas puedes identificar?</strong> La discriminación deportiva, la perseverancia, la amistad entre compañeros, la búsqueda de igualdad de oportunidades.</li>
+                </ul>
+                <div class="info-card">
+                    <strong>💡 Tip:</strong> El tema central suele ser universal (amor, muerte, libertad, justicia, identidad), mientras que el argumento es específico de la historia (lo que ocurre a los personajes).
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué es importante distinguir entre tema central y argumento?</p>
+                    <p><strong>Respuesta:</strong> Porque el argumento es lo que ocurre en la historia (hechos concretos), mientras que el tema central es la reflexión universal que la historia invita a hacer. Distinguirlos permite una comprensión más profunda y relacionar la obra con otras lecturas y con la propia experiencia.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Habilidad 2 - Caracterizar personajes -->
+            <div class="slide">
+                <h2>👥 Habilidad 2: Caracterizar personajes</h2>
+                <p>Caracterizar un personaje es describir sus <span class="highlight">rasgos físicos, psicológicos, morales y sociales</span>, así como sus motivaciones y evolución a lo largo de la historia.</p>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>📘 ¿Qué observar?</strong>
+                        <ul>
+                            <li><strong>Lo que se dice de él/ella</strong> (narrador u otros personajes).</li>
+                            <li><strong>Lo que él/ella dice</strong> (diálogos, monólogos).</li>
+                            <li><strong>Lo que él/ella hace</strong> (acciones, decisiones).</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <strong>📘 Tipos de personajes</strong>
+                        <ul>
+                            <li><strong>Principal:</strong> Sostiene la historia, evoluciona.</li>
+                            <li><strong>Secundario:</strong> Participa en algunos acontecimientos, no evoluciona significativamente.</li>
+                            <li><strong>Antagonista:</strong> Se opone al protagonista.</li>
+                        </ul>
+                    </div>
+                </div>
+                <h3>Ejemplo: Jimmy de "El mejor amigo de un muchacho" (Asimov)</h3>
+                <ul>
+                    <li><strong>Rasgos físicos:</strong> "brazos y piernas largos y ágiles", "bastante alto para sus diez años".</li>
+                    <li><strong>Rasgos psicológicos:</strong> Decidido, leal a Robutt, capaz de defender sus convicciones frente a su padre.</li>
+                    <li><strong>Motivación:</strong> Quiere conservar a su amigo Robutt, pues siente un vínculo genuino con él.</li>
+                </ul>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cómo caracterizarías a la protagonista de "Amigos por el viento"?</p>
+                    <p><strong>Respuesta:</strong> Es una niña que al inicio se muestra <strong>resentida, temerosa y defensiva</strong> ante la llegada de Juanjo (motivada por el dolor de la separación de sus padres). Evoluciona hacia la <strong>empatía y la apertura</strong> cuando descubre que Juanjo ha vivido un dolor similar ("fue como un viento"). Es un personaje <strong>principal y dinámico</strong> (evoluciona).</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: Práctica de caracterización con "Sara y las goleadoras" -->
+            <div class="slide">
+                <h2>📖 Práctica: Caracterizar personajes</h2>
+                <h3>Personaje: Sara (de "Sara y las goleadoras")</h3>
+                <p><em>"Sara era un año mayor: tenía trece años [...] Sara se picó. —¿Y se puede saber por qué no, listo? ¡Si juego mejor que ustedes dos juntos! [...] Sara apretó los dientes. Estaba claro por qué Eloy no era, precisamente, el profesor más popular del colegio."</em></p>
+                <ul>
+                    <li><strong>Rasgos físicos:</strong> Pelirroja, pecosa (por su hermano Bruno), trece años.</li>
+                    <li><strong>Rasgos psicológicos:</strong> Apasionada por el fútbol, competitiva, segura de sus habilidades, valiente, no se deja intimidar.</li>
+                    <li><strong>Motivación:</strong> Demostrar que las chicas tienen tanto derecho como los chicos a jugar fútbol competitivo.</li>
+                    <li><strong>Evolución:</strong> Acepta el desafío de formar un equipo femenino, mostrando determinación y liderazgo.</li>
+                </ul>
+                <div class="info-card">
+                    <strong>💡 Tip:</strong> Las acciones de un personaje revelan más sobre él que las descripciones directas. Observa lo que hace en situaciones de conflicto.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué tipo de personaje es Eloy (el profesor de gimnasia)? ¿Por qué?</p>
+                    <p><strong>Respuesta:</strong> Eloy es un <strong>personaje secundario y antagonista</strong>. Se opone a los deseos de Sara al afirmar que "las chicas no juegan al fútbol". No evoluciona en el fragmento y representa la resistencia al cambio y los estereotipos de género.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: Habilidad 3 - Analizar la secuencia narrativa -->
+            <div class="slide">
+                <h2>⏳ Habilidad 3: Analizar la secuencia narrativa</h2>
+                <p>Toda narración se organiza en una <span class="highlight">secuencia de acciones</span> que sigue un orden temporal. Se distinguen tres momentos clave:</p>
+                <table>
+                    <tr><th>Momento</th><th>Descripción</th><th>Ejemplo ("El mejor amigo de un muchacho")</th></tr>
+                    <tr><td><strong>Situación inicial</strong></td><td>Se presentan los personajes, el espacio y el tiempo. Hay un equilibrio.</td><td>Jimmy juega feliz en la Luna con Robutt, su perro robot.</td></tr>
+                    <tr><td><strong>Conflicto</strong></td><td>Se rompe el equilibrio. Aparece una complicación.</td><td>El padre de Jimmy le anuncia que le han traído un perro real desde la Tierra y que deberá deshacerse de Robutt.</td></tr>
+                    <tr><td><strong>Desenlace</strong></td><td>Se resuelve el conflicto. Se establece un nuevo orden.</td><td>Jimmy abraza a Robutt y defiende su derecho a quererlo, mostrando que el afecto genuino no depende de la naturaleza biológica.</td></tr>
+                </table>
+                <div class="info-card">
+                    <strong>📘 Tipos de conflicto:</strong>
+                    <ul>
+                        <li><strong>Entre personajes:</strong> Sara vs. Lucas y los demás chicos (Sara y las goleadoras).</li>
+                        <li><strong>Entre personaje y situación externa:</strong> La protagonista de "Amigos por el viento" vs. la separación de sus padres.</li>
+                        <li><strong>Interno (consigo mismo):</strong> El protagonista de "El mundo del fin del mundo" al dudar si quiere ser ballenero.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuál es el conflicto principal de "La mañana verde" (Ray Bradbury, págs. 106-113)?</p>
+                    <p><strong>Respuesta:</strong> El conflicto es <strong>entre el protagonista (Benjamín Driscoll) y el entorno hostil de Marte</strong> (aire enrarecido que le impide vivir allí). Su solución es plantar árboles para generar oxígeno, un conflicto que enfrenta al ser humano con un ambiente adverso.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: Habilidad 4 - Diferenciar entre hecho y opinión -->
+            <div class="slide">
+                <h2>⚖️ Habilidad 4: Diferenciar entre hecho y opinión</h2>
+                <p>Un <span class="highlight">hecho</span> es una afirmación verificable, objetiva y comprobable (datos, eventos reales). Una <span class="highlight">opinión</span> es una interpretación subjetiva, un juicio o creencia personal.</p>
+                <table>
+                    <tr><th>Hecho</th><th>Opinión</th></tr>
+                    <tr><td>"El uso intensivo de los teléfonos móviles produce un problema físico." (pág. 158)</td><td>"Nos está haciendo perder la vista" (puede ser discutible, no es un dato exacto).</td></tr>
+                    <tr><td>"El primer estudio se publicó en Journal of Anatomy."</td><td>"Esta forma de hacer publicidad ya no es efectiva" (juicio valorativo).</td></tr>
+                    <tr><td>"Chile es el segundo país donde más preocupación genera el cambio climático." (pág. 136)</td><td>"El cambio climático es el mayor problema del mundo." (puede ser debatible).</td></tr>
+                </table>
+                <div class="grid-2">
+                    <div class="info-card"><strong>📘 Preguntas para identificar hechos:</strong> ¿Se puede verificar? ¿Hay evidencia? ¿Es objetivo? ¿Aparece en otras fuentes?</div>
+                    <div class="info-card"><strong>📘 Indicadores de opinión:</strong> "creo que", "me parece que", "debería", adjetivos valorativos (bueno, malo, increíble, terrible).</div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿El siguiente enunciado es un hecho o una opinión? "El fútbol no es un deporte de chicas" (dicho por Eloy, en "Sara y las goleadoras").</p>
+                    <p><strong>Respuesta:</strong> Es una <strong>opinión</strong> (un prejuicio o estereotipo). No es un hecho verificable, pues hay muchas mujeres que juegan al fútbol profesionalmente. Eloy expresa una creencia personal, no un dato objetivo.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: Práctica de hecho/opinión con artículos periodísticos -->
+            <div class="slide">
+                <h2>📰 Práctica: Hecho u opinión</h2>
+                <p><strong>Lee los siguientes enunciados (del reportaje "Desde La Pintana a ganar el mundial de K-pop", pág. 33-37):</strong></p>
+                <ul>
+                    <li><em>"Soldier se hizo con el máximo premio del certamen en Corea del Sur."</em> → <strong>Hecho</strong> (es verificable, ocurrió realmente).</li>
+                    <li><em>"Son las 16:30 horas de este viernes y la banda extendida recorre el Teatro Municipal de La Pintana."</em> → <strong>Hecho</strong> (dato temporal y espacial concreto).</li>
+                    <li><em>"El K-pop es danza, belleza, maquillaje, vestuario…"</em> → <strong>Opinión del entrevistado</strong> (describe su percepción del género).</li>
+                    <li><em>"La vida moderna está transformando el esqueleto humano."</em> → <strong>Opinión</strong> (es una interpretación, no un dato comprobado).</li>
+                </ul>
+                <div class="info-card">
+                    <strong>💡 Tip para evaluar noticias:</strong> Busca que las afirmaciones estén respaldadas por fuentes identificables (nombres de investigadores, instituciones, datos estadísticos). Si solo hay afirmaciones sin respaldo, desconfía.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué es importante distinguir entre hechos y opiniones al leer noticias?</p>
+                    <p><strong>Respuesta:</strong> Para no ser manipulados por información falsa o tendenciosa. Los hechos nos permiten formarnos una opinión fundamentada; las opiniones nos muestran el punto de vista del emisor, pero no deben confundirse con verdades objetivas.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: Habilidad 5 - Inferir información implícita -->
+            <div class="slide">
+                <h2>🔍 Habilidad 5: Inferir información implícita</h2>
+                <p><span class="highlight">Inferir</span> es extraer información que no está escrita explícitamente, pero que se puede deducir a partir de <strong>pistas del texto + nuestros conocimientos del mundo</strong>.</p>
+                <div class="info-card">
+                    <strong>📘 Ejemplo de inferencia</strong><br>
+                    Texto: "El niño de La Pintana, de 24 años, es el líder del grupo Soldier. Tras seis años de entrenamiento, en 2019 formó su escuadrón."<br>
+                    <strong>Inferencia:</strong> Dedicó muchos años de esfuerzo y disciplina para lograr su sueño (aunque el texto no dice explícitamente "fue esforzado", se infiere por los años de entrenamiento y el resultado obtenido).
+                </div>
+                <h3>Pasos para inferir:</h3>
+                <ul>
+                    <li><strong>1. Observa</strong> los detalles explícitos (lo que dice el texto).</li>
+                    <li><strong>2. Activa</strong> tus conocimientos previos sobre el tema.</li>
+                    <li><strong>3. Relaciona</strong> la información y deduce lo que no está dicho.</li>
+                </ul>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> En "La mañana verde", al final Benjamín Driscoll "aspiró profundamente una bocanada de aire verde y húmedo, y se desmayó". ¿Qué puedes inferir?</p>
+                    <p><strong>Respuesta:</strong> Puedes inferir que el aire producido por los árboles recién crecidos es tan puro y diferente al aire enrarecido de Marte que su cuerpo no está acostumbrado, provocándole un desmayo. También se infiere que su misión fue exitosa: logró generar el oxígeno que necesitaba.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: Práctica de inferencia con "Amigos por el viento" -->
+            <div class="slide">
+                <h2>📖 Práctica: Inferir en "Amigos por el viento"</h2>
+                <p><strong>Lee este fragmento (pág. 22-25):</strong></p>
+                <p><em>"—¿Cuánto hace que se murió tu mamá? Juanjo abrió grandes los ojos para disimular algo. —Cuatro años —contestó. [...] —¿Y cómo fue? —volví a preguntar. Esta vez, entrecerró los ojos. Yo esperaba oír cualquier respuesta, menos la que llegó desde su voz cortada. —Fue… fue como un viento —dijo."</em></p>
+                <ul>
+                    <li><strong>¿Qué puedes inferir sobre la actitud inicial de la protagonista?</strong> Que es cruel o hiriente porque quiere hacer sufrir a Juanjo, ya que ella misma ha sufrido.</li>
+                    <li><strong>¿Qué puedes inferir sobre Juanjo por su respuesta "fue como un viento"?</strong> Que también ha experimentado el dolor de una pérdida repentina e inexplicable (como la protagonista con la partida de su padre).</li>
+                    <li><strong>¿Qué inferimos sobre el cambio de actitud de la protagonista?</strong> Que al descubrir que comparten el mismo dolor (el "viento"), siente empatía y decide abrirse a él ("Si querés vamos a comer cocadas").</li>
+                </ul>
+                <div class="info-card">
+                    <strong>💡 Tip:</strong> Las inferencias son fundamentales para comprender las motivaciones de los personajes y los temas profundos de una obra. No todo está dicho; el lector debe "leer entre líneas".
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué infieres sobre la madre de la protagonista cuando el texto dice "se me acaba de romper una copa, inventaba mamá"?</p>
+                    <p><strong>Respuesta:</strong> Infieres que la madre estaba llorando (por la partida del padre) y ocultaba su tristeza a su hija con excusas ("se me rompió una copa"). Muestra que intentaba proteger a su hija del dolor, aunque ella misma sufría.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: Síntesis de habilidades -->
+            <div class="slide">
+                <h2>📚 Síntesis: Habilidades lectoras trabajadas</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>🎯 Tema central y subtemas</strong><br>
+                        Identificar la idea principal y las secundarias.
+                    </div>
+                    <div class="info-card">
+                        <strong>👥 Caracterizar personajes</strong><br>
+                        Describir rasgos físicos, psicológicos y motivaciones.
+                    </div>
+                    <div class="info-card">
+                        <strong>⏳ Secuencia narrativa</strong><br>
+                        Reconocer situación inicial, conflicto y desenlace.
+                    </div>
+                    <div class="info-card">
+                        <strong>⚖️ Hecho vs. opinión</strong><br>
+                        Distinguir información objetiva de juicios subjetivos.
+                    </div>
+                    <div class="info-card">
+                        <strong>🔍 Inferir información</strong><br>
+                        Deducir lo que el texto sugiere sin decirlo explícitamente.
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta integradora:</strong> ¿Cómo se relacionan estas cinco habilidades para lograr una comprensión lectora profunda?</p>
+                    <p><strong>Respuesta:</strong> Para comprender un texto no basta con leer las palabras (hechos explícitos). Hay que identificar <strong>qué tema trata</strong> (tema central), <strong>quiénes participan y por qué actúan así</strong> (caracterización), <strong>cómo se organiza la historia</strong> (secuencia narrativa), <strong>qué es objetivo y qué es interpretación</strong> (hecho/opinión), y <strong>qué no está dicho pero se deduce</strong> (inferencia). En conjunto, estas habilidades permiten una lectura crítica, analítica y reflexiva.</p>
+                </div>
+                <p style="margin-top: 1rem; text-align: center;">📚 <strong>Fin de la clase</strong> — Practica con los ejercicios.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 11</div>
+    </div>
+
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slideCounterSpan.innerText = `Slide ${currentIndex+1} / ${totalSlides}`;
+    }
+    function nextSlide() { if (currentIndex < totalSlides-1) { currentIndex++; updateSlidePosition(); } }
+    function prevSlide() { if (currentIndex > 0) { currentIndex--; updateSlidePosition(); } }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { nextSlide(); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { prevSlide(); e.preventDefault(); }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => { window.location.href = 'Lenguaje.html'; });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => { window.location.href = 'C_3A_Lenguaje.html'; });
+    updateSlidePosition();
+</script>
+</body>
+</html>

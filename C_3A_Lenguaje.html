@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ejercicios: Habilidades Lectoras | Lengua 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #fef6f0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fffaf6;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0cfb0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #d9531e;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #b5431a;
+        }
+
+        .subtitle {
+            color: #c95a1c;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #fef0e6;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #f0cfb0;
+            color: #8a3c10;
+        }
+
+        .section {
+            background: #fefcf8;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #d9531e;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #c4450c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .reading-text {
+            background: #fef0e6;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #f0cfb0;
+            font-size: 0.95rem;
+            line-height: 1.5;
+            color: #3a2a1a;
+            white-space: pre-wrap;
+            font-family: monospace;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf8;
+            border-radius: 1rem;
+            border: 1px solid #f0cfb0;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3a2a1a;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(217, 83, 30, 0.1);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #d9531e;
+        }
+
+        .truefalse-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .truefalse-table th, .truefalse-table td {
+            border: 1px solid #f0cfb0;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .truefalse-table th {
+            background: #fef0e6;
+            color: #b5431a;
+            font-weight: 600;
+        }
+
+        select {
+            background: #fffaf2;
+            color: #2d4029;
+            border: 1px solid #f0cfb0;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #d95b2b;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef0e6;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #d9531e;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3a2a1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #f0cfb0;
+            color: #8a3c10;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #e0b48a;
+            color: #5a2a0a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .tf-correct {
+            color: #2d6a2d;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #b33;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            border: 1px solid #f0cfb0;
+            background: #fefff8;
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .open-question-card {
+            background: #fef0e6;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .model-answer {
+            background: #eef0e4;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+            display: none;
+            border-left: 4px solid #d9531e;
+        }
+
+        .complete-item {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf8;
+            border-radius: 1rem;
+            border: 1px solid #f0cfb0;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 Ejercicios: Habilidades Lectoras</h1>
+        <div class="subtitle">Tema central · Caracterización · Hecho/Opinión · Inferencia</div>
+        <div class="subtitle">7° Básico | Lengua y Literatura | Texto del Estudiante SM Chile</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (8 preguntas) + Verdadero/Falso (8) + Completar oraciones (8) = 24 preguntas puntuables</div>
+        <div>📝 <strong>Sección sin puntaje:</strong> Pregunta abierta (1) - Autoevaluación</div>
+        <div>✅ Exigencia: 60% para nota 4.0 | Nota máxima: 7.0</div>
+        <div>🔄 Al reiniciar, cambia el texto de la pregunta abierta</div>
+    </div>
+
+    <div id="examContent">
+        <!-- SECCIÓN I: SELECCIÓN MÚLTIPLE -->
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple</div>
+            <div class="reading-text" id="mcText"></div>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <!-- SECCIÓN II: VERDADERO O FALSO -->
+        <div class="section">
+            <div class="section-title">⚖️ II. Verdadero o Falso</div>
+            <div class="reading-text" id="tfText"></div>
+            <table class="truefalse-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN III: COMPLETAR ORACIONES -->
+        <div class="section">
+            <div class="section-title">✏️ III. Completar Oraciones</div>
+            <div class="reading-text" id="completeText"></div>
+            <div id="completeSentences"></div>
+        </div>
+
+        <!-- SECCIÓN IV: PREGUNTA ABIERTA -->
+        <div class="section">
+            <div class="section-title">📝 IV. Pregunta Abierta (sin puntaje)</div>
+            <div id="openQuestion"></div>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Lengua y Literatura 7° Básico | Fragmentos extraídos del texto oficial SM Chile</div>
+</div>
+
+<script>
+    // ==================== TEXTO PARA SELECCIÓN MÚLTIPLE ====================
+    // Fragmento literal de "El mejor amigo de un muchacho" (Isaac Asimov) - páginas 14-17 del texto
+    const mcTexto = `—No es un perro de verdad, Jimmy. Robutt tiene un cerebro positrónico muy sencillo y está hecho de acero y circuitos. No está vivo.
+—Hace todo lo que yo quiero que haga, papi. Me entiende. Te aseguro que está vivo.
+—No, hijo. Robutt no es más que una máquina. Está programado para que actúe de esa forma. Un perro es algo vivo. En cuanto tengas al perro ya no querrás a Robutt.
+—El perro necesitará un traje espacial, ¿verdad?
+—Sí, naturalmente, pero creo que será dinero bien invertido y muy pronto se habrá acostumbrado a él… Y cuando esté en la ciudad no lo necesitará, claro. Cuando lo tengamos en casa enseguida notarás la diferencia.
+Jimmy miró a Robutt. El perro robot había empezado a lanzar unos gemidos muy débiles, como si estuviera asustado. Jimmy extendió los brazos hacia él y Robutt salvó la distancia que le separaba de ellos de un solo salto.
+—¿Y qué diferencia hay entre Robutt y el perro? —preguntó Jimmy.
+—Es difícil de explicar —dijo el señor Anderson—, pero lo comprenderás en cuanto lo veas. El perro te querrá de verdad, Jimmy. Robutt solo está programado para actuar como si te quisiera, ¿entiendes?
+—Pero papi… No sabemos qué hay dentro del perro ni cuáles son sus sentimientos. Puede que también finja.
+Jimmy estrechó a Robutt en sus brazos. El niño también tenía el ceño fruncido, y la expresión desesperada de su rostro indicaba que no estaba dispuesto a cambiar de opinión.
+—Pero si los dos se portan igual conmigo, entonces tanto da que sea un perro de verdad o un perro robot —dijo Jimmy—. ¿Y lo que yo siento? Quiero a Robutt, y eso es lo que importa.`;
+
+    const mcPreguntas = [
+        { text: "¿Qué argumento usa el padre de Jimmy para convencerlo de que Robutt no está vivo?", options: ["a. Que Robutt no ladra", "b. Que Robutt está hecho de acero y circuitos, y es una máquina programada", "c. Que Robutt no lo quiere", "d. Que Robutt es muy pequeño"], correct: "b" },
+        { text: "¿Cómo reacciona Jimmy ante la afirmación de su padre?", options: ["a. Llora y obedece", "b. Se enoja y rompe a Robutt", "c. Defiende a Robutt, lo abraza y se niega a cambiar de opinión", "d. Ignora a su padre y se va a jugar"], correct: "c" },
+        { text: "Según Jimmy, ¿qué es lo que realmente importa en su relación con Robutt?", options: ["a. Que Robutt sea un perro de verdad", "b. Que Robutt tenga la última tecnología", "c. Lo que él siente por Robutt", "d. Que su padre esté contento"], correct: "c" },
+        { text: "¿Qué tipo de conflicto se presenta en este fragmento?", options: ["a. Entre Jimmy y un animal", "b. Entre Jimmy y su padre (personajes)", "c. Interno de Jimmy", "d. Entre Jimmy y la sociedad"], correct: "b" },
+        { text: "¿Qué característica de Jimmy se evidencia en el fragmento?", options: ["a. Es un niño obediente sin opinión propia", "b. Es un niño decidido que defiende sus convicciones", "c. Es un niño miedoso", "d. Es un niño egoísta"], correct: "b" },
+        { text: "¿Qué considera el padre de Jimmy como 'vivo'?", options: ["a. Algo que tiene sentimientos", "b. Algo biológico, como un perro real", "c. Algo que puede hablar", "d. Algo que corre rápido"], correct: "b" },
+        { text: "¿Qué gesto de Jimmy muestra su afecto hacia Robutt?", options: ["a. Le da una orden", "b. Lo ignora", "c. Lo estrecha en sus brazos", "d. Le pide perdón"], correct: "c" },
+        { text: "¿Qué tema central aborda este fragmento?", options: ["a. La tecnología del futuro", "b. La amistad y el vínculo afectivo más allá de la naturaleza biológica", "c. La importancia de obedecer a los padres", "d. La soledad en la Luna"], correct: "b" }
+    ];
+
+    // ==================== TEXTO PARA VERDADERO/FALSO ====================
+    // Fragmento literal de "Sara y las goleadoras" (Laura Gallego) - páginas 52-54 del texto
+    const tfTexto = `—Porque ahí dice MAS-CU-LI-NO, lista.
+Sara se picó.
+—¿Y se puede saber por qué no, listo? ¡Si juego mejor que ustedes dos juntos!
+Esto era estrictamente cierto, y los gemelos lo sabían. A todos les gustaba jugar al fútbol, pero nadie lo vivía con tanta intensidad como Sara ni practicaba tantas horas. Ni siquiera su hermano Bruno.
+Para salvar su dignidad, y antes de que nadie le diera la razón a la chica, Mateo replicó:
+—Porque ahí dice MAS-CU-LI-NO, lista.
+Todos se echaron a reír. Sara miró a su alrededor, buscando la complicidad de alguna de las otras chicas. Pero Alex ni siquiera se había molestado en acercarse a leer el cartel, y Eva, que también solía jugar con ellos a menudo, no había ido a clase aquel día. Sara se encontró de pronto sola entre un grupo de chicos que, hasta el día anterior, la habían aceptado como a una más.`;
+
+    const tfPreguntas = [
+        { text: "Sara acepta sin protestar que el equipo de fútbol sea solo para hombres.", correct: "F" },
+        { text: "Sara afirma que juega mejor que los gemelos Lucas y Mateo juntos.", correct: "V" },
+        { text: "Los gemelos reconocen que Sara juega mejor que ellos.", correct: "V" },
+        { text: "Bruno, el hermano de Sara, juega al fútbol con la misma intensidad que ella.", correct: "F" },
+        { text: "Alex y Eva, otras chicas, están presentes y apoyan a Sara en el momento del conflicto.", correct: "F" },
+        { text: "El cartel que puso el profesor decía que el equipo de fútbol sería mixto.", correct: "F" },
+        { text: "Sara se siente sola al darse cuenta de que ninguna otra chica la apoya en ese momento.", correct: "V" },
+        { text: "El fragmento muestra una situación de discriminación por razón de género.", correct: "V" }
+    ];
+
+    // ==================== TEXTO PARA COMPLETAR ORACIONES ====================
+    // Fragmento literal de "Amigos por el viento" (Liliana Bodoc) - páginas 20-23 del texto
+    const completeTexto = `A veces, la vida se comporta como un viento: desordena y arrasa. Algo susurra, pero no se le entiende. A su paso todo peligra; hasta lo que tiene raíces. Los edificios, por ejemplo. O las costumbres cotidianas.
+Cuando la vida se comporta de ese modo, se nos ensucian los ojos con los que vemos. Es decir, los verdaderos ojos. A nuestro lado, pasan papeles escritos con una letra que creemos reconocer. El cielo se mueve más rápido que las horas. Y lo peor es que nadie sabe si, alguna vez, regresará la calma.
+Así ocurrió el día que papá se fue de casa. La vida se nos transformó en viento casi sin dar aviso. Yo recuerdo la puerta que se cerró detrás de su sombra y sus valijas. También puedo recordar la ropa reseca sacudiéndose al sol mientras mamá cerraba las ventanas para que, adentro y adentro, algo quedara en su sitio.`;
+
+    const completePreguntas = [
+        { text: "Según el texto, la vida se comporta como un ________ que desordena y arrasa.", options: ["a. terremoto", "b. viento", "c. fuego", "d. mar"], correct: "b" },
+        { text: "Cuando la vida se comporta así, se nos ensucian los ________ con los que vemos.", options: ["a. oídos", "b. pensamientos", "c. ojos", "d. sentimientos"], correct: "c" },
+        { text: "La narradora recuerda el día en que su ________ se fue de casa.", options: ["a. madre", "b. hermano", "c. abuelo", "d. papá"], correct: "d" },
+        { text: "Mamá cerraba las ventanas para que algo quedara en su ________.", options: ["a. lugar", "b. sitio", "c. memoria", "d. casa"], correct: "b" },
+        { text: "El viento del que habla el texto es una metáfora de una ________ dolorosa.", options: ["a. celebración", "b. pérdida o crisis", "c. aventura", "d. alegría"], correct: "b" },
+        { text: "El texto dice que a su paso todo peligra, hasta lo que tiene ________.", options: ["a. alas", "b. raíces", "c. hojas", "d. flores"], correct: "b" },
+        { text: "La narradora recuerda la ________ que se cerró detrás de la sombra de su padre.", options: ["a. ventana", "b. puerta", "c. cortina", "d. caja"], correct: "b" },
+        { text: "El cielo se mueve más rápido que las ________, según describe la narradora.", options: ["a. estrellas", "b. nubes", "c. horas", "d. semanas"], correct: "c" }
+    ];
+
+    // ==================== POOL DE TEXTOS PARA PREGUNTA ABIERTA (8 textos del libro) ====================
+    const bankOpen = [
+        {
+            text: `Fragmento de "El mejor amigo de un muchacho" (Isaac Asimov):
+—No es un perro de verdad, Jimmy. Robutt tiene un cerebro positrónico muy sencillo y está hecho de acero y circuitos. No está vivo.
+—Hace todo lo que yo quiero que haga, papi. Me entiende. Te aseguro que está vivo.
+—Pero si los dos se portan igual conmigo, entonces tanto da que sea un perro de verdad o un perro robot —dijo Jimmy—. ¿Y lo que yo siento? Quiero a Robutt, y eso es lo que importa.`,
+            question: "¿Qué argumento usa Jimmy para defender que Robutt está vivo? ¿Qué nos dice esto sobre el concepto de amistad que plantea el cuento?",
+            modelAnswer: "Jimmy argumenta que Robutt hace todo lo que él quiere que haga, lo entiende, y que él siente un vínculo genuino hacia Robutt. Para Jimmy, lo que importa no es si Robutt es biológicamente 'vivo' o una máquina, sino el afecto que él siente y la lealtad que comparten. Esto plantea que la amistad verdadera se basa en el cuidado mutuo, la comprensión y el vínculo afectivo, más allá de la naturaleza física del ser amado."
+        },
+        {
+            text: `Fragmento de "Amigos por el viento" (Liliana Bodoc):
+—¿Cuánto hace que se murió tu mamá?
+Juanjo abrió grandes los ojos para disimular algo.
+—Cuatro años —contestó.
+—¿Y cómo fue? —volví a preguntar.
+Esta vez, entrecerró los ojos. Yo esperaba oír cualquier respuesta, menos la que llegó desde su voz cortada.
+—Fue… fue como un viento —dijo.
+—¿Es un viento que llega de repente y se mete en todos lados? —pregunté.
+—Sí, es ese.
+—¿Y también susurra…?
+—Mi viento susurraba —dijo Juanjo—. Pero no entendí lo que decía.
+—Yo tampoco entendí.`,
+            question: "¿Qué significa para Juanjo y para la protagonista que la muerte de sus padres haya sido 'como un viento'? ¿Cómo cambia la actitud de la protagonista después de esta conversación?",
+            modelAnswer: "Para ambos, el 'viento' representa una pérdida repentina, dolorosa e inexplicable que desordenó sus vidas. Al descubrir que comparten la misma experiencia de dolor, la protagonista deja de ver a Juanjo como una amenaza y desarrolla empatía hacia él. Su actitud cambia de la hostilidad y el rechazo a la comprensión y la apertura, invitándolo a comer cocadas."
+        },
+        {
+            text: `Fragmento de "Sara y las goleadoras" (Laura Gallego):
+—¿Y se puede saber por qué no, listo? ¡Si juego mejor que ustedes dos juntos!
+Esto era estrictamente cierto, y los gemelos lo sabían. A todos les gustaba jugar al fútbol, pero nadie lo vivía con tanta intensidad como Sara ni practicaba tantas horas.
+—Porque ahí dice MAS-CU-LI-NO, lista.
+Sara apretó los dientes.
+—¿Y por qué no, si puede saberse? —replicó ella, molesta—. ¿Me vas a decir, a estas alturas, que el fútbol es solo para hombres?`,
+            question: "¿Qué problema social refleja este fragmento? ¿Cómo se relaciona con la perseverancia y la identidad de Sara?",
+            modelAnswer: "El fragmento refleja la discriminación de género en el deporte y los estereotipos que asumen que ciertas actividades son 'solo para hombres'. Sara se niega a aceptar esta injusticia y decide defender su derecho a jugar fútbol, mostrando perseverancia y una identidad fuerte que no se deja intimidar por las normas sociales restrictivas."
+        },
+        {
+            text: `Fragmento de "La mañana verde" (Ray Bradbury):
+—Necesitas aire —le dijo al fuego nocturno.
+—Todos necesitamos aire. Hay aire enrarecido aquí en Marte. Se cansa uno tan pronto… Es como vivir en la cima de los Andes. Uno aspira y no consigue nada. No satisface.
+—¿Qué me ha pasado?
+—El aire enrarecido. Algunos no pueden adaptarse. Me parece que tendrá que volver a la Tierra.
+—¡No!`,
+            question: "¿Por qué Benjamín Driscoll se niega a volver a la Tierra? ¿Qué representa su decisión de plantar árboles en Marte?",
+            modelAnswer: "Benjamín se niega a volver a la Tierra porque quiere encontrar su lugar en Marte y superar la dificultad del aire enrarecido. Su decisión de plantar árboles representa la capacidad humana para transformar el entorno, adaptarse y crear las condiciones necesarias para sobrevivir. Simboliza la perseverancia y la esperanza."
+        },
+        {
+            text: `Fragmento de "Frente al mar" (Alfonsina Storni):
+Oh mar, enorme mar, corazón fiero de ritmo desigual, corazón malo,
+yo soy más blanda que ese pobre palo que se pudre en tus ondas prisionero.
+Oh mar, dame tu cólera tremenda,
+yo me pasé la vida perdonando,
+porque entendía, mar, yo me fui dando:
+"Piedad, piedad para el que más ofenda".
+Vulgaridad, vulgaridad me acosa.
+Ah, me han comprado la ciudad y el hombre.
+Hazme tener tu cólera sin nombre:
+Ya me fatiga esta misión de rosa.`,
+            question: "¿Qué le pide la hablante al mar y por qué? ¿Qué crítica social se puede identificar en estos versos?",
+            modelAnswer: "La hablante le pide al mar que le dé su 'cólera tremenda' porque está cansada de perdonar y de ser blanda ('misión de rosa'). Siente que la ciudad y la sociedad la han corrompido con la 'vulgaridad'. La crítica social apunta a una sociedad que valora lo superficial y oprime la autenticidad."
+        },
+        {
+            text: `Fragmento de "Alturas de Macchu Picchu" (Pablo Neruda):
+Sube a nacer conmigo, hermano.
+Dame la mano desde la profunda zona de tu dolor diseminado.
+No volverás del fondo de las rocas. No volverás del tiempo subterráneo.
+No volverá tu voz endurecida. No volverán tus ojos taladrados.
+Mírame desde el fondo de la tierra, labrador, tejedor, pastor callado.
+Yo vengo a hablar por vuestra boca muerta.`,
+            question: "¿A quién se dirige el hablante? ¿Qué compromiso asume al decir 'Yo vengo a hablar por vuestra boca muerta'?",
+            modelAnswer: "El hablante se dirige a los constructores y habitantes originales de Macchu Picchu, a los trabajadores anónimos que sufrieron para construir la ciudad. Al decir 'Yo vengo a hablar por vuestra boca muerta', asume el compromiso de dar voz a aquellos que fueron silenciados por la historia, de honrar su memoria y de denunciar el sufrimiento que soportaron."
+        },
+        {
+            text: `Fragmento de "Parinacota" (Pedro Humire):
+Me partes a mí y al tiempo, Parinacota de los pedregales,
+lugar primero, madrugada del Universo, iniciación de los pensamientos,
+donde piensa el viento grande y se encuentran las edades.
+Cuando nos conocimos me envolviste con tu grito y tuve la sensación de hundirme
+en tu perennidad, Parinacota, residencia de mi espíritu.
+¡Cómo estás en mí! que cuando te sueño me responde tu ventarrón,
+ese de tus tardes, de tu lluvia, de tus confidencias.`,
+            question: "¿Qué relación establece el hablante con el paisaje de Parinacota? ¿Por qué el lugar es importante para su identidad?",
+            modelAnswer: "El hablante establece una relación de profunda identificación y pertenencia con Parinacota. El paisaje no es solo un lugar físico, sino que es parte de su espíritu, su memoria y su identidad. Parinacota es 'residencia de mi espíritu', un lugar que lo ha marcado profundamente y que sigue vivo en sus sueños y recuerdos."
+        },
+        {
+            text: `Fragmento de "Para sanarte vine, me habló el Canelo" (Elicura Chihuailaf):
+Para sanarte vine, me habló el Árbol sagrado
+Ve y recoge mis hojas, mis semillas, me está diciendo
+De todas partes vinieron tus buenas Machi mis buenos Machi
+desde las cuatro Tierras, desde las cuatro aguas mediaremos
+Mas yo quise olvidar el consejo de las Ancianas y de los Ancianos
+por eso estoy enfermo ahora
+Mis pensamientos se alejaron de los apacibles Ríos de tu Corazón`,
+            question: "¿Qué representa el Canelo (Árbol sagrado) en la cosmovisión mapuche según este poema? ¿Por qué el hablante dice estar 'enfermo'?",
+            modelAnswer: "El Canelo representa la conexión con lo sagrado, la sanación espiritual y el vínculo con la naturaleza y los antepasados. Es un árbol que cura, que guía y que comunica la sabiduría ancestral. El hablante dice estar 'enfermo' porque olvidó el consejo de los ancianos y se alejó de las enseñanzas tradicionales y de la armonía con la naturaleza. La enfermedad es espiritual, producto de la desconexión con sus raíces."
+        }
+    ];
+
+    // Variables
+    let mcAnswers = new Array(8).fill(null);
+    let tfAnswers = new Array(8).fill(null);
+    let completeAnswers = new Array(8).fill(null);
+    let openAnswer = "";
+    let currentOpen = null;
+    let evaluated = false;
+
+    function renderMultipleChoice() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        mcPreguntas.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${q.options.map(opt => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${opt.charAt(0)}" id="mc_${idx}_${opt.charAt(0)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${opt.charAt(0)}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div style="font-size:0.8rem; margin-top:0.3rem;">${mcAnswers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta: ' + q.correct}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => { mcAnswers[idx] = e.target.value; });
+                });
+            }
+        });
+    }
+
+    function renderTrueFalse() {
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+        tfPreguntas.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellText.innerHTML = `${idx+1}. ${item.text}`;
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option'); defaultOpt.value = ""; defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+            const optV = document.createElement('option'); optV.value = "V"; optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option'); optF.value = "F"; optF.textContent = "Falso (F)";
+            select.appendChild(optV); select.appendChild(optF);
+            if (!evaluated && tfAnswers[idx]) {
+                if (tfAnswers[idx] === "V") optV.selected = true;
+                else if (tfAnswers[idx] === "F") optF.selected = true;
+            }
+            select.addEventListener('change', (e) => { tfAnswers[idx] = e.target.value; });
+            cellSelect.appendChild(select);
+            if (evaluated) {
+                const isCorrect = tfAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correct}`;
+                feedback.className = isCorrect ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+    }
+
+    function renderComplete() {
+        const container = document.getElementById('completeSentences');
+        container.innerHTML = '';
+        completePreguntas.forEach((item, idx) => {
+            const div = document.createElement('div');
+            div.className = 'complete-item';
+            div.innerHTML = `<p><strong>${idx+1}.</strong> ${item.text}</p>`;
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option'); defaultOpt.value = ""; defaultOpt.textContent = "Seleccione...";
+            select.appendChild(defaultOpt);
+            item.options.forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt.charAt(0);
+                option.textContent = opt;
+                if (!evaluated && completeAnswers[idx] === opt.charAt(0)) option.selected = true;
+                select.appendChild(option);
+            });
+            select.addEventListener('change', (e) => { completeAnswers[idx] = e.target.value; });
+            div.appendChild(select);
+            if (evaluated) {
+                const isCorrect = completeAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.8rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correct}`;
+                div.appendChild(feedback);
+            }
+            container.appendChild(div);
+        });
+    }
+
+    function renderOpen() {
+        const container = document.getElementById('openQuestion');
+        container.innerHTML = '';
+        if (!currentOpen) return;
+        const div = document.createElement('div');
+        div.className = 'open-question-card';
+        div.innerHTML = `
+            <p><strong>📖 Texto:</strong></p>
+            <div style="background: #fefff8; padding: 1rem; border-radius: 0.8rem; margin: 0.5rem 0; white-space: pre-wrap; font-family: monospace; font-size: 0.9rem;">${currentOpen.text}</div>
+            <p><strong>❓ Pregunta:</strong><br>${currentOpen.question}</p>
+            <textarea id="openAnswerInput" rows="6" placeholder="Escribe aquí tu respuesta (mínimo 5 líneas)..." ${evaluated ? 'disabled' : ''}>${evaluated ? openAnswer : ''}</textarea>
+            ${evaluated ? `<div id="modelAnswerDiv" class="model-answer" style="display:block; margin-top:1rem;"><strong>📝 Respuesta modelo de referencia:</strong><br>${currentOpen.modelAnswer}</div>` : ''}
+        `;
+        container.appendChild(div);
+        if (!evaluated) {
+            document.getElementById('openAnswerInput').addEventListener('input', (e) => { openAnswer = e.target.value; });
+        }
+    }
+
+    function resetTest() {
+        evaluated = false;
+        const randomIndex = Math.floor(Math.random() * bankOpen.length);
+        currentOpen = bankOpen[randomIndex];
+        mcAnswers = new Array(8).fill(null);
+        tfAnswers = new Array(8).fill(null);
+        completeAnswers = new Array(8).fill(null);
+        openAnswer = "";
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('mcText').innerHTML = `<strong>📖 Texto para responder las preguntas I (Isaac Asimov, "El mejor amigo de un muchacho"):</strong><br><br>${mcTexto.replace(/\n/g, '<br>')}`;
+        document.getElementById('tfText').innerHTML = `<strong>📖 Texto para responder las preguntas II (Laura Gallego, "Sara y las goleadoras"):</strong><br><br>${tfTexto.replace(/\n/g, '<br>')}`;
+        document.getElementById('completeText').innerHTML = `<strong>📖 Texto para responder las preguntas III (Liliana Bodoc, "Amigos por el viento"):</strong><br><br>${completeTexto.replace(/\n/g, '<br>')}`;
+        renderMultipleChoice();
+        renderTrueFalse();
+        renderComplete();
+        renderOpen();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function evaluateAll() {
+        evaluated = true;
+        let mcCorrect = 0, tfCorrect = 0, completeCorrect = 0;
+        for (let i = 0; i < mcPreguntas.length; i++) if (mcAnswers[i] === mcPreguntas[i].correct) mcCorrect++;
+        for (let i = 0; i < tfPreguntas.length; i++) if (tfAnswers[i] === tfPreguntas[i].correct) tfCorrect++;
+        for (let i = 0; i < completePreguntas.length; i++) if (completeAnswers[i] === completePreguntas[i].correct) completeCorrect++;
+        const total = mcPreguntas.length + tfPreguntas.length + completePreguntas.length;
+        const totalCorrect = mcCorrect + tfCorrect + completeCorrect;
+        const percentage = (totalCorrect / total) * 100;
+        let grade = 0;
+        const passing = 60;
+        if (percentage >= passing) grade = 4.0 + ((percentage - passing) / (100 - passing)) * 3.0;
+        else grade = 1.0 + (percentage / passing) * 3.0;
+        grade = Math.round(grade * 100) / 100;
+        const isApproved = grade >= 4.0;
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#c4450c; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrect} de ${total} (${Math.round(percentage)}%)</div>
+            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Múltiple: ${mcCorrect}/${mcPreguntas.length}</div>
+                <div>⚖️ V/F: ${tfCorrect}/${tfPreguntas.length}</div>
+                <div>✏️ Completar: ${completeCorrect}/${completePreguntas.length}</div>
+            </div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}"><strong>${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>NOTA: ${grade}</div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+        renderMultipleChoice();
+        renderTrueFalse();
+        renderComplete();
+        renderOpen();
+        document.getElementById('restartTestBtn')?.addEventListener('click', resetTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Lenguaje.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_3_Lenguaje.html');
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    resetTest();
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>
