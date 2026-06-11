@@ -1,0 +1,705 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ejercicios: Poemas | Lengua 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #fef6f0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fffaf6;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0cfb0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #d9531e;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #b5431a;
+        }
+
+        .subtitle {
+            color: #c95a1c;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #fef0e6;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #f0cfb0;
+            color: #8a3c10;
+        }
+
+        .section {
+            background: #fefcf8;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #d9531e;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #c4450c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .poem-container {
+            background: #fef0e6;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #f0cfb0;
+            font-size: 0.95rem;
+            line-height: 1.6;
+            color: #3a2a1a;
+            white-space: pre-wrap;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-style: italic;
+            max-height: 350px;
+            overflow-y: auto;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf8;
+            border-radius: 1rem;
+            border: 1px solid #f0cfb0;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3a2a1a;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(217, 83, 30, 0.1);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #d9531e;
+        }
+
+        .truefalse-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .truefalse-table th, .truefalse-table td {
+            border: 1px solid #f0cfb0;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .truefalse-table th {
+            background: #fef0e6;
+            color: #b5431a;
+            font-weight: 600;
+        }
+
+        select {
+            background: #fffaf2;
+            color: #2d4029;
+            border: 1px solid #f0cfb0;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #d95b2b;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef0e6;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #d9531e;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3a2a1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #f0cfb0;
+            color: #8a3c10;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #e0b48a;
+            color: #5a2a0a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .tf-correct {
+            color: #2d6a2d;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #b33;
+            font-weight: bold;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            border: 1px solid #f0cfb0;
+            background: #fefff8;
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .open-question-card {
+            background: #fef0e6;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .model-answer {
+            background: #eef0e4;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-top: 1rem;
+            display: none;
+            border-left: 4px solid #d9531e;
+        }
+
+        .open-title {
+            font-weight: 600;
+            color: #c4450c;
+            margin-bottom: 0.5rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 Ejercicios: Análisis de Poemas</h1>
+        <div class="subtitle">Comprensión lectora · Tema · Sentimientos del hablante · Mensaje</div>
+        <div class="subtitle">7° Básico | Lengua y Literatura</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones con puntaje:</strong> Selección Múltiple (16 preguntas) + Verdadero/Falso (16 afirmaciones) = 32 preguntas</div>
+        <div>📝 <strong>Sección sin puntaje:</strong> Pregunta abierta (1) - Autoevaluación</div>
+        <div>✅ Exigencia: 60% para nota 4.0 | Nota máxima: 7.0</div>
+    </div>
+
+    <div id="examContent">
+        <!-- SECCIÓN I: SELECCIÓN MÚLTIPLE -->
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple</div>
+            <div class="poem-container" id="mcPoem"></div>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <!-- SECCIÓN II: VERDADERO O FALSO -->
+        <div class="section">
+            <div class="section-title">⚖️ II. Verdadero o Falso</div>
+            <div class="poem-container" id="tfPoem"></div>
+            <table class="truefalse-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN III: PREGUNTA ABIERTA -->
+        <div class="section">
+            <div class="section-title">📝 III. Pregunta Abierta (sin puntaje)</div>
+            <div class="poem-container" id="openPoem"></div>
+            <div id="openQuestion"></div>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Lengua y Literatura 7° Básico | Poemas</div>
+</div>
+
+<script>
+    // ==================== POEMA 1: "Frente al mar" (Alfonsina Storni) ====================
+    const poema1 = `Frente al mar
+Alfonsina Storni
+
+Oh mar, enorme mar, corazón fiero de ritmo desigual, corazón malo,
+yo soy más blanda que ese pobre palo que se pudre en tus ondas prisionero.
+
+Oh mar, dame tu cólera tremenda,
+yo me pasé la vida perdonando,
+porque entendía, mar, yo me fui dando:
+"Piedad, piedad para el que más ofenda".
+
+Vulgaridad, vulgaridad me acosa.
+Ah, me han comprado la ciudad y el hombre.
+Hazme tener tu cólera sin nombre:
+Ya me fatiga esta misión de rosa.
+
+Me empobrecí porque entender abruma,
+me empobrecí porque entender sofoca,
+¡Bendecida la fuerza de la roca!
+Yo tengo el corazón como la espuma.
+
+Mar, yo soñaba ser como tú eres,
+allá en las tardes que la vida mía
+bajo las horas cálidas se abría…
+Ah, yo soñaba ser como tú eres.
+
+Mírame aquí, pequeña, miserable,
+todo dolor me vence, todo sueño;
+mar, dame, dame el inefable empeño
+de tornarme soberbia, inalcanzable.
+
+Dame tu sal, tu yodo, tu fiereza,
+¡Aire de mar!… ¡Oh tempestad, oh enojo!
+Desdichada de mí, soy un abrojo,
+y muero, mar, sucumbo en mi pobreza.
+
+Y el alma mía es como el mar, es eso,
+ah, la ciudad la pudre y equivoca
+pequeña vida que dolor provoca,
+¡Que pueda libertarme de su peso!
+
+Vuele mi empeño, mi esperanza vuele…
+La vida mía debió de ser horrible,
+debió ser una arteria incontenible
+y apenas es cicatriz que siempre duele.`;
+
+    // Pool de 40 preguntas de selección múltiple para Poema 1
+    const bankMultipleChoice = [
+        { text: "¿Cómo describe la hablante al mar en los primeros versos?", options: ["a. Como un lugar tranquilo", "b. Como un corazón fiero de ritmo desigual", "c. Como un amigo fiel", "d. Como un enemigo poderoso"], correct: "b" },
+        { text: "¿Con qué se compara la hablante en la primera estrofa?", options: ["a. Con una roca", "b. Con un pobre palo que se pudre en las olas", "c. Con la espuma del mar", "d. Con una gaviota"], correct: "b" },
+        { text: "¿Qué le pide la hablante al mar en la segunda estrofa?", options: ["a. Que le dé tranquilidad", "b. Que le dé su cólera tremenda", "c. Que le dé dinero", "d. Que le dé amor"], correct: "b" },
+        { text: "¿Qué dice la hablante que ha hecho durante su vida?", options: ["a. Luchar contra el mar", "b. Perdonar", "c. Viajar", "d. Escribir poemas"], correct: "b" },
+        { text: "¿Qué es lo que acosa a la hablante según la tercera estrofa?", options: ["a. La pobreza", "b. La vulgaridad", "c. La soledad", "d. La vejez"], correct: "b" },
+        { text: "¿Qué le han comprado la ciudad y el hombre según la hablante?", options: ["a. Su libertad", "b. Su casa", "c. Su trabajo", "d. No se especifica, pero la siente corrompida"], correct: "d" },
+        { text: "¿Qué significa 'misión de rosa' en el contexto del poema?", options: ["a. Ser delicada y frágil", "b. Ser amable, dulce y perdonadora", "c. Ser hermosa", "d. Ser efímera"], correct: "b" },
+        { text: "¿Qué le fatiga a la hablante?", options: ["a. Trabajar", "b. Su 'misión de rosa' (ser buena y perdonadora)", "c. Vivir en la ciudad", "d. La falta de amor"], correct: "b" },
+        { text: "¿Qué bendice la hablante en la cuarta estrofa?", options: ["a. El mar", "b. La fuerza de la roca", "c. La ciudad", "d. La espuma"], correct: "b" },
+        { text: "¿Cómo describe la hablante su corazón en la cuarta estrofa?", options: ["a. Como una roca", "b. Como la espuma", "c. Como el mar", "d. Como un palo"], correct: "b" },
+        { text: "¿Qué soñaba ser la hablante cuando era joven?", options: ["a. Famosa", "b. Como el mar (fuerte y fiera)", "c. Rica", "d. Viajera"], correct: "b" },
+        { text: "¿Cómo se describe la hablante a sí misma en la sexta estrofa?", options: ["a. Poderosa", "b. Pequeña, miserable y vencida por el dolor", "c. Alegre", "d. Indiferente"], correct: "b" },
+        { text: "¿Qué le pide la hablante al mar en la sexta estrofa?", options: ["a. Que la deje tranquila", "b. Que le dé el empeño de tornarse soberbia e inalcanzable", "c. Que la ahogue", "d. Que la haga famosa"], correct: "b" },
+        { text: "¿Qué le pide la hablante al mar en la séptima estrofa?", options: ["a. Su sal, su yodo, su fiereza", "b. Su calma", "c. Su belleza", "d. Su poder"], correct: "a" },
+        { text: "¿Cómo se siente la hablante al final de la séptima estrofa?", options: ["a. Triunfante", "b. Derrotada (muero, sucumbo en mi pobreza)", "c. Indiferente", "d. Enojada"], correct: "b" },
+        { text: "¿Qué le ocurre al alma de la hablante según la octava estrofa?", options: ["a. Es como el mar, pero la ciudad la pudre", "b. Es tranquila", "c. Es alegre", "d. Es indiferente"], correct: "a" },
+        { text: "¿Qué desea la hablante al final de la octava estrofa?", options: ["a. Liberarse del peso de la ciudad", "b. Volver al mar", "c. Morir", "d. Ser famosa"], correct: "a" },
+        { text: "¿Cómo describe la hablante su vida al final del poema?", options: ["a. Como una arteria incontenible que apenas es cicatriz que duele", "b. Como un sueño maravilloso", "c. Como una aventura", "d. Como un éxito"], correct: "a" },
+        { text: "¿Qué sentimiento predomina en el poema?", options: ["a. Alegría", "b. Frustración, cansancio y deseo de cambio", "c. Indiferencia", "d. Odio"], correct: "b" },
+        { text: "¿Qué representa el mar para la hablante?", options: ["a. Un enemigo", "b. La fuerza, la libertad y la autenticidad que ella desea", "c. Un lugar para descansar", "d. Un recuerdo de infancia"], correct: "b" },
+        { text: "¿Qué representa la ciudad para la hablante?", options: ["a. Un lugar de oportunidades", "b. La vulgaridad, la falsedad y la corrupción", "c. Un hogar", "d. Un lugar divertido"], correct: "b" },
+        { text: "¿Qué tipo de hablante lírico predomina en el poema?", options: ["a. Un hablante masculino", "b. Una hablante femenina que expresa su descontento con la vida", "c. Un hablante neutral", "d. Un narrador externo"], correct: "b" },
+        { text: "¿Qué quiere decir 'me empobrecí porque entender abruma'?", options: ["a. Perdió dinero", "b. Entender la realidad la agobia y la desgasta emocionalmente", "c. No entiende nada", "d. Es feliz"], correct: "b" },
+        { text: "¿Qué quiere decir 'soy un abrojo'?", options: ["a. Es una flor hermosa", "b. Es una persona que causa dolor o es insignificante", "c. Es una roca", "d. Es una ola"], correct: "b" },
+        { text: "¿Qué contraste se presenta en el poema?", options: ["a. Entre el mar y la ciudad", "b. Entre la noche y el día", "c. Entre la juventud y la vejez", "d. Entre la riqueza y la pobreza"], correct: "a" },
+        { text: "¿Qué desea la hablante que vuele al final del poema?", options: ["a. Sus pensamientos", "b. Su empeño y su esperanza", "c. Sus recuerdos", "d. Sus miedos"], correct: "b" },
+        { text: "¿Cómo se describe la vida de la hablante al final?", options: ["a. Como una cicatriz que siempre duele", "b. Como un río caudaloso", "c. Como un sueño", "d. Como un éxito rotundo"], correct: "a" },
+        { text: "¿Qué tono predomina en el poema?", options: ["a. Alegre y optimista", "b. Melancólico, cansado y de deseo de cambio", "c. Cómico", "d. Épico"], correct: "b" },
+        { text: "¿Qué le pide la hablante al mar en relación con la ciudad?", options: ["a. Que destruya la ciudad", "b. Que le dé fuerzas para liberarse del peso de la ciudad", "c. Que la lleve lejos", "d. Que ignore la ciudad"], correct: "b" },
+        { text: "¿Qué significado tiene 'la misión de rosa' en el poema?", options: ["a. Ser delicada", "b. Ser hermosa", "c. Ser bondadosa y perdonadora", "d. Ser frágil"], correct: "c" },
+        { text: "¿Qué crítica social se puede identificar en el poema?", options: ["a. Crítica a la pobreza", "b. Crítica a la vida urbana que corrompe y vuelve vulgar a las personas", "c. Crítica a la educación", "d. Crítica a la política"], correct: "b" },
+        { text: "¿Qué relación establece la hablante con el mar?", options: ["a. De indiferencia", "b. De admiración y deseo de imitarlo", "c. De miedo", "d. De odio"], correct: "b" },
+        { text: "¿Qué desea la hablante que el mar le transmita?", options: ["a. Su calma", "b. Su cólera y su fuerza", "c. Su belleza", "d. Su tranquilidad"], correct: "b" },
+        { text: "¿Qué significa 'sucumbo en mi pobreza'?", options: ["a. Se rinde o muere en su miseria", "b. Se enriquece", "c. Es feliz", "d. Viaja"], correct: "a" },
+        { text: "¿Qué siente la hablante hacia la ciudad?", options: ["a. Amor", "b. Rechazo y asco (vulgaridad me acosa)", "c. Indiferencia", "d. Miedo"], correct: "b" },
+        { text: "¿Qué anhela la hablante?", options: ["a. Ser como el mar: fuerte, libre y auténtica", "b. Ser famosa", "c. Ser rica", "d. Ser joven"], correct: "a" },
+        { text: "¿Qué simboliza la 'espuma' en el corazón de la hablante?", options: ["a. Fuerza", "b. Fragilidad y transitoriedad", "c. Belleza", "d. Pureza"], correct: "b" },
+        { text: "¿Qué simboliza la 'roca' en el poema?", options: ["a. Fragilidad", "b. Fuerza y firmeza", "c. Belleza", "d. Tranquilidad"], correct: "b" },
+        { text: "¿Qué mensaje principal transmite el poema?", options: ["a. La belleza del mar", "b. El deseo de liberarse de las normas sociales y recuperar la propia fuerza interior", "c. La tristeza de la vejez", "d. La alegría de la juventud"], correct: "b" },
+        { text: "¿Qué quiere decir 'debió ser una arteria incontenible'?", options: ["a. Debía haber sido una vida llena de energía y pasión", "b. Debía haber sido una vida tranquila", "c. Debía haber sido una vida aburrida", "d. Debía haber sido una vida corta"], correct: "a" }
+    ];
+
+    // ==================== POEMA 2: "Parinacota" (Pedro Humire) ====================
+    const poema2 = `Parinacota
+Pedro Humire
+
+Me partes a mí y al tiempo, Parinacota de los pedregales,
+lugar primero, madrugada del Universo, iniciación de los pensamientos,
+donde piensa el viento grande y se encuentran las edades.
+
+Cuando nos conocimos me envolviste con tu grito
+y tuve la sensación de hundirme en tu perennidad,
+Parinacota, residencia de mi espíritu.
+
+Dejé marcada en tus adobes mi locura,
+y se partió la blanca pared de las casas cuando te conté aquello,
+Parinacota de mi recuerdo.
+
+Los dos llorábamos, el ave bajo el arbusto a sepultar su plumaje;
+más hará navegar su canto hoy y siempre,
+en mi profundidad y en los reflejos de tu laguna.
+
+Tristemente vimos a las vicuñas doblegar su salvaje trote frente a la muerte,
+pero desde aquel tiempo siento correr la dulce sensibilidad de ellas entre mi sangre,
+Parinacota, mi necesario hallazgo.
+
+¡Cómo estás en mí! que cuando te sueño me responde tu ventarrón,
+ese de tus tardes, de tu lluvia, de tus confidencias
+en esa blancura del tiempo de invierno, de esos días en que buscas y corres riendo
+sobre tus penas o llorando frente a tu encuentro.
+
+Nuestra dulce desgracia, Parinacota, los dos la guardaremos,
+y no habrá más quien la sepa.
+Yo te entregué mi locura y tú me confiaste el frío de tu tristeza
+en el lenguaje perenne de América…
+Todo multiplicará entre tú y yo solamente.
+Parinacota, maternal huella encontrada.`;
+
+    // Pool de 40 afirmaciones de verdadero/falso para Poema 2
+    const bankTrueFalse = [
+        { text: "El hablante se dirige a Parinacota como un lugar que lo parte a él y al tiempo.", correct: "V" },
+        { text: "Parinacota es descrito como un lugar común y sin importancia.", correct: "F" },
+        { text: "El hablante siente que Parinacota es la 'residencia de mi espíritu'.", correct: "V" },
+        { text: "El hablante no siente ningún vínculo emocional con Parinacota.", correct: "F" },
+        { text: "El hablante dejó marcada su locura en los adobes de Parinacota.", correct: "V" },
+        { text: "El hablante y Parinacota lloraron juntos.", correct: "V" },
+        { text: "Las vicuñas son indiferentes a la muerte según el poema.", correct: "F" },
+        { text: "El hablante siente que la sensibilidad de las vicuñas corre por su sangre.", correct: "V" },
+        { text: "Parinacota es indiferente a los sentimientos del hablante.", correct: "F" },
+        { text: "El hablante sueña con Parinacota y el lugar le responde con su ventarrón.", correct: "V" },
+        { text: "El hablante se refiere a Parinacota como una 'maternal huella encontrada'.", correct: "V" },
+        { text: "El poema expresa indiferencia hacia la naturaleza.", correct: "F" },
+        { text: "Parinacota es presentado como un lugar sagrado y lleno de significado para el hablante.", correct: "V" },
+        { text: "El hablante no comparte sus sentimientos con Parinacota.", correct: "F" },
+        { text: "El viento grande piensa en Parinacota según el poema.", correct: "V" },
+        { text: "El hablante siente que Parinacota es parte de su identidad.", correct: "V" },
+        { text: "El poema muestra una relación de amor y pertenencia con la tierra natal.", correct: "V" },
+        { text: "Parinacota es un lugar que el hablante quiere olvidar.", correct: "F" },
+        { text: "El hablante entregó su locura a Parinacota.", correct: "V" },
+        { text: "Parinacota le confió al hablante el frío de su tristeza.", correct: "V" },
+        { text: "El lenguaje de Parinacota es 'perenne de América'.", correct: "V" },
+        { text: "El hablante considera a Parinacota como un enemigo.", correct: "F" },
+        { text: "El poema describe la naturaleza como algo sin vida.", correct: "F" },
+        { text: "El hablante siente que Parinacota es 'mi necesario hallazgo'.", correct: "V" },
+        { text: "El hablante se siente ajeno a Parinacota.", correct: "F" },
+        { text: "Parinacota es descrito como 'lugar primero, madrugada del Universo'.", correct: "V" },
+        { text: "El hablante no llora ni se emociona con Parinacota.", correct: "F" },
+        { text: "Las vicuñas doblegan su trote frente a la muerte según el poema.", correct: "V" },
+        { text: "El hablante siente que la sensibilidad de las vicuñas es ajena a él.", correct: "F" },
+        { text: "Parinacota es presentado como un lugar sin historia.", correct: "F" },
+        { text: "El hablante siente que Parinacota está dentro de él ('¡Cómo estás en mí!').", correct: "V" },
+        { text: "El poema refleja la cosmovisión andina de conexión con la tierra.", correct: "V" },
+        { text: "Parinacota es indiferente a los sueños del hablante.", correct: "F" },
+        { text: "El hablante y Parinacota comparten una 'dulce desgracia'.", correct: "V" },
+        { text: "El hablante no valora la cultura ni las tradiciones de su tierra.", correct: "F" },
+        { text: "Parinacota es descrito como un lugar que permite el encuentro de las edades.", correct: "V" },
+        { text: "El hablante no siente que Parinacota sea parte de su espíritu.", correct: "F" },
+        { text: "El poema expresa un profundo amor por la tierra natal.", correct: "V" },
+        { text: "Parinacota es un lugar sin significado espiritual para el hablante.", correct: "F" },
+        { text: "El hablante siente que Parinacota es una 'maternal huella'.", correct: "V" }
+    ];
+
+    // ==================== POEMA 3: "Fortuna" (Ida Vitale) ====================
+    const poema3 = `Fortuna
+Ida Vitale
+
+Por años, disfrutar del error y de su enmienda,
+haber podido hablar, caminar libre, no existir mutilada,
+no entrar o sí en iglesias, leer, oír la música querida,
+ser en la noche un ser como en el día.
+No ser casada en un negocio, medida en cabras,
+sufrir gobierno de parientes o legal lapidación.
+No desfilar ya nunca y no admitir palabras que pongan
+en la sangre limaduras de hierro.
+Descubrir por ti misma otro ser no previsto
+en el puente de la mirada.
+Ser humano y mujer, ni más ni menos.`;
+
+    // Pool de 5 preguntas abiertas para Poema 3
+    const bankOpen = [
+        {
+            question: "¿Qué aspectos de la vida valora la hablante en el poema 'Fortuna'? Menciona al menos tres.",
+            modelAnswer: "La hablante valora: 1) Haber podido hablar y caminar libre (libertad), 2) Poder leer y oír la música que le gusta (acceso a la cultura y el arte), 3) No estar sometida a gobiernos de parientes o matrimonios arreglados (autonomía), 4) Poder descubrirse a sí misma ('descubrir por ti misma otro ser'), 5) Ser humano y mujer sin más ni menos (igualdad y dignidad)."
+        },
+        {
+            question: "¿Qué significa 'No ser casada en un negocio, medida en cabras'? ¿Qué crítica social expresa este verso?",
+            modelAnswer: "Este verso critica la cosificación de la mujer en sociedades donde el matrimonio era un acuerdo económico (un 'negocio') y donde el valor de la mujer se medía en bienes materiales (como cabras). La hablante valora no haber sido tratada como una mercancía o un objeto de intercambio."
+        },
+        {
+            question: "¿Qué quiere decir 'no admitir palabras que pongan en la sangre limaduras de hierro'? ¿Qué tipo de palabras rechaza la hablante?",
+            modelAnswer: "La hablante rechaza las palabras hirientes, ofensivas o que dañan el espíritu ('limaduras de hierro en la sangre' es una metáfora de palabras que hieren profundamente). Valora una vida sin violencia verbal ni agresiones que dejan marcas en el interior."
+        },
+        {
+            question: "¿Qué significa 'descubrir por ti misma otro ser no previsto en el puente de la mirada'?",
+            modelAnswer: "Significa la capacidad de autodescubrimiento, de encontrar la propia identidad sin imposiciones externas. El 'puente de la mirada' sugiere el encuentro con otra persona (quizás amorosa) que refleja una versión inesperada de uno mismo. Es el valor del autoconocimiento y la sorpresa de descubrirse a través del otro."
+        },
+        {
+            question: "¿Qué mensaje principal transmite el poema 'Fortuna' sobre la vida de la mujer?",
+            modelAnswer: "El poema transmite que la verdadera fortuna no es la riqueza material, sino la libertad, la autonomía, el poder acceder a la cultura, no ser objeto de violencia ni de transacciones económicas, y poder descubrir la propia identidad. La hablante celebra 'ser humano y mujer, ni más ni menos', es decir, la igualdad y la dignidad humana sin discriminación."
+        }
+    ];
+
+    function getRandomItems(arr, count) {
+        const shuffled = [...arr];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+    }
+
+    let currentMC = [], currentTF = [], currentOpen = null;
+    let mcAnswers = [], tfAnswers = [], openAnswer = "";
+    let evaluated = false;
+
+    function renderMultipleChoice() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        currentMC.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${q.options.map(opt => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${opt.charAt(0)}" id="mc_${idx}_${opt.charAt(0)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${opt.charAt(0)}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div style="font-size:0.8rem; margin-top:0.3rem;">${mcAnswers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta: ' + q.correct}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => { mcAnswers[idx] = e.target.value; });
+                });
+            }
+        });
+    }
+
+    function renderTrueFalse() {
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+        currentTF.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellText.innerHTML = `${idx+1}. ${item.text}`;
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option'); defaultOpt.value = ""; defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+            const optV = document.createElement('option'); optV.value = "V"; optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option'); optF.value = "F"; optF.textContent = "Falso (F)";
+            select.appendChild(optV); select.appendChild(optF);
+            if (!evaluated && tfAnswers[idx]) {
+                if (tfAnswers[idx] === "V") optV.selected = true;
+                else if (tfAnswers[idx] === "F") optF.selected = true;
+            }
+            select.addEventListener('change', (e) => { tfAnswers[idx] = e.target.value; });
+            cellSelect.appendChild(select);
+            if (evaluated) {
+                const isCorrect = tfAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correct}`;
+                feedback.className = isCorrect ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+    }
+
+    function renderOpen() {
+        const container = document.getElementById('openQuestion');
+        container.innerHTML = '';
+        if (!currentOpen) return;
+        const div = document.createElement('div');
+        div.className = 'open-question-card';
+        div.innerHTML = `
+            <div class="open-title">❓ Pregunta</div>
+            <p>${currentOpen.question}</p>
+            <textarea id="openAnswerInput" rows="6" placeholder="Escribe aquí tu respuesta (mínimo 5 líneas)..." ${evaluated ? 'disabled' : ''}>${evaluated ? openAnswer : ''}</textarea>
+            ${evaluated ? `<div class="model-answer" style="display:block;"><strong>📝 Respuesta modelo de referencia:</strong><br>${currentOpen.modelAnswer}</div>` : ''}
+        `;
+        container.appendChild(div);
+        if (!evaluated) {
+            document.getElementById('openAnswerInput')?.addEventListener('input', (e) => { openAnswer = e.target.value; });
+        }
+    }
+
+    function resetTest() {
+        evaluated = false;
+        currentMC = getRandomItems(bankMultipleChoice, 16);
+        currentTF = getRandomItems(bankTrueFalse, 16);
+        const randomIndex = Math.floor(Math.random() * bankOpen.length);
+        currentOpen = bankOpen[randomIndex];
+        mcAnswers = new Array(16).fill(null);
+        tfAnswers = new Array(16).fill(null);
+        openAnswer = "";
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('mcPoem').innerHTML = `<strong>📖 Poema 1: "Frente al mar" - Alfonsina Storni</strong><br><br>${poema1.replace(/\n/g, '<br>')}`;
+        document.getElementById('tfPoem').innerHTML = `<strong>📖 Poema 2: "Parinacota" - Pedro Humire</strong><br><br>${poema2.replace(/\n/g, '<br>')}`;
+        document.getElementById('openPoem').innerHTML = `<strong>📖 Poema 3: "Fortuna" - Ida Vitale</strong><br><br>${poema3.replace(/\n/g, '<br>')}`;
+        renderMultipleChoice();
+        renderTrueFalse();
+        renderOpen();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function evaluateAll() {
+        evaluated = true;
+        let mcCorrect = 0, tfCorrect = 0;
+        for (let i = 0; i < currentMC.length; i++) if (mcAnswers[i] === currentMC[i].correct) mcCorrect++;
+        for (let i = 0; i < currentTF.length; i++) if (tfAnswers[i] === currentTF[i].correct) tfCorrect++;
+        const total = currentMC.length + currentTF.length;
+        const totalCorrect = mcCorrect + tfCorrect;
+        const percentage = (totalCorrect / total) * 100;
+        let grade = 0;
+        const passing = 60;
+        if (percentage >= passing) grade = 4.0 + ((percentage - passing) / (100 - passing)) * 3.0;
+        else grade = 1.0 + (percentage / passing) * 3.0;
+        grade = Math.round(grade * 100) / 100;
+        const isApproved = grade >= 4.0;
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#c4450c; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrect} de ${total} (${Math.round(percentage)}%)</div>
+            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Múltiple: ${mcCorrect}/${currentMC.length}</div>
+                <div>⚖️ V/F: ${tfCorrect}/${currentTF.length}</div>
+            </div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}"><strong>${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>NOTA: ${grade}</div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+        renderMultipleChoice();
+        renderTrueFalse();
+        renderOpen();
+        document.getElementById('restartTestBtn')?.addEventListener('click', resetTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Lenguaje.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_4_Lenguaje.html');
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    resetTest();
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>

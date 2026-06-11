@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: Análisis de Poemas | Lengua y Literatura 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #fef6f0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffaf6;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            scrollbar-width: thin;
+            background: #fffaf6;
+            color: #3a1f0d;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #f0e0d0; }
+        .slide::-webkit-scrollbar-thumb { background: #c9753c; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #b5431a;
+            border-left: 7px solid #d9531e;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #c4450c;
+            margin: 1rem 0 0.6rem 0;
+            border-bottom: 2px solid #f0cfb0;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #d9672e;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+            color: #3a2a1a;
+            text-align: justify;
+        }
+
+        ul, .custom-list {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #fce4d0;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #c95a1c;
+        }
+
+        .info-card {
+            background: #fef0e6;
+            border-left: 6px solid #d9531e;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .poem-example {
+            background: #fef0e6;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin: 1rem 0;
+            border: 1px solid #f0cfb0;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-style: italic;
+            line-height: 1.6;
+            white-space: pre-wrap;
+        }
+
+        .question-sample {
+            background: #fdf0e8;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            margin: 1.2rem 0 0.5rem;
+            border-left: 5px solid #d95b2b;
+        }
+
+        .badge {
+            background: #d9531e;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf4;
+            border-top: 1px solid #f0cfb0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #d95b2b; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #f0cfb0;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #8a3c10;
+            font-weight: 500;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(200, 100, 50, 0.4);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #8a3c10;
+            transition: 0.2s;
+            z-index: 90;
+        }
+        .nav-arrow:hover { background: #d95b2b; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .poem-example { font-size: 0.85rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+            <!-- SLIDE 1: Portada -->
+            <div class="slide">
+                <h1>📖 Análisis de Poemas</h1>
+                <p>La poesía es una forma de expresión que condensa emociones, pensamientos y visiones del mundo en pocas palabras. Para comprender un poema, debemos prestar atención a su <span class="highlight">tema central</span>, los <span class="highlight">sentimientos del hablante</span>, el <span class="highlight">mensaje</span> que transmite y los <span class="highlight">contrastes o símbolos</span> que utiliza.</p>
+                <div class="info-card">
+                    <strong>📘 En esta clase analizaremos tres poemas:</strong>
+                    <ul>
+                        <li>"Frente al mar" de Alfonsina Storni</li>
+                        <li>"Parinacota" de Pedro Humire</li>
+                        <li>"Fortuna" de Ida Vitale</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión inicial:</strong> ¿Qué sentimientos o emociones te han transmitido los poemas que has leído?</p>
+                    <p><strong>Respuesta orientativa:</strong> Los poemas pueden transmitir alegría, tristeza, nostalgia, amor, rabia, soledad, esperanza, entre muchos otros sentimientos. Cada lector puede interpretarlos de manera distinta según su experiencia personal.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: ¿Cómo analizar un poema? -->
+            <div class="slide">
+                <h2>🔍 ¿Cómo analizar un poema?</h2>
+                <p>Para comprender un poema, puedes guiarte por las siguientes preguntas:</p>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>📌 Sobre el tema</strong>
+                        <ul>
+                            <li>¿De qué trata el poema?</li>
+                            <li>¿Cuál es la idea principal?</li>
+                            <li>¿Qué contrastes o símbolos aparecen?</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <strong>📌 Sobre el hablante</strong>
+                        <ul>
+                            <li>¿Quién habla en el poema?</li>
+                            <li>¿Qué sentimientos expresa?</li>
+                            <li>¿Cómo se siente hacia lo que describe?</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <strong>📌 Sobre el mensaje</strong>
+                        <ul>
+                            <li>¿Qué quiere comunicar el poema?</li>
+                            <li>¿Qué reflexión o enseñanza deja?</li>
+                            <li>¿Qué crítica social o personal plantea?</li>
+                        </ul>
+                    </div>
+                    <div class="info-card">
+                        <strong>📌 Sobre el contexto</strong>
+                        <ul>
+                            <li>¿Qué elementos de la naturaleza o la sociedad aparecen?</li>
+                            <li>¿Qué valores o creencias se defienden?</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué es importante identificar el tema de un poema?</p>
+                    <p><strong>Respuesta:</strong> El tema es la idea central que el poeta quiere comunicar. Identificarlo permite comprender el sentido global del poema y relacionarlo con la experiencia humana (amor, muerte, libertad, identidad, naturaleza, etc.).</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Poema 1 - "Frente al mar" (Alfonsina Storni) -->
+            <div class="slide">
+                <h2>🌊 Poema 1: "Frente al mar"</h2>
+                <div class="poem-example">
+                    <strong>Alfonsina Storni</strong><br><br>
+                    Oh mar, enorme mar, corazón fiero de ritmo desigual, corazón malo,<br>
+                    yo soy más blanda que ese pobre palo que se pudre en tus ondas prisionero.<br><br>
+                    Oh mar, dame tu cólera tremenda,<br>
+                    yo me pasé la vida perdonando,<br>
+                    porque entendía, mar, yo me fui dando:<br>
+                    "Piedad, piedad para el que más ofenda".<br><br>
+                    Vulgaridad, vulgaridad me acosa.<br>
+                    Ah, me han comprado la ciudad y el hombre.<br>
+                    Hazme tener tu cólera sin nombre:<br>
+                    Ya me fatiga esta misión de rosa.
+                </div>
+                <div class="info-card">
+                    <strong>📘 Análisis:</strong>
+                    <ul>
+                        <li><strong>Tema central:</strong> El deseo de liberarse de las normas sociales y recuperar la fuerza interior.</li>
+                        <li><strong>Sentimientos del hablante:</strong> Frustración, cansancio, deseo de cambio, admiración por la fuerza del mar.</li>
+                        <li><strong>Contraste:</strong> Entre la fuerza y autenticidad del mar vs. la vulgaridad y falsedad de la ciudad.</li>
+                        <li><strong>Símbolos:</strong> El mar representa la fuerza, la libertad y la autenticidad; la ciudad representa la vulgaridad y la corrupción.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué le pide la hablante al mar y por qué?</p>
+                    <p><strong>Respuesta:</strong> La hablante le pide al mar que le dé su "cólera tremenda" porque está cansada de perdonar y de ser blanda ("misión de rosa"). Quiere ser fuerte, fiera y auténtica como el mar.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Continuación "Frente al mar" -->
+            <div class="slide">
+                <h2>🌊 "Frente al mar" (continuación)</h2>
+                <div class="poem-example">
+                    Me empobrecí porque entender abruma,<br>
+                    me empobrecí porque entender sofoca,<br>
+                    ¡Bendecida la fuerza de la roca!<br>
+                    Yo tengo el corazón como la espuma.<br><br>
+                    Mar, yo soñaba ser como tú eres,<br>
+                    allá en las tardes que la vida mía<br>
+                    bajo las horas cálidas se abría…<br>
+                    Ah, yo soñaba ser como tú eres.<br><br>
+                    Mírame aquí, pequeña, miserable,<br>
+                    todo dolor me vence, todo sueño;<br>
+                    mar, dame, dame el inefable empeño<br>
+                    de tornarme soberbia, inalcanzable.<br><br>
+                    Y el alma mía es como el mar, es eso,<br>
+                    ah, la ciudad la pudre y equivoca<br>
+                    pequeña vida que dolor provoca,<br>
+                    ¡Que pueda libertarme de su peso!
+                </div>
+                <div class="info-card">
+                    <strong>📘 Mensaje del poema:</strong> La hablante siente que la ciudad y la sociedad la han corrompido y debilitado. Anhela recuperar la fuerza y autenticidad del mar, liberarse del "peso" de la vida urbana y ser soberbia e inalcanzable como las olas. También expresa nostalgia por sus sueños juveniles de ser fuerte como el mar.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué significa que la hablante tenga "el corazón como la espuma"?</p>
+                    <p><strong>Respuesta:</strong> La espuma es frágil, efímera y delicada. La hablante reconoce su fragilidad y sensibilidad, en contraste con la fuerza de la roca que bendice.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: Poema 2 - "Parinacota" (Pedro Humire) -->
+            <div class="slide">
+                <h2>🏔️ Poema 2: "Parinacota"</h2>
+                <div class="poem-example">
+                    <strong>Pedro Humire</strong><br><br>
+                    Me partes a mí y al tiempo, Parinacota de los pedregales,<br>
+                    lugar primero, madrugada del Universo, iniciación de los pensamientos,<br>
+                    donde piensa el viento grande y se encuentran las edades.<br><br>
+                    Cuando nos conocimos me envolviste con tu grito<br>
+                    y tuve la sensación de hundirme en tu perennidad,<br>
+                    Parinacota, residencia de mi espíritu.<br><br>
+                    Dejé marcada en tus adobes mi locura,<br>
+                    y se partió la blanca pared de las casas cuando te conté aquello,<br>
+                    Parinacota de mi recuerdo.<br><br>
+                    ¡Cómo estás en mí! que cuando te sueño me responde tu ventarrón,<br>
+                    ese de tus tardes, de tu lluvia, de tus confidencias.
+                </div>
+                <div class="info-card">
+                    <strong>📘 Análisis:</strong>
+                    <ul>
+                        <li><strong>Tema central:</strong> La profunda conexión entre el hablante y su tierra natal (Parinacota).</li>
+                        <li><strong>Sentimientos del hablante:</strong> Pertenencia, amor, nostalgia, identificación espiritual con el paisaje.</li>
+                        <li><strong>Relación con la naturaleza:</strong> Parinacota no es solo un lugar físico, sino "residencia de mi espíritu". El paisaje siente, habla y responde al hablante.</li>
+                        <li><strong>Valores destacados:</strong> El respeto por la tierra, la memoria ancestral, la identidad cultural andina.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué significa que Parinacota sea la "residencia de mi espíritu"?</p>
+                    <p><strong>Respuesta:</strong> Significa que el hablante siente que su esencia, su identidad y su alma están profundamente ligadas a ese lugar. Parinacota no es solo un paisaje, sino parte de quién es él.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: Continuación "Parinacota" -->
+            <div class="slide">
+                <h2>🏔️ "Parinacota" (continuación)</h2>
+                <div class="poem-example">
+                    Los dos llorábamos, el ave bajo el arbusto a sepultar su plumaje;<br>
+                    más hará navegar su canto hoy y siempre,<br>
+                    en mi profundidad y en los reflejos de tu laguna.<br><br>
+                    Tristemente vimos a las vicuñas doblegar su salvaje trote frente a la muerte,<br>
+                    pero desde aquel tiempo siento correr la dulce sensibilidad de ellas entre mi sangre,<br>
+                    Parinacota, mi necesario hallazgo.<br><br>
+                    Nuestra dulce desgracia, Parinacota, los dos la guardaremos,<br>
+                    y no habrá más quien la sepa.<br>
+                    Yo te entregué mi locura y tú me confiaste el frío de tu tristeza<br>
+                    en el lenguaje perenne de América…<br>
+                    Todo multiplicará entre tú y yo solamente.<br>
+                    Parinacota, maternal huella encontrada.
+                </div>
+                <div class="info-card">
+                    <strong>📘 Mensaje del poema:</strong> La tierra no es un objeto inerte, sino un ser con quien se puede dialogar, compartir penas y alegrías. El hablante ha encontrado en Parinacota su identidad, su origen y su hogar espiritual. La expresión "lenguaje perenne de América" conecta la experiencia personal con la historia y cultura del continente.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué significa que Parinacota sea una "maternal huella encontrada"?</p>
+                    <p><strong>Respuesta:</strong> Significa que el hablante siente que Parinacota es como una madre: lo acoge, lo protege y lo ha marcado profundamente. Es un lugar que le da identidad y pertenencia.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: Poema 3 - "Fortuna" (Ida Vitale) -->
+            <div class="slide">
+                <h2>🍀 Poema 3: "Fortuna"</h2>
+                <div class="poem-example">
+                    <strong>Ida Vitale</strong><br><br>
+                    Por años, disfrutar del error y de su enmienda,<br>
+                    haber podido hablar, caminar libre, no existir mutilada,<br>
+                    no entrar o sí en iglesias, leer, oír la música querida,<br>
+                    ser en la noche un ser como en el día.<br>
+                    No ser casada en un negocio, medida en cabras,<br>
+                    sufrir gobierno de parientes o legal lapidación.<br>
+                    No desfilar ya nunca y no admitir palabras que pongan<br>
+                    en la sangre limaduras de hierro.<br>
+                    Descubrir por ti misma otro ser no previsto<br>
+                    en el puente de la mirada.<br>
+                    Ser humano y mujer, ni más ni menos.
+                </div>
+                <div class="info-card">
+                    <strong>📘 Análisis:</strong>
+                    <ul>
+                        <li><strong>Tema central:</strong> La verdadera fortuna es la libertad, la autonomía y la dignidad de la mujer.</li>
+                        <li><strong>Sentimientos del hablante:</strong> Agradecimiento, alivio, empoderamiento, reivindicación.</li>
+                        <li><strong>Valores destacados:</strong> Libertad, autonomía, educación, igualdad, respeto, autodescubrimiento.</li>
+                        <li><strong>Crítica social:</strong> Denuncia el matrimonio como negocio, la cosificación de la mujer, el control familiar, la violencia verbal.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué tipo de "fortuna" celebra la hablante en este poema?</p>
+                    <p><strong>Respuesta:</strong> No celebra la riqueza material, sino la fortuna de ser libre, de poder hablar, caminar, leer, tomar decisiones propias, no ser tratada como mercancía y poder descubrirse a sí misma.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: Comparación de los tres poemas -->
+            <div class="slide">
+                <h2>📊 Comparación de los poemas</h2>
+                <div class="grid-3">
+                    <div class="info-card">
+                        <strong>🌊 "Frente al mar"</strong><br>
+                        <strong>Tema:</strong> Liberarse de las normas sociales<br>
+                        <strong>Sentimiento:</strong> Frustración y deseo de cambio<br>
+                        <strong>Símbolo principal:</strong> El mar (fuerza, autenticidad)
+                    </div>
+                    <div class="info-card">
+                        <strong>🏔️ "Parinacota"</strong><br>
+                        <strong>Tema:</strong> Identidad y conexión con la tierra natal<br>
+                        <strong>Sentimiento:</strong> Pertenencia y amor espiritual<br>
+                        <strong>Símbolo principal:</strong> Parinacota (identidad, origen)
+                    </div>
+                    <div class="info-card">
+                        <strong>🍀 "Fortuna"</strong><br>
+                        <strong>Tema:</strong> Libertad y dignidad de la mujer<br>
+                        <strong>Sentimiento:</strong> Agradecimiento y empoderamiento<br>
+                        <strong>Símbolo principal:</strong> La fortuna (libertad, autonomía)
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 ¿Qué tienen en común?</strong> Los tres poemas expresan un <span class="highlight">anhelo de libertad y autenticidad</span>. La hablante de Storni quiere liberarse de la "vulgaridad" de la ciudad; el hablante de Humire encuentra su identidad en la tierra; la hablante de Vitale celebra haberse liberado de las opresiones sociales. Los tres valoran la fuerza interior y la identidad propia.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta final:</strong> ¿Qué mensaje sobre la identidad y la libertad comparten estos tres poemas?</p>
+                    <p><strong>Respuesta:</strong> Los tres poemas coinciden en que la verdadera realización personal proviene de ser auténtico, de conectarse con las propias raíces (ya sean naturales, culturales o personales) y de liberarse de las imposiciones sociales que limitan la libertad y la expresión del ser.</p>
+                </div>
+                <p style="margin-top: 1rem; text-align: center;">📚 <strong>Fin de la clase</strong> — Practica con los ejercicios.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 8</div>
+    </div>
+
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slideCounterSpan.innerText = `Slide ${currentIndex+1} / ${totalSlides}`;
+    }
+    function nextSlide() { if (currentIndex < totalSlides-1) { currentIndex++; updateSlidePosition(); } }
+    function prevSlide() { if (currentIndex > 0) { currentIndex--; updateSlidePosition(); } }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { nextSlide(); e.preventDefault(); }
+        else if (e.key === 'ArrowLeft') { prevSlide(); e.preventDefault(); }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => { window.location.href = 'Lenguaje.html'; });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => { window.location.href = 'C_4A_Lenguaje.html'; });
+    updateSlidePosition();
+</script>
+</body>
+</html>
