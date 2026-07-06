@@ -1,0 +1,959 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Sismos y Volcanes</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1724 0%, #1a2a3a 100%);
+            color: #eef2ff;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(20, 30, 45, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 145, 77, 0.3);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #ff914d55;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #ff914d;
+        }
+
+        .subtitle {
+            color: #ffb347;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #0f2a3a;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+        }
+
+        .section {
+            background: rgba(15, 35, 55, 0.6);
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 4px solid #ff914d;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #ffb347;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.25);
+            border-radius: 1rem;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(255, 145, 77, 0.2);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #ff914d;
+        }
+
+        .match-table, .truefalse-table, .fill-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .match-table th, .match-table td,
+        .truefalse-table th, .truefalse-table td,
+        .fill-table th, .fill-table td {
+            border: 1px solid #ff914d66;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .match-table th, .truefalse-table th, .fill-table th {
+            background: #ff914d33;
+            color: #ffb347;
+        }
+
+        select {
+            background: #0f2a3a;
+            color: white;
+            border: 1px solid #ff914d;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+        }
+
+        select option {
+            background: #1a2a3a;
+        }
+
+        .fill-input {
+            background: #0f2a3a;
+            color: white;
+            border: 1px solid #ff914d;
+            border-radius: 0.5rem;
+            padding: 0.4rem 0.6rem;
+            width: 100%;
+            font-size: 0.9rem;
+        }
+
+        .fill-input:focus {
+            outline: 2px solid #ff914d;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #ff914d;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: #0f2a2f;
+            border-radius: 1rem;
+            display: none;
+            border: 2px solid #ff914d;
+        }
+
+        .score-box {
+            font-size: 1.5rem;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 1rem;
+        }
+
+        .approved {
+            background: #1e4a2e;
+            color: #8bc34a;
+        }
+
+        .failed {
+            background: #7a2e2e;
+            color: #ff8a80;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #2c5a6e;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.2rem;
+            border-radius: 1.5rem;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .action-btn:hover {
+            background: #3a7a8e;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            opacity: 0.5;
+        }
+
+        .correct-row {
+            background: rgba(46, 204, 113, 0.25);
+        }
+
+        .incorrect-row {
+            background: rgba(231, 76, 60, 0.25);
+        }
+
+        .tf-correct {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+        .fill-correct {
+            color: #2ecc71;
+            font-weight: bold;
+        }
+
+        .fill-incorrect {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+
+
+        .feedback-text {
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 1rem 1rem 80px 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: 1.1rem;
+            }
+            th, td {
+                font-size: 0.75rem;
+                padding: 0.4rem;
+            }
+            .fill-input {
+                font-size: 0.75rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🌋 Ejercicios: Sismos y Volcanes</h1>
+        <div class="subtitle">Colegio Pedro de Valdivia - Providencia | 7° Básico</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (7) + Relación de Columnas (7) + Verdadero/Falso (6) + Completar (4)</div>
+        <div>✅ Exigencia: 60%</div>
+        <div>🎯 Nota máxima: 7.0</div>
+        <div>📝 Total preguntas: 24</div>
+    </div>
+
+    <div id="examContent">
+        <!-- SECCIÓN I: SELECCIÓN MÚLTIPLE (SISMOS) -->
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple - Sismos</div>
+            <p>Lee cada pregunta y marca la alternativa correcta. (7 preguntas)</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <!-- SECCIÓN II: RELACIÓN DE COLUMNAS (VOLCANES) -->
+        <div class="section">
+            <div class="section-title">🔗 II. Relación de Columnas - Volcanes</div>
+            <p>Selecciona el término correcto para cada descripción. (7 preguntas)</p>
+            <table class="match-table" id="matchTable">
+                <thead>
+                    <tr><th style="width:60%">Descripción</th><th style="width:40%">Término</th></tr>
+                </thead>
+                <tbody id="matchBody"></tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN III: VERDADERO O FALSO (MIXTO) -->
+        <div class="section">
+            <div class="section-title">⚖️ III. Verdadero o Falso</div>
+            <p>Selecciona Verdadero (V) o Falso (F) para cada afirmación. (6 preguntas)</p>
+            <table class="truefalse-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <!-- SECCIÓN IV: COMPLETAR (PARTES DEL VOLCÁN) -->
+        <div class="section">
+            <div class="section-title">✏️ IV. Completar - Partes del Volcán</div>
+            <p>Escribe el nombre de la parte del volcán que corresponde a cada descripción. (4 preguntas)</p>
+            <table class="fill-table" id="fillTable">
+                <thead><tr><th style="width:70%">Descripción</th><th style="width:30%">Respuesta</th></tr></thead>
+                <tbody id="fillBody"></tbody>
+            </table>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar Ejercicios</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Sismos y Volcanes | CPV - Providencia</div>
+</div>
+
+
+<script>
+    // ============================================================
+    //  POOL DE PREGUNTAS
+    // ============================================================
+
+    // ---------- SECCIÓN I: SELECCIÓN MÚLTIPLE (SISMOS) ----------
+    const mcPool = [
+        // Preguntas difíciles de contexto sobre sismos
+        {
+            text: "En la zona de subducción entre la placa de Nazca y la placa Sudamericana, los sismos de gran magnitud se generan porque:",
+            options: [
+                "a. Ambas placas se separan lentamente",
+                "b. La placa oceánica se desliza bajo la continental generando fricción",
+                "c. El magma asciende desde el núcleo terrestre",
+                "d. La corteza continental se adelgaza por erosión"
+            ],
+            correct: "b"
+        },
+        {
+            text: "Durante un terremoto, el hipocentro es el punto donde:",
+            options: [
+                "a. Se registra la mayor intensidad en la superficie",
+                "b. Se origina la ruptura de la roca en el interior de la Tierra",
+                "c. Las ondas sísmicas se detienen completamente",
+                "d. Se produce la licuefacción del suelo"
+            ],
+            correct: "b"
+        },
+        {
+            text: "La escala de Mercalli mide la intensidad de un sismo basándose en:",
+            options: [
+                "a. La energía liberada en el hipocentro",
+                "b. Los daños y la percepción humana en la superficie",
+                "c. La velocidad de las ondas P y S",
+                "d. La profundidad del epicentro"
+            ],
+            correct: "b"
+        },
+        {
+            text: "¿Por qué los sismos en Chile son tan frecuentes y de gran magnitud?",
+            options: [
+                "a. Porque Chile está en el centro de una placa tectónica",
+                "b. Porque Chile se ubica en el Cinturón de Fuego del Pacífico, donde convergen placas",
+                "c. Porque la corteza chilena es muy delgada",
+                "d. Porque existe una gran cantidad de volcanes activos"
+            ],
+            correct: "b"
+        },
+        {
+            text: "Las ondas sísmicas de tipo P (primarias) se caracterizan por:",
+            options: [
+                "a. Ser las más lentas y destructivas",
+                "b. Ser las primeras en llegar y viajar comprimiendo y expandiendo el material",
+                "c. No poder viajar a través del núcleo líquido",
+                "d. Ser las responsables de la licuefacción del suelo"
+            ],
+            correct: "b"
+        },
+        {
+            text: "El fenómeno de licuefacción durante un sismo ocurre cuando:",
+            options: [
+                "a. La roca fundida asciende a la superficie",
+                "b. El suelo saturado de agua pierde resistencia y se comporta como líquido",
+                "c. Las placas tectónicas se separan bruscamente",
+                "d. El magma se solidifica en el interior"
+            ],
+            correct: "b"
+        },
+        {
+            text: "¿Qué diferencia fundamental existe entre magnitud e intensidad de un sismo?",
+            options: [
+                "a. La magnitud mide los daños y la intensidad la energía liberada",
+                "b. La magnitud es la energía liberada en el foco y la intensidad los efectos en la superficie",
+                "c. Son exactamente lo mismo, solo cambia el nombre",
+                "d. La intensidad se mide con el sismógrafo y la magnitud con la escala Mercalli"
+            ],
+            correct: "b"
+        },
+        {
+            text: "Cuando ocurre un sismo de subducción en el océano Pacífico frente a Chile, el riesgo de tsunami aumenta porque:",
+            options: [
+                "a. El terremoto genera ondas que se propagan en el agua",
+                "b. El fondo marino se desplaza verticalmente, desplazando grandes masas de agua",
+                "c. La placa oceánica se fractura en miles de pedazos",
+                "d. El magma calienta el agua del océano"
+            ],
+            correct: "b"
+        },
+        {
+            text: "La zona de Benioff es importante para entender los sismos porque:",
+            options: [
+                "a. Es el lugar donde las placas se separan sin fricción",
+                "b. Es la zona de fricción donde la placa oceánica se subduce bajo la continental",
+                "c. Es el punto más alto de un volcán",
+                "d. Es el área donde se acumula el magma"
+            ],
+            correct: "b"
+        },
+        {
+            text: "El sismógrafo registra las ondas sísmicas, pero ¿qué información específica permite calcular la distancia al epicentro?",
+            options: [
+                "a. La amplitud máxima de las ondas",
+                "b. La diferencia de tiempo entre la llegada de las ondas P y S",
+                "c. La dirección de propagación de las ondas",
+                "d. La frecuencia de las ondas superficiales"
+            ],
+            correct: "b"
+        },
+        {
+            text: "¿Por qué los edificios altos pueden ser más vulnerables durante un sismo?",
+            options: [
+                "a. Porque su peso genera mayor presión sobre el suelo",
+                "b. Porque pueden entrar en resonancia con las ondas sísmicas de cierta frecuencia",
+                "c. Porque están construidos con materiales más livianos",
+                "d. Porque el viento los debilita previamente"
+            ],
+            correct: "b"
+        },
+        {
+            text: "El terremoto de Valdivia de 1960 es relevante en la historia sísmica porque:",
+            options: [
+                "a. Fue el primer terremoto registrado en Chile",
+                "b. Es el terremoto más potente registrado en la historia, con magnitud 9.5",
+                "c. Ocurrió en el norte de Chile",
+                "d. No generó daños significativos"
+            ],
+            correct: "b"
+        },
+        {
+            text: "Durante un terremoto, las ondas superficiales son las más destructivas porque:",
+            options: [
+                "a. Viajan más rápido que todas las demás",
+                "b. Generan movimientos horizontales y verticales en la superficie",
+                "c. Solo se propagan por el núcleo terrestre",
+                "d. Su frecuencia es demasiado baja para ser detectada"
+            ],
+            correct: "b"
+        },
+        {
+            text: "¿Qué relación existe entre la profundidad del hipocentro y los daños en la superficie?",
+            options: [
+                "a. A mayor profundidad, mayores daños",
+                "b. A menor profundidad, mayores daños",
+                "c. La profundidad no influye en los daños",
+                "d. Solo los sismos superficiales generan tsunamis"
+            ],
+            correct: "b"
+        },
+        {
+            text: "La expresión 'sismo interplaca' se refiere a terremotos que:",
+            options: [
+                "a. Ocurren en el interior de una placa tectónica",
+                "b. Se generan en el límite entre dos placas tectónicas",
+                "c. Son causados por actividad volcánica",
+                "d. Se producen por el movimiento del núcleo"
+            ],
+            correct: "b"
+        },
+        {
+            text: "¿Qué fenómeno ocurre cuando las ondas sísmicas atraviesan el núcleo externo líquido?",
+            options: [
+                "a. Las ondas P se detienen completamente",
+                "b. Las ondas S no pueden atravesarlo, generando la 'sombra sísmica'",
+                "c. Las ondas aumentan su velocidad",
+                "d. Las ondas se reflejan sin cambiar de dirección"
+            ],
+            correct: "b"
+        },
+        {
+            text: "En Chile, la mayoría de los sismos se originan en la zona de subducción, pero también existen sismos intraplaca. Estos últimos:",
+            options: [
+                "a. Ocurren en el interior del continente por fallas locales",
+                "b. Son siempre de baja magnitud",
+                "c. No generan daños en la superficie",
+                "d. Se producen exclusivamente en la costa"
+            ],
+            correct: "a"
+        },
+        {
+            text: "La escala de Richter es logarítmica, lo que significa que:",
+            options: [
+                "a. Cada unidad representa un aumento lineal de la energía",
+                "b. Cada unidad representa un aumento de 10 veces en la amplitud y 32 veces en la energía",
+                "c. Es equivalente a la escala Mercalli",
+                "d. Solo mide sismos de profundidad mayor a 100 km"
+            ],
+            correct: "b"
+        },
+        {
+            text: "El concepto de 'período de retorno' de un sismo se refiere a:",
+            options: [
+                "a. El tiempo que tarda una onda sísmica en dar la vuelta al mundo",
+                "b. El tiempo promedio entre terremotos de cierta magnitud en una zona específica",
+                "c. El tiempo que dura la réplica de un terremoto",
+                "d. El intervalo entre dos ondas P consecutivas"
+            ],
+            correct: "b"
+        },
+        {
+            text: "¿Por qué la zona norte de Chile presenta sismos de gran profundidad?",
+            options: [
+                "a. Porque la placa de Nazca se subduce en un ángulo más pronunciado",
+                "b. Porque la corteza continental es más gruesa en el norte",
+                "c. Porque no existe subducción en el norte",
+                "d. Porque los volcanes activos generan los sismos"
+            ],
+            correct: "a"
+        }
+    ];
+
+    // ---------- SECCIÓN II: RELACIÓN DE COLUMNAS (VOLCANES) ----------
+    const matchPool = [
+        { description: "Tipo de volcán con forma de cono perfecto, formado por capas de lava y ceniza, de erupciones explosivas.", correct: "Estratovolcán" },
+        { description: "Volcán de gran tamaño con pendientes suaves, formado por lava fluida que se extiende ampliamente.", correct: "Volcán en escudo" },
+        { description: "Volcán pequeño de pendientes pronunciadas, formado por fragmentos de roca y ceniza expulsados.", correct: "Cono de escoria" },
+        { description: "Tipo de erupción caracterizada por lava muy fluida que forma fuentes de lava.", correct: "Erupción hawaiana" },
+        { description: "Erupción explosiva que genera grandes columnas de ceniza y gases, muy peligrosa.", correct: "Erupción pliniana" },
+        { description: "Magma que ha perdido gases y fluye por la superficie del volcán.", correct: "Lava" },
+        { description: "Cámara subterránea donde se acumula el magma antes de una erupción.", correct: "Cámara magmática" },
+        { description: "Abertura en la cima del volcán por donde salen los materiales.", correct: "Cráter" },
+        { description: "Conducto o tubo por donde asciende el magma desde la cámara magmática.", correct: "Chimenea" },
+        { description: "Volcán que ha tenido actividad registrada en tiempos históricos.", correct: "Volcán activo" },
+        { description: "Volcán que no ha tenido erupciones en tiempos históricos pero podría reactivarse.", correct: "Volcán inactivo" },
+        { description: "Volcán que no tiene posibilidad de volver a erupcionar.", correct: "Volcán extinto" },
+        { description: "Partículas finas de roca expulsadas durante una erupción volcánica.", correct: "Ceniza volcánica" },
+        { description: "Gases y vapor que emanan del volcán a través de grietas.", correct: "Fumarola" },
+        { description: "Gran depresión en la cima de un volcán formada por el colapso de la estructura.", correct: "Caldera" },
+        { description: "Ladera o pendiente del volcán.", correct: "Flanco" },
+        { description: "Parte más alta del volcán.", correct: "Pico" },
+        { description: "Acumulación de lava viscosa en el cráter que no fluye.", correct: "Domo de lava" },
+        { description: "Cono secundario que se forma en los flancos del volcán principal.", correct: "Cono parásito" },
+        { description: "Mezcla de gases, ceniza y roca que se desplaza a gran velocidad durante una erupción.", correct: "Flujo piroclástico" }
+    ];
+
+    // ---------- SECCIÓN III: VERDADERO/FALSO (MIXTO) ----------
+    const tfPool = [
+        { text: "La escala de Richter y la escala de Mercalli miden lo mismo, solo que con unidades diferentes.", correct: "F" },
+        { text: "Las ondas S pueden viajar a través del núcleo externo líquido de la Tierra.", correct: "F" },
+        { text: "En una erupción pliniana, la lava es muy viscosa y los gases se acumulan generando explosiones violentas.", correct: "V" },
+        { text: "El Cinturón de Fuego del Pacífico concentra aproximadamente el 90% de los sismos del mundo.", correct: "V" },
+        { text: "La licuefacción del suelo durante un sismo puede causar el hundimiento de edificios.", correct: "V" },
+        { text: "Los volcanes en escudo se forman por erupciones explosivas de lava viscosa.", correct: "F" },
+        { text: "El hipocentro es el punto en la superficie terrestre directamente sobre el foco del sismo.", correct: "F" },
+        { text: "La zona de Benioff es el lugar donde se genera la mayor cantidad de sismos en una zona de subducción.", correct: "V" },
+        { text: "El magma y la lava son el mismo material, solo se diferencian por su ubicación (interior o exterior).", correct: "V" },
+        { text: "Las fumarolas emiten principalmente agua líquida y magma fundido.", correct: "F" },
+        { text: "Un volcán inactivo nunca podrá volver a erupcionar.", correct: "F" },
+        { text: "Los tsunamis generados por sismos siempre alcanzan la misma altura en todas las costas.", correct: "F" },
+        { text: "El terremoto de Valdivia de 1960 fue el de mayor magnitud registrado en la historia.", correct: "V" },
+        { text: "Las ondas P son más rápidas que las ondas S, por eso llegan primero a los sismógrafos.", correct: "V" },
+        { text: "Los sismos intraplaca ocurren solo en el océano Pacífico.", correct: "F" }
+    ];
+
+    // ---------- SECCIÓN IV: COMPLETAR (PARTES DEL VOLCÁN) ----------
+    const fillPool = [
+        { description: "Abertura en la cima del volcán por donde salen los materiales expulsados.", answer: "cráter" },
+        { description: "Conducto o tubo por donde asciende el magma desde la cámara magmática.", answer: "chimenea" },
+        { description: "Reservorio subterráneo donde se acumula el magma antes de una erupción.", answer: "cámara magmática" },
+        { description: "Estructura formada por la acumulación de materiales expulsados durante las erupciones.", answer: "cono volcánico" },
+        { description: "Magma que fluye por la superficie del volcán.", answer: "lava" },
+        { description: "Partículas sólidas finas expulsadas durante la erupción volcánica.", answer: "ceniza volcánica" },
+        { description: "Ladera o pendiente del volcán.", answer: "flanco" },
+        { description: "Punto más alto del volcán.", answer: "pico" },
+        { description: "Emisión de gases y vapor por las grietas del volcán.", answer: "fumarola" }
+    ];
+
+    // ============================================================
+    //  FUNCIONES DE UTILIDAD
+    // ============================================================
+
+    function shuffleArray(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function selectRandom(arr, n) {
+        const shuffled = shuffleArray(arr);
+        return shuffled.slice(0, n);
+    }
+
+    // ============================================================
+    //  ESTADO DEL EXAMEN
+    // ============================================================
+
+    // Selección de preguntas (se hace una vez al cargar)
+    const selectedMC = selectRandom(mcPool, 7);
+    const selectedMatch = selectRandom(matchPool, 7);
+    const selectedTF = selectRandom(tfPool, 6);
+    const selectedFill = selectRandom(fillPool, 4);
+
+    // Almacenar respuestas
+    let mcAnswers = new Array(selectedMC.length).fill(null);
+    let matchAnswers = new Array(selectedMatch.length).fill("");
+    let tfAnswers = new Array(selectedTF.length).fill(null);
+    let fillAnswers = new Array(selectedFill.length).fill("");
+
+    let evaluated = false;
+
+    // ============================================================
+    //  RENDERIZADO
+    // ============================================================
+
+    function renderMultipleChoice() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        selectedMC.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${q.options.map(opt => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${opt.charAt(0)}" id="mc_${idx}_${opt.charAt(0)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${opt.charAt(0)}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div class="feedback-text">${mcAnswers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta correcta: ' + q.correct}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => {
+                        mcAnswers[idx] = e.target.value;
+                    });
+                });
+            }
+        });
+    }
+
+    function renderMatch() {
+        const tbody = document.getElementById('matchBody');
+        tbody.innerHTML = '';
+
+        // Opciones para los selects (todas las respuestas correctas + algunas extras)
+        const allMatchTerms = matchPool.map(m => m.correct);
+        const matchOptions = shuffleArray([...allMatchTerms, "Lava", "Cráter", "Chimenea", "Cámara magmática", "Cono volcánico", "Ceniza", "Fumarola", "Caldera", "Domo de lava"]);
+
+        selectedMatch.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellDesc = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellDesc.innerHTML = `${idx+1}. ${item.description}`;
+
+            const select = document.createElement('select');
+            select.id = `match_${idx}`;
+            select.disabled = evaluated;
+
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione...";
+            select.appendChild(defaultOpt);
+
+            const optionsToShow = shuffleArray([item.correct, ...matchOptions.filter(o => o !== item.correct).slice(0, 7)]);
+            optionsToShow.forEach(opt => {
+                const option = document.createElement('option');
+                option.value = opt;
+                option.textContent = opt;
+                if (!evaluated && matchAnswers[idx] === opt) option.selected = true;
+                select.appendChild(option);
+            });
+
+            select.addEventListener('change', (e) => {
+                matchAnswers[idx] = e.target.value;
+            });
+
+            cellSelect.appendChild(select);
+
+            if (evaluated) {
+                const isCorrect = matchAnswers[idx] === item.correct;
+                row.classList.add(isCorrect ? 'correct-row' : 'incorrect-row');
+                if (!isCorrect) {
+                    const feedback = document.createElement('div');
+                    feedback.style.fontSize = '0.75rem';
+                    feedback.style.marginTop = '0.3rem';
+                    feedback.style.color = '#ffaa88';
+                    feedback.innerHTML = `Correcta: ${item.correct}`;
+                    cellSelect.appendChild(feedback);
+                }
+            }
+        });
+    }
+
+    function renderTrueFalse() {
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+        selectedTF.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellText.innerHTML = `${idx+1}. ${item.text}`;
+
+            const select = document.createElement('select');
+            select.id = `tf_${idx}`;
+            select.disabled = evaluated;
+
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+
+            const optV = document.createElement('option');
+            optV.value = "V";
+            optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option');
+            optF.value = "F";
+            optF.textContent = "Falso (F)";
+
+            select.appendChild(optV);
+            select.appendChild(optF);
+
+            if (!evaluated && tfAnswers[idx]) {
+                if (tfAnswers[idx] === "V") optV.selected = true;
+                else if (tfAnswers[idx] === "F") optF.selected = true;
+            }
+
+            select.addEventListener('change', (e) => {
+                tfAnswers[idx] = e.target.value;
+            });
+
+            cellSelect.appendChild(select);
+
+            if (evaluated) {
+                const isCorrect = tfAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correct}`;
+                feedback.className = isCorrect ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+    }
+
+    function renderFill() {
+        const tbody = document.getElementById('fillBody');
+        tbody.innerHTML = '';
+        selectedFill.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellDesc = row.insertCell(0);
+            const cellInput = row.insertCell(1);
+            cellDesc.innerHTML = `${idx+1}. ${item.description}`;
+
+            const input = document.createElement('input');
+            input.type = 'text';
+            input.className = 'fill-input';
+            input.id = `fill_${idx}`;
+            input.disabled = evaluated;
+            if (!evaluated && fillAnswers[idx]) {
+                input.value = fillAnswers[idx];
+            }
+            input.addEventListener('input', (e) => {
+                fillAnswers[idx] = e.target.value.trim();
+            });
+
+            cellInput.appendChild(input);
+
+            if (evaluated) {
+                const userAnswer = fillAnswers[idx] || '';
+                const isCorrect = userAnswer.toLowerCase() === item.answer.toLowerCase();
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.answer}`;
+                feedback.className = isCorrect ? 'fill-correct' : 'fill-incorrect';
+                cellInput.appendChild(feedback);
+
+                if (!isCorrect) {
+                    row.classList.add('incorrect-row');
+                } else {
+                    row.classList.add('correct-row');
+                }
+            }
+        });
+    }
+
+    // ============================================================
+    //  EVALUACIÓN
+    // ============================================================
+
+    function evaluateAll() {
+        evaluated = true;
+
+        let mcCorrect = 0;
+        let matchCorrect = 0;
+        let tfCorrect = 0;
+        let fillCorrect = 0;
+
+        // Evaluar MC
+        for (let i = 0; i < selectedMC.length; i++) {
+            if (mcAnswers[i] === selectedMC[i].correct) mcCorrect++;
+        }
+
+        // Evaluar Match
+        for (let i = 0; i < selectedMatch.length; i++) {
+            if (matchAnswers[i] === selectedMatch[i].correct) matchCorrect++;
+        }
+
+        // Evaluar TF
+        for (let i = 0; i < selectedTF.length; i++) {
+            if (tfAnswers[i] === selectedTF[i].correct) tfCorrect++;
+        }
+
+        // Evaluar Fill
+        for (let i = 0; i < selectedFill.length; i++) {
+            if (fillAnswers[i] && fillAnswers[i].toLowerCase() === selectedFill[i].answer.toLowerCase()) fillCorrect++;
+        }
+
+        const totalQuestions = selectedMC.length + selectedMatch.length + selectedTF.length + selectedFill.length;
+        const totalCorrect = mcCorrect + matchCorrect + tfCorrect + fillCorrect;
+        const percentage = (totalCorrect / totalQuestions) * 100;
+
+        let grade = 0;
+        const passingPercentage = 60;
+
+        if (percentage >= passingPercentage) {
+            grade = 4.0 + ((percentage - passingPercentage) / (100 - passingPercentage)) * 3.0;
+        } else {
+            grade = 1.0 + (percentage / passingPercentage) * 3.0;
+        }
+        grade = Math.round(grade * 100) / 100;
+
+        const resultsDiv = document.getElementById('results');
+        const isApproved = grade >= 4.0;
+
+        resultsDiv.innerHTML = `
+            <h3 style="color:#ffb347; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Respuestas correctas: ${totalCorrect} de ${totalQuestions} (${Math.round(percentage)}%)</div>
+            <div class="score-box">📊 Detalle:</div>
+            <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Selección Múltiple: ${mcCorrect}/${selectedMC.length}</div>
+                <div>🔗 Relación: ${matchCorrect}/${selectedMatch.length}</div>
+                <div>⚖️ V/F: ${tfCorrect}/${selectedTF.length}</div>
+                <div>✏️ Completar: ${fillCorrect}/${selectedFill.length}</div>
+            </div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}">
+                ${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}<br>
+                <strong>NOTA FINAL: ${grade}</strong>
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartBtn">🔄 Reiniciar Ejercicios</button>
+                <button class="action-btn" id="goToClassBtn">📚 Volver a la Clase</button>
+                <button class="action-btn" id="goToCourseBtn">🏠 Volver al Curso</button>
+            </div>
+        `;
+
+        resultsDiv.style.display = 'block';
+
+        // Re-renderizar todo
+        renderMultipleChoice();
+        renderMatch();
+        renderTrueFalse();
+        renderFill();
+
+        // Event listeners
+        document.getElementById('restartBtn')?.addEventListener('click', restartExam);
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => {
+            window.location.href = 'C_4_Fisica.html';
+        });
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => {
+            window.location.href = 'Fisica.html';
+        });
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function restartExam() {
+        evaluated = false;
+        mcAnswers = new Array(selectedMC.length).fill(null);
+        matchAnswers = new Array(selectedMatch.length).fill("");
+        tfAnswers = new Array(selectedTF.length).fill(null);
+        fillAnswers = new Array(selectedFill.length).fill("");
+
+        document.getElementById('results').style.display = 'none';
+
+        renderMultipleChoice();
+        renderMatch();
+        renderTrueFalse();
+        renderFill();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ============================================================
+    //  INICIALIZACIÓN
+    // ============================================================
+
+    renderMultipleChoice();
+    renderMatch();
+    renderTrueFalse();
+    renderFill();
+
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>

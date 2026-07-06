@@ -1,0 +1,1099 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase: Sismos y Volcanes | Dinámica Terrestre</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #0f1724 0%, #1a2a3a 100%);
+            color: #eef2ff;
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            padding-bottom: 80px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(20, 30, 45, 0.92);
+            backdrop-filter: blur(3px);
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.4);
+            border: 1px solid rgba(255, 145, 77, 0.3);
+            flex: 1;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 2px solid #ff914d55;
+            padding-bottom: 1rem;
+        }
+
+        .logo {
+            font-size: 0.85rem;
+            color: #ffb347;
+            letter-spacing: 2px;
+            margin-bottom: 0.5rem;
+        }
+
+        h1 {
+            font-size: 2.2rem;
+            color: #ff914d;
+            margin-bottom: 0.3rem;
+        }
+
+        .subtitle {
+            color: #ffb347;
+            font-size: 1rem;
+        }
+
+        .meta-info {
+            display: flex;
+            justify-content: space-between;
+            background: #0f2a3a;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            font-size: 0.85rem;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .slides-container {
+            position: relative;
+            min-height: 500px;
+        }
+
+        .section {
+            background: rgba(15, 35, 55, 0.6);
+            border-radius: 1.2rem;
+            padding: 1.5rem;
+            border-left: 4px solid #ff914d;
+            transition: 0.2s;
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .section.active-slide {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateX(20px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+        .section:hover {
+            background: rgba(25, 50, 75, 0.7);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            color: #ffb347;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            border-bottom: 1px solid #ff914d55;
+            padding-bottom: 0.5rem;
+        }
+
+        .section-title span {
+            font-size: 1.8rem;
+        }
+
+        .subsection {
+            margin: 1.2rem 0 1rem 1rem;
+            padding-left: 1rem;
+            border-left: 2px solid #ff914d88;
+        }
+
+        .subsection-title {
+            font-size: 1.2rem;
+            color: #ffaa66;
+            margin-bottom: 0.6rem;
+            font-weight: 600;
+        }
+
+        .concept-box {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1rem;
+            border: 1px solid #ff914d44;
+        }
+
+        .card h4 {
+            color: #ff914d;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        th, td {
+            border: 1px solid #ff914d66;
+            padding: 0.6rem;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background: #ff914d33;
+            color: #ffb347;
+        }
+
+        .highlight {
+            color: #ff914d;
+            font-weight: bold;
+        }
+
+        .highlight-green {
+            color: #6fcf97;
+            font-weight: bold;
+        }
+
+        .part-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .part-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .part-list li::before {
+            content: "🌋";
+            position: absolute;
+            left: 0;
+        }
+
+        .evidence-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .evidence-list li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .evidence-list li::before {
+            content: "🔬";
+            position: absolute;
+            left: 0;
+        }
+
+        .nav-circles {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem;
+            margin: 1.5rem 0 1rem;
+            padding: 0.8rem;
+            background: rgba(0, 0, 0, 0.3);
+            border-radius: 1rem;
+        }
+
+        .circle {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 0.85rem;
+            transition: all 0.2s ease;
+            background: #2c3e50;
+            color: white;
+            border: 2px solid #ff914d55;
+        }
+
+        .circle:hover {
+            transform: scale(1.1);
+            border-color: #ff914d;
+        }
+
+        .circle.active {
+            background: #ff914d;
+            color: white;
+            border-color: #ff914d;
+            box-shadow: 0 0 10px rgba(255, 145, 77, 0.5);
+        }
+
+        .slide-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 1rem;
+            gap: 1rem;
+        }
+
+        .nav-arrow-btn {
+            background: #ff6b35;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-size: 0.9rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .nav-arrow-btn:hover {
+            background: #ff914d;
+            transform: scale(1.02);
+        }
+
+        .nav-arrow-btn:disabled {
+            background: #555;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .progress-info {
+            text-align: center;
+            margin: 0.8rem 0;
+            font-size: 0.85rem;
+            color: #ffb347;
+        }
+
+        .fixed-footer {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(10, 20, 30, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 0.8rem 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            border-top: 1px solid #ff914d;
+            z-index: 1000;
+        }
+
+        .footer-btn {
+            background: #2c5a6e;
+            color: white;
+            border: none;
+            padding: 0.6rem 1.8rem;
+            border-radius: 2rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .footer-btn:hover {
+            background: #3a7a8e;
+            transform: scale(1.02);
+        }
+
+        .footer-btn.primary {
+            background: #ff6b35;
+        }
+
+        .footer-btn.primary:hover {
+            background: #ff914d;
+        }
+
+        @media (max-width: 700px) {
+            body {
+                padding: 1rem 1rem 80px 1rem;
+            }
+            .container {
+                padding: 1rem;
+            }
+            .section-title {
+                font-size: 1.2rem;
+            }
+            th, td {
+                font-size: 0.75rem;
+                padding: 0.4rem;
+            }
+            .circle {
+                width: 32px;
+                height: 32px;
+                font-size: 0.75rem;
+            }
+            .footer-btn {
+                padding: 0.4rem 1.2rem;
+                font-size: 0.85rem;
+            }
+            .grid-3 {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <div class="logo">CPV | PROVIDENCIA</div>
+        <h1>🌋 Sismos y Volcanes</h1>
+        <div class="subtitle">Colegio Pedro de Valdivia - Providencia | 7° Básico</div>
+    </div>
+
+    <div class="meta-info">
+        <span>📖 <strong>Curso:</strong> 7° Básico</span>
+        <span>🎯 <strong>Objetivo:</strong> Conocer los fenómenos de sismos y volcanes, sus causas, características y su relación con la tectónica de placas</span>
+        <span>⌨️ <strong>Navegación:</strong> ← → o clic en círculos</span>
+    </div>
+
+    <div id="nav-circles" class="nav-circles"></div>
+
+    <div id="slides-container" class="slides-container"></div>
+
+    <div class="slide-nav">
+        <button class="nav-arrow-btn" id="prevSlideBtn">◀ Anterior</button>
+        <button class="nav-arrow-btn" id="nextSlideBtn">Siguiente ▶</button>
+    </div>
+    <div class="progress-info" id="progressInfo"></div>
+</div>
+
+<div class="fixed-footer">
+    <button class="footer-btn" id="backToFisicaBtn">🏠 Volver a Física</button>
+    <button class="footer-btn primary" id="exercisesBtn">📝 Ejercicios</button>
+</div>
+
+<script>
+    // ==================== DEFINICIÓN DE LAS SLIDES ====================
+    const slides = [
+        { // Slide 0 - Introducción
+            title: "🌋 Introducción a Sismos y Volcanes",
+            content: `
+                <p>Los <strong class="highlight">sismos</strong> y <strong class="highlight">volcanes</strong> son fenómenos geológicos que ocurren como consecuencia de la <strong class="highlight">dinámica interna de la Tierra</strong>. Ambos están estrechamente relacionados con el movimiento de las <strong>placas tectónicas</strong>.</p>
+                
+                <div class="subsection">
+                    <div class="subsection-title">🌍 Relación con la Tectónica de Placas</div>
+                    <p>La mayoría de los sismos y volcanes del mundo ocurren en los <strong>límites de las placas tectónicas</strong>. En estos bordes, las placas interactúan de diferentes maneras:</p>
+                    <ul style="margin: 0.8rem 0 0 1.5rem;">
+                        <li><strong>Límites convergentes:</strong> Una placa se subduce bajo otra, generando sismos y volcanes.</li>
+                        <li><strong>Límites divergentes:</strong> Las placas se separan, permitiendo el ascenso de magma.</li>
+                        <li><strong>Límites transformantes:</strong> Las placas se deslizan lateralmente, generando sismos.</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🔥 El Cinturón de Fuego del Pacífico</div>
+                    <div class="concept-box">
+                        <p>El <strong class="highlight">Cinturón de Fuego del Pacífico</strong> es una región con forma de herradura que rodea el Océano Pacífico. Concentra aproximadamente el <strong class="highlight">90% de los sismos</strong> y el <strong class="highlight">75% de los volcanes activos</strong> del mundo.</p>
+                        <p style="margin-top: 0.5rem;">Chile se encuentra en esta zona, lo que explica la alta actividad sísmica y volcánica del país.</p>
+                    </div>
+                </div>
+            `
+        },
+        { // Slide 1 - Sismos: Definición y Causas
+            title: "🔬 Sismos: Definición y Causas",
+            content: `
+                <p>Un <strong class="highlight">sismo</strong> o <strong>terremoto</strong> es un movimiento brusco de la corteza terrestre causado por la liberación repentina de energía acumulada en el interior de la Tierra.</p>
+
+                <div class="subsection">
+                    <div class="subsection-title">⚡ Causas de los Sismos</div>
+                    <ul style="margin: 0.8rem 0 0 1.5rem;">
+                        <li><strong>Movimiento de placas tectónicas:</strong> La principal causa. La fricción entre placas acumula energía que se libera en forma de ondas sísmicas.</li>
+                        <li><strong>Actividad volcánica:</strong> El movimiento del magma puede generar sismos de menor magnitud.</li>
+                        <li><strong>Actividad humana:</strong> Explosiones, minería, o construcción de grandes embalses pueden generar sismos inducidos.</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">📐 Conceptos Clave</div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h4>📍 Hipocentro</h4>
+                            <p>Punto en el <strong>interior de la Tierra</strong> donde se origina el sismo. También llamado <strong>foco</strong>.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📍 Epicentro</h4>
+                            <p>Punto en la <strong>superficie</strong> directamente sobre el hipocentro. Es donde se siente con mayor intensidad.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🌊 Zona de Subducción y Zona de Benioff</div>
+                    <div class="concept-box">
+                        <p>La <strong class="highlight">zona de subducción</strong> es el lugar donde una placa oceánica se hunde bajo otra placa (continental u oceánica).</p>
+                        <p style="margin-top: 0.5rem;">La <strong class="highlight">zona de Benioff</strong> es la región de fricción entre las placas en subducción. En esta zona se generan la mayoría de los sismos profundos y de gran magnitud.</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">📊 Tipos de Sismos según su Ubicación</div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h4>🔴 Sismo Interplaca</h4>
+                            <p>Ocurre en el <strong>límite entre dos placas</strong> tectónicas. Son los más comunes y de mayor magnitud.</p>
+                        </div>
+                        <div class="card">
+                            <h4>🟠 Sismo Intraplaca</h4>
+                            <p>Ocurre en el <strong>interior de una placa</strong>, generalmente por fallas locales. Pueden ser de gran magnitud.</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        { // Slide 2 - Ondas Sísmicas
+            title: "📊 Ondas Sísmicas",
+            content: `
+                <p>Los sismos generan <strong class="highlight">ondas sísmicas</strong> que se propagan por el interior y la superficie de la Tierra. Estas ondas son registradas por los <strong>sismógrafos</strong>.</p>
+
+                <div class="subsection">
+                    <div class="subsection-title">📡 Tipos de Ondas Sísmicas</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo de Onda</th>
+                                <th>Características</th>
+                                <th>Velocidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Ondas P</strong> <br> (Primarias)</td>
+                                <td>Son las más rápidas. Viajan comprimiendo y expandiendo el material (movimiento en la dirección de propagación). Pueden atravesar <strong>sólidos, líquidos y gases</strong>.</td>
+                                <td>Más rápidas</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ondas S</strong> <br> (Secundarias)</td>
+                                <td>Viajan con movimiento perpendicular a la dirección de propagación. Solo pueden atravesar <strong>sólidos</strong>. No pueden atravesar el núcleo externo líquido.</td>
+                                <td>Más lentas que las P</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ondas Superficiales</strong> <br> (Love y Rayleigh)</td>
+                                <td>Viajan por la <strong>superficie</strong> terrestre. Son las <strong>más destructivas</strong> porque generan movimientos horizontales y verticales.</td>
+                                <td>Las más lentas</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🔍 Sombra Sísmica</div>
+                    <div class="concept-box">
+                        <p>Las <strong>ondas S no pueden atravesar el núcleo externo líquido</strong> de la Tierra. Esto genera una <strong class="highlight">sombra sísmica</strong>, una zona donde no se registran ondas S, lo que permitió a los científicos descubrir que el núcleo externo es líquido.</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">📏 Cálculo de la Distancia al Epicentro</div>
+                    <div class="concept-box">
+                        <p>Los sismógrafos registran el <strong>tiempo de llegada de las ondas P y S</strong>. La <strong>diferencia de tiempo</strong> entre ambas permite calcular la <strong>distancia al epicentro</strong> del sismo.</p>
+                        <p style="margin-top: 0.5rem;">💡 <strong>Importante:</strong> A mayor diferencia de tiempo, mayor es la distancia al epicentro.</p>
+                    </div>
+                </div>
+            `
+        },
+        { // Slide 3 - Escalas Sísmicas
+            title: "📏 Escalas Sísmicas",
+            content: `
+                <p>Existen dos escalas principales para medir y clasificar los sismos: la <strong class="highlight">escala de Richter</strong> y la <strong class="highlight">escala de Mercalli</strong>. Ambas miden aspectos diferentes del fenómeno.</p>
+
+                <div class="subsection">
+                    <div class="subsection-title">📊 Escala de Richter (Magnitud)</div>
+                    <div class="concept-box">
+                        <p>Mide la <strong>energía liberada</strong> en el foco del sismo. Es una escala <strong>logarítmica</strong>.</p>
+                        <ul style="margin: 0.8rem 0 0 1.5rem;">
+                            <li><strong>Cada unidad</strong> en la escala representa un aumento de <strong>10 veces</strong> en la amplitud de las ondas.</li>
+                            <li><strong>La energía</strong> aumenta <strong>32 veces</strong> por cada unidad.</li>
+                            <li>Se calcula con el <strong>sismógrafo</strong> y es objetiva (no depende de la percepción humana).</li>
+                            <li>No tiene límite superior, pero los sismos más grandes registrados son de magnitud ~9.5.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🌍 Escala de Mercalli (Intensidad)</div>
+                    <div class="concept-box">
+                        <p>Mide los <strong>efectos y daños</strong> del sismo en la superficie. Es una escala <strong>subjetiva</strong> basada en la percepción humana y los daños materiales.</p>
+                        <ul style="margin: 0.8rem 0 0 1.5rem;">
+                            <li>Va de <strong>I</strong> (no perceptible) a <strong>XII</strong> (destrucción total).</li>
+                            <li>Depende de la <strong>distancia al epicentro</strong>, el tipo de suelo y la construcción de edificios.</li>
+                            <li>Es útil para evaluar el <strong>impacto real</strong> del sismo en una zona.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">⚖️ Diferencias Clave</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Escala de Richter</th>
+                                <th>Escala de Mercalli</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Mide <strong>magnitud</strong> (energía liberada)</td>
+                                <td>Mide <strong>intensidad</strong> (efectos en la superficie)</td>
+                            </tr>
+                            <tr>
+                                <td>Es <strong>objetiva</strong></td>
+                                <td>Es <strong>subjetiva</strong></td>
+                            </tr>
+                            <tr>
+                                <td>Se mide con <strong>sismógrafo</strong></td>
+                                <td>Se mide por <strong>observación</strong> de daños</td>
+                            </tr>
+                            <tr>
+                                <td>Escala <strong>logarítmica</strong></td>
+                                <td>Escala de <strong>12 grados</strong> (I a XII)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            `
+        },
+        { // Slide 4 - Volcanes: Definición y Partes
+            title: "🌋 Volcanes: Definición y Partes",
+            content: `
+                <p>Un <strong class="highlight">volcán</strong> es una estructura geológica formada por la acumulación de materiales (lava, ceniza, gases) expulsados desde el interior de la Tierra a través de una abertura en la corteza.</p>
+
+                <div class="subsection">
+                    <div class="subsection-title">🗺️ Partes del Volcán</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Parte</th>
+                                <th>Descripción</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Cámara magmática</strong></td>
+                                <td>Reservorio subterráneo donde se acumula el magma antes de una erupción.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Chimenea</strong></td>
+                                <td>Conducto o tubo por donde asciende el magma desde la cámara magmática.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cráter</strong></td>
+                                <td>Abertura en la cima del volcán por donde salen los materiales expulsados.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Cono volcánico</strong></td>
+                                <td>Estructura formada por la acumulación de materiales expulsados durante las erupciones.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Flanco</strong></td>
+                                <td>Ladera o pendiente del volcán.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pico</strong></td>
+                                <td>Punto más alto del volcán.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Lava</strong></td>
+                                <td>Magma que fluye por la superficie del volcán.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ceniza volcánica</strong></td>
+                                <td>Partículas sólidas finas expulsadas durante la erupción volcánica.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Fumarola</strong></td>
+                                <td>Emisión de gases y vapor por las grietas del volcán.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🔍 Otras Estructuras</div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h4>Caldera</h4>
+                            <p>Gran depresión en la cima de un volcán formada por el colapso de la estructura después de una erupción masiva.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Domo de lava</h4>
+                            <p>Acumulación de lava viscosa en el cráter que no fluye, formando una cúpula.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Cono parásito</h4>
+                            <p>Cono secundario que se forma en los flancos del volcán principal.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Flujo piroclástico</h4>
+                            <p>Mezcla de gases calientes, ceniza y roca que se desplaza a gran velocidad durante una erupción explosiva.</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        { // Slide 5 - Tipos de Volcanes y Erupciones
+            title: "🔥 Tipos de Volcanes y Erupciones",
+            content: `
+                <p>Los volcanes se clasifican según su <strong>forma</strong> y el <strong>tipo de erupción</strong> que presentan. La composición del magma determina el comportamiento del volcán.</p>
+
+                <div class="subsection">
+                    <div class="subsection-title">🗻 Tipos de Volcanes según su Forma</div>
+                    <div class="grid-3">
+                        <div class="card">
+                            <h4>⛰️ Volcán en Escudo</h4>
+                            <p>Gran tamaño con <strong>pendientes suaves</strong>. Formado por <strong>lava fluida</strong> que se extiende ampliamente. Erupciones <strong>efusivas</strong>.</p>
+                            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Ejemplo: Volcán Mauna Loa (Hawái).</p>
+                        </div>
+                        <div class="card">
+                            <h4>🗻 Estratovolcán</h4>
+                            <p>Forma de <strong>cono perfecto</strong> y pendientes pronunciadas. Formado por <strong>capas alternadas</strong> de lava y ceniza. Erupciones <strong>explosivas</strong>.</p>
+                            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Ejemplo: Volcán Villarrica (Chile).</p>
+                        </div>
+                        <div class="card">
+                            <h4>🌋 Cono de Escoria</h4>
+                            <p>Volcán <strong>pequeño</strong> de pendientes muy pronunciadas. Formado por <strong>fragmentos de roca y ceniza</strong> expulsados.</p>
+                            <p style="margin-top: 0.5rem; font-size: 0.85rem;">Ejemplo: Conos del Complejo Volcánico Laguna del Maule.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">💥 Tipos de Erupción</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tipo de Erupción</th>
+                                <th>Características</th>
+                                <th>Peligrosidad</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Hawaiana</strong></td>
+                                <td>Lava muy fluida, forma fuentes de lava. Baja explosividad.</td>
+                                <td>Baja</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Estromboliana</strong></td>
+                                <td>Lava moderadamente fluida. Erupciones con expulsión de material incandescente.</td>
+                                <td>Moderada</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Vulcaniana</strong></td>
+                                <td>Lava viscosa. Erupciones explosivas con grandes nubes de ceniza.</td>
+                                <td>Alta</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Pliniana</strong></td>
+                                <td>Lava muy viscosa. Erupciones <strong>extremadamente explosivas</strong> con grandes columnas de ceniza y gases. Muy peligrosas.</td>
+                                <td>Muy Alta</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🔄 Clasificación por Actividad</div>
+                    <div class="grid-3">
+                        <div class="card">
+                            <h4>🟢 Activo</h4>
+                            <p>Volcán que ha tenido actividad registrada en <strong>tiempos históricos</strong> (últimos 10.000 años).</p>
+                        </div>
+                        <div class="card">
+                            <h4>🟡 Inactivo</h4>
+                            <p>Volcán que <strong>no ha tenido erupciones</strong> en tiempos históricos pero <strong>podría reactivarse</strong>.</p>
+                        </div>
+                        <div class="card">
+                            <h4>⚫ Extinto</h4>
+                            <p>Volcán que <strong>no tiene posibilidad</strong> de volver a erupcionar.</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        { // Slide 6 - Sismos y Volcanes en Chile
+            title: "🇨🇱 Sismos y Volcanes en Chile",
+            content: `
+                <p>Chile se encuentra en el <strong class="highlight">Cinturón de Fuego del Pacífico</strong>, lo que lo convierte en uno de los países con <strong>mayor actividad sísmica y volcánica</strong> del mundo.</p>
+
+                <div class="subsection">
+                    <div class="subsection-title">📉 La Subducción en Chile</div>
+                    <div class="concept-box">
+                        <p>Frente a la costa chilena, la <strong>placa de Nazca</strong> (oceánica) se subduce bajo la <strong>placa Sudamericana</strong> (continental).</p>
+                        <ul style="margin: 0.8rem 0 0 1.5rem;">
+                            <li>En la zona <strong>norte</strong> de Chile, la placa de Nazca se subduce en un <strong>ángulo más pronunciado</strong>, generando sismos de mayor profundidad.</li>
+                            <li>En la zona <strong>central y sur</strong>, el ángulo de subducción es menor, generando sismos de mayor magnitud.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🇨🇱 Grandes Terremotos en la Historia de Chile</div>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Año</th>
+                                <th>Lugar</th>
+                                <th>Magnitud</th>
+                                <th>Importancia</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>1960</strong></td>
+                                <td>Valdivia</td>
+                                <td><span class="highlight">9.5</span></td>
+                                <td>El terremoto más potente registrado en la historia mundial.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2010</strong></td>
+                                <td>Chile Central</td>
+                                <td>8.8</td>
+                                <td>Uno de los 5 terremotos más grandes registrados.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>2015</strong></td>
+                                <td>Illapel (Coquimbo)</td>
+                                <td>8.3</td>
+                                <td>Activó alerta de tsunami en la zona norte.</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🌋 Volcanes Importantes de Chile</div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h4>Villarrica</h4>
+                            <p>Estratovolcán activo en la Región de La Araucanía. Es uno de los volcanes más activos de Chile.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Llaima</h4>
+                            <p>Estratovolcán activo en la Región de La Araucanía. Tiene erupciones estrombolianas frecuentes.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Chaitén</h4>
+                            <p>Volcán de la Región de Los Lagos. En 2008 tuvo su primera erupción registrada, que fue de tipo pliniano.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Calbuco</h4>
+                            <p>Estratovolcán activo en la Región de Los Lagos. En 2015 tuvo una erupción pliniana.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Puyehue-Cordón Caulle</h4>
+                            <p>Complejo volcánico en la Región de Los Ríos. En 2011 tuvo una gran erupción que afectó el tráfico aéreo.</p>
+                        </div>
+                        <div class="card">
+                            <h4>Lascar</h4>
+                            <p>Estratovolcán activo en la Región de Antofagasta. Es el volcán más activo del norte de Chile.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">📈 Período de Retorno</div>
+                    <div class="concept-box">
+                        <p>El <strong class="highlight">período de retorno</strong> es el tiempo promedio entre terremotos de cierta magnitud en una zona específica. En Chile, los grandes sismos tienen un período de retorno de aproximadamente <strong class="highlight">50 a 100 años</strong>.</p>
+                    </div>
+                </div>
+            `
+        },
+        { // Slide 7 - Fenómenos Asociados y Prevención
+            title: "🛡️ Fenómenos Asociados y Prevención",
+            content: `
+                <p>Los sismos y volcanes pueden generar otros fenómenos peligrosos que amplifican los daños. Es importante conocerlos para tomar medidas de prevención.</p>
+
+                <div class="subsection">
+                    <div class="subsection-title">🌊 Tsunamis</div>
+                    <div class="concept-box">
+                        <p>Los <strong class="highlight">tsunamis</strong> son olas gigantes generadas por el desplazamiento vertical del fondo marino durante un <strong>sismo de subducción</strong>.</p>
+                        <ul style="margin: 0.8rem 0 0 1.5rem;">
+                            <li>Se propagan a gran velocidad en el océano (hasta 800 km/h).</li>
+                            <li>En aguas profundas tienen poca altura, pero al acercarse a la costa aumentan su altura (<strong>efecto de shoaling</strong>).</li>
+                            <li>Chile tiene un sistema de <strong>alerta de tsunami</strong> para proteger a la población.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🏗️ Licuefacción del Suelo</div>
+                    <div class="concept-box">
+                        <p>La <strong class="highlight">licuefacción</strong> ocurre cuando el suelo <strong>saturado de agua</strong> pierde su resistencia y se comporta como un <strong>líquido</strong> durante un sismo.</p>
+                        <ul style="margin: 0.8rem 0 0 1.5rem;">
+                            <li>Puede causar el <strong>hundimiento de edificios</strong> y la inclinación de estructuras.</li>
+                            <li>Es más común en suelos arenosos y cerca de fuentes de agua.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🏠 Medidas de Prevención</div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h4>🔴 Antes de un Sismo</h4>
+                            <ul style="margin: 0.5rem 0 0 1rem;">
+                                <li>Preparar un <strong>plan de emergencia</strong> familiar.</li>
+                                <li>Tener una <strong>mochila de emergencia</strong> con agua, alimentos, linterna y radio.</li>
+                                <li>Fijar muebles altos a la pared.</li>
+                                <li>Conocer las <strong>rutas de evacuación</strong>.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🟠 Durante un Sismo</h4>
+                            <ul style="margin: 0.5rem 0 0 1rem;">
+                                <li><strong>Mantener la calma</strong>.</li>
+                                <li>Ubicarse en una <strong>zona de seguridad</strong> (lejos de ventanas).</li>
+                                <li><strong>Agacharse, cubrirse y sujetarse</strong>.</li>
+                                <li>No usar ascensores.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🟢 Después de un Sismo</h4>
+                            <ul style="margin: 0.5rem 0 0 1rem;">
+                                <li><strong>Evacuar</strong> si hay riesgo de tsunami.</li>
+                                <li>Revisar si hay <strong>heridos</strong> y pedir ayuda.</li>
+                                <li>No tocar <strong>cables eléctricos caídos</strong>.</li>
+                                <li>Alejarse de <strong>edificios dañados</strong>.</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🌋 En caso de Erupción Volcánica</h4>
+                            <ul style="margin: 0.5rem 0 0 1rem;">
+                                <li>Alejarse de las <strong>zonas de peligro</strong>.</li>
+                                <li>Usar <strong>mascarillas</strong> para evitar inhalar ceniza.</li>
+                                <li>Seguir las <strong>instrucciones de las autoridades</strong>.</li>
+                                <li>Cerrar puertas y ventanas para evitar la entrada de ceniza.</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+        { // Slide 8 - Resumen y Conceptos Clave
+            title: "📌 Resumen y Conceptos Clave",
+            content: `
+                <p>Este slide resume los conceptos más importantes sobre <strong class="highlight">sismos y volcanes</strong> para ayudarte a estudiar.</p>
+
+                <div class="subsection">
+                    <div class="subsection-title">📋 Conceptos Clave sobre Sismos</div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h4>📌 Sismo</h4>
+                            <p>Movimiento brusco de la corteza terrestre por liberación de energía.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📍 Hipocentro</h4>
+                            <p>Punto de origen del sismo en el interior de la Tierra.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📍 Epicentro</h4>
+                            <p>Punto en la superficie sobre el hipocentro.</p>
+                        </div>
+                        <div class="card">
+                            <h4>🌊 Subducción</h4>
+                            <p>Placa oceánica se hunde bajo otra placa.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📊 Ondas P</h4>
+                            <p>Más rápidas, atraviesan sólidos, líquidos y gases.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📊 Ondas S</h4>
+                            <p>Más lentas, solo atraviesan sólidos.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📏 Richter</h4>
+                            <p>Mide la magnitud (energía liberada). Escala logarítmica.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📏 Mercalli</h4>
+                            <p>Mide la intensidad (efectos en la superficie).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">📋 Conceptos Clave sobre Volcanes</div>
+                    <div class="grid-2">
+                        <div class="card">
+                            <h4>🌋 Cámara magmática</h4>
+                            <p>Reservorio de magma en el interior.</p>
+                        </div>
+                        <div class="card">
+                            <h4>🌋 Chimenea</h4>
+                            <p>Conducto por donde asciende el magma.</p>
+                        </div>
+                        <div class="card">
+                            <h4>🌋 Cráter</h4>
+                            <p>Abertura en la cima del volcán.</p>
+                        </div>
+                        <div class="card">
+                            <h4>🌋 Cono volcánico</h4>
+                            <p>Estructura formada por acumulación de materiales.</p>
+                        </div>
+                        <div class="card">
+                            <h4>🔥 Lava</h4>
+                            <p>Magma en la superficie.</p>
+                        </div>
+                        <div class="card">
+                            <h4>🌋 Ceniza volcánica</h4>
+                            <p>Partículas finas expulsadas.</p>
+                        </div>
+                        <div class="card">
+                            <h4>🗻 Estratovolcán</h4>
+                            <p>Cono perfecto, erupciones explosivas.</p>
+                        </div>
+                        <div class="card">
+                            <h4>⛰️ Volcán en escudo</h4>
+                            <p>Pendientes suaves, erupciones efusivas.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">🇨🇱 Chile en el Cinturón de Fuego</div>
+                    <div class="concept-box">
+                        <ul style="margin: 0.8rem 0 0 1.5rem;">
+                            <li>Chile está en el <strong>Cinturón de Fuego del Pacífico</strong>.</li>
+                            <li>La <strong>placa de Nazca</strong> se subduce bajo la <strong>placa Sudamericana</strong>.</li>
+                            <li>El <strong>terremoto de Valdivia (1960)</strong> es el más potente de la historia (9.5).</li>
+                            <li>Chile tiene <strong>más de 100 volcanes activos</strong>.</li>
+                            <li>El <strong>período de retorno</strong> de grandes sismos en Chile es de 50 a 100 años.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <div class="subsection-title">📌 Frase para Recordar</div>
+                    <div class="concept-box" style="text-align: center;">
+                        <p style="font-size: 1.2rem; color: #ffb347;">"Los sismos y volcanes son la manifestación de la <strong class="highlight">energía interna de la Tierra</strong> que moldea constantemente nuestro planeta."</p>
+                    </div>
+                </div>
+            `
+        }
+    ];
+
+    let currentIndex = 0;
+
+    function renderCircles() {
+        const container = document.getElementById('nav-circles');
+        container.innerHTML = '';
+        for (let i = 0; i < slides.length; i++) {
+            const circle = document.createElement('div');
+            circle.className = 'circle';
+            circle.textContent = i + 1;
+            if (i === currentIndex) circle.classList.add('active');
+            circle.addEventListener('click', () => goToSlide(i));
+            container.appendChild(circle);
+        }
+    }
+
+    function renderCurrentSlide() {
+        const container = document.getElementById('slides-container');
+        const slide = slides[currentIndex];
+        container.innerHTML = `
+            <div class="section active-slide">
+                <div class="section-title">
+                    <span>${slide.title.split(' ')[0]}</span> ${slide.title.substring(slide.title.indexOf(' '))}
+                </div>
+                ${slide.content}
+            </div>
+        `;
+        
+        document.querySelectorAll('.circle').forEach((circle, idx) => {
+            if (idx === currentIndex) circle.classList.add('active');
+            else circle.classList.remove('active');
+        });
+        
+        document.getElementById('progressInfo').innerHTML = `📖 Slide ${currentIndex + 1} de ${slides.length}`;
+        
+        const prevBtn = document.getElementById('prevSlideBtn');
+        const nextBtn = document.getElementById('nextSlideBtn');
+        prevBtn.disabled = currentIndex === 0;
+        nextBtn.disabled = currentIndex === slides.length - 1;
+    }
+
+    function goToSlide(index) {
+        if (index >= 0 && index < slides.length) {
+            currentIndex = index;
+            renderCurrentSlide();
+        }
+    }
+
+    function nextSlide() {
+        if (currentIndex < slides.length - 1) {
+            currentIndex++;
+            renderCurrentSlide();
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            renderCurrentSlide();
+        }
+    }
+
+    renderCircles();
+    renderCurrentSlide();
+
+    document.getElementById('prevSlideBtn').addEventListener('click', prevSlide);
+    document.getElementById('nextSlideBtn').addEventListener('click', nextSlide);
+    
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowLeft') {
+            prevSlide();
+        } else if (e.key === 'ArrowRight') {
+            nextSlide();
+        }
+    });
+
+    document.getElementById('backToFisicaBtn').addEventListener('click', () => {
+        window.location.href = 'Fisica.html';
+    });
+    
+    document.getElementById('exercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_4A_Fisica.html';
+    });
+</script>
+</body>
+</html>
