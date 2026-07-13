@@ -1,0 +1,1733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>C_7_Ingles - Adverbs & Comparatives | Complete Grammar Guide</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f0c29 0%, #302b63 50%, #24243e 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 88vh;
+            max-height: 800px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
+            background: #1a1a2e;
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.8rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: #1a1a2e;
+            border-radius: 32px;
+            color: #e2e8f0;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #2d2d44;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #6c5ce7;
+            border-radius: 8px;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        .badge {
+            background: rgba(108, 92, 231, 0.25);
+            color: #a29bfe;
+            padding: 0.25rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            display: inline-block;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(108, 92, 231, 0.2);
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #a29bfe, #6c5ce7, #fd79a8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.5rem;
+            line-height: 1.15;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #a29bfe;
+            border-left: 5px solid #6c5ce7;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #fd79a8;
+            margin: 1rem 0 0.6rem 0;
+        }
+
+        h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #fdcb6e;
+            margin: 0.8rem 0 0.4rem 0;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #b2bec3;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CARDS & BOXES ===== */
+        .info-box {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin: 0.8rem 0;
+        }
+
+        .info-box.highlight {
+            border-left: 4px solid #6c5ce7;
+            background: rgba(108, 92, 231, 0.08);
+        }
+
+        .info-box.warning {
+            border-left: 4px solid #fdcb6e;
+            background: rgba(253, 203, 110, 0.08);
+        }
+
+        .info-box.danger {
+            border-left: 4px solid #fd79a8;
+            background: rgba(253, 121, 168, 0.08);
+        }
+
+        .info-box.success {
+            border-left: 4px solid #00b894;
+            background: rgba(0, 184, 148, 0.08);
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 0.8rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 0.8rem 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 16px;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-2px);
+        }
+
+        .card i {
+            font-size: 1.5rem;
+            color: #a29bfe;
+            margin-bottom: 0.4rem;
+        }
+
+        .card .title {
+            font-weight: 700;
+            color: #fdcb6e;
+            font-size: 0.95rem;
+        }
+
+        .card .example {
+            font-family: 'Inter', monospace;
+            font-size: 0.85rem;
+            color: #b2bec3;
+            margin-top: 0.3rem;
+            background: rgba(0,0,0,0.2);
+            padding: 0.3rem 0.6rem;
+            border-radius: 8px;
+        }
+
+        /* ===== TABLES ===== */
+        .grammar-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8rem 0;
+            font-size: 0.85rem;
+        }
+
+        .grammar-table th {
+            background: rgba(108, 92, 231, 0.25);
+            color: #a29bfe;
+            padding: 0.6rem;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid #6c5ce7;
+        }
+
+        .grammar-table td {
+            padding: 0.5rem 0.6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.06);
+            vertical-align: top;
+        }
+
+        .grammar-table tr:hover td {
+            background: rgba(255, 255, 255, 0.03);
+        }
+
+        .grammar-table .highlight-cell {
+            color: #fdcb6e;
+            font-weight: 600;
+        }
+
+        /* ===== EXCEPTION LIST ===== */
+        .exception-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .exception-list li {
+            padding: 0.4rem 0.8rem;
+            margin: 0.3rem 0;
+            background: rgba(253, 121, 168, 0.08);
+            border-left: 3px solid #fd79a8;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .exception-list li strong {
+            color: #fd79a8;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.2s ease;
+            color: #b2bec3;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: #6c5ce7;
+            color: white;
+            transform: scale(1.05);
+            border-color: #6c5ce7;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: rgba(255, 255, 255, 0.08);
+            color: #b2bec3;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .action:hover {
+            background: #6c5ce7;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #6c5ce7;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        /* ===== SCROLLBAR ===== */
+        .slide::-webkit-scrollbar {
+            width: 5px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #6c5ce7;
+            border-radius: 10px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.65rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0.1rem 0.2rem;
+        }
+
+        .tag-purple { background: rgba(108, 92, 231, 0.25); color: #a29bfe; }
+        .tag-pink { background: rgba(253, 121, 168, 0.2); color: #fd79a8; }
+        .tag-yellow { background: rgba(253, 203, 110, 0.2); color: #fdcb6e; }
+        .tag-green { background: rgba(0, 184, 148, 0.2); color: #00b894; }
+        .tag-red { background: rgba(255, 118, 117, 0.2); color: #ff7675; }
+        .tag-blue { background: rgba(116, 185, 255, 0.2); color: #74b9ff; }
+
+        .highlight-text {
+            color: #fdcb6e;
+            font-weight: 600;
+        }
+
+        .highlight-pink {
+            color: #fd79a8;
+            font-weight: 600;
+        }
+
+        .highlight-purple {
+            color: #a29bfe;
+            font-weight: 600;
+        }
+
+        .highlight-green {
+            color: #00b894;
+            font-weight: 600;
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 768px) {
+            .slide {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            .grammar-table {
+                font-size: 0.7rem;
+            }
+            .grammar-table th,
+            .grammar-table td {
+                padding: 0.3rem 0.4rem;
+            }
+            .card .example {
+                font-size: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 0.8rem;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            h2 {
+                font-size: 1.1rem;
+                padding-left: 0.6rem;
+            }
+            h3 {
+                font-size: 1rem;
+            }
+            .badge {
+                font-size: 0.6rem;
+                padding: 0.15rem 0.8rem;
+            }
+            .info-box {
+                padding: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 0 - PORTADA -->
+        <!-- ============================================================ -->
+        <div class="slide active" data-index="0">
+            <div class="badge">📘 Advanced Grammar · Complete Guide</div>
+            <h1>Adverbs &amp; Comparatives</h1>
+            <p class="subtitle" style="font-size:1.2rem; color:#b2bec3;">Adverbs of Frequency · Comparatives · Superlatives · Adverbs of Degree · Questions with Prepositions · Question Tags · Adverbs of Manner</p>
+            <div style="margin-top:2rem; display:flex; flex-wrap:wrap; gap:0.8rem;">
+                <span class="tag tag-purple">📊 7 Topics</span>
+                <span class="tag tag-pink">📝 30+ Slides</span>
+                <span class="tag tag-yellow">⭐ Complete Reference</span>
+                <span class="tag tag-green">🎯 Exam Preparation</span>
+            </div>
+            <div class="info-box highlight" style="margin-top:2rem;">
+                <i class="fas fa-book-open" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">This class covers:</strong><br>
+                • Adverbs of Frequency (6 levels + position rules)<br>
+                • Comparatives &amp; Superlatives (short, long, irregular)<br>
+                • Adverbs (comparative &amp; superlative forms)<br>
+                • Adverbs of Degree (10+ intensifiers)<br>
+                • Questions with Prepositions (common verbs + prepositions)<br>
+                • Question Tags (all tenses + special cases)<br>
+                • Adverbs of Manner (formation, position, exceptions)
+            </div>
+            <div style="margin-top:auto; text-align:center; padding:0.5rem; color:#636e72; font-size:0.8rem;">
+                <i class="fas fa-arrow-right"></i> Press ▶ or swipe to begin
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 1 - ADVERBS OF FREQUENCY (Introduction) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="1">
+            <div class="badge">⏰ Topic 1</div>
+            <h2>Adverbs of Frequency</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">Indican <strong>con qué frecuencia</strong> ocurre una acción.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-percent"></i>
+                    <div class="title">100% — Always</div>
+                    <div class="example">I <strong>always</strong> warm up before running.</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-percent"></i>
+                    <div class="title">~90% — Usually</div>
+                    <div class="example">She <strong>usually</strong> plays volleyball on Saturdays.</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-percent"></i>
+                    <div class="title">~70% — Often</div>
+                    <div class="example">They <strong>often</strong> go cycling in the mountains.</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-percent"></i>
+                    <div class="title">50% — Sometimes</div>
+                    <div class="example">He <strong>sometimes</strong> forgets his water bottle.</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-percent"></i>
+                    <div class="title">~10% — Hardly ever</div>
+                    <div class="example">We <strong>hardly ever</strong> play rugby at school.</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-percent"></i>
+                    <div class="title">0% — Never</div>
+                    <div class="example">I <strong>never</strong> skip training sessions.</div>
+                </div>
+            </div>
+
+            <div class="info-box warning" style="margin-top:0.5rem;">
+                <i class="fas fa-lightbulb" style="color:#fdcb6e;"></i>
+                <strong style="color:#fdcb6e;">Position Rule:</strong> Adverbs of frequency go <strong>BEFORE</strong> the main verb, but <strong>AFTER</strong> the verb <em>to be</em>.
+                <br><span style="color:#b2bec3; font-size:0.85rem;">✅ I <strong>always</strong> play tennis. / ✅ I <strong>am always</strong> tired.</span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 2 - Adverbs of Frequency: Negatives & Questions -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="2">
+            <div class="badge">⏰ Topic 1</div>
+            <h2>Adverbs of Frequency: Negatives &amp; Questions</h2>
+
+            <h3>❌ Negative Sentences</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="title">don't / doesn't + adverb</div>
+                    <div class="example">I <strong>don't always</strong> win matches.</div>
+                    <div class="example">She <strong>doesn't usually</strong> play on Sundays.</div>
+                </div>
+                <div class="card">
+                    <div class="title">to be + not + adverb</div>
+                    <div class="example">He <strong>isn't always</strong> on time.</div>
+                    <div class="example">They <strong>aren't usually</strong> tired after practice.</div>
+                </div>
+            </div>
+
+            <h3>❓ Questions</h3>
+            <div class="grid-2">
+                <div class="card">
+                    <div class="title">Do/Does + subject + adverb + verb?</div>
+                    <div class="example"><strong>Do</strong> you <strong>always</strong> warm up before playing?</div>
+                    <div class="example"><strong>Does</strong> she <strong>often</strong> practice yoga?</div>
+                </div>
+                <div class="card">
+                    <div class="title">To be + subject + adverb?</div>
+                    <div class="example"><strong>Are</strong> you <strong>usually</strong> tired after matches?</div>
+                    <div class="example"><strong>Is</strong> he <strong>never</strong> late for practice?</div>
+                </div>
+            </div>
+
+            <div class="info-box success">
+                <i class="fas fa-check-circle" style="color:#00b894;"></i>
+                <strong style="color:#00b894;">Additional Adverbs:</strong><br>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                <strong>occasionally</strong> (ocasionalmente) · <strong>frequently</strong> (frecuentemente) · <strong>rarely</strong> (raramente) · <strong>seldom</strong> (rara vez, formal)
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 3 - COMPARATIVES (Introduction) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="3">
+            <div class="badge">📊 Topic 2</div>
+            <h2>Comparatives</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">Se usan para comparar <strong>DOS</strong> cosas o personas.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-ruler"></i>
+                    <div class="title">📏 Short Adjectives (1 syllable)</div>
+                    <div class="example"><strong>Rule:</strong> adjective + <span class="highlight-text">-er</span> + <span class="highlight-text">than</span></div>
+                    <div class="example">old → <strong>older than</strong></div>
+                    <div class="example">tall → <strong>taller than</strong></div>
+                    <div class="example">fast → <strong>faster than</strong></div>
+                    <div class="example" style="margin-top:0.3rem; background:rgba(253,203,110,0.1); padding:0.3rem 0.6rem; border-radius:8px;">
+                        ⚠️ <strong>Spelling:</strong> big → bigger (double consonant) · happy → happier (y→i)
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-balance-scale"></i>
+                    <div class="title">📚 Long Adjectives (2+ syllables)</div>
+                    <div class="example"><strong>Rule:</strong> <span class="highlight-text">more</span> + adjective + <span class="highlight-text">than</span></div>
+                    <div class="example">expensive → <strong>more expensive than</strong></div>
+                    <div class="example">intelligent → <strong>more intelligent than</strong></div>
+                    <div class="example">beautiful → <strong>more beautiful than</strong></div>
+                    <div class="example" style="margin-top:0.3rem; background:rgba(0,184,148,0.1); padding:0.3rem 0.6rem; border-radius:8px;">
+                        💡 Adjectives ending in <strong>-y</strong> (happy, funny) → add <strong>-ier</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box highlight">
+                <i class="fas fa-star" style="color:#fdcb6e;"></i>
+                <strong style="color:#fdcb6e;">Irregular Comparatives:</strong>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                good → <strong>better than</strong> · bad → <strong>worse than</strong> · far → <strong>farther/further than</strong>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 4 - COMPARATIVES: Complete Rules -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="4">
+            <div class="badge">📊 Topic 2</div>
+            <h2>Comparatives: Complete Rules</h2>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Adjective Type</th><th>Rule</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1 syllable</strong></td>
+                        <td>add <span class="highlight-text">-er</span></td>
+                        <td>fast → faster<br>small → smaller</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1 syllable (CVC)</strong></td>
+                        <td>double final consonant + <span class="highlight-text">-er</span></td>
+                        <td>big → bigger<br>hot → hotter<br>thin → thinner</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ends in -y</strong></td>
+                        <td>change <span class="highlight-text">y</span> → <span class="highlight-text">i</span> + <span class="highlight-text">-er</span></td>
+                        <td>happy → happier<br>funny → funnier<br>shy → shyer</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2+ syllables</strong></td>
+                        <td><span class="highlight-text">more</span> + adjective</td>
+                        <td>beautiful → more beautiful<br>interesting → more interesting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ends in -le / -ow / -er</strong></td>
+                        <td>can take <span class="highlight-text">-er</span> OR <span class="highlight-text">more</span></td>
+                        <td>simple → simpler / more simple<br>narrow → narrower / more narrow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Irregular</strong></td>
+                        <td>special forms</td>
+                        <td>good → <strong>better</strong><br>bad → <strong>worse</strong><br>far → <strong>farther / further</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box danger">
+                <i class="fas fa-exclamation-triangle" style="color:#fd79a8;"></i>
+                <strong style="color:#fd79a8;">Common Mistakes:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                ❌ more taller (double comparative) · ✅ taller<br>
+                ❌ more good · ✅ better
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 5 - SUPERLATIVES -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="5">
+            <div class="badge">🏆 Topic 3</div>
+            <h2>Superlatives</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">Se usan para comparar <strong>UNO</strong> contra todo el grupo (el/la más...).</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-crown"></i>
+                    <div class="title">📏 Short Adjectives (1 syllable)</div>
+                    <div class="example"><strong>Rule:</strong> <span class="highlight-text">the</span> + adjective + <span class="highlight-text">-est</span></div>
+                    <div class="example">old → <strong>the oldest</strong></div>
+                    <div class="example">tall → <strong>the tallest</strong></div>
+                    <div class="example">fast → <strong>the fastest</strong></div>
+                    <div class="example" style="margin-top:0.3rem; background:rgba(253,203,110,0.1); padding:0.3rem 0.6rem; border-radius:8px;">
+                        ⚠️ <strong>Spelling:</strong> big → the biggest · happy → the happiest
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-trophy"></i>
+                    <div class="title">📚 Long Adjectives (2+ syllables)</div>
+                    <div class="example"><strong>Rule:</strong> <span class="highlight-text">the most</span> + adjective</div>
+                    <div class="example">expensive → <strong>the most expensive</strong></div>
+                    <div class="example">intelligent → <strong>the most intelligent</strong></div>
+                    <div class="example">beautiful → <strong>the most beautiful</strong></div>
+                </div>
+            </div>
+
+            <div class="info-box highlight">
+                <i class="fas fa-star" style="color:#fdcb6e;"></i>
+                <strong style="color:#fdcb6e;">Irregular Superlatives:</strong>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                good → <strong>the best</strong> · bad → <strong>the worst</strong> · far → <strong>the farthest / furthest</strong>
+                </span>
+            </div>
+
+            <div class="info-box success" style="margin-top:0.5rem;">
+                <i class="fas fa-check-circle" style="color:#00b894;"></i>
+                <strong style="color:#00b894;">Examples:</strong>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                "He is <strong>the most intelligent</strong> student in the class."<br>
+                "This is <strong>the best</strong> pizza I've ever eaten."
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 6 - SUPERLATIVES: Complete Rules -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="6">
+            <div class="badge">🏆 Topic 3</div>
+            <h2>Superlatives: Complete Rules</h2>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Adjective Type</th><th>Rule</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>1 syllable</strong></td>
+                        <td><span class="highlight-text">the</span> + adj + <span class="highlight-text">-est</span></td>
+                        <td>fast → the fastest<br>small → the smallest</td>
+                    </tr>
+                    <tr>
+                        <td><strong>1 syllable (CVC)</strong></td>
+                        <td>double final consonant + <span class="highlight-text">-est</span></td>
+                        <td>big → the biggest<br>hot → the hottest</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ends in -y</strong></td>
+                        <td>change <span class="highlight-text">y</span> → <span class="highlight-text">i</span> + <span class="highlight-text">-est</span></td>
+                        <td>happy → the happiest<br>funny → the funniest</td>
+                    </tr>
+                    <tr>
+                        <td><strong>2+ syllables</strong></td>
+                        <td><span class="highlight-text">the most</span> + adjective</td>
+                        <td>beautiful → the most beautiful<br>interesting → the most interesting</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Ends in -le / -ow / -er</strong></td>
+                        <td>can take <span class="highlight-text">-est</span> OR <span class="highlight-text">the most</span></td>
+                        <td>simple → the simplest / the most simple<br>narrow → the narrowest / the most narrow</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Irregular</strong></td>
+                        <td>special forms</td>
+                        <td>good → <strong>the best</strong><br>bad → <strong>the worst</strong><br>far → <strong>the farthest / furthest</strong></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 7 - ADVERBS: Comparative & Superlative Forms -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="7">
+            <div class="badge">📊 Topic 4</div>
+            <h2>Adverbs: Comparative &amp; Superlative Forms</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Los adverbios también se pueden comparar para describir <strong>cómo</strong> se realiza una acción.</p>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Adverb</th><th>Comparative</th><th>Superlative</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>fast</strong></td><td>faster</td><td>fastest</td><td>He runs <span class="highlight-text">fastest</span> of all.</td></tr>
+                    <tr><td><strong>hard</strong></td><td>harder</td><td>hardest</td><td>She works <span class="highlight-text">harder than</span> me.</td></tr>
+                    <tr><td><strong>early</strong></td><td>earlier</td><td>earliest</td><td>I wake up <span class="highlight-text">earliest</span> in my family.</td></tr>
+                    <tr><td><strong>late</strong></td><td>later</td><td>latest</td><td>He arrived <span class="highlight-text">later than</span> us.</td></tr>
+                    <tr><td><strong>high</strong></td><td>higher</td><td>highest</td><td>The bird flew <span class="highlight-text">highest</span>.</td></tr>
+                    <tr><td><strong>low</strong></td><td>lower</td><td>lowest</td><td>She scored <span class="highlight-text">lower than</span> before.</td></tr>
+                    <tr><td><strong>carefully</strong> (long)</td><td>more carefully</td><td>most carefully</td><td>Drive <span class="highlight-text">more carefully</span> in rain.</td></tr>
+                    <tr><td><strong>quietly</strong> (long)</td><td>more quietly</td><td>most quietly</td><td>She speaks <span class="highlight-text">most quietly</span> of all.</td></tr>
+                    <tr><td><strong>happily</strong></td><td>more happily</td><td>most happily</td><td>He smiled <span class="highlight-text">more happily</span> today.</td></tr>
+                    <tr><td><strong>loudly</strong> (long)</td><td>more loudly</td><td>most loudly</td><td>Cheer <span class="highlight-text">most loudly</span> for your team!</td></tr>
+                </tbody>
+            </table>
+
+            <div class="info-box warning">
+                <i class="fas fa-lightbulb" style="color:#fdcb6e;"></i>
+                <strong style="color:#fdcb6e;">Rule:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Short adverbs (1 syllable) → add <span class="highlight-text">-er / -est</span><br>
+                Long adverbs (ending in -ly) → use <span class="highlight-text">more / most</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 8 - ADVERBS: Irregular Forms -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="8">
+            <div class="badge">⚠️ Topic 4</div>
+            <h2>Irregular Adverb Forms</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Algunos adverbios no siguen las reglas normales y tienen formas especiales.</p>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Adverb</th><th>Comparative</th><th>Superlative</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="highlight-pink">well</span></td>
+                        <td><span class="highlight-text">better</span></td>
+                        <td><span class="highlight-text">best</span></td>
+                        <td>She sings <span class="highlight-text">better</span> than me.<br>He performed <span class="highlight-text">best</span> of all.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-pink">badly</span></td>
+                        <td><span class="highlight-text">worse</span></td>
+                        <td><span class="highlight-text">worst</span></td>
+                        <td>I played <span class="highlight-text">worse</span> than yesterday.<br>She danced <span class="highlight-text">worst</span> in the group.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-pink">far</span></td>
+                        <td><span class="highlight-text">farther / further</span></td>
+                        <td><span class="highlight-text">farthest / furthest</span></td>
+                        <td>He ran <span class="highlight-text">farther</span> than before.<br>She threw <span class="highlight-text">furthest</span> of all.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-pink">little</span></td>
+                        <td><span class="highlight-text">less</span></td>
+                        <td><span class="highlight-text">least</span></td>
+                        <td>I sleep <span class="highlight-text">less</span> than my brother.<br>He studies <span class="highlight-text">least</span> in the class.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-pink">much</span></td>
+                        <td><span class="highlight-text">more</span></td>
+                        <td><span class="highlight-text">most</span></td>
+                        <td>She cares <span class="highlight-text">more</span> than anyone.<br>He talks <span class="highlight-text">most</span> of all.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box danger">
+                <i class="fas fa-exclamation-triangle" style="color:#fd79a8;"></i>
+                <strong style="color:#fd79a8;">Important Distinction:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                <strong>good</strong> (adjective) → <strong>well</strong> (adverb)<br>
+                ✅ She is a <strong>good</strong> singer. / ✅ She sings <strong>well</strong>.<br>
+                ❌ She sings <strong>good</strong>. (incorrecto)
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 9 - ADVERBS OF DEGREE (Introduction) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="9">
+            <div class="badge">🎯 Topic 5</div>
+            <h2>Adverbs of Degree</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">Indican <strong>intensidad</strong>. Modifican adjetivos, verbos u otros adverbios.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-arrow-up"></i>
+                    <div class="title" style="color:#fd79a8;">🔺 Strong Intensifiers</div>
+                    <div class="example"><strong>extremely</strong> — extremadamente</div>
+                    <div class="example">This test is <strong>extremely</strong> difficult.</div>
+                    <div class="example"><strong>absolutely</strong> — absolutamente</div>
+                    <div class="example">That's <strong>absolutely</strong> perfect!</div>
+                    <div class="example"><strong>completely</strong> — completamente</div>
+                    <div class="example">I'm <strong>completely</strong> sure.</div>
+                    <div class="example"><strong>very</strong> — muy</div>
+                    <div class="example">My cat is <strong>very</strong> friendly.</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-arrow-down"></i>
+                    <div class="title" style="color:#74b9ff;">🔽 Moderate / Weak Intensifiers</div>
+                    <div class="example"><strong>quite</strong> — bastante</div>
+                    <div class="example">The movie was <strong>quite</strong> interesting.</div>
+                    <div class="example"><strong>rather</strong> — bastante (con matiz negativo)</div>
+                    <div class="example">It's <strong>rather</strong> cold today.</div>
+                    <div class="example"><strong>a bit</strong> — un poco</div>
+                    <div class="example">I'm <strong>a bit</strong> tired.</div>
+                    <div class="example"><strong>a little</strong> — un poco</div>
+                    <div class="example">She is <strong>a little</strong> nervous.</div>
+                </div>
+            </div>
+
+            <div class="info-box highlight">
+                <i class="fas fa-arrows-left-right" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">Position:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Adverbs of degree go <strong>BEFORE</strong> the word they modify:<br>
+                <span class="highlight-text">very</span> tall · <span class="highlight-text">extremely</span> beautiful · <span class="highlight-text">quite</span> interesting
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 10 - ADVERBS OF DEGREE: Complete List -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="10">
+            <div class="badge">🎯 Topic 5</div>
+            <h2>Adverbs of Degree: Complete List</h2>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Adverb</th><th>Meaning</th><th>Intensity</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>extremely</strong></td><td>extremadamente</td><td>🔺🔺🔺</td><td>This is <span class="highlight-text">extremely</span> important.</td></tr>
+                    <tr><td><strong>absolutely</strong></td><td>absolutamente</td><td>🔺🔺🔺</td><td>It's <span class="highlight-text">absolutely</span> freezing!</td></tr>
+                    <tr><td><strong>completely</strong></td><td>completamente</td><td>🔺🔺🔺</td><td>I <span class="highlight-text">completely</span> agree.</td></tr>
+                    <tr><td><strong>utterly</strong></td><td>totalmente</td><td>🔺🔺🔺</td><td>She was <span class="highlight-text">utterly</span> exhausted.</td></tr>
+                    <tr><td><strong>very</strong></td><td>muy</td><td>🔺🔺</td><td>He is <span class="highlight-text">very</span> tall.</td></tr>
+                    <tr><td><strong>really</strong></td><td>realmente</td><td>🔺🔺</td><td>She is <span class="highlight-text">really</span> kind.</td></tr>
+                    <tr><td><strong>quite</strong></td><td>bastante</td><td>🔺🔺</td><td>It's <span class="highlight-text">quite</span> warm today.</td></tr>
+                    <tr><td><strong>rather</strong></td><td>bastante (negativo)</td><td>🔺🔺</td><td>It's <span class="highlight-text">rather</span> cold.</td></tr>
+                    <tr><td><strong>fairly</strong></td><td>bastante (positivo)</td><td>🔺</td><td>She is <span class="highlight-text">fairly</span> confident.</td></tr>
+                    <tr><td><strong>a bit</strong></td><td>un poco</td><td>🔺</td><td>I'm <span class="highlight-text">a bit</span> hungry.</td></tr>
+                    <tr><td><strong>a little</strong></td><td>un poco</td><td>🔺</td><td>He is <span class="highlight-text">a little</span> shy.</td></tr>
+                    <tr><td><strong>hardly</strong></td><td>apenas</td><td>🔻</td><td>I can <span class="highlight-text">hardly</span> believe it.</td></tr>
+                    <tr><td><strong>scarcely</strong></td><td>apenas</td><td>🔻</td><td>She <span class="highlight-text">scarcely</span> spoke.</td></tr>
+                </tbody>
+            </table>
+
+            <div class="info-box warning">
+                <i class="fas fa-exclamation-triangle" style="color:#fdcb6e;"></i>
+                <strong style="color:#fdcb6e;">Special Case: "enough"</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                <strong>enough</strong> va <strong>DESPUÉS</strong> del adjetivo o adverbio:<br>
+                ✅ tall <span class="highlight-text">enough</span> · fast <span class="highlight-text">enough</span><br>
+                ❌ enough tall · ❌ enough fast
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 11 - QUESTIONS WITH PREPOSITIONS -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="11">
+            <div class="badge">❓ Topic 6</div>
+            <h2>Questions with Prepositions</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">En inglés, la preposición va al <strong>FINAL</strong> de la pregunta en lenguaje cotidiano.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-check-circle" style="color:#00b894;"></i>
+                    <div class="title" style="color:#00b894;">✅ Correct (everyday English)</div>
+                    <div class="example"><strong>What</strong> are you looking <span class="highlight-text">for</span>?</div>
+                    <div class="example"><strong>Who</strong> are you talking <span class="highlight-text">to</span>?</div>
+                    <div class="example"><strong>What</strong> are you thinking <span class="highlight-text">about</span>?</div>
+                    <div class="example"><strong>What</strong> are you waiting <span class="highlight-text">for</span>?</div>
+                    <div class="example"><strong>What</strong> music are you listening <span class="highlight-text">to</span>?</div>
+                    <div class="example"><strong>Where</strong> are you hanging <span class="highlight-text">out</span>?</div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-times-circle" style="color:#fd79a8;"></i>
+                    <div class="title" style="color:#fd79a8;">❌ Incorrect (too formal)</div>
+                    <div class="example"><span class="highlight-pink">For what</span> are you looking?</div>
+                    <div class="example"><span class="highlight-pink">To whom</span> are you talking?</div>
+                    <div class="example"><span class="highlight-pink">About what</span> are you thinking?</div>
+                    <div class="example"><span class="highlight-pink">For what</span> are you waiting?</div>
+                    <div class="example"><span class="highlight-pink">To what</span> music are you listening?</div>
+                    <div class="example"><span class="highlight-pink">Out where</span> are you hanging?</div>
+                </div>
+            </div>
+
+            <div class="info-box success">
+                <i class="fas fa-lightbulb" style="color:#00b894;"></i>
+                <strong style="color:#00b894;">Common verbs + prepositions:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                look <strong>for</strong> · talk <strong>to/about</strong> · listen <strong>to</strong> · wait <strong>for</strong> · think <strong>about</strong> · look <strong>at</strong> · laugh <strong>at</strong> · ask <strong>for</strong> · pay <strong>for</strong> · complain <strong>about</strong> · care <strong>about</strong> · depend <strong>on</strong> · insist <strong>on</strong>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 12 - QUESTIONS WITH PREPOSITIONS: Complete List -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="12">
+            <div class="badge">❓ Topic 6</div>
+            <h2>Questions with Prepositions: Verb + Preposition List</h2>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Verb + Preposition</th><th>Question Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>look <span class="highlight-text">for</span></strong></td><td><span class="highlight-text">What</span> are you looking for?</td></tr>
+                    <tr><td><strong>talk <span class="highlight-text">to</span></strong></td><td><span class="highlight-text">Who</span> are you talking to?</td></tr>
+                    <tr><td><strong>talk <span class="highlight-text">about</span></strong></td><td><span class="highlight-text">What</span> are you talking about?</td></tr>
+                    <tr><td><strong>listen <span class="highlight-text">to</span></strong></td><td><span class="highlight-text">What</span> are you listening to?</td></tr>
+                    <tr><td><strong>wait <span class="highlight-text">for</span></strong></td><td><span class="highlight-text">What/Who</span> are you waiting for?</td></tr>
+                    <tr><td><strong>think <span class="highlight-text">about</span></strong></td><td><span class="highlight-text">What</span> are you thinking about?</td></tr>
+                    <tr><td><strong>look <span class="highlight-text">at</span></strong></td><td><span class="highlight-text">What</span> are you looking at?</td></tr>
+                    <tr><td><strong>laugh <span class="highlight-text">at</span></strong></td><td><span class="highlight-text">What</span> are you laughing at?</td></tr>
+                    <tr><td><strong>ask <span class="highlight-text">for</span></strong></td><td><span class="highlight-text">What</span> are you asking for?</td></tr>
+                    <tr><td><strong>pay <span class="highlight-text">for</span></strong></td><td><span class="highlight-text">What</span> are you paying for?</td></tr>
+                    <tr><td><strong>complain <span class="highlight-text">about</span></strong></td><td><span class="highlight-text">What</span> are you complaining about?</td></tr>
+                    <tr><td><strong>care <span class="highlight-text">about</span></strong></td><td><span class="highlight-text">Who</span> do you care about?</td></tr>
+                    <tr><td><strong>depend <span class="highlight-text">on</span></strong></td><td><span class="highlight-text">What</span> does it depend on?</td></tr>
+                    <tr><td><strong>insist <span class="highlight-text">on</span></strong></td><td><span class="highlight-text">What</span> are you insisting on?</td></tr>
+                    <tr><td><strong>succeed <span class="highlight-text">in</span></strong></td><td><span class="highlight-text">What</span> did you succeed in?</td></tr>
+                    <tr><td><strong>look forward <span class="highlight-text">to</span></strong></td><td><span class="highlight-text">What</span> are you looking forward to?</td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 13 - QUESTION TAGS (Introduction) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="13">
+            <div class="badge">🏷️ Topic 7</div>
+            <h2>Question Tags</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">Se usan para <strong>confirmar información</strong> o pedir acuerdo.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-check-circle" style="color:#00b894;"></i>
+                    <div class="title" style="color:#00b894;">✅ Positive Statement → Negative Tag</div>
+                    <div class="example">You like pizza, <span class="highlight-text">don't you?</span></div>
+                    <div class="example">She is your friend, <span class="highlight-text">isn't she?</span></div>
+                    <div class="example">They play football, <span class="highlight-text">don't they?</span></div>
+                    <div class="example">He can swim, <span class="highlight-text">can't he?</span></div>
+                    <div class="example">You have finished, <span class="highlight-text">haven't you?</span></div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-times-circle" style="color:#fd79a8;"></i>
+                    <div class="title" style="color:#fd79a8;">❌ Negative Statement → Positive Tag</div>
+                    <div class="example">You don't have a pet, <span class="highlight-text">do you?</span></div>
+                    <div class="example">She isn't coming, <span class="highlight-text">is she?</span></div>
+                    <div class="example">They don't play rugby, <span class="highlight-text">do they?</span></div>
+                    <div class="example">He can't drive, <span class="highlight-text">can he?</span></div>
+                    <div class="example">You haven't eaten, <span class="highlight-text">have you?</span></div>
+                </div>
+            </div>
+
+            <div class="info-box highlight">
+                <i class="fas fa-lightbulb" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">The Rule:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                <strong>Positive statement</strong> → <strong>negative tag</strong><br>
+                <strong>Negative statement</strong> → <strong>positive tag</strong>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 14 - QUESTION TAGS: Complete Tenses -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="14">
+            <div class="badge">🏷️ Topic 7</div>
+            <h2>Question Tags: All Tenses</h2>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Tense</th><th>Statement</th><th>Question Tag</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>Present Simple</strong></td><td>You <span class="highlight-text">like</span> pizza,</td><td><span class="highlight-text">don't you?</span></td></tr>
+                    <tr><td><strong>Present Simple (he/she/it)</strong></td><td>She <span class="highlight-text">plays</span> tennis,</td><td><span class="highlight-text">doesn't she?</span></td></tr>
+                    <tr><td><strong>Present Continuous</strong></td><td>You <span class="highlight-text">are</span> coming,</td><td><span class="highlight-text">aren't you?</span></td></tr>
+                    <tr><td><strong>Past Simple</strong></td><td>You <span class="highlight-text">went</span> to the party,</td><td><span class="highlight-text">didn't you?</span></td></tr>
+                    <tr><td><strong>Past Continuous</strong></td><td>She <span class="highlight-text">was</span> sleeping,</td><td><span class="highlight-text">wasn't she?</span></td></tr>
+                    <tr><td><strong>Present Perfect</strong></td><td>You <span class="highlight-text">have</span> finished,</td><td><span class="highlight-text">haven't you?</span></td></tr>
+                    <tr><td><strong>Past Perfect</strong></td><td>They <span class="highlight-text">had</span> left,</td><td><span class="highlight-text">hadn't they?</span></td></tr>
+                    <tr><td><strong>Future (will)</strong></td><td>You <span class="highlight-text">will</span> help,</td><td><span class="highlight-text">won't you?</span></td></tr>
+                    <tr><td><strong>Modal (can)</strong></td><td>He <span class="highlight-text">can</span> swim,</td><td><span class="highlight-text">can't he?</span></td></tr>
+                    <tr><td><strong>Modal (should)</strong></td><td>We <span class="highlight-text">should</span> go,</td><td><span class="highlight-text">shouldn't we?</span></td></tr>
+                    <tr><td><strong>Modal (must)</strong></td><td>You <span class="highlight-text">must</span> go,</td><td><span class="highlight-text">mustn't you?</span></td></tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 15 - QUESTION TAGS: Special Cases -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="15">
+            <div class="badge">⚠️ Topic 7</div>
+            <h2>Question Tags: Special Cases</h2>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Special Case</th><th>Statement</th><th>Question Tag</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>I am</strong></td>
+                        <td>I <span class="highlight-text">am</span> your best friend,</td>
+                        <td><span class="highlight-text">aren't I?</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Let's</strong></td>
+                        <td><span class="highlight-text">Let's</span> go to the cinema,</td>
+                        <td><span class="highlight-text">shall we?</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Imperative</strong></td>
+                        <td><span class="highlight-text">Close</span> the door,</td>
+                        <td><span class="highlight-text">will you?</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Imperative (negative)</strong></td>
+                        <td><span class="highlight-text">Don't</span> forget,</td>
+                        <td><span class="highlight-text">will you?</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>I have (possession)</strong></td>
+                        <td>I <span class="highlight-text">have</span> a car,</td>
+                        <td><span class="highlight-text">haven't I?</span> / <span class="highlight-text">don't I?</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>There is/are</strong></td>
+                        <td><span class="highlight-text">There is</span> a problem,</td>
+                        <td><span class="highlight-text">isn't there?</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Nobody/Nothing</strong></td>
+                        <td><span class="highlight-text">Nobody</span> came,</td>
+                        <td><span class="highlight-text">did they?</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Everyone/Someone</strong></td>
+                        <td><span class="highlight-text">Everyone</span> is here,</td>
+                        <td><span class="highlight-text">aren't they?</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>This/That is</strong></td>
+                        <td><span class="highlight-text">That is</span> yours,</td>
+                        <td><span class="highlight-text">isn't it?</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>These/Those are</strong></td>
+                        <td><span class="highlight-text">Those are</span> yours,</td>
+                        <td><span class="highlight-text">aren't they?</span></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 16 - ADVERBS OF MANNER (Introduction) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="16">
+            <div class="badge">🏃 Topic 8</div>
+            <h2>Adverbs of Manner</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">Describen <strong>cómo</strong> se realiza una acción. Responden a la pregunta <strong>"How?"</strong></p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-cog"></i>
+                    <div class="title">📝 Formation</div>
+                    <div class="example"><strong>Rule:</strong> adjective + <span class="highlight-text">-ly</span></div>
+                    <div class="example">quick → <strong>quickly</strong></div>
+                    <div class="example">careful → <strong>carefully</strong></div>
+                    <div class="example">beautiful → <strong>beautifully</strong></div>
+                    <div class="example">bad → <strong>badly</strong></div>
+                    <div class="example" style="margin-top:0.3rem; background:rgba(253,203,110,0.1); padding:0.3rem 0.6rem; border-radius:8px;">
+                        ⚠️ <strong>Spelling:</strong> happy → happily (y→i) · terrible → terribly (e→y)
+                    </div>
+                </div>
+                <div class="card">
+                    <i class="fas fa-question-circle"></i>
+                    <div class="title">📌 Position in the sentence</div>
+                    <div class="example"><strong>1. End of the sentence</strong> (most common)</div>
+                    <div class="example">She sings <span class="highlight-text">beautifully</span>.</div>
+                    <div class="example"><strong>2. After the object</strong></div>
+                    <div class="example">He drives the car <span class="highlight-text">carefully</span>.</div>
+                    <div class="example"><strong>3. Before the main verb</strong> (emphasis)</div>
+                    <div class="example">She <span class="highlight-text">quietly</span> left the room.</div>
+                </div>
+            </div>
+
+            <div class="info-box success">
+                <i class="fas fa-check-circle" style="color:#00b894;"></i>
+                <strong style="color:#00b894;">Examples:</strong>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                "He ran <strong>fast</strong>." (adverb) · "She spoke <strong>softly</strong>." · "They played <strong>well</strong>."
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 17 - ADVERBS OF MANNER: Complete List -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="17">
+            <div class="badge">🏃 Topic 8</div>
+            <h2>Adverbs of Manner: Complete List</h2>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="title">🗣️ Speaking / Communication</div>
+                    <div class="example"><strong>softly</strong> — suavemente</div>
+                    <div class="example"><strong>loudly</strong> — en voz alta</div>
+                    <div class="example"><strong>quietly</strong> — silenciosamente</div>
+                    <div class="example"><strong>politely</strong> — cortésmente</div>
+                    <div class="example"><strong>rudely</strong> — groseramente</div>
+                    <div class="example"><strong>clearly</strong> — claramente</div>
+                </div>
+                <div class="card">
+                    <div class="title">🏃 Movement / Action</div>
+                    <div class="example"><strong>quickly</strong> — rápidamente</div>
+                    <div class="example"><strong>slowly</strong> — lentamente</div>
+                    <div class="example"><strong>carefully</strong> — cuidadosamente</div>
+                    <div class="example"><strong>carelessly</strong> — descuidadamente</div>
+                    <div class="example"><strong>easily</strong> — fácilmente</div>
+                    <div class="example"><strong>hard</strong> — duro (sin -ly)</div>
+                </div>
+                <div class="card">
+                    <div class="title">❤️ Emotions / Feelings</div>
+                    <div class="example"><strong>happily</strong> — felizmente</div>
+                    <div class="example"><strong>sadly</strong> — tristemente</div>
+                    <div class="example"><strong>angrily</strong> — enfadadamente</div>
+                    <div class="example"><strong>nervously</strong> — nerviosamente</div>
+                    <div class="example"><strong>confidently</strong> — confiadamente</div>
+                    <div class="example"><strong>patiently</strong> — pacientemente</div>
+                </div>
+            </div>
+
+            <div class="grid-3" style="margin-top:0.5rem;">
+                <div class="card">
+                    <div class="title">📚 Study / Work</div>
+                    <div class="example"><strong>diligently</strong> — diligentemente</div>
+                    <div class="example"><strong>efficiently</strong> — eficientemente</div>
+                    <div class="example"><strong>effectively</strong> — efectivamente</div>
+                </div>
+                <div class="card">
+                    <div class="title">🌟 Other Common</div>
+                    <div class="example"><strong>well</strong> — bien</div>
+                    <div class="example"><strong>badly</strong> — mal</div>
+                    <div class="example"><strong>fast</strong> — rápido</div>
+                    <div class="example"><strong>late</strong> — tarde</div>
+                    <div class="example"><strong>early</strong> — temprano</div>
+                </div>
+                <div class="card">
+                    <div class="title">🎯 Intensity</div>
+                    <div class="example"><strong>extremely</strong> — extremadamente</div>
+                    <div class="example"><strong>quite</strong> — bastante</div>
+                    <div class="example"><strong>very</strong> — muy</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 18 - ADVERBS OF MANNER: Exceptions -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="18">
+            <div class="badge">⚠️ Topic 8</div>
+            <h2>Adverbs of Manner: Exceptions</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">Algunos adverbios <strong>no terminan en -ly</strong> o tienen formas especiales.</p>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Adjective</th><th>Adverb</th><th>Exception</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>good</strong></td>
+                        <td><span class="highlight-text">well</span></td>
+                        <td>Forma especial (no "goodly")</td>
+                        <td>She sings <strong>well</strong>. (❌ She sings good.)</td>
+                    </tr>
+                    <tr>
+                        <td><strong>fast</strong></td>
+                        <td><span class="highlight-text">fast</span></td>
+                        <td>Igual que adjetivo</td>
+                        <td>He drives <strong>fast</strong>. (no "fastly")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>hard</strong></td>
+                        <td><span class="highlight-text">hard</span></td>
+                        <td>Igual que adjetivo</td>
+                        <td>She works <strong>hard</strong>. (no "hardly")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>late</strong></td>
+                        <td><span class="highlight-text">late</span></td>
+                        <td>Igual que adjetivo</td>
+                        <td>He arrived <strong>late</strong>. (no "lately")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>early</strong></td>
+                        <td><span class="highlight-text">early</span></td>
+                        <td>Igual que adjetivo</td>
+                        <td>I woke up <strong>early</strong>. (no "earlyly")</td>
+                    </tr>
+                    <tr>
+                        <td><strong>straight</strong></td>
+                        <td><span class="highlight-text">straight</span></td>
+                        <td>Igual que adjetivo</td>
+                        <td>Go <strong>straight</strong> ahead.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>friendly</strong></td>
+                        <td><span class="highlight-text">in a friendly way</span></td>
+                        <td>No existe "friendlily"</td>
+                        <td>She smiled <strong>in a friendly way</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><strong>lonely</strong></td>
+                        <td><span class="highlight-text">in a lonely way</span></td>
+                        <td>No existe "lonelily"</td>
+                        <td>He looked <strong>in a lonely way</strong>.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box danger">
+                <i class="fas fa-exclamation-triangle" style="color:#fd79a8;"></i>
+                <strong style="color:#fd79a8;">Key Distinctions:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                <strong>hard</strong> (adverb: con esfuerzo) vs <strong>hardly</strong> (adverb: apenas)<br>
+                ✅ She works <strong>hard</strong>. · ❌ She works hardly.<br>
+                ✅ I can <strong>hardly</strong> see. (apenas puedo ver)
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 19 - ADVERBS OF MANNER: Comparative Forms -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="19">
+            <div class="badge">🏃 Topic 8</div>
+            <h2>Adverbs of Manner: Comparative &amp; Superlative</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">Los adverbios de manner también se pueden comparar.</p>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Adverb</th><th>Comparative</th><th>Superlative</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr><td><strong>quickly</strong></td><td>more quickly</td><td>most quickly</td><td>She runs <span class="highlight-text">more quickly</span> than me.<br>He finished <span class="highlight-text">most quickly</span>.</td></tr>
+                    <tr><td><strong>carefully</strong></td><td>more carefully</td><td>most carefully</td><td>Drive <span class="highlight-text">more carefully</span>.<br>She checked <span class="highlight-text">most carefully</span>.</td></tr>
+                    <tr><td><strong>quietly</strong></td><td>more quietly</td><td>most quietly</td><td>Please speak <span class="highlight-text">more quietly</span>.<br>She entered <span class="highlight-text">most quietly</span>.</td></tr>
+                    <tr><td><strong>fast</strong></td><td>faster</td><td>fastest</td><td>He runs <span class="highlight-text">faster</span> than before.<br>She runs <span class="highlight-text">fastest</span> of all.</td></tr>
+                    <tr><td><strong>well</strong></td><td>better</td><td>best</td><td>She sings <span class="highlight-text">better</span> than me.<br>He performed <span class="highlight-text">best</span>.</td></tr>
+                    <tr><td><strong>badly</strong></td><td>worse</td><td>worst</td><td>I played <span class="highlight-text">worse</span> than before.<br>She danced <span class="highlight-text">worst</span>.</td></tr>
+                    <tr><td><strong>hard</strong></td><td>harder</td><td>hardest</td><td>She works <span class="highlight-text">harder</span> than me.<br>He works <span class="highlight-text">hardest</span>.</td></tr>
+                    <tr><td><strong>late</strong></td><td>later</td><td>latest</td><td>He arrived <span class="highlight-text">later</span> than us.<br>She arrived <span class="highlight-text">latest</span>.</td></tr>
+                </tbody>
+            </table>
+
+            <div class="info-box highlight">
+                <i class="fas fa-lightbulb" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">Rule:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Adverbs ending in <strong>-ly</strong> → use <span class="highlight-text">more / most</span><br>
+                Short adverbs → add <span class="highlight-text">-er / -est</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 20 - ADVERBS: Position Summary -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="20">
+            <div class="badge">📌 Topic 8</div>
+            <h2>Adverbs of Manner: Position in the Sentence</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="title" style="color:#00b894;">✅ Position 1: End of sentence</div>
+                    <div class="example">She sings <span class="highlight-text">beautifully</span>.</div>
+                    <div class="example">He drove <span class="highlight-text">carefully</span>.</div>
+                    <div class="example">They played <span class="highlight-text">well</span>.</div>
+                    <div class="example" style="margin-top:0.3rem; background:rgba(0,184,148,0.1); padding:0.3rem 0.6rem; border-radius:8px;">
+                        <strong>Most common position.</strong>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="title" style="color:#74b9ff;">✅ Position 2: After the object</div>
+                    <div class="example">She speaks English <span class="highlight-text">fluently</span>.</div>
+                    <div class="example">He opened the door <span class="highlight-text">slowly</span>.</div>
+                    <div class="example">She signed the document <span class="highlight-text">quickly</span>.</div>
+                </div>
+                <div class="card">
+                    <div class="title" style="color:#fdcb6e;">✅ Position 3: Before the verb</div>
+                    <div class="example">She <span class="highlight-text">quietly</span> left the room.</div>
+                    <div class="example">He <span class="highlight-text">suddenly</span> stopped.</div>
+                    <div class="example">They <span class="highlight-text">angrily</span> shouted.</div>
+                    <div class="example" style="margin-top:0.3rem; background:rgba(253,203,110,0.1); padding:0.3rem 0.6rem; border-radius:8px;">
+                        <strong>Adds emphasis.</strong>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="title" style="color:#fd79a8;">⚠️ Position 4: After the verb (with to be)</div>
+                    <div class="example">She is <span class="highlight-text">always</span> late.</div>
+                    <div class="example">He is <span class="highlight-text">never</span> rude.</div>
+                    <div class="example">They were <span class="highlight-text">extremely</span> tired.</div>
+                </div>
+            </div>
+
+            <div class="info-box warning">
+                <i class="fas fa-lightbulb" style="color:#fdcb6e;"></i>
+                <strong style="color:#fdcb6e;">Tip:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Usually, adverbs of manner go <strong>at the end</strong> of the sentence or after the object.<br>
+                For emphasis, they can go <strong>before the verb</strong>.
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 21 - ADVERBS vs ADJECTIVES -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="21">
+            <div class="badge">⚖️ Topic 8</div>
+            <h2>Adverbs vs Adjectives</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">Es crucial distinguir entre <strong>adjetivos</strong> (describen sustantivos) y <strong>adverbios</strong> (describen verbos).</p>
+
+            <table class="grammar-table">
+                <thead>
+                    <tr><th>Adjective</th><th>Adverb</th><th>Example</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><span class="highlight-text">quick</span></td>
+                        <td><span class="highlight-text">quickly</span></td>
+                        <td>✅ She is a <strong>quick</strong> runner.<br>✅ She runs <strong>quickly</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-text">careful</span></td>
+                        <td><span class="highlight-text">carefully</span></td>
+                        <td>✅ He is a <strong>careful</strong> driver.<br>✅ He drives <strong>carefully</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-text">beautiful</span></td>
+                        <td><span class="highlight-text">beautifully</span></td>
+                        <td>✅ She is a <strong>beautiful</strong> singer.<br>✅ She sings <strong>beautifully</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-text">good</span></td>
+                        <td><span class="highlight-text">well</span></td>
+                        <td>✅ She is a <strong>good</strong> dancer.<br>✅ She dances <strong>well</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-text">fast</span></td>
+                        <td><span class="highlight-text">fast</span></td>
+                        <td>✅ He is a <strong>fast</strong> worker.<br>✅ He works <strong>fast</strong>.</td>
+                    </tr>
+                    <tr>
+                        <td><span class="highlight-text">hard</span></td>
+                        <td><span class="highlight-text">hard</span></td>
+                        <td>✅ This is a <strong>hard</strong> question.<br>✅ She works <strong>hard</strong>.</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box danger">
+                <i class="fas fa-exclamation-triangle" style="color:#fd79a8;"></i>
+                <strong style="color:#fd79a8;">Common Errors:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                ❌ She sings <strong>good</strong>. → ✅ She sings <strong>well</strong>.<br>
+                ❌ He drives <strong>careful</strong>. → ✅ He drives <strong>carefully</strong>.<br>
+                ❌ She is a <strong>beautifully</strong> singer. → ✅ She is a <strong>beautiful</strong> singer.
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 22 - PRACTICE EXAMPLES (Mixed) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="22">
+            <div class="badge">📝 Practice</div>
+            <h2>Mixed Examples</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="title" style="color:#a29bfe;">Adverbs of Frequency</div>
+                    <div class="example">I <strong>always</strong> brush my teeth before bed.</div>
+                    <div class="example">She <strong>sometimes</strong> goes to the gym.</div>
+                    <div class="example">They <strong>never</strong> eat junk food.</div>
+                </div>
+                <div class="card">
+                    <div class="title" style="color:#fdcb6e;">Comparatives</div>
+                    <div class="example">My brother is <strong>older than</strong> me.</div>
+                    <div class="example">This is <strong>more expensive than</strong> that.</div>
+                    <div class="example">She is <strong>better than</strong> him at tennis.</div>
+                </div>
+                <div class="card">
+                    <div class="title" style="color:#fd79a8;">Superlatives</div>
+                    <div class="example">He is <strong>the tallest</strong> in the class.</div>
+                    <div class="example">This is <strong>the most interesting</strong> book I've read.</div>
+                    <div class="example">She is <strong>the best</strong> singer I know.</div>
+                </div>
+                <div class="card">
+                    <div class="title" style="color:#74b9ff;">Adverbs of Degree</div>
+                    <div class="example">This test is <strong>extremely</strong> difficult.</div>
+                    <div class="example">I'm <strong>a bit</strong> tired today.</div>
+                    <div class="example">She is <strong>very</strong> kind to everyone.</div>
+                </div>
+                <div class="card">
+                    <div class="title" style="color:#00b894;">Questions with Prepositions</div>
+                    <div class="example"><strong>What</strong> are you looking <strong>for</strong>?</div>
+                    <div class="example"><strong>Who</strong> are you talking <strong>to</strong>?</div>
+                    <div class="example"><strong>What</strong> are you thinking <strong>about</strong>?</div>
+                </div>
+                <div class="card">
+                    <div class="title" style="color:#fd79a8;">Question Tags</div>
+                    <div class="example">You like pizza, <strong>don't you</strong>?</div>
+                    <div class="example">She isn't coming, <strong>is she</strong>?</div>
+                    <div class="example">Let's go, <strong>shall we</strong>?</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 23 - COMPLETE SUMMARY -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="23">
+            <div class="badge">📌 Summary</div>
+            <h2>Complete Summary</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="title">⏰ Adverbs of Frequency</div>
+                    <div class="example">always · usually · often · sometimes · hardly ever · never</div>
+                    <div class="example" style="margin-top:0.3rem;">Position: <strong>before</strong> verb · <strong>after</strong> to be</div>
+                </div>
+                <div class="card">
+                    <div class="title">📊 Comparatives</div>
+                    <div class="example">adj + <strong>-er</strong> · <strong>more</strong> + adj · irregular (<strong>better, worse</strong>)</div>
+                    <div class="example" style="margin-top:0.3rem;">Compare <strong>TWO</strong> things</div>
+                </div>
+                <div class="card">
+                    <div class="title">🏆 Superlatives</div>
+                    <div class="example"><strong>the</strong> + adj + <strong>-est</strong> · <strong>the most</strong> + adj · irregular (<strong>best, worst</strong>)</div>
+                    <div class="example" style="margin-top:0.3rem;">Compare <strong>ONE</strong> vs the group</div>
+                </div>
+                <div class="card">
+                    <div class="title">🏃 Adverbs (Comparative/Superlative)</div>
+                    <div class="example">fast → faster → fastest · carefully → more carefully → most carefully</div>
+                    <div class="example" style="margin-top:0.3rem;"><strong>well</strong> → better → best · <strong>badly</strong> → worse → worst</div>
+                </div>
+                <div class="card">
+                    <div class="title">🎯 Adverbs of Degree</div>
+                    <div class="example">extremely · very · quite · a bit · too · enough · etc.</div>
+                    <div class="example" style="margin-top:0.3rem;">Go <strong>BEFORE</strong> the word they modify</div>
+                </div>
+                <div class="card">
+                    <div class="title">❓ Questions with Prepositions</div>
+                    <div class="example"><strong>What</strong> are you looking <strong>for</strong>?</div>
+                    <div class="example" style="margin-top:0.3rem;">Preposition at the <strong>END</strong> in everyday English</div>
+                </div>
+                <div class="card">
+                    <div class="title">🏷️ Question Tags</div>
+                    <div class="example">Positive → negative tag · Negative → positive tag</div>
+                    <div class="example" style="margin-top:0.3rem;">Special: <strong>aren't I?</strong> · <strong>shall we?</strong> · <strong>will you?</strong></div>
+                </div>
+                <div class="card">
+                    <div class="title">🏃 Adverbs of Manner</div>
+                    <div class="example">adj + <strong>-ly</strong> (quick → quickly)</div>
+                    <div class="example" style="margin-top:0.3rem;">Exceptions: <strong>well, fast, hard, late, early</strong></div>
+                    <div class="example" style="margin-top:0.3rem;">Position: usually at the <strong>end</strong> of the sentence</div>
+                </div>
+            </div>
+
+            <div class="info-box success" style="margin-top:0.5rem;">
+                <i class="fas fa-check-circle" style="color:#00b894;"></i>
+                <strong style="color:#00b894;">¡Ya has completado toda la materia!</strong>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                Revisa cada tema y practica con los ejercicios.
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 24 - FINAL (Goodbye) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="24">
+            <div class="badge">🎉 Complete!</div>
+            <h1 style="font-size:3rem; text-align:center;">You've Got This! 💪</h1>
+            <p style="text-align:center; font-size:1.2rem; color:#b2bec3; margin:1rem 0;">
+                Adverbs of Frequency · Comparatives · Superlatives ·<br>
+                Adverbs of Degree · Questions with Prepositions ·<br>
+                Question Tags · Adverbs of Manner
+            </p>
+            <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:1.5rem 0;">
+                <span class="tag tag-purple">📊 7 Topics</span>
+                <span class="tag tag-pink">📝 25 Slides</span>
+                <span class="tag tag-yellow">⭐ Complete Reference</span>
+                <span class="tag tag-green">🎯 Exam Ready</span>
+            </div>
+            <div class="info-box highlight" style="text-align:center; margin-top:1.5rem;">
+                <i class="fas fa-arrow-right" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">Next step:</strong>
+                <span style="color:#b2bec3;">
+                Go to the exercises page to practice what you've learned!
+                </span>
+            </div>
+            <div style="margin-top:1.5rem; text-align:center; color:#636e72; font-size:0.8rem;">
+                <i class="fas fa-arrow-left"></i> Use the arrows to navigate
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="dots" id="dotsContainer"></div>
+
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Course</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Exercises</button>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // NAVIGATION LOGIC
+    // ============================================================
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if (idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+        updateButtons();
+    }
+
+    function nextSlide() {
+        if (currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if (currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    function updateButtons() {
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        prevBtn.disabled = currentIdx === 0;
+        nextBtn.disabled = currentIdx === totalSlides - 1;
+    }
+
+    // Event listeners
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    // Swipe for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 40) nextSlide();
+        if (touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    // Action buttons
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Ingles.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_7A_Ingles.html';
+    });
+
+    // Initialize
+    updateDots();
+    updateButtons();
+</script>
+</body>
+</html>
