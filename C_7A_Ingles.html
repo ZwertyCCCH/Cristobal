@@ -1189,7 +1189,7 @@ const tablePool = [
     // 🔴 IRREGULARES (cortos pero irregulares)
     { items: [{ label: "Adjective", value: "good" }, { label: "Comparative", correct: "better" }, { label: "Superlative", correct: "best" }] },
     { items: [{ label: "Adjective", value: "bad" }, { label: "Comparative", correct: "worse" }, { label: "Superlative", correct: "worst" }] },
-    { items: [{ label: "Adjective", value: "far" }, { label: "Comparative", correct: "farther" }, { label: "Superlative", correct: "farthest" }] },
+    { items: [{ label: "Adjective", value: "far" }, { label: "Comparative", correct: "farther", alt: ["further"] }, { label: "Superlative", correct: "farthest", alt: ["furthest"] }] },
     
     // 🟢 ADJETIVOS DE 1 SÍLABA (regla general: +er / +est)
     { items: [{ label: "Adjective", value: "big" }, { label: "Comparative", correct: "bigger" }, { label: "Superlative", correct: "biggest" }] },
@@ -1225,9 +1225,9 @@ const tablePool = [
     { items: [{ label: "Adjective", value: "shallow" }, { label: "Comparative", correct: "shallower" }, { label: "Superlative", correct: "shallowest" }] },
     
     // 🟠 ADJETIVOS DE 2 SÍLABAS (ACENTO EN LA PRIMERA SÍLABA, aceptan -er/-est Y more/most)
-    { items: [{ label: "Adjective", value: "polite" }, { label: "Comparative", correct: "politer" }, { label: "Superlative", correct: "politest" }] },
-    { items: [{ label: "Adjective", value: "common" }, { label: "Comparative", correct: "commoner" }, { label: "Superlative", correct: "commonest" }] },
-    { items: [{ label: "Adjective", value: "pleasant" }, { label: "Comparative", correct: "pleasanter" }, { label: "Superlative", correct: "pleasantest" }] }
+    { items: [{ label: "Adjective", value: "polite" }, { label: "Comparative", correct: "more polite", alt: ["politer"] }, { label: "Superlative", correct: "most polite", alt: ["politest"] }] },
+    { items: [{ label: "Adjective", value: "common" }, { label: "Comparative", correct: "commoner", alt: ["more common"] }, { label: "Superlative", correct: "commonest", alt: ["most common"] }] },
+    { items: [{ label: "Adjective", value: "pleasant" }, { label: "Comparative", correct: "pleasanter", alt: ["more pleasant"] }, { label: "Superlative", correct: "pleasantest", alt: ["most pleasant"] }] }
 ];
 
 
@@ -1265,6 +1265,32 @@ const tablePool = [
             grade = 1.0 + (percentage / passing) * 3.0;
         }
         return { grade: Math.round(grade * 100) / 100, percentage: Math.round(percentage) };
+    }
+
+    // Normaliza texto libre antes de comparar respuestas:
+    // - unifica comillas/apóstrofes "inteligentes" (typográficos) con los rectos
+    // - colapsa espacios múltiples en uno solo
+    // - quita espacios al inicio/final
+    // - quita puntuación final (., !, ?, ,, ;, :) sin importar cuál sea
+    function normalizeAnswer(str) {
+        if (!str) return '';
+        return str
+            .toLowerCase()
+            .replace(/[\u2018\u2019\u201A\u201B\u02BC]/g, "'")
+            .replace(/[\u201C\u201D\u201E\u201F]/g, '"')
+            .replace(/\s+/g, ' ')
+            .trim()
+            .replace(/[.!?,;:]+$/g, '')
+            .trim();
+    }
+
+    // Revisa si la respuesta del usuario calza con la respuesta principal
+    // o con alguna de las respuestas alternativas válidas (item.alt)
+    function isAnswerAccepted(userAnswer, item) {
+        const norm = normalizeAnswer(userAnswer);
+        if (norm === normalizeAnswer(item.correct)) return true;
+        if (item.alt && item.alt.some(a => norm === normalizeAnswer(a))) return true;
+        return false;
     }
 
 
@@ -1767,7 +1793,7 @@ function renderAll() {
         userAnswers.tag.forEach(a => { if (a) answered++; });
         // Table
         userAnswers.table.forEach(a => { 
-            if (a && a.every(v => v)) answered++;
+            if (a && a.length > 0 && a.every(v => v)) answered++;
         });
 
         document.getElementById('answeredCount').textContent = answered;
@@ -1808,7 +1834,7 @@ function renderAll() {
             const card = document.getElementById(`fill-card-${idx}`);
             if (!card) return;
             const input = card.querySelector('.q-input');
-            const isCorrect = userAnswers.fill[idx] === q.answer.toLowerCase();
+            const isCorrect = normalizeAnswer(userAnswers.fill[idx]) === normalizeAnswer(q.answer);
             input.disabled = true;
             input.classList.add(isCorrect ? 'correct' : 'wrong');
             if (!isCorrect) {
@@ -1850,7 +1876,7 @@ function renderAll() {
             const card = document.getElementById(`error-card-${idx}`);
             if (!card) return;
             const input = card.querySelector('.q-input');
-            const isCorrect = userAnswers.error[idx] === q.correct.toLowerCase().replace(/\.$/, '').trim();
+            const isCorrect = normalizeAnswer(userAnswers.error[idx]) === normalizeAnswer(q.correct);
             input.disabled = true;
             input.classList.add(isCorrect ? 'correct' : 'wrong');
             if (!isCorrect) {
@@ -1915,7 +1941,7 @@ function renderAll() {
             const card = document.getElementById(`question-card-${idx}`);
             if (!card) return;
             const input = card.querySelector('.q-input');
-            const isCorrect = userAnswers.question[idx] && userAnswers.question[idx].toLowerCase().replace(/\.$/, '').trim() === q.correct.toLowerCase().replace(/\.$/, '').trim();
+            const isCorrect = userAnswers.question[idx] && normalizeAnswer(userAnswers.question[idx]) === normalizeAnswer(q.correct);
             input.disabled = true;
             input.classList.add(isCorrect ? 'correct' : 'wrong');
             if (!isCorrect) {
@@ -1993,7 +2019,7 @@ function renderAll() {
                 if (item) {
                     totalInputs++;
                     const userAnswer = userAnswers.table[idx] ? userAnswers.table[idx][cellIdx] : '';
-                    const isCorrect = userAnswer === item.correct.toLowerCase();
+                    const isCorrect = isAnswerAccepted(userAnswer, item);
                     input.disabled = true;
                     input.classList.add(isCorrect ? 'correct' : 'wrong');
                     if (!isCorrect) {
@@ -2018,7 +2044,8 @@ function renderAll() {
                 for (let j = 0; j < q.items.length; j++) {
                     if (!q.items[j].value) {
                         const userAns = userAnswers.table[idx] ? userAnswers.table[idx][inputCounter] : '';
-                        correctText += `${q.items[j].label}: ${q.items[j].correct} · `;
+                        const altText = q.items[j].alt && q.items[j].alt.length ? ` (o ${q.items[j].alt.join(', ')})` : '';
+                        correctText += `${q.items[j].label}: ${q.items[j].correct}${altText} · `;
                         inputCounter++;
                     }
                 }
@@ -2052,7 +2079,7 @@ function renderAll() {
 
         // Fill
         currentQuestions.fill.forEach((q, idx) => {
-            if (userAnswers.fill[idx] === q.answer.toLowerCase()) correct++;
+            if (normalizeAnswer(userAnswers.fill[idx]) === normalizeAnswer(q.answer)) correct++;
         });
 
         // Order
@@ -2062,7 +2089,7 @@ function renderAll() {
 
         // Error
         currentQuestions.error.forEach((q, idx) => {
-            if (userAnswers.error[idx] === q.correct.toLowerCase().replace(/\.$/, '').trim()) correct++;
+            if (normalizeAnswer(userAnswers.error[idx]) === normalizeAnswer(q.correct)) correct++;
         });
 
         // Match
@@ -2077,7 +2104,7 @@ function renderAll() {
 
         // Question
         currentQuestions.question.forEach((q, idx) => {
-            if (userAnswers.question[idx] && userAnswers.question[idx].toLowerCase().replace(/\.$/, '').trim() === q.correct.toLowerCase().replace(/\.$/, '').trim()) correct++;
+            if (userAnswers.question[idx] && normalizeAnswer(userAnswers.question[idx]) === normalizeAnswer(q.correct)) correct++;
         });
 
         // Tag
@@ -2095,7 +2122,7 @@ function renderAll() {
                     const userAnswer = userAnswers.table[idx] && userAnswers.table[idx][inputIndex] !== undefined 
                         ? userAnswers.table[idx][inputIndex] 
                         : '';
-                    if (userAnswer !== q.items[j].correct.toLowerCase()) {
+                    if (!isAnswerAccepted(userAnswer, q.items[j])) {
                         allCorrect = false;
                     }
                     inputIndex++;
@@ -2158,7 +2185,7 @@ function generateTest() {
         adjAdv: new Array(currentQuestions.adjAdv.length).fill(null),  // ← DEBE EXISTIR
         question: new Array(currentQuestions.question.length).fill(''), // ← DEBE EXISTIR
         tag: new Array(currentQuestions.tag.length).fill(''),          // ← DEBE EXISTIR
-        table: new Array(currentQuestions.table.length).fill([])       // ← DEBE EXISTIR
+        table: Array.from({ length: currentQuestions.table.length }, () => [])  // arrays independientes, NO usar .fill([]) (comparte referencia)
     };
 
     evaluated = false;
