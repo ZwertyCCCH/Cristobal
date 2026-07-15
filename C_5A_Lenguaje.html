@@ -1,0 +1,1458 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ejercicios: Análisis de Poemas | Lengua 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #fef6f0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #fffaf6;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0cfb0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #d9531e;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #b5431a;
+        }
+
+        .subtitle {
+            color: #c95a1c;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #fef0e6;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #f0cfb0;
+            color: #8a3c10;
+        }
+
+        .section {
+            background: #fefcf8;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #d9531e;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #c4450c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .poem-container {
+            background: #fef0e6;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #f0cfb0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #3a2a1a;
+            white-space: pre-wrap;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            font-style: italic;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .poem-container strong {
+            font-style: normal;
+            color: #b5431a;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf8;
+            border-radius: 1rem;
+            border: 1px solid #f0cfb0;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3a2a1a;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(217, 83, 30, 0.1);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #d9531e;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #d95b2b;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef0e6;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #d9531e;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3a2a1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #f0cfb0;
+            color: #8a3c10;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #e0b48a;
+            color: #5a2a0a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .correct-feedback {
+            color: #2d6a2d;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        .incorrect-feedback {
+            color: #b33;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 0.8rem; }
+            .container { padding: 1rem; }
+            h1 { font-size: 1.5rem; }
+            .info-bar { flex-direction: column; text-align: center; }
+            .poem-container { font-size: 0.85rem; max-height: 300px; }
+            .btn-evaluate { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 Ejercicios: Análisis de Poemas</h1>
+        <div class="subtitle">Hablante lírico · Objeto lírico · Temple de ánimo · Motivo lírico · Figuras literarias</div>
+        <div class="subtitle">7° Básico | Lengua y Literatura | Colegio Pedro de Valdivia</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Total preguntas:</strong> 30 (5 por cada uno de los 6 poemas)</div>
+        <div>📖 <strong>Poemas:</strong> Pita Amor, Arteche, Borges</div>
+        <div>✅ Exigencia: 60% para nota 4.0 | Nota máxima: 7.0</div>
+    </div>
+
+    <div id="examContent">
+        <!-- Aquí se renderizarán los poemas con sus preguntas -->
+        <div id="questionsContainer"></div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Lengua y Literatura 7° Básico | Colegio Pedro de Valdivia</div>
+</div>
+
+<script>
+    // =============================================
+    // POEMAS COMPLETOS
+    // =============================================
+
+    const poemas = [
+        {
+            id: 1,
+            poeta: "Guadalupe 'Pita' Amor",
+            titulo: "Dedicatoria",
+            texto: `Dedicatoria
+Guadalupe "Pita" Amor
+
+Al dueño del desierto americano,
+del llano desolado y devastado,
+a Rulfo, que del llano enamorado,
+arrasó el Continente Americano
+
+A Arreola, el florentino mexicano
+que a Salaino su gorra le ha bordado
+con alamares de festón plateado
+que dibujó con tinta de su mano
+
+A la grave y contrita Emma Godoy
+que practica la misa ayer y hoy
+A Guadalupe Dueñas, la infernal
+
+y a su pluma celeste y terrenal
+A Guadalupe Amor, la mexicana
+que es dueña de la tinta americana.`
+        },
+        {
+            id: 2,
+            poeta: "Guadalupe 'Pita' Amor",
+            titulo: "Mi Locura",
+            texto: `Mi Locura
+Guadalupe "Pita" Amor
+
+Mi locura es portentosa
+mi locura es de espejismos,
+mi vida de cataclismos
+y es de locura la rosa
+
+y la alada mariposa
+y mis pensamientos mismos
+De locura mis abismos
+de locura es cualquier cosa
+
+Suele el lirio ser del valle
+y de cemento la calle
+y es infernal mi locura
+
+y eterna la noche oscura
+Es de platino mi mente
+y mi locura ascendente`
+        },
+        {
+            id: 3,
+            poeta: "Miguel Arteche",
+            titulo: "Comienzo",
+            texto: `Comienzo
+Miguel Arteche
+
+El jardín se ha posado en mi jardín.
+Toda su galaxia resplandece a medianoche.
+Los árboles destellan, las flores fulgen.
+Tiene el césped una tersura de nimbo.
+Bajan los Transparentes
+y de sus cuerpos surgen peldaños de escala.
+Los Radiantes me llaman con sus cristales.
+Mis años descienden en el cáliz de un instante.
+Los Centelleantes me han rodeado
+y me tienden sus ojos de oro.
+El amor es una paloma de fuego que elevan.
+Por fin llegaron.`
+        },
+        {
+            id: 4,
+            poeta: "Miguel Arteche",
+            titulo: "El agua",
+            texto: `El agua
+Miguel Arteche
+
+A media noche desperté.
+Toda la casa navegaba.
+Era la lluvia con la lluvia
+de la postrera madrugada.
+
+Toda la casa era silencio,
+y eran silencio las montañas
+de aquella noche. No se oía
+sino caer el agua.
+
+Me vi despierto a medianoche
+buscando a tientas la ventana;
+pero en la casa y sobre el mundo
+no había hermanos, madre, nada.
+
+Y hacia el espacio oscuro y frío
+y frío el barco caminaba
+conmigo. ¿Quién movía
+todas las velas solitarias?
+
+Nadie me dijo que saliera.
+Nadie me dijo que me entrara,
+y adentro, adentro de mí mismo
+me retiré: toda la casa.
+
+Me vio en el tiempo que yo fui,
+y en el seré la vi lejana,
+y ya no pude reclinar
+mi juventud sobre la almohada.
+
+A medianoche busqué
+mientras la casa navegaba.
+Y sobre el mundo no se oyó
+sino caer el agua.`
+        },
+        {
+            id: 5,
+            poeta: "Jorge Luis Borges",
+            titulo: "A un gato",
+            texto: `A un gato
+Jorge Luis Borges
+
+No son más silenciosos los espejos
+ni más furtiva el alba aventurera;
+eres, bajo la luna, esa pantera
+que nos es dado divisar de lejos.
+
+Por obra indescifrable de un decreto
+divino, te buscamos vanamente;
+más remoto que el Ganges y el poniente,
+tuya es la soledad, tuyo el secreto.
+
+Tu lomo condesciende a la morosa
+caricia de mi mano. Has admitido,
+desde esa eternidad que ya es olvido,
+el amor de la mano recelosa.
+
+En otro tiempo estás. Eres el dueño
+de un ámbito cerrado como un sueño.`
+        },
+        {
+            id: 6,
+            poeta: "Jorge Luis Borges",
+            titulo: "Arte Poética",
+            texto: `Arte Poética
+Jorge Luis Borges
+
+Mirar el río hecho de tiempo y agua
+y recordar que el tiempo es otro río,
+saber que nos perdemos como el río
+y que los rostros pasan como el agua.
+
+Sentir que la vigilia es otro sueño
+que sueña no soñar y que la muerte
+que teme nuestra carne es esa muerte
+de cada noche, que se llama sueño.
+
+Ver en el día o en el año un símbolo
+de los días del hombre y de sus años,
+convertir el ultraje de los años
+en una música, un rumor y un símbolo,
+
+ver en la muerte el sueño, en el ocaso
+un triste oro, tal es la poesía
+que es inmortal y pobre. La poesía
+vuelve como la aurora y el ocaso.
+
+A veces en las tardes una cara
+nos mira desde el fondo de un espejo;
+el arte debe ser como ese espejo
+que nos revela nuestra propia cara.
+
+Cuentan que Ulises, harto de prodigios,
+lloró de amor al divisar su Itaca
+verde y humilde. El arte es esa Itaca
+de verde eternidad, no de prodigios.
+
+También es como el río interminable
+que pasa y queda y es cristal de un mismo
+Heráclito inconstante, que es el mismo
+y es otro, como el río interminable.`
+        }
+    ];
+
+    // =============================================
+    // POOL DE PREGUNTAS POR POEMA (12 cada uno)
+    // =============================================
+
+    const bancosPreguntas = {
+        1: [ // Dedicatoria - Pita Amor
+            {
+                pregunta: "¿Quién es el hablante lírico en el poema 'Dedicatoria'?",
+                opciones: [
+                    "a) Un narrador anónimo que describe a escritores famosos",
+                    "b) La propia poeta, que se autorretrata e incluye en el homenaje",
+                    "c) Juan Rulfo, a quien se dedica el poema",
+                    "d) Un crítico literario que analiza a los autores"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el objeto lírico principal del poema 'Dedicatoria'?",
+                opciones: [
+                    "a) El desierto americano y su paisaje",
+                    "b) Los escritores mexicanos contemporáneos y la propia poeta",
+                    "c) La ciudad de México y sus tradiciones",
+                    "d) La naturaleza y sus elementos"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué temple de ánimo transmite el hablante en 'Dedicatoria'?",
+                opciones: [
+                    "a) Tristeza y melancolía profunda",
+                    "b) Solemnidad, orgullo y autoafirmación",
+                    "c) Indiferencia y desgano",
+                    "d) Ira y resentimiento"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el motivo lírico que impulsa el poema 'Dedicatoria'?",
+                opciones: [
+                    "a) Describir el paisaje del desierto americano",
+                    "b) Reivindicar su lugar en la tradición literaria mexicana",
+                    "c) Criticar a los escritores de su época",
+                    "d) Celebrar la llegada de la primavera"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿En cuál de los siguientes versos podemos encontrar una metáfora?",
+                opciones: [
+                    "a) 'Al dueño del desierto americano'",
+                    "b) 'A Arreola, el florentino mexicano'",
+                    "c) 'del llano desolado y devastado'",
+                    "d) 'que practica la misa ayer y hoy'"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿En qué verso se encuentra una antítesis (oposición de ideas)?",
+                opciones: [
+                    "a) 'Al dueño del desierto americano'",
+                    "b) 'del llano desolado y devastado'",
+                    "c) 'y a su pluma celeste y terrenal'",
+                    "d) 'que es dueña de la tinta americana'"
+                ],
+                correcta: "c"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en el verso 'A Arreola, el florentino mexicano'?",
+                opciones: [
+                    "a) Símil",
+                    "b) Metáfora",
+                    "c) Hipérbole",
+                    "d) Personificación"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Quiénes son los objetos líricos mencionados en el poema?",
+                opciones: [
+                    "a) Solo Juan Rulfo",
+                    "b) Rulfo, Arreola, Emma Godoy, Guadalupe Dueñas y la propia poeta",
+                    "c) Solo Arreola y Rulfo",
+                    "d) Los escritores extranjeros"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué expresa la poeta al incluirse a sí misma al final del poema?",
+                opciones: [
+                    "a) Humildad y modestia",
+                    "b) Orgullo y seguridad en su lugar en la literatura",
+                    "c) Arrepentimiento por haber escrito",
+                    "d) Deseo de ser olvidada"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué recurso literario utiliza la poeta al escribir 'pluma celeste y terrenal'?",
+                opciones: [
+                    "a) Metáfora",
+                    "b) Antítesis",
+                    "c) Símil",
+                    "d) Hipérbaton"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué quiere decir la poeta cuando se llama a sí misma 'dueña de la tinta americana'?",
+                opciones: [
+                    "a) Que es dueña de una fábrica de tinta",
+                    "b) Que se considera dueña y señora de la literatura americana",
+                    "c) Que tiene una imprenta",
+                    "d) Que no sabe escribir"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué caracteriza al hablante lírico de este poema?",
+                opciones: [
+                    "a) Es una voz tímida y retraída",
+                    "b) Es una voz segura, orgullosa y autoreferente",
+                    "c) Es una voz triste y derrotada",
+                    "d) Es una voz neutral y objetiva"
+                ],
+                correcta: "b"
+            }
+        ],
+        2: [ // Mi Locura - Pita Amor
+            {
+                pregunta: "¿Quién es el hablante lírico en el poema 'Mi Locura'?",
+                opciones: [
+                    "a) Una persona que rechaza su locura",
+                    "b) Una voz en primera persona que asume con orgullo su locura",
+                    "c) Un narrador externo que describe la locura",
+                    "d) Un médico que analiza la enfermedad"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el objeto lírico del poema 'Mi Locura'?",
+                opciones: [
+                    "a) La tristeza y la depresión",
+                    "b) La locura como una fuerza cósmica y creadora",
+                    "c) La enfermedad mental como sufrimiento",
+                    "d) La vida cotidiana de una persona común"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué temple de ánimo transmite el hablante en 'Mi Locura'?",
+                opciones: [
+                    "a) Tristeza y desesperanza",
+                    "b) Eufórico, exaltado y rotundo",
+                    "c) Miedo y angustia",
+                    "d) Indiferencia y apatía"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el motivo lírico del poema 'Mi Locura'?",
+                opciones: [
+                    "a) Describir los síntomas de la locura",
+                    "b) Reivindicar la locura como un estado superior de conciencia",
+                    "c) Pedir ayuda para curar la locura",
+                    "d) Criticar a quienes no entienden la locura"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿En cuál de los siguientes versos se repite la palabra 'mi locura' al inicio de dos versos consecutivos?",
+                opciones: [
+                    "a) 'mi vida de cataclismos / y es de locura la rosa'",
+                    "b) 'Mi locura es portentosa / mi locura es de espejismos'",
+                    "c) 'De locura mis abismos / de locura es cualquier cosa'",
+                    "d) 'y eterna la noche oscura / Es de platino mi mente'"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en el verso 'Es de platino mi mente'?",
+                opciones: [
+                    "a) Símil",
+                    "b) Hipérbole",
+                    "c) Personificación",
+                    "d) Metáfora"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en el verso 'es infernal mi locura'?",
+                opciones: [
+                    "a) Antítesis",
+                    "b) Paradoja",
+                    "c) Símil",
+                    "d) Anáfora"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en el verso 'Es de platino mi mente'?",
+                opciones: [
+                    "a) Sinestesia",
+                    "b) Hipérbaton",
+                    "c) Personificación",
+                    "d) Elipsis"
+                ],
+                correcta: "a"
+            },
+            {
+                pregunta: "¿Cuál es la actitud del hablante hacia su propia locura?",
+                opciones: [
+                    "a) La rechaza y la teme",
+                    "b) La acepta y la celebra como algo extraordinario",
+                    "c) La ignora y no le da importancia",
+                    "d) La oculta y la avergüenza"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué dice el hablante que es 'de locura' en el poema?",
+                opciones: [
+                    "a) Solo su mente",
+                    "b) La rosa, la mariposa, sus pensamientos, sus abismos y cualquier cosa",
+                    "c) Solo la noche",
+                    "d) Solo la calle"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué significado tiene la palabra 'ascendente' al final del poema?",
+                opciones: [
+                    "a) Que la locura es algo malo",
+                    "b) Que la locura lo eleva, lo hace crecer",
+                    "c) Que la locura lo hunde",
+                    "d) Que la locura es indiferente"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué recurso literario predomina en el poema 'Mi Locura'?",
+                opciones: [
+                    "a) La narración de una historia",
+                    "b) La exclamación y la repetición para enfatizar la locura",
+                    "c) La descripción objetiva de un paisaje",
+                    "d) El diálogo entre dos personajes"
+                ],
+                correcta: "b"
+            }
+        ],
+        3: [ // Comienzo - Arteche
+            {
+                pregunta: "¿Quién es el hablante lírico en el poema 'Comienzo'?",
+                opciones: [
+                    "a) Un jardinero que cuida un jardín",
+                    "b) Una voz en primera persona que experimenta una revelación mística",
+                    "c) Un científico que observa la naturaleza",
+                    "d) Un niño que juega en un jardín"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el objeto lírico del poema 'Comienzo'?",
+                opciones: [
+                    "a) El jardín como espacio físico",
+                    "b) La experiencia de un 'comienzo' trascendente o revelación",
+                    "c) Los árboles y las flores del jardín",
+                    "d) La noche y su oscuridad"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué temple de ánimo transmite el hablante en 'Comienzo'?",
+                opciones: [
+                    "a) Miedo y terror",
+                    "b) Asombro, plenitud mística y reverencia",
+                    "c) Indiferencia y aburrimiento",
+                    "d) Tristeza y desolación"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el motivo lírico del poema 'Comienzo'?",
+                opciones: [
+                    "a) Describir un jardín en primavera",
+                    "b) Celebrar el instante en que lo sagrado irrumpe en lo cotidiano",
+                    "c) Criticar a quienes no cuidan la naturaleza",
+                    "d) Recordar la infancia en el jardín"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿En cuál de los siguientes versos se encuentra una metáfora?",
+                opciones: [
+                    "a) 'Los árboles destellan, las flores fulgen.'",
+                    "b) 'El jardín se ha posado en mi jardín.'",
+                    "c) 'Bajan los Transparentes'",
+                    "d) 'Por fin llegaron.'"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿En qué verso se utiliza la hipérbole (exageración)?",
+                opciones: [
+                    "a) 'Tiene el césped una tersura de nimbo.'",
+                    "b) 'Toda su galaxia resplandece a medianoche.'",
+                    "c) 'Los Radiantes me llaman con sus cristales.'",
+                    "d) 'El amor es una paloma de fuego que elevan.'"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en 'Bajan los Transparentes'?",
+                opciones: [
+                    "a) Metáfora",
+                    "b) Personificación",
+                    "c) Símil",
+                    "d) Hipérbole"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en 'El amor es una paloma de fuego que elevan'?",
+                opciones: [
+                    "a) Símil",
+                    "b) Metáfora",
+                    "c) Antítesis",
+                    "d) Personificación"
+                ],
+                correcta: "a"
+            },
+            {
+                pregunta: "¿Quiénes son 'los Transparentes', 'los Radiantes' y 'los Centelleantes'?",
+                opciones: [
+                    "a) Personas reales que visitan al hablante",
+                    "b) Entidades espirituales o seres de luz que representan lo sagrado",
+                    "c) Objetos decorativos del jardín",
+                    "d) Animales del bosque"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué significado tiene el verso 'Mis años descienden en el cáliz de un instante'?",
+                opciones: [
+                    "a) El tiempo se acelera",
+                    "b) El tiempo se detiene y se concentra en un momento sagrado",
+                    "c) El hablante envejece rápidamente",
+                    "d) El hablante olvida su edad"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué sensación transmite el poema 'Comienzo'?",
+                opciones: [
+                    "a) Una sensación de vacío y soledad",
+                    "b) Una sensación de plenitud y revelación espiritual",
+                    "c) Una sensación de miedo y peligro",
+                    "d) Una sensación de aburrimiento"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué elemento de la naturaleza se transforma en algo sagrado en el poema?",
+                opciones: [
+                    "a) El mar",
+                    "b) El jardín",
+                    "c) El desierto",
+                    "d) La montaña"
+                ],
+                correcta: "b"
+            }
+        ],
+        4: [ // El agua - Arteche
+            {
+                pregunta: "¿Quién es el hablante lírico en el poema 'El agua'?",
+                opciones: [
+                    "a) Un narrador en tercera persona que observa la lluvia",
+                    "b) Una voz en primera persona que experimenta una noche de insomnio y soledad",
+                    "c) La lluvia misma que cae",
+                    "d) Un viajero que navega en un barco"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el objeto lírico del poema 'El agua'?",
+                opciones: [
+                    "a) La lluvia como fenómeno natural",
+                    "b) La soledad existencial y el paso del tiempo",
+                    "c) El mar y sus olas",
+                    "d) La casa como espacio físico"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué temple de ánimo transmite el hablante en 'El agua'?",
+                opciones: [
+                    "a) Alegría y entusiasmo",
+                    "b) Desolación, extrañeza y melancolía",
+                    "c) Indiferencia y aburrimiento",
+                    "d) Ira y resentimiento"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el motivo lírico del poema 'El agua'?",
+                opciones: [
+                    "a) Describir una noche de lluvia",
+                    "b) Explorar la soledad esencial del ser humano",
+                    "c) Celebrar la llegada de la primavera",
+                    "d) Recordar la infancia"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿En cuál de los siguientes versos se encuentra una metáfora?",
+                opciones: [
+                    "a) 'A media noche desperté.'",
+                    "b) 'Toda la casa navegaba.'",
+                    "c) 'No se oía sino caer el agua.'",
+                    "d) 'buscando a tientas la ventana'"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en el verso 'Toda la casa era silencio'?",
+                opciones: [
+                    "a) Metáfora",
+                    "b) Sinestesia",
+                    "c) Personificación",
+                    "d) Hipérbole"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en los versos 'Nadie me dijo que saliera. / Nadie me dijo que me entrara'?",
+                opciones: [
+                    "a) Anáfora",
+                    "b) Antítesis",
+                    "c) Símil",
+                    "d) Hipérbaton"
+                ],
+                correcta: "a"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en 'Y hacia el espacio oscuro y frío / y frío el barco caminaba'?",
+                opciones: [
+                    "a) Asíndeton",
+                    "b) Polisíndeton",
+                    "c) Elipsis",
+                    "d) Ironía"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué representa la 'casa que navega' en el poema?",
+                opciones: [
+                    "a) Un barco real",
+                    "b) La vida del hablante, que se siente a la deriva",
+                    "c) Una casa flotante",
+                    "d) Un sueño"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué siente el hablante al no encontrar a nadie en la casa?",
+                opciones: [
+                    "a) Alivio",
+                    "b) Soledad y extrañeza",
+                    "c) Alegría",
+                    "d) Indiferencia"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué significa 'y adentro, adentro de mí mismo me retiré'?",
+                opciones: [
+                    "a) El hablante se esconde físicamente",
+                    "b) El hablante se sumerge en su propia conciencia y soledad interior",
+                    "c) El hablante sale de la casa",
+                    "d) El hablante duerme"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué sonido predomina al final del poema?",
+                opciones: [
+                    "a) El viento",
+                    "b) El agua cayendo",
+                    "c) La música",
+                    "d) El silencio total"
+                ],
+                correcta: "b"
+            }
+        ],
+        5: [ // A un gato - Borges
+            {
+                pregunta: "¿Quién es el hablante lírico en el poema 'A un gato'?",
+                opciones: [
+                    "a) Un científico que estudia a los gatos",
+                    "b) Una voz en primera persona que reflexiona sobre el gato y su misterio",
+                    "c) El gato mismo que habla",
+                    "d) Un narrador externo que describe al gato"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el objeto lírico del poema 'A un gato'?",
+                opciones: [
+                    "a) El gato como animal doméstico",
+                    "b) El gato como símbolo de lo inalcanzable y misterioso",
+                    "c) La luna y la noche",
+                    "d) El amor del hablante por los animales"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué temple de ánimo transmite el hablante en 'A un gato'?",
+                opciones: [
+                    "a) Miedo y desconfianza",
+                    "b) Asombro intelectual y melancólico respeto",
+                    "c) Indiferencia y aburrimiento",
+                    "d) Alegría y entusiasmo"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el motivo lírico del poema 'A un gato'?",
+                opciones: [
+                    "a) Describir las características físicas del gato",
+                    "b) Explorar la otredad y el misterio de lo que no se puede comprender",
+                    "c) Contar una historia sobre un gato",
+                    "d) Criticar a quienes no entienden a los animales"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿En cuál de los siguientes versos se encuentra un símil?",
+                opciones: [
+                    "a) 'No son más silenciosos los espejos'",
+                    "b) 'eres, bajo la luna, esa pantera'",
+                    "c) 'tuya es la soledad, tuyo el secreto'",
+                    "d) 'desde esa eternidad que ya es olvido'"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en 'más remoto que el Ganges y el poniente'?",
+                opciones: [
+                    "a) Metáfora",
+                    "b) Hipérbole",
+                    "c) Símil",
+                    "d) Personificación"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en 'Tu lomo condesciende a la morosa caricia de mi mano'?",
+                opciones: [
+                    "a) Personificación",
+                    "b) Metáfora",
+                    "c) Símil",
+                    "d) Hipérbaton"
+                ],
+                correcta: "a"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en 'Eres el dueño / de un ámbito cerrado como un sueño'?",
+                opciones: [
+                    "a) Metáfora",
+                    "b) Símil",
+                    "c) Hipérbole",
+                    "d) Personificación"
+                ],
+                correcta: "a"
+            },
+            {
+                pregunta: "¿Qué significa que el gato sea 'más remoto que el Ganges'?",
+                opciones: [
+                    "a) El gato vive en la India",
+                    "b) El gato es misterioso e inalcanzable, como un lugar lejano y sagrado",
+                    "c) El gato es muy viejo",
+                    "d) El gato es muy pequeño"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cómo describe Borges la relación entre el gato y el tiempo?",
+                opciones: [
+                    "a) El gato vive en el presente",
+                    "b) 'En otro tiempo estás', sugiriendo que el gato habita en una eternidad",
+                    "c) El gato envejece como los humanos",
+                    "d) El gato no tiene relación con el tiempo"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué sensación transmite el poema hacia el gato?",
+                opciones: [
+                    "a) Odio y rechazo",
+                    "b) Admiración y respeto por su misterio",
+                    "c) Indiferencia",
+                    "d) Miedo"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué significado tiene 'un ámbito cerrado como un sueño'?",
+                opciones: [
+                    "a) El gato vive en una caja",
+                    "b) El gato habita un mundo privado, inaccesible para los humanos",
+                    "c) El gato sueña despierto",
+                    "d) El gato está encerrado"
+                ],
+                correcta: "b"
+            }
+        ],
+        6: [ // Arte Poética - Borges
+            {
+                pregunta: "¿Quién es el hablante lírico en el poema 'Arte Poética'?",
+                opciones: [
+                    "a) Un poeta que habla desde su experiencia personal",
+                    "b) Una voz en primera persona del plural, con tono filosófico universal",
+                    "c) Un crítico literario que analiza la poesía",
+                    "d) Un narrador externo que describe el arte"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el objeto lírico del poema 'Arte Poética'?",
+                opciones: [
+                    "a) El río y el agua",
+                    "b) La poesía misma y la naturaleza del arte",
+                    "c) La vida del poeta",
+                    "d) La ciudad y sus calles"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué temple de ánimo transmite el hablante en 'Arte Poética'?",
+                opciones: [
+                    "a) Angustia y desesperación",
+                    "b) Serenidad, reflexión y aceptación estoica",
+                    "c) Ira y resentimiento",
+                    "d) Alegría desbordante"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Cuál es el motivo lírico del poema 'Arte Poética'?",
+                opciones: [
+                    "a) Describir el paisaje de un río",
+                    "b) Definir y celebrar la esencia de la poesía",
+                    "c) Criticar a otros poetas",
+                    "d) Contar la historia de Ulises"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿En cuál de los siguientes versos se encuentra una metáfora?",
+                opciones: [
+                    "a) 'saber que nos perdemos como el río'",
+                    "b) 'Mirar el río hecho de tiempo y agua'",
+                    "c) 'la poesía vuelve como la aurora'",
+                    "d) 'el arte debe ser como ese espejo'"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en 'Sentir que la vigilia es otro sueño / que sueña no soñar'?",
+                opciones: [
+                    "a) Metáfora",
+                    "b) Paradoja",
+                    "c) Símil",
+                    "d) Anáfora"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en 'que es inmortal y pobre'?",
+                opciones: [
+                    "a) Antítesis",
+                    "b) Paradoja",
+                    "c) Símil",
+                    "d) Personificación"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué figura literaria se encuentra en 'el arte debe ser como ese espejo'?",
+                opciones: [
+                    "a) Metáfora",
+                    "b) Símil",
+                    "c) Hipérbole",
+                    "d) Personificación"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué referencia intertextual (a otra obra) aparece en el poema?",
+                opciones: [
+                    "a) La referencia a Heráclito y a Ulises",
+                    "b) La referencia a la Biblia",
+                    "c) La referencia a la mitología griega",
+                    "d) La referencia a la historia de Chile"
+                ],
+                correcta: "a"
+            },
+            {
+                pregunta: "¿Qué significa que la poesía sea 'esa Itaca de verde eternidad'?",
+                opciones: [
+                    "a) Que la poesía es un lugar físico",
+                    "b) Que la poesía es el hogar espiritual al que siempre se regresa",
+                    "c) Que la poesía es un viaje",
+                    "d) Que la poesía es aburrida"
+                ],
+                correcta: "b"
+            },
+            {
+                pregunta: "¿Qué simboliza el río en el poema?",
+                opciones: [
+                    "a) La vida y el tiempo que fluyen incesantemente",
+                    "b) La ciudad",
+                    "c) La poesía",
+                    "d) La muerte"
+                ],
+                correcta: "a"
+            },
+            {
+                pregunta: "¿Qué dice Borges sobre la relación entre el arte y el espejo?",
+                opciones: [
+                    "a) El arte debe ocultar la realidad",
+                    "b) El arte debe ser como un espejo que nos revela nuestra propia cara",
+                    "c) El arte debe ser como un espejo roto",
+                    "d) El arte debe evitar los espejos"
+                ],
+                correcta: "b"
+            }
+        ]
+    };
+
+    // =============================================
+    // SELECCIÓN ALEATORIA DE PREGUNTAS
+    // =============================================
+
+    function seleccionarPreguntas(banco, cantidad) {
+        const copia = [...banco];
+        const seleccionadas = [];
+        for (let i = 0; i < cantidad && copia.length > 0; i++) {
+            const indice = Math.floor(Math.random() * copia.length);
+            seleccionadas.push(copia.splice(indice, 1)[0]);
+        }
+        return seleccionadas;
+    }
+
+    // =============================================
+    // RENDERIZADO DE POEMAS Y PREGUNTAS
+    // =============================================
+
+    const preguntasPorPoema = {};
+    const respuestasUsuario = {};
+
+    // Seleccionar 5 preguntas por cada poema
+    for (let i = 1; i <= 6; i++) {
+        preguntasPorPoema[i] = seleccionarPreguntas(bancosPreguntas[i], 5);
+        respuestasUsuario[i] = new Array(5).fill(null);
+    }
+
+    function renderizarTodo() {
+        const container = document.getElementById('questionsContainer');
+        container.innerHTML = '';
+
+        let preguntaGlobal = 0;
+
+        for (let i = 0; i < poemas.length; i++) {
+            const poema = poemas[i];
+            const preguntas = preguntasPorPoema[poema.id];
+
+            // Si no hay preguntas, mostrar todas
+            const preguntasMostrar = preguntas.length > 0 ? preguntas : bancosPreguntas[poema.id];
+
+            const section = document.createElement('div');
+            section.className = 'section';
+            section.id = `poema-${poema.id}`;
+
+            // Título del poema
+            const titulo = document.createElement('div');
+            titulo.className = 'section-title';
+            titulo.innerHTML = `📖 ${poema.poeta} - "${poema.titulo}"`;
+            section.appendChild(titulo);
+
+            // Poema completo
+            const poemaDiv = document.createElement('div');
+            poemaDiv.className = 'poem-container';
+            poemaDiv.innerHTML = `<strong>${poema.poeta}</strong><br><br>${poema.texto.replace(/\n/g, '<br>')}`;
+            section.appendChild(poemaDiv);
+
+            // Preguntas
+            preguntasMostrar.forEach((q, idx) => {
+                const qDiv = document.createElement('div');
+                qDiv.className = 'question';
+                qDiv.id = `q-${poema.id}-${idx}`;
+
+                const numPregunta = preguntaGlobal + 1;
+                const p = document.createElement('p');
+                p.innerHTML = `<strong>${numPregunta}.</strong> ${q.pregunta}`;
+                qDiv.appendChild(p);
+
+                const ul = document.createElement('ul');
+                ul.className = 'options';
+
+                const letras = ['a', 'b', 'c', 'd'];
+                q.opciones.forEach((opt, optIdx) => {
+                    const li = document.createElement('li');
+                    const radio = document.createElement('input');
+                    radio.type = 'radio';
+                    radio.name = `q-${poema.id}-${idx}`;
+                    radio.value = letras[optIdx];
+                    radio.id = `q-${poema.id}-${idx}-${letras[optIdx]}`;
+                    radio.disabled = evaluado;
+
+                    // Recuperar respuesta guardada
+                    if (respuestasUsuario[poema.id] && respuestasUsuario[poema.id][idx] === letras[optIdx]) {
+                        radio.checked = true;
+                    }
+
+                    if (!evaluado) {
+                        radio.addEventListener('change', function() {
+                            respuestasUsuario[poema.id][idx] = this.value;
+                            guardarRespuestas();
+                        });
+                    }
+
+                    const label = document.createElement('label');
+                    label.htmlFor = `q-${poema.id}-${idx}-${letras[optIdx]}`;
+                    label.textContent = ` ${opt}`;
+
+                    li.appendChild(radio);
+                    li.appendChild(label);
+                    ul.appendChild(li);
+                });
+
+                qDiv.appendChild(ul);
+
+                // Feedback si ya fue evaluado
+                if (evaluado) {
+                    const respuestaUsuario = respuestasUsuario[poema.id] ? respuestasUsuario[poema.id][idx] : null;
+                    const esCorrecta = respuestaUsuario === q.correcta;
+                    const feedback = document.createElement('div');
+                    feedback.className = esCorrecta ? 'correct-feedback' : 'incorrect-feedback';
+                    if (esCorrecta) {
+                        feedback.textContent = '✅ Correcto';
+                    } else {
+                        feedback.textContent = `❌ Incorrecto. La respuesta correcta era: ${q.correcta}) ${q.opciones.find(o => o.startsWith(q.correcta))}`;
+                    }
+                    qDiv.appendChild(feedback);
+                }
+
+                section.appendChild(qDiv);
+                preguntaGlobal++;
+            });
+
+            container.appendChild(section);
+        }
+    }
+
+    // =============================================
+    // GUARDAR Y CARGAR RESPUESTAS
+    // =============================================
+
+    function guardarRespuestas() {
+        try {
+            localStorage.setItem('respuestasPoemas', JSON.stringify(respuestasUsuario));
+        } catch (e) {}
+    }
+
+    function cargarRespuestas() {
+        try {
+            const data = localStorage.getItem('respuestasPoemas');
+            if (data) {
+                const parsed = JSON.parse(data);
+                for (const key in parsed) {
+                    if (respuestasUsuario[key]) {
+                        respuestasUsuario[key] = parsed[key];
+                    }
+                }
+            }
+        } catch (e) {}
+    }
+
+    // =============================================
+    // EVALUACIÓN
+    // =============================================
+
+    let evaluado = false;
+
+    function evaluarTodo() {
+        evaluado = true;
+
+        // Contar correctas
+        let totalCorrectas = 0;
+        let totalPreguntas = 0;
+
+        for (const poemaId in preguntasPorPoema) {
+            const preguntas = preguntasPorPoema[poemaId];
+            const respuestas = respuestasUsuario[poemaId] || [];
+
+            for (let i = 0; i < preguntas.length; i++) {
+                totalPreguntas++;
+                if (respuestas[i] === preguntas[i].correcta) {
+                    totalCorrectas++;
+                }
+            }
+        }
+
+        // Calcular nota
+        const porcentaje = (totalCorrectas / totalPreguntas) * 100;
+        let nota = 0;
+        const exigencia = 60;
+
+        if (porcentaje >= exigencia) {
+            nota = 4.0 + ((porcentaje - exigencia) / (100 - exigencia)) * 3.0;
+        } else {
+            nota = 1.0 + (porcentaje / exigencia) * 3.0;
+        }
+        nota = Math.round(nota * 100) / 100;
+        const aprobado = nota >= 4.0;
+
+        // Mostrar resultados
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#c4450c; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrectas} de ${totalPreguntas} (${Math.round(porcentaje)}%)</div>
+            <div class="grade-box ${aprobado ? 'approved' : 'failed'}">
+                <strong>${aprobado ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>
+                NOTA: ${nota.toFixed(1)}
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+
+        // Volver a renderizar con feedback
+        renderizarTodo();
+
+        // Eventos de los botones
+        document.getElementById('restartTestBtn')?.addEventListener('click', reiniciarTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Lenguaje.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_5_Lenguaje.html');
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // =============================================
+    // REINICIAR TEST
+    // =============================================
+
+    function reiniciarTest() {
+        evaluado = false;
+        // Seleccionar nuevas preguntas
+        for (let i = 1; i <= 6; i++) {
+            preguntasPorPoema[i] = seleccionarPreguntas(bancosPreguntas[i], 5);
+            respuestasUsuario[i] = new Array(5).fill(null);
+        }
+        document.getElementById('results').style.display = 'none';
+        renderizarTodo();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =============================================
+    // INICIALIZACIÓN
+    // =============================================
+
+    cargarRespuestas();
+    renderizarTodo();
+
+    document.getElementById('evaluateBtn').addEventListener('click', evaluarTodo);
+
+    // =============================================
+    // ESTILOS ADICIONALES PARA RESPONSIVE
+    // =============================================
+
+    const style = document.createElement('style');
+    style.textContent = `
+        .correct-feedback { color: #2d6a2d; font-weight: bold; font-size: 0.85rem; margin-top: 0.3rem; }
+        .incorrect-feedback { color: #b33; font-weight: bold; font-size: 0.85rem; margin-top: 0.3rem; }
+        .poem-container { white-space: pre-wrap; word-wrap: break-word; }
+        @media (max-width: 700px) {
+            .container { padding: 1rem; }
+            .info-bar { flex-direction: column; text-align: center; }
+            .poem-container { font-size: 0.85rem; max-height: 300px; }
+            .btn-evaluate { width: 100%; }
+        }
+    `;
+    document.head.appendChild(style);
+</script>
+</body>
+</html>

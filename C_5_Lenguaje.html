@@ -1,0 +1,2081 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: Análisis de Poemas | Lengua y Literatura 7°</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #fef6f0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffaf6;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 1.5rem 2rem;
+            scrollbar-width: thin;
+            background: #fffaf6;
+            color: #3a1f0d;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #f0e0d0; }
+        .slide::-webkit-scrollbar-thumb { background: #c9753c; border-radius: 8px; }
+
+        h1 { font-size: 2.4rem; color: #b5431a; border-left: 7px solid #d9531e; padding-left: 1.2rem; margin-bottom: 1.2rem; font-weight: 700; }
+        h2 { font-size: 1.8rem; color: #c4450c; margin: 0.8rem 0 0.4rem 0; border-bottom: 2px solid #f0cfb0; display: inline-block; padding-bottom: 0.2rem; }
+        h3 { font-size: 1.2rem; color: #d9672e; margin: 0.6rem 0 0.3rem; }
+        p, li { font-size: 0.95rem; line-height: 1.5; margin-bottom: 0.5rem; color: #3a2a1a; text-align: justify; }
+        ul { margin-left: 1.5rem; margin-bottom: 0.8rem; }
+
+        .highlight { background: #fce4d0; padding: 0.1rem 0.3rem; border-radius: 5px; font-weight: 600; color: #c95a1c; }
+
+        .info-card {
+            background: #fef0e6;
+            border-left: 6px solid #d9531e;
+            padding: 0.8rem 1.5rem;
+            margin: 0.8rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .info-card-success { border-left-color: #2d8f5c; background: #edf7f0; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 0.8rem 0;
+            height: calc(100% - 140px);
+            min-height: 300px;
+        }
+
+        .grid-2-full {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 0.8rem 0;
+        }
+
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 0.8rem 0; }
+
+        .poem-col {
+            background: #fdf5ee;
+            padding: 1rem 1.2rem;
+            border-radius: 1.2rem;
+            border: 2px solid #e8c8b0;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 2;
+            white-space: pre-wrap;
+            box-shadow: 0 2px 8px rgba(180, 80, 30, 0.08);
+            overflow-y: auto;
+            max-height: 100%;
+            font-size: 0.92rem;
+        }
+
+        .poem-col::-webkit-scrollbar { width: 4px; }
+        .poem-col::-webkit-scrollbar-thumb { background: #c9753c; border-radius: 8px; }
+
+        .analysis-col {
+            background: #fef8f4;
+            padding: 1rem 1.2rem;
+            border-radius: 1.2rem;
+            border: 2px solid #d9531e;
+            box-shadow: 0 2px 8px rgba(180, 80, 30, 0.08);
+            overflow-y: auto;
+            max-height: 100%;
+        }
+
+        .analysis-col::-webkit-scrollbar { width: 4px; }
+        .analysis-col::-webkit-scrollbar-thumb { background: #c9753c; border-radius: 8px; }
+
+        .analysis-col .label { font-weight: 700; color: #b5431a; display: inline-block; min-width: 70px; }
+        .analysis-col .item { margin-bottom: 0.3rem; padding-bottom: 0.2rem; border-bottom: 1px dashed #f0cfb0; }
+        .analysis-col .item:last-child { border-bottom: none; }
+
+        .poem-title-small { font-style: normal; font-weight: 700; color: #b5431a; font-size: 1rem; display: block; margin-bottom: 0.2rem; }
+
+        .poet-name { color: #b5431a; font-size: 1.5rem; font-weight: 700; }
+        .poet-bio { background: #f5e8dc; padding: 0.4rem 1.2rem; border-radius: 30px; display: inline-block; font-size: 0.9rem; color: #5a3a1a; margin-bottom: 0.6rem; }
+
+        .concept-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 0.6rem; margin: 0.6rem 0; }
+        .concept-item { background: #faf0e8; padding: 0.5rem 0.8rem; border-radius: 10px; border-left: 4px solid #d9531e; }
+        .concept-item strong { color: #b5431a; display: block; font-size: 0.85rem; }
+        .concept-item p { font-size: 0.82rem; margin-bottom: 0; margin-top: 0.1rem; }
+
+        /* ===== FIGURAS LITERARIAS - ESTILOS ===== */
+        /* Cada figura tiene un color de fondo al ser resaltada */
+        .fig-met { transition: background 0.15s; }
+        .fig-met.destello { background: #ffd54f; }
+
+        .fig-simil { transition: background 0.15s; }
+        .fig-simil.destello { background: #81c784; }
+
+        .fig-anfora { transition: background 0.15s; }
+        .fig-anfora.destello { background: #64b5f6; }
+
+        .fig-hiper { transition: background 0.15s; }
+        .fig-hiper.destello { background: #f48fb1; }
+
+        .fig-person { transition: background 0.15s; }
+        .fig-person.destello { background: #ce93d8; }
+
+        .fig-antites { transition: background 0.15s; }
+        .fig-antites.destello { background: #ffb74d; }
+
+        .fig-paradoja { transition: background 0.15s; }
+        .fig-paradoja.destello { background: #4dd0e1; }
+
+        .fig-sinest { transition: background 0.15s; }
+        .fig-sinest.destello { background: #ff8a65; }
+
+        .fig-ironia { transition: background 0.15s; }
+        .fig-ironia.destello { background: #ef5350; color: white; }
+
+        .fig-hipbat { transition: background 0.15s; }
+        .fig-hipbat.destello { background: #90a4ae; color: white; }
+
+        .fig-apostrofe { transition: background 0.15s; }
+        .fig-apostrofe.destello { background: #d4e157; }
+
+        .fig-asi { transition: background 0.15s; }
+        .fig-asi.destello { background: #b39ddb; }
+
+        .fig-poli { transition: background 0.15s; }
+        .fig-poli.destello { background: #4fc3f7; }
+
+        .fig-epitet { transition: background 0.15s; }
+        .fig-epitet.destello { background: #ffcc80; }
+
+        .fig-interrog { transition: background 0.15s; }
+        .fig-interrog.destello { background: #ff7043; color: white; }
+
+        .fig-elipsis { transition: background 0.15s; }
+        .fig-elipsis.destello { background: #bdbdbd; }
+
+        .fig-intertext { transition: background 0.15s; }
+        .fig-intertext.destello { background: #66bb6a; color: white; }
+
+        .fig-enum { transition: background 0.15s; }
+        .fig-enum.destello { background: #ffca28; }
+
+        /* Botones de figuras literarias en el análisis */
+        .fig-btn {
+            display: inline-block;
+            background: #f5e8dc;
+            border: 2px solid #d9531e;
+            border-radius: 20px;
+            padding: 0.15rem 0.8rem;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #b5431a;
+            cursor: pointer;
+            transition: all 0.2s;
+            margin: 0.1rem 0.1rem;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .fig-btn:hover {
+            background: #d9531e;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .fig-btn:active {
+            transform: scale(0.95);
+        }
+
+        .fig-btn-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            margin-top: 0.3rem;
+        }
+
+        .fig-label {
+            font-size: 0.7rem;
+            color: #7a4a2a;
+            display: block;
+            margin-top: 0.2rem;
+        }
+
+        /* ===== FIN FIGURAS ===== */
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf4;
+            border-top: 1px solid #f0cfb0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #d95b2b; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #f0cfb0;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #8a3c10;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(200, 100, 50, 0.4);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #8a3c10;
+            transition: 0.2s;
+            z-index: 90;
+            user-select: none;
+        }
+        .nav-arrow:hover { background: #d95b2b; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.78rem;
+            margin: 0.8rem 0;
+        }
+        .comparison-table th { background: #d9531e; color: white; padding: 0.4rem 0.6rem; text-align: left; }
+        .comparison-table td { padding: 0.4rem 0.6rem; border-bottom: 1px solid #f0cfb0; vertical-align: top; }
+        .comparison-table tr:nth-child(even) { background: #fdf5ee; }
+        .comparison-table tr:hover { background: #fce4d0; }
+
+        .slide { opacity: 0; animation: fadeSlide 0.4s ease forwards; }
+        .slide.active { opacity: 1; }
+        @keyframes fadeSlide { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+        .question-sample {
+            background: #fdf0e8;
+            border-radius: 20px;
+            padding: 0.8rem 1.5rem;
+            margin: 0.8rem 0;
+            border-left: 5px solid #d95b2b;
+        }
+
+        .interactive-hint {
+            font-size: 0.75rem;
+            color: #7a4a2a;
+            font-style: italic;
+            background: #f5e8dc;
+            padding: 0.2rem 0.8rem;
+            border-radius: 20px;
+            display: inline-block;
+            margin-top: 0.2rem;
+        }
+
+        @media (max-width: 800px) {
+            .grid-2, .grid-2-full { grid-template-columns: 1fr; height: auto; min-height: auto; }
+            .poem-col, .analysis-col { max-height: 400px; font-size: 0.82rem; padding: 0.8rem; }
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .concept-grid { grid-template-columns: 1fr 1fr; }
+            .grid-3 { grid-template-columns: 1fr 1fr; }
+            .comparison-table { font-size: 0.6rem; }
+            .nav-arrow { width: 34px; height: 34px; font-size: 1.2rem; }
+            .nav-left { left: 4px; }
+            .nav-right { right: 4px; }
+            .btn-footer { padding: 0.3rem 0.8rem; font-size: 0.75rem; }
+            .footer-nav { padding: 0 0.6rem; flex-wrap: wrap; height: auto; gap: 0.3rem; }
+            .btn-group { gap: 0.3rem; flex-wrap: wrap; }
+            .slide-counter { font-size: 0.7rem; padding: 0.2rem 0.8rem; }
+            .fig-btn { font-size: 0.65rem; padding: 0.1rem 0.5rem; }
+        }
+
+        @media (max-width: 500px) {
+            .concept-grid { grid-template-columns: 1fr; }
+            .grid-3 { grid-template-columns: 1fr; }
+            .poem-col, .analysis-col { max-height: 300px; font-size: 0.75rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+            <!-- ============================================ -->
+            <!-- SLIDE 1: PORTADA -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h1>Análisis de Poemas</h1>
+                <p style="font-size: 1.2rem; color: #5a3a1a;">Lengua y Literatura - 7° Básico</p>
+                <p style="font-size: 1.1rem; color: #7a4a2a; margin-bottom: 1rem;">Colegio Pedro de Valdivia</p>
+
+                <div class="info-card">
+                    <p><strong>¿Qué es un poema?</strong></p>
+                    <p>Un poema es una forma de expresión artística que usa el lenguaje para transmitir emociones, pensamientos, imágenes y visiones del mundo. A diferencia de la prosa, la poesía se caracteriza por su ritmo, musicalidad y uso de figuras literarias.</p>
+                </div>
+
+                <div class="info-card">
+                    <p><strong>Conceptos clave para analizar un poema</strong></p>
+                    <div class="concept-grid">
+                        <div class="concept-item">
+                            <strong>Hablante lírico</strong>
+                            <p>Voz que habla en el poema. No es el poeta real.</p>
+                        </div>
+                        <div class="concept-item">
+                            <strong>Objeto lírico</strong>
+                            <p>Aquello a lo que se canta o se refiere.</p>
+                        </div>
+                        <div class="concept-item">
+                            <strong>Temple de ánimo</strong>
+                            <p>Estado emocional que transmite el hablante.</p>
+                        </div>
+                        <div class="concept-item">
+                            <strong>Motivo lírico</strong>
+                            <p>Razón por la que el hablante expresa su sentir.</p>
+                        </div>
+                        <div class="concept-item">
+                            <strong>Figuras literarias</strong>
+                            <p>Recursos que dan belleza y expresividad al lenguaje.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="question-sample">
+                    <p><strong>Pregunta de reflexión inicial</strong></p>
+                    <p>¿Qué crees que motiva a una persona a escribir poesía? ¿Qué sentimientos o experiencias crees que inspiran a los poetas?</p>
+                    <p style="color: #7a4a2a; font-style: italic;">Respuesta orientativa: La poesía surge de emociones profundas como el amor, la pérdida, la alegría, la nostalgia, la rabia o la admiración por la naturaleza.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PITA AMOR - POEMAS CON ANÁLISIS Y FIGURAS -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Guadalupe "Pita" Amor</h2>
+                <div class="poet-bio">(1918-2000) Poeta mexicana</div>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Poetisa conocida por su personalidad arrolladora y su poesía irreverente. Explora la locura, la muerte, el amor y la identidad femenina.</p>
+                <h3 style="font-size: 1rem;">Dedicatoria</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Dedicatoria</span>
+                        <span class="fig-hipbat">Al dueño del desierto americano,
+                        del llano desolado y devastado,
+                        a Rulfo, que del llano enamorado,
+                        arrasó el Continente Americano</span>
+
+                        <span class="fig-met">A Arreola, el florentino mexicano</span>
+                        que a Salaino su gorra le ha bordado
+                        con alamares de festón plateado
+                        que dibujó con tinta de su mano
+
+                        A la grave y contrita Emma Godoy
+                        que practica la misa ayer y hoy
+                        A Guadalupe Dueñas, la infernal
+
+                        y a su <span class="fig-met">pluma <span class="fig-antites">celeste y terrenal</span></span>
+                        A Guadalupe Amor, la mexicana
+                        que es dueña de la tinta americana.
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que se autorretrata.</div>
+                        <div class="item"><span class="label">Objeto:</span> Escritores mexicanos y ella misma.</div>
+                        <div class="item"><span class="label">Temple:</span> Solemne, festivo, orgulloso.</div>
+                        <div class="item"><span class="label">Motivo:</span> Reivindicar su lugar en la tradición literaria.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                                <button class="fig-btn" data-fig="fig-hipbat">Hipérbaton</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Guadalupe "Pita" Amor</h2>
+                <div class="poet-bio">(1918-2000) Poeta mexicana</div>
+                <h3 style="font-size: 1rem;">Mi Locura</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Mi Locura</span>
+                        <span class="fig-anfora">Mi locura es portentosa
+                        mi locura es de espejismos,</span>
+                        mi vida de cataclismos
+                        y es de locura la rosa
+
+                        y la alada mariposa
+                        y mis pensamientos mismos
+                        <span class="fig-anfora">De locura mis abismos
+                        de locura es cualquier cosa</span>
+
+                        Suele el lirio ser del valle
+                        y de cemento la calle
+                        y es <span class="fig-paradoja">infernal mi locura</span>
+
+                        y eterna la noche oscura
+                        <span class="fig-sinest"><span class="fig-hiper">Es de platino mi mente</span></span>
+                        y mi locura ascendente
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que asume su locura.</div>
+                        <div class="item"><span class="label">Objeto:</span> La locura como fuerza creadora.</div>
+                        <div class="item"><span class="label">Temple:</span> Eufórico, exaltado, rotundo.</div>
+                        <div class="item"><span class="label">Motivo:</span> Reivindicar la locura como estado superior.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-anfora">Anáfora</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-sinest">Sinestesia</button>
+                                <button class="fig-btn" data-fig="fig-hiper">Hipérbole</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Guadalupe "Pita" Amor</h2>
+                <div class="poet-bio">(1918-2000) Poeta mexicana</div>
+                <h3 style="font-size: 1rem;">Mi Testamento</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Mi Testamento</span>
+                        <span class="fig-anfora">En estas líneas</span> que con tinta escribo
+                        te lego Juan de Dios mi testamento,
+                        quede de testimonio documento
+                        la <span class="fig-paradoja">palabra transcrita que transcribo</span>
+
+                        <span class="fig-anfora">En estas letras</span> dadas al olvido
+                        infinitas, igual que el firmamento,
+                        dejo mi signo, mi señal, mi acento
+                        y te digo don Juan lo que he vivido
+
+                        <span class="fig-anfora">Y te digo</span> don Juan cómo yo he muerto
+                        Lego mis asombrosos abalorios
+                        a la <span class="fig-antites">sombra del ávido desierto</span>
+                        y a la misa final de mis velorios
+                        Y <span class="fig-met">mi sangre la dejo al llano abierto</span>
+                        y mi gloria a los cielos transitorios
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que se despide.</div>
+                        <div class="item"><span class="label">Objeto:</span> Su vida, muerte y legado espiritual.</div>
+                        <div class="item"><span class="label">Temple:</span> Sereno, reflexivo, estoico.</div>
+                        <div class="item"><span class="label">Motivo:</span> Perpetuar su memoria a través de la palabra.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-anfora">Anáfora</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PITA AMOR - ANÁLISIS GENERAL -->
+            <div class="slide">
+                <h2>Pita Amor - Análisis del autor</h2>
+                <div class="info-card">
+                    <p><strong>Ideas generales:</strong> La poesía como afirmación de la identidad; la locura como estado superior de conciencia; la trascendencia a través de la palabra.</p>
+                    <p><strong>Intenciones expresivas:</strong> Autoreivindicación y orgullo literario; desmitificar la locura; dejar constancia de su paso por el mundo.</p>
+                    <p><strong>Aspectos destacables:</strong> Fuerte personalidad, lenguaje ceremonial y vibrante, tensión entre lo terrenal y lo divino.</p>
+                </div>
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                    <p><strong>Resumen:</strong> En <em>Dedicatoria</em>, se coloca al nivel de los grandes escritores. En <em>Mi Locura</em>, reivindica la locura como potencia creativa. En <em>Mi Testamento</em>, deja su legado espiritual.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- MIGUEL ARTECHE - POEMAS CON ANÁLISIS Y FIGURAS -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Miguel Arteche</h2>
+                <div class="poet-bio">(1926-2012) Poeta chileno</div>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Su obra se caracteriza por una profunda búsqueda espiritual y una poesía de tono visionario.</p>
+                <h3 style="font-size: 1rem;">Comienzo</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Comienzo</span>
+                        <span class="fig-met">El jardín se ha posado en mi jardín.</span>
+                        <span class="fig-hiper">Toda su galaxia resplandece a medianoche.</span>
+                        Los árboles destellan, las flores fulgen.
+                        Tiene el césped una tersura de nimbo.
+                        Bajan los <span class="fig-person">Transparentes</span>
+                        y de sus cuerpos surgen peldaños de escala.
+                        Los <span class="fig-person">Radiantes</span> me llaman con sus cristales.
+                        <span class="fig-met">Mis años descienden en el cáliz de un instante.</span>
+                        Los <span class="fig-person">Centelleantes</span> me han rodeado
+                        y me tienden sus ojos de oro.
+                        <span class="fig-simil">El amor es una paloma de fuego que elevan.</span>
+                        Por fin llegaron.
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que experimenta una revelación mística.</div>
+                        <div class="item"><span class="label">Objeto:</span> La experiencia de un "comienzo" trascendente.</div>
+                        <div class="item"><span class="label">Temple:</span> Asombro, plenitud mística, reverencia.</div>
+                        <div class="item"><span class="label">Motivo:</span> Celebrar la irrupción de lo sagrado.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-hiper">Hipérbole</button>
+                                <button class="fig-btn" data-fig="fig-person">Personificación</button>
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Miguel Arteche</h2>
+                <div class="poet-bio">(1926-2012) Poeta chileno</div>
+                <h3 style="font-size: 1rem;">El agua</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">El agua</span>
+                        A media noche desperté.
+                        <span class="fig-met">Toda la casa navegaba.</span>
+                        Era la lluvia con la lluvia
+                        de la postrera madrugada.
+
+                        <span class="fig-sinest">Toda la casa era silencio,</span>
+                        y eran silencio las montañas
+                        de aquella noche. No se oía
+                        sino caer el agua.
+
+                        Me vi despierto a medianoche
+                        buscando a tientas la ventana;
+                        pero en la casa y sobre el mundo
+                        no había hermanos, madre, nada.
+
+                        <span class="fig-poli">Y hacia el espacio oscuro y frío
+                        y frío el barco caminaba</span>
+                        conmigo. ¿Quién movía
+                        todas las velas solitarias?
+
+                        <span class="fig-anfora">Nadie me dijo que saliera.
+                        Nadie me dijo que me entrara,</span>
+                        y adentro, adentro de mí mismo
+                        me retiré: toda la casa.
+
+                        <span class="fig-antites">Me vio en el tiempo que yo fui,
+                        y en el seré la vi lejana,</span>
+                        y ya no pude reclinar
+                        mi juventud sobre la almohada.
+
+                        A medianoche busqué
+                        mientras la casa navegaba.
+                        Y sobre el mundo no se oyó
+                        sino caer el agua.
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que narra una experiencia onírica.</div>
+                        <div class="item"><span class="label">Objeto:</span> La soledad existencial y el paso del tiempo.</div>
+                        <div class="item"><span class="label">Temple:</span> Desolación, extrañeza, melancolía.</div>
+                        <div class="item"><span class="label">Motivo:</span> Explorar la soledad esencial del ser humano.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-sinest">Sinestesia</button>
+                                <button class="fig-btn" data-fig="fig-anfora">Anáfora</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                                <button class="fig-btn" data-fig="fig-poli">Polisíndeton</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ARTECHE - ANÁLISIS GENERAL -->
+            <div class="slide">
+                <h2>Miguel Arteche - Análisis del autor</h2>
+                <div class="info-card">
+                    <p><strong>Ideas generales:</strong> La experiencia mística como revelación; la soledad existencial; la fusión entre lo exterior y lo interior.</p>
+                    <p><strong>Intenciones expresivas:</strong> Dar testimonio de la iluminación; explorar la condición humana; fusionar lo íntimo con lo cósmico.</p>
+                    <p><strong>Aspectos destacables:</strong> Lenguaje visionario y de tono bíblico; precisión en la imagen; dualidad entre lo material y lo espiritual.</p>
+                </div>
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                    <p><strong>Resumen:</strong> En <em>Comienzo</em>, lo sagrado irrumpe en lo cotidiano. En <em>El agua</em>, la casa-barco navega en la soledad y el silencio del mundo.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- JORGE LUIS BORGES - POEMAS CON ANÁLISIS Y FIGURAS -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Jorge Luis Borges</h2>
+                <div class="poet-bio">(1899-1986) Escritor argentino</div>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Su poesía se caracteriza por su tono intelectual, referencias filosóficas y reflexión sobre el tiempo y la identidad.</p>
+                <h3 style="font-size: 1rem;">A un gato</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">A un gato</span>
+                        No son más silenciosos los espejos
+                        ni más furtiva el alba aventurera;
+                        <span class="fig-simil">eres, bajo la luna, esa pantera</span>
+                        que nos es dado divisar de lejos.
+
+                        Por obra indescifrable de un decreto
+                        divino, te buscamos vanamente;
+                        <span class="fig-hiper">más remoto que el Ganges y el poniente,</span>
+                        tuya es la soledad, tuyo el secreto.
+
+                        <span class="fig-person">Tu lomo condesciende a la morosa
+                        caricia de mi mano. Has admitido,
+                        desde esa eternidad que ya es olvido,
+                        el amor de la mano recelosa.</span>
+
+                        <span class="fig-met">En otro tiempo estás. Eres el dueño
+                        de un ámbito cerrado como un sueño.</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que reflexiona sobre el gato.</div>
+                        <div class="item"><span class="label">Objeto:</span> El gato como símbolo de lo inalcanzable.</div>
+                        <div class="item"><span class="label">Temple:</span> Asombro intelectual, respeto melancólico.</div>
+                        <div class="item"><span class="label">Motivo:</span> Explorar la otredad y el misterio.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                                <button class="fig-btn" data-fig="fig-hiper">Hipérbole</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-person">Personificación</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Jorge Luis Borges</h2>
+                <div class="poet-bio">(1899-1986) Escritor argentino</div>
+                <h3 style="font-size: 1rem;">Arte Poética</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Arte Poética</span>
+                        <span class="fig-met">Mirar el río hecho de tiempo y agua</span>
+                        y recordar que el tiempo es otro río,
+                        <span class="fig-simil">saber que nos perdemos como el río</span>
+                        y que los rostros pasan como el agua.
+
+                        <span class="fig-paradoja">Sentir que la vigilia es otro sueño
+                        que sueña no soñar</span> y que la muerte
+                        que teme nuestra carne es esa muerte
+                        de cada noche, que se llama sueño.
+
+                        Ver en el día o en el año un símbolo
+                        de los días del hombre y de sus años,
+                        convertir el ultraje de los años
+                        en una música, un rumor y un símbolo,
+
+                        <span class="fig-antites">ver en la muerte el sueño, en el ocaso
+                        un triste oro,</span> tal es la poesía
+                        <span class="fig-paradoja">que es inmortal y pobre.</span> La poesía
+                        vuelve como la aurora y el ocaso.
+
+                        <span class="fig-simil">A veces en las tardes una cara
+                        nos mira desde el fondo de un espejo;
+                        el arte debe ser como ese espejo</span>
+                        que nos revela nuestra propia cara.
+
+                        <span class="fig-intertext">Cuentan que Ulises, harto de prodigios,
+                        lloró de amor al divisar su Itaca
+                        verde y humilde. El arte es esa Itaca
+                        de verde eternidad, no de prodigios.</span>
+
+                        También es como el río interminable
+                        que pasa y queda y es cristal de un mismo
+                        <span class="fig-intertext">Heráclito inconstante, que es el mismo
+                        y es otro, como el río interminable.</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona del plural, tono filosófico.</div>
+                        <div class="item"><span class="label">Objeto:</span> La poesía misma y la naturaleza del arte.</div>
+                        <div class="item"><span class="label">Temple:</span> Sereno, reflexivo, aceptación estoica.</div>
+                        <div class="item"><span class="label">Motivo:</span> Definir y celebrar la esencia de la poesía.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                                <button class="fig-btn" data-fig="fig-intertext">Intertextualidad</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Jorge Luis Borges</h2>
+                <div class="poet-bio">(1899-1986) Escritor argentino</div>
+                <h3 style="font-size: 1rem;">Una despedida</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Una despedida</span>
+                        <span class="fig-anfora">Tarde que socavó nuestro adiós.
+                        Tarde acerada y deleitosa y monstruosa como un ángel oscuro.
+                        Tarde cuando vivieron nuestros labios en la desnuda intimidad de los besos.</span>
+
+                        <span class="fig-hiper">El tiempo inevitable se desbordaba
+                        sobre el abrazo inútil.</span>
+                        <span class="fig-paradoja">Prodigábamos pasión juntamente, no para nosotros sino para la soledad ya inmediata.</span>
+
+                        Nos rechazó la luz; la noche había llegado con urgencia.
+                        Fuimos hasta la verja en esa gravedad de la sombra que ya el lucero alivia.
+
+                        <span class="fig-simil">Como quien vuelve de un perdido prado yo volví de tu abrazo.
+                        Como quien vuelve de un país de espadas yo volví de tus lágrimas.</span>
+
+                        <span class="fig-simil">Tarde que dura vívida como un sueño</span>
+                        entre las otras tardes.
+                        Después yo fui alcanzando y rebasando
+                        noches y singladuras.
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que narra una despedida.</div>
+                        <div class="item"><span class="label">Objeto:</span> El momento de la despedida y el ser amado.</div>
+                        <div class="item"><span class="label">Temple:</span> Agridulce, estoico, intenso.</div>
+                        <div class="item"><span class="label">Motivo:</span> Explorar el amor y la pérdida.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-anfora">Anáfora</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                                <button class="fig-btn" data-fig="fig-hiper">Hipérbole</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- BORGES - ANÁLISIS GENERAL -->
+            <div class="slide">
+                <h2>Jorge Luis Borges - Análisis del autor</h2>
+                <div class="info-card">
+                    <p><strong>Ideas generales:</strong> El arte como espejo y hogar eterno; la otredad y el misterio; el amor y la pérdida; el tiempo como río y la identidad como cambio.</p>
+                    <p><strong>Intenciones expresivas:</strong> Reflexionar filosóficamente sobre el arte; explorar la condición humana; nombrar lo inefable.</p>
+                    <p><strong>Aspectos destacables:</strong> Lenguaje intelectual y preciso; intertextualidad; equilibrio entre lo abstracto y lo concreto.</p>
+                </div>
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                    <p><strong>Resumen:</strong> En <em>A un gato</em>, explora la otredad del animal. En <em>Arte Poética</em>, define la poesía como espejo e Itaca. En <em>Una despedida</em>, el amor y la pérdida se vuelven experiencia definitoria.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- ERNESTO CARDENAL - POEMAS CON ANÁLISIS Y FIGURAS -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Ernesto Cardenal</h2>
+                <div class="poet-bio">(1925-2020) Poeta nicaragüense</div>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Su poesía se caracteriza por un estilo directo, sencillo y profundamente humano.</p>
+                <h3 style="font-size: 1rem;">Muchachas que algún día leáis emocionadas</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Muchachas que algún día leáis emocionadas</span>
+                        <span class="fig-apostrofe">Muchachas que algún día leáis emocionadas
+                        estos versos</span>
+                        <span class="fig-ironia">y soñéis con un poeta:</span>
+                        sabed que yo los hice para una como vosotras
+                        <span class="fig-elipsis">y <span class="fig-paradoja">que fue en vano.</span></span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Poeta en 1ª persona que se dirige a lectoras futuras.</div>
+                        <div class="item"><span class="label">Objeto:</span> El amor frustrado y la poesía como testimonio.</div>
+                        <div class="item"><span class="label">Temple:</span> Amarga melancolía, desencanto, ironía.</div>
+                        <div class="item"><span class="label">Motivo:</span> Desmitificar el amor romántico.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-apostrofe">Apostrofe</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-ironia">Ironía</button>
+                                <button class="fig-btn" data-fig="fig-elipsis">Elipsis</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Ernesto Cardenal</h2>
+                <div class="poet-bio">(1925-2020) Poeta nicaragüense</div>
+                <h3 style="font-size: 1rem;">La persona</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">La persona</span>
+                        <span class="fig-hipbat">La persona
+                        más próxima
+                        a mí</span>
+
+                        <span class="fig-paradoja">eres tú
+                        a la que
+                        sin embargo</span>
+
+                        no veo
+                        hace tanto tiempo
+
+                        <span class="fig-elipsis">más que en sueños.</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que se dirige a un "tú" ausente.</div>
+                        <div class="item"><span class="label">Objeto:</span> La persona amada, presente solo en sueños.</div>
+                        <div class="item"><span class="label">Temple:</span> Melancolía contenida, ternura.</div>
+                        <div class="item"><span class="label">Motivo:</span> Constatar la ausencia y buscar presencia.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-hipbat">Hipérbaton</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-elipsis">Elipsis</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Ernesto Cardenal</h2>
+                <div class="poet-bio">(1925-2020) Poeta nicaragüense</div>
+                <h3 style="font-size: 1rem;">Nuestro amor</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Nuestro amor</span>
+                        <span class="fig-met">Nuestro amor
+                        nació en mayo
+                        con malinches en flor</span>
+
+                        <span class="fig-paralelismo">—Cuando están en flor
+                        los malinches en Managua—.</span>
+
+                        Sólo ese mes
+                        dan flores:
+                        en los demás
+                        dan vainas
+
+                        pero los malinches
+                        volverán a florecer
+                        en mayo
+
+                        y <span class="fig-antites">el amor
+                        que se fue
+                        ya no volverá
+                        <span class="fig-epitet">otra vez.</span></span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona del plural.</div>
+                        <div class="item"><span class="label">Objeto:</span> El amor pasado, asociado a los malinches.</div>
+                        <div class="item"><span class="label">Temple:</span> Melancolía resignada, nostalgia.</div>
+                        <div class="item"><span class="label">Motivo:</span> Constatar la irreversibilidad del amor.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                                <button class="fig-btn" data-fig="fig-paralelismo">Paralelismo</button>
+                                <button class="fig-btn" data-fig="fig-epitet">Epíteto</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- CARDENAL - ANÁLISIS GENERAL -->
+            <div class="slide">
+                <h2>Ernesto Cardenal - Análisis del autor</h2>
+                <div class="info-card">
+                    <p><strong>Ideas generales:</strong> El amor como experiencia efímera e irrecuperable; la poesía como testimonio de un amor frustrado; la cercanía afectiva frente a la distancia física.</p>
+                    <p><strong>Intenciones expresivas:</strong> Desmitificar la poesía romántica; reflejar la experiencia cotidiana; conectar lo personal con lo universal.</p>
+                    <p><strong>Aspectos destacables:</strong> Sencillez formal y claridad; uso de imágenes de la naturaleza; honestidad y desencanto.</p>
+                </div>
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                    <p><strong>Resumen:</strong> En <em>Muchachas...</em>, la poesía nace de un amor frustrado. En <em>La persona</em>, la ausencia se enfrenta a través del sueño. En <em>Nuestro amor</em>, el amor perdido no regresa.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- GABRIELA MISTRAL - POEMAS CON ANÁLISIS Y FIGURAS -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Gabriela Mistral</h2>
+                <div class="poet-bio">(1889-1957) Poeta chilena, Premio Nobel 1945</div>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Su poesía se caracteriza por su profunda sensibilidad, su amor por la naturaleza y su compromiso con los niños.</p>
+                <h3 style="font-size: 1rem;">A la cara de mi hijo</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">A la cara de mi hijo</span>
+                        <span class="fig-apostrofe">A la cara de mi hijo</span>
+                        que duerme, bajan
+                        <span class="fig-enum">arenas de las dunas,
+                        flor de la caña
+                        y la espuma que vuela
+                        de la cascada...</span>
+
+                        Y es sueño nada más
+                        cuanto le baja;
+                        <span class="fig-anfora">sueño cae a su boca,
+                        sueño a su espalda,</span>
+                        y <span class="fig-person">me roban su cuerpo
+                        junto con su alma.</span>
+
+                        Y así lo van cubriendo
+                        con tanta maña,
+                        que en la noche no tengo
+                        hijo ni nada,
+                        <span class="fig-met">madre ciega de sombra,
+                        madre robada.</span>
+
+                        Hasta que el sol bendito
+                        al fin lo baña:
+                        <span class="fig-simil">me lo devuelve en linda
+                        fruta mondada</span>
+                        ¡y me lo pone entero
+                        sobre la falda!
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que se identifica como madre.</div>
+                        <div class="item"><span class="label">Objeto:</span> El hijo dormido y el vínculo maternal.</div>
+                        <div class="item"><span class="label">Temple:</span> Angustia, desposesión, alivio.</div>
+                        <div class="item"><span class="label">Motivo:</span> Explorar la paradoja de la maternidad.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-apostrofe">Apostrofe</button>
+                                <button class="fig-btn" data-fig="fig-enum">Enumeración</button>
+                                <button class="fig-btn" data-fig="fig-anfora">Anáfora</button>
+                                <button class="fig-btn" data-fig="fig-person">Personificación</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Gabriela Mistral</h2>
+                <div class="poet-bio">(1889-1957) Poeta chilena</div>
+                <h3 style="font-size: 1rem;">Dame la mano</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Dame la mano</span>
+                        <span class="fig-anfora">Dame la mano y danzaremos;
+                        dame la mano y me amarás.</span>
+                        <span class="fig-simil">Como una sola flor seremos,
+                        como una flor, y nada más...</span>
+                        <span class="fig-paralelismo">El mismo verso cantaremos,
+                        al mismo paso bailarás.</span>
+                        <span class="fig-simil">Como una espiga ondularemos,
+                        como una espiga, y nada más.</span>
+                        Te llamas Rosa y yo Esperanza;
+                        pero tu nombre olvidarás,
+                        porque seremos una danza
+                        en la colina y nada más...
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que invita a la unión.</div>
+                        <div class="item"><span class="label">Objeto:</span> El encuentro y la comunión entre dos personas.</div>
+                        <div class="item"><span class="label">Temple:</span> Alegría serena, armonía, confianza.</div>
+                        <div class="item"><span class="label">Motivo:</span> Celebrar la unión como fusión.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-anfora">Anáfora</button>
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                                <button class="fig-btn" data-fig="fig-paralelismo">Paralelismo</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Gabriela Mistral</h2>
+                <div class="poet-bio">(1889-1957) Poeta chilena</div>
+                <h3 style="font-size: 1rem;">Piececitos</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Piececitos</span>
+                        <span class="fig-apostrofe">Piececitos de niño,
+                        azulosos de frío,</span>
+                        ¡cómo os ven y no os cubren,
+                        Dios mío!
+
+                        <span class="fig-hiper">¡Piececitos heridos
+                        por los guijarros todos,</span>
+                        <span class="fig-antites">ultrajados de nieves
+                        y lodos!</span>
+
+                        <span class="fig-person">El hombre ciego ignora
+                        que por donde pasáis,</span>
+                        <span class="fig-met">una flor de luz viva
+                        dejáis;</span>
+
+                        que allí donde ponéis
+                        la plantita sangrante,
+                        el nardo nace más
+                        fragante.
+
+                        Sed, puesto que marcháis
+                        por los caminos rectos,
+                        heroicos como sois
+                        perfectos.
+
+                        <span class="fig-met">Piececitos de niño,
+                        dos joyitas sufrientes,</span>
+                        ¡cómo pasan sin veros
+                        las gentes!
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz compasiva que denuncia la injusticia.</div>
+                        <div class="item"><span class="label">Objeto:</span> Los piececitos del niño como símbolo de pobreza.</div>
+                        <div class="item"><span class="label">Temple:</span> Indignación, compasión, ternura.</div>
+                        <div class="item"><span class="label">Motivo:</span> Denunciar la indiferencia social.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-apostrofe">Apostrofe</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-hiper">Hipérbole</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                                <button class="fig-btn" data-fig="fig-person">Personificación</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- MISTRAL - ANÁLISIS GENERAL -->
+            <div class="slide">
+                <h2>Gabriela Mistral - Análisis del autor</h2>
+                <div class="info-card">
+                    <p><strong>Ideas generales:</strong> El amor maternal como experiencia de posesión y pérdida; la unión y la comunión como valores fundamentales; la denuncia de la injusticia y la indiferencia social.</p>
+                    <p><strong>Intenciones expresivas:</strong> Celebrar el vínculo maternal; promover la solidaridad; denunciar la injusticia.</p>
+                    <p><strong>Aspectos destacables:</strong> Lenguaje de gran ternura y precisión; fusión entre lo íntimo y lo social; ritmo y musicalidad.</p>
+                </div>
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                    <p><strong>Resumen:</strong> En <em>A la cara de mi hijo</em>, explora la angustia y la alegría maternal. En <em>Dame la mano</em>, invita a la fusión. En <em>Piececitos</em>, denuncia la indiferencia social.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- EDGAR ALLAN POE - POEMAS CON ANÁLISIS Y FIGURAS -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Edgar Allan Poe</h2>
+                <div class="poet-bio">(1809-1849) Escritor estadounidense</div>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Su poesía se caracteriza por su musicalidad, su atmósfera de melancolía y su obsesión por la muerte y el amor perdido.</p>
+                <h3 style="font-size: 1rem;">Soneto a la ciencia</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Soneto a la ciencia</span>
+                        <span class="fig-apostrofe">¡Ciencia! ¡verdadera hija del tiempo tú eres!</span>
+                        que alteras todas las cosas con tus escrutadores ojos.
+                        <span class="fig-interrog">¿Por qué devoras así el corazón del poeta,</span>
+                        <span class="fig-met">buitre, cuyas alas son obtusas realidades?</span>
+                        <span class="fig-interrog"><span class="fig-person">¿Cómo debería él amarte? o ¿cómo puede juzgarte sabia
+                        aquel a quien no dejas en su vagar</span>
+                        buscar un tesoro en los enjoyados cielos,</span>
+                        aunque se elevara con intrépida ala?
+                        <span class="fig-interrog">¿No has arrebatado a Diana de su carro?
+                        ¿Ni expulsado a las Hamadríades del bosque
+                        para buscar abrigo en alguna feliz estrella?
+                        ¿No has arrancado a las Náyades de la inundación,
+                        al Elfo de la verde hierba, y a mí
+                        del sueño de verano bajo el tamarindo?</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Poeta romántico que interpela a la Ciencia.</div>
+                        <div class="item"><span class="label">Objeto:</span> La Ciencia personificada y el mundo mitológico.</div>
+                        <div class="item"><span class="label">Temple:</span> Frustración, indignación, melancolía.</div>
+                        <div class="item"><span class="label">Motivo:</span> Denunciar la tiranía de la razón.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-apostrofe">Apostrofe</button>
+                                <button class="fig-btn" data-fig="fig-interrog">Interrogación retórica</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-person">Personificación</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Edgar Allan Poe</h2>
+                <div class="poet-bio">(1809-1849) Escritor estadounidense</div>
+                <h3 style="font-size: 1rem;">Annabel Lee</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Annabel Lee</span>
+                        <span class="fig-anfora">Hace de esto ya muchos, muchos años,</span>
+                        cuando en un reino junto al mar viví,
+                        vivía allí una virgen que os evoco
+                        por el nombre de Annabel Lee;
+                        y era su único sueño verse siempre
+                        por mí adorada y adorarme a mí.
+
+                        Niños éramos ambos, en el reino
+                        junto al mar; nos quisimos allí
+                        <span class="fig-hiper">con amor que era amor de los amores,</span>
+                        yo con mi Annabel Lee;
+                        <span class="fig-hiper">con amor que los ángeles del cielo
+                        envidiaban a ella cuanto a mí.</span>
+
+                        Y por eso, hace mucho, en aquel reino,
+                        en el reino ante el mar, ¡triste de mí!,
+                        desde una nube sopló un viento, helando
+                        para siempre a mi hermosa Annabel Lee.
+                        Y parientes ilustres la llevaron
+                        lejos, lejos de mí;
+                        en el reino ante el mar se la llevaron
+                        hasta una tumba a sepultarla allí.
+
+                        ¡Oh sí! -no tan felices los arcángeles-,
+                        llegaron a envidiarnos, a ella, a mí.
+                        Y no más que por eso -todos, todos
+                        en el reino, ante el mar, sábenlo así-,
+                        sopló viento nocturno, de una nube,
+                        robándome por siempre a Annabel Lee.
+
+                        <span class="fig-paradoja">Mas, vence nuestro amor; vence al de muchos,</span>
+                        más grandes que ella fue, que nunca fui;
+                        y ni próceres ángeles del cielo
+                        ni demonios que el mar prospere en sí,
+                        <span class="fig-paradoja">separarán jamás mi alma del alma
+                        de la radiante Annabel Lee.</span>
+
+                        <span class="fig-anfora">Pues la luna ascendente, dulcemente,
+                        tráeme sueños de Annabel Lee;
+                        como estrellas tranquilas las pupilas
+                        me sonríen de Annabel Lee;</span>
+                        y reposo, en la noche embellecida,
+                        con mi siempre querida, con mi vida;
+                        <span class="fig-met">con mi esposa radiante Annabel Lee
+                        en la tumba, ante el mar, Annabel Lee.</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Amante en 1ª persona, atormentado y devoto.</div>
+                        <div class="item"><span class="label">Objeto:</span> Annabel Lee y el amor inmortal.</div>
+                        <div class="item"><span class="label">Temple:</span> Melancolía, desesperación, devoción.</div>
+                        <div class="item"><span class="label">Motivo:</span> Celebrar la inmortalidad del amor.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-anfora">Anáfora</button>
+                                <button class="fig-btn" data-fig="fig-hiper">Hipérbole</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- POE - ANÁLISIS GENERAL -->
+            <div class="slide">
+                <h2>Edgar Allan Poe - Análisis del autor</h2>
+                <div class="info-card">
+                    <p><strong>Ideas generales:</strong> La imaginación como facultad suprema; el conflicto entre razón y fantasía; el amor inmortal y la fidelidad más allá de la muerte.</p>
+                    <p><strong>Intenciones expresivas:</strong> Defender el valor de la imaginación; crear poesía de belleza y misterio; establecer una teoría estética.</p>
+                    <p><strong>Aspectos destacables:</strong> Musicalidad y ritmo hipnótico; atmósfera de misterio; reflexión teórica.</p>
+                </div>
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                    <p><strong>Resumen:</strong> En <em>Soneto a la ciencia</em>, denuncia la tiranía de la razón. En <em>Annabel Lee</em>, el amor trasciende la muerte.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- BLANCA VARELA - POEMAS CON ANÁLISIS Y FIGURAS -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Blanca Varela</h2>
+                <div class="poet-bio">(1926-2009) Poeta peruana</div>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Su poesía se caracteriza por su lenguaje preciso, su honestidad brutal y su mirada lúcida sobre la existencia.</p>
+                <h3 style="font-size: 1rem;">Fútbol</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Fútbol</span>
+                        <span class="fig-met">juega con la tierra
+                        como con una pelota</span>
+
+                        <span class="fig-asi">báilala
+                        estréllala
+                        reviéntala</span>
+
+                        no es sino eso la tierra
+                        tú en el jardín
+                        <span class="fig-enum">mi guardavalla mi espantapájaros
+                        mi atila mi niño</span>
+
+                        <span class="fig-hiper">la tierra entre tus pies
+                        gira como nunca</span>
+                        prodigiosamente bella
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz maternal en 1ª persona que observa a un niño.</div>
+                        <div class="item"><span class="label">Objeto:</span> El niño jugando y su capacidad transformadora.</div>
+                        <div class="item"><span class="label">Temple:</span> Júbilo, ternura, asombro.</div>
+                        <div class="item"><span class="label">Motivo:</span> Celebrar la magia de la infancia.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-asi">Asíndeton</button>
+                                <button class="fig-btn" data-fig="fig-enum">Enumeración</button>
+                                <button class="fig-btn" data-fig="fig-hiper">Hipérbole</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Blanca Varela</h2>
+                <div class="poet-bio">(1926-2009) Poeta peruana</div>
+                <h3 style="font-size: 1rem;">Bodas</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Bodas</span>
+                        <span class="fig-hipbat">Perdidos en la niebla
+                        el colibrí y su amante.</span>
+                        <span class="fig-met">Dos piedras lanzadas
+                        por el deseo
+                        se encuentran en el aire.</span>
+                        <span class="fig-sinest">La retama está viva,
+                        arde en la niebla, habitada.</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 3ª persona que describe un encuentro.</div>
+                        <div class="item"><span class="label">Objeto:</span> El encuentro amoroso y el deseo.</div>
+                        <div class="item"><span class="label">Temple:</span> Misterio, pasión, asombro.</div>
+                        <div class="item"><span class="label">Motivo:</span> Capturar el instante sagrado del amor.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-sinest">Sinestesia</button>
+                                <button class="fig-btn" data-fig="fig-hipbat">Hipérbaton</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Blanca Varela</h2>
+                <div class="poet-bio">(1926-2009) Poeta peruana</div>
+                <h3 style="font-size: 1rem;">Escena Final</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Escena Final</span>
+                        He dejado la puerta entreabierta
+                        <span class="fig-simil">soy un animal que no se resigna
+                        a morir.</span> La eternidad
+                        es la oscura bisagra que cede.
+                        Un pequeño ruido en la noche
+                        de la carne.
+                        <span class="fig-enum"><span class="fig-antites">Soy la isla que avanza sostenida
+                        por la muerte o una ciudad
+                        ferozmente cercada
+                        por la vida,</span></span>
+                        <span class="fig-paradoja">o tal vez no soy nada,</span>
+                        sólo el insomnio
+                        y la brillante indiferencia de los astros.
+                        Desierto destino,
+                        inexorable el sol de los vivos se levanta.
+                        Reconozco esa puerta,
+                        no hay otra.
+                        <span class="fig-sinest">Hielo primaveral
+                        y una espina de sangre
+                        en el ojo de la rosa.</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que enfrenta la muerte.</div>
+                        <div class="item"><span class="label">Objeto:</span> La muerte y la identidad en su límite.</div>
+                        <div class="item"><span class="label">Temple:</span> Desolación, lucidez, aceptación.</div>
+                        <div class="item"><span class="label">Motivo:</span> Explorar la naturaleza de la identidad.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                                <button class="fig-btn" data-fig="fig-enum">Enumeración</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-sinest">Sinestesia</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Blanca Varela</h2>
+                <div class="poet-bio">(1926-2009) Poeta peruana</div>
+                <h3 style="font-size: 1rem;">Curriculum Vitae</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Curriculum Vitae</span>
+                        <span class="fig-ironia">digamos que ganaste la carrera</span>
+                        <span class="fig-met">y que el premio
+                        era otra carrera</span>
+                        que no bebiste el vino de la victoria
+                        <span class="fig-antites">sino tu propia sal</span>
+                        que jamás escuchaste vítores
+                        <span class="fig-antites">sino ladridos de perros</span>
+                        y que tu sombra
+                        tu propia sombra
+                        <span class="fig-person">fue tu única
+                        y desleal competidora.</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz que se dirige a un "tú", con ironía.</div>
+                        <div class="item"><span class="label">Objeto:</span> La lucha vital y el fracaso del éxito.</div>
+                        <div class="item"><span class="label">Temple:</span> Melancolía irónica, estoicismo.</div>
+                        <div class="item"><span class="label">Motivo:</span> Desmitificar el concepto de éxito.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                                <button class="fig-btn" data-fig="fig-person">Personificación</button>
+                                <button class="fig-btn" data-fig="fig-ironia">Ironía</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VARELA - ANÁLISIS GENERAL -->
+            <div class="slide">
+                <h2>Blanca Varela - Análisis del autor</h2>
+                <div class="info-card">
+                    <p><strong>Ideas generales:</strong> La infancia como espacio de transformación; el amor como encuentro sagrado; la muerte como enfrentamiento con la identidad; el fracaso del éxito.</p>
+                    <p><strong>Intenciones expresivas:</strong> Capturar instantes de plenitud; explorar la identidad en sus límites; desmitificar convenciones.</p>
+                    <p><strong>Aspectos destacables:</strong> Lenguaje preciso y despojado; imágenes potentes; honestidad brutal.</p>
+                </div>
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                    <p><strong>Resumen:</strong> En <em>Fútbol</em>, el niño transforma el mundo. En <em>Bodas</em>, el amor es encuentro sagrado. En <em>Escena Final</em>, la muerte enfrenta la identidad. En <em>Curriculum Vitae</em>, el éxito es un espejismo.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- NICANOR PARRA - POEMAS CON ANÁLISIS Y FIGURAS -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Nicanor Parra</h2>
+                <div class="poet-bio">(1914-2018) Poeta chileno, creador de la antipoesía</div>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Su obra se caracteriza por el lenguaje coloquial, la ironía, el humor y la crítica social.</p>
+                <h3 style="font-size: 1rem;">El hombre imaginario</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">El hombre imaginario</span>
+                        El hombre imaginario
+                        vive en una mansión imaginaria
+                        rodeada de árboles imaginarios
+                        a la orilla de un río imaginario
+
+                        <span class="fig-anfora"><span class="fig-enum">De los muros que son imaginarios
+                        penden antiguos cuadros imaginarios
+                        irreparables grietas imaginarias
+                        que representan hechos imaginarios
+                        ocurridos en mundos imaginarios
+                        en lugares y tiempos imaginarios</span></span>
+
+                        <span class="fig-paradoja">Todas las tardes tardes imaginarias</span>
+                        sube las escaleras imaginarias
+                        y se asoma al balcón imaginario
+                        a mirar el paisaje imaginario
+                        que consiste en un valle imaginario
+                        circundado de cerros imaginarios
+
+                        <span class="fig-asi">Sombras imaginarias
+                        vienen por el camino imaginario
+                        entonando canciones imaginarias
+                        a la muerte del sol imaginario</span>
+
+                        Y en las noches de luna imaginaria
+                        sueña con la mujer imaginaria
+                        que le brindó su amor imaginario
+                        vuelve a sentir ese mismo dolor
+                        ese mismo placer imaginario
+                        y <span class="fig-paradoja">vuelve a palpitar
+                        el corazón del hombre imaginario</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 3ª persona, narrador omnisciente.</div>
+                        <div class="item"><span class="label">Objeto:</span> El hombre imaginario y su mundo ficticio.</div>
+                        <div class="item"><span class="label">Temple:</span> Extrañeza, distancia irónica.</div>
+                        <div class="item"><span class="label">Motivo:</span> Explorar la naturaleza de la imaginación.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-anfora">Anáfora</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-asi">Asíndeton</button>
+                                <button class="fig-btn" data-fig="fig-enum">Enumeración</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Nicanor Parra</h2>
+                <div class="poet-bio">(1914-2018) Poeta chileno</div>
+                <h3 style="font-size: 1rem;">A los amantes de las bellas letras</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">A los amantes de las bellas letras</span>
+                        A los amantes de las bellas letras
+                        Hago llegar mis mejores deseos
+                        Voy a cambiar de nombre a algunas cosas.
+
+                        Mi posición es ésta:
+                        El poeta no cumple su palabra
+                        Si no cambia los nombres de las cosas.
+
+                        <span class="fig-interrog">¿Con qué razón el sol
+                        Ha de seguir llamándose sol?</span>
+                        <span class="fig-hiper">¡Pido que se llame Micifuz
+                        El de las botas de cuarenta leguas!</span>
+
+                        <span class="fig-interrog">¿Mis zapatos parecen ataúdes?</span>
+                        Sepan que desde hoy en adelante
+                        <span class="fig-met">Los zapatos se llaman ataúdes.</span>
+                        <span class="fig-ironia">Comuníquese, anótese y publíquese
+                        Que los zapatos han cambiado de nombre:
+                        Desde ahora se llaman ataúdes.</span>
+
+                        Bueno, la noche es larga
+                        Todo poeta que se estime a sí mismo
+                        Debe tener su propio diccionario
+                        Y antes que se me olvide
+                        Al propio dios hay que cambiarle nombre
+                        Que cada cual lo llame como quiera:
+                        Ese es un problema personal.
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona, tono de manifiesto.</div>
+                        <div class="item"><span class="label">Objeto:</span> El poder del lenguaje y la libertad del poeta.</div>
+                        <div class="item"><span class="label">Temple:</span> Ironía, provocación, humor.</div>
+                        <div class="item"><span class="label">Motivo:</span> Reivindicar la función transformadora.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-interrog">Interrogación retórica</button>
+                                <button class="fig-btn" data-fig="fig-hiper">Hipérbole</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-ironia">Ironía</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Nicanor Parra</h2>
+                <div class="poet-bio">(1914-2018) Poeta chileno</div>
+                <h3 style="font-size: 1rem;">Preguntas a la hora del té</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Preguntas a la hora del té</span>
+                        Este señor desvaído parece
+                        <span class="fig-simil">Una figura de un museo de cera;</span>
+                        Mira a través de los visillos rotos:
+                        <span class="fig-interrog">¿Qué vale más, el oro o la belleza?,</span>
+                        <span class="fig-interrog">¿Vale más el arroyo que se mueve
+                        O la chépica fija a la ribera?</span>
+                        A lo lejos se oye una campana
+                        <span class="fig-paradoja">Que abre una herida más, o que la cierra:</span>
+                        <span class="fig-interrog">¿Es más real el agua de la fuente
+                        O la muchacha que se mira en ella?</span>
+                        No se sabe, la gente se lo pasa
+                        <span class="fig-met">Construyendo castillos en la arena.</span>
+                        <span class="fig-interrog">¿Es superior el vaso transparente
+                        A la mano del hombre que lo crea?</span>
+                        Se respira una atmósfera cansada
+                        <span class="fig-enum">De ceniza, de humo, de tristeza:</span>
+                        <span class="fig-person">Lo que se vio una vez ya no se vuelve
+                        A ver igual, dicen las hojas secas.</span>
+                        Hora del té, tostadas, margarina.
+                        Todo envuelto en una especie de niebla.
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 3ª persona, observador contemplativo.</div>
+                        <div class="item"><span class="label">Objeto:</span> La escena cotidiana y las preguntas filosóficas.</div>
+                        <div class="item"><span class="label">Temple:</span> Melancolía, desencanto, incertidumbre.</div>
+                        <div class="item"><span class="label">Motivo:</span> Explorar la imposibilidad de certezas.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                                <button class="fig-btn" data-fig="fig-interrog">Interrogación retórica</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-enum">Enumeración</button>
+                                <button class="fig-btn" data-fig="fig-person">Personificación</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Nicanor Parra</h2>
+                <div class="poet-bio">(1914-2018) Poeta chileno</div>
+                <h3 style="font-size: 1rem;">Test</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Test</span>
+                        <span class="fig-interrog">Qué es un antipoeta:</span>
+                        un comerciante en urnas y ataúdes?
+                        un sacerdote que no cree en nada?
+                        un general que duda de sí mismo?
+                        un vagabundo que se ríe de todo
+                        hasta de la vejez y de la muerte?
+                        un interlocutor de mal carácter?
+                        un bailarín al borde del abismo?
+                        un narciso que ama a todo el mundo?
+                        un bromista sangriento
+                        deliberadamente miserable?
+                        un poeta que duerme en una silla?
+                        un alquimista de los tiempos modernos?
+                        un revolucionario de bolsillo?
+                        un pequeño burgués?
+                        un charlatán?
+                        <span class="fig-antites">un dios?
+                        un inocente?</span>
+                        un aldeano de Santiago de Chile?
+                        Subraye la frase que considere correcta.
+
+                        <span class="fig-interrog">Qué es la antipoesía:</span>
+                        un temporal en una taza de té?
+                        una mancha de nieve en una roca?
+                        un azafate lleno de excrementos humanos
+                        como lo cree el padre Salvatierra?
+                        <span class="fig-paradoja">un espejo que dice la verdad?</span>
+                        un bofetón al rostro
+                        del Presidente de la Sociedad de Escritores?
+                        (Dios lo tenga en su santo reino)
+                        una advertencia a los poetas jóvenes?
+                        <span class="fig-ironia"><span class="fig-hiper">un ataúd a chorro?
+                        un ataúd a fuerza centrífuga?
+                        un ataúd a gas de parafina?
+                        una capilla ardiente sin difunto?</span></span>
+                        Marque con una cruz
+                        la definición que considere correcta.
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz examinadora que interpela al lector.</div>
+                        <div class="item"><span class="label">Objeto:</span> La antipoesía y la figura del antipoeta.</div>
+                        <div class="item"><span class="label">Temple:</span> Ironía, provocación, humor mordaz.</div>
+                        <div class="item"><span class="label">Motivo:</span> Mostrar la imposibilidad de definir la antipoesía.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-interrog">Interrogación retórica</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-ironia">Ironía</button>
+                                <button class="fig-btn" data-fig="fig-hiper">Hipérbole</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- PARRA - ANÁLISIS GENERAL -->
+            <div class="slide">
+                <h2>Nicanor Parra - Análisis del autor</h2>
+                <div class="info-card">
+                    <p><strong>Ideas generales:</strong> La antipoesía como cuestionamiento de la poesía tradicional; la imaginación como construcción ficticia; el poder transformador del lenguaje; la incertidumbre existencial.</p>
+                    <p><strong>Intenciones expresivas:</strong> Renovar la poesía; provocar al lector; reflexionar filosóficamente desde lo cotidiano.</p>
+                    <p><strong>Aspectos destacables:</strong> Lenguaje coloquial y prosaico; ironía y humor; cuestionamiento de la autoridad.</p>
+                </div>
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                    <p><strong>Resumen:</strong> En <em>El hombre imaginario</em>, explora la ficción de la identidad. En <em>A los amantes...</em>, defiende el poder transformador del lenguaje. En <em>Preguntas a la hora del té</em>, reflexiona sobre la incertidumbre. En <em>Test</em>, demuestra la imposibilidad de definir la antipoesía.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- PABLO NERUDA - POEMAS CON ANÁLISIS Y FIGURAS -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Pablo Neruda</h2>
+                <div class="poet-bio">(1904-1973) Poeta chileno, Premio Nobel 1971</div>
+                <p style="font-size: 0.9rem; margin-bottom: 0.5rem;">Su poesía se caracteriza por su lenguaje sensual, su intensidad emocional y su capacidad para conectar lo personal con lo universal.</p>
+                <h3 style="font-size: 1rem;">Soneto XXII</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">Soneto XXII - "Cuántas veces, amor, te amé"</span>
+                        <span class="fig-anfora"><span class="fig-hipbat">Cuántas veces, amor, te amé sin verte y tal vez sin recuerdo,
+                        sin reconocer tu mirada, sin mirarte, centaura,</span></span>
+                        en regiones contrarias, en un mediodía quemante:
+                        <span class="fig-met">eras sólo el aroma de los cereales que amo.</span>
+
+                        Tal vez te vi, te supuse al pasar levantando una copa
+                        en Angol, a la luz de la luna de Junio,
+                        <span class="fig-simil">o eras tú la cintura de aquella guitarra
+                        que toqué en las tinieblas y sonó como el mar desmedido.</span>
+
+                        <span class="fig-paradoja">Te amé sin que yo lo supiera,</span> y busqué tu memoria.
+                        En las casas vacías entré con linterna a robar tu retrato.
+                        Pero yo ya sabía cómo era. De pronto
+
+                        mientras ibas conmigo te toqué y se detuvo mi vida:
+                        frente a mis ojos estabas, reinándome, y reinas.
+                        <span class="fig-simil">Como hoguera en los bosques el fuego es tu reino.</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Amante en 1ª persona que descubre un amor predestinado.</div>
+                        <div class="item"><span class="label">Objeto:</span> La amada como presencia amada antes de ser conocida.</div>
+                        <div class="item"><span class="label">Temple:</span> Asombro, certeza, pasión.</div>
+                        <div class="item"><span class="label">Motivo:</span> Celebrar el amor como destino.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-anfora">Anáfora</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                                <button class="fig-btn" data-fig="fig-paradoja">Paradoja</button>
+                                <button class="fig-btn" data-fig="fig-hipbat">Hipérbaton</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Pablo Neruda</h2>
+                <div class="poet-bio">(1904-1973) Poeta chileno</div>
+                <h3 style="font-size: 1rem;">El sueño</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">El sueño (Los versos del capitán)</span>
+                        Andando en las arenas
+                        yo decidí dejarte.
+
+                        Pisaba un barro oscuro
+                        que temblaba,
+                        y hundiéndome y saliendo
+                        decidí que salieras
+                        de mí, que me pesabas
+                        <span class="fig-simil">como piedra cortante,</span>
+                        y elaboré tu pérdida
+                        paso a paso:
+                        <span class="fig-met">cortarte las raíces,
+                        soltarte sola al viento.</span>
+
+                        Ay, en ese minuto,
+                        corazón mío, <span class="fig-person">un sueño
+                        con sus alas terribles te cubría.</span>
+
+                        Te sentías tragada por el barro,
+                        y me llamabas y yo no acudía,
+                        te ibas, inmóvil,
+                        sin defenderte
+                        hasta ahogarte en la boca de arena.
+
+                        Después
+                        mi decisión se encontró con tu sueño,
+                        y desde la ruptura
+                        que nos quebraba el alma,
+                        <span class="fig-antites">surgimos limpios otra vez, desnudos,</span>
+                        amándonos
+                        <span class="fig-asi">sin sueño, sin arena,</span>
+                        completos y radiantes,
+                        sellados por el fuego.
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que decide y se reconcilia.</div>
+                        <div class="item"><span class="label">Objeto:</span> La crisis de la relación y el renacimiento del amor.</div>
+                        <div class="item"><span class="label">Temple:</span> Lucha interior, dolor, paz final.</div>
+                        <div class="item"><span class="label">Motivo:</span> Explorar el amor como fuerza que triunfa.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-person">Personificación</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                                <button class="fig-btn" data-fig="fig-asi">Asíndeton</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="slide">
+                <h2>Pablo Neruda</h2>
+                <div class="poet-bio">(1904-1973) Poeta chileno</div>
+                <h3 style="font-size: 1rem;">La pobreza</h3>
+                <div class="grid-2">
+                    <div class="poem-col">
+                        <span class="poem-title-small">La pobreza (Los versos del capitán)</span>
+                        <span class="fig-apostrofe">Ay no quieres,
+                        te asusta
+                        la pobreza,</span>
+
+                        no quieres
+                        ir con zapatos rotos al mercado
+                        y volver con el viejo vestido.
+
+                        Amor, no amamos,
+                        como quieren los ricos,
+                        la miseria. Nosotros
+                        <span class="fig-simil">la extirparemos como diente maligno</span>
+                        que hasta ahora ha mordido el corazón del hombre.
+
+                        Pero no quiero
+                        que la temas.
+                        <span class="fig-antites">Si llega por mi culpa a tu morada,
+                        si la pobreza expulsa
+                        tus zapatos dorados,
+                        que no expulse <span class="fig-met">tu risa que es el pan de mi vida.</span></span>
+                        Si no puedes pagar el alquiler
+                        sal al trabajo con paso orgulloso,
+                        y piensa, amor, que yo te estoy mirando
+                        <span class="fig-met">y somos juntos la mayor riqueza
+                        que jamás se reunió sobre la tierra.</span>
+                    </div>
+                    <div class="analysis-col">
+                        <p style="font-weight: 700; color: #b5431a; font-size: 1rem; margin-bottom: 0.3rem;">Análisis</p>
+                        <div class="item"><span class="label">Hablante:</span> Voz en 1ª persona que apoya y consuela.</div>
+                        <div class="item"><span class="label">Objeto:</span> El amor como riqueza verdadera.</div>
+                        <div class="item"><span class="label">Temple:</span> Comprensión, ternura, optimismo.</div>
+                        <div class="item"><span class="label">Motivo:</span> Defender el amor como valor esencial.</div>
+                        <div class="item">
+                            <span class="label">Figuras:</span>
+                            <div class="fig-btn-group">
+                                <button class="fig-btn" data-fig="fig-apostrofe">Apostrofe</button>
+                                <button class="fig-btn" data-fig="fig-simil">Símil</button>
+                                <button class="fig-btn" data-fig="fig-met">Metáfora</button>
+                                <button class="fig-btn" data-fig="fig-antites">Antítesis</button>
+                            </div>
+                            <span class="interactive-hint">💡 Haz clic en una figura para verla en el poema</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- NERUDA - ANÁLISIS GENERAL -->
+            <div class="slide">
+                <h2>Pablo Neruda - Análisis del autor</h2>
+                <div class="info-card">
+                    <p><strong>Ideas generales:</strong> El amor como destino y búsqueda inconsciente; el amor como fuerza que triunfa sobre la voluntad; el amor como riqueza verdadera frente a la pobreza material.</p>
+                    <p><strong>Intenciones expresivas:</strong> Celebrar el amor como experiencia total; explorar sus contradicciones; fusionar lo personal con lo universal.</p>
+                    <p><strong>Aspectos destacables:</strong> Lenguaje de gran sensualidad e intensidad; honestidad emocional; visión del amor como fuerza cósmica.</p>
+                </div>
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                    <p><strong>Resumen:</strong> En el <em>Soneto XXII</em>, el amor es destino inconsciente. En <em>El sueño</em>, el amor triunfa sobre la decisión de separarse. En <em>La pobreza</em>, el amor es la mayor riqueza.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- TABLA COMPARATIVA -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Tabla comparativa de poetas</h2>
+                <p style="margin-bottom: 0.8rem;">Resumen de las ideas principales, intenciones y aspectos destacables de cada autor.</p>
+
+                <div style="overflow-x: auto;">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr><th>Poeta</th><th>Ideas principales</th><th>Intenciones expresivas</th><th>Aspectos destacables</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><td><strong>Pita Amor</strong></td><td>Autoreivindicación, locura creadora, trascendencia</td><td>Afirmarse en literatura, reivindicar la locura</td><td>Personalidad fuerte, lenguaje ceremonial</td></tr>
+                            <tr><td><strong>Arteche</strong></td><td>Experiencia mística, soledad existencial</td><td>Registrar la iluminación, explorar la extrañeza</td><td>Lenguaje visionario, precisión de imágenes</td></tr>
+                            <tr><td><strong>Borges</strong></td><td>Arte como espejo, otredad, tiempo e identidad</td><td>Reflexionar filosóficamente, nombrar lo inefable</td><td>Lenguaje intelectual, intertextualidad</td></tr>
+                            <tr><td><strong>Cardenal</strong></td><td>Amor efímero, poesía como testimonio</td><td>Desmitificar el romanticismo, reflejar lo cotidiano</td><td>Sencillez formal, honestidad y desencanto</td></tr>
+                            <tr><td><strong>Mistral</strong></td><td>Maternidad, comunión, denuncia social</td><td>Celebrar el amor maternal, promover solidaridad</td><td>Ternura y precisión, ritmo musical</td></tr>
+                            <tr><td><strong>Poe</strong></td><td>Imaginación suprema, conflicto razón/fantasía</td><td>Defender la imaginación, crear belleza y misterio</td><td>Musicalidad hipnótica, atmósfera de misterio</td></tr>
+                            <tr><td><strong>Varela</strong></td><td>Infancia transformadora, muerte e identidad</td><td>Capturar instantes de plenitud, explorar la identidad</td><td>Lenguaje preciso, honestidad brutal</td></tr>
+                            <tr><td><strong>Parra</strong></td><td>Antipoesía, lenguaje transformador</td><td>Renovar la poesía, provocar al lector</td><td>Lenguaje coloquial, ironía y humor</td></tr>
+                            <tr><td><strong>Neruda</strong></td><td>Amor como destino, fuerza transformadora</td><td>Celebrar el amor, explorar contradicciones</td><td>Lenguaje sensual, visión cósmica del amor</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- CONCLUSIONES FINALES -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>Conclusiones finales</h2>
+
+                <div class="info-card">
+                    <p><strong>¿Qué tienen en común estos poetas?</strong></p>
+                    <ul>
+                        <li><span class="highlight">La búsqueda de identidad</span> - Todos exploran quiénes son y su lugar en el mundo.</li>
+                        <li><span class="highlight">El amor como tema central</span> - Desde el amor maternal hasta el romántico.</li>
+                        <li><span class="highlight">La relación con la naturaleza</span> - La naturaleza es un espejo de las emociones.</li>
+                        <li><span class="highlight">La reflexión sobre la muerte</span> - La muerte como puerta a la trascendencia.</li>
+                        <li><span class="highlight">El poder transformador del lenguaje</span> - La poesía transforma el mundo.</li>
+                        <li><span class="highlight">La denuncia de la injusticia</span> - Varios poetas critican la opresión.</li>
+                    </ul>
+                </div>
+
+                <div class="info-card info-card-success">
+                    <p><strong>Reflexión final</strong></p>
+                    <p>La poesía nos muestra que, a pesar de las diferencias de tiempo y lugar, compartimos emociones universales. Cada poeta, con su voz única, nos invita a mirar el mundo desde una perspectiva distinta.</p>
+                    <p style="margin-top: 0.8rem; color: #7a4a2a; font-style: italic;">"La poesía es el lenguaje de la emoción, el espejo del alma y la voz de la humanidad."</p>
+                </div>
+
+                <div class="question-sample">
+                    <p><strong>Pregunta final para reflexionar</strong></p>
+                    <p>De todos los poemas que hemos analizado, ¿cuál te ha llegado más profundamente y por qué? ¿Qué temas reconoces en tu propia vida?</p>
+                    <p style="color: #7a4a2a; font-style: italic;">Cada lector conecta con distintos poemas según su experiencia personal. Lo importante es que la poesía nos ayuda a comprendernos mejor.</p>
+                </div>
+
+                <p style="margin-top: 1.5rem; text-align: center; font-size: 1.1rem; color: #8a4a20;"><strong>Fin de la clase</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FOOTER NAV -->
+    <!-- ============================================ -->
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 / 44</div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FLECHAS DE NAVEGACIÓN -->
+    <!-- ============================================ -->
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+    let isTransitioning = false;
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+        slideCounterSpan.innerText = 'Diapositiva ' + (currentIndex + 1) + ' / ' + totalSlides;
+
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentIndex);
+        });
+
+        const activeSlide = slides[currentIndex];
+        if (activeSlide) {
+            activeSlide.scrollTop = 0;
+        }
+    }
+
+    function goToSlide(index) {
+        if (isTransitioning) return;
+        if (index < 0 || index >= totalSlides) return;
+
+        isTransitioning = true;
+        currentIndex = index;
+        updateSlidePosition();
+
+        setTimeout(() => {
+            const activeSlide = slides[currentIndex];
+            if (activeSlide) {
+                activeSlide.scrollTop = 0;
+            }
+            isTransitioning = false;
+        }, 150);
+    }
+
+    function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+            goToSlide(currentIndex + 1);
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            goToSlide(currentIndex - 1);
+        }
+    }
+
+    // ============================================
+    // FUNCIONALIDAD DE DESTELLO DE FIGURAS
+    // ============================================
+    document.querySelectorAll('.fig-btn').forEach(button => {
+        button.addEventListener('click', function() {
+            const figClass = this.dataset.fig;
+            // Buscar todos los elementos con esa clase dentro de la misma diapositiva
+            const slide = this.closest('.slide');
+            const elements = slide.querySelectorAll('.' + figClass);
+
+            if (elements.length === 0) {
+                // Si no hay elementos en esta diapositiva, buscar en toda la página
+                const allElements = document.querySelectorAll('.' + figClass);
+                allElements.forEach(el => {
+                    el.classList.add('destello');
+                    setTimeout(() => {
+                        el.classList.remove('destello');
+                    }, 1000);
+                });
+                return;
+            }
+
+            elements.forEach(el => {
+                el.classList.add('destello');
+                setTimeout(() => {
+                    el.classList.remove('destello');
+                }, 1000);
+            });
+        });
+    });
+
+    // ============================================
+    // NAVEGACIÓN
+    // ============================================
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+            e.preventDefault();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+            e.preventDefault();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', function() {
+        window.location.href = 'Lenguaje.html';
+    });
+
+    document.getElementById('goToExercisesBtn').addEventListener('click', function() {
+        window.location.href = 'C_5A_Lenguaje.html';
+    });
+
+    updateSlidePosition();
+</script>
+</body>
+</html>
