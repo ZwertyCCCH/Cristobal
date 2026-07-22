@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Tectónica, Sismos, Volcanes, Tsunamis, Huracanes y Rocas | 7° Básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1628;
+            color: #e2e8f0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #0d1b2a;
+            border-radius: 28px;
+            padding: 2rem;
+            border: 1px solid #1a365d;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #1a365d;
+            margin-bottom: 1.5rem;
+        }
+        .header h1 {
+            font-size: 2.2rem;
+            color: #90cdf4;
+            margin-bottom: 0.3rem;
+        }
+        .header .subtitle {
+            color: #4a7a9c;
+            font-size: 0.9rem;
+        }
+        .header .badge {
+            display: inline-block;
+            background: #2b6cb0;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(26,54,93,0.4);
+            padding: 0.8rem 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            border: 1px solid #1a365d;
+        }
+        .info-bar span {
+            color: #90cdf4;
+            font-weight: 600;
+        }
+        .info-bar .highlight-info {
+            color: #63b3ed;
+        }
+        .question-card {
+            background: rgba(26,54,93,0.3);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #1a365d;
+            transition: all 0.3s ease;
+        }
+        .question-card:hover {
+            border-color: #2b6cb0;
+        }
+        .question-number {
+            font-size: 0.75rem;
+            color: #4a7a9c;
+            margin-bottom: 0.3rem;
+        }
+        .question-text {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 0.5rem;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        .options label:hover {
+            background: rgba(43,108,176,0.2);
+        }
+        .options input[type="radio"] {
+            accent-color: #2b6cb0;
+            transform: scale(1.1);
+            flex-shrink: 0;
+        }
+        .options input[type="radio"]:disabled {
+            accent-color: #4a7a9c;
+            cursor: not-allowed;
+        }
+        .question-card.correct {
+            border-left: 5px solid #22c55e;
+            background: rgba(34,197,94,0.1);
+        }
+        .question-card.incorrect {
+            border-left: 5px solid #ef4444;
+            background: rgba(239,68,68,0.1);
+        }
+        .feedback-text {
+            margin-top: 0.6rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            display: none;
+        }
+        .feedback-text.show {
+            display: block;
+        }
+        .feedback-text.correct-fb {
+            background: rgba(34,197,94,0.15);
+            color: #8bc34a;
+            border-left: 3px solid #22c55e;
+        }
+        .feedback-text.incorrect-fb {
+            background: rgba(239,68,68,0.15);
+            color: #ff8a80;
+            border-left: 3px solid #ef4444;
+        }
+        .btn-evaluate {
+            display: block;
+            width: 280px;
+            margin: 1.5rem auto;
+            background: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-evaluate:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+        .btn-evaluate:disabled {
+            background: #4a7a9c;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .results {
+            background: rgba(26,54,93,0.5);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid #2b6cb0;
+            display: none;
+        }
+        .results h3 {
+            color: #90cdf4;
+            font-size: 1.6rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .results .score {
+            font-size: 1.3rem;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+        .results .grade {
+            font-size: 2rem;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 16px;
+            font-weight: bold;
+        }
+        .results .grade.approved {
+            background: rgba(34,197,94,0.2);
+            color: #8bc34a;
+        }
+        .results .grade.failed {
+            background: rgba(239,68,68,0.2);
+            color: #ff8a80;
+        }
+        .results .details {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .results .details span {
+            color: #e2e8f0;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .btn {
+            padding: 0.6rem 1.8rem;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+        .btn-primary {
+            background: #facc15;
+            color: #0a1628;
+        }
+        .btn-primary:hover {
+            background: #fde047;
+            transform: translateY(-2px);
+        }
+        .btn-secondary {
+            background: #2b6cb0;
+            color: white;
+        }
+        .btn-secondary:hover {
+            background: #3182ce;
+            transform: translateY(-2px);
+        }
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #2b6cb0;
+            color: #90cdf4;
+        }
+        .btn-outline:hover {
+            background: #2b6cb0;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #4a7a9c;
+        }
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .container { padding: 1rem; }
+            .header h1 { font-size: 1.5rem; }
+            .info-bar { font-size: 0.75rem; padding: 0.5rem 1rem; }
+            .question-text { font-size: 0.9rem; }
+            .options label { font-size: 0.8rem; }
+            .btn-evaluate { width: 100%; }
+            .results { padding: 1rem; }
+            .results .grade { font-size: 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="badge">Ejercicios - Clase 5</div>
+        <h1>📝 Tectónica, Sismos, Volcanes, Tsunamis, Huracanes y Rocas</h1>
+        <div class="subtitle">7° Básico | Ciencias Naturales | 50 preguntas aleatorias</div>
+    </div>
+
+    <div class="info-bar">
+        <span>📋 <span class="highlight-info" id="totalQuestions">50</span> preguntas</span>
+        <span>✅ Exigencia: <span class="highlight-info">60%</span> (30 correctas = nota 4.0)</span>
+        <span>🎯 Nota máxima: <span class="highlight-info">7.0</span></span>
+        <span>📝 <span class="highlight-info" id="answeredCount">0</span> respondidas</span>
+    </div>
+
+    <div id="examContent"></div>
+
+    <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar Respuestas</button>
+
+    <div id="results" class="results"></div>
+
+    <div class="footer">Basado en la Lección 4 del libro de Ciencias Naturales 7° Básico</div>
+</div>
+
+<script>
+    // ================================================================
+    // POOL DE PREGUNTAS - 170+ PREGUNTAS ENUMERADAS
+    // ================================================================
+
+    // ================================================================
+    // TECTÓNICA DE PLACAS - 30 preguntas (1-30)
+    // ================================================================
+    const tectonicaPool = [
+        // 1
+        { text: "¿Qué postula la teoría de la tectónica de placas?", options: ["Que la Tierra es plana y estática", "Que la corteza terrestre está fragmentada en placas que se desplazan sobre el manto", "Que los continentes están fijos en su posición actual, lo cual provoca que se movilicen las placas distintas a estos territorios", "Que el núcleo terrestre es líquido y genera el movimiento de las distintas placas tectónicas"], correct: "Que la corteza terrestre está fragmentada en placas que se desplazan sobre el manto" },
+        // 2
+        { text: "¿Qué fenómeno genera el movimiento de las placas tectónicas según la teoría más aceptada?", options: ["La rotación de la Tierra sobre su eje, la permite la generación aumento de temperatura y por consecuencia, el movimieto de placas tectónicas", "Las corrientes de convección en el manto por diferencia de temperatura", "La fuerza gravitacional de la Luna, la cual permite que sse genere el movimiento de placas", "La radiación solar que calienta la superficie, generando corrientes de convección"], correct: "Las corrientes de convección en el manto por diferencia de temperatura" },
+        // 3
+        { text: "¿Qué tipo de límite de placas se caracteriza por el choque entre dos placas?", options: ["Límite divergente", "Límite convergente", "Límite transformante", "Límite estático"], correct: "Límite convergente" },
+        // 4
+        { text: "En un límite convergente entre una placa oceánica y una continental, ¿qué proceso ocurre?", options: ["Separación de las placas", "Subducción de la placa oceánica bajo la continental", "Deslizamiento lateral de las placas", "Formación de una dorsal oceánica"], correct: "Subducción de la placa oceánica bajo la continental" },
+        // 5
+        { text: "¿Qué tipo de límite de placas se asocia con la formación de dorsales oceánicas?", options: ["Límite convergente", "Límite divergente", "Límite transformante", "Límite de subducción"], correct: "Límite divergente" },
+        // 6
+        { text: "¿Qué ocurre en un límite transformante entre placas?", options: ["Las placas chocan y una se hunde bajo la otra", "Las placas se separan y asciende magma", "Las placas se deslizan lateralmente sin crear ni destruir corteza", "Las placas se fusionan formando una sola"], correct: "Las placas se deslizan lateralmente sin crear ni destruir corteza" },
+        // 7
+        { text: "¿Qué placas tectónicas interactúan frente a las costas de Chile?", options: ["Placa del Pacífico y Placa Norteamericana", "Placa de Nazca y Placa Sudamericana", "Placa Indoaustraliana y Placa Euroasiática", "Placa Africana y Placa Antártica"], correct: "Placa de Nazca y Placa Sudamericana" },
+        // 8
+        { text: "¿Cómo se llama la zona donde una placa oceánica se hunde bajo otra en un límite convergente?", options: ["Zona de expansión", "Zona de subducción", "Zona de transformación", "Zona de obducción"], correct: "Zona de subducción" },
+        // 9
+        { text: "¿Qué es una dorsal oceánica?", options: ["Una fosa marina profunda", "Un límite divergente bajo el mar donde se forma nueva corteza", "Un tipo de volcán submarino extinto", "Una falla transformante en el fondo oceánico"], correct: "Un límite divergente bajo el mar donde se forma nueva corteza" },
+        // 10
+        { text: "¿Cuál es la principal consecuencia de la subducción de la Placa de Nazca bajo la Placa Sudamericana?", options: ["Formación de glaciares en los Andes", "Alta actividad sísmica y volcánica en Chile", "Formación de desiertos en el norte", "Aumento del nivel del mar en la costa"], correct: "Alta actividad sísmica y volcánica en Chile" },
+        // 11
+        { text: "¿Qué nombre recibe la región de fricción entre las placas en subducción donde se generan sismos profundos?", options: ["Zona de Benioff", "Zona de Wadati", "Zona de convergencia", "Zona de fractura"], correct: "Zona de Benioff" },
+        // 12
+        { text: "¿Qué tipo de límite de placas genera la formación de montañas como el Himalaya?", options: ["Límite divergente", "Límite convergente entre placas continentales", "Límite transformante", "Límite convergente entre placa oceánica y continental"], correct: "Límite convergente entre placas continentales" },
+        // 13
+        { text: "¿Qué es el Cinturón de Fuego del Pacífico?", options: ["Una zona con muchos incendios forestales", "Una región con alta actividad sísmica y volcánica que rodea el Pacífico", "Un desierto caliente en el centro del Pacífico", "Una cadena montañosa submarina"], correct: "Una región con alta actividad sísmica y volcánica que rodea el Pacífico" },
+        // 14
+        { text: "¿Qué porcentaje de los sismos del mundo ocurre en el Cinturón de Fuego del Pacífico?", options: ["50%", "70%", "90%", "95%"], correct: "90%" },
+        // 15
+        { text: "¿Qué porcentaje de los volcanes activos del mundo se encuentra en el Cinturón de Fuego del Pacífico?", options: ["50%", "65%", "75%", "85%"], correct: "75%" },
+        // 16
+        { text: "¿Qué capa de la Tierra permite el movimiento de las placas tectónicas debido a su comportamiento plástico?", options: ["La litosfera", "La astenosfera", "La mesosfera", "La endosfera"], correct: "La astenosfera" },
+        // 17
+        { text: "¿Qué tipo de límite de placas se caracteriza por la ausencia de actividad volcánica pero alta sismicidad?", options: ["Límite divergente", "Límite convergente", "Límite transformante", "Límite de subducción"], correct: "Límite transformante" },
+        // 18
+        { text: "¿Qué es una fosa oceánica?", options: ["Una depresión en el fondo marino formada en un límite convergente", "Una dorsal oceánica en el fondo marino formado en un límite divergente", "Un volcán submarino que se encuentra escondido", "Un cañón submarino formado por erosión y movimientos de agua"], correct: "Una depresión en el fondo marino formada en un límite convergente" },
+        // 19
+        { text: "¿Cuál de las siguientes NO es una placa tectónica principal?", options: ["Placa de Nazca", "Placa Sudamericana", "Placa del Atlántico", "Placa del Pacífico"], correct: "Placa del Atlántico" },
+        // 20
+        { text: "¿Qué proceso ocurre en un límite divergente entre dos placas oceánicas?", options: ["Subducción de una placa bajo la otra", "Formación de nueva corteza oceánica", "Formación de montañas", "Deslizamiento lateral"], correct: "Formación de nueva corteza oceánica" },
+        // 21
+        { text: "¿Qué nombre recibe el movimiento de las placas tectónicas impulsado por las corrientes de convección?", options: ["Deriva continental", "Tectónica de placas", "Expansión del fondo oceánico", "Subducción"], correct: "Tectónica de placas" },
+        // 22
+        { text: "¿Qué tipo de límite de placas se encuentra en la Falla de San Andrés en California?", options: ["Límite divergente", "Límite convergente", "Límite transformante", "Límite de subducción"], correct: "Límite transformante" },
+        // 23
+        { text: "¿Cuál es la velocidad aproximada de movimiento de las placas tectónicas?", options: ["1-2 cm por año", "2-10 cm por año", "10-20 cm por año", "20-50 cm por año"], correct: "2-10 cm por año" },
+        // 24
+        { text: "¿Qué relación tiene la tectónica de placas con la formación de volcanes?", options: ["Los volcanes se forman solo en límites divergentes de la tierra", "Los volcanes se forman principalmente en límites convergentes y divergentes", "Los volcanes se forman tanto en límites transformantes como en convergentes", "Los volcanes no tienen relación con la tectónica de placas"], correct: "Los volcanes se forman principalmente en límites convergentes y divergentes" },
+        // 25
+        { text: "¿Qué ocurre cuando dos placas continentales chocan en un límite convergente?", options: ["Una placa subduce bajo la otra", "Se forman montañas por compresión", "Se forma una dorsal oceánica", "Se genera una falla transformante"], correct: "Se forman montañas por compresión" },
+        // 26
+        { text: "¿Qué es la litosfera en el contexto de la tectónica de placas?", options: ["La capa líquida del manto", "La capa rígida formada por la corteza y parte del manto superior", "El núcleo externo líquido formado por altas temperaturas y minerales como hierro y silicio", "La atmósfera terrestre"], correct: "La capa rígida formada por la corteza y parte del manto superior" },
+        // 27
+        { text: "¿Qué evidencia apoya la teoría de la tectónica de placas?", options: ["La forma de los continentes", "La distribución de fósiles y rocas similares en continentes separados", "La actividad sísmica en los bordes de placas", "Todas las demás"], correct: "Todas las demás" },
+        // 28
+        { text: "¿Qué es el proceso de obducción?", options: ["Cuando una placa oceánica se hunde bajo una continental", "Cuando la corteza continental es empujada sobre otra", "Cuando dos placas se separan", "Cuando las placas se deslizan lateralmente"], correct: "Cuando la corteza continental es empujada sobre otra" },
+        // 29
+        { text: "¿Qué tipo de límite de placas genera sismos de gran magnitud pero sin actividad volcánica?", options: ["Límite convergente con subducción", "Límite divergente", "Límite transformante", "Límite convergente continental-continental"], correct: "Límite transformante" },
+        // 30
+        { text: "¿Cuál es la principal fuente de energía que impulsa el movimiento de las placas tectónicas?", options: ["La energía solar", "El calor interno de la Tierra", "La fuerza gravitacional de la Luna", "La rotación de la Tierra"], correct: "El calor interno de la Tierra" }
+    ];
+
+    // ================================================================
+    // SISMOS - 30 preguntas (31-60)
+    // ================================================================
+    const sismosPool = [
+        // 31
+        { text: "¿Qué es un sismo o terremoto?", options: ["Una erupción volcánica", "Un movimiento brusco de la corteza terrestre por liberación de energía", "Un tsunami", "Un huracán"], correct: "Un movimiento brusco de la corteza terrestre por liberación de energía" },
+        // 32
+        { text: "¿Cuál es la principal causa de los sismos?", options: ["La actividad humana indiscriminada", "El movimiento de las placas tectónicas", "El movimiento de las placas subcutaneas", "El movimiento de las placas tertónicas"], correct: "El movimiento de las placas tectónicas" },
+        // 33
+        { text: "¿Cómo se llama el punto dentro de la Tierra donde se origina un sismo?", options: ["Epicentro", "Hipocentro", "Foco sísmico", "Magnitud"], correct: "Hipocentro" },
+        // 34
+        { text: "¿Cómo se llama el punto en la superficie terrestre directamente sobre el hipocentro?", options: ["Hipocentro", "Epicentro", "Foco", "Onda P"], correct: "Epicentro" },
+        // 35
+        { text: "¿Qué tipo de ondas sísmicas son las más rápidas?", options: ["Ondas S", "Ondas P", "Ondas superficiales", "Ondas L"], correct: "Ondas P" },
+        // 36
+        { text: "¿Qué tipo de ondas sísmicas son las más destructivas?", options: ["Ondas P", "Ondas S", "Ondas superficiales", "Ondas de Rayleigh"], correct: "Ondas superficiales" },
+        // 37
+        { text: "¿Qué tipo de ondas sísmicas NO pueden atravesar líquidos?", options: ["Ondas P", "Ondas S", "Ondas superficiales", "Ondas de Love"], correct: "Ondas S" },
+        // 38
+        { text: "¿Qué mide la escala de Richter?", options: ["La intensidad del sismo", "La magnitud o energía liberada", "Los daños en la superficie", "La duración del sismo"], correct: "La magnitud o energía liberada" },
+        // 39
+        { text: "¿Qué mide la escala de Mercalli?", options: ["La magnitud del sismo", "La intensidad o efectos del sismo", "La energía liberada", "La profundidad del hipocentro"], correct: "La intensidad o efectos del sismo" },
+        // 40
+        { text: "¿Cuántos grados tiene la escala de Mercalli?", options: ["10", "12", "8", "15"], correct: "12" },
+        // 41
+        { text: "¿Qué magnitud en la escala de Richter se considera un 'gran terremoto'?", options: ["5.0", "6.0", "7.0", "8.0 o más"], correct: "8.0 o más" },
+        // 42
+        { text: "¿Qué fenómeno permite calcular la distancia al epicentro de un sismo?", options: ["La diferencia de la amplitud entre las dos ondas tipo P y S", "La diferencia de tiempo entre la llegada de las ondas P y S", "La duración del sismo", "La profundidad del hipocentro"], correct: "La diferencia de tiempo entre la llegada de las ondas P y S" },
+        // 43
+        { text: "¿Qué instrumento registra los movimientos telúricos?", options: ["Barómetro", "Termómetro", "Sismógrafo", "Anemómetro"], correct: "Sismógrafo" },
+        // 44
+        { text: "¿Qué magnitud tuvo el terremoto de Valdivia en 1960?", options: ["8.8", "9.5", "8.2", "9.0"], correct: "9.5" },
+        // 45
+        { text: "¿Qué magnitud tuvo el terremoto del Maule en 2010?", options: ["7.5", "8.8", "9.5", "8.2"], correct: "8.8" },
+        // 46
+        { text: "¿Cuánto duró aproximadamente el terremoto de Valdivia en 1960?", options: ["1 minuto", "3 minutos", "10 minutos", "30 segundos"], correct: "10 minutos" },
+        // 47
+        { text: "¿Qué es la zona de Benioff?", options: ["Una zona de alta presión atmosférica", "La región de fricción entre placas en subducción", "Un tipo de falla geológica", "Una zona de expansión oceánica"], correct: "La región de fricción entre placas en subducción" },
+        // 48
+        { text: "¿Qué son las réplicas sísmicas?", options: ["Sismos que ocurren antes de un terremoto principal", "Sismos que ocurren después de un terremoto principal", "Tsunamis generados por sismos", "Erupciones volcánicas"], correct: "Sismos que ocurren después de un terremoto principal" },
+        // 49
+        { text: "¿Qué tipo de sismo ocurre en el límite entre dos placas tectónicas?", options: ["Sismo intraplaca", "Sismo interplaca", "Sismo volcánico", "Sismo inducido"], correct: "Sismo interplaca" },
+        // 50
+        { text: "¿Qué tipo de sismo ocurre en el interior de una placa tectónica?", options: ["Sismo interplaca", "Sismo intraplaca", "Sismo de subducción", "Sismo transformante"], correct: "Sismo intraplaca" },
+        // 51
+        { text: "¿Qué magnitud en la escala de Richter se considera 'moderada'?", options: ["3.0-3.9", "4.0-4.9", "5.0-5.9", "6.0-6.9"], correct: "5.0-5.9" },
+        // 52
+        { text: "¿Qué intensidad en la escala de Mercalli corresponde a 'destrucción total'?", options: ["IX", "X", "XI", "XII"], correct: "XII" },
+        // 53
+        { text: "¿Qué tipo de ondas sísmicas viajan comprimiendo y expandiendo el material?", options: ["Ondas S", "Ondas P", "Ondas superficiales", "Ondas de Love"], correct: "Ondas P" },
+        // 54
+        { text: "¿Qué tipo de ondas sísmicas mueven el terreno perpendicularmente a la dirección de viaje?", options: ["Ondas P", "Ondas S", "Ondas superficiales", "Ondas de Rayleigh"], correct: "Ondas S" },
+        // 55
+        { text: "¿Qué es el epicentro de un sismo?", options: ["El punto de origen en el interior de la Tierra", "El punto en la superficie sobre el hipocentro", "La zona de mayor daño", "El lugar donde se registra el sismo"], correct: "El punto en la superficie sobre el hipocentro" },
+        // 56
+        { text: "¿Qué es el hipocentro de un sismo?", options: ["El punto en la superficie sobre el foco", "El punto de origen en el interior de la Tierra", "La zona de mayor intensidad", "El lugar donde se siente con mayor fuerza"], correct: "El punto de origen en el interior de la Tierra" },
+        // 57
+        { text: "¿Qué magnitud tuvo el terremoto de Iquique en 2014?", options: ["7.5", "8.2", "8.8", "9.5"], correct: "8.2" },
+        // 58
+        { text: "¿Qué magnitud tuvo el terremoto de Coquimbo en 2015?", options: ["7.5", "8.2", "8.3", "8.8"], correct: "8.3" },
+        // 59
+        { text: "¿Qué es la licuefacción del suelo durante un sismo?", options: ["Cuando el suelo se vuelve más duro", "Cuando el suelo saturado de agua pierde resistencia y se comporta como líquido", "Cuando el suelo se agrieta y provoca que el suelo se pueda comportar como un líquido ", "Cuando el suelo se compacta debido al aumento de absorción de agua"], correct: "Cuando el suelo saturado de agua pierde resistencia y se comporta como líquido" },
+        // 60
+        { text: "¿Qué diferencia fundamental existe entre magnitud e intensidad de un sismo?", options: ["La magnitud mide los daños y la intensidad la energía liberada", "La magnitud es la energía liberada en el foco y la intensidad los efectos en la superficie", "Son exactamente lo mismo", "La intensidad se mide con el sismógrafo"], correct: "La magnitud es la energía liberada en el foco y la intensidad los efectos en la superficie" }
+    ];
+
+    // ================================================================
+    // VOLCANES - 30 preguntas (61-90)
+    // ================================================================
+    const volcanesPool = [
+        // 61
+        { text: "¿Qué es un volcán?", options: ["Una gran montaña por la cual se puede apreciar la salida de magma, gases y cenizas", "Una abertura en la corteza terrestre por donde sale magma, gases y cenizas", "Un cráter terrestre, donde se originan los sismos", "Un glaciar"], correct: "Una abertura en la corteza terrestre por donde sale magma, gases y cenizas" },
+        // 62
+        { text: "¿Cómo se llama el material fundido dentro del volcán?", options: ["Lava", "Magma", "Ceniza", "Piedra pómez"], correct: "Magma" },
+        // 63
+        { text: "¿Cómo se llama el magma cuando sale a la superficie?", options: ["Magma", "Lava", "Ceniza", "Roca ígnea"], correct: "Lava" },
+        // 64
+        { text: "¿Cuál es la cámara donde se acumula el magma antes de una erupción?", options: ["Cráter", "Chimenea", "Cámara magmática", "Cono volcánico"], correct: "Cámara magmática" },
+        // 65
+        { text: "¿Cuál es el conducto por donde asciende el magma?", options: ["Cráter", "Chimenea", "Cono", "Caldera"], correct: "Chimenea" },
+        // 66
+        { text: "¿Cuál es la abertura en la cima del volcán por donde salen los materiales?", options: ["Chimenea", "Cámara magmática", "Cráter", "Fumarola"], correct: "Cráter" },
+        // 67
+        { text: "¿Qué tipo de volcán tiene forma de cono perfecto con laderas empinadas?", options: ["Volcán en escudo", "Estratovolcán", "Cono de escoria", "Caldera"], correct: "Estratovolcán" },
+        // 68
+        { text: "¿Qué tipo de volcán tiene forma ancha y baja con pendientes suaves?", options: ["Estratovolcán", "Volcán en escudo", "Cono de escoria", "Caldera"], correct: "Volcán en escudo" },
+        // 69
+        { text: "¿Qué tipo de erupción es tranquila con lava muy fluida?", options: ["Explosiva (Pliniana)", "Efusiva (Hawaiana)", "Estromboliana", "Vulcaniana"], correct: "Efusiva (Hawaiana)" },
+        // 70
+        { text: "¿Qué tipo de erupción es extremadamente explosiva con grandes columnas de ceniza?", options: ["Efusiva", "Pliniana", "Estromboliana", "Hawaiana"], correct: "Pliniana" },
+        // 71
+        { text: "¿Qué volcán chileno entró en erupción en 2008 destruyendo la ciudad cercana?", options: ["Villarrica", "Chaitén", "Calbuco", "Llaima"], correct: "Chaitén" },
+        // 72
+        { text: "¿Qué volcán chileno es conocido por tener un lago de lava en su interior?", options: ["Llaima", "Villarrica", "Osorno", "Calbuco"], correct: "Villarrica" },
+        // 73
+        { text: "¿Qué volcán chileno entró en erupción sorpresivamente en abril de 2015?", options: ["Villarrica", "Chaitén", "Calbuco", "Llaima"], correct: "Calbuco" },
+        // 74
+        { text: "¿Qué son las fumarolas?", options: ["Emisiones de gases y vapor por grietas del volcán", "Flujos de lava que sale por las grietas del volcán", "Cenizas volcánicas", "Lahares"], correct: "Emisiones de gases y vapor por grietas del volcán" },
+        // 75
+        { text: "¿Qué son los lahares?", options: ["Flujo de lava", "Flujo de lodo volcánico", "Ceniza volcánica", "Gas tóxico"], correct: "Flujo de lodo volcánico" },
+        // 76
+        { text: "¿Qué es la piedra pómez?", options: ["Una roca sedimentaria lisa que flota en el agua", "Una roca volcánica porosa que flota en el agua", "Un mineral indispensable para la vida marina", "Un fósil marino que es capaz de flotar"], correct: "Una roca volcánica porosa que flota en el agua" },
+        // 77
+        { text: "¿Qué volcán es el más alto del mundo y se encuentra en Chile?", options: ["Villarrica", "Llaima", "Ojos del Salado", "Láscar"], correct: "Ojos del Salado" },
+        // 78
+        { text: "¿Qué tipo de erupción lleva el nombre de un volcán italiano?", options: ["Pliniana", "Estromboliana", "Hawaiana", "Vulcaniana"], correct: "Estromboliana" },
+        // 79
+        { text: "¿Qué es una caldera volcánica?", options: ["Un tipo de volcán pequeño", "Una gran depresión formada por el colapso del volcán", "El conducto del magma", "La abertura en la cima"], correct: "Una gran depresión formada por el colapso del volcán" },
+        // 80
+        { text: "¿Qué volcán chileno tuvo una erupción pliniana en 2008?", options: ["Villarrica", "Chaitén", "Calbuco", "Llaima"], correct: "Chaitén" },
+        // 81
+        { text: "¿Qué es un volcán activo?", options: ["Que nunca ha hecho erupción", "Que ha tenido actividad en tiempos históricos", "Que está en erupción permanente", "Que no tiene posibilidad de erupcionar"], correct: "Que ha tenido actividad en tiempos históricos" },
+        // 82
+        { text: "¿Qué es un volcán extinto?", options: ["Que ha tenido actividad reciente", "Que no tiene posibilidad de volver a erupcionar", "Que está durmiendo", "Que tiene fumarolas"], correct: "Que no tiene posibilidad de volver a erupcionar" },
+        // 83
+        { text: "¿Qué volcán chileno es uno de los más activos de Sudamérica?", options: ["Osorno", "Llaima", "Chaitén", "Calbuco"], correct: "Llaima" },
+        // 84
+        { text: "¿Qué gases emiten los volcanes?", options: ["Solo vapor de agua", "Vapor de agua, CO₂ y SO₂", "Solo oxígeno", "Solo nitrógeno"], correct: "Vapor de agua, CO₂ y SO₂" },
+        // 85
+        { text: "¿Qué son las bombas volcánicas?", options: ["Fragmentos de lava solidificada expulsados", "Explosiones dentro del volcán", "Gases tóxicos que explotan (como una bomba)", "Flujos de lodo"], correct: "Fragmentos de lava solidificada expulsados" },
+        // 86
+        { text: "¿Qué volcán chileno se encuentra en la Región de Arica y Parinacota?", options: ["Láscar", "Tacora", "El Planchón", "Descabezado Grande"], correct: "Tacora" },
+        // 87
+        { text: "¿Qué volcán chileno es el más activo del norte de Chile?", options: ["Tacora", "Láscar", "El Planchón", "Ojos del Salado"], correct: "Láscar" },
+        // 88
+        { text: "¿Qué volcán chileno está en la Región de Aysén y tuvo una gran erupción en 1991?", options: ["Chaitén", "Hudson", "Calbuco", "Puyehue"], correct: "Hudson" },
+        // 89
+        { text: "¿Qué es un flujo piroclástico?", options: ["Un flujo de lava lento que se desplaza debido a la diferencia de presión", "Una mezcla de gases calientes, ceniza y roca que se desplaza a gran velocidad", "Un flujo de lodo volcánico y cenizas que se desplaza a gran velocidad", "Una columna de ceniza que nunca sale del volcán"], correct: "Una mezcla de gases calientes, ceniza y roca que se desplaza a gran velocidad" },
+        // 90
+        { text: "¿Qué tipo de roca se forma al enfriarse la lava?", options: ["Roca sedimentaria", "Roca ígnea", "Roca metamórfica", "Roca caliza"], correct: "Roca ígnea" }
+    ];
+
+    // ================================================================
+    // TSUNAMIS - 30 preguntas (91-120)
+    // ================================================================
+    const tsunamisPool = [
+        // 91
+        { text: "¿Qué es un tsunami?", options: ["Un terremoto marino que genera el desplazamiento de agua", "Una serie de olas gigantes generadas por desplazamiento del fondo marino", "Una erupción volcánica que genera el desplazamiento de vientos marinos", "Un huracán"], correct: "Una serie de olas gigantes generadas por desplazamiento del fondo marino" },
+        // 92
+        { text: "¿Cuál es la causa más común de un tsunami?", options: ["Un huracán", "Un sismo de subducción", "Una tormenta eléctrica", "Una marea alta"], correct: "Un sismo de subducción" },
+        // 93
+        { text: "¿Qué característica tienen los tsunamis en alta mar?", options: ["Alta velocidad y baja altura", "Baja velocidad y alta altura", "Velocidad media y altura media", "Son muy lentos"], correct: "Alta velocidad y baja altura" },
+        // 94
+        { text: "¿Qué ocurre con la altura de la ola de un tsunami al acercarse a la costa?", options: ["Disminuye", "Aumenta drásticamente", "Se mantiene igual", "Desaparece"], correct: "Aumenta drásticamente" },
+        // 95
+        { text: "¿Qué velocidad puede alcanzar un tsunami en alta mar?", options: ["100 km/h", "300 km/h", "800 km/h", "1.500 km/h"], correct: "800 km/h" },
+        // 96
+        { text: "¿Qué altura puede superar un tsunami al llegar a la costa?", options: ["5 metros", "10 metros", "30 metros", "50 metros"], correct: "30 metros" },
+        // 97
+        { text: "¿Qué tsunami chileno cruzó el Océano Pacífico y llegó a Japón y Hawái?", options: ["Maule 2010", "Valdivia 1960", "Iquique 2014", "Coquimbo 2015"], correct: "Valdivia 1960" },
+        // 98
+        { text: "¿Qué es el efecto de shoaling?", options: ["Aumento de la velocidad de la ola al acercarse a la costa", "Aumento de la altura de la ola al acercarse a la costa", "Disminución de la altura de la ola al acercarse a la costa", "Desaparición de la ola"], correct: "Aumento de la altura de la ola al acercarse a la costa" },
+        // 99
+        { text: "¿Qué instituciones emiten alertas de tsunami en Chile?", options: ["SHOA y ONEMI", "SERNAC y CONAF", "MINSAL y CSN", "SAE y CENSO"], correct: "SHOA y ONEMI" },
+        // 100
+        { text: "¿Qué magnitud tuvo el terremoto de Valdivia que generó el tsunami de 1960?", options: ["8.8", "9.5", "8.2", "9.0"], correct: "9.5" },
+        // 101
+        { text: "¿Qué altura alcanzaron las olas del tsunami de Valdivia en 1960?", options: ["10 metros", "15 metros", "25 metros", "40 metros"], correct: "25 metros" },
+        // 102
+        { text: "¿Qué fenómeno puede generar un tsunami además de un sismo?", options: ["Una erupción volcánica submarina", "Un huracán", "Una tormenta de nieve", "Un eclipse"], correct: "Una erupción volcánica submarina" },
+        // 103
+        { text: "¿Qué magnitud tuvo el terremoto que generó el tsunami de Coquimbo en 2015?", options: ["7.5", "8.2", "8.3", "8.8"], correct: "8.3" },
+        // 104
+        { text: "¿Qué altura alcanzaron las olas del tsunami de Coquimbo en 2015?", options: ["2 metros", "3 metros", "4.5 metros", "6 metros"], correct: "4.5 metros" },
+        // 105
+        { text: "¿Qué es un tsunami?", options: ["Una ola gigante causada por un sismo submarino", "Un terremoto en el mar", "Una erupción volcánica", "Una tormenta tropical"], correct: "Una ola gigante causada por un sismo submarino" },
+        // 106
+        { text: "¿Cuál es la longitud de onda típica de un tsunami en alta mar?", options: ["1-10 km", "10-50 km", "50-100 km", "100-200 km"], correct: "50-100 km" },
+        // 107
+        { text: "¿Qué ocurre con la velocidad de un tsunami al acercarse a la costa?", options: ["Aumenta", "Disminuye", "Se mantiene igual", "Se detiene"], correct: "Disminuye" },
+        // 108
+        { text: "¿Qué tsunami chileno generó olas de 4-5 metros en la costa?", options: ["Valdivia 1960", "Maule 2010", "Iquique 2014", "Coquimbo 2015"], correct: "Maule 2010" },
+        // 109
+        { text: "¿Qué es el Sistema de Alerta de Emergencia (SAE) en Chile?", options: ["Un sistema para alertar sobre sismos, tsunamis y otras emergencias a través de celulares", "Una radio de emergencia", "Un sistema de sirenas", "Un plan de evacuación"], correct: "Un sistema para alertar sobre sismos, tsunamis y otras emergencias a través de celulares" },
+        // 110
+        { text: "¿Qué magnitud tuvo el terremoto de Iquique en 2014 que generó un tsunami?", options: ["7.5", "8.2", "8.8", "9.5"], correct: "8.2" },
+        // 111
+        { text: "¿Qué altura alcanzaron las olas del tsunami de Iquique en 2014?", options: ["1 metro", "2 metros", "4 metros", "6 metros"], correct: "2 metros" },
+        // 112
+        { text: "¿Qué tipo de sismo es más propenso a generar tsunamis?", options: ["Sismo intraplaca", "Sismo de subducción", "Sismo transformante", "Sismo volcánico"], correct: "Sismo de subducción" },
+        // 113
+        { text: "¿Qué es la zona de subducción en relación con los tsunamis?", options: ["La zona donde se generan la mayoría de los tsunamis", "La zona donde se forman la mayoría de los huracanes", "La zona histórica conocida por su alta presión atmosférica", "La zona de formación de glaciares"], correct: "La zona donde se generan la mayoría de los tsunamis" },
+        // 114
+        { text: "¿Qué países fueron afectados por el tsunami de Valdivia en 1960?", options: ["Solo Chile", "Chile y Argentina", "Chile, Hawái, Japón y Filipinas", "Chile y Perú"], correct: "Chile, Hawái, Japón y Filipinas" },
+        // 115
+        { text: "¿Qué es un tren de ondas en el contexto de los tsunamis?", options: ["Una serie de olas que llegan en sucesión", "Una sola ola gigante", "Una ola que viaja en tren", "Una ola de gran velocidad"], correct: "Una serie de olas que llegan en sucesión" },
+        // 116
+        { text: "¿Cuánto tiempo puede durar la llegada de las olas de un tsunami?", options: ["Minutos", "Horas", "Días", "Semanas"], correct: "Horas" },
+        // 117
+        { text: "¿Qué es el efecto de amplificación de un tsunami en bahías y estuarios?", options: ["Cuando la ola se hace más pequeña producto de las ondas reflejadas", "Cuando la ola aumenta su altura al concentrarse en espacios reducidos", "Cuando la ola se desvía generando nuevas olas con mayor altura", "Cuando la ola desaparece"], correct: "Cuando la ola aumenta su altura al concentrarse en espacios reducidos" },
+        // 118
+        { text: "¿Qué magnitud tuvo el terremoto que generó el tsunami de Maule en 2010?", options: ["7.5", "8.8", "9.5", "8.2"], correct: "8.8" },
+        // 119
+        { text: "¿Qué es un tsunami local?", options: ["Un tsunami que afecta solo la zona cercana al epicentro", "Un tsunami que cruza océanos", "Un tsunami pequeño que afecta solamente la zona del hipocentro", "Un tsunami generado por un huracán "], correct: "Un tsunami que afecta solo la zona cercana al epicentro" },
+        // 120
+        { text: "¿Qué es un tsunami distante o transoceánico?", options: ["Un tsunami que afecta solo la costa cercana", "Un tsunami que cruza océanos enteros", "Un tsunami pequeño", "Un tsunami generado por un volcán"], correct: "Un tsunami que cruza océanos enteros" }
+    ];
+
+    // ================================================================
+    // HURACANES - 30 preguntas (121-150)
+    // ================================================================
+    const huracanesPool = [
+        // 121
+        { text: "¿Qué es un huracán?", options: ["Una tormenta de nieve", "Un sistema de tormentas tropicales con vientos sostenidos de al menos 119 km/h", "Un terremoto en el mar con vientos sostenidos de al menos 132 km/h", "Un sistema de tormetas, que genera vientos sostenidos de al menos 123 km/h y olas gigantes"], correct: "Un sistema de tormentas tropicales con vientos sostenidos de al menos 119 km/h" },
+        // 122
+        { text: "¿Cuál es la temperatura mínima del agua para que se forme un huracán?", options: ["20°C", "26.5°C", "30°C", "15°C"], correct: "26.5°C" },
+        // 123
+        { text: "¿Cómo se llama el centro del huracán donde hay calma?", options: ["Pared del ojo", "Ojo", "Bandas de nubes", "Ciclón"], correct: "Ojo" },
+        // 124
+        { text: "¿Dónde se registran los vientos más intensos en un huracán?", options: ["En el ojo", "En la pared del ojo", "En las bandas de nubes", "En el exterior"], correct: "En la pared del ojo" },
+        // 125
+        { text: "¿Qué escala clasifica los huracanes en 5 categorías?", options: ["Escala de Richter", "Escala de Mercalli", "Escala Saffir-Simpson", "Escala Fujita"], correct: "Escala Saffir-Simpson" },
+        // 126
+        { text: "¿Qué categoría tiene un huracán con vientos superiores a 252 km/h?", options: ["Categoría 3", "Categoría 4", "Categoría 5", "Categoría 2"], correct: "Categoría 5" },
+        // 127
+        { text: "¿Por qué Chile NO es afectado directamente por huracanes?", options: ["Porque está en el hemisferio sur", "Por la corriente fría de Humboldt y los vientos del oeste", "Porque está muy al sur, lo que permite que las bajas temperaturas impidan la formación de estos", "Porque no hay océano"], correct: "Por la corriente fría de Humboldt y los vientos del oeste" },
+        // 128
+        { text: "¿Cómo se llama un huracán en el Pacífico Noroccidental?", options: ["Ciclón", "Tifón", "Tormenta", "Monzón"], correct: "Tifón" },
+        // 129
+        { text: "¿Qué fenómeno asociado a los huracanes causa el aumento del nivel del mar?", options: ["Marejada ciclónica", "Tsunami", "Marea alta", "Efecto Coriolis"], correct: "Marejada ciclónica" },
+        // 130
+        { text: "¿Qué huracán devastó Nueva Orleans en 2005?", options: ["Irma", "Katrina", "Harvey", "Otto"], correct: "Katrina" },
+        // 131
+        { text: "¿Qué categoría alcanzó el huracán Katrina en 2005?", options: ["Categoría 3", "Categoría 4", "Categoría 5", "Categoría 2"], correct: "Categoría 5" },
+        // 132
+        { text: "¿Qué vientos tenía el huracán Irma en 2017?", options: ["250 km/h", "280 km/h", "295 km/h", "320 km/h"], correct: "295 km/h" },
+        // 133
+        { text: "¿Qué huracán causó inundaciones catastróficas en Texas en 2017?", options: ["Katrina", "Irma", "Harvey", "Maria"], correct: "Harvey" },
+        // 134
+        { text: "¿Qué huracán afectó Centroamérica en 2016 (Costa Rica y Nicaragua)?", options: ["Katrina", "Irma", "Harvey", "Otto"], correct: "Otto" },
+        // 135
+        { text: "¿Qué es el Efecto Coriolis en la formación de huracanes?", options: ["La fuerza que hace girar a los huracanes debido a la rotación de la Tierra", "La fuerza que detiene los huracanes debido principalmente a la traslación de la Tierra", "La fuerza que los desplaza hacia el oeste", "La fuerza destruye todo debido a un huracán"], correct: "La fuerza que hace girar a los huracanes debido a la rotación de la Tierra" },
+        // 136
+        { text: "¿Qué es la cizalladura del viento y su relación con los huracanes?", options: ["El cambio en la dirección del viento con la altura que puede debilitar un huracán", "La fuerza del viento en el ojo del huracán, lo cual implica que se debilite el huracán", "El viento en la pared del ojo del huracán, que aumenta la fuerza del huracán", "La velocidad del viento en superficie debido a la diferencia de presión y temperatura"], correct: "El cambio en la dirección del viento con la altura que puede debilitar un huracán" },
+        // 137
+        { text: "¿Qué diámetro puede tener el ojo de un huracán?", options: ["5-10 km", "10-20 km", "30-60 km", "100-200 km"], correct: "30-60 km" },
+        // 138
+        { text: "¿Qué daños causa un huracán de categoría 1 en la escala Saffir-Simpson?", options: ["Destrucción total", "Daños extremos", "Daños mínimos", "Daños catastróficos"], correct: "Daños mínimos" },
+        // 139
+        { text: "¿Qué daños causa un huracán de categoría 5 en la escala Saffir-Simpson?", options: ["Daños mínimos", "Daños moderados", "Daños mayores", "Daños catastróficos"], correct: "Daños catastróficos" },
+        // 140
+        { text: "¿Cuánta energía puede liberar un huracán por día?", options: ["Equivalente a 100 bombas atómicas", "Equivalente a 1.000 bombas atómicas", "Equivalente a 10.000 bombas atómicas", "Equivalente a 100.000 bombas atómicas"], correct: "Equivalente a 10.000 bombas atómicas" },
+        // 141
+        { text: "¿Qué es la marejada ciclónica?", options: ["El aumento del nivel del mar causado por la baja presión y los vientos de un huracán", "Una ola gigante generada por un sismo", "Una marea alta causada por la alta presión  y vientos de un huracán", "Una tormenta de lluvia"], correct: "El aumento del nivel del mar causado por la baja presión y los vientos de un huracán" },
+        // 142
+        { text: "¿Qué regiones del mundo son más propensas a huracanes?", options: ["Regiones polares", "Regiones tropicales", "Regiones templadas", "Regiones desérticas"], correct: "Regiones tropicales" },
+        // 143
+        { text: "¿Qué es un ciclón tropical?", options: ["Otro nombre para un huracán según la región", "Una tormenta de nieve que ocurre en clima tropical", "Un terremoto que ocurre en zonas tropicales", "Un tsunami"], correct: "Otro nombre para un huracán según la región" },
+        // 144
+        { text: "¿Qué es el 'ojo' de un huracán?", options: ["La zona de vientos más intensos en el huracán", "El centro del huracán con calma y cielo despejado", "Las bandas de nubes exteriores formadas en la zona del huracán", "La zona de lluvias torrenciales"], correct: "El centro del huracán con calma y cielo despejado" },
+        // 145
+        { text: "¿Qué es la 'pared del ojo' en un huracán?", options: ["El centro del huracán donde la presión es normal", "El anillo de nubes alrededor del ojo con los vientos más intensos", "Las bandas de nubes exteriores donde la humedad es mayor", "La zona de baja presión donde los vientos son más intensos"], correct: "El anillo de nubes alrededor del ojo con los vientos más intensos" },
+        // 146
+        { text: "¿Qué vientos debe tener un huracán para ser categoría 5 según Saffir-Simpson?", options: ["Más de 200 km/h", "Más de 220 km/h", "Más de 252 km/h", "Más de 280 km/h"], correct: "Más de 252 km/h" },
+        // 147
+        { text: "¿Qué es un tifón?", options: ["Un huracán en el océano Atlántico", "Un huracán en el Pacífico Noroccidental", "Un huracán en el océano Índico", "Un tipo de tornado"], correct: "Un huracán en el Pacífico Noroccidental" },
+        // 148
+        { text: "¿Cuántas categorías tiene la escala Saffir-Simpson?", options: ["3", "4", "5", "6"], correct: "5" },
+        // 149
+        { text: "¿Qué tipo de lluvias pueden causar los huracanes?", options: ["Lluvias ligeras", "Lluvias torrenciales", "Lluvias de nieve", "Lluvias de granizo"], correct: "Lluvias torrenciales" },
+        // 150
+        { text: "¿Qué fenómeno climático puede generar tormentas atípicas en Chile?", options: ["El Niño", "La Niña", "El efecto Coriolis", "La corriente de Humboldt"], correct: "El Niño" }
+    ];
+
+    // ================================================================
+    // ROCAS - 30 preguntas (151-180)
+    // ================================================================
+    const rocasPool = [
+        // 151
+        { text: "¿Qué es una roca?", options: ["Un mineral puro indispensable para la vida microscópica", "Una mezcla heterogénea de varios minerales", "Una mezcla homogénea de varios minerales", "Un fósil"], correct: "Una mezcla heterogénea de varios minerales" },
+        // 152
+        { text: "¿Qué tipo de roca se forma por la solidificación del magma o lava?", options: ["Roca sedimentaria", "Roca ígnea", "Roca metamórfica", "Roca caliza"], correct: "Roca ígnea" },
+        // 153
+        { text: "¿Qué tipo de roca se forma por la compactación de sedimentos?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca sedimentaria" },
+        // 154
+        { text: "¿Qué tipo de roca se forma por presión y calor sin llegar a fundirse?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca metamórfica" },
+        // 155
+        { text: "¿Qué tipo de roca es el granito?", options: ["Roca sedimentaria", "Roca ígnea", "Roca metamórfica", "Roca caliza"], correct: "Roca ígnea" },
+        // 156
+        { text: "¿Qué tipo de roca es la pumita o piedra pómez?", options: ["Roca sedimentaria", "Roca ígnea", "Roca metamórfica", "Roca caliza"], correct: "Roca ígnea" },
+        // 157
+        { text: "¿Qué tipo de roca es el mármol?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca metamórfica" },
+        // 158
+        { text: "¿Qué tipo de roca es la arenisca?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca sedimentaria" },
+        // 159
+        { text: "¿Qué tipo de roca es la caliza?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca sedimentaria" },
+        // 160
+        { text: "¿Qué tipo de roca es el esquisto?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca metamórfica" },
+        // 161
+        { text: "¿Qué tipo de roca es el basalto?", options: ["Roca sedimentaria", "Roca ígnea", "Roca metamórfica", "Roca caliza"], correct: "Roca ígnea" },
+        // 162
+        { text: "¿Qué tipo de roca es el gneis?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca metamórfica" },
+        // 163
+        { text: "¿Qué elemento es el más abundante en la composición de la Tierra?", options: ["Oxígeno", "Silicio", "Hierro", "Magnesio"], correct: "Hierro" },
+        // 164
+        { text: "¿Qué porcentaje de hierro tiene la composición de la Tierra?", options: ["20%", "25%", "32%", "40%"], correct: "32%" },
+        // 165
+        { text: "¿Qué porcentaje de oxígeno tiene la composición de la Tierra?", options: ["20%", "25%", "30%", "35%"], correct: "30%" },
+        // 166
+        { text: "¿Qué mineral es el más abundante en la Tierra?", options: ["Cuarzo", "Silicato", "Calcita", "Feldespato"], correct: "Silicato" },
+        // 167
+        { text: "¿Qué elemento es el segundo más abundante en la Tierra?", options: ["Hierro", "Oxígeno", "Silicio", "Magnesio"], correct: "Oxígeno" },
+        // 168
+        { text: "¿Qué elemento es el tercero más abundante en la Tierra?", options: ["Hierro", "Oxígeno", "Silicio", "Magnesio"], correct: "Silicio" },
+        // 169
+        { text: "¿Qué tipo de roca cubre aproximadamente el 75% de la superficie terrestre?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca sedimentaria" },
+        // 170
+        { text: "¿Qué proceso describe el ciclo de las rocas?", options: ["La transformación de un tipo de roca en otro a través de procesos geológicos", "La formación de fósiles", "La erosión de las montañas a lo largo del tiempo provocada principalmente por las lluvias", "La transformación de un tipo de mineral en otro a través de procesos geológicos"], correct: "La transformación de un tipo de roca en otro a través de procesos geológicos" },
+        // 171
+        { text: "¿Qué es la erosión en el contexto de las rocas?", options: ["El desgaste y transporte de materiales por agentes externos", "La fusión de rocas que permiten la formación de nuevos minerales", "La compactación de sedimentos marinos debido a agentes internos", "La formación de minerales"], correct: "El desgaste y transporte de materiales por agentes externos" },
+        // 172
+        { text: "¿Qué es la meteorización?", options: ["La descomposición de rocas en la superficie", "La formación de nuevas rocas", "El transporte de sedimentos", "La compactación de sedimentos"], correct: "La descomposición de rocas en la superficie" },
+        // 173
+        { text: "¿Qué tipo de roca se forma en el interior de la Tierra por enfriamiento lento del magma?", options: ["Roca ígnea intrusiva", "Roca ígnea extrusiva", "Roca sedimentaria", "Roca metamórfica"], correct: "Roca ígnea intrusiva" },
+        // 174
+        { text: "¿Qué tipo de roca se forma en la superficie por enfriamiento rápido de la lava?", options: ["Roca ígnea intrusiva", "Roca ígnea extrusiva", "Roca sedimentaria", "Roca metamórfica"], correct: "Roca ígnea extrusiva" },
+        // 175
+        { text: "¿Qué es un conglomerado?", options: ["Una roca sedimentaria formada por fragmentos redondeados", "Una roca ígnea formada por distintos elementos", "Una roca metamórfica generada a partir de altas presiones", "Un mineral formado por distintos tipos de rocas"], correct: "Una roca sedimentaria formada por fragmentos redondeados" },
+        // 176
+        { text: "¿Qué es la obsidiana?", options: ["Una roca ígnea vítrea", "Una roca sedimentaria", "Una roca metamórfica", "Un mineral"], correct: "Una roca ígnea vítrea" },
+        // 177
+        { text: "¿Qué elemento es el más abundante en la corteza terrestre?", options: ["Hierro", "Oxígeno", "Silicio", "Aluminio"], correct: "Oxígeno" },
+        // 178
+        { text: "¿Qué elemento es el segundo más abundante en la corteza terrestre?", options: ["Hierro", "Oxígeno", "Silicio", "Aluminio"], correct: "Silicio" },
+        // 179
+        { text: "¿Qué tipo de roca se utiliza comúnmente en escultura como el mármol?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca metamórfica" },
+        // 180
+        { text: "¿Qué es la pumita?", options: ["Una roca ígnea porosa que flota en el agua", "Una roca sedimentaria lisa que flota en el agua", "Una roca metamórfica porosa que flota en el agua", "Un mineral"], correct: "Una roca ígnea porosa que flota en el agua" }
+    ];
+
+    // ================================================================
+    // POOL COMPLETO - 180 PREGUNTAS (TODAS ENUMERADAS)
+    // ================================================================
+
+    const fullPool = [
+        // Tectónica de placas (1-30)
+        ...tectonicaPool.map((q, i) => ({ ...q, tema: 'tectonica' })),
+        // Sismos (31-60)
+        ...sismosPool.map((q, i) => ({ ...q, tema: 'sismos' })),
+        // Volcanes (61-90)
+        ...volcanesPool.map((q, i) => ({ ...q, tema: 'volcanes' })),
+        // Tsunamis (91-120)
+        ...tsunamisPool.map((q, i) => ({ ...q, tema: 'tsunamis' })),
+        // Huracanes (121-150)
+        ...huracanesPool.map((q, i) => ({ ...q, tema: 'huracanes' })),
+        // Rocas (151-180)
+        ...rocasPool.map((q, i) => ({ ...q, tema: 'rocas' }))
+    ];
+
+    // ================================================================
+    // FUNCIONES DE SELECCIÓN Y EVALUACIÓN
+    // ================================================================
+
+    // Verificar que el pool tenga al menos 20 preguntas por tema
+    function verificarPool() {
+        const temas = ['tectonica', 'sismos', 'volcanes', 'tsunamis', 'huracanes', 'rocas'];
+        const conteo = {};
+        temas.forEach(t => conteo[t] = fullPool.filter(q => q.tema === t).length);
+        console.log('Conteo de preguntas por tema:', conteo);
+        // Todos deben tener al menos 20
+        const ok = temas.every(t => conteo[t] >= 20);
+        if (!ok) console.warn('¡Algún tema tiene menos de 20 preguntas!');
+        return conteo;
+    }
+    verificarPool();
+
+    function shuffleArray(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function seleccionarPreguntas(pool, n) {
+        // Asegurar al menos 20 preguntas por tema
+        const temas = ['tectonica', 'sismos', 'volcanes', 'tsunamis', 'huracanes', 'rocas'];
+        let seleccionadas = [];
+        const porTema = 20; // 20 de cada tema = 120 preguntas
+
+        temas.forEach(tema => {
+            const poolTema = pool.filter(q => q.tema === tema);
+            const seleccion = shuffleArray(poolTema).slice(0, porTema);
+            seleccionadas = seleccionadas.concat(seleccion);
+        });
+
+        // Si necesitamos más preguntas, agregar aleatorias
+        const restantes = n - seleccionadas.length;
+        if (restantes > 0) {
+            const poolRestante = pool.filter(q => !seleccionadas.includes(q));
+            const adicionales = shuffleArray(poolRestante).slice(0, restantes);
+            seleccionadas = seleccionadas.concat(adicionales);
+        }
+
+        // Mezclar y limitar a n
+        return shuffleArray(seleccionadas).slice(0, n);
+    }
+
+    function getRandomQuestions() {
+        return seleccionarPreguntas(fullPool, 50);
+    }
+
+    // ================================================================
+    // RENDERIZADO Y EVALUACIÓN
+    // ================================================================
+
+    let currentQuestions = [];
+    let userAnswers = [];
+    let evaluated = false;
+
+    function renderQuestions() {
+        currentQuestions = getRandomQuestions();
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        evaluated = false;
+
+        const container = document.getElementById('examContent');
+        container.innerHTML = '';
+
+        currentQuestions.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `q-${idx}`;
+
+            const shuffledOptions = shuffleArray(q.options);
+
+            div.innerHTML = `
+                <div class="question-number">Pregunta ${idx + 1} de ${currentQuestions.length}</div>
+                <div class="question-text">${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label>
+                            <input type="radio" name="q_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+                <div class="feedback-text" id="fb-${idx}"></div>
+            `;
+
+            container.appendChild(div);
+
+            // Event listener para guardar respuesta
+            const radios = div.querySelectorAll(`input[name="q_${idx}"]`);
+            radios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (!evaluated) {
+                        userAnswers[idx] = e.target.value;
+                        actualizarContador();
+                    }
+                });
+            });
+        });
+
+        document.getElementById('totalQuestions').textContent = currentQuestions.length;
+        actualizarContador();
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('evaluateBtn').disabled = false;
+    }
+
+    function actualizarContador() {
+        const respondidas = userAnswers.filter(a => a !== null).length;
+        document.getElementById('answeredCount').textContent = respondidas;
+    }
+
+    function evaluarTest() {
+        if (evaluated) return;
+        evaluated = true;
+
+        let correctas = 0;
+        const total = currentQuestions.length;
+
+        currentQuestions.forEach((q, idx) => {
+            const card = document.getElementById(`q-${idx}`);
+            const fb = document.getElementById(`fb-${idx}`);
+            const userAnswer = userAnswers[idx];
+            const isCorrect = userAnswer === q.correct;
+
+            if (isCorrect) {
+                correctas++;
+                card.classList.add('correct');
+                fb.className = 'feedback-text show correct-fb';
+                fb.innerHTML = '✅ Correcto';
+            } else {
+                card.classList.add('incorrect');
+                fb.className = 'feedback-text show incorrect-fb';
+                fb.innerHTML = `❌ Incorrecto. Respuesta correcta: <strong>${q.correct}</strong>`;
+            }
+
+            // Deshabilitar radios
+            const radios = card.querySelectorAll('input[type="radio"]');
+            radios.forEach(r => r.disabled = true);
+        });
+
+        const porcentaje = (correctas / total) * 100;
+        let nota = 0;
+        if (porcentaje >= 60) {
+            nota = 4.0 + ((porcentaje - 60) / 40) * 3.0;
+        } else {
+            nota = 1.0 + (porcentaje / 60) * 3.0;
+        }
+        nota = Math.round(nota * 100) / 100;
+
+        const aprobado = nota >= 4.0;
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = `
+            <h3>📊 Resultados</h3>
+            <div class="score">✅ Respuestas correctas: <span style="color:#63b3ed;">${correctas}</span> de ${total}</div>
+            <div class="grade ${aprobado ? 'approved' : 'failed'}">
+                ${aprobado ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}<br>
+                <strong>NOTA FINAL: ${nota}</strong>
+            </div>
+            <div class="details">
+                <span>📈 Porcentaje: ${Math.round(porcentaje)}%</span>
+                <span>✅ Exigencia: 60%</span>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="restartBtn">🔄 Reiniciar Test</button>
+                <button class="btn btn-secondary" id="backToClassBtn">📚 Volver a la Clase</button>
+                <button class="btn btn-outline" id="backToCourseBtn">🏠 Volver al Curso</button>
+            </div>
+        `;
+
+        document.getElementById('evaluateBtn').disabled = true;
+
+        document.getElementById('restartBtn').addEventListener('click', restartTest);
+        document.getElementById('backToClassBtn').addEventListener('click', () => {
+            window.location.href = 'C_5_Fisica.html';
+        });
+        document.getElementById('backToCourseBtn').addEventListener('click', () => {
+            window.location.href = 'Fisica.html';
+        });
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function restartTest() {
+        renderQuestions();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ================================================================
+    // INICIALIZACIÓN
+    // ================================================================
+
+    renderQuestions();
+
+    document.getElementById('evaluateBtn').addEventListener('click', evaluarTest);
+
+    console.log('✅ Pool de preguntas cargado. Total:', fullPool.length);
+    console.log('📊 Distribución por tema:');
+    ['tectonica', 'sismos', 'volcanes', 'tsunamis', 'huracanes', 'rocas'].forEach(t => {
+        const count = fullPool.filter(q => q.tema === t).length;
+        console.log(`  ${t}: ${count} preguntas`);
+    });
+</script>
+</body>
+</html>

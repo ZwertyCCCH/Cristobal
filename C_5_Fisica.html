@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 5: Tectónica, Sismos, Volcanes, Tsunamis y Huracanes | 7° Básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1628;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1300px;
+            height: 85vh;
+            max-height: 800px;
+            background: #0d1b2a;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            border: 1px solid #1a365d;
+        }
+        .slides-wrapper { position: relative; width: 100%; height: 100%; }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2.5rem 3rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            overflow-y: auto;
+            background: #0d1b2a;
+            color: #e2e8f0;
+        }
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; }
+        .slide::-webkit-scrollbar { width: 5px; }
+        .slide::-webkit-scrollbar-track { background: #1a365d; border-radius: 10px; }
+        .slide::-webkit-scrollbar-thumb { background: #2b6cb0; border-radius: 10px; }
+        .slide-number {
+            position: absolute; bottom: 20px; right: 30px;
+            font-size: 0.75rem; color: #4a7a9c;
+            background: #0d1b2a; padding: 0.2rem 0.8rem;
+            border-radius: 20px; border: 1px solid #1a365d; z-index: 15;
+        }
+        .nav-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            z-index: 20; background: rgba(26,54,93,0.7);
+            border: 1px solid #2b6cb0; color: #90cdf4;
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.3rem;
+            transition: all 0.3s ease; backdrop-filter: blur(5px);
+        }
+        .nav-arrow:hover:not(:disabled) { background: #2b6cb0; color: white; transform: translateY(-50%) scale(1.05); }
+        .nav-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+        .nav-arrow-left { left: 15px; }
+        .nav-arrow-right { right: 15px; }
+        .dots-container {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px; z-index: 15;
+            background: rgba(13,27,42,0.8); padding: 6px 14px;
+            border-radius: 30px; border: 1px solid #1a365d;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #1a365d; cursor: pointer; transition: all 0.3s ease; }
+        .dot.active { background: #2b6cb0; width: 24px; border-radius: 12px; }
+        .dot:hover { background: #4a7a9c; }
+        .fixed-footer {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(13,27,42,0.95); backdrop-filter: blur(10px);
+            padding: 0.8rem 2rem; display: flex; justify-content: center;
+            gap: 2rem; border-top: 1px solid #1a365d; z-index: 1000;
+        }
+        .footer-btn {
+            background: transparent; border: 1px solid #2b6cb0;
+            color: #90cdf4; padding: 0.6rem 2rem;
+            border-radius: 30px; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 8px;
+        }
+        .footer-btn:hover { background: #2b6cb0; color: white; transform: translateY(-2px); }
+        .footer-btn.primary { background: #2b6cb0; color: white; }
+        .footer-btn.primary:hover { background: #3182ce; }
+        h1 { font-size: 2.8rem; font-weight: 800; color: #90cdf4; margin-bottom: 0.5rem; }
+        h2 { font-size: 2rem; font-weight: 700; color: #63b3ed; margin-bottom: 1rem; border-left: 4px solid #2b6cb0; padding-left: 1rem; }
+        h3 { font-size: 1.2rem; font-weight: 600; color: #90cdf4; margin: 0.8rem 0 0.4rem 0; }
+        .badge {
+            display: inline-block; background: #2b6cb0; color: white;
+            padding: 0.2rem 1rem; border-radius: 30px; font-size: 0.7rem;
+            font-weight: 600; margin-bottom: 0.8rem; letter-spacing: 0.5px;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 0.8rem 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 0.8rem 0; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin: 0.8rem 0; }
+        .card {
+            background: rgba(26,54,93,0.4); border-radius: 16px;
+            padding: 1.2rem; border: 1px solid #1a365d;
+            transition: all 0.2s ease;
+        }
+        .card:hover { border-color: #2b6cb0; background: rgba(26,54,93,0.6); }
+        .card i { font-size: 1.6rem; color: #63b3ed; margin-bottom: 0.5rem; }
+        .card h4 { color: #90cdf4; font-size: 1rem; margin-bottom: 0.4rem; }
+        .card p, .card li { color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; }
+        .card ul { padding-left: 1.2rem; margin-top: 0.3rem; }
+        .card ul li { margin-bottom: 0.2rem; }
+        .highlight { color: #63b3ed; font-weight: 600; }
+        .info-box {
+            background: rgba(26,54,93,0.5); padding: 1rem 1.2rem;
+            border-radius: 16px; margin: 0.8rem 0; border-left: 4px solid #2b6cb0;
+        }
+        .info-box i { color: #63b3ed; margin-right: 8px; }
+        .info-box strong { color: #90cdf4; }
+        .example-box {
+            background: rgba(43,108,176,0.15); border-left: 4px solid #2b6cb0;
+            padding: 0.8rem 1.2rem; border-radius: 12px; margin: 0.8rem 0;
+        }
+        .example-box strong { color: #90cdf4; }
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.85rem;
+        }
+        .comparison-table th { background: #1a365d; color: #90cdf4; padding: 0.6rem; text-align: left; }
+        .comparison-table td { border: 1px solid #1a365d; padding: 0.6rem; color: #cbd5e1; }
+        .comparison-table tr:nth-child(even) { background: rgba(26,54,93,0.3); }
+        .timeline {
+            display: flex; flex-wrap: wrap; justify-content: space-around;
+            gap: 0.8rem; margin: 0.8rem 0;
+        }
+        .timeline-item {
+            background: rgba(26,54,93,0.4); border-radius: 16px;
+            padding: 0.8rem 1rem; text-align: center; flex: 1;
+            min-width: 120px; border: 1px solid #1a365d;
+        }
+        .timeline-year { font-size: 1.3rem; font-weight: bold; color: #63b3ed; }
+        @media (max-width: 768px) {
+            body { padding: 10px; padding-bottom: 70px; }
+            .slides-container { height: 80vh; border-radius: 20px; }
+            .slide { padding: 1.2rem 1.5rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .nav-arrow { width: 36px; height: 36px; font-size: 1rem; }
+            .nav-arrow-left { left: 8px; }
+            .nav-arrow-right { right: 8px; }
+            .fixed-footer { padding: 0.5rem 1rem; gap: 1rem; }
+            .footer-btn { padding: 0.4rem 1.2rem; font-size: 0.8rem; }
+            .dots-container { bottom: 12px; padding: 4px 10px; }
+            .dot { width: 8px; height: 8px; }
+            .dot.active { width: 18px; }
+            .slide-number { bottom: 12px; right: 16px; font-size: 0.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <button class="nav-arrow nav-arrow-left" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+    <button class="nav-arrow nav-arrow-right" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    <div class="dots-container" id="dotsContainer"></div>
+    <div class="slides-wrapper" id="slidesWrapper"></div>
+</div>
+
+<div class="fixed-footer">
+    <button class="footer-btn" id="cursoBtn"><i class="fas fa-book-open"></i> Curso</button>
+    <button class="footer-btn primary" id="ejerciciosBtn"><i class="fas fa-pen-alt"></i> Ejercicios</button>
+</div>
+
+<script>
+    // ================================================================
+    // SLIDES - LECCIÓN 4 + TSUNAMIS + HURACANES (SIN PREVENCIÓN)
+    // MODIFICADO: Slide 22 (volcanes), Slide 23 (efectos), Slide 28 (Panthalassa, Laurasia, Gondwana)
+    // NUEVA SLIDE: Rocas y composición de la Tierra
+    // ================================================================
+
+    const slides = [
+        // === SLIDE 0: PORTADA ===
+        {
+            title: "🌍 Cambios del planeta Tierra",
+            content: `
+                <div style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+                    <div class="badge">Clase 5 - Ciencias Naturales</div>
+                    <h1 style="font-size:3.2rem;">¿Por qué cambia<br>el planeta Tierra?</h1>
+                    <p style="font-size:1.3rem; color:#90cdf4; margin:0.5rem 0;">Tectónica • Sismos • Volcanes • Tsunamis • Huracanes</p>
+                    <div style="margin-top:1.5rem; display:flex; gap:1.5rem; flex-wrap:wrap;">
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-globe" style="color:#63b3ed;"></i> Tectónica
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-waveform" style="color:#63b3ed;"></i> Sismos
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-fire" style="color:#63b3ed;"></i> Volcanes
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-water" style="color:#63b3ed;"></i> Tsunamis
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-wind" style="color:#63b3ed;"></i> Huracanes
+                        </div>
+                    </div>
+                    <div style="margin-top:2rem; color:#4a7a9c; font-size:0.9rem;">
+                        <i class="fas fa-arrow-right"></i> Usa las flechas ← → para navegar
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 1: INTRODUCCIÓN ===
+        {
+            title: "🔄 La Tierra en transformación",
+            content: `
+                <div class="badge">Lección 4 - Introducción</div>
+                <h2>La Tierra cambia constantemente</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-clock"></i>
+                        <h4>Desde su formación</h4>
+                        <p>Desde su formación, hace aproximadamente <span class="highlight">4.600 millones de años</span>, la Tierra ha estado en <span class="highlight">continua transformación</span>.</p>
+                        <p style="margin-top:0.5rem;">Los cambios ocurren por <span class="highlight">procesos internos</span> (energía del interior) y <span class="highlight">procesos externos</span> (agentes como el agua, el viento y el hielo).</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-lightbulb"></i>
+                        <h4>¿Cómo explicamos estos cambios?</h4>
+                        <p>Los científicos utilizan <span class="highlight">teorías y modelos</span> para explicar los procesos que transforman la Tierra.</p>
+                        <p style="margin-top:0.5rem;">La <span class="highlight">Teoría de la Tectónica de Placas</span> es la más aceptada para explicar el movimiento de la corteza terrestre.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Idea clave:</strong> La Tierra no es estática; está en <span class="highlight">permanente movimiento y cambio</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 2: TEORÍA DE TECTÓNICA DE PLACAS ===
+        {
+            title: "🧩 Tectónica de placas",
+            content: `
+                <div class="badge">Lección 4 - Tectónica de placas</div>
+                <h2>Teoría de la Tectónica de Placas</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-puzzle-piece"></i>
+                        <h4>Definición</h4>
+                        <p>La <span class="highlight">teoría de la tectónica de placas</span> postula que la <span class="highlight">corteza terrestre</span> está fragmentada en grandes secciones llamadas <span class="highlight">placas tectónicas</span> que se desplazan unas respecto de otras sobre el <span class="highlight">manto</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-thermometer-half"></i>
+                        <h4>¿Qué produce el movimiento?</h4>
+                        <p>La explicación más aceptada se basa en la <span class="highlight">diferencia de temperatura</span> entre el <span class="highlight">núcleo</span> (muy caliente) y el <span class="highlight">manto</span> (menos caliente).</p>
+                        <p style="margin-top:0.5rem;">Esto genera <span class="highlight">corrientes de convección</span> en el manto que mueven las placas.</p>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Dato:</strong> Las placas se mueven aproximadamente <span class="highlight">2 a 10 cm por año</span>, similar al crecimiento de las uñas.
+                </div>
+            `
+        },
+
+        // === SLIDE 3: CORRIENTES DE CONVECCIÓN ===
+        {
+            title: "🔥 Corrientes de convección",
+            content: `
+                <div class="badge">Lección 4 - Corrientes de convección</div>
+                <h2>Corrientes de convección en el manto</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Proceso</h4>
+                        <ul>
+                            <li>El material caliente del <span class="highlight">núcleo</span> asciende hacia el manto.</li>
+                            <li>Al llegar cerca de la corteza, se enfría y <span class="highlight">desciende</span>.</li>
+                            <li>Este ciclo continuo genera <span class="highlight">corrientes circulares</span>.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrows-alt-v"></i>
+                        <h4>Efecto en las placas</h4>
+                        <p>Estas corrientes <span class="highlight">arrastran</span> las placas tectónicas, provocando que se muevan, choquen, se separen o deslicen.</p>
+                        <p style="margin-top:0.5rem;">Es la <span class="highlight">energía interna</span> de la Tierra la que impulsa estos movimientos.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Analogía:</strong> Las corrientes de convección son como el agua caliente que sube y baja en una olla al hervir.
+                </div>
+            `
+        },
+
+        // === SLIDE 4: LÍMITES CONVERGENTES ===
+        {
+            title: "➡️ Límites convergentes",
+            content: `
+                <div class="badge">Lección 4 - Límites de placas</div>
+                <h2>Límite convergente</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        <h4>¿Qué ocurre?</h4>
+                        <p>Dos placas <span class="highlight">chocan</span> entre sí. Esto puede producir:</p>
+                        <ul>
+                            <li><span class="highlight">Subducción</span>: una placa se hunde bajo la otra.</li>
+                            <li><span class="highlight">Compresión</span>: ambas placas se comprimen.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Consecuencias</h4>
+                        <ul>
+                            <li>Formación de <span class="highlight">montañas</span> (ej. Himalaya).</li>
+                            <li>Formación de <span class="highlight">volcanes</span> (ej. Andes).</li>
+                            <li>Generación de <span class="highlight">sismos</span> de gran magnitud.</li>
+                            <li>Formación de <span class="highlight">fosas oceánicas</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Ejemplo en Chile:</strong> Límite convergente entre la <span class="highlight">Placa de Nazca</span> (oceánica) y la <span class="highlight">Placa Sudamericana</span> (continental).
+                </div>
+            `
+        },
+
+        // === SLIDE 5: LÍMITES DIVERGENTES ===
+        {
+            title: "⬅️ Límites divergentes",
+            content: `
+                <div class="badge">Lección 4 - Límites de placas</div>
+                <h2>Límite divergente</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        <h4>¿Qué ocurre?</h4>
+                        <p>Dos placas se <span class="highlight">separan</span> en direcciones opuestas.</p>
+                        <p style="margin-top:0.5rem;">El espacio que queda es ocupado por <span class="highlight">magma</span> que asciende desde el manto.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Consecuencias</h4>
+                        <ul>
+                            <li>Formación de <span class="highlight">nueva corteza oceánica</span>.</li>
+                            <li>Formación de <span class="highlight">dorsales oceánicas</span>.</li>
+                            <li>Actividad sísmica de <span class="highlight">baja magnitud</span>.</li>
+                            <li>Formación de <span class="highlight">riftes continentales</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> La <span class="highlight">Dorsal Mesoatlántica</span> en el Océano Atlántico.
+                </div>
+            `
+        },
+
+        // === SLIDE 6: LÍMITES TRANSFORMANTES ===
+        {
+            title: "🔄 Límites transformantes",
+            content: `
+                <div class="badge">Lección 4 - Límites de placas</div>
+                <h2>Límite transformante</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        <h4>¿Qué ocurre?</h4>
+                        <p>Dos placas se <span class="highlight">deslizan lateralmente</span> una respecto de la otra.</p>
+                        <p style="margin-top:0.5rem;">No crean ni destruyen corteza, solo la <span class="highlight">desplazan</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-waveform"></i>
+                        <h4>Consecuencias</h4>
+                        <ul>
+                            <li>Generan <span class="highlight">sismicidad intensa</span>.</li>
+                            <li>Formación de <span class="highlight">fallas geológicas</span>.</li>
+                            <li>No hay actividad volcánica.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> La <span class="highlight">Falla de San Andrés</span> en California (EE.UU.).
+                </div>
+            `
+        },
+
+        // === SLIDE 7: PRINCIPALES PLACAS ===
+        {
+            title: "🌍 Principales placas tectónicas",
+            content: `
+                <div class="badge">Lección 4 - Placas tectónicas</div>
+                <h2>Las 15 placas tectónicas principales</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <h4>Placas oceánicas</h4>
+                        <ul>
+                            <li>Placa del <span class="highlight">Pacífico</span></li>
+                            <li>Placa de <span class="highlight">Nazca</span></li>
+                            <li>Placa de <span class="highlight">Cocos</span></li>
+                            <li>Placa de <span class="highlight">Juan de Fuca</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Placas continentales</h4>
+                        <ul>
+                            <li>Placa <span class="highlight">Sudamericana</span></li>
+                            <li>Placa <span class="highlight">Norteamericana</span></li>
+                            <li>Placa <span class="highlight">Euroasiática</span></li>
+                            <li>Placa <span class="highlight">Africana</span></li>
+                            <li>Placa <span class="highlight">Indoaustraliana</span></li>
+                            <li>Placa <span class="highlight">Antártica</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Otras placas</h4>
+                        <ul>
+                            <li>Placa del <span class="highlight">Caribe</span></li>
+                            <li>Placa <span class="highlight">Filipina</span></li>
+                            <li>Placa <span class="highlight">Arábiga</span></li>
+                            <li>Placa de <span class="highlight">Scotia</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Chile:</strong> Está influenciado por la interacción entre la <span class="highlight">Placa de Nazca</span> y la <span class="highlight">Placa Sudamericana</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 8: CHILE Y EL CINTURÓN DE FUEGO ===
+        {
+            title: "🇨🇱 Chile en el Cinturón de Fuego",
+            content: `
+                <div class="badge">Lección 4 - Chile y la tectónica</div>
+                <h2>Chile en el Cinturón de Fuego del Pacífico</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>¿Qué es el Cinturón de Fuego?</h4>
+                        <p>Es una región con forma de herradura que rodea el Océano Pacífico. Concentra el <span class="highlight">90% de los sismos</span> y el <span class="highlight">75% de los volcanes activos</span> del mundo.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-map-marked-alt"></i>
+                        <h4>Chile en el Cinturón</h4>
+                        <p>Chile se encuentra en la <span class="highlight">zona de subducción</span> entre la Placa de Nazca y la Placa Sudamericana, lo que explica su alta actividad sísmica y volcánica.</p>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Dato:</strong> El terremoto de <span class="highlight">Valdivia (1960)</span> con magnitud 9.5 es el más potente registrado en la historia.
+                </div>
+            `
+        },
+
+        // === SLIDE 9: SISMOS - DEFINICIÓN Y CAUSAS ===
+        {
+            title: "📈 Sismos - Definición y causas",
+            content: `
+                <div class="badge">Lección 4 - Sismos</div>
+                <h2>¿Qué son los sismos?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-waveform"></i>
+                        <h4>Definición</h4>
+                        <p>Un <span class="highlight">sismo</span> es un <span class="highlight">movimiento brusco de la corteza terrestre</span> causado por la <span class="highlight">liberación repentina de energía</span> acumulada en el interior de la Tierra.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Causas</h4>
+                        <ul>
+                            <li><span class="highlight">Movimiento de placas tectónicas</span> (principal causa).</li>
+                            <li><span class="highlight">Actividad volcánica</span> (sismos de menor magnitud).</li>
+                            <li><span class="highlight">Actividad humana</span> (explosiones, minería, embalses).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La mayoría de los sismos ocurren en los <span class="highlight">límites de placas</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 10: HIPOCENTRO Y EPICENTRO ===
+        {
+            title: "📍 Hipocentro y Epicentro",
+            content: `
+                <div class="badge">Lección 4 - Sismos</div>
+                <h2>Partes de un sismo</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-location-dot"></i>
+                        <h4>Hipocentro (Foco)</h4>
+                        <p>Es el punto <span class="highlight">dentro de la Tierra</span> donde se <span class="highlight">origina</span> el sismo.</p>
+                        <p style="margin-top:0.5rem;">Puede estar a:</p>
+                        <ul>
+                            <li>Menos de 70 km: <span class="highlight">superficial</span></li>
+                            <li>70-300 km: <span class="highlight">intermedio</span></li>
+                            <li>Más de 300 km: <span class="highlight">profundo</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-map-pin"></i>
+                        <h4>Epicentro</h4>
+                        <p>Es el punto en la <span class="highlight">superficie</span> directamente sobre el hipocentro.</p>
+                        <p style="margin-top:0.5rem;">Es donde el sismo se siente con <span class="highlight">mayor intensidad</span>.</p>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> En el terremoto de Valdivia (1960), el hipocentro estaba a <span class="highlight">33 km</span> de profundidad y el epicentro cerca de <span class="highlight">Lumaco</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 11: ONDAS SÍSMICAS ===
+        {
+            title: "📡 Ondas sísmicas",
+            content: `
+                <div class="badge">Lección 4 - Ondas sísmicas</div>
+                <h2>Tipos de ondas sísmicas</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <i class="fas fa-arrow-right"></i>
+                        <h4>Ondas P (Primarias)</h4>
+                        <ul>
+                            <li><span class="highlight">Más rápidas</span>.</li>
+                            <li>Movimiento de <span class="highlight">compresión</span>.</li>
+                            <li>Atraviesan <span class="highlight">sólidos, líquidos y gases</span>.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Ondas S (Secundarias)</h4>
+                        <ul>
+                            <li><span class="highlight">Más lentas</span> que las P.</li>
+                            <li>Movimiento <span class="highlight">perpendicular</span>.</li>
+                            <li><span class="highlight">NO pueden atravesar líquidos</span>.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Ondas superficiales</h4>
+                        <ul>
+                            <li><span class="highlight">Más lentas</span> pero <span class="highlight">más destructivas</span>.</li>
+                            <li>Viajan por la superficie terrestre.</li>
+                            <li>Generan movimientos horizontales y verticales.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Importancia:</strong> La diferencia entre la llegada de las ondas P y S permite calcular la <span class="highlight">distancia al epicentro</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 12: ESCALA DE RICHTER ===
+        {
+            title: "📊 Escala de Richter",
+            content: `
+                <div class="badge">Lección 4 - Escalas sísmicas</div>
+                <h2>Escala de Richter (Magnitud)</h2>
+                <div class="card">
+                    <p>Mide la <span class="highlight">energía liberada</span> en el hipocentro. Es una escala <span class="highlight">logarítmica</span>.</p>
+                    <ul style="margin-top:0.5rem;">
+                        <li>Cada unidad representa <span class="highlight">10 veces más amplitud</span>.</li>
+                        <li>Cada unidad representa <span class="highlight">32 veces más energía</span>.</li>
+                        <li><span class="highlight">No tiene límite superior</span> teórico.</li>
+                        <li>Se calcula con el <span class="highlight">sismógrafo</span>.</li>
+                    </ul>
+                </div>
+                <div class="grid-2" style="margin-top:0.5rem;">
+                    <div class="card">
+                        <h4>Magnitudes y efectos</h4>
+                        <ul>
+                            <li>< 2.0: Microsismo (solo instrumentos)</li>
+                            <li>2.0-3.9: Muy leve</li>
+                            <li>4.0-4.9: Ligero</li>
+                            <li>5.0-5.9: Moderado</li>
+                            <li>6.0-6.9: Fuerte</li>
+                            <li>7.0-7.9: Mayor</li>
+                            <li>≥ 8.0: Gran terremoto</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Ejemplos en Chile</h4>
+                        <ul>
+                            <li>Valdivia (1960): <span class="highlight">9.5</span></li>
+                            <li>Maule (2010): <span class="highlight">8.8</span></li>
+                            <li>Iquique (2014): <span class="highlight">8.2</span></li>
+                            <li>Coquimbo (2015): <span class="highlight">8.3</span></li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 13: ESCALA DE MERCALLI ===
+        {
+            title: "📊 Escala de Mercalli",
+            content: `
+                <div class="badge">Lección 4 - Escalas sísmicas</div>
+                <h2>Escala de Mercalli (Intensidad)</h2>
+                <div class="card">
+                    <p>Mide los <span class="highlight">efectos y daños</span> del sismo en la superficie. Es una escala <span class="highlight">subjetiva</span> basada en la percepción humana y los daños materiales.</p>
+                    <p style="margin-top:0.5rem;">Va del <span class="highlight">I</span> (no perceptible) al <span class="highlight">XII</span> (destrucción total).</p>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>Grados I - VI</h4>
+                        <ul>
+                            <li><span class="highlight">I</span>: No sentido, solo registrado.</li>
+                            <li><span class="highlight">II</span>: Sentido por pocos en reposo.</li>
+                            <li><span class="highlight">III</span>: Sentido dentro de edificios.</li>
+                            <li><span class="highlight">IV</span>: Sentido por muchos, despierta durmientes.</li>
+                            <li><span class="highlight">V</span>: Sentido por casi todos, objetos se mueven.</li>
+                            <li><span class="highlight">VI</span>: Sentido por todos, caída de objetos.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Grados VII - XII</h4>
+                        <ul>
+                            <li><span class="highlight">VII</span>: Difícil mantenerse de pie.</li>
+                            <li><span class="highlight">VIII</span>: Daños en estructuras.</li>
+                            <li><span class="highlight">IX</span>: Daños estructurales graves.</li>
+                            <li><span class="highlight">X</span>: Destrucción de edificios.</li>
+                            <li><span class="highlight">XI</span>: Pocas estructuras quedan en pie.</li>
+                            <li><span class="highlight">XII</span>: Destrucción total.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> En el terremoto del Maule (2010), la intensidad fue <span class="highlight">IX en Concepción</span> y <span class="highlight">VII en Santiago</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 14: SISMOS HISTÓRICOS EN CHILE ===
+        {
+            title: "🇨🇱 Sismos históricos en Chile",
+            content: `
+                <div class="badge">Lección 4 - Sismos en Chile</div>
+                <h2>Grandes sismos en la historia de Chile</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1906</div>
+                        <p><strong>Valparaíso</strong></p>
+                        <p>Magnitud: ~8.2</p>
+                        <p>"Terremoto del siglo"</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1960</div>
+                        <p><strong>Valdivia</strong></p>
+                        <p>Magnitud: <span class="highlight">9.5</span></p>
+                        <p>~1,600 muertos</p>
+                        <p>Duración: ~10 min</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2010</div>
+                        <p><strong>Maule</strong></p>
+                        <p>Magnitud: <span class="highlight">8.8</span></p>
+                        <p>~525 muertos</p>
+                        <p>Duración: ~3 min</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2014</div>
+                        <p><strong>Iquique</strong></p>
+                        <p>Magnitud: <span class="highlight">8.2</span></p>
+                        <p>Evacuación exitosa</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015</div>
+                        <p><strong>Coquimbo</strong></p>
+                        <p>Magnitud: <span class="highlight">8.3</span></p>
+                        <p>15 muertos</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Período de retorno:</strong> En Chile, los grandes sismos tienen un período de retorno de aproximadamente <span class="highlight">50 a 100 años</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 15: ZONA DE SUBDUCCIÓN Y BENIOFF ===
+        {
+            title: "🌊 Zona de subducción y Benioff",
+            content: `
+                <div class="badge">Lección 4 - Subducción</div>
+                <h2>Zona de subducción y zona de Benioff</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrow-down"></i>
+                        <h4>Zona de subducción</h4>
+                        <p>Es el lugar donde una placa <span class="highlight">oceánica</span> se hunde bajo otra placa (continental u oceánica).</p>
+                        <p style="margin-top:0.5rem;">En Chile, la <span class="highlight">Placa de Nazca</span> se subduce bajo la <span class="highlight">Placa Sudamericana</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-waveform"></i>
+                        <h4>Zona de Benioff</h4>
+                        <p>Es la <span class="highlight">región de fricción</span> entre las placas en subducción.</p>
+                        <p style="margin-top:0.5rem;">En esta zona se generan la <span class="highlight">mayoría de los sismos profundos</span> y de gran magnitud.</p>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>En Chile:</strong> La zona de Benioff frente a la costa chilena es la responsable de los <span class="highlight">terremotos de gran magnitud</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 16: ACTIVIDAD VOLCÁNICA ===
+        {
+            title: "🌋 Actividad volcánica",
+            content: `
+                <div class="badge">Lección 4 - Volcanes</div>
+                <h2>¿Qué es la actividad volcánica?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>Definición</h4>
+                        <p>La <span class="highlight">actividad volcánica</span> hace referencia a la <span class="highlight">expulsión de magma</span> en el fondo marino y en la corteza continental.</p>
+                        <p style="margin-top:0.5rem;">Está relacionada con la <span class="highlight">tectónica de placas</span> y la formación de volcanes y relieve.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Consecuencias</h4>
+                        <ul>
+                            <li>Modificación del <span class="highlight">relieve</span>.</li>
+                            <li>Cambios en el <span class="highlight">clima</span>.</li>
+                            <li>Afectación del <span class="highlight">desarrollo de la vida</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> Los volcanes comunican los niveles más profundos del planeta con la superficie.
+                </div>
+            `
+        },
+
+        // === SLIDE 17: PARTES DE UN VOLCÁN ===
+        {
+            title: "🌋 Partes de un volcán",
+            content: `
+                <div class="badge">Lección 4 - Volcanes</div>
+                <h2>Estructura de un volcán</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-warehouse"></i>
+                        <h4>Cámara magmática</h4>
+                        <p>Reservorio subterráneo donde se <span class="highlight">acumula el magma</span> antes de una erupción.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-tint"></i>
+                        <h4>Chimenea</h4>
+                        <p>Conducto por donde <span class="highlight">asciende el magma</span> desde la cámara magmática.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-circle"></i>
+                        <h4>Cráter</h4>
+                        <p>Abertura en la <span class="highlight">cima del volcán</span> por donde salen los materiales expulsados.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Cono volcánico</h4>
+                        <p>Estructura formada por la <span class="highlight">acumulación de materiales</span> expulsados durante las erupciones.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-wind"></i>
+                        <h4>Fumarola</h4>
+                        <p>Emisión de <span class="highlight">gases y vapor</span> por las grietas del volcán.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Lava</h4>
+                        <p><span class="highlight">Magma</span> que fluye por la superficie del volcán.</p>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 18: TIPOS DE VOLCANES ===
+        {
+            title: "🗻 Tipos de volcanes",
+            content: `
+                <div class="badge">Lección 4 - Volcanes</div>
+                <h2>Clasificación de los volcanes</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Estratovolcán</h4>
+                        <ul>
+                            <li>Forma de <span class="highlight">cono perfecto</span>.</li>
+                            <li>Pendientes <span class="highlight">pronunciadas</span>.</li>
+                            <li>Capas alternadas de lava y ceniza.</li>
+                            <li>Erupciones <span class="highlight">explosivas</span>.</li>
+                            <li>Ej: Villarrica, Llaima.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Volcán en escudo</h4>
+                        <ul>
+                            <li>Forma <span class="highlight">ancha y baja</span>.</li>
+                            <li>Pendientes <span class="highlight">suaves</span>.</li>
+                            <li>Lava muy <span class="highlight">fluida</span>.</li>
+                            <li>Erupciones <span class="highlight">efusivas</span>.</li>
+                            <li>Ej: Volcanes de Hawái.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-circle"></i>
+                        <h4>Cono de escoria</h4>
+                        <ul>
+                            <li>Volcán <span class="highlight">pequeño</span>.</li>
+                            <li>Pendientes <span class="highlight">muy pronunciadas</span>.</li>
+                            <li>Formado por fragmentos de roca y ceniza.</li>
+                            <li>Ej: Conos del Complejo Laguna del Maule.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Caldera:</strong> Gran depresión formada por el colapso del volcán después de una erupción masiva.
+                </div>
+            `
+        },
+
+        // === SLIDE 19: TIPOS DE ERUPCIONES ===
+        {
+            title: "💥 Tipos de erupciones",
+            content: `
+                <div class="badge">Lección 4 - Volcanes</div>
+                <h2>Tipos de erupción</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr><th>Tipo de erupción</th><th>Características</th><th>Peligrosidad</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="highlight">Hawaiana</span></td>
+                            <td>Lava muy fluida, fuentes de lava. Baja explosividad.</td>
+                            <td>Baja</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">Estromboliana</span></td>
+                            <td>Lava moderadamente fluida. Expulsión de material incandescente.</td>
+                            <td>Moderada</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">Vulcaniana</span></td>
+                            <td>Lava viscosa. Erupciones explosivas con grandes nubes de ceniza.</td>
+                            <td>Alta</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">Pliniana</span></td>
+                            <td>Lava muy viscosa. <span class="highlight">Extremadamente explosivas</span>. Grandes columnas de ceniza y gases.</td>
+                            <td>Muy Alta</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="example-box">
+                    <strong>Ejemplo en Chile:</strong> La erupción del <span class="highlight">Chaitén (2008)</span> fue de tipo pliniano.
+                </div>
+            `
+        },
+
+        // === SLIDE 20: CLASIFICACIÓN POR ACTIVIDAD ===
+        {
+            title: "🔄 Clasificación por actividad",
+            content: `
+                <div class="badge">Lección 4 - Volcanes</div>
+                <h2>Volcanes según su actividad</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <i class="fas fa-fire" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Activo</h4>
+                        <p>Volcán que ha tenido actividad registrada en <span class="highlight">tiempos históricos</span> (últimos 10.000 años).</p>
+                        <p style="margin-top:0.5rem;"><strong>Ejemplos:</strong> Villarrica, Llaima, Calbuco.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-pause" style="color:#facc15;"></i>
+                        <h4 style="color:#facc15;">Inactivo</h4>
+                        <p>Volcán que <span class="highlight">no ha tenido erupciones</span> en tiempos históricos pero <span class="highlight">podría reactivarse</span>.</p>
+                        <p style="margin-top:0.5rem;"><strong>Ejemplo:</strong> Volcán Osorno.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-stop" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Extinto</h4>
+                        <p>Volcán que <span class="highlight">no tiene posibilidad</span> de volver a erupcionar.</p>
+                        <p style="margin-top:0.5rem;"><strong>Ejemplo:</strong> Cerros isla en la Región Metropolitana.</p>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 21: MATERIALES VOLCÁNICOS ===
+        {
+            title: "💨 Materiales volcánicos",
+            content: `
+                <div class="badge">Lección 4 - Volcanes</div>
+                <h2>Materiales expulsados por un volcán</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>Lava</h4>
+                        <p>Magma que sale a la superficie. Temperatura: <span class="highlight">700-1.200°C</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-dust"></i>
+                        <h4>Ceniza volcánica</h4>
+                        <p>Partículas sólidas finas expulsadas durante la erupción.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-wind"></i>
+                        <h4>Gases volcánicos</h4>
+                        <p>Vapor de agua, CO₂, SO₂. Pueden ser <span class="highlight">tóxicos</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-rocket"></i>
+                        <h4>Bombas volcánicas</h4>
+                        <p>Fragmentos de lava solidificada expulsados.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Lahares</h4>
+                        <p>Flujos de <span class="highlight">lodo volcánico</span> (ceniza + agua + escombros).</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-gem"></i>
+                        <h4>Piedra pómez</h4>
+                        <p>Roca volcánica <span class="highlight">porosa</span> que flota en el agua.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La piedra pómez se forma cuando el gas se expande rápidamente dentro de la lava viscosa.
+                </div>
+            `
+        },
+
+        // === SLIDE 22: VOLCANES IMPORTANTES DE CHILE (MODIFICADO) ===
+        {
+            title: "🇨🇱 Volcanes importantes de Chile",
+            content: `
+                <div class="badge">Lección 4 - Volcanes en Chile</div>
+                <h2>Volcanes destacados de Chile</h2>
+                <div class="grid-4">
+                    <div class="card">
+                        <h4>🌋 Tacora</h4>
+                        <p>Región de Arica y Parinacota.</p>
+                        <p>Altitud: 5.980 m.</p>
+                        <p>Última erupción: <span class="highlight">1930</span>.</p>
+                        <p>Estratovolcán activo.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Láscar</h4>
+                        <p>Región de Antofagasta.</p>
+                        <p>Altitud: 5.592 m.</p>
+                        <p>Última erupción: <span class="highlight">2022</span>.</p>
+                        <p>El más activo del norte de Chile.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 El Planchón</h4>
+                        <p>Región de O'Higgins / Argentina.</p>
+                        <p>Altitud: 4.108 m.</p>
+                        <p>Última erupción: <span class="highlight">1999</span>.</p>
+                        <p>Complejo volcánico.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Descabezado Grande</h4>
+                        <p>Región del Maule.</p>
+                        <p>Altitud: 3.953 m.</p>
+                        <p>Última erupción: <span class="highlight">1933</span>.</p>
+                        <p>Estratovolcán activo.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Quizapú</h4>
+                        <p>Región del Maule.</p>
+                        <p>Altitud: 3.948 m.</p>
+                        <p>Última erupción: <span class="highlight">1932</span>.</p>
+                        <p>Erupción histórica (1932) con gran caída de ceniza.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Nevados de Chillán</h3>
+                        <p>Región de Ñuble.</p>
+                        <p>Altitud: 3.212 m.</p>
+                        <p>Última erupción: <span class="highlight">2022</span>.</p>
+                        <p>Complejo volcánico activo.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Lonquimay</h4>
+                        <p>Región de La Araucanía.</p>
+                        <p>Altitud: 2.865 m.</p>
+                        <p>Última erupción: <span class="highlight">1990</span>.</p>
+                        <p>Estratovolcán activo.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Llaima</h4>
+                        <p>Región de La Araucanía.</p>
+                        <p>Altitud: 3.125 m.</p>
+                        <p>Última erupción: <span class="highlight">2008-2009</span>.</p>
+                        <p>Uno de los más activos de Sudamérica.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Villarrica</h4>
+                        <p>Región de La Araucanía.</p>
+                        <p>Altitud: 2.847 m.</p>
+                        <p>Última erupción: <span class="highlight">2015</span>.</p>
+                        <p>Tiene un lago de lava activo.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Puyehue</h4>
+                        <p>Región de Los Lagos.</p>
+                        <p>Altitud: 2.236 m.</p>
+                        <p>Última erupción: <span class="highlight">2011</span>.</p>
+                        <p>Erupción pliniana en 2011.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Caulle</h4>
+                        <p>Región de Los Ríos / Los Lagos.</p>
+                        <p>Altitud: 1.790 m.</p>
+                        <p>Última erupción: <span class="highlight">2011</span>.</p>
+                        <p>Forma complejo con Puyehue.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Calbuco</h4>
+                        <p>Región de Los Lagos.</p>
+                        <p>Altitud: 2.015 m.</p>
+                        <p>Última erupción: <span class="highlight">2015</span>.</p>
+                        <p>Erupción sorpresiva en 2015.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Chaitén</h4>
+                        <p>Región de Los Lagos.</p>
+                        <p>Altitud: 1.122 m.</p>
+                        <p>Última erupción: <span class="highlight">2008-2009</span>.</p>
+                        <p>Erupción pliniana, ciudad destruida.</p>
+                    </div>
+                    <div class="card">
+                        <h4>🌋 Hudson</h4>
+                        <p>Región de Aysén.</p>
+                        <p>Altitud: 1.905 m.</p>
+                        <p>Última erupción: <span class="highlight">1991</span>.</p>
+                        <p>Estratovolcán activo, gran erupción en 1991.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> Chile tiene más de <span class="highlight">100 volcanes activos</span>, lo que lo convierte en uno de los países con mayor actividad volcánica del mundo.
+                </div>
+            `
+        },
+
+        // === SLIDE 23: EFECTOS DE LA ACTIVIDAD VOLCÁNICA (MODIFICADO) ===
+        {
+            title: "⚠️ Efectos de la actividad volcánica",
+            content: `
+                <div class="badge">Lección 4 - Efectos volcánicos</div>
+                <h2>Efectos de la actividad volcánica</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <i class="fas fa-gem"></i>
+                        <h4>Rocas</h4>
+                        <p>La lava al enfriarse forma <span class="highlight">rocas ígneas</span> como basalto, obsidiana y piedra pómez. Estas rocas pueden tener texturas vítreas o porosas.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Columna eruptiva</h4>
+                        <p>Columna de <span class="highlight">gases, cenizas y fragmentos</span> que puede alcanzar hasta <span class="highlight">50 km</span> de altura en erupciones plinianas. La ceniza puede viajar miles de kilómetros.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>Flujo de lava</h4>
+                        <p>Corriente de <span class="highlight">magma que avanza por la superficie</span>. Puede alcanzar velocidades de hasta 60 km/h en pendientes pronunciadas. Temperatura: 700-1.200°C.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-wind"></i>
+                        <h4>Fumarola</h4>
+                        <p>Emisión de <span class="highlight">gases y vapor de agua</span> a través de grietas. Pueden contener SO₂ y CO₂, que son tóxicos. Pueden persistir por años después de una erupción.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Grietas</h4>
+                        <p>Fracturas en la corteza terrestre por donde escapan <span class="highlight">gases o magma</span>. Pueden formarse en los flancos del volcán y extenderse por varios kilómetros.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Domo de lava</h4>
+                        <p>Acumulación de <span class="highlight">lava viscosa</span> en el cráter que no fluye. Puede crecer hasta formar una cúpula de varios cientos de metros de altura y colapsar explosivamente.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-right"></i>
+                        <h4>Flujo piroclástico</h4>
+                        <p>Mezcla de <span class="highlight">gases calientes, ceniza y fragmentos de roca</span> que se desplaza a gran velocidad (<span class="highlight">hasta 700 km/h</span>). Temperatura: > 1.000°C. Es extremadamente destructivo.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-dust"></i>
+                        <h4>Caída de cenizas</h4>
+                        <p>Partículas finas de roca pulverizada que caen a gran distancia. Pueden <span class="highlight">colapsar techos, contaminar agua</span> y afectar la aviación. La ceniza es abrasiva y corrosiva.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-cloud"></i>
+                        <h4>Nube eruptiva</h4>
+                        <p>Gran nube de <span class="highlight">ceniza, gases y vapor</span> que se eleva desde el cráter. Puede dispersarse por miles de kilómetros y afectar el clima global al bloquear la radiación solar.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Lahar</h4>
+                        <p>Flujo de <span class="highlight">lodo volcánico</span> compuesto por ceniza, agua y escombros. Puede viajar a velocidades de <span class="highlight">hasta 100 km/h</span> y enterrar ciudades enteras. El lahar de Armero (1985) mató a 23.000 personas.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-down"></i>
+                        <h4>Deslizamiento</h4>
+                        <p>Colapso de material volcánico en los <span class="highlight">flancos del volcán</span>. Puede ser provocado por sismos o por la misma actividad volcánica. Genera avalanchas de gran magnitud.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-tint"></i>
+                        <h4>Lluvia ácida</h4>
+                        <p>Formada por la <span class="highlight">combinación de gases volcánicos (SO₂, CO₂) con el vapor de agua</span>. Puede dañar cultivos, bosques y estructuras. El pH de esta lluvia puede llegar a ser tan bajo como 2.0.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> Los efectos de una erupción volcánica pueden durar años y afectar el clima global. Por ejemplo, la erupción del Tambora (1815) causó el "Año sin verano" en 1816.
+                </div>
+            `
+        },
+
+        // === SLIDE 24: ROCAS ÍGNEAS ===
+        {
+            title: "🔥 Rocas ígneas",
+            content: `
+                <div class="badge">Lección 4 - Rocas</div>
+                <h2>Rocas ígneas</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>¿Cómo se forman?</h4>
+                        <p>Se forman a partir de la <span class="highlight">solidificación del magma</span> en el interior de la Tierra o de la <span class="highlight">lava</span> en la superficie.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-gem"></i>
+                        <h4>Ejemplos</h4>
+                        <ul>
+                            <li><span class="highlight">Pumita</span> (piedra pómez): muy porosa, gris o blanca.</li>
+                            <li><span class="highlight">Granito</span>: aspecto granular, colores muy claros.</li>
+                            <li><span class="highlight">Basalto</span>: roca oscura, común en el fondo oceánico.</li>
+                            <li><span class="highlight">Obsidiana</span>: vidrio volcánico, color negro o gris.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Dato:</strong> El <span class="highlight">granito</span> es una de las rocas más comunes en la corteza continental.
+                </div>
+            `
+        },
+
+        // === SLIDE 25: ROCAS SEDIMENTARIAS ===
+        {
+            title: "🏜️ Rocas sedimentarias",
+            content: `
+                <div class="badge">Lección 4 - Rocas</div>
+                <h2>Rocas sedimentarias</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>¿Cómo se forman?</h4>
+                        <p>Se forman a partir de cualquier roca que haya experimentado un proceso de <span class="highlight">erosión, transporte y desintegración</span>.</p>
+                        <p style="margin-top:0.5rem;">Los sedimentos se acumulan y se <span class="highlight">compactan</span> con el tiempo.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-gem"></i>
+                        <h4>Ejemplos</h4>
+                        <ul>
+                            <li><span class="highlight">Arenisca</span>: espacios libres entre sus granos.</li>
+                            <li><span class="highlight">Caliza</span>: granos muy finos.</li>
+                            <li><span class="highlight">Conglomerado</span>: fragmentos redondeados.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> Las rocas sedimentarias cubren aproximadamente el <span class="highlight">75%</span> de la superficie terrestre.
+                </div>
+            `
+        },
+
+        // === SLIDE 26: ROCAS METAMÓRFICAS ===
+        {
+            title: "⚡ Rocas metamórficas",
+            content: `
+                <div class="badge">Lección 4 - Rocas</div>
+                <h2>Rocas metamórficas</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-thermometer-half"></i>
+                        <h4>¿Cómo se forman?</h4>
+                        <p>Se forman a partir de cualquier tipo de roca que experimente un <span class="highlight">incremento de presión y/o temperatura</span>.</p>
+                        <p style="margin-top:0.5rem;">A diferencia de las ígneas, estas <span class="highlight">no experimentan fusión</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-gem"></i>
+                        <h4>Ejemplos</h4>
+                        <ul>
+                            <li><span class="highlight">Esquisto</span>: láminas o escamas separables.</li>
+                            <li><span class="highlight">Mármol</span>: compacta, color blanco o traslúcido.</li>
+                            <li><span class="highlight">Gneis</span>: bandas alternadas de minerales.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Dato:</strong> El <span class="highlight">mármol</span> se utiliza mucho en escultura y construcción (ej. estatuas griegas).
+                </div>
+            `
+        },
+
+        // === SLIDE 27: NUEVA SLIDE - COMPOSICIÓN DE LA TIERRA Y CLASIFICACIÓN DE ROCAS ===
+        {
+            title: "🧪 Composición de la Tierra y clasificación de rocas",
+            content: `
+                <div class="badge">Lección 4 - Composición de la Tierra</div>
+                <h2>Composición química de la Tierra</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-atom"></i>
+                        <h4>Elementos más abundantes</h4>
+                        <ul>
+                            <li><span class="highlight">Hierro (Fe)</span>: 32.1% - Principal en el núcleo.</li>
+                            <li><span class="highlight">Oxígeno (O)</span>: 30.1% - En minerales y agua.</li>
+                            <li><span class="highlight">Silicio (Si)</span>: 15.1% - En silicatos.</li>
+                            <li><span class="highlight">Magnesio (Mg)</span>: 13.9% - En el manto.</li>
+                            <li><span class="highlight">Níquel (Ni)</span>: 1.8% - En el núcleo.</li>
+                            <li><span class="highlight">Calcio (Ca)</span>: 1.5% - En carbonatos.</li>
+                            <li><span class="highlight">Aluminio (Al)</span>: 1.4% - En la corteza.</li>
+                            <li>Otros: 4.1% (S, K, Na, Ti, etc.)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>Distribución por capas</h4>
+                        <ul>
+                            <li><span class="highlight">Corteza</span>: Oxígeno, Silicio, Aluminio, Calcio, Sodio, Potasio.</li>
+                            <li><span class="highlight">Manto</span>: Oxígeno, Silicio, Magnesio, Hierro.</li>
+                            <li><span class="highlight">Núcleo</span>: Hierro, Níquel (aleación metálica).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> El <span class="highlight">silicato</span> es el mineral más abundante en la Tierra. Está compuesto por silicio y oxígeno.
+                </div>
+                <div class="example-box">
+                    <h4 style="color:#90cdf4; margin-bottom:0.3rem;">Clasificación de rocas según su origen</h4>
+                    <div class="grid-3" style="margin-top:0.3rem;">
+                        <div style="background:rgba(43,108,176,0.2); border-radius:12px; padding:0.6rem;">
+                            <strong style="color:#63b3ed;">Ígneas</strong>
+                            <p style="font-size:0.75rem;">Solidificación de magma o lava.</p>
+                            <p style="font-size:0.7rem; color:#90cdf4;">Ej: Granito, Basalto, Pumita</p>
+                        </div>
+                        <div style="background:rgba(43,108,176,0.2); border-radius:12px; padding:0.6rem;">
+                            <strong style="color:#63b3ed;">Sedimentarias</strong>
+                            <p style="font-size:0.75rem;">Compactación de sedimentos.</p>
+                            <p style="font-size:0.7rem; color:#90cdf4;">Ej: Arenisca, Caliza, Conglomerado</p>
+                        </div>
+                        <div style="background:rgba(43,108,176,0.2); border-radius:12px; padding:0.6rem;">
+                            <strong style="color:#63b3ed;">Metamórficas</strong>
+                            <p style="font-size:0.75rem;">Presión y calor sin fusión.</p>
+                            <p style="font-size:0.7rem; color:#90cdf4;">Ej: Mármol, Esquisto, Gneis</p>
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 28: CICLO DE LAS ROCAS ===
+        {
+            title: "🔄 Ciclo de las rocas",
+            content: `
+                <div class="badge">Lección 4 - Ciclo de las rocas</div>
+                <h2>El ciclo de las rocas</h2>
+                <div class="card">
+                    <p>El <span class="highlight">ciclo de las rocas</span> muestra cómo las rocas se transforman de un tipo a otro a través de procesos geológicos.</p>
+                </div>
+                <div class="grid-3">
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>Roca ígnea</h4>
+                        <p>Se forma por <span class="highlight">solidificación</span> de magma o lava.</p>
+                        <p style="margin-top:0.3rem;font-size:0.8rem;">→ Puede erosionarse y convertirse en sedimentaria.</p>
+                        <p style="font-size:0.8rem;">→ Puede metamorfizarse y convertirse en metamórfica.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Roca sedimentaria</h4>
+                        <p>Se forma por <span class="highlight">compactación</span> de sedimentos.</p>
+                        <p style="margin-top:0.3rem;font-size:0.8rem;">→ Puede fundirse y convertirse en ígnea.</p>
+                        <p style="font-size:0.8rem;">→ Puede metamorfizarse y convertirse en metamórfica.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Roca metamórfica</h4>
+                        <p>Se forma por <span class="highlight">presión y calor</span>.</p>
+                        <p style="margin-top:0.3rem;font-size:0.8rem;">→ Puede fundirse y convertirse en ígnea.</p>
+                        <p style="font-size:0.8rem;">→ Puede erosionarse y convertirse en sedimentaria.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Importante:</strong> Los procesos descritos en el ciclo <span class="highlight">no siguen un orden preestablecido</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 29: TEORÍA DE LA DERIVA CONTINENTAL (MODIFICADO) ===
+        {
+            title: "🗺️ Deriva Continental",
+            content: `
+                <div class="badge">Lección 4 - Deriva continental</div>
+                <h2>Alfred Wegener y la deriva continental</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-user-astronaut"></i>
+                        <h4>Alfred Wegener (1880-1930)</h4>
+                        <p>Meteorólogo y geofísico alemán que propuso la <span class="highlight">teoría de la deriva continental</span> en 1912.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-earth"></i>
+                        <h4>Pangea y Panthalassa</h4>
+                        <p>Wegener propuso que todos los continentes estuvieron unidos en un solo supercontinente llamado <span class="highlight">Pangea</span> hace aproximadamente <span class="highlight">300 millones de años</span>.</p>
+                        <p style="margin-top:0.5rem;">El océano que rodeaba a Pangea se llamaba <span class="highlight">Panthalassa</span> ("todo el mar").</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>División de Pangea:</strong>
+                    <ul style="margin-left:1.5rem; margin-top:0.3rem;">
+                        <li>Pangea se fragmentó en dos grandes continentes: <span class="highlight">Laurasia</span> (al norte) y <span class="highlight">Gondwana</span> (al sur).</li>
+                        <li><span class="highlight">Laurasia</span>: América del Norte, Europa y Asia (excepto India).</li>
+                        <li><span class="highlight">Gondwana</span>: América del Sur, África, India, Australia y Antártida.</li>
+                    </ul>
+                </div>
+                <div class="example-box">
+                    <strong>Evidencias:</strong>
+                    <ul>
+                        <li><span class="highlight">Geométricas</span>: Los continentes encajan como rompecabezas.</li>
+                        <li><span class="highlight">Paleontológicas</span>: Fósiles idénticos en continentes separados (ej. Mesosaurus en Sudamérica y África).</li>
+                        <li><span class="highlight">Geológicas</span>: Formaciones rocosas coincidentes.</li>
+                        <li><span class="highlight">Climáticas</span>: Evidencias de glaciaciones en zonas tropicales.</li>
+                    </ul>
+                </div>
+            `
+        },
+
+        // === SLIDE 30: PROCESOS GEOLÓGICOS INTERNOS ===
+        {
+            title: "⚡ Procesos geológicos internos",
+            content: `
+                <div class="badge">Lección 4 - Procesos geológicos</div>
+                <h2>Procesos geológicos internos</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>¿Qué son?</h4>
+                        <p>Son procesos que ocurren en el <span class="highlight">interior de la Tierra</span> impulsados por su <span class="highlight">energía interna</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-list"></i>
+                        <h4>Ejemplos</h4>
+                        <ul>
+                            <li><span class="highlight">Actividad volcánica</span></li>
+                            <li><span class="highlight">Formación de montañas</span></li>
+                            <li><span class="highlight">Terremotos y sismos</span></li>
+                            <li><span class="highlight">Movimiento de placas</span></li>
+                            <li><span class="highlight">Formación de rocas ígneas</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Fuente de energía:</strong> El calor del <span class="highlight">núcleo</span> y la <span class="highlight">desintegración radiactiva</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 31: PROCESOS GEOLÓGICOS EXTERNOS ===
+        {
+            title: "🌬️ Procesos geológicos externos",
+            content: `
+                <div class="badge">Lección 4 - Procesos geológicos</div>
+                <h2>Procesos geológicos externos</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-wind"></i>
+                        <h4>¿Qué son?</h4>
+                        <p>Son procesos que ocurren en la <span class="highlight">superficie</span> causados por agentes externos como el agua, el viento, el hielo y la gravedad.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-list"></i>
+                        <h4>Ejemplos</h4>
+                        <ul>
+                            <li><span class="highlight">Erosión</span>: desgaste del relieve.</li>
+                            <li><span class="highlight">Meteorización</span>: descomposición de rocas.</li>
+                            <li><span class="highlight">Transporte de sedimentos</span>.</li>
+                            <li><span class="highlight">Formación de rocas sedimentarias</span>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Diferencia:</strong> Los procesos externos <span class="highlight">no forman montañas</span>, sino que las <span class="highlight">modifican y desgastan</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 32: TSUNAMIS - DEFINICIÓN ===
+        {
+            title: "🌊 Tsunamis - Definición",
+            content: `
+                <div class="badge">Tsunamis</div>
+                <h2>¿Qué es un tsunami?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Definición</h4>
+                        <p>Un <span class="highlight">tsunami</span> es una <span class="highlight">serie de olas gigantes</span> generadas por un <span class="highlight">desplazamiento vertical del fondo marino</span>. La causa más común es un <span class="highlight">sismo de subducción</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Otras causas</h4>
+                        <ul>
+                            <li><span class="highlight">Erupciones volcánicas</span> submarinas.</li>
+                            <li><span class="highlight">Deslizamientos de tierra</span> submarinos.</li>
+                            <li><span class="highlight">Impactos de meteoritos</span> en el océano.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Etimología:</strong> La palabra "tsunami" proviene del japonés <span class="highlight">"tsu"</span> (puerto) y <span class="highlight">"nami"</span> (ola). Significa "ola de puerto".
+                </div>
+            `
+        },
+
+        // === SLIDE 33: TSUNAMIS - CARACTERÍSTICAS ===
+        {
+            title: "🌊 Tsunamis - Características",
+            content: `
+                <div class="badge">Tsunamis</div>
+                <h2>Características de los tsunamis</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-rocket"></i>
+                        <h4>En alta mar</h4>
+                        <ul>
+                            <li><span class="highlight">Velocidad muy alta</span>: hasta 800 km/h.</li>
+                            <li><span class="highlight">Altura muy baja</span>: menos de 1 metro.</li>
+                            <li>Olas de <span class="highlight">larga longitud de onda</span> (hasta 100 km).</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Cerca de la costa</h4>
+                        <ul>
+                            <li>La velocidad <span class="highlight">disminuye</span>.</li>
+                            <li>La <span class="highlight">altura aumenta</span> drásticamente (<span class="highlight">efecto de shoaling</span>).</li>
+                            <li>Puede superar los <span class="highlight">30 metros</span> de altura.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Efecto de shoaling:</strong> Al acercarse a la costa, el fondo marino se hace más superficial, lo que reduce la velocidad de la ola y aumenta su altura.
+                </div>
+            `
+        },
+
+        // === SLIDE 34: TSUNAMIS - HISTÓRICOS EN CHILE ===
+        {
+            title: "🌊 Tsunamis históricos en Chile",
+            content: `
+                <div class="badge">Tsunamis</div>
+                <h2>Tsunamis históricos en Chile</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1960</div>
+                        <p><strong>Valdivia</strong></p>
+                        <p>Magnitud: 9.5</p>
+                        <p>Tsunami cruzó el Pacífico</p>
+                        <p>Olas de hasta 25 m</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2010</div>
+                        <p><strong>Maule</strong></p>
+                        <p>Magnitud: 8.8</p>
+                        <p>Olas de 4-5 m</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2014</div>
+                        <p><strong>Iquique</strong></p>
+                        <p>Magnitud: 8.2</p>
+                        <p>Olas de 2 m</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2015</div>
+                        <p><strong>Coquimbo</strong></p>
+                        <p>Magnitud: 8.3</p>
+                        <p>Olas de 4.5 m</p>
+                        <p>15 fallecidos</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El tsunami de Valdivia (1960) cruzó el Océano Pacífico y afectó a <span class="highlight">Hawái, Japón y Filipinas</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 35: HURACANES - DEFINICIÓN ===
+        {
+            title: "🌀 Huracanes - Definición",
+            content: `
+                <div class="badge">Huracanes</div>
+                <h2>¿Qué es un huracán?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-wind"></i>
+                        <h4>Definición</h4>
+                        <p>Un <span class="highlight">huracán</span> es un sistema de tormentas de gran tamaño que se forma sobre <span class="highlight">océanos tropicales</span>. Se caracteriza por vientos sostenidos de al menos <span class="highlight">119 km/h</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-globe"></i>
+                        <h4>Nombres según región</h4>
+                        <ul>
+                            <li><span class="highlight">Huracán</span>: Océano Atlántico y Pacífico Nororiental.</li>
+                            <li><span class="highlight">Ciclón</span>: Océano Índico y Pacífico Sur.</li>
+                            <li><span class="highlight">Tifón</span>: Pacífico Noroccidental.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> Los huracanes obtienen su energía del <span class="highlight">calor del agua del mar</span>. Por eso se forman en zonas tropicales donde el agua supera los 26.5°C.
+                </div>
+            `
+        },
+
+        // === SLIDE 36: HURACANES - PARTES ===
+        {
+            title: "🌀 Huracanes - Partes",
+            content: `
+                <div class="badge">Huracanes</div>
+                <h2>Partes de un huracán</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <i class="fas fa-circle"></i>
+                        <h4>Ojo</h4>
+                        <p>Centro del huracán. Zona de <span class="highlight">calma</span> y <span class="highlight">baja presión</span>. Cielo despejado.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-ring"></i>
+                        <h4>Pared del ojo</h4>
+                        <p>Anillo de nubes alrededor del ojo. Aquí se registran los <span class="highlight">vientos más intensos</span> y las lluvias más fuertes.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-cloud-rain"></i>
+                        <h4>Bandas de nubes</h4>
+                        <p>Brazos espirales de nubes y tormentas que se extienden desde el centro. Provocan <span class="highlight">lluvias torrenciales</span>.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El ojo de un huracán puede tener entre <span class="highlight">30 y 60 km</span> de diámetro.
+                </div>
+            `
+        },
+
+        // === SLIDE 37: HURACANES - CONDICIONES DE FORMACIÓN ===
+        {
+            title: "🌀 Huracanes - Formación",
+            content: `
+                <div class="badge">Huracanes</div>
+                <h2>Condiciones para la formación de un huracán</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-temperature-high"></i>
+                        <h4>Condiciones necesarias</h4>
+                        <ul>
+                            <li>Temperatura del agua <span class="highlight">> 26.5°C</span>.</li>
+                            <li><span class="highlight">Aire húmedo</span> en la atmósfera.</li>
+                            <li><span class="highlight">Rotación de la Tierra</span> (Efecto Coriolis).</li>
+                            <li><span class="highlight">Baja cizalladura</span> del viento.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Proceso de formación</h4>
+                        <ol style="margin-left:1.2rem; color:#cbd5e1; font-size:0.85rem; line-height:1.8;">
+                            <li>El <span class="highlight">agua cálida</span> se evapora y asciende.</li>
+                            <li>Al enfriarse, forma <span class="highlight">nubes</span> y libera calor.</li>
+                            <li>El calor hace que el aire <span class="highlight">ascienda más</span>.</li>
+                            <li>El <span class="highlight">Efecto Coriolis</span> hace que gire.</li>
+                            <li>Se forma un <span class="highlight">sistema organizado</span> que se retroalimenta.</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> Un huracán puede liberar la energía equivalente a <span class="highlight">10.000 bombas atómicas</span> por día.
+                </div>
+            `
+        },
+
+        // === SLIDE 38: HURACANES - ESCALA SAFFIR-SIMPSON ===
+        {
+            title: "🌀 Escala Saffir-Simpson",
+            content: `
+                <div class="badge">Huracanes</div>
+                <h2>Escala Saffir-Simpson</h2>
+                <div class="card">
+                    <p>Clasifica los huracanes en <span class="highlight">5 categorías</span> según la intensidad de sus vientos.</p>
+                </div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr><th>Categoría</th><th>Vientos</th><th>Daños</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="highlight">1</span></td><td>119-153 km/h</td><td>Mínimos: ramas caídas</td></tr>
+                        <tr><td><span class="highlight">2</span></td><td>154-177 km/h</td><td>Moderados: árboles arrancados</td></tr>
+                        <tr><td><span class="highlight">3</span></td><td>178-208 km/h</td><td>Mayores: daños estructurales</td></tr>
+                        <tr><td><span class="highlight">4</span></td><td>209-251 km/h</td><td>Extremos: daños graves</td></tr>
+                        <tr><td><span class="highlight">5</span></td><td>> 252 km/h</td><td>Catastróficos: destrucción total</td></tr>
+                    </tbody>
+                </table>
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> El huracán Katrina (2005) alcanzó la categoría 5 con vientos de 280 km/h.
+                </div>
+            `
+        },
+
+        // === SLIDE 39: HURACANES - PELIGROS ASOCIADOS ===
+        {
+            title: "🌀 Huracanes - Peligros",
+            content: `
+                <div class="badge">Huracanes</div>
+                <h2>Peligros asociados a los huracanes</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-wind"></i>
+                        <h4>Vientos destructivos</h4>
+                        <p>Pueden arrancar árboles, destruir viviendas y lanzar objetos peligrosos.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Marejada ciclónica</h4>
+                        <p>Aumento del <span class="highlight">nivel del mar</span> por la baja presión y los vientos. Inunda zonas costeras.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-tint"></i>
+                        <h4>Lluvias torrenciales</h4>
+                        <p>Pueden causar <span class="highlight">inundaciones</span> y <span class="highlight">deslizamientos de tierra</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-tornado"></i>
+                        <h4>Tornados</h4>
+                        <p>Los huracanes pueden generar <span class="highlight">tornados</span> en sus bandas de nubes.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El mayor peligro de un huracán no son solo los vientos, sino la <span class="highlight">marejada ciclónica</span> y las <span class="highlight">inundaciones</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 40: HURACANES - HISTÓRICOS ===
+        {
+            title: "🌀 Huracanes históricos",
+            content: `
+                <div class="badge">Huracanes</div>
+                <h2>Huracanes famosos en la historia</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-history"></i>
+                        <h4>Katrina (2005)</h4>
+                        <ul>
+                            <li>Categoría <span class="highlight">5</span>.</li>
+                            <li>Afectó Nueva Orleans (EE.UU.).</li>
+                            <li>Más de <span class="highlight">1.800</span> fallecidos.</li>
+                            <li>Daños: <span class="highlight">$125 mil millones</span>.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-history"></i>
+                        <h4>Irma (2017)</h4>
+                        <ul>
+                            <li>Categoría <span class="highlight">5</span>.</li>
+                            <li>Afectó Caribe y Florida.</li>
+                            <li>Vientos de <span class="highlight">295 km/h</span>.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-history"></i>
+                        <h4>Harvey (2017)</h4>
+                        <ul>
+                            <li>Categoría <span class="highlight">4</span>.</li>
+                            <li>Causó <span class="highlight">inundaciones catastróficas</span> en Texas.</li>
+                            <li>Récord de lluvias: 1.500 mm.</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-history"></i>
+                        <h4>Otto (2016)</h4>
+                        <ul>
+                            <li>Categoría <span class="highlight">3</span>.</li>
+                            <li>Afectó <span class="highlight">Centroamérica</span> (Costa Rica, Nicaragua).</li>
+                            <li>Primer huracán en Costa Rica en 100 años.</li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 41: HURACANES Y CHILE ===
+        {
+            title: "🌀 Huracanes y Chile",
+            content: `
+                <div class="badge">Huracanes</div>
+                <h2>¿Por qué Chile no es afectado por huracanes?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-thermometer-half"></i>
+                        <h4>Corriente de Humboldt</h4>
+                        <p>La corriente de Humboldt trae aguas <span class="highlight">frías</span> desde el sur. El agua de la costa chilena es demasiado fría para la formación de huracanes.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-wind"></i>
+                        <h4>Vientos del oeste</h4>
+                        <p>Los <span class="highlight">vientos del oeste</span> en el Pacífico Sur desvían las tormentas tropicales hacia el este, lejos de la costa chilena.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-down"></i>
+                        <h4>Alta presión</h4>
+                        <p>La <span class="highlight">alta presión</span> del Pacífico Sur actúa como una barrera que impide que los huracanes se acerquen a Chile.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-check-circle"></i>
+                        <h4>Conclusión</h4>
+                        <p>Chile es <span class="highlight">prácticamente inmune</span> a los huracanes. Sin embargo, fenómenos como <span class="highlight">El Niño</span> pueden generar tormentas atípicas.</p>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 42: RELACIÓN ENTRE FENÓMENOS ===
+        {
+            title: "🔗 Relación entre fenómenos",
+            content: `
+                <div class="badge">Relación</div>
+                <h2>¿Cómo se relacionan estos fenómenos?</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <i class="fas fa-waveform"></i>
+                        <h4>Sismos → Tsunamis</h4>
+                        <p>Los sismos de <span class="highlight">subducción</span> pueden generar tsunamis al desplazar el fondo marino.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>Volcanes → Tsunamis</h4>
+                        <p>Las <span class="highlight">erupciones volcánicas</span> submarinas pueden generar tsunamis.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Tsunamis → Huracanes</h4>
+                        <p>No hay relación directa. Los tsunamis son oceánicos, los huracanes son atmosféricos.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-globe"></i>
+                        <h4>Todos → Chile</h4>
+                        <p>Chile es afectado por <span class="highlight">sismos, volcanes y tsunamis</span>, pero no por huracanes.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Tectónica → Todos</h4>
+                        <p>La <span class="highlight">tectónica de placas</span> es la causa principal de sismos, volcanes y tsunamis.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-thermometer-half"></i>
+                        <h4>Clima → Huracanes</h4>
+                        <p>El <span class="highlight">cambio climático</span> está aumentando la intensidad y frecuencia de los huracanes.</p>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 43: CIERRE ===
+        {
+            title: "🎯 ¡Clase completada!",
+            content: `
+                <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center;">
+                    <div class="badge">Clase 5 - Completada</div>
+                    <h1 style="font-size:2.8rem;">🎯 ¡Has completado la clase!</h1>
+                    <p style="font-size:1.2rem; color:#90cdf4; margin:1rem 0;">Tectónica • Sismos • Volcanes • Tsunamis • Huracanes</p>
+                    <div style="display:flex; gap:2rem; flex-wrap:wrap; justify-content:center; margin:1.5rem 0;">
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.5rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-check-circle" style="color:#63b3ed;"></i> 44 slides de contenido
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.5rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-graduation-cap" style="color:#63b3ed;"></i> Listo para los ejercicios
+                        </div>
+                    </div>
+                    <p style="color:#4a7a9c; font-size:0.9rem;">Presiona <span class="highlight">"Ejercicios"</span> para poner a prueba tus conocimientos.</p>
+                </div>
+            `
+        }
+    ];
+
+    // ================================================================
+    // LÓGICA DE NAVEGACIÓN
+    // ================================================================
+
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    function renderSlides() {
+        const wrapper = document.getElementById('slidesWrapper');
+        wrapper.innerHTML = '';
+        slides.forEach((slide, index) => {
+            const div = document.createElement('div');
+            div.className = 'slide';
+            if (index === 0) div.classList.add('active');
+            div.setAttribute('data-index', index);
+            div.innerHTML = `
+                ${slide.content}
+                <div class="slide-number">${index + 1} / ${totalSlides}</div>
+            `;
+            wrapper.appendChild(div);
+        });
+        updateDots();
+        updateButtons();
+    }
+
+    function updateDots() {
+        const container = document.getElementById('dotsContainer');
+        container.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (i === currentSlide) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            container.appendChild(dot);
+        }
+    }
+
+    function updateButtons() {
+        document.getElementById('prevBtn').disabled = currentSlide === 0;
+        document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    function goToSlide(index) {
+        if (index < 0 || index >= totalSlides) return;
+        currentSlide = index;
+        const slidesElements = document.querySelectorAll('.slide');
+        slidesElements.forEach((slide, i) => {
+            slide.classList.toggle('active', i === currentSlide);
+        });
+        updateDots();
+        updateButtons();
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) goToSlide(currentSlide - 1);
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', prevSlide);
+    document.getElementById('nextBtn').addEventListener('click', nextSlide);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+    });
+
+    document.getElementById('cursoBtn').addEventListener('click', () => {
+        window.location.href = 'Fisica.html';
+    });
+
+    document.getElementById('ejerciciosBtn').addEventListener('click', () => {
+        window.location.href = 'C_5A_Fisica.html';
+    });
+
+    renderSlides();
+</script>
+</body>
+</html>
