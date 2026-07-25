@@ -1,0 +1,830 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Rocas, Tsunamis y Huracanes | 7° Básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1628;
+            color: #e2e8f0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #0d1b2a;
+            border-radius: 28px;
+            padding: 2rem;
+            border: 1px solid #1a365d;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #1a365d;
+            margin-bottom: 1.5rem;
+        }
+        .header h1 { font-size: 2.2rem; color: #90cdf4; margin-bottom: 0.3rem; }
+        .header .subtitle { color: #4a7a9c; font-size: 0.9rem; }
+        .header .badge {
+            display: inline-block;
+            background: #2b6cb0;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(26,54,93,0.4);
+            padding: 0.8rem 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            border: 1px solid #1a365d;
+        }
+        .info-bar span { color: #90cdf4; font-weight: 600; }
+        .info-bar .highlight-info { color: #63b3ed; }
+        .question-card {
+            background: rgba(26,54,93,0.3);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #1a365d;
+            transition: all 0.3s ease;
+        }
+        .question-card:hover { border-color: #2b6cb0; }
+        .question-number {
+            font-size: 0.75rem;
+            color: #4a7a9c;
+            margin-bottom: 0.3rem;
+        }
+        .question-text {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 0.5rem;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        .options label:hover { background: rgba(43,108,176,0.2); }
+        .options input[type="radio"] {
+            accent-color: #2b6cb0;
+            transform: scale(1.1);
+            flex-shrink: 0;
+        }
+        .options input[type="radio"]:disabled {
+            accent-color: #4a7a9c;
+            cursor: not-allowed;
+        }
+        .question-card.correct {
+            border-left: 5px solid #22c55e;
+            background: rgba(34,197,94,0.1);
+        }
+        .question-card.incorrect {
+            border-left: 5px solid #ef4444;
+            background: rgba(239,68,68,0.1);
+        }
+        .feedback-text {
+            margin-top: 0.6rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            display: none;
+        }
+        .feedback-text.show { display: block; }
+        .feedback-text.correct-fb {
+            background: rgba(34,197,94,0.15);
+            color: #8bc34a;
+            border-left: 3px solid #22c55e;
+        }
+        .feedback-text.incorrect-fb {
+            background: rgba(239,68,68,0.15);
+            color: #ff8a80;
+            border-left: 3px solid #ef4444;
+        }
+
+        /* Sección de identificación de rocas */
+        .rock-identification-section {
+            margin-top: 2rem;
+            padding-top: 2rem;
+            border-top: 2px solid #1a365d;
+        }
+        .rock-identification-section h2 {
+            color: #90cdf4;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            border-left: 4px solid #2b6cb0;
+            padding-left: 1rem;
+        }
+        .rock-identification-section .subtitle-section {
+            color: #4a7a9c;
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+            padding-left: 1rem;
+        }
+        .rock-item {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+            background: rgba(26,54,93,0.3);
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #1a365d;
+            transition: all 0.3s ease;
+        }
+        .rock-item:hover { border-color: #2b6cb0; }
+        .rock-item img {
+            width: 160px;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 12px;
+            border: 1px solid #1a365d;
+            flex-shrink: 0;
+            background: #0d1b2a;
+        }
+        .rock-inputs {
+            display: flex;
+            flex-direction: column;
+            gap: 0.8rem;
+            flex: 1;
+        }
+        .rock-input-group {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        .rock-input-group label {
+            min-width: 100px;
+            color: #90cdf4;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .rock-input-group input {
+            flex: 1;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            border: 1px solid #1a365d;
+            background: #0d1b2a;
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.3s ease;
+        }
+        .rock-input-group input:focus {
+            outline: 2px solid #2b6cb0;
+            border-color: transparent;
+        }
+        .rock-input-group input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .rock-item.correct {
+            border-left: 5px solid #22c55e;
+            background: rgba(34,197,94,0.1);
+        }
+        .rock-item.incorrect {
+            border-left: 5px solid #ef4444;
+            background: rgba(239,68,68,0.1);
+        }
+        .rock-feedback {
+            margin-top: 0.3rem;
+            font-size: 0.85rem;
+        }
+        .rock-feedback.correct-fb { color: #8bc34a; }
+        .rock-feedback.incorrect-fb { color: #ff8a80; }
+
+        .btn-evaluate {
+            display: block;
+            width: 280px;
+            margin: 1.5rem auto;
+            background: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-evaluate:hover { background: #3182ce; transform: translateY(-2px); }
+        .btn-evaluate:disabled {
+            background: #4a7a9c;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            background: rgba(26,54,93,0.5);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid #2b6cb0;
+            display: none;
+        }
+        .results h3 {
+            color: #90cdf4;
+            font-size: 1.6rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .results .score {
+            font-size: 1.3rem;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+        .results .grade {
+            font-size: 2rem;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 16px;
+            font-weight: bold;
+        }
+        .results .grade.approved {
+            background: rgba(34,197,94,0.2);
+            color: #8bc34a;
+        }
+        .results .grade.failed {
+            background: rgba(239,68,68,0.2);
+            color: #ff8a80;
+        }
+        .results .details {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .results .details span { color: #e2e8f0; }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .btn {
+            padding: 0.6rem 1.8rem;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+        .btn-primary { background: #facc15; color: #0a1628; }
+        .btn-primary:hover { background: #fde047; transform: translateY(-2px); }
+        .btn-secondary { background: #2b6cb0; color: white; }
+        .btn-secondary:hover { background: #3182ce; transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 2px solid #2b6cb0; color: #90cdf4; }
+        .btn-outline:hover { background: #2b6cb0; color: white; transform: translateY(-2px); }
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #4a7a9c;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .container { padding: 1rem; }
+            .header h1 { font-size: 1.5rem; }
+            .info-bar { font-size: 0.75rem; padding: 0.5rem 1rem; }
+            .question-text { font-size: 0.9rem; }
+            .options label { font-size: 0.8rem; }
+            .btn-evaluate { width: 100%; }
+            .results { padding: 1rem; }
+            .results .grade { font-size: 1.5rem; }
+            .rock-item {
+                flex-direction: column;
+                align-items: stretch;
+                padding: 1rem;
+            }
+            .rock-item img {
+                width: 100%;
+                height: auto;
+                max-width: 200px;
+                margin: 0 auto;
+            }
+            .rock-input-group {
+                flex-direction: column;
+                align-items: stretch;
+                gap: 0.3rem;
+            }
+            .rock-input-group label { min-width: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="badge">Ejercicios - Clase 6</div>
+        <h1>📝 Rocas, Tsunamis y Huracanes</h1>
+        <div class="subtitle">7° Básico | Ciencias Naturales | 35 preguntas + 4 rocas para identificar</div>
+    </div>
+
+    <div class="info-bar">
+        <span>📋 <span class="highlight-info" id="totalQuestions">35</span> preguntas</span>
+        <span>✅ Exigencia: <span class="highlight-info">60%</span> (para nota 4.0)</span>
+        <span>🎯 Nota máxima: <span class="highlight-info">7.0</span></span>
+        <span>📝 <span class="highlight-info" id="answeredCount">0</span> respondidas</span>
+    </div>
+
+    <div id="examContent"></div>
+
+    <!-- SECCIÓN DE IDENTIFICACIÓN DE ROCAS -->
+    <div class="rock-identification-section" id="rockSection">
+        <h2>🪨 Identificación de rocas</h2>
+        <div class="subtitle-section">Observa cada roca y escribe su clasificación (ígnea, sedimentaria o metamórfica) y su nombre.</div>
+        <div id="rockContainer"></div>
+    </div>
+
+    <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar Respuestas</button>
+
+    <div id="results" class="results"></div>
+
+    <div class="footer">Basado en la Clase 6: Rocas, Tsunamis y Huracanes</div>
+</div>
+
+<script>
+    // ================================================================
+    // POOL DE PREGUNTAS - 80 PREGUNTAS SIN IMÁGENES
+    // ================================================================
+
+    // ================================================================
+    // ROCAS - 30 preguntas (1-30)
+    // ================================================================
+    const rocasPool = [
+        { text: "¿Qué tipo de roca se forma por la solidificación del magma en el interior de la Tierra?", options: ["Roca sedimentaria", "Roca ígnea intrusiva", "Roca ígnea extrusiva", "Roca metamórfica"], correct: "Roca ígnea intrusiva" },
+        { text: "¿Qué roca ígnea se caracteriza por tener cristales grandes y visibles a simple vista, compuesta por cuarzo, feldespato y mica?", options: ["Basalto", "Obsidiana", "Granito", "Piedra pómez"], correct: "Granito" },
+        { text: "¿Qué roca ígnea extrusiva es la más común en la corteza oceánica y tiene color oscuro?", options: ["Granito", "Basalto", "Obsidiana", "Riolita"], correct: "Basalto" },
+        { text: "¿Qué roca ígnea extrusiva es conocida como 'vidrio volcánico' por su textura vítrea y fractura concoidea?", options: ["Granito", "Basalto", "Obsidiana", "Piedra pómez"], correct: "Obsidiana" },
+        { text: "¿Qué roca ígnea extrusiva es muy porosa y flota en el agua debido a su baja densidad?", options: ["Granito", "Basalto", "Obsidiana", "Piedra pómez"], correct: "Piedra pómez" },
+        { text: "¿Qué roca sedimentaria se forma por la compactación de granos de arena y tiene textura granulosa?", options: ["Caliza", "Lutita", "Arenisca", "Conglomerado"], correct: "Arenisca" },
+        { text: "¿Qué roca sedimentaria está compuesta principalmente por carbonato de calcio y reacciona con ácidos produciendo efervescencia?", options: ["Arenisca", "Caliza", "Lutita", "Brecha"], correct: "Caliza" },
+        { text: "¿Qué roca sedimentaria se caracteriza por tener fragmentos redondeados (guijarros) incrustados en una matriz?", options: ["Brecha", "Conglomerado", "Arenisca", "Toba volcánica"], correct: "Conglomerado" },
+        { text: "¿Qué roca sedimentaria se caracteriza por tener fragmentos angulares (con bordes filosos) incrustados en una matriz?", options: ["Conglomerado", "Brecha", "Arenisca", "Lutita"], correct: "Brecha" },
+        { text: "¿Qué roca metamórfica se forma a partir de la caliza por acción de calor y presión, y es muy utilizada en escultura?", options: ["Esquisto", "Gneis", "Mármol", "Pizarra"], correct: "Mármol" },
+        { text: "¿Qué roca metamórfica se caracteriza por tener láminas o escamas que se pueden separar fácilmente (foliación pronunciada)?", options: ["Mármol", "Esquisto", "Gneis", "Cuarcita"], correct: "Esquisto" },
+        { text: "¿Qué roca metamórfica se caracteriza por tener bandas alternadas de minerales claros y oscuros?", options: ["Esquisto", "Mármol", "Gneis", "Pizarra"], correct: "Gneis" },
+        { text: "¿Qué roca metamórfica se forma a partir de la arenisca por metamorfismo y es extremadamente dura?", options: ["Mármol", "Cuarcita", "Pizarra", "Serpentinita"], correct: "Cuarcita" },
+        { text: "¿Qué roca metamórfica se forma en el primer grado de metamorfismo de la lutita y se utiliza para techos y pizarras?", options: ["Lutita", "Pizarra", "Arenisca", "Caliza"], correct: "Pizarra" },
+        { text: "¿Qué roca metamórfica se forma en zonas de subducción a partir de la peridotita hidratada y tiene color verde oscuro?", options: ["Serpentinita", "Gneis", "Esquisto", "Mármol"], correct: "Serpentinita" },
+        { text: "¿Qué roca ígnea intrusiva se diferencia del granito por su falta de cuarzo (menos del 5%)?", options: ["Diorita", "Sienita", "Granito", "Riolita"], correct: "Sienita" },
+        { text: "¿Qué roca ígnea extrusiva es el equivalente volcánico del granito y tiene color claro (gris, rosado o amarillento)?", options: ["Basalto", "Riolita", "Obsidiana", "Diorita"], correct: "Riolita" },
+        { text: "¿Qué roca ígnea intrusiva tiene color gris oscuro a verde oscuro y está compuesta por plagioclasa y hornblenda?", options: ["Granito", "Sienita", "Diorita", "Riolita"], correct: "Diorita" },
+        { text: "¿Qué roca sedimentaria piroclástica se forma por la compactación de ceniza volcánica y fragmentos expulsados?", options: ["Arenisca", "Caliza", "Toba volcánica", "Lutita"], correct: "Toba volcánica" },
+        { text: "¿Qué roca sedimentaria es la más abundante en la superficie terrestre, cubriendo aproximadamente el 75% del área?", options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"], correct: "Roca sedimentaria" },
+        { text: "¿Qué proceso describe la transformación de una roca en otro tipo diferente a través de procesos geológicos como erosión, metamorfismo y fusión?", options: ["Erosión", "Meteorización", "Ciclo de las rocas", "Sedimentación"], correct: "Ciclo de las rocas" },
+        { text: "¿Qué roca ígnea extrusiva se forma por enfriamiento extremadamente rápido de lava, resultando en una textura vítrea sin cristales?", options: ["Granito", "Basalto", "Obsidiana", "Riolita"], correct: "Obsidiana" },
+        { text: "¿Qué roca sedimentaria se forma por la compactación de arcilla y limo, y se caracteriza por ser de grano muy fino?", options: ["Arenisca", "Caliza", "Lutita", "Conglomerado"], correct: "Lutita" },
+        { text: "¿Qué roca ígnea intrusiva es la más común en la corteza continental y forma grandes batolitos?", options: ["Granito", "Basalto", "Sienita", "Diorita"], correct: "Granito" },
+        { text: "¿Qué roca metamórfica se caracteriza por tener bandas alternadas de minerales claros (cuarzo y feldespato) y oscuros (mica y anfíboles)?", options: ["Esquisto", "Mármol", "Gneis", "Pizarra"], correct: "Gneis" },
+        { text: "¿Qué roca sedimentaria se forma por la acumulación de restos de organismos marinos (conchas, corales) y es la principal fuente de cemento?", options: ["Arenisca", "Caliza", "Lutita", "Conglomerado"], correct: "Caliza" },
+        { text: "¿Qué roca ígnea extrusiva tiene una textura porosa porque los gases quedaron atrapados al solidificarse la lava?", options: ["Obsidiana", "Basalto", "Piedra pómez", "Riolita"], correct: "Piedra pómez" },
+        { text: "¿Qué roca metamórfica se forma en el interior de la Tierra a partir de la lutita bajo alta presión y temperatura, resultando en láminas separables?", options: ["Mármol", "Esquisto", "Gneis", "Cuarcita"], correct: "Esquisto" },
+        { text: "¿Qué roca sedimentaria detrítica se forma por la compactación de fragmentos angulares que han sido transportados poca distancia?", options: ["Conglomerado", "Brecha", "Arenisca", "Lutita"], correct: "Brecha" },
+        { text: "¿Qué roca ígnea extrusiva es de color oscuro (negro o gris oscuro) y forma la mayor parte de la litosfera oceánica?", options: ["Granito", "Basalto", "Obsidiana", "Riolita"], correct: "Basalto" }
+    ];
+
+    // ================================================================
+    // TSUNAMIS - 25 preguntas (31-55)
+    // ================================================================
+    const tsunamisPool = [
+        { text: "¿Cuál es la principal diferencia entre un tsunami y una ola normal en cuanto a su longitud de onda?", options: ["El tsunami tiene una longitud de onda mucho más corta", "El tsunami tiene una longitud de onda mucho más larga (hasta 100-200 km)", "Ambos tienen la misma longitud de onda", "La ola normal tiene una longitud de onda más larga"], correct: "El tsunami tiene una longitud de onda mucho más larga (hasta 100-200 km)" },
+        { text: "¿Qué velocidad puede alcanzar un tsunami en aguas profundas (alta mar)?", options: ["50-100 km/h", "100-300 km/h", "500-600 km/h", "Hasta 800 km/h"], correct: "Hasta 800 km/h" },
+        { text: "¿Cuál es la altura aproximada de un tsunami en alta mar?", options: ["5-10 metros", "10-20 metros", "Menos de 1 metro", "20-30 metros"], correct: "Menos de 1 metro" },
+        { text: "¿Cuáles son las tres etapas de un tsunami en orden cronológico?", options: ["Formación, madurez y disipación", "Generación, propagación e inundación", "Nacimiento, crecimiento y muerte", "Formación, propagación y retroceso"], correct: "Generación, propagación e inundación" },
+        { text: "¿Cuánto tiempo puede tardar un tsunami local en llegar a la costa después de un sismo?", options: ["2-4 horas", "5-30 minutos", "1-2 días", "30-60 minutos"], correct: "5-30 minutos" },
+        { text: "¿Cuánto tiempo puede tardar un tsunami distante o transoceánico en llegar a una costa lejana?", options: ["5-30 minutos", "1-2 horas", "2-12 horas", "1-2 días"], correct: "2-12 horas" },
+        { text: "¿Qué fenómeno natural generó el tsunami de Sumatra en 2004 que afectó a 14 países?", options: ["Una erupción volcánica", "Un sismo de magnitud 9.1", "Un deslizamiento de tierra", "Un impacto de meteorito"], correct: "Un sismo de magnitud 9.1" },
+        { text: "¿Cuántas personas fallecieron aproximadamente en el tsunami de Sumatra en 2004?", options: ["50.000", "100.000", "230.000", "500.000"], correct: "230.000" },
+        { text: "¿Qué altura alcanzaron las olas del tsunami de Japón en 2011, que también causó el desastre nuclear de Fukushima?", options: ["10 metros", "20 metros", "30 metros", "40 metros"], correct: "40 metros" },
+        { text: "¿Qué desastre adicional provocó el tsunami de Japón en 2011 además de las muertes y daños materiales?", options: ["Un terremoto", "Un desastre nuclear en Fukushima", "Una erupción volcánica", "Una tormenta de nieve"], correct: "Un desastre nuclear en Fukushima" },
+        { text: "¿Qué magnitud tuvo el terremoto de Alaska en 1964 que generó un tsunami con olas de hasta 67 metros?", options: ["8.5", "9.0", "9.2", "9.5"], correct: "9.2" },
+        { text: "¿Qué señal natural indica la posible llegada de un tsunami y se caracteriza por la exposición del fondo marino?", options: ["Aumento de la temperatura del agua", "Retroceso anormal del mar", "Aumento del viento", "Cambio en la dirección de las olas"], correct: "Retroceso anormal del mar" },
+        { text: "¿Qué instituciones en Chile son responsables de emitir alertas de tsunami?", options: ["SERNAC y CONAF", "SHOA y ONEMI", "MINSAL y CSN", "SAE y CENSO"], correct: "SHOA y ONEMI" },
+        { text: "¿Qué son las boyas DART utilizadas en la detección de tsunamis?", options: ["Boyas para medir la temperatura del mar", "Boyas para detectar tsunamis en alta mar midiendo cambios de presión", "Boyas para medir la salinidad", "Boyas para medir el viento"], correct: "Boyas para detectar tsunamis en alta mar midiendo cambios de presión" },
+        { text: "¿Qué erupción volcánica en 1883 generó un tsunami de 40 metros que mató a más de 36.000 personas?", options: ["Tonga 2022", "Krakatoa 1883", "Tambora 1815", "Vesubio 79 d.C."], correct: "Krakatoa 1883" },
+        { text: "¿Qué erupción volcánica en 2022 generó un tsunami que cruzó el Pacífico y afectó a Tonga, Perú, Chile y EE.UU.?", options: ["Krakatoa", "Tonga", "Fuji", "Etna"], correct: "Tonga" },
+        { text: "¿Qué efecto describe el aumento de la altura de una ola de tsunami al acercarse a la costa debido a la disminución de la profundidad?", options: ["Efecto Doppler", "Efecto Coriolis", "Efecto de shoaling", "Efecto invernadero"], correct: "Efecto de shoaling" },
+        { text: "¿Cuál es la longitud de onda típica de un tsunami en alta mar, que puede superar los 100 km?", options: ["1-10 km", "10-50 km", "50-100 km", "100-200 km"], correct: "50-100 km" },
+        { text: "¿Qué es un tsunami local y qué característica lo define?", options: ["Un tsunami que cruza océanos", "Un tsunami que afecta solo la zona cercana al epicentro (llegada en minutos)", "Un tsunami pequeño", "Un tsunami generado por un huracán"], correct: "Un tsunami que afecta solo la zona cercana al epicentro (llegada en minutos)" },
+        { text: "¿Qué es un tsunami distante o transoceánico?", options: ["Un tsunami que afecta solo la costa cercana", "Un tsunami que cruza océanos enteros y puede tardar horas en llegar", "Un tsunami pequeño", "Un tsunami generado por un volcán"], correct: "Un tsunami que cruza océanos enteros y puede tardar horas en llegar" },
+        { text: "¿Qué instrumento mide los cambios en el nivel del mar en puertos y costas para detectar tsunamis?", options: ["Sismógrafo", "Boyas DART", "Mareógrafo", "Barómetro"], correct: "Mareógrafo" },
+        { text: "¿Cuál fue el tsunami más costoso en la historia, con daños estimados en $360 mil millones?", options: ["Sumatra 2004", "Japón 2011", "Valdivia 1960", "Alaska 1964"], correct: "Japón 2011" },
+        { text: "¿Qué país europeo fue afectado por un tsunami en 1755 que mató a más de 50.000 personas?", options: ["Italia", "España", "Portugal (Lisboa)", "Grecia"], correct: "Portugal (Lisboa)" },
+        { text: "¿Qué efecto puede tener un tsunami en los ecosistemas costeros como manglares y humedales?", options: ["Creación de nuevos ecosistemas", "Destrucción de manglares y humedales", "Aumento de la biodiversidad", "Ningún efecto"], correct: "Destrucción de manglares y humedales" },
+        { text: "¿Qué acción se debe tomar si se observa un retroceso anormal del mar en la costa, dejando el fondo marino al descubierto?", options: ["Acercarse a ver qué sucede", "Evacuar inmediatamente a zonas altas", "Tomar fotos del fenómeno", "Esperar instrucciones de las autoridades"], correct: "Evacuar inmediatamente a zonas altas" }
+    ];
+
+    // ================================================================
+    // HURACANES - 25 preguntas (56-80)
+    // ================================================================
+    const huracanesPool = [
+        { text: "¿Cuál es el ciclo de vida de un huracán en orden cronológico correcto?", options: ["Intensificación → Formación → Tocan tierra → Disipación", "Formación → Intensificación → Tocan tierra → Disipación", "Tocan tierra → Formación → Intensificación → Disipación", "Formación → Tocan tierra → Intensificación → Disipación"], correct: "Formación → Intensificación → Tocan tierra → Disipación" },
+        { text: "¿Qué vientos debe tener un sistema para ser considerado una tormenta tropical?", options: ["Menos de 63 km/h", "63-118 km/h", "119-153 km/h", "Más de 252 km/h"], correct: "63-118 km/h" },
+        { text: "¿Qué vientos debe tener un sistema para ser considerado un huracán?", options: ["Menos de 63 km/h", "63-118 km/h", "Más de 119 km/h", "Más de 200 km/h"], correct: "Más de 119 km/h" },
+        { text: "¿En qué hemisferio los huracanes giran en sentido horario debido al Efecto Coriolis?", options: ["Hemisferio norte", "Hemisferio sur", "En el Ecuador", "En ambos hemisferios"], correct: "Hemisferio sur" },
+        { text: "¿En qué hemisferio los huracanes giran en sentido antihorario debido al Efecto Coriolis?", options: ["Hemisferio norte", "Hemisferio sur", "En el Ecuador", "En ambos hemisferios"], correct: "Hemisferio norte" },
+        { text: "¿Cuándo es la temporada de huracanes en el Océano Atlántico?", options: ["1 de enero - 30 de abril", "1 de junio - 30 de noviembre", "15 de mayo - 30 de noviembre", "Todo el año"], correct: "1 de junio - 30 de noviembre" },
+        { text: "¿Cuándo es la temporada de huracanes en el Pacífico Oriental?", options: ["1 de enero - 30 de abril", "1 de junio - 30 de noviembre", "15 de mayo - 30 de noviembre", "Todo el año"], correct: "15 de mayo - 30 de noviembre" },
+        { text: "¿Qué huracán en 2015 fue el más intenso registrado en el Pacífico Oriental con vientos de 345 km/h y presión de 872 hPa?", options: ["Katrina", "Irma", "Patricia", "Harvey"], correct: "Patricia" },
+        { text: "¿Qué categoría en la escala Saffir-Simpson tiene un huracán con vientos superiores a 252 km/h?", options: ["Categoría 3", "Categoría 4", "Categoría 5", "Categoría 2"], correct: "Categoría 5" },
+        { text: "¿Qué categoría en la escala Saffir-Simpson tiene un huracán con vientos de 178-208 km/h?", options: ["Categoría 1", "Categoría 2", "Categoría 3", "Categoría 4"], correct: "Categoría 3" },
+        { text: "¿Qué fenómeno meteorológico hace que los huracanes giren debido a la rotación de la Tierra sobre su eje?", options: ["Efecto invernadero", "Efecto Coriolis", "Efecto de shoaling", "Efecto Doppler"], correct: "Efecto Coriolis" },
+        { text: "¿Qué parte del huracán tiene los vientos más intensos y las lluvias más fuertes?", options: ["El ojo", "La pared del ojo", "Las bandas de nubes", "El exterior"], correct: "La pared del ojo" },
+        { text: "¿Qué parte del huracán es una zona de calma, baja presión y cielo despejado?", options: ["El ojo", "La pared del ojo", "Las bandas de nubes", "El exterior"], correct: "El ojo" },
+        { text: "¿Qué huracán devastó Nueva Orleans en 2005, causando daños por $125 mil millones?", options: ["Irma", "Katrina", "Harvey", "Maria"], correct: "Katrina" },
+        { text: "¿Qué huracán causó inundaciones catastróficas en Texas en 2017, con récord de lluvias de 1.500 mm?", options: ["Katrina", "Irma", "Harvey", "Maria"], correct: "Harvey" },
+        { text: "¿Cómo se llama un huracán en el Pacífico Noroccidental?", options: ["Ciclón", "Tifón", "Tormenta", "Monzón"], correct: "Tifón" },
+        { text: "¿Qué es la marejada ciclónica asociada a los huracanes?", options: ["El aumento del nivel del mar causado por la baja presión y los vientos", "Una ola gigante generada por un sismo", "Una marea alta normal", "Una tormenta de lluvia"], correct: "El aumento del nivel del mar causado por la baja presión y los vientos" },
+        { text: "¿Qué efecto tiene el cambio climático en la intensidad de los huracanes?", options: ["Los huracanes son menos frecuentes", "Los huracanes son más intensos y con más lluvias", "Los huracanes no cambian", "Los huracanes son más pequeños"], correct: "Los huracanes son más intensos y con más lluvias" },
+        { text: "¿Qué vientos sostenidos tenía el huracán Irma en 2017 cuando alcanzó categoría 5?", options: ["250 km/h", "280 km/h", "295 km/h", "320 km/h"], correct: "295 km/h" },
+        { text: "¿Qué huracán afectó Centroamérica en 2016, siendo el primero en tocar Costa Rica en 100 años?", options: ["Katrina", "Irma", "Harvey", "Otto"], correct: "Otto" },
+        { text: "¿Qué es la cizalladura del viento y cómo afecta a los huracanes?", options: ["El cambio en la dirección del viento con la altura que puede debilitar un huracán", "La fuerza del viento en el ojo", "El viento en la pared del ojo", "La velocidad del viento en superficie"], correct: "El cambio en la dirección del viento con la altura que puede debilitar un huracán" },
+        { text: "¿Qué diámetro puede tener el ojo de un huracán, típicamente entre 30 y 60 km?", options: ["5-10 km", "10-20 km", "30-60 km", "100-200 km"], correct: "30-60 km" },
+        { text: "¿Qué porcentaje aproximado de las tormentas tropicales se convierten en huracanes?", options: ["10%", "30%", "50%", "70%"], correct: "30%" },
+        { text: "¿Qué huracán fue el más costoso de la historia, con daños estimados en $125 mil millones?", options: ["Katrina", "Irma", "Harvey", "Maria"], correct: "Katrina" },
+        { text: "¿Qué tipo de precipitaciones pueden causar los huracanes al tocar tierra?", options: ["Lluvias ligeras", "Lluvias torrenciales", "Lluvias de nieve", "Lluvias de granizo"], correct: "Lluvias torrenciales" }
+    ];
+
+    // ================================================================
+    // POOL DE ROCAS PARA IDENTIFICACIÓN (CON URLs DE IMÁGENES)
+    // ================================================================
+    const rocasIdentificacion = [
+        { nombre: "Granito", clasificacion: "ígnea", imagen: "https://i.ibb.co/Csms4J36/image.png" },
+        { nombre: "Basalto", clasificacion: "ígnea", imagen: "https://i.ibb.co/WdNPyBq/image.png" },
+        { nombre: "Obsidiana", clasificacion: "ígnea", imagen: "https://i.ibb.co/pjK3JJMy/image.png" },
+        { nombre: "Sienita", clasificacion: "ígnea", imagen: "https://i.ibb.co/8LyBwgd1/image.png" },
+        { nombre: "Piedra pómez", clasificacion: "ígnea", imagen: "https://i.ibb.co/MkDYhwSM/image.png" },
+        { nombre: "Riolita", clasificacion: "ígnea", imagen: "https://i.ibb.co/VY9wpgwL/image.png" },
+        { nombre: "Diorita", clasificacion: "ígnea", imagen: "https://i.ibb.co/RkCxYLRB/image.png" },
+        { nombre: "Arenisca", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/whf49CxR/image.png" },
+        { nombre: "Caliza", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/LDyWjML6/image.png" },
+        { nombre: "Conglomerado", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/jkd34fpM/image.png" },
+        { nombre: "Brecha", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/4RPgd5vM/image.png" },
+        { nombre: "Lutita", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/CK3kdbfF/image.png" },
+        { nombre: "Toba volcánica", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/279RjSqY/image.png" },
+        { nombre: "Mármol", clasificacion: "metamórfica", imagen: "https://i.ibb.co/fzbW6qn2/image.png" },
+        { nombre: "Esquisto", clasificacion: "metamórfica", imagen: "https://i.ibb.co/3YzFG57d/image.png" },
+        { nombre: "Gneis", clasificacion: "metamórfica", imagen: "https://i.ibb.co/pr9tDjjB/image.png" },
+        { nombre: "Cuarcita", clasificacion: "metamórfica", imagen: "https://i.ibb.co/RT23TsM9/image.png" },
+        { nombre: "Pizarra", clasificacion: "metamórfica", imagen: "https://i.ibb.co/5hj8XwJ4/image.png" },
+        { nombre: "Serpentinita", clasificacion: "metamórfica", imagen: "https://i.ibb.co/HfbYJQrb/image.png" }
+    ];
+
+    // ================================================================
+    // FUNCIONES DE SELECCIÓN
+    // ================================================================
+
+    function shuffleArray(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function getRandomQuestions() {
+        const shuffled = shuffleArray(fullPool);
+        return shuffled.slice(0, 35);
+    }
+
+    function getRandomRocks() {
+        return shuffleArray(rocasIdentificacion).slice(0, 4);
+    }
+
+    // ================================================================
+    // POOL COMPLETO
+    // ================================================================
+    const fullPool = [
+        ...rocasPool.map(q => ({ ...q, tema: 'rocas' })),
+        ...tsunamisPool.map(q => ({ ...q, tema: 'tsunamis' })),
+        ...huracanesPool.map(q => ({ ...q, tema: 'huracanes' }))
+    ];
+
+    // ================================================================
+    // ESTADO Y RENDERIZADO
+    // ================================================================
+
+    let currentQuestions = [];
+    let userAnswers = [];
+    let currentRocks = [];
+    let rockAnswers = [];
+    let evaluated = false;
+
+    const sinonimos = {
+        "granito": ["granito"],
+        "basalto": ["basalto"],
+        "obsidiana": ["obsidiana"],
+        "sienita": ["sienita"],
+        "piedra pómez": ["piedra pómez", "pumita"],
+        "riolita": ["riolita"],
+        "diorita": ["diorita"],
+        "arenisca": ["arenisca"],
+        "caliza": ["caliza"],
+        "conglomerado": ["conglomerado"],
+        "brecha": ["brecha"],
+        "lutita": ["lutita"],
+        "toba volcánica": ["toba volcánica", "toba"],
+        "mármol": ["mármol"],
+        "esquisto": ["esquisto"],
+        "gneis": ["gneis"],
+        "cuarcita": ["cuarcita"],
+        "pizarra": ["pizarra"],
+        "serpentinita": ["serpentinita"]
+    };
+
+    function normalizarTexto(texto) {
+        return texto.trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    function esNombreCorrecto(ingresado, correcto) {
+        const normalizado = normalizarTexto(ingresado);
+        const sinonimosCorrectos = sinonimos[correcto.toLowerCase()] || [correcto.toLowerCase()];
+        return sinonimosCorrectos.some(s => normalizado === s);
+    }
+
+    function renderQuestions() {
+        currentQuestions = getRandomQuestions();
+        userAnswers = new Array(currentQuestions.length).fill(null);
+        evaluated = false;
+
+        const container = document.getElementById('examContent');
+        container.innerHTML = '';
+
+        currentQuestions.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `q-${idx}`;
+
+            const shuffledOptions = shuffleArray(q.options);
+
+            div.innerHTML = `
+                <div class="question-number">Pregunta ${idx + 1} de ${currentQuestions.length}</div>
+                <div class="question-text">${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label>
+                            <input type="radio" name="q_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+                <div class="feedback-text" id="fb-${idx}"></div>
+            `;
+
+            container.appendChild(div);
+
+            const radios = div.querySelectorAll(`input[name="q_${idx}"]`);
+            radios.forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if (!evaluated) {
+                        userAnswers[idx] = e.target.value;
+                        actualizarContador();
+                    }
+                });
+            });
+        });
+
+        renderRocks();
+
+        document.getElementById('totalQuestions').textContent = currentQuestions.length;
+        actualizarContador();
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('evaluateBtn').disabled = false;
+    }
+
+    function renderRocks() {
+        currentRocks = getRandomRocks();
+        rockAnswers = currentRocks.map(() => ({ clasificacion: '', nombre: '' }));
+
+        const container = document.getElementById('rockContainer');
+        container.innerHTML = '';
+
+        currentRocks.forEach((roca, idx) => {
+            const div = document.createElement('div');
+            div.className = 'rock-item';
+            div.id = `rock-${idx}`;
+
+            div.innerHTML = `
+                <img src="${roca.imagen}" alt="${roca.nombre}" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';">
+                <div class="rock-inputs">
+                    <div class="rock-input-group">
+                        <label>Clasificación:</label>
+                        <input type="text" id="rock-clasificacion-${idx}" placeholder="ígnea, sedimentaria o metamórfica" ${evaluated ? 'disabled' : ''}>
+                    </div>
+                    <div class="rock-input-group">
+                        <label>Nombre:</label>
+                        <input type="text" id="rock-nombre-${idx}" placeholder="Nombre de la roca" ${evaluated ? 'disabled' : ''}>
+                    </div>
+                    <div class="rock-feedback" id="rock-fb-${idx}"></div>
+                </div>
+            `;
+
+            container.appendChild(div);
+
+            if (!evaluated) {
+                const inputClasificacion = document.getElementById(`rock-clasificacion-${idx}`);
+                const inputNombre = document.getElementById(`rock-nombre-${idx}`);
+
+                inputClasificacion.addEventListener('input', (e) => {
+                    rockAnswers[idx].clasificacion = e.target.value;
+                });
+
+                inputNombre.addEventListener('input', (e) => {
+                    rockAnswers[idx].nombre = e.target.value;
+                });
+            }
+        });
+    }
+
+    function actualizarContador() {
+        const respondidas = userAnswers.filter(a => a !== null).length;
+        document.getElementById('answeredCount').textContent = respondidas;
+    }
+
+    function evaluarTest() {
+        if (evaluated) return;
+        evaluated = true;
+
+        let correctas = 0;
+        let totalPreguntas = currentQuestions.length;
+
+        // Evaluar preguntas de selección múltiple
+        currentQuestions.forEach((q, idx) => {
+            const card = document.getElementById(`q-${idx}`);
+            const fb = document.getElementById(`fb-${idx}`);
+            const userAnswer = userAnswers[idx];
+            const isCorrect = userAnswer === q.correct;
+
+            if (isCorrect) {
+                correctas++;
+                card.classList.add('correct');
+                fb.className = 'feedback-text show correct-fb';
+                fb.innerHTML = '✅ Correcto';
+            } else {
+                card.classList.add('incorrect');
+                fb.className = 'feedback-text show incorrect-fb';
+                fb.innerHTML = `❌ Incorrecto. Respuesta correcta: <strong>${q.correct}</strong>`;
+            }
+
+            const radios = card.querySelectorAll('input[type="radio"]');
+            radios.forEach(r => r.disabled = true);
+        });
+
+        // Evaluar identificación de rocas
+        let puntosRocas = 0;
+        currentRocks.forEach((roca, idx) => {
+            const div = document.getElementById(`rock-${idx}`);
+            const fb = document.getElementById(`rock-fb-${idx}`);
+            const inputClasificacion = document.getElementById(`rock-clasificacion-${idx}`);
+            const inputNombre = document.getElementById(`rock-nombre-${idx}`);
+
+            inputClasificacion.disabled = true;
+            inputNombre.disabled = true;
+
+            const clasificacionIngresada = normalizarTexto(rockAnswers[idx].clasificacion);
+            const nombreIngresado = normalizarTexto(rockAnswers[idx].nombre);
+
+            const clasificacionCorrecta = roca.clasificacion.toLowerCase();
+            const nombreCorrecto = esNombreCorrecto(nombreIngresado, roca.nombre);
+
+            const clasifOk = clasificacionIngresada === clasificacionCorrecta;
+            const nombreOk = nombreCorrecto;
+
+            let aciertos = 0;
+            if (clasifOk) aciertos++;
+            if (nombreOk) aciertos++;
+
+            puntosRocas += aciertos;
+
+            let feedbackHtml = '';
+            if (clasifOk && nombreOk) {
+                div.classList.add('correct');
+                feedbackHtml = '✅ Clasificación correcta | ✅ Nombre correcto';
+                fb.className = 'rock-feedback correct-fb';
+            } else if (clasifOk && !nombreOk) {
+                div.classList.add('incorrect');
+                feedbackHtml = `✅ Clasificación correcta | ❌ Nombre incorrecto. Correcto: <strong>${roca.nombre}</strong>`;
+                fb.className = 'rock-feedback incorrect-fb';
+            } else if (!clasifOk && nombreOk) {
+                div.classList.add('incorrect');
+                feedbackHtml = `❌ Clasificación incorrecta. Correcto: <strong>${roca.clasificacion}</strong> | ✅ Nombre correcto`;
+                fb.className = 'rock-feedback incorrect-fb';
+            } else {
+                div.classList.add('incorrect');
+                feedbackHtml = `❌ Clasificación incorrecta. Correcto: <strong>${roca.clasificacion}</strong> | ❌ Nombre incorrecto. Correcto: <strong>${roca.nombre}</strong>`;
+                fb.className = 'rock-feedback incorrect-fb';
+            }
+
+            fb.innerHTML = feedbackHtml;
+        });
+
+        const totalCorrectas = correctas + puntosRocas;
+        const totalItems = totalPreguntas + 8;
+        const porcentaje = (totalCorrectas / totalItems) * 100;
+
+        let nota = 0;
+        if (porcentaje >= 60) {
+            nota = 4.0 + ((porcentaje - 60) / 40) * 3.0;
+        } else {
+            nota = 1.0 + (porcentaje / 60) * 3.0;
+        }
+        nota = Math.round(nota * 100) / 100;
+
+        const aprobado = nota >= 4.0;
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = `
+            <h3>📊 Resultados</h3>
+            <div class="score">✅ Respuestas correctas: <span style="color:#63b3ed;">${totalCorrectas}</span> de ${totalItems}</div>
+            <div class="score" style="font-size:1rem; color:#94a3b8;">
+                📝 Selección múltiple: ${correctas}/${totalPreguntas} | 🪨 Rocas: ${puntosRocas}/8
+            </div>
+            <div class="grade ${aprobado ? 'approved' : 'failed'}">
+                ${aprobado ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}<br>
+                <strong>NOTA FINAL: ${nota}</strong>
+            </div>
+            <div class="details">
+                <span>📈 Porcentaje: ${Math.round(porcentaje)}%</span>
+                <span>✅ Exigencia: 60%</span>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="restartBtn">🔄 Reiniciar Test</button>
+                <button class="btn btn-secondary" id="backToClassBtn">📚 Volver a la Clase</button>
+                <button class="btn btn-outline" id="backToCourseBtn">🏠 Volver al Curso</button>
+            </div>
+        `;
+
+        document.getElementById('evaluateBtn').disabled = true;
+
+        document.getElementById('restartBtn').addEventListener('click', restartTest);
+        document.getElementById('backToClassBtn').addEventListener('click', () => {
+            window.location.href = 'C_6_Fisica.html';
+        });
+        document.getElementById('backToCourseBtn').addEventListener('click', () => {
+            window.location.href = 'Fisica.html';
+        });
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function restartTest() {
+        renderQuestions();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ================================================================
+    // INICIALIZACIÓN
+    // ================================================================
+
+    renderQuestions();
+
+    document.getElementById('evaluateBtn').addEventListener('click', evaluarTest);
+
+    console.log('✅ Pool de preguntas cargado. Total:', fullPool.length);
+    console.log(`  Rocas: ${rocasPool.length} preguntas`);
+    console.log(`  Tsunamis: ${tsunamisPool.length} preguntas`);
+    console.log(`  Huracanes: ${huracanesPool.length} preguntas`);
+    console.log(`🪨 Rocas para identificación: ${rocasIdentificacion.length} rocas`);
+</script>
+</body>
+</html>
