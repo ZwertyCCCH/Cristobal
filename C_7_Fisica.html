@@ -1,0 +1,1970 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 7: Sismos, Volcanes, Huracanes y Tsunamis | 7° Básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1628;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1300px;
+            height: 85vh;
+            max-height: 800px;
+            background: #0d1b2a;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            border: 1px solid #1a365d;
+        }
+        .slides-wrapper { position: relative; width: 100%; height: 100%; }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2.5rem 3rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            overflow-y: auto;
+            background: #0d1b2a;
+            color: #e2e8f0;
+        }
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; }
+        .slide::-webkit-scrollbar { width: 5px; }
+        .slide::-webkit-scrollbar-track { background: #1a365d; border-radius: 10px; }
+        .slide::-webkit-scrollbar-thumb { background: #2b6cb0; border-radius: 10px; }
+        .slide-number {
+            position: absolute; bottom: 20px; right: 30px;
+            font-size: 0.75rem; color: #4a7a9c;
+            background: #0d1b2a; padding: 0.2rem 0.8rem;
+            border-radius: 20px; border: 1px solid #1a365d; z-index: 15;
+        }
+        .nav-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            z-index: 20; background: rgba(26,54,93,0.7);
+            border: 1px solid #2b6cb0; color: #90cdf4;
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.3rem;
+            transition: all 0.3s ease; backdrop-filter: blur(5px);
+        }
+        .nav-arrow:hover:not(:disabled) { background: #2b6cb0; color: white; transform: translateY(-50%) scale(1.05); }
+        .nav-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+        .nav-arrow-left { left: 15px; }
+        .nav-arrow-right { right: 15px; }
+        .dots-container {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px; z-index: 15;
+            background: rgba(13,27,42,0.8); padding: 6px 14px;
+            border-radius: 30px; border: 1px solid #1a365d;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #1a365d; cursor: pointer; transition: all 0.3s ease; }
+        .dot.active { background: #2b6cb0; width: 24px; border-radius: 12px; }
+        .dot:hover { background: #4a7a9c; }
+        .fixed-footer {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(13,27,42,0.95); backdrop-filter: blur(10px);
+            padding: 0.8rem 2rem; display: flex; justify-content: center;
+            gap: 2rem; border-top: 1px solid #1a365d; z-index: 1000;
+        }
+        .footer-btn {
+            background: transparent; border: 1px solid #2b6cb0;
+            color: #90cdf4; padding: 0.6rem 2rem;
+            border-radius: 30px; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 8px;
+        }
+        .footer-btn:hover { background: #2b6cb0; color: white; transform: translateY(-2px); }
+        .footer-btn.primary { background: #2b6cb0; color: white; }
+        .footer-btn.primary:hover { background: #3182ce; }
+        h1 { font-size: 2.8rem; font-weight: 800; color: #90cdf4; margin-bottom: 0.5rem; }
+        h2 { font-size: 2rem; font-weight: 700; color: #63b3ed; margin-bottom: 1rem; border-left: 4px solid #2b6cb0; padding-left: 1rem; }
+        h3 { font-size: 1.2rem; font-weight: 600; color: #90cdf4; margin: 0.8rem 0 0.4rem 0; }
+        .badge {
+            display: inline-block; background: #2b6cb0; color: white;
+            padding: 0.2rem 1rem; border-radius: 30px; font-size: 0.7rem;
+            font-weight: 600; margin-bottom: 0.8rem; letter-spacing: 0.5px;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 0.8rem 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 0.8rem 0; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin: 0.8rem 0; }
+        .card {
+            background: rgba(26,54,93,0.4); border-radius: 16px;
+            padding: 1.2rem; border: 1px solid #1a365d;
+            transition: all 0.2s ease;
+        }
+        .card:hover { border-color: #2b6cb0; background: rgba(26,54,93,0.6); }
+        .card i { font-size: 1.6rem; color: #63b3ed; margin-bottom: 0.5rem; }
+        .card h4 { color: #90cdf4; font-size: 1rem; margin-bottom: 0.4rem; }
+        .card p, .card li { color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; }
+        .card ul { padding-left: 1.2rem; margin-top: 0.3rem; }
+        .card ul li { margin-bottom: 0.2rem; }
+        .card img { width: 100%; border-radius: 12px; margin-bottom: 0.5rem; border: 1px solid #1a365d; }
+        .highlight { color: #63b3ed; font-weight: 600; }
+        .highlight-warm { color: #f6ad55; font-weight: 600; }
+        .info-box {
+            background: rgba(26,54,93,0.5); padding: 1rem 1.2rem;
+            border-radius: 16px; margin: 0.8rem 0; border-left: 4px solid #2b6cb0;
+        }
+        .info-box i { color: #63b3ed; margin-right: 8px; }
+        .info-box strong { color: #90cdf4; }
+        .example-box {
+            background: rgba(43,108,176,0.15); border-left: 4px solid #2b6cb0;
+            padding: 0.8rem 1.2rem; border-radius: 12px; margin: 0.8rem 0;
+        }
+        .example-box strong { color: #90cdf4; }
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.85rem;
+        }
+        .comparison-table th { background: #1a365d; color: #90cdf4; padding: 0.6rem; text-align: left; }
+        .comparison-table td { border: 1px solid #1a365d; padding: 0.6rem; color: #cbd5e1; }
+        .comparison-table tr:nth-child(even) { background: rgba(26,54,93,0.3); }
+        .timeline {
+            display: flex; flex-wrap: wrap; justify-content: space-around;
+            gap: 0.8rem; margin: 0.8rem 0;
+        }
+        .timeline-item {
+            background: rgba(26,54,93,0.4); border-radius: 16px;
+            padding: 0.8rem 1rem; text-align: center; flex: 1;
+            min-width: 120px; border: 1px solid #1a365d;
+        }
+        .timeline-year { font-size: 1.3rem; font-weight: bold; color: #63b3ed; }
+        .img-placeholder {
+            background: #1a365d;
+            border: 2px dashed #2b6cb0;
+            border-radius: 16px;
+            padding: 2rem;
+            text-align: center;
+            color: #4a7a9c;
+            font-size: 0.9rem;
+            margin: 0.5rem 0;
+        }
+        .img-placeholder i { font-size: 2rem; color: #2b6cb0; display: block; margin-bottom: 0.5rem; }
+        @media (max-width: 768px) {
+            body { padding: 10px; padding-bottom: 70px; }
+            .slides-container { height: 80vh; border-radius: 20px; }
+            .slide { padding: 1.2rem 1.5rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .nav-arrow { width: 36px; height: 36px; font-size: 1rem; }
+            .nav-arrow-left { left: 8px; }
+            .nav-arrow-right { right: 8px; }
+            .fixed-footer { padding: 0.5rem 1rem; gap: 1rem; }
+            .footer-btn { padding: 0.4rem 1.2rem; font-size: 0.8rem; }
+            .dots-container { bottom: 12px; padding: 4px 10px; }
+            .dot { width: 8px; height: 8px; }
+            .dot.active { width: 18px; }
+            .slide-number { bottom: 12px; right: 16px; font-size: 0.6rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <button class="nav-arrow nav-arrow-left" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+    <button class="nav-arrow nav-arrow-right" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    <div class="dots-container" id="dotsContainer"></div>
+    <div class="slides-wrapper" id="slidesWrapper"></div>
+</div>
+
+<div class="fixed-footer">
+    <button class="footer-btn" id="cursoBtn"><i class="fas fa-book-open"></i> Curso</button>
+    <button class="footer-btn primary" id="ejerciciosBtn"><i class="fas fa-pen-alt"></i> Ejercicios</button>
+</div>
+
+<script>
+    // ================================================================
+    // SLIDES - SISMOS, VOLCANES, HURACANES Y TSUNAMIS
+    // BASADO EN LA GUÍA "GUÍA FÍSICA VOLCANES.pdf"
+    // TOTAL: 43 SLIDES
+    // ================================================================
+
+    // NOTA: Las imágenes marcadas con [IMAGEN] deben ser reemplazadas por URLs reales.
+
+    const slides = [
+        // ================================================================
+        // SLIDE 0: PORTADA
+        // ================================================================
+        {
+            title: "🌋 Desastres Naturales",
+            content: `
+                <div style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+                    <div class="badge">Clase 7 - Ciencias Naturales</div>
+                    <h1 style="font-size:3.2rem;">Desastres Naturales</h1>
+                    <p style="font-size:1.3rem; color:#90cdf4; margin:0.5rem 0;">Sismos • Volcanes • Huracanes • Tsunamis</p>
+                    <div style="margin-top:1.5rem; display:flex; gap:1.5rem; flex-wrap:wrap;">
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-waveform" style="color:#63b3ed;"></i> Sismos
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-fire" style="color:#63b3ed;"></i> Volcanes
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-wind" style="color:#63b3ed;"></i> Huracanes
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-water" style="color:#63b3ed;"></i> Tsunamis
+                        </div>
+                    </div>
+                    <div style="margin-top:2rem; color:#4a7a9c; font-size:0.9rem;">
+                        <i class="fas fa-arrow-right"></i> Usa las flechas ← → para navegar
+                    </div>
+                </div>
+            `
+        },
+
+        // ================================================================
+        // SECCIÓN 1: SISMOS (13 SLIDES)
+        // ================================================================
+
+        // === SLIDE 1: DEFINICIÓN DE ACTIVIDAD SÍSMICA ===
+        {
+            title: "📈 Actividad Sísmica",
+            content: `
+                <div class="badge">Sismos - Definición</div>
+                <h2>¿Qué es la actividad sísmica?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-waveform"></i>
+                        <h4>Definición</h4>
+                        <p>La <span class="highlight">actividad sísmica</span> se refiere al conjunto de movimientos o temblores que ocurren en la <span class="highlight">corteza terrestre</span> debido a la liberación de energía acumulada por la fractura o desplazamiento de las <span class="highlight">placas tectónicas</span>.</p>
+                        <p style="margin-top:0.5rem;">Estos movimientos generan <span class="highlight">ondas sísmicas</span> que se propagan por el suelo.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Causas principales</h4>
+                        <ul>
+                            <li><span class="highlight">Roce</span> entre placas tectónicas</li>
+                            <li><span class="highlight">Choque</span> de placas tectónicas</li>
+                            <li><span class="highlight">Desplazamiento</span> de placas o fallas geológicas</li>
+                            <li>Acumulación de <span class="highlight">energía elástica</span> que se libera repentinamente</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Idea clave:</strong> Los sismos son el resultado de la <span class="highlight">liberación repentina de energía</span> acumulada en el interior de la Tierra.
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/35qxWfy3/image.png" alt="Destrucción en Valdivia por el terremoto de 1960" style="max-width:300px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Destrucción en Valdivia a causa del terremoto de 1960<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 2: CONSECUENCIAS DE LOS SISMOS ===
+        {
+            title: "⚠️ Consecuencias de los sismos",
+            content: `
+                <div class="badge">Sismos - Consecuencias</div>
+                <h2>Impacto de los sismos</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-building" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Daños materiales</h4>
+                        <ul>
+                            <li>Daños estructurales en <span class="highlight">edificios y caminos</span></li>
+                            <li><span class="highlight">Ruptura de tuberías</span> (agua, gas)</li>
+                            <li>Destrucción de <span class="highlight">viviendas e infraestructura</span></li>
+                            <li><span class="highlight">Deslizamientos de tierra</span></li>
+                            <li><span class="highlight">Aludes</span> y <span class="highlight">incendios</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-heart" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Impacto humano</h4>
+                        <ul>
+                            <li>Pérdida de <span class="highlight">vidas humanas</span></li>
+                            <li>Heridos y <span class="highlight">damnificados</span></li>
+                            <li>Destrucción de <span class="highlight">comunidades enteras</span></li>
+                            <li>Efectos <span class="highlight">sociales y económicos</span> graves</li>
+                            <li><span class="highlight">Desplazamiento</span> de ciudades (ej. Concepción 1751)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Consecuencia adicional:</strong> Si el epicentro está en el océano, los sismos pueden provocar <span class="highlight">tsunamis</span>. Los sismos también han llevado a <span class="highlight">cambios en las normas de construcción</span> para mitigar daños futuros.
+                </div>
+            `
+        },
+
+        // === SLIDE 3: SISMOS HISTÓRICOS EN CHILE ===
+        {
+            title: "🇨🇱 Sismos históricos en Chile",
+            content: `
+                <div class="badge">Sismos - Historia de Chile</div>
+                <h2>Grandes sismos en la historia de Chile</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1647</div>
+                        <p><strong>Santiago</strong></p>
+                        <p>Gran terremoto destruyó Santiago</p>
+                        <p>Crisis económica y social en el Chile colonial</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1751</div>
+                        <p><strong>Concepción</strong></p>
+                        <p>Ciudad <span class="highlight">desplazada</span> tras el sismo</p>
+                        <p>Cambios en la ubicación de la ciudad</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1960</div>
+                        <p><strong>Valdivia</strong></p>
+                        <p>Magnitud: <span class="highlight">9.5</span> (el más potente)</p>
+                        <p>1.600-4.000 muertos</p>
+                        <p>2 millones de damnificados</p>
+                        <p>Tsunami devastador</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2010</div>
+                        <p><strong>27 de Febrero</strong></p>
+                        <p>Magnitud: <span class="highlight">8.8</span></p>
+                        <p>432 fallecidos</p>
+                        <p>2 millones de damnificados</p>
+                        <p>Tsunami devastador en zonas costeras</p>
+                    </div>
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/QvjJ4Sq3/image.png" alt="Mapa Chile epicentros" style="max-width:300px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Mapa de Chile con epicentros de sismos históricos<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 4: CARACTERÍSTICAS DE LOS SISMOS ===
+        {
+            title: "📋 Características de los sismos",
+            content: `
+                <div class="badge">Sismos - Características</div>
+                <h2>Características principales</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Naturaleza</h4>
+                        <ul>
+                            <li><span class="highlight">Temblores bruscos y repentinos</span></li>
+                            <li>Liberación rápida de energía acumulada</li>
+                            <li>Causados por roce, choque o desplazamiento de placas</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-location-dot"></i>
+                        <h4>Partes del sismo</h4>
+                        <ul>
+                            <li><span class="highlight">Hipocentro (foco)</span>: punto dentro de la Tierra donde se origina</li>
+                            <li><span class="highlight">Epicentro</span>: punto en la superficie directamente sobre el foco</li>
+                            <li>En el epicentro se sienten con <span class="highlight">mayor intensidad</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrow-down"></i>
+                        <h4>Clasificación por profundidad</h4>
+                        <ul>
+                            <li><span class="highlight">Superficiales</span>: menos de 70 km (causan mayor daño)</li>
+                            <li><span class="highlight">Intermedios</span>: 70 a 450 km</li>
+                            <li><span class="highlight">Profundos</span>: más de 450 km</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-ruler"></i>
+                        <h4>Medición</h4>
+                        <ul>
+                            <li><span class="highlight">Magnitud</span>: energía liberada (Escala Richter)</li>
+                            <li><span class="highlight">Intensidad</span>: efectos y daños (Escala Mercalli)</li>
+                            <li>Para grandes terremotos: <span class="highlight">Magnitud de Momento (Mw)</span></li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 5: ESCALA DE MERCALLI ===
+        {
+            title: "📊 Escala de Mercalli",
+            content: `
+                <div class="badge">Sismos - Escalas</div>
+                <h2>Escala de Mercalli (Intensidad)</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-clipboard-list"></i>
+                        <h4>Características</h4>
+                        <ul>
+                            <li>Escala <span class="highlight">cualitativa</span></li>
+                            <li>Mide la <span class="highlight">intensidad</span> del sismo</li>
+                            <li>Basada en <span class="highlight">efectos y daños</span> en construcciones, objetos, terreno y percepción humana</li>
+                            <li>Creada en 1902 por <span class="highlight">Giuseppe Mercalli</span></li>
+                            <li>Modificada en 1931 (Escala Modificada de Mercalli)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>12 grados (I al XII)</h4>
+                        <ul>
+                            <li><span class="highlight">I</span>: Muy leve, apenas sentido</li>
+                            <li><span class="highlight">II-III</span>: Sentido por pocos</li>
+                            <li><span class="highlight">IV-V</span>: Sentido por muchos, objetos se mueven</li>
+                            <li><span class="highlight">VI-VII</span>: Daños en estructuras</li>
+                            <li><span class="highlight">VIII-IX</span>: Daños graves</li>
+                            <li><span class="highlight">X-XI</span>: Destrucción de edificios</li>
+                            <li><span class="highlight">XII</span>: <span class="highlight">Destrucción total</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Factores que evalúa:</strong> Distancia al epicentro, tipo de construcción, geología del área, duración del sacudimiento, densidad poblacional.
+                </div>
+            `
+        },
+
+        // === SLIDE 6: ESCALA DE RICHTER ===
+        {
+            title: "📊 Escala de Richter",
+            content: `
+                <div class="badge">Sismos - Escalas</div>
+                <h2>Escala de Richter (Magnitud)</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-ruler"></i>
+                        <h4>Características</h4>
+                        <ul>
+                            <li>Escala <span class="highlight">logarítmica</span></li>
+                            <li>Mide la <span class="highlight">magnitud</span> (energía liberada)</li>
+                            <li>Creada en 1935 por <span class="highlight">Charles Francis Richter</span></li>
+                            <li>Junto con <span class="highlight">Beno Gutenberg</span></li>
+                            <li>Basada en la amplitud de ondas sísmicas registradas por un <span class="highlight">sismógrafo</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-chart-line"></i>
+                        <h4>Escala logarítmica</h4>
+                        <ul>
+                            <li>Cada unidad = <span class="highlight">10 veces más amplitud</span></li>
+                            <li>Cada unidad = <span class="highlight">~31 veces más energía</span></li>
+                            <li>Rango usual: 0 a 9 (sin límite teórico)</li>
+                            <li>Para sismos de magnitud <span class="highlight">2.0 a 6.9</span></li>
+                            <li>Profundidad hasta <span class="highlight">400 km</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato importante:</strong> Para grandes terremotos (magnitud > 7) se utiliza la <span class="highlight">escala de Magnitud de Momento (Mw)</span>, que es más precisa.
+                </div>
+            `
+        },
+
+        // === SLIDE 7: MAGNITUD DE MOMENTO (Mw) ===
+        {
+            title: "📊 Magnitud de Momento (Mw)",
+            content: `
+                <div class="badge">Sismos - Escalas</div>
+                <h2>Magnitud de Momento (Mw)</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-calculator"></i>
+                        <h4>¿Qué es?</h4>
+                        <ul>
+                            <li>Es la escala <span class="highlight">actual</span> para medir grandes terremotos</li>
+                            <li>Más <span class="highlight">precisa</span> que Richter para magnitudes > 7</li>
+                            <li>Mide la <span class="highlight">energía total liberada</span></li>
+                            <li>Considera: área de ruptura, desplazamiento promedio y resistencia de las rocas</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-right"></i>
+                        <h4>¿Por qué reemplaza a Richter?</h4>
+                        <ul>
+                            <li>Richter fue diseñada para sismos <span class="highlight">pequeños y locales</span></li>
+                            <li>Para grandes terremotos, Richter <span class="highlight">satura</span> (no es precisa)</li>
+                            <li>Mw es <span class="highlight">más precisa</span> para terremotos de magnitud > 7</li>
+                            <li>Mw se usa para <span class="highlight">todos los terremotos</span> actualmente</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Ejemplo:</strong> El terremoto de Valdivia (1960) tiene magnitud <span class="highlight">9.5 Mw</span> (no 9.5 en Richter).
+                </div>
+            `
+        },
+
+        // === SLIDE 8: COMPARACIÓN DE ESCALAS ===
+        {
+            title: "📊 Comparación de escalas sísmicas",
+            content: `
+                <div class="badge">Sismos - Escalas</div>
+                <h2>Richter vs. Mercalli vs. Mw</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Richter</th>
+                            <th>Mercalli</th>
+                            <th>Mw</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Qué mide</strong></td>
+                            <td>Magnitud</td>
+                            <td>Intensidad</td>
+                            <td>Magnitud</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tipo de escala</strong></td>
+                            <td>Logarítmica</td>
+                            <td>Cualitativa</td>
+                            <td>Logarítmica</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Creador</strong></td>
+                            <td>Richter (1935)</td>
+                            <td>Mercalli (1902)</td>
+                            <td>Kanamori (1977)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Rango</strong></td>
+                            <td>0-9 (teórico)</td>
+                            <td>I al XII</td>
+                            <td>Sin límite</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Uso</strong></td>
+                            <td>Sismos 2.0-6.9</td>
+                            <td>Daños locales</td>
+                            <td>Todos los sismos</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Precisión</strong></td>
+                            <td>Satura > 7</td>
+                            <td>Subjetiva</td>
+                            <td><span class="highlight">Más precisa</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            `
+        },
+
+        // === SLIDE 9: ONDAS SÍSMICAS - INTRODUCCIÓN ===
+        {
+            title: "📡 Ondas sísmicas",
+            content: `
+                <div class="badge">Sismos - Ondas sísmicas</div>
+                <h2>Ondas sísmicas</h2>
+                <div class="card">
+                    <p>Cuando ocurre un sismo, se libera energía dentro de la Tierra y esta viaja en forma de <span class="highlight">ondas sísmicas</span>. Se clasifican en dos grandes grupos:</p>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrow-down"></i>
+                        <h4>Ondas internas (de cuerpo)</h4>
+                        <ul>
+                            <li>Viajan por el <span class="highlight">interior</span> de la Tierra</li>
+                            <li>Son las <span class="highlight">primeras</span> en registrarse</li>
+                            <li>Se dividen en <span class="highlight">Ondas P</span> y <span class="highlight">Ondas S</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrows-alt-h"></i>
+                        <h4>Ondas superficiales</h4>
+                        <ul>
+                            <li>Se desplazan por la <span class="highlight">superficie terrestre</span></li>
+                            <li>Llegan <span class="highlight">después</span> de las ondas internas</li>
+                            <li>Son <span class="highlight">más lentas</span> pero <span class="highlight">más destructivas</span></li>
+                            <li>Se dividen en <span class="highlight">Ondas Love</span> y <span class="highlight">Ondas Rayleigh</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Idea clave:</strong> Las ondas superficiales son las <span class="highlight">principales responsables</span> de los daños en edificios, caminos y construcciones durante un terremoto.
+                </div>
+            `
+        },
+
+        // === SLIDE 10: ONDAS P Y S ===
+        {
+            title: "📡 Ondas P y S",
+            content: `
+                <div class="badge">Sismos - Ondas internas</div>
+                <h2>Ondas P (Primarias) y Ondas S (Secundarias)</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrow-right" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Ondas P (Primarias)</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Longitudinales (compresión y expansión)</li>
+                            <li><span class="highlight">Velocidad</span>: Las más rápidas (5-8 km/s en la corteza)</li>
+                            <li><span class="highlight">Medio</span>: Se propagan por sólidos, líquidos y gases</li>
+                            <li><span class="highlight">Efecto</span>: Hacen vibrar el terreno en la misma dirección que avanza la onda</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up" style="color:#facc15;"></i>
+                        <h4 style="color:#facc15;">Ondas S (Secundarias)</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Transversales</li>
+                            <li><span class="highlight">Velocidad</span>: Más lentas que las P (3-4.5 km/s)</li>
+                            <li><span class="highlight">Medio</span>: <span class="highlight">Solo viajan por sólidos</span></li>
+                            <li><span class="highlight">Efecto</span>: Mueven el terreno perpendicularmente a la dirección de propagación</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> Los sismógrafos registran primero las <span class="highlight">ondas P</span>, luego las <span class="highlight">ondas S</span> y finalmente las <span class="highlight">ondas superficiales</span>.
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/1fDn1mrs/image.png" alt="Diagrama ondas P y S" style="max-width:600px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Diagrama de ondas P (longitudinales) y S (transversales)<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 11: ONDAS LOVE Y RAYLEIGH ===
+        {
+            title: "📡 Ondas Love y Rayleigh",
+            content: `
+                <div class="badge">Sismos - Ondas superficiales</div>
+                <h2>Ondas Love y Ondas Rayleigh</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrows-alt-h" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Ondas Love</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Superficiales</li>
+                            <li><span class="highlight">Movimiento</span>: Horizontal de lado a lado</li>
+                            <li><span class="highlight">Velocidad</span>: Generalmente más rápidas que las Rayleigh</li>
+                            <li><span class="highlight">Efecto</span>: Producen fuertes desplazamientos laterales y causan daños importantes en edificios</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Ondas Rayleigh</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Superficiales</li>
+                            <li><span class="highlight">Movimiento</span>: Elíptico, similar al movimiento de las olas del mar</li>
+                            <li><span class="highlight">Velocidad</span>: Más lentas que las ondas Love</li>
+                            <li><span class="highlight">Efecto</span>: El suelo se mueve hacia arriba, abajo, adelante y atrás al mismo tiempo</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Importante:</strong> Las ondas superficiales (Love y Rayleigh) son las que producen la <span class="highlight">mayor parte de los daños</span> en la superficie.
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/gZ9w5sRg/image.png" alt="Diagrama ondas superficiales" style="max-width:450px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Diagrama de ondas Love y Rayleigh<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 12: COMPARACIÓN DE ONDAS SÍSMICAS ===
+        {
+            title: "📊 Comparación de ondas sísmicas",
+            content: `
+                <div class="badge">Sismos - Ondas sísmicas</div>
+                <h2>Comparación rápida de ondas sísmicas</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Tipo de onda</th>
+                            <th>Medio de propagación</th>
+                            <th>Velocidad</th>
+                            <th>Movimiento</th>
+                            <th>Nivel de daño</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><span class="highlight">P</span></td>
+                            <td>Sólidos, líquidos y gases</td>
+                            <td>★★★★★ (5-8 km/s)</td>
+                            <td>Longitudinal</td>
+                            <td>Bajo</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">S</span></td>
+                            <td><span class="highlight">Solo sólidos</span></td>
+                            <td>★★★ (3-4.5 km/s)</td>
+                            <td>Transversal</td>
+                            <td>Medio</td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">Love</span></td>
+                            <td>Superficie terrestre</td>
+                            <td>★★</td>
+                            <td>Horizontal (lado a lado)</td>
+                            <td><span class="highlight">Alto</span></td>
+                        </tr>
+                        <tr>
+                            <td><span class="highlight">Rayleigh</span></td>
+                            <td>Superficie terrestre</td>
+                            <td>★</td>
+                            <td>Elíptico</td>
+                            <td><span class="highlight">Muy alto</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> Conocer cómo se propagan las ondas sísmicas nos ayuda a <span class="highlight">construir mejor</span> y estar <span class="highlight">más preparados</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 13: RESUMEN DE SISMOS ===
+        {
+            title: "📌 Resumen: Sismos",
+            content: `
+                <div class="badge">Sismos - Resumen</div>
+                <h2>Conceptos clave sobre sismos</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Lo que debes recordar</h4>
+                        <ul>
+                            <li>Los sismos son <span class="highlight">liberación de energía</span> en la corteza terrestre</li>
+                            <li>Causados por <span class="highlight">movimiento de placas tectónicas</span></li>
+                            <li><span class="highlight">Hipocentro</span> (origen) y <span class="highlight">Epicentro</span> (superficie)</li>
+                            <li>Clasificación por profundidad: <span class="highlight">superficiales, intermedios, profundos</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Escalas y ondas</h4>
+                        <ul>
+                            <li><span class="highlight">Richter</span>: magnitud (energía)</li>
+                            <li><span class="highlight">Mercalli</span>: intensidad (daños)</li>
+                            <li><span class="highlight">Mw</span>: magnitud de momento (grandes terremotos)</li>
+                            <li><span class="highlight">Ondas P, S, Love y Rayleigh</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Chile:</strong> País con <span class="highlight">alta actividad sísmica</span> por la subducción de la Placa de Nazca bajo la Placa Sudamericana.
+                </div>
+            `
+        },
+
+        // ================================================================
+        // SECCIÓN 2: VOLCANES (8 SLIDES)
+        // ================================================================
+
+        // === SLIDE 14: ACTIVIDAD VOLCÁNICA ===
+        {
+            title: "🌋 Actividad volcánica",
+            content: `
+                <div class="badge">Volcanes - Definición</div>
+                <h2>¿Qué es la actividad volcánica?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>Definición</h4>
+                        <p>La <span class="highlight">actividad volcánica</span> es el conjunto de fenómenos relacionados con la emisión de <span class="highlight">magma, gases y materiales sólidos</span> (como cenizas y fragmentos) desde el interior de la Tierra hacia la superficie a través de los <span class="highlight">volcanes</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Causas</h4>
+                        <ul>
+                            <li>Movimiento de las <span class="highlight">placas tectónicas</span></li>
+                            <li>Aumento de <span class="highlight">presión y temperatura</span> en el manto</li>
+                            <li>El magma asciende y encuentra salida por fisuras o conductos volcánicos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-tint" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Erupción efusiva</h4>
+                        <ul>
+                            <li>Lava <span class="highlight">fluida</span></li>
+                            <li>Fluye sin <span class="highlight">explosiones violentas</span></li>
+                            <li>Menos peligrosa</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-bolt" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Erupción explosiva</h4>
+                        <ul>
+                            <li><span class="highlight">Explosiones fuertes</span></li>
+                            <li>Lanzan fragmentos y gases a <span class="highlight">gran altura</span></li>
+                            <li>Muy peligrosa</li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 15: CONSECUENCIAS DE LA ACTIVIDAD VOLCÁNICA ===
+        {
+            title: "⚠️ Consecuencias de la actividad volcánica",
+            content: `
+                <div class="badge">Volcanes - Consecuencias</div>
+                <h2>Impacto de la actividad volcánica</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-building" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Daños materiales</h4>
+                        <ul>
+                            <li>Caída de <span class="highlight">lava, cenizas y flujos piroclásticos</span></li>
+                            <li>Destrucción de viviendas, infraestructura y cultivos</li>
+                            <li><span class="highlight">Lahares</span> (flujos de lodo volcánico)</li>
+                            <li>Aluviones y cambios en cauces de ríos</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-heart" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Impacto humano y ambiental</h4>
+                        <ul>
+                            <li>Pérdida de <span class="highlight">vidas humanas y animales</span></li>
+                            <li>Alteraciones en el <span class="highlight">paisaje y topografía</span></li>
+                            <li><span class="highlight">Impacto climático</span>: SO₂ reduce temperatura, CO₂ contribuye al efecto invernadero</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> Los gases volcánicos como el <span class="highlight">dióxido de azufre (SO₂)</span> pueden reflejar la radiación solar y <span class="highlight">reducir temporalmente</span> la temperatura global.
+                </div>
+            `
+        },
+
+        // === SLIDE 16: ESTRUCTURAS DE UN VOLCÁN ===
+        {
+            title: "🏗️ Estructuras de un volcán",
+            content: `
+                <div class="badge">Volcanes - Estructura</div>
+                <h2>Partes de un volcán</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-warehouse"></i>
+                        <h4>Cámara magmática</h4>
+                        <p>Depósito subterráneo donde se <span class="highlight">acumula el magma</span> (roca fundida) bajo presión en el interior de la Tierra.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-tint"></i>
+                        <h4>Chimenea</h4>
+                        <p>Conducto por donde el magma <span class="highlight">asciende</span> desde la cámara magmática hasta la superficie.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-circle"></i>
+                        <h4>Cráter</h4>
+                        <p><span class="highlight">Abertura</span> en la cima del volcán por donde salen los gases, lava y materiales durante una erupción.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain"></i>
+                        <h4>Cono volcánico</h4>
+                        <p>Estructura externa formada por la <span class="highlight">acumulación de lava solidificada, cenizas y otros materiales</span> expulsados.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Estructuras adicionales:</strong> <span class="highlight">Fisuras</span>, <span class="highlight">cráteres secundarios</span> en los flancos, <span class="highlight">domos de lava</span> (solidificación de lava viscosa cerca de la chimenea).
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/Sw6PsMC9/image.png" alt="Diagrama volcán" style="max-width:400px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Diagrama de un volcán con sus partes etiquetadas<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 17: ESTRUCTURAS ADICIONALES ===
+        {
+            title: "🏗️ Estructuras adicionales de un volcán",
+            content: `
+                <div class="badge">Volcanes - Estructura</div>
+                <h2>Otras estructuras volcánicas</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-grip-lines"></i>
+                        <h4>Fisuras</h4>
+                        <ul>
+                            <li><span class="highlight">Grietas</span> en la corteza terrestre</li>
+                            <li>Pueden ser de <span class="highlight">varios kilómetros</span> de largo</li>
+                            <li>Permiten la salida de lava y gases</li>
+                            <li>Ejemplo: <span class="highlight">Erupciones fisurales</span> en Islandia</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-circle"></i>
+                        <h4>Cráteres secundarios</h4>
+                        <ul>
+                            <li>Se forman en los <span class="highlight">flancos</span> del volcán</li>
+                            <li>También llamados <span class="highlight">conos parásitos</span></li>
+                            <li>Pueden tener erupciones <span class="highlight">independientes</span></li>
+                            <li>Ejemplo: <span class="highlight">Conos parásitos del Llaima</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-dome"></i>
+                        <h4>Domos de lava</h4>
+                        <ul>
+                            <li><span class="highlight">Acumulación de lava viscosa</span> cerca de la chimenea</li>
+                            <li>La lava es tan viscosa que <span class="highlight">no fluye</span></li>
+                            <li>Pueden crecer hasta formar <span class="highlight">cúpulas</span></li>
+                            <li>Ejemplo: <span class="highlight">Domo del Chaitén (2008)</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Calderas</h4>
+                        <ul>
+                            <li><span class="highlight">Gran depresión</span> formada por el colapso del volcán</li>
+                            <li>Ocurre después de una <span class="highlight">erupción masiva</span></li>
+                            <li>Pueden tener <span class="highlight">lagos</span> en su interior</li>
+                            <li>Ejemplo: <span class="highlight">Caldera del Chaitén</span></li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 18: ISLAS VOLCÁNICAS ===
+        {
+            title: "🏝️ Islas volcánicas",
+            content: `
+                <div class="badge">Volcanes - Islas volcánicas</div>
+                <h2>Islas volcánicas</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-umbrella-beach"></i>
+                        <h4>Formación</h4>
+                        <p>Ocurre cuando el <span class="highlight">magma</span> asciende desde el manto hacia el <span class="highlight">fondo marino</span> y, tras varias erupciones y enfriamientos, la acumulación de materiales volcánicos <span class="highlight">emerge sobre el nivel del mar</span>.</p>
+                        <p style="margin-top:0.5rem;">Puede darse en diferentes contextos geológicos:</p>
+                        <ul>
+                            <li><span class="highlight">Límites divergentes</span> de placas tectónicas</li>
+                            <li><span class="highlight">Zonas de subducción</span></li>
+                            <li><span class="highlight">Puntos calientes</span> (hotspots)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-list"></i>
+                        <h4>Ejemplos de islas volcánicas</h4>
+                        <ul>
+                            <li><span class="highlight">Hawái</span> (punto caliente)</li>
+                            <li><span class="highlight">Islas Canarias</span> (punto caliente)</li>
+                            <li><span class="highlight">Islas Galápagos</span> (punto caliente)</li>
+                            <li><span class="highlight">Santorini</span> (arco volcánico)</li>
+                            <li><span class="highlight">Isla de Pascua</span> (punto caliente) - volcán Rano Kau</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/nMbHRH49/image.png" alt="Volcán Rano Kau" style="max-width:400px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Volcán Rano Kau, Isla de Pascua<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 19: EFECTOS POSITIVOS DEL VULCANISMO ===
+        {
+            title: "✅ Efectos positivos del vulcanismo",
+            content: `
+                <div class="badge">Volcanes - Efectos positivos</div>
+                <h2>Efectos positivos del vulcanismo en islas volcánicas</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-seedling" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Suelos fértiles</h4>
+                        <ul>
+                            <li><span class="highlight">Suelos extremadamente fértiles</span></li>
+                            <li>Ricos en <span class="highlight">minerales volcánicos</span></li>
+                            <li>Ideales para la <span class="highlight">agricultura</span></li>
+                            <li>Ejemplo: <span class="highlight">Suelos de Hawái y Chile</span> (vallé central)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-leaf" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Ecosistemas únicos</h4>
+                        <ul>
+                            <li>Desarrollo de <span class="highlight">ecosistemas únicos</span></li>
+                            <li>Flora y fauna <span class="highlight">endémica</span></li>
+                            <li>Debido al <span class="highlight">aislamiento geográfico</span></li>
+                            <li>Ejemplo: <span class="highlight">Islas Galápagos</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-mountain" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Atractivo turístico</h4>
+                        <ul>
+                            <li>Formación de <span class="highlight">paisajes naturales llamativos</span></li>
+                            <li><span class="highlight">Atractivos turísticos</span> que impulsan la economía local</li>
+                            <li>Ejemplo: <span class="highlight">Parque Nacional Volcán Villarrica</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-flask" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Conocimiento científico</h4>
+                        <ul>
+                            <li>Contribución al <span class="highlight">conocimiento científico</span></li>
+                            <li>Estudio de <span class="highlight">procesos geológicos</span></li>
+                            <li>Estudio de <span class="highlight">evolución de especies</span> en ambientes aislados</li>
+                            <li>Ejemplo: <span class="highlight">Investigaciones en Galápagos</span></li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 20: CONSECUENCIAS ADICIONALES ===
+        {
+            title: "⚠️ Consecuencias adicionales",
+            content: `
+                <div class="badge">Volcanes - Consecuencias</div>
+                <h2>Otras consecuencias de la actividad volcánica</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-mountain" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Alteraciones del paisaje</h4>
+                        <ul>
+                            <li>Cambios en la <span class="highlight">topografía</span></li>
+                            <li>Formación de <span class="highlight">nuevos relieves</span></li>
+                            <li>Destrucción de ecosistemas</li>
+                            <li>Creación de nuevas áreas terrestres</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Impacto en recursos hídricos</h4>
+                        <ul>
+                            <li><span class="highlight">Cambios en cauces de ríos</span></li>
+                            <li>Contaminación de <span class="highlight">fuentes de agua</span></li>
+                            <li>Formación de <span class="highlight">lagos</span> por represamiento</li>
+                            <li><span class="highlight">Lahares</span> que modifican valles</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> La erupción del <span class="highlight">Chaitén (2008)</span> modificó completamente el paisaje de la zona, creando un nuevo domo de lava y cambiando el curso de ríos.
+                </div>
+            `
+        },
+
+        // === SLIDE 21: RESUMEN DE VOLCANES ===
+        {
+            title: "📌 Resumen: Volcanes",
+            content: `
+                <div class="badge">Volcanes - Resumen</div>
+                <h2>Conceptos clave sobre volcanes</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Lo que debes recordar</h4>
+                        <ul>
+                            <li>Los volcanes son <span class="highlight">aberturas</span> en la corteza terrestre</li>
+                            <li>Expulsan <span class="highlight">magma, gases y cenizas</span></li>
+                            <li><span class="highlight">Erupciones efusivas</span> (lava fluida) y <span class="highlight">explosivas</span></li>
+                            <li>Partes: <span class="highlight">cámara magmática, chimenea, cráter, cono</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Islas volcánicas</h4>
+                        <ul>
+                            <li>Se forman por <span class="highlight">acumulación de materiales volcánicos</span> en el fondo marino</li>
+                            <li>Ejemplos: <span class="highlight">Hawái, Galápagos, Isla de Pascua</span></li>
+                            <li><span class="highlight">Efectos positivos</span>: suelos fértiles, ecosistemas únicos, turismo, ciencia</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Chile:</strong> País con <span class="highlight">alta actividad volcánica</span> (más de 100 volcanes activos) por la subducción de la Placa de Nazca.
+                </div>
+            `
+        },
+
+        // ================================================================
+        // SECCIÓN 3: HURACANES (10 SLIDES)
+        // ================================================================
+
+        // === SLIDE 22: HURACANES - DEFINICIÓN ===
+        {
+            title: "🌀 Huracanes - Definición",
+            content: `
+                <div class="badge">Huracanes - Definición</div>
+                <h2>¿Qué es un huracán?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-wind"></i>
+                        <h4>Definición</h4>
+                        <p>Un <span class="highlight">huracán</span> es una tormenta gigante y muy poderosa que se forma sobre los <span class="highlight">océanos cálidos</span>. Funciona como un enorme remolino que gira en espiral alrededor de un centro, produciendo <span class="highlight">vientos muy fuertes</span> y <span class="highlight">mucha lluvia</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-thermometer-half"></i>
+                        <h4>Función natural</h4>
+                        <p>Actúa como un <span class="highlight">motor</span> que transporta el <span class="highlight">exceso de energía</span> desde el área tropical hacia las regiones más frías del planeta, ayudando a <span class="highlight">equilibrar la temperatura global</span>.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> Los huracanes <span class="highlight">no cruzan la línea del Ecuador</span> debido al Efecto Coriolis.
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/Ckgv22g/image.png" alt="Imagen satelital huracán" style="max-width:400px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Imagen satelital de un huracán<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 23: CONDICIONES DE FORMACIÓN ===
+        {
+            title: "🌀 Condiciones de formación",
+            content: `
+                <div class="badge">Huracanes - Formación</div>
+                <h2>¿Cómo se forma un huracán?</h2>
+                <div class="grid-3">
+                    <div class="card">
+                        <i class="fas fa-temperature-high" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">1. Aguas cálidas</h4>
+                        <p>El océano debe tener una temperatura <span class="highlight">superior a 26.5°C o 27°C</span> para entregarle energía a la tormenta.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-cloud-sun-rain" style="color:#facc15;"></i>
+                        <h4 style="color:#facc15;">2. Baja presión y humedad</h4>
+                        <p>El agua cálida calienta el aire cercano, haciendo que <span class="highlight">suba</span> (creando una zona de <span class="highlight">baja presión</span>) y, al estar cargado de <span class="highlight">humedad</span>, alimenta la formación de nubes.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-sync-alt" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">3. Organización</h4>
+                        <p>Suelen comenzar como ondas muy débiles (llamadas <span class="highlight">"ondas del este"</span>) que, si encuentran las condiciones adecuadas de temperatura y vientos, se van organizando hasta convertirse en tormentas tropicales y, finalmente, en <span class="highlight">huracanes</span>.</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Importante:</strong> Los huracanes se producen principalmente en <span class="highlight">zonas tropicales</span> sobre los océanos cálidos.
+                </div>
+            `
+        },
+
+        // === SLIDE 24: ZONAS DE FORMACIÓN ===
+        {
+            title: "🌍 Zonas de formación de huracanes",
+            content: `
+                <div class="badge">Huracanes - Zonas de formación</div>
+                <h2>¿Dónde se forman los huracanes?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-globe-americas" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Áreas principales</h4>
+                        <ul>
+                            <li><span class="highlight">Caribe y Atlántico Norte</span>: incluye Puerto Rico, República Dominicana, Haití, Cuba, Jamaica, Centroamérica y sureste de EE.UU.</li>
+                            <li><span class="highlight">Sudeste Asiático</span> (Pacífico Noroccidental): en esta región son conocidos como <span class="highlight">tifones</span> (Filipinas, Vietnam, China, Japón)</li>
+                            <li><span class="highlight">Océano Índico</span></li>
+                            <li><span class="highlight">Pacífico Nororiental</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-map-marked-alt" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Chile y huracanes</h4>
+                        <ul>
+                            <li>Chile <span class="highlight">NO</span> presenta huracanes</li>
+                            <li>Razón: <span class="highlight">Corriente de Humboldt</span> mantiene el agua demasiado fría (<span class="highlight">18°C-19°C</span>) para su formación</li>
+                            <li>Además, los <span class="highlight">vientos del oeste</span> desvían las tormentas</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La <span class="highlight">Corriente de Humboldt</span> es una corriente oceánica fría que recorre las costas de Chile y Perú, enfriando el agua y evitando la formación de huracanes.
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/HsS0LbZ/image.png" alt="Mapa formación de huracanes" style="max-width:400px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Mapa mundial de zonas de formación de huracanes<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 25: ESCALA SAFFIR-SIMPSON ===
+        {
+            title: "🌀 Escala Saffir-Simpson",
+            content: `
+                <div class="badge">Huracanes - Escala</div>
+                <h2>Escala de Saffir-Simpson</h2>
+                <div class="card">
+                    <p>Creada en <span class="highlight">1969</span> por el ingeniero <span class="highlight">Herbert Saffir</span> y el director del Centro Nacional de Huracanes de EE.UU., <span class="highlight">Robert Simpson</span>.</p>
+                </div>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Categoría</th>
+                            <th>Vientos (km/h)</th>
+                            <th>Daños</th>
+                            <th>Ejemplo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td><span class="highlight">1</span></td><td>119-153</td><td>Mínimos: ramas caídas, daños en tejados</td><td>Huracán Dolly (2008)</td></tr>
+                        <tr><td><span class="highlight">2</span></td><td>154-177</td><td>Moderados: árboles arrancados</td><td>Huracán Frances (2004)</td></tr>
+                        <tr><td><span class="highlight">3</span></td><td>178-208</td><td>Mayores: daños estructurales</td><td>Katrina al tocar tierra</td></tr>
+                        <tr><td><span class="highlight">4</span></td><td>209-251</td><td>Extremos: daños graves</td><td>Harvey (2017)</td></tr>
+                        <tr><td><span class="highlight">5</span></td><td>> 252</td><td>Catastróficos: destrucción total</td><td>Patricia (2015)</td></tr>
+                    </tbody>
+                </table>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Importante:</strong> Se usa principalmente para huracanes en el <span class="highlight">Atlántico</span> y el <span class="highlight">Pacífico Nororiental</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 26: PELIGROS DE UN HURACÁN ===
+        {
+            title: "⚠️ Peligros de un huracán",
+            content: `
+                <div class="badge">Huracanes - Peligros</div>
+                <h2>La doble amenaza de un huracán</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-wind" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">1. Vientos destructivos</h4>
+                        <ul>
+                            <li>Vientos de gran <span class="highlight">velocidad</span></li>
+                            <li>Arrancan <span class="highlight">árboles</span></li>
+                            <li>Destruyen <span class="highlight">viviendas e infraestructura</span></li>
+                            <li>Lanzan <span class="highlight">objetos peligrosos</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">2. Agua (lluvias y marejada)</h4>
+                        <ul>
+                            <li><span class="highlight">Lluvias torrenciales</span>: inundaciones terrestres</li>
+                            <li><span class="highlight">Marejada ciclónica</span>: inundaciones costeras</li>
+                            <li><span class="highlight">Marea ciclonada</span>: aumento anormal del nivel del mar</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> La <span class="highlight">marejada ciclónica</span> no es una ola gigante como un tsunami, sino una <span class="highlight">"subida" del océano</span> provocada por la combinación de vientos fuertes que empujan el agua hacia la tierra y la baja presión atmosférica del centro del ciclón.
+                </div>
+            `
+        },
+
+        // === SLIDE 27: IMPACTOS AMBIENTALES ===
+        {
+            title: "🌿 Impactos ambientales de los huracanes",
+            content: `
+                <div class="badge">Huracanes - Impactos ambientales</div>
+                <h2>Consecuencias ambientales</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-tree" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Destrucción de hábitats</h4>
+                        <ul>
+                            <li>Destrucción de <span class="highlight">ecosistemas costeros</span></li>
+                            <li><span class="highlight">Manglares</span> y <span class="highlight">arrecifes</span> dañados</li>
+                            <li>Pérdida de <span class="highlight">biodiversidad</span></li>
+                            <li>Alteración de <span class="highlight">cadenas alimenticias</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-water" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Impacto en recursos hídricos</h4>
+                        <ul>
+                            <li><span class="highlight">Contaminación</span> de fuentes de agua</li>
+                            <li><span class="highlight">Salinización</span> de acuíferos costeros</li>
+                            <li><span class="highlight">Inundaciones</span> que arrastran contaminantes</li>
+                            <li><span class="highlight">Sedimentación</span> de ríos y estuarios</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> Los huracanes pueden tener efectos <span class="highlight">positivos</span> en algunos ecosistemas, como la <span class="highlight">renovación de nutrientes</span> en suelos y la <span class="highlight">regulación de poblaciones</span> de especies.
+                </div>
+            `
+        },
+
+        // === SLIDE 28: CONSECUENCIAS DE LOS HURACANES ===
+        {
+            title: "⚠️ Consecuencias de los huracanes",
+            content: `
+                <div class="badge">Huracanes - Consecuencias</div>
+                <h2>Impacto humano y material</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-building" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Daños materiales</h4>
+                        <ul>
+                            <li>Destrucción de <span class="highlight">viviendas</span></li>
+                            <li>Daños en <span class="highlight">infraestructura</span> (carreteras, puentes)</li>
+                            <li><span class="highlight">Cortes de energía</span> y comunicaciones</li>
+                            <li>Daños a <span class="highlight">cultivos y agricultura</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-heart" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Pérdidas humanas</h4>
+                        <ul>
+                            <li>Pérdida de <span class="highlight">vidas humanas</span></li>
+                            <li><span class="highlight">Heridos</span> y <span class="highlight">desplazados</span></li>
+                            <li><span class="highlight">Traumas psicológicos</span></li>
+                            <li>Impacto <span class="highlight">económico y social</span> a largo plazo</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> El huracán <span class="highlight">Katrina (2005)</span> causó más de <span class="highlight">1.800 muertos</span> y daños por <span class="highlight">$125 mil millones</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 29: HURACÁN MILTON ===
+        {
+            title: "🌀 Huracán Milton",
+            content: `
+                <div class="badge">Huracanes - Caso de estudio</div>
+                <h2>Huracán Milton (2024)</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-bolt" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Intensificación rápida</h4>
+                        <ul>
+                            <li>El huracán Milton subió a <span class="highlight">categoría 5</span> en <span class="highlight">menos de 10 horas</span></li>
+                            <li>Ejemplo de <span class="highlight">intensificación rápida</span> favorecida por el cambio climático</li>
+                            <li>Demuestra cómo los océanos más cálidos <span class="highlight">"sobrealimentan"</span> a las tormentas</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-thermometer-half" style="color:#facc15;"></i>
+                        <h4 style="color:#facc15;">Causas</h4>
+                        <ul>
+                            <li><span class="highlight">Aguas anormalmente cálidas</span> en el Golfo de México</li>
+                            <li><span class="highlight">Cambio climático</span> como factor principal</li>
+                            <li>Condiciones atmosféricas <span class="highlight">favorables</span> (baja cizalladura)</li>
+                            <li>Alta <span class="highlight">humedad</span> en la atmósfera</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Reflexión:</strong> La intensificación rápida de huracanes como Milton plantea la pregunta: <span class="highlight">¿nos estamos acercando al límite científico</span> de la potencia que puede alcanzar un huracán?
+                </div>
+            `
+        },
+
+        // === SLIDE 30: CAMBIO CLIMÁTICO Y HURACANES ===
+        {
+            title: "🌍 Cambio climático y huracanes",
+            content: `
+                <div class="badge">Huracanes - Cambio climático</div>
+                <h2>Relación entre cambio climático y huracanes</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-temperature-high" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Mayor potencia e intensidad</h4>
+                        <ul>
+                            <li>Los huracanes usan el <span class="highlight">agua cálida</span> del océano como combustible</li>
+                            <li>El cambio climático <span class="highlight">calienta los océanos</span></li>
+                            <li>Esto <span class="highlight">"sobrealimenta"</span> a las tormentas</li>
+                            <li>Huracanes cada vez más <span class="highlight">intensos y peligrosos</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-clock" style="color:#facc15;"></i>
+                        <h4 style="color:#facc15;">Intensificación rápida</h4>
+                        <ul>
+                            <li>El calentamiento global favorece que los ciclones aumenten su fuerza con <span class="highlight">mayor rapidez</span></li>
+                            <li><span class="highlight">Ejemplo</span>: Huracán Milton subió a categoría 5 en <span class="highlight">menos de 10 horas</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-exclamation-triangle" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Nuevas zonas de riesgo</h4>
+                        <ul>
+                            <li>Aunque Chile está protegido por aguas frías</li>
+                            <li>Si las temperaturas oceánicas globales siguen subiendo, podrían aparecer tormentas tropicales en regiones donde hoy no son comunes</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-flask" style="color:#63b3ed;"></i>
+                        <h4 style="color:#63b3ed;">Pregunta científica</h4>
+                        <ul>
+                            <li>Los científicos se preguntan si nos estamos acercando al <span class="highlight">límite científico</span> de la potencia que puede alcanzar un huracán</li>
+                            <li>La relación entre el cambio climático y las condiciones meteorológicas extremas es cada vez más clara</li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 31: RESUMEN DE HURACANES ===
+        {
+            title: "📌 Resumen: Huracanes",
+            content: `
+                <div class="badge">Huracanes - Resumen</div>
+                <h2>Conceptos clave sobre huracanes</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Lo que debes recordar</h4>
+                        <ul>
+                            <li>Los huracanes son <span class="highlight">tormentas tropicales</span> con vientos > 119 km/h</li>
+                            <li>Condiciones: <span class="highlight">agua > 26.5°C</span>, baja presión, humedad</li>
+                            <li>No cruzan el <span class="highlight">Ecuador</span></li>
+                            <li><span class="highlight">Tifones</span> en el Pacífico Noroccidental</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Escalas y peligros</h4>
+                        <ul>
+                            <li>Escala <span class="highlight">Saffir-Simpson</span> (categorías 1-5)</li>
+                            <li><span class="highlight">Doble amenaza</span>: vientos + agua (marejada ciclónica)</li>
+                            <li><span class="highlight">Cambio climático</span> aumenta intensidad</li>
+                            <li>Chile <span class="highlight">NO</span> tiene huracanes (Corriente de Humboldt)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La <span class="highlight">Corriente de Humboldt</span> mantiene el agua de la costa chilena a 18-19°C, demasiado fría para la formación de huracanes.
+                </div>
+            `
+        },
+
+        // ================================================================
+        // SECCIÓN 4: TSUNAMIS (12 SLIDES)
+        // ================================================================
+
+        // === SLIDE 32: TSUNAMIS - DEFINICIÓN ===
+        {
+            title: "🌊 Tsunamis - Definición",
+            content: `
+                <div class="badge">Tsunamis - Definición</div>
+                <h2>¿Qué es un tsunami?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Definición</h4>
+                        <p>Un <span class="highlight">tsunami</span> es un conjunto de olas de <span class="highlight">gran energía y longitud de onda</span>, que se manifiestan en la costa como una gran masa de agua capaz de <span class="highlight">inundar y destruir</span> zonas costeras.</p>
+                        <p style="margin-top:0.5rem;">A diferencia de las olas normales, no son provocadas por el viento ni por las mareas, sino por <span class="highlight">fenómenos geológicos</span>.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Causas</h4>
+                        <ul>
+                            <li><span class="highlight">Terremotos submarinos</span> (>80% de los tsunamis)</li>
+                            <li><span class="highlight">Erupciones volcánicas</span> (ej. Krakatoa 1883)</li>
+                            <li><span class="highlight">Deslizamientos y derrumbes submarinos</span></li>
+                            <li><span class="highlight">Remociones en masa</span></li>
+                            <li><span class="highlight">Impacto de meteoritos</span> (poco frecuente)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> Los terremotos submarinos son responsables de más del <span class="highlight">80%</span> de los tsunamis.
+                </div>
+            `
+        },
+
+        // === SLIDE 33: EFECTOS ECONÓMICOS ===
+        {
+            title: "💰 Efectos económicos de los tsunamis",
+            content: `
+                <div class="badge">Tsunamis - Efectos económicos</div>
+                <h2>Impacto económico</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-building" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Destrucción de infraestructura</h4>
+                        <ul>
+                            <li><span class="highlight">Puertos</span> y <span class="highlight">carreteras</span> destruidos</li>
+                            <li>Viviendas y edificios costeros arrasados</li>
+                            <li>Afectación de la <span class="highlight">actividad productiva</span></li>
+                            <li>Pérdida de <span class="highlight">embarcaciones</span> y equipos</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-coins" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Colapso económico</h4>
+                        <ul>
+                            <li><span class="highlight">Colapso</span> de economías locales</li>
+                            <li>Gobiernos deben asumir <span class="highlight">fuerte endeudamiento</span> para reconstrucción</li>
+                            <li><span class="highlight">Ejemplo</span>: Tsunami del Océano Índico (2004) ocasionó daños económicos que superaron el <span class="highlight">PIB</span> de varios países afectados</li>
+                            <li>Pérdida de <span class="highlight">fuentes de trabajo</span> y medios de vida</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/zVBtfF7C/image.png" alt="Destrucción tsunamis" style="max-width:400px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Destrucción de infraestructura costera por tsunami<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 34: EFECTOS AMBIENTALES ===
+        {
+            title: "🌿 Efectos ambientales de los tsunamis",
+            content: `
+                <div class="badge">Tsunamis - Efectos ambientales</div>
+                <h2>Impacto ambiental</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-tree" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Erosión y destrucción</h4>
+                        <ul>
+                            <li><span class="highlight">Erosión</span> de las costas</li>
+                            <li>Destrucción de <span class="highlight">manglares y arrecifes</span></li>
+                            <li>Pérdida de <span class="highlight">biodiversidad</span></li>
+                            <li>Alteración del <span class="highlight">equilibrio de ecosistemas</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-tint" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Salinización y contaminación</h4>
+                        <ul>
+                            <li><span class="highlight">Salinización</span> de suelos agrícolas</li>
+                            <li>Contaminación de <span class="highlight">fuentes de agua dulce</span></li>
+                            <li>Muerte de <span class="highlight">especies marinas</span></li>
+                            <li>Acumulación de <span class="highlight">escombros</span> y <span class="highlight">contaminantes</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La <span class="highlight">salinización de suelos</span> puede hacer que las tierras agrícolas queden <span class="highlight">inutilizables por años</span> después de un tsunami.
+                </div>
+            `
+        },
+
+        // === SLIDE 35: EFECTOS SOCIALES ===
+        {
+            title: "👥 Efectos sociales de los tsunamis",
+            content: `
+                <div class="badge">Tsunamis - Efectos sociales</div>
+                <h2>Impacto social</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-users" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Desplazamiento y crisis</h4>
+                        <ul>
+                            <li>Desplazamiento de <span class="highlight">miles de personas</span></li>
+                            <li><span class="highlight">Crisis sanitarias</span> (falta de agua potable y atención médica)</li>
+                            <li><span class="highlight">Secuelas psicológicas</span> en sobrevivientes</li>
+                            <li>Pérdida de <span class="highlight">viviendas, barrios y espacios comunitarios</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-handshake" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Debilitamiento social</h4>
+                        <ul>
+                            <li>Debilitamiento del <span class="highlight">tejido social</span></li>
+                            <li>Afectación del <span class="highlight">sentido de identidad</span></li>
+                            <li>Pérdida de <span class="highlight">seguridad</span> comunitaria</li>
+                            <li><span class="highlight">Trauma</span> colectivo y <span class="highlight">duelo</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Ejemplo:</strong> El tsunami de Japón (2011) no solo causó muertes y daños materiales, sino también <span class="highlight">traumas psicológicos</span> duraderos en las comunidades afectadas.
+                </div>
+            `
+        },
+
+        // === SLIDE 36: TSUNAMIS DESTRUCTIVOS EN EL MUNDO ===
+        {
+            title: "🌊 Tsunamis destructivos en el mundo",
+            content: `
+                <div class="badge">Tsunamis - Históricos mundiales</div>
+                <h2>Tsunamis más devastadores del mundo</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1755</div>
+                        <p><strong>Lisboa</strong></p>
+                        <p>Hasta <span class="highlight">100.000</span> muertos</p>
+                        <p>Portugal, España, Marruecos</p>
+                        <p>Uno de los primeros estudiados</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1883</div>
+                        <p><strong>Krakatoa</strong></p>
+                        <p>Erupción volcánica</p>
+                        <p><span class="highlight">36.000+</span> muertos</p>
+                        <p>Olas de 40 metros</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1976</div>
+                        <p><strong>Filipinas</strong></p>
+                        <p>8.000 muertos</p>
+                        <p>Generado por un terremoto</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2004</div>
+                        <p><strong>Océano Índico</strong></p>
+                        <p><span class="highlight">~230.000</span> víctimas</p>
+                        <p>14 países afectados</p>
+                        <p>Magnitud 9.1</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2011</div>
+                        <p><strong>Tóhoku, Japón</strong></p>
+                        <p>18.000+ muertos</p>
+                        <p>Olas de 40 metros</p>
+                        <p>Desastre nuclear de Fukushima</p>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El tsunami del Océano Índico (2004) es uno de los más mortíferos de la historia, afectando a 14 países con olas de hasta 30 metros.
+                </div>
+            `
+        },
+
+        // === SLIDE 37: TSUNAMIS EN CHILE ===
+        {
+            title: "🇨🇱 Tsunamis en Chile",
+            content: `
+                <div class="badge">Tsunamis - Historia de Chile</div>
+                <h2>Tsunamis importantes en Chile</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">1868</div>
+                        <p><strong>Arica</strong></p>
+                        <p>Destruyó <span class="highlight">gran parte</span> de la ciudad</p>
+                        <p>Generado por un terremoto</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">1960</div>
+                        <p><strong>Valdivia</strong></p>
+                        <p>Asociado al terremoto <span class="highlight">9.5 Mw</span></p>
+                        <p>Olas de hasta <span class="highlight">25 metros</span></p>
+                        <p>Cruzó el Océano Pacífico</p>
+                        <p>Afectó Hawái, Japón y Filipinas</p>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">2010</div>
+                        <p><strong>Maule</strong></p>
+                        <p>Olas de hasta <span class="highlight">15 metros</span></p>
+                        <p>Afectó severamente localidades costeras</p>
+                        <p>Asociado al terremoto 8.8 Mw</p>
+                    </div>
+                </div>
+                <div class="img-placeholder">
+                    <div class="img-container" style="margin:0.5rem 0;">
+                    <img src="https://i.ibb.co/XxSR7265/image.png" alt="Destrucción tsunamis Chile 2010" style="max-width:400px; border-radius:12px; border:1px solid #1a365d; max-height:auto;">
+                    </div>
+                    Daños del tsunami en Chile (2010)<br>
+                </div>
+            `
+        },
+
+        // === SLIDE 38: TSUNAMIS EN CHILE - DETALLES ===
+        {
+            title: "🇨🇱 Tsunamis en Chile - Detalles",
+            content: `
+                <div class="badge">Tsunamis - Historia de Chile</div>
+                <h2>Detalles de tsunamis en Chile</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-history" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Valdivia (1960)</h4>
+                        <ul>
+                            <li>Generado por el <span class="highlight">terremoto más potente</span> registrado (9.5 Mw)</li>
+                            <li>Olas de hasta <span class="highlight">25 metros</span></li>
+                            <li>Cruzó el <span class="highlight">Océano Pacífico</span></li>
+                            <li>Afectó a <span class="highlight">Hawái, Japón y Filipinas</span></li>
+                            <li>Dejó miles de damnificados</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-history" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Maule (2010)</h4>
+                        <ul>
+                            <li>Generado por el terremoto de <span class="highlight">8.8 Mw</span></li>
+                            <li>Olas de hasta <span class="highlight">15 metros</span></li>
+                            <li>Afectó severamente <span class="highlight">localidades costeras</span></li>
+                            <li><span class="highlight">Destrucción</span> de puertos y viviendas</li>
+                            <li><span class="highlight">2 millones</span> de damnificados</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-history" style="color:#ef4444;"></i>
+                        <h4 style="color:#ef4444;">Arica (1868)</h4>
+                        <ul>
+                            <li>Destruyó <span class="highlight">gran parte</span> de la ciudad</li>
+                            <li>Generado por un terremoto de gran magnitud</li>
+                            <li>Uno de los tsunamis más destructivos del siglo XIX</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-lightbulb" style="color:#63b3ed;"></i>
+                        <h4 style="color:#63b3ed;">Lecciones aprendidas</h4>
+                        <ul>
+                            <li>Los tsunamis en Chile han demostrado la importancia de:</li>
+                            <li><span class="highlight">Sistemas de alerta temprana</span></li>
+                            <li><span class="highlight">Evacuación rápida</span> a zonas altas</li>
+                            <li><span class="highlight">Normas de construcción</span> antisísmicas</li>
+                            <li><span class="highlight">Educación</span> y simulacros</li>
+                        </ul>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 39: PREVENCIÓN DE TSUNAMIS - ANTES ===
+        {
+            title: "🛡️ Prevención de tsunamis - Antes",
+            content: `
+                <div class="badge">Tsunamis - Prevención</div>
+                <h2>¿Cómo prepararse ante un tsunami?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-clipboard-list" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Planificación</h4>
+                        <ul>
+                            <li>Conocer las <span class="highlight">zonas de riesgo</span></li>
+                            <li>Conocer las <span class="highlight">rutas de evacuación</span></li>
+                            <li>Conocer los <span class="highlight">puntos de encuentro</span> y áreas seguras</li>
+                            <li>Tener un <span class="highlight">plan familiar</span> de emergencia</li>
+                            <li>Participar en <span class="highlight">simulacros</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-suitcase" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Kit de emergencia</h4>
+                        <ul>
+                            <li><span class="highlight">Agua</span> (2 litros por persona para 3 días)</li>
+                            <li><span class="highlight">Alimentos no perecibles</span> (barras energéticas, enlatados)</li>
+                            <li><span class="highlight">Linterna</span> y radio con pilas</li>
+                            <li><span class="highlight">Botiquín</span> de primeros auxilios</li>
+                            <li><span class="highlight">Documentos importantes</span> (fotocopia de cédula)</li>
+                            <li><span class="highlight">Silbato</span> y manta térmica</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Importante:</strong> La <span class="highlight">preparación</span> es la mejor herramienta para reducir los riesgos ante un tsunami.
+                </div>
+            `
+        },
+
+        // === SLIDE 40: PREVENCIÓN DE TSUNAMIS - DURANTE ===
+        {
+            title: "🛡️ Prevención de tsunamis - Durante",
+            content: `
+                <div class="badge">Tsunamis - Prevención</div>
+                <h2>¿Cómo actuar durante un tsunami?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-running" style="color:#facc15;"></i>
+                        <h4 style="color:#facc15;">Señales de alerta</h4>
+                        <ul>
+                            <li><span class="highlight">Sismo fuerte</span> en la costa</li>
+                            <li><span class="highlight">Retiro inusual del mar</span> (el agua se aleja)</li>
+                            <li>Sonido <span class="highlight">fuerte y extraño</span></li>
+                            <li>Comportamiento <span class="highlight">extraño</span> de animales</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up" style="color:#facc15;"></i>
+                        <h4 style="color:#facc15;">Acciones inmediatas</h4>
+                        <ul>
+                            <li><span class="highlight">Evacuar de inmediato</span> a zonas altas</li>
+                            <li><span class="highlight">No esperar</span> la alerta oficial</li>
+                            <li>Seguir las <span class="highlight">indicaciones de las autoridades</span></li>
+                            <li>Mantenerse informado a través de sistemas de alerta oficiales</li>
+                            <li><span class="highlight">No regresar</span> a las zonas afectadas hasta confirmación de peligro</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Regla de oro:</strong> Si estás en la costa y sientes un <span class="highlight">sismo fuerte</span> o ves un <span class="highlight">retiro inusual del mar</span>, <span class="highlight">evacúa inmediatamente</span> a zonas altas sin esperar ninguna alerta oficial.
+                </div>
+            `
+        },
+
+        // === SLIDE 41: PREVENCIÓN DE TSUNAMIS - DESPUÉS ===
+        {
+            title: "🛡️ Prevención de tsunamis - Después",
+            content: `
+                <div class="badge">Tsunamis - Prevención</div>
+                <h2>¿Qué hacer después de un tsunami?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-hand-holding-medical" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Acciones inmediatas</h4>
+                        <ul>
+                            <li><span class="highlight">Revisar si hay heridos</span> y prestar primeros auxilios</li>
+                            <li><span class="highlight">Esperar la confirmación oficial</span> de que el peligro ha pasado</li>
+                            <li>Los tsunamis pueden durar <span class="highlight">varias horas</span></li>
+                            <li><span class="highlight">No confiarse</span> si el mar parece tranquilo</li>
+                            <li><span class="highlight">No regresar</span> a las zonas afectadas hasta que las autoridades lo indiquen</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-broadcast-tower" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Información oficial</h4>
+                        <ul>
+                            <li><span class="highlight">SHOA</span>: Alerta de tsunami</li>
+                            <li><span class="highlight">ONEMI</span>: Coordinación de emergencias</li>
+                            <li><span class="highlight">CSN</span>: Información sobre sismos</li>
+                            <li><span class="highlight">SAE</span>: Alertas a celulares</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="example-box">
+                    <strong>Ejemplo exitoso:</strong> En el terremoto de Iquique (2014), la <span class="highlight">evacuación fue exitosa</span> gracias a la preparación y rápida respuesta de la población.
+                </div>
+            `
+        },
+
+        // === SLIDE 42: RESUMEN DE TSUNAMIS ===
+        {
+            title: "📌 Resumen: Tsunamis",
+            content: `
+                <div class="badge">Tsunamis - Resumen</div>
+                <h2>Conceptos clave sobre tsunamis</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Lo que debes recordar</h4>
+                        <ul>
+                            <li>Los tsunamis son <span class="highlight">olas gigantes</span> generadas por fenómenos geológicos</li>
+                            <li>Causa principal: <span class="highlight">terremotos submarinos</span> (>80%)</li>
+                            <li>Características: <span class="highlight">alta velocidad</span> en alta mar, <span class="highlight">baja altura</span></li>
+                            <li>Cerca de la costa: <span class="highlight">baja velocidad</span>, <span class="highlight">gran altura</span> (efecto shoaling)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-check-circle" style="color:#22c55e;"></i>
+                        <h4 style="color:#22c55e;">Impactos y prevención</h4>
+                        <ul>
+                            <li>Efectos: <span class="highlight">económicos, ambientales y sociales</span></li>
+                            <li>Tsunamis devastadores: <span class="highlight">2004 (Índico)</span>, <span class="highlight">2011 (Japón)</span></li>
+                            <li>En Chile: <span class="highlight">1960 (Valdivia)</span>, <span class="highlight">2010 (Maule)</span></li>
+                            <li><span class="highlight">Prevención</span>: evacuar a zonas altas inmediatamente</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Regla de oro:</strong> Si sientes un sismo fuerte en la costa, <span class="highlight">evacúa a zonas altas</span> sin esperar ninguna alerta oficial.
+                </div>
+            `
+        },
+
+        // === SLIDE 43: CIERRE ===
+        {
+            title: "🎯 ¡Clase completada!",
+            content: `
+                <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center;">
+                    <div class="badge">Clase 7 - Completada</div>
+                    <h1 style="font-size:2.8rem;">🎯 ¡Has completado la clase!</h1>
+                    <p style="font-size:1.2rem; color:#90cdf4; margin:1rem 0;">Sismos • Volcanes • Huracanes • Tsunamis</p>
+                    <div style="display:flex; gap:2rem; flex-wrap:wrap; justify-content:center; margin:1.5rem 0;">
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.5rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-check-circle" style="color:#63b3ed;"></i> 44 slides de contenido
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.5rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-graduation-cap" style="color:#63b3ed;"></i> Listo para los ejercicios
+                        </div>
+                    </div>
+                    <p style="color:#4a7a9c; font-size:0.9rem;">Presiona <span class="highlight">"Ejercicios"</span> para poner a prueba tus conocimientos.</p>
+                </div>
+            `
+        }
+    ];
+
+    // ================================================================
+    // LÓGICA DE NAVEGACIÓN
+    // ================================================================
+
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    function renderSlides() {
+        const wrapper = document.getElementById('slidesWrapper');
+        wrapper.innerHTML = '';
+        slides.forEach((slide, index) => {
+            const div = document.createElement('div');
+            div.className = 'slide';
+            if (index === 0) div.classList.add('active');
+            div.setAttribute('data-index', index);
+            div.innerHTML = `
+                ${slide.content}
+                <div class="slide-number">${index + 1} / ${totalSlides}</div>
+            `;
+            wrapper.appendChild(div);
+        });
+        updateDots();
+        updateButtons();
+    }
+
+    function updateDots() {
+        const container = document.getElementById('dotsContainer');
+        container.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (i === currentSlide) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            container.appendChild(dot);
+        }
+    }
+
+    function updateButtons() {
+        document.getElementById('prevBtn').disabled = currentSlide === 0;
+        document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    function goToSlide(index) {
+        if (index < 0 || index >= totalSlides) return;
+        currentSlide = index;
+        const slidesElements = document.querySelectorAll('.slide');
+        slidesElements.forEach((slide, i) => {
+            slide.classList.toggle('active', i === currentSlide);
+        });
+        updateDots();
+        updateButtons();
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) goToSlide(currentSlide - 1);
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', prevSlide);
+    document.getElementById('nextBtn').addEventListener('click', nextSlide);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+    });
+
+    document.getElementById('cursoBtn').addEventListener('click', () => {
+        window.location.href = 'Fisica.html';
+    });
+
+    document.getElementById('ejerciciosBtn').addEventListener('click', () => {
+        window.location.href = 'C_7A_Fisica.html';
+    });
+
+    renderSlides();
+</script>
+</body>
+</html>
