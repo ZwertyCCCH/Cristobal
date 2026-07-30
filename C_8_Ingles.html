@@ -1,0 +1,1343 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Romeo and Juliet | William Shakespeare | Complete Analysis</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a0a1e 0%, #2d1b36 40%, #1e0f2a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+            max-height: 820px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7);
+            background: #1a0a1e;
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.8rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: #1a0a1e;
+            border-radius: 32px;
+            color: #e2e8f0;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #2d1b36;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #e94560;
+            border-radius: 8px;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        .badge {
+            background: rgba(233, 69, 96, 0.2);
+            color: #e94560;
+            padding: 0.25rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            display: inline-block;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(233, 69, 96, 0.2);
+        }
+
+        .badge-gold {
+            background: rgba(244, 206, 80, 0.15);
+            color: #f4ce50;
+            border-color: rgba(244, 206, 80, 0.2);
+        }
+
+        .badge-purple {
+            background: rgba(162, 155, 254, 0.15);
+            color: #a29bfe;
+            border-color: rgba(162, 155, 254, 0.2);
+        }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e94560, #f4ce50, #e94560);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+            line-height: 1.15;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f4ce50;
+            border-left: 5px solid #e94560;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #a29bfe;
+            margin: 1rem 0 0.6rem 0;
+        }
+
+        h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #f4ce50;
+            margin: 0.8rem 0 0.4rem 0;
+        }
+
+        .subtitle {
+            font-size: 1.1rem;
+            color: #b2bec3;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CARDS & BOXES ===== */
+        .info-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin: 0.8rem 0;
+        }
+
+        .info-box.romance {
+            border-left: 4px solid #e94560;
+            background: rgba(233, 69, 96, 0.06);
+        }
+
+        .info-box.gold {
+            border-left: 4px solid #f4ce50;
+            background: rgba(244, 206, 80, 0.06);
+        }
+
+        .info-box.purple {
+            border-left: 4px solid #a29bfe;
+            background: rgba(162, 155, 254, 0.06);
+        }
+
+        .info-box.quote {
+            border-left: 4px solid #f4ce50;
+            background: rgba(244, 206, 80, 0.04);
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 0.8rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+            margin: 0.8rem 0;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+
+        .card:hover {
+            background: rgba(255, 255, 255, 0.07);
+            transform: translateY(-2px);
+        }
+
+        .card .icon {
+            font-size: 1.8rem;
+            margin-bottom: 0.4rem;
+        }
+
+        .card .title {
+            font-weight: 700;
+            color: #f4ce50;
+            font-size: 0.95rem;
+        }
+
+        .card .desc {
+            font-size: 0.85rem;
+            color: #b2bec3;
+            margin-top: 0.3rem;
+            line-height: 1.5;
+        }
+
+        /* ===== TABLES ===== */
+        .lit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8rem 0;
+            font-size: 0.85rem;
+        }
+
+        .lit-table th {
+            background: rgba(233, 69, 96, 0.2);
+            color: #f4ce50;
+            padding: 0.6rem;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid #e94560;
+        }
+
+        .lit-table td {
+            padding: 0.5rem 0.6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: top;
+        }
+
+        .lit-table tr:hover td {
+            background: rgba(255, 255, 255, 0.02);
+        }
+
+        .highlight-rose {
+            color: #e94560;
+            font-weight: 600;
+        }
+
+        .highlight-gold {
+            color: #f4ce50;
+            font-weight: 600;
+        }
+
+        .highlight-purple {
+            color: #a29bfe;
+            font-weight: 600;
+        }
+
+        .highlight-green {
+            color: #55efc4;
+            font-weight: 600;
+        }
+
+        /* ===== QUOTE BOX ===== */
+        .quote-box {
+            background: rgba(244, 206, 80, 0.05);
+            border: 1px solid rgba(244, 206, 80, 0.15);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin: 0.8rem 0;
+            position: relative;
+        }
+
+        .quote-box::before {
+            content: '"';
+            font-size: 3rem;
+            color: rgba(244, 206, 80, 0.15);
+            position: absolute;
+            top: 0.2rem;
+            left: 0.6rem;
+            font-family: Georgia, serif;
+        }
+
+        .quote-box .quote-text {
+            font-family: 'Georgia', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: #f4ce50;
+            padding-left: 1.5rem;
+        }
+
+        .quote-box .quote-source {
+            font-size: 0.8rem;
+            color: #b2bec3;
+            text-align: right;
+            margin-top: 0.4rem;
+            font-style: normal;
+        }
+
+        /* ===== CHARACTER CARD ===== */
+        .char-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin: 0.4rem 0;
+        }
+
+        .char-card .char-name {
+            font-weight: 700;
+            color: #e94560;
+            font-size: 1rem;
+        }
+
+        .char-card .char-role {
+            font-size: 0.75rem;
+            color: #a29bfe;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+
+        .char-card .char-desc {
+            font-size: 0.85rem;
+            color: #b2bec3;
+            margin-top: 0.3rem;
+            line-height: 1.5;
+        }
+
+        /* ===== THEME CARD ===== */
+        .theme-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin: 0.4rem 0;
+        }
+
+        .theme-card .theme-name {
+            font-weight: 700;
+            color: #f4ce50;
+            font-size: 1rem;
+        }
+
+        .theme-card .theme-desc {
+            font-size: 0.85rem;
+            color: #b2bec3;
+            margin-top: 0.2rem;
+            line-height: 1.5;
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.2s ease;
+            color: #b2bec3;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-btn:hover {
+            background: #e94560;
+            color: white;
+            transform: scale(1.05);
+            border-color: #e94560;
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: rgba(255, 255, 255, 0.06);
+            color: #b2bec3;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+        }
+
+        .action:hover {
+            background: #e94560;
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #e94560;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        .tag {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0.1rem 0.2rem;
+        }
+
+        .tag-rose { background: rgba(233, 69, 96, 0.2); color: #e94560; }
+        .tag-gold { background: rgba(244, 206, 80, 0.2); color: #f4ce50; }
+        .tag-purple { background: rgba(162, 155, 254, 0.2); color: #a29bfe; }
+        .tag-green { background: rgba(85, 239, 196, 0.15); color: #55efc4; }
+
+        .vocab-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .vocab-list li {
+            padding: 0.3rem 0.6rem;
+            margin: 0.2rem 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .vocab-list li .word {
+            font-weight: 600;
+            color: #f4ce50;
+        }
+
+        .vocab-list li .meaning {
+            color: #b2bec3;
+            font-size: 0.8rem;
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.8rem;
+            }
+            h2 {
+                font-size: 1.4rem;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            .nav-btn {
+                width: 40px;
+                height: 40px;
+                font-size: 1rem;
+            }
+            .lit-table {
+                font-size: 0.7rem;
+            }
+            .lit-table th,
+            .lit-table td {
+                padding: 0.3rem 0.4rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .slide {
+                padding: 0.8rem;
+            }
+            h1 {
+                font-size: 1.4rem;
+            }
+            h2 {
+                font-size: 1.1rem;
+                padding-left: 0.6rem;
+            }
+            .badge {
+                font-size: 0.55rem;
+                padding: 0.15rem 0.8rem;
+            }
+            .info-box {
+                padding: 0.8rem;
+            }
+            .quote-box .quote-text {
+                font-size: 0.9rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 0 - PORTADA -->
+        <!-- ============================================================ -->
+        <div class="slide active" data-index="0">
+            <div class="badge">📘 English Literature · 7th Grade</div>
+            <h1>Romeo &amp; Juliet</h1>
+            <p class="subtitle" style="font-size:1.2rem; color:#b2bec3;">by <strong style="color:#f4ce50;">William Shakespeare</strong> · First performed c. 1595</p>
+            <div style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.6rem;">
+                <span class="tag tag-rose">❤️ Tragedy</span>
+                <span class="tag tag-gold">🎭 Drama</span>
+                <span class="tag tag-purple">📖 5 Acts</span>
+                <span class="tag tag-green">🏛️ Elizabethan Era</span>
+            </div>
+            <div class="info-box romance" style="margin-top:1.5rem;">
+                <i class="fas fa-heart" style="color:#e94560;"></i>
+                <strong style="color:#e94560;">The greatest love story ever told.</strong><br>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                "For never was a story of more woe<br>
+                Than this of Juliet and her Romeo."
+                </span>
+            </div>
+            <div style="margin-top:auto; text-align:center; padding:0.5rem; color:#636e72; font-size:0.8rem;">
+                <i class="fas fa-arrow-right"></i> Press ▶ or swipe to begin
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 1 - WILLIAM SHAKESPEARE -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="1">
+            <div class="badge">📖 Author</div>
+            <h2>William Shakespeare</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">The greatest writer in the English language</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🎂</div>
+                    <div class="title">Life</div>
+                    <div class="desc">
+                        Baptised 26 April 1564 — Died 23 April 1616<br>
+                        Born and raised in <strong>Stratford-upon-Avon</strong><br>
+                        Married <strong>Anne Hathaway</strong> at age 18<br>
+                        Had three children: Susanna, Hamnet &amp; Judith
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🎭</div>
+                    <div class="title">Career</div>
+                    <div class="desc">
+                        Actor, playwright, and part-owner of the <strong>Lord Chamberlain's Men</strong> (later <strong>King's Men</strong>)<br>
+                        Wrote <strong>38 plays</strong>, <strong>154 sonnets</strong>, and 2 long narrative poems<br>
+                        Produced most works between <strong>1590–1613</strong>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">📚</div>
+                    <div class="title">Major Works</div>
+                    <div class="desc">
+                        <strong>Tragedies:</strong> Hamlet, Macbeth, King Lear, Othello<br>
+                        <strong>Comedies:</strong> A Midsummer Night's Dream, Much Ado About Nothing<br>
+                        <strong>Histories:</strong> Henry V, Richard III<br>
+                        <strong>Romances:</strong> The Tempest, The Winter's Tale
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🏛️</div>
+                    <div class="title">Legacy</div>
+                    <div class="desc">
+                        Often called <strong>"The Bard of Avon"</strong><br>
+                        Works translated into every major language<br>
+                        Performed more than any other playwright<br>
+                        <strong>First Folio</strong> published in 1623 (36 plays)
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box gold">
+                <i class="fas fa-lightbulb" style="color:#f4ce50;"></i>
+                <strong style="color:#f4ce50;">Did you know?</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Shakespeare invented over <strong>1,700 words</strong> still used today, including <em>"assassination"</em>, <em>"lonely"</em>, and <em>"gloomy"</em>.
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 2 - HISTORICAL CONTEXT -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="2">
+            <div class="badge badge-gold">🏛️ Context</div>
+            <h2>Historical &amp; Social Context</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">👑</div>
+                    <div class="title">Elizabethan England</div>
+                    <div class="desc">
+                        <strong>Queen Elizabeth I</strong> (1558-1603)<br>
+                        A time of <strong>cultural flourishing</strong><br>
+                        Theatre was extremely popular<br>
+                        All roles were played by men and boys<br>
+                        The <strong>Globe Theatre</strong> built in 1599
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🗡️</div>
+                    <div class="title">Italian Setting</div>
+                    <div class="desc">
+                        Set in <strong>Verona, Italy</strong><br>
+                        Italian settings were fashionable in Elizabethan drama<br>
+                        Shakespeare never visited Italy but used Italian <strong>novellas</strong> as sources<br>
+                        Showcased the <strong>Italian Renaissance</strong> culture
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">⚔️</div>
+                    <div class="title">Social Structure</div>
+                    <div class="desc">
+                        Rigid class hierarchy: <strong>Nobility &gt; Gentry &gt; Commoners</strong><br>
+                        Family honour was paramount<br>
+                        Fathers had absolute authority over children<br>
+                        Marriages were often <strong>arranged</strong> for economic gain
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">📜</div>
+                    <div class="title">Literary Sources</div>
+                    <div class="desc">
+                        Based on <strong>"Romeus and Juliet"</strong> (1562) by Arthur Brooke<br>
+                        Also drew from <strong>"The Tragical History of Romeus and Juliet"</strong><br>
+                        Shakespeare added depth to characters and accelerated the plot<br>
+                        Created the <strong>younger, more passionate</strong> lovers
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box purple">
+                <i class="fas fa-mask" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">Elizabethan Theatre:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Plays were performed in the afternoon with minimal sets. Audiences were diverse — from nobility to groundlings who stood in the "pit." The <strong>Globe Theatre</strong> was an open-air amphitheatre holding up to 3,000 spectators.
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 3 - PLOT SUMMARY -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="3">
+            <div class="badge">📖 Plot</div>
+            <h2>Plot Summary</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Two noble families in Verona — the <strong class="highlight-rose">Capulets</strong> and the <strong class="highlight-gold">Montagues</strong> — are locked in a bitter feud.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">⚔️</div>
+                    <div class="title">Act I: The Conflict</div>
+                    <div class="desc">
+                        <strong>Street brawl</strong> between the two houses<br>
+                        Prince Escalus warns both families<br>
+                        Romeo is lovesick for <strong>Rosaline</strong><br>
+                        He attends a Capulet masquerade ball<br>
+                        <span class="highlight-rose">Romeo meets Juliet</span> and falls in love
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">❤️</div>
+                    <div class="title">Act II: The Love</div>
+                    <div class="desc">
+                        The <strong>balcony scene</strong> — Romeo and Juliet declare their love<br>
+                        They agree to <strong>marry in secret</strong><br>
+                        Friar Laurence agrees to perform the ceremony<br>
+                        Juliet's Nurse acts as their messenger<br>
+                        Romeo and Juliet are married in secret
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🗡️</div>
+                    <div class="title">Act III: The Turning Point</div>
+                    <div class="desc">
+                        <strong>Tybalt kills Mercutio</strong><br>
+                        Romeo kills Tybalt in revenge<br>
+                        Romeo is <strong>banished</strong> from Verona<br>
+                        Juliet is grief- stricken but loyal to Romeo<br>
+                        The lovers spend one night together before Romeo flees
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">💔</div>
+                    <div class="title">Acts IV &amp; V: The Tragedy</div>
+                    <div class="desc">
+                        Juliet is forced to marry <strong>Paris</strong><br>
+                        Friar Laurence gives Juliet a <strong>sleeping potion</strong><br>
+                        Romeo believes Juliet is dead<br>
+                        Romeo buys poison and drinks it at her tomb<br>
+                        Juliet wakes, sees Romeo dead, and <strong>stabs herself</strong>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-box">
+                <div class="quote-text">
+                    "For never was a story of more woe<br>
+                    Than this of Juliet and her Romeo."
+                </div>
+                <div class="quote-source">— Act V, Scene III</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 4 - CHARACTERS (Part 1) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="4">
+            <div class="badge">👥 Characters</div>
+            <h2>Main Characters — Part 1</h2>
+
+            <div class="char-card">
+                <div class="char-name">❤️ Romeo</div>
+                <div class="char-role">Protagonist · Son of Montague</div>
+                <div class="char-desc">
+                    Young, passionate, and impulsive. Falls in love quickly and deeply. His <strong>impetuous nature</strong> drives the tragedy — from his instant love for Juliet to his rash decision to kill Tybalt and later himself. He is a romantic idealist who believes in the power of love above all else.
+                </div>
+            </div>
+
+            <div class="char-card">
+                <div class="char-name">💕 Juliet</div>
+                <div class="char-role">Protagonist · Daughter of Capulet</div>
+                <div class="char-desc">
+                    Nearly 14 years old, wise beyond her years, and fiercely independent. She challenges the patriarchal society and refuses to marry Paris. Her love for Romeo is <strong>pure and unwavering</strong>. She grows from an obedient child to a woman who defies her family for love.
+                </div>
+            </div>
+
+            <div class="char-card">
+                <div class="char-name">⚔️ Tybalt</div>
+                <div class="char-role">Antagonist · Cousin of Juliet</div>
+                <div class="char-desc">
+                    Hot-headed, aggressive, and proud. Known as the <strong>"Prince of Cats"</strong> for his fencing skills. He embodies the family feud and <strong>hates all Montagues</strong>. His death at Romeo's hands is the turning point of the play.
+                </div>
+            </div>
+
+            <div class="char-card">
+                <div class="char-name">🎭 Mercutio</div>
+                <div class="char-role">Romeo's close friend · Kinsman to the Prince</div>
+                <div class="char-desc">
+                    Witty, cynical, and dramatic. He mocks Romeo's romantic ideals and talks about <strong>Queen Mab</strong>. His death is a <strong>pivotal moment</strong> — he curses "a plague o' both your houses!" marking the point where the play turns from comedy to tragedy.
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 5 - CHARACTERS (Part 2) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="5">
+            <div class="badge">👥 Characters</div>
+            <h2>Main Characters — Part 2</h2>
+
+            <div class="char-card">
+                <div class="char-name">🙏 Friar Laurence</div>
+                <div class="char-role">Franciscan Friar · Confessor to Romeo &amp; Juliet</div>
+                <div class="char-desc">
+                    Wise, well- meaning, but <strong>flawed</strong>. He agrees to marry Romeo and Juliet hoping to end the feud. His plan to fake Juliet's death goes wrong due to <strong>miscommunication</strong>. He represents the intersection of religion and human weakness.
+                </div>
+            </div>
+
+            <div class="char-card">
+                <div class="char-name">🤱 The Nurse</div>
+                <div class="char-role">Juliet's caretaker and confidante</div>
+                <div class="char-desc">
+                    Talkative, sentimental, and vulgar. She has cared for Juliet since infancy and acts as a <strong>messenger</strong> between the lovers. Her advice to Juliet to marry Paris is seen as a <strong>betrayal</strong>, leading Juliet to lose trust in her.
+                </div>
+            </div>
+
+            <div class="char-card">
+                <div class="char-name">💼 Lord &amp; Lady Capulet</div>
+                <div class="char-role">Parents of Juliet</div>
+                <div class="char-desc">
+                    <strong>Lord Capulet</strong> is initially protective but becomes tyrannical when Juliet defies him. <strong>Lady Capulet</strong> is distant and prioritises social status. Both represent the <strong>patriarchal authority</strong> that Juliet must overcome.
+                </div>
+            </div>
+
+            <div class="char-card">
+                <div class="char-name">👑 Prince Escalus &amp; Paris</div>
+                <div class="char-role">Ruler of Verona · Juliet's suitor</div>
+                <div class="char-desc">
+                    <strong>Prince Escalus</strong> represents <strong>law and order</strong>, trying to control the feud. <strong>Paris</strong> is a nobleman who wants to marry Juliet. He is a foil to Romeo — <strong>conventional, proper, and approved by her family</strong>.
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 6 - THEMES (Part 1) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="6">
+            <div class="badge badge-gold">💡 Themes</div>
+            <h2>Key Themes — Part 1</h2>
+
+            <div class="theme-card">
+                <div class="theme-name">❤️ The Power of Love</div>
+                <div class="theme-desc">
+                    Love in the play is <strong>overwhelming, transcendent, and violent</strong>. Romeo and Juliet's love defies family, society, and even death itself. Shakespeare presents love as a force that can <strong>overcome hatred but also lead to destruction</strong> when taken to extremes. Love is portrayed as both divine and dangerous.
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-name">☯️ Fate vs. Free Will</div>
+                <div class="theme-desc">
+                    The lovers are described as <strong>"star-cross'd"</strong> — suggesting their fate is written in the stars. Yet, many of their choices (marrying in secret, Romeo killing Tybalt, taking the poison) are made <strong>by their own free will</strong>. Shakespeare explores the tension between <strong>destiny and human agency</strong>.
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-name">💥 The Feud (Hatred vs. Love)</div>
+                <div class="theme-desc">
+                    The <strong>ancient grudge</strong> between the Montagues and Capulets is the backdrop to the play. It represents the <strong>destructive power of hatred</strong> and how it poisons everything it touches. Only the deaths of the lovers can finally <strong>end the feud</strong> — a tragic price for peace.
+                </div>
+            </div>
+
+            <div class="info-box romance">
+                <i class="fas fa-quote-left" style="color:#e94560;"></i>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                "My only love sprung from my only hate!<br>
+                Too early seen unknown, and known too late!"
+                </span>
+                <div style="color:#636e72; font-size:0.75rem; margin-top:0.2rem;">— Juliet, Act I, Scene V</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 7 - THEMES (Part 2) -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="7">
+            <div class="badge badge-gold">💡 Themes</div>
+            <h2>Key Themes — Part 2</h2>
+
+            <div class="theme-card">
+                <div class="theme-name">🌓 Light vs. Darkness</div>
+                <div class="theme-desc">
+                    <strong>Light</strong> is associated with Juliet — Romeo compares her to the sun, stars, and a bright jewel. <strong>Darkness</strong> is where their love thrives, hidden from their families. The imagery of light and darkness reflects the <strong>secret, forbidden nature</strong> of their love and the <strong>tragic loss</strong> at the end.
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-name">👤 Youth vs. Age</div>
+                <div class="theme-desc">
+                    The young lovers are <strong>impulsive, passionate, and idealistic</strong>. The older generation (Capulet, Montague, the Prince) are <strong>cautious, authoritative, and entrenched in tradition</strong>. The conflict between youth and age represents the <strong>generational divide</strong> and the failure of adults to understand the young.
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-name">⚖️ Love vs. Violence</div>
+                <div class="theme-desc">
+                    The play constantly contrasts <strong>love and violence</strong> — the love between Romeo and Juliet set against the violence of the feud. Romeo's killing of Tybalt <strong>destroys his chance at happiness</strong>, showing how violence and love are tragically intertwined in Verona.
+                </div>
+            </div>
+
+            <div class="theme-card">
+                <div class="theme-name">💀 Death and Rebirth</div>
+                <div class="theme-desc">
+                    The lovers' deaths are not just tragic endings but also a form of <strong>transformation</strong>. Their sacrifice ends the feud and brings peace to Verona. Death becomes a <strong>vehicle for love's triumph</strong> — the ultimate statement that their love was stronger than their families' hatred.
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 8 - SYMBOLS -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="8">
+            <div class="badge badge-purple">🔍 Symbols</div>
+            <h2>Symbols in Romeo and Juliet</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🌹</div>
+                    <div class="title">The Rose</div>
+                    <div class="desc">
+                        Symbolises <strong>love and beauty</strong>, but also the <strong>dual nature</strong> of things.<br>
+                        "A rose by any other name would smell as sweet" — Juliet argues that a name doesn't change what something is.<br>
+                        The rose also has <strong>thorns</strong>, representing the <strong>pain</strong> that accompanies love.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">☀️</div>
+                    <div class="title">Light and Darkness</div>
+                    <div class="desc">
+                        <strong>Light</strong> represents Juliet, love, and hope.<br>
+                        Romeo calls Juliet <strong>"the sun"</strong> and <strong>"a rich jewel in an Ethiop's ear."</strong><br>
+                        <strong>Darkness</strong> represents secrecy, danger, and death.<br>
+                        Their love is conducted in darkness, hidden from the world.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">💊</div>
+                    <div class="title">The Poison</div>
+                    <div class="desc">
+                        Represents the <strong>final, irreversible act</strong> of love and desperation.<br>
+                        Romeo drinks poison to join Juliet in death.<br>
+                        It symbolises the <strong>deadly consequences</strong> of the feud and miscommunication.<br>
+                        Also represents the <strong>power of love to transcend death</strong>.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🗡️</div>
+                    <div class="title">The Dagger</div>
+                    <div class="desc">
+                        Juliet uses Romeo's dagger to kill herself, making it a symbol of <strong>tragic unity</strong>.<br>
+                        It represents the <strong>inextricable link</strong> between love and death in the play.<br>
+                        Also symbolises <strong>female agency</strong> — Juliet takes control of her own destiny.
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box gold">
+                <i class="fas fa-lightbulb" style="color:#f4ce50;"></i>
+                <strong style="color:#f4ce50;">Key Symbolic Image:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                The <strong>balcony scene</strong> is a symbol of the <strong>barrier between the lovers</strong> — physical distance, family divide, and social expectations. Yet they overcome it with words and love.
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 9 - FAMOUS QUOTES -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="9">
+            <div class="badge badge-gold">📝 Famous Quotes</div>
+            <h2>Iconic Lines from the Play</h2>
+
+            <div class="quote-box">
+                <div class="quote-text">
+                    "But, soft! what light through yonder window breaks?<br>
+                    It is the east, and Juliet is the sun."
+                </div>
+                <div class="quote-source">— Romeo, Act II, Scene II</div>
+                <div style="color:#b2bec3; font-size:0.8rem; margin-top:0.3rem;">
+                    <strong>Significance:</strong> Romeo elevates Juliet to a celestial figure. She is the source of light in his dark world — his hope and his love.
+                </div>
+            </div>
+
+            <div class="quote-box">
+                <div class="quote-text">
+                    "O Romeo, Romeo! wherefore art thou Romeo?<br>
+                    Deny thy father and refuse thy name;<br>
+                    Or, if thou wilt not, be but sworn my love,<br>
+                    And I'll no longer be a Capulet."
+                </div>
+                <div class="quote-source">— Juliet, Act II, Scene II</div>
+                <div style="color:#b2bec3; font-size:0.8rem; margin-top:0.3rem;">
+                    <strong>Significance:</strong> Juliet questions the importance of names and family. She is willing to abandon her identity for love.
+                </div>
+            </div>
+
+            <div class="quote-box">
+                <div class="quote-text">
+                    "What's in a name? that which we call a rose<br>
+                    By any other name would smell as sweet."
+                </div>
+                <div class="quote-source">— Juliet, Act II, Scene II</div>
+                <div style="color:#b2bec3; font-size:0.8rem; margin-top:0.3rem;">
+                    <strong>Significance:</strong> The essence of a thing is not in its name. Romeo would still be Romeo even without the Montague name.
+                </div>
+            </div>
+
+            <div class="quote-box">
+                <div class="quote-text">
+                    "A plague o' both your houses!"
+                </div>
+                <div class="quote-source">— Mercutio, Act III, Scene I</div>
+                <div style="color:#b2bec3; font-size:0.8rem; margin-top:0.3rem;">
+                    <strong>Significance:</strong> Mercutio's curse marks the turning point of the play. From this moment, tragedy is inevitable.
+                </div>
+            </div>
+
+            <div class="quote-box">
+                <div class="quote-text">
+                    "For never was a story of more woe<br>
+                    Than this of Juliet and her Romeo."
+                </div>
+                <div class="quote-source">— Prince Escalus, Act V, Scene III</div>
+                <div style="color:#b2bec3; font-size:0.8rem; margin-top:0.3rem;">
+                    <strong>Significance:</strong> The final words of the play acknowledge the tragic beauty of their love and the price paid for peace.
+                </div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 10 - VOCABULARY -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="10">
+            <div class="badge badge-purple">📚 Vocabulary</div>
+            <h2>Key Vocabulary</h2>
+
+            <ul class="vocab-list">
+                <li><span class="word">feud</span><span class="meaning">a long- lasting, bitter conflict between families</span></li>
+                <li><span class="word">star- cross'd</span><span class="meaning">ill- fated; destined to have a tragic outcome</span></li>
+                <li><span class="word">banishment</span><span class="meaning">being forced to leave a place as a punishment</span></li>
+                <li><span class="word">mutiny</span><span class="meaning">rebellion or uprising; a revolt</span></li>
+                <li><span class="word">peril</span><span class="meaning">great danger or risk</span></li>
+                <li><span class="word">forswear</span><span class="meaning">to swear falsely; to renounce or give up</span></li>
+                <li><span class="word">monument</span><span class="meaning">a tomb or structure built to remember someone</span></li>
+                <li><span class="word">dirge</span><span class="meaning">a funeral song or mournful lament</span></li>
+                <li><span class="word">wanton</span><span class="meaning">uncontrolled; playful; immoral or unrestrained</span></li>
+                <li><span class="word">vile</span><span class="meaning">extremely unpleasant; evil or disgusting</span></li>
+                <li><span class="word">rapier</span><span class="meaning">a thin, sharp sword used in fencing</span></li>
+                <li><span class="word">portentous</span><span class="meaning">foreboding; a sign of something bad to come</span></li>
+                <li><span class="word">piteous</span><span class="meaning">deserving or causing pity; sad and tragic</span></li>
+                <li><span class="word">solemnity</span><span class="meaning">the state of being serious and formal</span></li>
+                <li><span class="word">transgression</span><span class="meaning">an act that goes against a law or command</span></li>
+            </ul>
+
+            <div class="info-box purple">
+                <i class="fas fa-book-open" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">Tip:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Many of Shakespeare's words are still used today. Keep a list of new vocabulary as you read the play!
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 11 - LITERARY DEVICES -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="11">
+            <div class="badge badge-purple">🎭 Literary Devices</div>
+            <h2>Literary Devices in Romeo and Juliet</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">📝</div>
+                    <div class="title">Foreshadowing</div>
+                    <div class="desc">
+                        The <strong>Prologue</strong> tells us the lovers will die.<br>
+                        Romeo says: <em>"I fear, too early: for my mind misgives / Some consequence yet hanging in the stars"</em> (Act I, Scene IV).<br>
+                        Juliet says: <em>"Methinks I see thee, now thou art below, / As one dead in the bottom of a tomb"</em> (Act III, Scene V).
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">⚖️</div>
+                    <div class="title">Dramatic Irony</div>
+                    <div class="desc">
+                        The audience knows Juliet is not dead, but Romeo does not.<br>
+                        The audience knows Romeo is listening when Juliet speaks on the balcony.<br>
+                        The audience knows the Friar's plan will go wrong, but the characters don't.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">☯️</div>
+                    <div class="title">Oxymoron</div>
+                    <div class="desc">
+                        Romeo describes love as: <em>"O heavy lightness! serious vanity! / Mis- shapen chaos of well- seeming forms!"</em><br>
+                        Juliet says: <em>"Beautiful tyrant! fiend angelical!"</em><br>
+                        These contradictions reflect the <strong>confused, intense nature</strong> of love.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🌅</div>
+                    <div class="title">Imagery</div>
+                    <div class="desc">
+                        <strong>Light imagery:</strong> Juliet is the sun, stars, a torch.<br>
+                        <strong>Dark imagery:</strong> night, tombs, death.<br>
+                        <strong>Natural imagery:</strong> flowers, stars, birds.<br>
+                        Shakespeare uses imagery to <strong>create mood and emotion</strong>.
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box gold">
+                <i class="fas fa-lightbulb" style="color:#f4ce50;"></i>
+                <strong style="color:#f4ce50;">Key Device: Sonnet Form</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                The Prologue is a <strong>Shakespearean sonnet</strong> (14 lines, ABAB rhyme scheme). Romeo and Juliet's first conversation also forms a sonnet, showing their <strong>perfect harmony</strong> and connection.
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 12 - ACT STRUCTURE & SUMMARY -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="12">
+            <div class="badge">📋 Structure</div>
+            <h2>Act Structure &amp; Summary</h2>
+
+            <table class="lit-table">
+                <thead>
+                    <tr><th>Act</th><th>Key Events</th><th>Significance</th></tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Act I</strong><br><span style="color:#b2bec3; font-size:0.75rem;">The Conflict</span></td>
+                        <td>Street brawl · Romeo meets Juliet at the Capulet ball</td>
+                        <td>Introduces the feud and the instant love between Romeo and Juliet</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Act II</strong><br><span style="color:#b2bec3; font-size:0.75rem;">The Love</span></td>
+                        <td>Balcony scene · Secret marriage · Friar Laurence's plan</td>
+                        <td>The lovers' commitment to each other against all odds</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Act III</strong><br><span style="color:#b2bec3; font-size:0.75rem;">The Turning Point</span></td>
+                        <td>Tybalt kills Mercutio · Romeo kills Tybalt · Romeo banished</td>
+                        <td>The tragedy becomes inevitable; the lovers are separated</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Act IV</strong><br><span style="color:#b2bec3; font-size:0.75rem;">The Plan</span></td>
+                        <td>Juliet agrees to marry Paris · Friar's potion · Juliet "dies"</td>
+                        <td>The desperate plan to reunite the lovers goes into motion</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Act V</strong><br><span style="color:#b2bec3; font-size:0.75rem;">The Tragedy</span></td>
+                        <td>Romeo buys poison · Death at the tomb · Families reconcile</td>
+                        <td>The tragic climax and the ultimate cost of the feud</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box romance">
+                <i class="fas fa-clock" style="color:#e94560;"></i>
+                <strong style="color:#e94560;">Timeline:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                The entire play takes place over <strong>just five days</strong> — Sunday to Thursday. This compressed timeline heightens the intensity and urgency of the lovers' passion.
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 13 - SUMMARY & KEY TAKEAWAYS -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="13">
+            <div class="badge badge-gold">📌 Summary</div>
+            <h2>Key Takeaways</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">❤️</div>
+                    <div class="title">Love Conquers All</div>
+                    <div class="desc">
+                        Romeo and Juliet's love is powerful enough to defy family, society, and even death. Their story reminds us that love is worth fighting for — even when the cost is high.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">⚔️</div>
+                    <div class="title">The Cost of Hatred</div>
+                    <div class="desc">
+                        The feud between the families destroys everything it touches. Only the deaths of the lovers are enough to end the cycle of violence — a tragic lesson in the cost of hatred.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">⭐</div>
+                    <div class="title">Fate vs. Choice</div>
+                    <div class="desc">
+                        Are the lovers victims of fate, or do their choices lead to their downfall? The play suggests a <strong>combination of both</strong> — they are star- cross'd, yet their decisions seal their fate.
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">📖</div>
+                    <div class="title">Literary Legacy</div>
+                    <div class="desc">
+                        Romeo and Juliet is one of the <strong>most adapted and performed plays</strong> in history. It has inspired countless films, ballets, operas, and musicals — and remains a timeless story of tragic love.
+                    </div>
+                </div>
+            </div>
+
+            <div class="quote-box" style="margin-top:0.5rem;">
+                <div class="quote-text">
+                    "For never was a story of more woe<br>
+                    Than this of Juliet and her Romeo."
+                </div>
+                <div class="quote-source">— Prince Escalus, Act V, Scene III</div>
+            </div>
+
+            <div style="text-align:center; margin-top:0.8rem; color:#b2bec3; font-size:0.85rem;">
+                <i class="fas fa-arrow-right"></i> Now go to the exercises page to test your understanding!
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="dots" id="dotsContainer"></div>
+
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Course</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Exercises</button>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // NAVIGATION LOGIC
+    // ============================================================
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if (idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+        updateButtons();
+    }
+
+    function nextSlide() {
+        if (currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if (currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        dotsContainer.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    function updateButtons() {
+        const prevBtn = document.getElementById('prevSlide');
+        const nextBtn = document.getElementById('nextSlide');
+        prevBtn.disabled = currentIdx === 0;
+        nextBtn.disabled = currentIdx === totalSlides - 1;
+    }
+
+    // Event listeners
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    // Keyboard navigation
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    // Swipe for mobile
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 40) nextSlide();
+        if (touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    // Action buttons
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Ingles.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_8A_Ingles.html';
+    });
+
+    // Initialize
+    updateDots();
+    updateButtons();
+</script>
+</body>
+</html>

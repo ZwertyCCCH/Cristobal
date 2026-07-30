@@ -1,0 +1,2120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Romeo and Juliet | 60 Exercises</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #1a0a1e 0%, #2d1b36 40%, #1e0f2a 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: rgba(26, 10, 30, 0.95);
+            border-radius: 32px;
+            padding: 2rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6);
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            padding-bottom: 1.5rem;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #e94560, #f4ce50);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+
+        .header p {
+            color: #b2bec3;
+            font-size: 1rem;
+            margin-top: 0.3rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(255,255,255,0.04);
+            padding: 0.8rem 1.5rem;
+            border-radius: 40px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .info-item {
+            color: #b2bec3;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .info-item span {
+            color: #f4ce50;
+        }
+
+        .info-item .highlight-rose {
+            color: #e94560;
+        }
+
+        .progress-bar {
+            height: 4px;
+            background: rgba(255,255,255,0.06);
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #e94560, #f4ce50);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+            width: 0%;
+        }
+
+        .reading-text {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-family: 'Georgia', serif;
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: #e2e8f0;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .reading-text::-webkit-scrollbar {
+            width: 4px;
+        }
+        .reading-text::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.04);
+            border-radius: 4px;
+        }
+        .reading-text::-webkit-scrollbar-thumb {
+            background: #e94560;
+            border-radius: 4px;
+        }
+
+        .section-title {
+            color: #f4ce50;
+            font-size: 1.3rem;
+            font-weight: 700;
+            margin: 1.5rem 0 1rem 0;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid rgba(233, 69, 96, 0.3);
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title .badge-count {
+            background: rgba(233, 69, 96, 0.2);
+            color: #e94560;
+            padding: 0.1rem 0.8rem;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .question-card {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1rem 1.2rem;
+            margin-bottom: 0.8rem;
+            transition: all 0.2s;
+        }
+
+        .question-card:hover {
+            background: rgba(255,255,255,0.06);
+        }
+
+        .question-card.correct-highlight {
+            border-left: 4px solid #55efc4;
+            background: rgba(85, 239, 196, 0.06);
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 4px solid #e94560;
+            background: rgba(233, 69, 96, 0.06);
+        }
+
+        .q-header {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            margin-bottom: 0.4rem;
+        }
+
+        .q-number {
+            background: rgba(233, 69, 96, 0.15);
+            color: #e94560;
+            border-radius: 50%;
+            width: 28px;
+            height: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.7rem;
+            font-weight: 700;
+            flex-shrink: 0;
+            margin-top: 2px;
+        }
+
+        .q-text {
+            color: #e2e8f0;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            font-weight: 500;
+        }
+
+        .q-text .highlight-gold {
+            color: #f4ce50;
+        }
+
+        .options {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 0.5rem;
+            padding-left: 40px;
+        }
+
+        .option {
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: #b2bec3;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .option:hover:not(.locked) {
+            background: rgba(233, 69, 96, 0.15);
+            border-color: #e94560;
+        }
+
+        .option.selected {
+            background: #e94560;
+            color: white;
+            border-color: #e94560;
+        }
+
+        .option.correct {
+            background: #55efc4;
+            color: #1a0a1e;
+            border-color: #55efc4;
+        }
+
+        .option.wrong {
+            background: #e94560;
+            color: white;
+            border-color: #e94560;
+        }
+
+        .option.show-correct {
+            background: rgba(85, 239, 196, 0.15);
+            border-color: #55efc4;
+            color: #55efc4;
+        }
+
+        .option.locked {
+            cursor: default;
+        }
+
+        .tf-options {
+            display: flex;
+            gap: 12px;
+            margin-top: 0.5rem;
+            padding-left: 40px;
+        }
+
+        .tf-btn {
+            padding: 0.3rem 1.5rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: #b2bec3;
+            cursor: pointer;
+            font-size: 0.85rem;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+        }
+
+        .tf-btn:hover:not(.locked) {
+            background: rgba(233, 69, 96, 0.15);
+            border-color: #e94560;
+        }
+
+        .tf-btn.selected {
+            background: #e94560;
+            color: white;
+            border-color: #e94560;
+        }
+
+        .tf-btn.correct {
+            background: #55efc4;
+            color: #1a0a1e;
+            border-color: #55efc4;
+        }
+
+        .tf-btn.wrong {
+            background: #e94560;
+            color: white;
+            border-color: #e94560;
+        }
+
+        .tf-btn.show-correct {
+            background: rgba(85, 239, 196, 0.15);
+            border-color: #55efc4;
+            color: #55efc4;
+        }
+
+        .tf-btn.locked {
+            cursor: default;
+        }
+
+        /* ===== DRAG & DROP - Fill in the Blanks ===== */
+        .drag-container {
+            margin: 0.8rem 0;
+            padding-left: 40px;
+        }
+
+        .drag-words {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
+            min-height: 50px;
+            margin-bottom: 0.8rem;
+        }
+
+        .drag-word {
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            background: rgba(233, 69, 96, 0.15);
+            color: #f4ce50;
+            border: 1px solid rgba(233, 69, 96, 0.2);
+            cursor: grab;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .drag-word:hover {
+            transform: scale(1.05);
+        }
+
+        .drag-word.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .drag-word.placed {
+            opacity: 0.3;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .drag-text-container {
+            background: rgba(255,255,255,0.03);
+            border: 2px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
+            padding: 1rem;
+            min-height: 80px;
+            font-family: 'Georgia', serif;
+            font-size: 0.9rem;
+            line-height: 1.8;
+            color: #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .drag-text-container.drag-over {
+            border-color: #f4ce50;
+            background: rgba(244, 206, 80, 0.05);
+        }
+
+        .drop-slot {
+            display: inline-block;
+            padding: 0.1rem 0.6rem;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.05);
+            border: 2px dashed rgba(255,255,255,0.15);
+            min-width: 50px;
+            min-height: 30px;
+            color: #636e72;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            transition: all 0.2s;
+            margin: 0 2px;
+        }
+
+        .drop-slot.drag-over {
+            border-color: #f4ce50;
+            background: rgba(244, 206, 80, 0.05);
+        }
+
+        .drop-slot.filled {
+            background: rgba(85, 239, 196, 0.08);
+            border-color: #55efc4;
+            color: #55efc4;
+            border-style: solid;
+        }
+
+        .drop-slot.correct-slot {
+            border-color: #55efc4;
+            background: rgba(85, 239, 196, 0.08);
+            color: #55efc4;
+            border-style: solid;
+        }
+
+        .drop-slot.wrong-slot {
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.08);
+            color: #e94560;
+            border-style: solid;
+        }
+
+        .drag-clear-btn {
+            margin-top: 0.5rem;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: #b2bec3;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .drag-clear-btn:hover:not(:disabled) {
+            background: rgba(233, 69, 96, 0.15);
+            border-color: #e94560;
+            color: white;
+        }
+
+        .drag-clear-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        /* ===== CLASSIFY ===== */
+        .classify-container {
+            margin: 0.8rem 0;
+            padding-left: 40px;
+        }
+
+        .classify-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            padding: 0.8rem;
+            background: rgba(255,255,255,0.03);
+            border: 1px dashed rgba(255,255,255,0.1);
+            border-radius: 12px;
+            min-height: 50px;
+            margin-bottom: 0.8rem;
+        }
+
+        .classify-item {
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            background: rgba(244, 206, 80, 0.1);
+            color: #f4ce50;
+            border: 1px solid rgba(244, 206, 80, 0.15);
+            cursor: grab;
+            font-size: 0.8rem;
+            font-weight: 500;
+            transition: all 0.2s;
+            user-select: none;
+        }
+
+        .classify-item:hover {
+            transform: scale(1.05);
+        }
+
+        .classify-item.dragging {
+            opacity: 0.5;
+            cursor: grabbing;
+        }
+
+        .classify-item.placed {
+            opacity: 0.3;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .classify-drop-zones {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
+        .classify-column {
+            flex: 1;
+            min-width: 100px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 12px;
+            padding: 0.6rem;
+        }
+
+        .classify-column .col-title {
+            color: #f4ce50;
+            font-weight: 700;
+            font-size: 0.85rem;
+            text-align: center;
+            padding-bottom: 0.4rem;
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+            margin-bottom: 0.4rem;
+        }
+
+        .classify-column .col-drop {
+            min-height: 40px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            padding: 0.3rem;
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+
+        .classify-column .col-drop.drag-over {
+            background: rgba(244, 206, 80, 0.05);
+            border: 1px dashed rgba(244, 206, 80, 0.2);
+        }
+
+        .classify-column .col-drop .placed-item {
+            padding: 0.2rem 0.8rem;
+            border-radius: 40px;
+            background: rgba(85, 239, 196, 0.08);
+            border: 1px solid rgba(85, 239, 196, 0.2);
+            color: #55efc4;
+            font-size: 0.7rem;
+            font-weight: 500;
+        }
+
+        .classify-column .col-drop .placed-item.correct-item {
+            background: rgba(85, 239, 196, 0.15);
+            border-color: #55efc4;
+        }
+
+        .classify-column .col-drop .placed-item.wrong-item {
+            background: rgba(233, 69, 96, 0.15);
+            border-color: #e94560;
+            color: #e94560;
+        }
+
+        .classify-clear-btn {
+            margin-top: 0.5rem;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.03);
+            color: #b2bec3;
+            cursor: pointer;
+            font-size: 0.8rem;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .classify-clear-btn:hover:not(:disabled) {
+            background: rgba(233, 69, 96, 0.15);
+            border-color: #e94560;
+            color: white;
+        }
+
+        .classify-clear-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+        }
+
+        .q-input {
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 40px;
+            padding: 0.5rem 1rem;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            width: 100%;
+            max-width: 500px;
+            margin-top: 0.4rem;
+            margin-left: 40px;
+            transition: all 0.2s;
+            outline: none;
+        }
+
+        .q-input:focus {
+            border-color: #e94560;
+            box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.1);
+        }
+
+        .q-input:disabled {
+            opacity: 0.6;
+        }
+
+        .q-input.correct {
+            border-color: #55efc4;
+            background: rgba(85, 239, 196, 0.05);
+            color: #55efc4;
+        }
+
+        .q-input.wrong {
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.05);
+            color: #e94560;
+        }
+
+        .open-text-area {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1rem;
+            margin: 0.8rem 0;
+        }
+
+        .open-text-area textarea {
+            width: 100%;
+            min-height: 120px;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 0.8rem;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            resize: vertical;
+            outline: none;
+            transition: all 0.2s;
+        }
+
+        .open-text-area textarea:focus {
+            border-color: #e94560;
+            box-shadow: 0 0 0 3px rgba(233, 69, 96, 0.08);
+        }
+
+        .open-text-area textarea:disabled {
+            opacity: 0.6;
+        }
+
+        .open-text-area .word-count {
+            text-align: right;
+            color: #636e72;
+            font-size: 0.8rem;
+            margin-top: 0.4rem;
+        }
+
+        .feedback {
+            margin-top: 0.4rem;
+            margin-left: 40px;
+            font-size: 0.8rem;
+            display: none;
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+        }
+
+        .feedback.visible {
+            display: block;
+        }
+
+        .feedback.correct {
+            color: #55efc4;
+            background: rgba(85, 239, 196, 0.06);
+        }
+
+        .feedback.wrong {
+            color: #e94560;
+            background: rgba(233, 69, 96, 0.06);
+        }
+
+        .feedback.info {
+            color: #f4ce50;
+            background: rgba(244, 206, 80, 0.06);
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 280px;
+            margin: 1.5rem auto 1rem;
+            padding: 0.9rem;
+            border-radius: 60px;
+            border: none;
+            background: linear-gradient(135deg, #e94560, #c0392b);
+            color: white;
+            font-family: 'Inter', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .btn-evaluate:hover:not(:disabled) {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .btn-evaluate:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .btn-reset {
+            background: rgba(255,255,255,0.08);
+            color: #b2bec3;
+            width: 280px;
+            margin: 0.5rem auto;
+        }
+
+        .btn-reset:hover:not(:disabled) {
+            background: rgba(255,255,255,0.15);
+            transform: scale(1.02);
+        }
+
+        .results {
+            display: none;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 24px;
+            padding: 2rem;
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .results .grade {
+            font-size: 4rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #f4ce50, #e94560);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            line-height: 1.2;
+        }
+
+        .results .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+        }
+
+        .results .stat {
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 16px;
+            padding: 1rem 2rem;
+            min-width: 100px;
+        }
+
+        .results .stat .num {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        .results .stat .label {
+            color: #b2bec3;
+            font-size: 0.75rem;
+            font-weight: 600;
+            display: block;
+            margin-top: 0.2rem;
+        }
+
+        .results .stat.green .num { color: #55efc4; }
+        .results .stat.red .num { color: #e94560; }
+        .results .stat.yellow .num { color: #f4ce50; }
+        .results .stat.purple .num { color: #a29bfe; }
+
+        .results .pass {
+            color: #55efc4;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .results .fail {
+            color: #e94560;
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-top: 0.5rem;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            padding: 0.6rem 1.5rem;
+            border-radius: 40px;
+            border: none;
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        .action-btn.primary {
+            background: linear-gradient(135deg, #e94560, #c0392b);
+            color: white;
+        }
+
+        .action-btn.primary:hover {
+            box-shadow: 0 8px 30px rgba(233, 69, 96, 0.3);
+        }
+
+        .action-btn.secondary {
+            background: rgba(255,255,255,0.08);
+            color: #b2bec3;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+
+        .action-btn.secondary:hover {
+            background: rgba(255,255,255,0.15);
+        }
+
+        .open-text-required {
+            color: #e94560;
+            font-size: 0.85rem;
+            font-weight: 600;
+            text-align: center;
+            padding: 0.5rem;
+            display: none;
+        }
+
+        .open-text-required.show {
+            display: block;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 1rem;
+            }
+            .question-card {
+                padding: 0.8rem 1rem;
+            }
+            .options, .tf-options, .drag-container, .classify-container {
+                padding-left: 0;
+            }
+            .q-input {
+                margin-left: 0;
+                max-width: 100%;
+            }
+            .feedback {
+                margin-left: 0;
+            }
+            .classify-drop-zones {
+                flex-direction: column;
+            }
+            .classify-column {
+                min-width: 100%;
+            }
+            .results .stats {
+                gap: 1rem;
+            }
+            .results .stat {
+                padding: 0.8rem 1.2rem;
+                min-width: 80px;
+            }
+            .results .grade {
+                font-size: 3rem;
+            }
+            .btn-evaluate {
+                width: 100%;
+            }
+            .btn-reset {
+                width: 100%;
+            }
+            .info-bar {
+                flex-direction: column;
+                align-items: center;
+                gap: 4px;
+                padding: 0.6rem 1rem;
+            }
+            .reading-text {
+                max-height: 200px;
+                font-size: 0.85rem;
+            }
+            .drag-words {
+                min-width: 100%;
+            }
+            .classify-items {
+                min-width: 100%;
+            }
+            .classify-column {
+                min-width: 100%;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .header h1 {
+                font-size: 1.5rem;
+            }
+            .q-text {
+                font-size: 0.85rem;
+            }
+            .option, .tf-btn, .drag-word, .classify-item {
+                font-size: 0.75rem;
+                padding: 0.25rem 0.8rem;
+            }
+            .section-title {
+                font-size: 1.1rem;
+            }
+            .action-btn {
+                width: 100%;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 C_8A_Ingles · Romeo and Juliet</h1>
+        <p>60 ejercicios · 6 secciones · Reading Comprehension · Vocabulary · Analysis</p>
+    </div>
+
+    <div class="info-bar">
+        <div class="info-item">📋 Total: <span id="totalQuestions">60</span> ejercicios</div>
+        <div class="info-item">✅ Exigencia: <span>60%</span> (36 correctas = nota 4.0)</div>
+        <div class="info-item">🎯 Nota máxima: <span>7.0</span></div>
+        <div class="info-item">📊 <span class="highlight-rose" id="answeredCount">0</span> / 60 respondidas</div>
+    </div>
+
+    <div class="progress-bar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <form id="examForm" onsubmit="return false;">
+        <!-- ============================================================ -->
+        <!-- SECTION 1: TRUE/FALSE with Reading Text -->
+        <!-- ============================================================ -->
+        <div class="section-title">
+            📖 Section 1: True / False
+            <span class="badge-count">10 questions</span>
+        </div>
+
+        <div class="reading-text" id="readingText">
+            <p><strong>Romeo and Juliet</strong> is a tragedy written by William Shakespeare about two young star-crossed lovers whose deaths ultimately reconcile their feuding families. The play is set in Verona, Italy, where the Montagues and Capulets have been engaged in a bitter feud for many years. Romeo, the son of Montague, attends a masquerade ball at the Capulet house and falls in love with Juliet, the daughter of Capulet. They secretly marry with the help of Friar Laurence. Soon after, Romeo kills Juliet's cousin Tybalt in a street brawl and is banished from Verona. Juliet's parents arrange for her to marry Paris, but Friar Laurence gives her a potion that makes her appear dead. Romeo, believing Juliet is truly dead, drinks poison in her tomb. Juliet wakes, finds Romeo dead, and stabs herself. The families, devastated by the tragedy, finally end their feud. The play explores themes of love, fate, family, and the destructive nature of hatred.</p>
+        </div>
+
+        <div id="tf-questions"></div>
+
+        <!-- ============================================================ -->
+        <!-- SECTION 2: MULTIPLE CHOICE -->
+        <!-- ============================================================ -->
+        <div class="section-title">
+            📝 Section 2: Multiple Choice
+            <span class="badge-count">20 questions</span>
+        </div>
+        <div id="mcq-questions"></div>
+
+        <!-- ============================================================ -->
+        <!-- SECTION 3: DRAG & DROP - Fill in the Blanks -->
+        <!-- ============================================================ -->
+        <div class="section-title">
+            🧩 Section 3: Drag & Drop - Fill in the Blanks
+            <span class="badge-count">10 blanks</span>
+        </div>
+        <div id="drag-questions"></div>
+
+        <!-- ============================================================ -->
+        <!-- SECTION 4: DRAG & DROP - Classify by Act -->
+        <!-- ============================================================ -->
+        <div class="section-title">
+            📊 Section 4: Classify by Act
+            <span class="badge-count">10 events</span>
+        </div>
+        <div id="classify-questions"></div>
+
+        <!-- ============================================================ -->
+        <!-- SECTION 5: SHORT ANSWER -->
+        <!-- ============================================================ -->
+        <div class="section-title">
+            ✏️ Section 5: Short Answer
+            <span class="badge-count">10 questions</span>
+        </div>
+        <div id="short-questions"></div>
+
+        <!-- ============================================================ -->
+        <!-- SECTION 6: OPEN TEXT -->
+        <!-- ============================================================ -->
+        <div class="section-title">
+            📝 Section 6: Open Response
+            <span class="badge-count">1 question · 60 words min</span>
+        </div>
+        <div id="open-questions"></div>
+
+        <div class="open-text-required" id="openTextRequired">
+            ⚠️ Please complete the open response question before evaluating the test.
+        </div>
+
+        <button type="button" class="btn-evaluate" id="evaluateBtn">✅ Evaluate Exercises</button>
+        <button type="button" class="btn-evaluate btn-reset" id="resetBtn" style="display:none">🔄 New Test</button>
+    </form>
+
+    <div class="results" id="results">
+        <div class="grade" id="gradeDisplay">—</div>
+        <div class="stats">
+            <div class="stat green"><span class="num" id="correctStat">0</span><span class="label">Correct</span></div>
+            <div class="stat red"><span class="num" id="wrongStat">0</span><span class="label">Incorrect</span></div>
+            <div class="stat yellow"><span class="num" id="percentStat">0%</span><span class="label">Score</span></div>
+            <div class="stat purple"><span class="num" id="gradeStat">0.0</span><span class="label">Grade</span></div>
+        </div>
+        <div id="passDisplay"></div>
+        <div class="action-buttons">
+            <button type="button" class="action-btn primary" id="restartBtn">🔄 Restart Test</button>
+            <a href="C_8_Ingles.html" class="action-btn secondary">📚 Back to Class</a>
+            <a href="Ingles.html" class="action-btn secondary">🏠 Back to English</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // DATA POOLS
+    // ============================================================
+
+    // ===== SECTION 1: TRUE/FALSE (25 pool, select 10) =====
+    const tfPool = [
+        { text: "Romeo and Juliet is set in Venice, Italy.", correct: "false" },
+        { text: "The Montagues and Capulets have a long-standing feud.", correct: "true" },
+        { text: "Romeo kills Mercutio in a street brawl.", correct: "false" },
+        { text: "Juliet's father wants her to marry Paris.", correct: "true" },
+        { text: "Friar Laurence gives Juliet a poison to kill herself.", correct: "false" },
+        { text: "Romeo is banished from Verona after killing Tybalt.", correct: "true" },
+        { text: "Juliet is 13 years old at the start of the play.", correct: "true" },
+        { text: "Mercutio is a member of the Capulet family.", correct: "false" },
+        { text: "Romeo and Juliet marry in secret with the help of the Nurse.", correct: "false" },
+        { text: "The Prince of Verona banishes Romeo.", correct: "true" },
+        { text: "Tybalt is Juliet's cousin.", correct: "true" },
+        { text: "Romeo's first love is Juliet.", correct: "false" },
+        { text: "The play takes place over several months.", correct: "false" },
+        { text: "Juliet takes a potion to avoid marrying Paris.", correct: "true" },
+        { text: "Romeo drinks poison in Juliet's tomb.", correct: "true" },
+        { text: "Juliet stabs herself with a dagger.", correct: "true" },
+        { text: "The Nurse helps Juliet marry Paris.", correct: "false" },
+        { text: "Mercutio is killed by Tybalt.", correct: "true" },
+        { text: "The families reconcile after the deaths of Romeo and Juliet.", correct: "true" },
+        { text: "Romeo is banished to Mantua.", correct: "true" },
+        { text: "Friar Laurence's letter reaches Romeo in time.", correct: "false" },
+        { text: "Paris is killed by Romeo at the tomb.", correct: "true" },
+        { text: "The play ends with a celebration of the marriage.", correct: "false" },
+        { text: "Benvolio is Romeo's cousin.", correct: "true" },
+        { text: "Lady Capulet wants Juliet to marry Romeo.", correct: "false" }
+    ];
+
+    // ===== SECTION 2: MULTIPLE CHOICE (40 pool, select 20) =====
+    const mcqPool = [
+        { text: "In which city is Romeo and Juliet set?", options: ["London", "Paris", "Verona", "Mantua"], correct: "Verona" },
+        { text: "Who kills Mercutio?", options: ["Romeo", "Tybalt", "Benvolio", "Paris"], correct: "Tybalt" },
+        { text: "Who does Juliet's father want her to marry?", options: ["Romeo", "Mercutio", "Paris", "Benvolio"], correct: "Paris" },
+        { text: "What does Friar Laurence give Juliet?", options: ["Poison", "A sleeping potion", "A love letter", "A dagger"], correct: "A sleeping potion" },
+        { text: "Where is Romeo banished?", options: ["Mantua", "Venice", "Florence", "Rome"], correct: "Mantua" },
+        { text: "Who is the first person Romeo falls in love with?", options: ["Juliet", "Rosaline", "Lady Capulet", "The Nurse"], correct: "Rosaline" },
+        { text: "What does Romeo drink in Juliet's tomb?", options: ["Water", "Wine", "Poison", "The potion"], correct: "Poison" },
+        { text: "How does Juliet die?", options: ["She drinks poison", "She stabs herself", "She jumps from a balcony", "She dies of grief"], correct: "She stabs herself" },
+        { text: "Who kills Tybalt?", options: ["Mercutio", "Romeo", "Benvolio", "The Prince"], correct: "Romeo" },
+        { text: "Who helps Romeo and Juliet marry in secret?", options: ["The Nurse", "Friar Laurence", "Benvolio", "Mercutio"], correct: "Friar Laurence" },
+        { text: "What is the name of Juliet's cousin?", options: ["Benvolio", "Mercutio", "Tybalt", "Paris"], correct: "Tybalt" },
+        { text: "What does the Prince declare after the street brawl?", options: ["Death to all", "Banishment for Romeo", "A fine for both families", "Death to the next who fights"], correct: "Death to the next who fights" },
+        { text: "Who tells Romeo that Juliet is dead?", options: ["Friar Laurence", "The Nurse", "Balthasar", "Benvolio"], correct: "Balthasar" },
+        { text: "What is the name of the friar who marries Romeo and Juliet?", options: ["Friar John", "Friar Laurence", "Friar Francis", "Friar Peter"], correct: "Friar Laurence" },
+        { text: "Why does Romeo attend the Capulet party?", options: ["To see Juliet", "To fight Tybalt", "To see Rosaline", "To challenge Paris"], correct: "To see Rosaline" },
+        { text: "Who dies first in the play?", options: ["Mercutio", "Tybalt", "Paris", "Romeo"], correct: "Mercutio" },
+        { text: "What does the Nurse call Juliet?", options: ["My lady", "Sweetheart", "Lamb", "Daughter"], correct: "Lamb" },
+        { text: "How old is Juliet during the play?", options: ["13", "14", "16", "18"], correct: "13" },
+        { text: "Who is the ruler of Verona?", options: ["Prince Escalus", "King Lear", "Duke of Milan", "Lord Capulet"], correct: "Prince Escalus" },
+        { text: "What is the main theme of the play?", options: ["Love and hate", "Friendship and loyalty", "Ambition and power", "Justice and revenge"], correct: "Love and hate" },
+        { text: "Who does Romeo kill in the street brawl?", options: ["Mercutio", "Tybalt", "Paris", "Benvolio"], correct: "Tybalt" },
+        { text: "Why does Juliet take the potion?", options: ["To die", "To avoid marrying Paris", "To see Romeo", "To escape Verona"], correct: "To avoid marrying Paris" },
+        { text: "Who discovers Juliet's body?", options: ["Romeo", "Paris", "The Nurse", "Lord Capulet"], correct: "The Nurse" },
+        { text: "What does Romeo buy from the apothecary?", options: ["A potion", "Poison", "A dagger", "A rope"], correct: "Poison" },
+        { text: "Who is the first to see Juliet after she wakes?", options: ["Romeo", "Paris", "Friar Laurence", "The Nurse"], correct: "Friar Laurence" },
+        { text: "What is the relationship between Tybalt and Juliet?", options: ["Brother", "Cousin", "Uncle", "Father"], correct: "Cousin" },
+        { text: "Who kills Paris?", options: ["Romeo", "Tybalt", "Mercutio", "Benvolio"], correct: "Romeo" },
+        { text: "What does the Prince do at the end of the play?", options: ["Exiles the families", "Condemns the families", "Reconciles the families", "Leaves Verona"], correct: "Reconciles the families" },
+        { text: "Who is Romeo's close friend and confidant?", options: ["Benvolio", "Mercutio", "Tybalt", "Paris"], correct: "Mercutio" },
+        { text: "What is the name of Romeo's family?", options: ["Capulet", "Montague", "Escalus", "Lorenzo"], correct: "Montague" },
+        { text: "Why does Friar Laurence agree to marry Romeo and Juliet?", options: ["He loves them", "He wants to end the feud", "He is paid", "He is forced"], correct: "He wants to end the feud" },
+        { text: "Who tells the Prince about the deaths at the tomb?", options: ["The Nurse", "Friar Laurence", "Balthasar", "The Page"], correct: "The Page" },
+        { text: "What does Juliet say about names?", options: ["They are important", "They don't matter", "They define us", "They change over time"], correct: "They don't matter" },
+        { text: "Where do Romeo and Juliet meet for the first time?", options: ["The church", "The Capulet ball", "The balcony", "The street"], correct: "The Capulet ball" },
+        { text: "What does Mercutio say about dreams?", options: ["They come true", "They are fantasies", "They are warnings", "They are messages from the gods"], correct: "They are fantasies" },
+        { text: "What is Tybalt's nickname?", options: ["The Prince of Cats", "The King of Swords", "The Lord of Verona", "The Duke of Venice"], correct: "The Prince of Cats" },
+        { text: "Who is the last person to die in the play?", options: ["Romeo", "Juliet", "Paris", "Tybalt"], correct: "Juliet" },
+        { text: "What does the Prince call the deaths of Romeo and Juliet?", options: ["A tragedy", "A blessing", "A punishment", "A lesson"], correct: "A tragedy" },
+        { text: "Who is the messenger between Romeo and Juliet?", options: ["Friar Laurence", "The Nurse", "Benvolio", "Mercutio"], correct: "The Nurse" },
+        { text: "What is the final outcome of the feud?", options: ["The feud continues", "The families reconcile", "The families are exiled", "The families go to war"], correct: "The families reconcile" }
+    ];
+
+    // ===== SECTION 3: DRAG & DROP - Fill in the Blanks (3 texts, select 1) =====
+    const dragTexts = [
+        {
+            text: "But, soft! what light through yonder window breaks? It is the east, and Juliet is the sun. Arise, fair sun, and kill the envious moon, Who is already sick and pale with grief, That thou her maid art far more fair than she: Be not her maid, since she is envious; Her vestal livery is but sick and green And none but fools do wear it; cast it off. It is my lady, O, it is my love! O, that she knew she were! She speaks yet she says nothing: what of that? Her eye discourses; I will answer it.",
+            blanks: ["window", "east", "sun", "moon", "pale", "grief", "vestal", "livery", "fools", "love"],
+            correct: ["window", "east", "sun", "moon", "pale", "grief", "vestal", "livery", "fools", "love"]
+        },
+        {
+            text: "O Romeo, Romeo! wherefore art thou Romeo? Deny thy father and refuse thy name; Or, if thou wilt not, be but sworn my love, And I'll no longer be a Capulet. 'Tis but thy name that is my enemy; Thou art thyself, though not a Montague. What's Montague? it is nor hand, nor foot, Nor arm, nor face, nor any other part Belonging to a man. O, be some other name! What's in a name? that which we call a rose By any other name would smell as sweet.",
+            blanks: ["wherefore", "father", "name", "sworn", "Capulet", "enemy", "Montague", "foot", "rose", "sweet"],
+            correct: ["wherefore", "father", "name", "sworn", "Capulet", "enemy", "Montague", "foot", "rose", "sweet"]
+        },
+        {
+            text: "A plague o' both your houses! I am sped. Is he gone, and hath nothing? Ay, ay, a scratch, a scratch; marry, 'tis enough. Where is my page? Go, villain, fetch a surgeon. Courage, man; the hurt cannot be much. No, 'tis not so deep as a well, nor so wide as a church-door; but 'tis enough,'twill serve: ask for me to-morrow, and you shall find me a grave man. I am peppered, I warrant, for this world.",
+            blanks: ["plague", "houses", "sped", "scratch", "surgeon", "courage", "deep", "well", "church", "grave"],
+            correct: ["plague", "houses", "sped", "scratch", "surgeon", "courage", "deep", "well", "church", "grave"]
+        }
+    ];
+
+    // ===== SECTION 4: CLASSIFY BY ACT (40 events, select 10) =====
+    const classifyPool = [
+        // Act I (8 events)
+        { event: "Street brawl between Montagues and Capulets", act: "Act I" },
+        { event: "Prince Escalus warns the families", act: "Act I" },
+        { event: "Romeo is lovesick for Rosaline", act: "Act I" },
+        { event: "Romeo attends the Capulet masquerade ball", act: "Act I" },
+        { event: "Romeo and Juliet meet for the first time", act: "Act I" },
+        { event: "Tybalt recognizes Romeo at the ball", act: "Act I" },
+        { event: "Juliet learns Romeo is a Montague", act: "Act I" },
+        { event: "The Nurse tells Juliet about Romeo", act: "Act I" },
+        // Act II (8 events)
+        { event: "Romeo climbs the Capulet orchard wall", act: "Act II" },
+        { event: "The balcony scene: Romeo and Juliet declare their love", act: "Act II" },
+        { event: "Romeo and Juliet agree to marry in secret", act: "Act II" },
+        { event: "Friar Laurence agrees to marry the lovers", act: "Act II" },
+        { event: "The Nurse acts as a messenger for Juliet", act: "Act II" },
+        { event: "Romeo and Juliet are married in secret", act: "Act II" },
+        { event: "Mercutio mocks Romeo's love for Rosaline", act: "Act II" },
+        { event: "The Nurse warns Romeo to be true to Juliet", act: "Act II" },
+        // Act III (8 events)
+        { event: "Tybalt kills Mercutio", act: "Act III" },
+        { event: "Romeo kills Tybalt in revenge", act: "Act III" },
+        { event: "Romeo is banished from Verona", act: "Act III" },
+        { event: "Juliet grieves for Tybalt but remains loyal to Romeo", act: "Act III" },
+        { event: "Romeo and Juliet spend their wedding night together", act: "Act III" },
+        { event: "Romeo flees to Mantua", act: "Act III" },
+        { event: "Lady Capulet tells Juliet about Tybalt's death", act: "Act III" },
+        { event: "The Nurse advises Juliet to forget Romeo", act: "Act III" },
+        // Act IV (8 events)
+        { event: "Paris asks for Juliet's hand in marriage", act: "Act IV" },
+        { event: "Juliet agrees to marry Paris to stop her father's anger", act: "Act IV" },
+        { event: "Friar Laurence gives Juliet a sleeping potion", act: "Act IV" },
+        { event: "Juliet drinks the potion and falls into a deep sleep", act: "Act IV" },
+        { event: "The Nurse discovers Juliet's body", act: "Act IV" },
+        { event: "The Capulets mourn Juliet's death", act: "Act IV" },
+        { event: "Friar Laurence reassures the family that Juliet is in heaven", act: "Act IV" },
+        { event: "The preparations for the wedding become funeral preparations", act: "Act IV" },
+        // Act V (8 events)
+        { event: "Romeo receives news of Juliet's death", act: "Act V" },
+        { event: "Romeo buys poison from the apothecary", act: "Act V" },
+        { event: "Friar Laurence's letter fails to reach Romeo", act: "Act V" },
+        { event: "Romeo enters Juliet's tomb", act: "Act V" },
+        { event: "Romeo kills Paris at the tomb", act: "Act V" },
+        { event: "Romeo drinks the poison and dies", act: "Act V" },
+        { event: "Juliet wakes, sees Romeo dead, and stabs herself", act: "Act V" },
+        { event: "The families reconcile after the tragedy", act: "Act V" }
+    ];
+
+    // ===== SECTION 5: SHORT ANSWER (20 pool, select 10) =====
+    const shortPool = [
+        { text: "In which city is Romeo and Juliet set?", keywords: ["Verona"] },
+        { text: "Which family does Romeo belong to?", keywords: ["Montague"] },
+        { text: "Which family does Juliet belong to?", keywords: ["Capulet"] },
+        { text: "Who gives Juliet the sleeping potion?", keywords: ["Friar Laurence", "Laurence"] },
+        { text: "Where is Romeo banished?", keywords: ["Mantua"] },
+        { text: "Who kills Mercutio?", keywords: ["Tybalt"] },
+        { text: "Who kills Tybalt?", keywords: ["Romeo"] },
+        { text: "What does Romeo drink at the tomb?", keywords: ["poison"] },
+        { text: "How does Juliet die?", keywords: ["stabs", "dagger", "herself"] },
+        { text: "Who is Juliet's cousin?", keywords: ["Tybalt"] },
+        { text: "Who does Juliet's father want her to marry?", keywords: ["Paris"] },
+        { text: "Who is the ruler of Verona?", keywords: ["Prince", "Escalus"] },
+        { text: "What is the name of Romeo's close friend?", keywords: ["Mercutio"] },
+        { text: "Who acts as a messenger for Juliet?", keywords: ["Nurse"] },
+        { text: "What does Romeo say Juliet is like in the balcony scene?", keywords: ["sun"] },
+        { text: "What does Juliet say a rose would smell as sweet by any other name?", keywords: ["name"] },
+        { text: "Who helps Romeo and Juliet marry?", keywords: ["Friar", "Laurence"] },
+        { text: "What does the Prince declare after the street brawl?", keywords: ["death", "next", "fight"] },
+        { text: "Where does Romeo first meet Juliet?", keywords: ["Capulet", "ball", "party"] },
+        { text: "What does the Nurse call Juliet?", keywords: ["lamb"] }
+    ];
+
+    // ============================================================
+    // IDEAL RESPONSE FOR SECTION 6
+    // ============================================================
+    const idealResponse = `The hatred between the families is the central cause of the tragedy in Romeo and Juliet. The ancient feud between the Montagues and Capulets creates a world where love between the two families is forbidden. This hatred forces Romeo and Juliet to marry in secret, which leads to a series of tragic misunderstandings. Tybalt's aggression and Romeo's revenge are direct results of the feud. Ultimately, it is the family hatred that prevents the lovers from being together openly and leads to their deaths. Only through their tragic sacrifice do the families finally realize the cost of their hatred and reconcile.`;
+
+    // ============================================================
+    // STATE
+    // ============================================================
+    let currentTF = [];
+    let currentMCQ = [];
+    let currentDrag = null;
+    let currentClassify = [];
+    let currentShort = [];
+
+    let userTF = [];
+    let userMCQ = [];
+    let userDrag = [];
+    let userClassify = {};
+    let userShort = [];
+    let userOpen = "";
+
+    let evaluated = false;
+
+    // ============================================================
+    // UTILITIES
+    // ============================================================
+    function shuffleArray(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function getRandomItems(pool, count) {
+        const shuffled = shuffleArray(pool);
+        return shuffled.slice(0, count);
+    }
+
+    function calculateGrade(correct, total) {
+        const percentage = (correct / total) * 100;
+        const passing = 60;
+        let grade;
+        if (percentage >= passing) {
+            grade = 4.0 + ((percentage - passing) / (100 - passing)) * 3.0;
+        } else {
+            grade = 1.0 + (percentage / passing) * 3.0;
+        }
+        return { grade: Math.round(grade * 100) / 100, percentage: Math.round(percentage) };
+    }
+
+    // ============================================================
+    // RENDER FUNCTIONS
+    // ============================================================
+
+    // ----- SECTION 1: TRUE/FALSE -----
+    function renderTF() {
+        const container = document.getElementById('tf-questions');
+        container.innerHTML = '';
+        currentTF.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `tf-card-${idx}`;
+            div.innerHTML = `
+                <div class="q-header">
+                    <div class="q-number">${idx + 1}</div>
+                    <div class="q-text">${q.text}</div>
+                </div>
+                <div class="tf-options" data-idx="${idx}">
+                    <button type="button" class="tf-btn" data-value="true">✅ True</button>
+                    <button type="button" class="tf-btn" data-value="false">❌ False</button>
+                </div>
+            `;
+            container.appendChild(div);
+
+            const buttons = div.querySelectorAll('.tf-btn');
+            buttons.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (evaluated) return;
+                    buttons.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    userTF[idx] = btn.dataset.value;
+                    updateProgress();
+                });
+                if (userTF[idx] === btn.dataset.value) {
+                    btn.classList.add('selected');
+                }
+            });
+        });
+    }
+
+    // ----- SECTION 2: MULTIPLE CHOICE -----
+    function renderMCQ() {
+        const container = document.getElementById('mcq-questions');
+        container.innerHTML = '';
+        currentMCQ.forEach((q, idx) => {
+            const shuffledOpts = shuffleArray([...q.options]);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `mcq-card-${idx}`;
+            div.innerHTML = `
+                <div class="q-header">
+                    <div class="q-number">${idx + 1}</div>
+                    <div class="q-text">${q.text}</div>
+                </div>
+                <div class="options" data-idx="${idx}">
+                    ${shuffledOpts.map(opt => `
+                        <button type="button" class="option" data-value="${opt}">${opt}</button>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+
+            const options = div.querySelectorAll('.option');
+            options.forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    if (evaluated) return;
+                    options.forEach(b => b.classList.remove('selected'));
+                    btn.classList.add('selected');
+                    userMCQ[idx] = btn.dataset.value;
+                    updateProgress();
+                });
+                if (userMCQ[idx] === btn.dataset.value) {
+                    btn.classList.add('selected');
+                }
+            });
+        });
+    }
+
+// ----- SECTION 3: DRAG & DROP - Fill in the Blanks (dragging to text) -----
+function renderDrag() {
+    const container = document.getElementById('drag-questions');
+    container.innerHTML = '';
+
+    if (!currentDrag) return;
+
+    const q = currentDrag;
+    const shuffledWords = shuffleArray([...q.blanks]);
+
+    // Build the text with drop slots
+    let fullHtml = '';
+    let remainingText = q.text;
+    q.blanks.forEach((blank, idx) => {
+        const parts = remainingText.split(blank);
+        if (parts.length > 1) {
+            fullHtml += parts[0];
+            const userWord = userDrag[idx] || '';
+            fullHtml += `<span class="drop-slot" data-index="${idx}" data-blank="${blank}">${userWord || '___'}</span>`;
+            remainingText = parts.slice(1).join(blank);
+        } else {
+            fullHtml += remainingText;
+            remainingText = '';
+        }
+    });
+    if (remainingText) fullHtml += remainingText;
+
+    const div = document.createElement('div');
+    div.className = 'question-card';
+    div.id = 'drag-card';
+    div.innerHTML = `
+        <div class="q-header">
+            <div class="q-number">📖</div>
+            <div class="q-text">Drag the words into the correct blanks in the text below.</div>
+        </div>
+        <div class="drag-container">
+            <div class="drag-words" id="dragWords">
+                ${shuffledWords.map(word => `
+                    <span class="drag-word" draggable="true" data-word="${word}">${word}</span>
+                `).join('')}
+            </div>
+            <div class="drag-text-container" id="dragTextContainer">
+                ${fullHtml}
+            </div>
+            <button type="button" class="drag-clear-btn" id="dragClearBtn">🔄 Clear All</button>
+        </div>
+    `;
+    container.appendChild(div);
+
+    // Initialize userDrag
+    if (!userDrag || userDrag.length === 0) {
+        userDrag = new Array(q.blanks.length).fill(null);
+    }
+
+    // Get all drop slots
+    const dropSlots = div.querySelectorAll('.drop-slot');
+    const dragWords = div.querySelectorAll('.drag-word');
+    const textContainer = document.getElementById('dragTextContainer');
+
+    // Restore previous state
+    dropSlots.forEach(slot => {
+        const idx = parseInt(slot.dataset.index);
+        if (userDrag[idx]) {
+            slot.textContent = userDrag[idx];
+            slot.classList.add('filled');
+            const wordEl = document.querySelector(`.drag-word[data-word="${userDrag[idx]}"]`);
+            if (wordEl) wordEl.classList.add('placed');
+        }
+    });
+
+    // ----- DRAG WORDS EVENTS -----
+    dragWords.forEach(word => {
+        word.addEventListener('dragstart', (e) => {
+            if (e.target.classList.contains('placed')) {
+                e.preventDefault();
+                return;
+            }
+            e.dataTransfer.setData('text/plain', e.target.dataset.word);
+            e.target.classList.add('dragging');
+        });
+        word.addEventListener('dragend', (e) => {
+            e.target.classList.remove('dragging');
+        });
+    });
+
+    // ----- DROP SLOTS EVENTS (direct drop on slots) -----
+    dropSlots.forEach(slot => {
+        // Prevent default to allow drop
+        slot.addEventListener('dragover', (e) => {
+            e.preventDefault();
+            if (!slot.classList.contains('filled')) {
+                slot.classList.add('drag-over');
+            }
+        });
+        slot.addEventListener('dragleave', (e) => {
+            slot.classList.remove('drag-over');
+        });
+        slot.addEventListener('drop', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            slot.classList.remove('drag-over');
+            
+            // If slot is already filled, don't allow drop
+            if (slot.classList.contains('filled')) return;
+
+            const word = e.dataTransfer.getData('text/plain');
+            if (!word) return;
+
+            const idx = parseInt(slot.dataset.index);
+
+            // Check if this word is already used in another slot
+            const usedSlot = textContainer.querySelector(`.drop-slot.filled`);
+            if (usedSlot && usedSlot.textContent === word && usedSlot !== slot) {
+                // Remove from previous slot
+                const prevIdx = parseInt(usedSlot.dataset.index);
+                usedSlot.textContent = '___';
+                usedSlot.classList.remove('filled');
+                userDrag[prevIdx] = null;
+                const wordEl = document.querySelector(`.drag-word[data-word="${word}"]`);
+                if (wordEl) wordEl.classList.remove('placed');
+            }
+
+            // Place the word in this slot
+            slot.textContent = word;
+            slot.classList.add('filled');
+            userDrag[idx] = word;
+
+            // Mark the word as placed
+            const wordEl = document.querySelector(`.drag-word[data-word="${word}"]`);
+            if (wordEl) wordEl.classList.add('placed');
+
+            updateProgress();
+        });
+    });
+
+    // ----- DRAG OVER TEXT CONTAINER (for dropping on the container) -----
+    textContainer.addEventListener('dragover', (e) => {
+        e.preventDefault();
+        textContainer.classList.add('drag-over');
+    });
+
+    textContainer.addEventListener('dragleave', (e) => {
+        textContainer.classList.remove('drag-over');
+    });
+
+    textContainer.addEventListener('drop', (e) => {
+        e.preventDefault();
+        textContainer.classList.remove('drag-over');
+
+        const word = e.dataTransfer.getData('text/plain');
+        if (!word) return;
+
+        // Find the closest empty slot by position
+        const slots = textContainer.querySelectorAll('.drop-slot');
+        let targetSlot = null;
+        let targetIndex = -1;
+        let closestDist = Infinity;
+
+        const rect = textContainer.getBoundingClientRect();
+        const mouseY = e.clientY;
+
+        slots.forEach(slot => {
+            if (slot.classList.contains('filled')) return;
+            const slotRect = slot.getBoundingClientRect();
+            const dist = Math.abs(slotRect.top + slotRect.height/2 - mouseY);
+            if (dist < closestDist) {
+                closestDist = dist;
+                targetSlot = slot;
+                targetIndex = parseInt(slot.dataset.index);
+            }
+        });
+
+        // If no empty slot found, try to find the closest slot by horizontal position
+        if (!targetSlot) {
+            const mouseX = e.clientX;
+            slots.forEach(slot => {
+                if (slot.classList.contains('filled')) return;
+                const slotRect = slot.getBoundingClientRect();
+                const dist = Math.abs(slotRect.left + slotRect.width/2 - mouseX);
+                if (dist < closestDist) {
+                    closestDist = dist;
+                    targetSlot = slot;
+                    targetIndex = parseInt(slot.dataset.index);
+                }
+            });
+        }
+
+        if (!targetSlot || targetSlot.classList.contains('filled')) return;
+
+        // Check if this word is already used in another slot
+        const usedSlot = textContainer.querySelector(`.drop-slot.filled`);
+        if (usedSlot && usedSlot.textContent === word && usedSlot !== targetSlot) {
+            // Remove from previous slot
+            const prevIdx = parseInt(usedSlot.dataset.index);
+            usedSlot.textContent = '___';
+            usedSlot.classList.remove('filled');
+            userDrag[prevIdx] = null;
+            const wordEl = document.querySelector(`.drag-word[data-word="${word}"]`);
+            if (wordEl) wordEl.classList.remove('placed');
+        }
+
+        // Place the word in the target slot
+        targetSlot.textContent = word;
+        targetSlot.classList.add('filled');
+        userDrag[targetIndex] = word;
+
+        // Mark the word as placed
+        const wordEl = document.querySelector(`.drag-word[data-word="${word}"]`);
+        if (wordEl) wordEl.classList.add('placed');
+
+        updateProgress();
+    });
+
+    // ----- CLEAR BUTTON -----
+    const clearBtn = document.getElementById('dragClearBtn');
+    clearBtn.addEventListener('click', () => {
+        if (evaluated) return;
+        // Remove all placed words
+        dropSlots.forEach(slot => {
+            slot.textContent = '___';
+            slot.classList.remove('filled');
+            const idx = parseInt(slot.dataset.index);
+            userDrag[idx] = null;
+        });
+        // Unmark all words
+        document.querySelectorAll('.drag-word').forEach(el => {
+            el.classList.remove('placed');
+        });
+        updateProgress();
+    });
+}
+
+    // ----- SECTION 4: CLASSIFY BY ACT -----
+    function renderClassify() {
+        const container = document.getElementById('classify-questions');
+        container.innerHTML = '';
+
+        const acts = ["Act I", "Act II", "Act III", "Act IV", "Act V"];
+
+        // Shuffle events
+        const shuffledEvents = shuffleArray([...currentClassify]);
+
+        const div = document.createElement('div');
+        div.className = 'question-card';
+        div.id = 'classify-card';
+        div.innerHTML = `
+            <div class="q-header">
+                <div class="q-number">📊</div>
+                <div class="q-text">Drag each event to the correct Act.</div>
+            </div>
+            <div class="classify-container">
+                <div class="classify-items" id="classifyItems">
+                    ${shuffledEvents.map((item, idx) => `
+                        <span class="classify-item" draggable="true" data-event="${item.event}" data-idx="${idx}">${item.event}</span>
+                    `).join('')}
+                </div>
+                <div class="classify-drop-zones">
+                    ${acts.map(act => `
+                        <div class="classify-column">
+                            <div class="col-title">${act}</div>
+                            <div class="col-drop" data-act="${act}"></div>
+                        </div>
+                    `).join('')}
+                </div>
+                <button type="button" class="classify-clear-btn" id="classifyClearBtn">🔄 Clear All</button>
+            </div>
+        `;
+        container.appendChild(div);
+
+        // Initialize userClassify
+        if (!userClassify || Object.keys(userClassify).length === 0) {
+            userClassify = {};
+            shuffledEvents.forEach(item => {
+                userClassify[item.event] = null;
+            });
+        }
+
+        const items = div.querySelectorAll('.classify-item');
+        const dropZones = div.querySelectorAll('.col-drop');
+
+        items.forEach(item => {
+            item.addEventListener('dragstart', (e) => {
+                if (e.target.classList.contains('placed')) {
+                    e.preventDefault();
+                    return;
+                }
+                e.dataTransfer.setData('text/plain', e.target.dataset.event);
+                e.target.classList.add('dragging');
+            });
+            item.addEventListener('dragend', (e) => {
+                e.target.classList.remove('dragging');
+            });
+        });
+
+        dropZones.forEach(zone => {
+            zone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                zone.classList.add('drag-over');
+            });
+            zone.addEventListener('dragleave', (e) => {
+                zone.classList.remove('drag-over');
+            });
+            zone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                zone.classList.remove('drag-over');
+
+                const event = e.dataTransfer.getData('text/plain');
+                const act = zone.dataset.act;
+
+                // Find the item
+                const itemEl = document.querySelector(`.classify-item[data-event="${event}"]`);
+                if (!itemEl || itemEl.classList.contains('placed')) return;
+
+                // Check if event already placed in this act
+                if (userClassify[event] === act) return;
+
+                // Remove from previous placement if exists
+                if (userClassify[event]) {
+                    const prevZone = document.querySelector(`.col-drop[data-act="${userClassify[event]}"]`);
+                    if (prevZone) {
+                        const prevItem = prevZone.querySelector(`.placed-item[data-event="${event}"]`);
+                        if (prevItem) prevItem.remove();
+                    }
+                }
+
+                // Place in new zone
+                const placedItem = document.createElement('span');
+                placedItem.className = 'placed-item';
+                placedItem.dataset.event = event;
+                placedItem.textContent = event;
+                zone.appendChild(placedItem);
+
+                itemEl.classList.add('placed');
+                userClassify[event] = act;
+
+                updateProgress();
+            });
+        });
+
+        // Restore existing placements
+        Object.keys(userClassify).forEach(event => {
+            const act = userClassify[event];
+            if (act) {
+                const zone = document.querySelector(`.col-drop[data-act="${act}"]`);
+                const itemEl = document.querySelector(`.classify-item[data-event="${event}"]`);
+                if (zone && itemEl) {
+                    const placedItem = document.createElement('span');
+                    placedItem.className = 'placed-item';
+                    placedItem.dataset.event = event;
+                    placedItem.textContent = event;
+                    zone.appendChild(placedItem);
+                    itemEl.classList.add('placed');
+                }
+            }
+        });
+
+        // Clear button
+        const clearBtn = document.getElementById('classifyClearBtn');
+        clearBtn.addEventListener('click', () => {
+            if (evaluated) return;
+            // Remove all placed items
+            document.querySelectorAll('.placed-item').forEach(el => el.remove());
+            document.querySelectorAll('.classify-item').forEach(el => {
+                el.classList.remove('placed');
+            });
+            // Reset userClassify
+            currentClassify.forEach(item => {
+                userClassify[item.event] = null;
+            });
+            updateProgress();
+        });
+    }
+
+    // ----- SECTION 5: SHORT ANSWER -----
+    function renderShort() {
+        const container = document.getElementById('short-questions');
+        container.innerHTML = '';
+        currentShort.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `short-card-${idx}`;
+            div.innerHTML = `
+                <div class="q-header">
+                    <div class="q-number">${idx + 1}</div>
+                    <div class="q-text">${q.text}</div>
+                </div>
+                <input type="text" class="q-input" data-idx="${idx}" placeholder="Write your answer..." value="${userShort[idx] || ''}">
+            `;
+            container.appendChild(div);
+
+            const input = div.querySelector('.q-input');
+            input.addEventListener('input', () => {
+                if (evaluated) return;
+                userShort[idx] = input.value.trim().toLowerCase();
+                updateProgress();
+            });
+        });
+    }
+
+    // ----- SECTION 6: OPEN TEXT -----
+    function renderOpen() {
+        const container = document.getElementById('open-questions');
+        container.innerHTML = '';
+
+        const div = document.createElement('div');
+        div.className = 'open-text-area';
+        div.innerHTML = `
+            <div style="color:#f4ce50; font-weight:700; margin-bottom:0.5rem;">
+                <i class="fas fa-pen"></i> Question: What role does the hatred between the families play in the tragedy of Romeo and Juliet?
+            </div>
+            <div style="color:#b2bec3; font-size:0.85rem; margin-bottom:0.8rem;">
+                Write a response of at least <strong>60 words</strong>. Explain how the family feud contributes to the tragic outcome of the play.
+            </div>
+            <textarea id="openTextArea" placeholder="Write your response here (minimum 60 words)...">${userOpen}</textarea>
+            <div class="word-count" id="wordCount">Words: 0</div>
+            <div id="idealResponseContainer" style="margin-top:0.8rem; display:none; background:rgba(244,206,80,0.05); border:1px solid rgba(244,206,80,0.15); border-radius:12px; padding:0.8rem;">
+                <div style="color:#f4ce50; font-weight:600; margin-bottom:0.3rem;">📖 Ideal Response:</div>
+                <div style="color:#b2bec3; font-size:0.85rem; line-height:1.6;">${idealResponse}</div>
+            </div>
+        `;
+        container.appendChild(div);
+
+        const textarea = document.getElementById('openTextArea');
+        textarea.addEventListener('input', () => {
+            userOpen = textarea.value;
+            const wordCount = countWords(userOpen);
+            document.getElementById('wordCount').textContent = `Words: ${wordCount}`;
+            if (!evaluated) updateProgress();
+        });
+
+        // Restore existing text
+        if (userOpen) {
+            textarea.value = userOpen;
+            const wordCount = countWords(userOpen);
+            document.getElementById('wordCount').textContent = `Words: ${wordCount}`;
+        }
+    }
+
+    function countWords(text) {
+        return text.trim().split(/\s+/).filter(w => w.length > 0).length;
+    }
+
+    // ============================================================
+    // PROGRESS & EVALUATION
+    // ============================================================
+
+    function updateProgress() {
+        let answered = 0;
+        const total = 60;
+
+        // TF (10)
+        userTF.forEach(a => { if (a) answered++; });
+
+        // MCQ (20)
+        userMCQ.forEach(a => { if (a) answered++; });
+
+        // Drag (10)
+        userDrag.forEach(a => { if (a) answered++; });
+
+        // Classify (10)
+        let classifyAnswered = 0;
+        if (currentClassify) {
+            currentClassify.forEach(item => {
+                if (userClassify[item.event]) classifyAnswered++;
+            });
+        }
+        answered += classifyAnswered;
+
+        // Short (10)
+        userShort.forEach(a => { if (a) answered++; });
+
+        // Open (1) - only count if has text
+        if (userOpen && userOpen.trim().length > 0) answered++;
+
+        document.getElementById('answeredCount').textContent = Math.min(answered, total);
+        const progress = (answered / total) * 100;
+        document.getElementById('progressFill').style.width = Math.min(progress, 100) + '%';
+    }
+
+    function showCorrectAnswers() {
+        // TF
+        currentTF.forEach((q, idx) => {
+            const card = document.getElementById(`tf-card-${idx}`);
+            if (!card) return;
+            const isCorrect = userTF[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            const buttons = card.querySelectorAll('.tf-btn');
+            buttons.forEach(btn => {
+                btn.classList.add('locked');
+                if (btn.dataset.value === q.correct) {
+                    btn.classList.add('show-correct');
+                }
+                if (btn.dataset.value === userTF[idx] && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+                if (btn.dataset.value === userTF[idx] && isCorrect) {
+                    btn.classList.add('correct');
+                }
+            });
+            if (!card.querySelector('.feedback')) {
+                const fb = document.createElement('div');
+                fb.className = `feedback visible ${isCorrect ? 'correct' : 'wrong'}`;
+                fb.textContent = isCorrect ? '✅ Correct!' : `❌ Correct answer: ${q.correct}`;
+                card.appendChild(fb);
+            }
+        });
+
+        // MCQ
+        currentMCQ.forEach((q, idx) => {
+            const card = document.getElementById(`mcq-card-${idx}`);
+            if (!card) return;
+            const isCorrect = userMCQ[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            const options = card.querySelectorAll('.option');
+            options.forEach(btn => {
+                btn.classList.add('locked');
+                if (btn.dataset.value === q.correct) {
+                    btn.classList.add('show-correct');
+                }
+                if (btn.dataset.value === userMCQ[idx] && !isCorrect) {
+                    btn.classList.add('wrong');
+                }
+                if (btn.dataset.value === userMCQ[idx] && isCorrect) {
+                    btn.classList.add('correct');
+                }
+            });
+            if (!card.querySelector('.feedback')) {
+                const fb = document.createElement('div');
+                fb.className = `feedback visible ${isCorrect ? 'correct' : 'wrong'}`;
+                fb.textContent = isCorrect ? '✅ Correct!' : `❌ Correct answer: ${q.correct}`;
+                card.appendChild(fb);
+            }
+        });
+
+        // Drag
+        if (currentDrag) {
+            const card = document.getElementById('drag-card');
+            if (card) {
+                const slots = card.querySelectorAll('.drop-slot');
+                let allCorrect = true;
+                slots.forEach((slot, idx) => {
+                    const userWord = userDrag[idx] || '';
+                    const isCorrect = userWord === currentDrag.correct[idx];
+                    if (!isCorrect) allCorrect = false;
+                    slot.classList.add(isCorrect ? 'correct-slot' : 'wrong-slot');
+                    slot.classList.remove('filled');
+                    if (isCorrect) {
+                        slot.textContent = userWord;
+                        slot.style.color = '#55efc4';
+                    } else {
+                        slot.textContent = `❌ ${currentDrag.correct[idx]}`;
+                        slot.style.color = '#e94560';
+                    }
+                });
+                // Disable drag words
+                card.querySelectorAll('.drag-word').forEach(el => el.style.display = 'none');
+                const fb = document.createElement('div');
+                fb.className = `feedback visible ${allCorrect ? 'correct' : 'wrong'}`;
+                fb.textContent = allCorrect ? '✅ All words correct!' : '❌ Some words are incorrect. Check the slots above.';
+                if (!card.querySelector('.feedback')) card.appendChild(fb);
+                card.classList.add(allCorrect ? 'correct-highlight' : 'wrong-highlight');
+                document.getElementById('dragClearBtn').disabled = true;
+            }
+        }
+
+        // Classify
+        if (currentClassify.length > 0) {
+            const card = document.getElementById('classify-card');
+            if (card) {
+                let allCorrect = true;
+                let correctCount = 0;
+                currentClassify.forEach(item => {
+                    const isCorrect = userClassify[item.event] === item.act;
+                    if (isCorrect) correctCount++;
+                    else allCorrect = false;
+                    // Find placed item
+                    const placedItem = card.querySelector(`.placed-item[data-event="${item.event}"]`);
+                    if (placedItem) {
+                        placedItem.classList.add(isCorrect ? 'correct-item' : 'wrong-item');
+                    }
+                });
+                const fb = document.createElement('div');
+                fb.className = `feedback visible ${allCorrect ? 'correct' : 'wrong'}`;
+                fb.textContent = allCorrect ? `✅ All ${currentClassify.length} events classified correctly!` : `❌ ${correctCount}/${currentClassify.length} correct. Check the red items above.`;
+                if (!card.querySelector('.feedback')) card.appendChild(fb);
+                card.classList.add(allCorrect ? 'correct-highlight' : 'wrong-highlight');
+                // Disable dragging
+                card.querySelectorAll('.classify-item').forEach(el => el.style.display = 'none');
+                document.getElementById('classifyClearBtn').disabled = true;
+            }
+        }
+
+        // Short
+        currentShort.forEach((q, idx) => {
+            const card = document.getElementById(`short-card-${idx}`);
+            if (!card) return;
+            const input = card.querySelector('.q-input');
+            const userAns = userShort[idx] || '';
+            const keywordMatch = checkKeywords(userAns, q.keywords);
+            const isCorrect = keywordMatch;
+            input.disabled = true;
+            input.classList.add(isCorrect ? 'correct' : 'wrong');
+            if (!card.querySelector('.feedback')) {
+                const fb = document.createElement('div');
+                fb.className = `feedback visible ${isCorrect ? 'correct' : 'wrong'}`;
+                if (isCorrect) {
+                    fb.textContent = '✅ Correct! (Keywords found)';
+                } else {
+                    fb.textContent = `❌ Keywords needed: ${q.keywords.join(', ')}`;
+                }
+                card.appendChild(fb);
+            }
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+        });
+
+        // Open text - show ideal response
+        const idealContainer = document.getElementById('idealResponseContainer');
+        if (idealContainer) {
+            idealContainer.style.display = 'block';
+        }
+    }
+
+    function checkKeywords(answer, keywords) {
+        if (!answer || answer.trim() === '') return false;
+        const words = answer.toLowerCase().split(/\s+/);
+        let matchCount = 0;
+        keywords.forEach(kw => {
+            const kwLower = kw.toLowerCase();
+            if (words.some(w => w.includes(kwLower))) {
+                matchCount++;
+            }
+        });
+        const percentage = matchCount / keywords.length;
+        return percentage >= 0.7;
+    }
+
+    function evaluate() {
+        if (evaluated) return;
+
+        // Check if open text is filled
+        const openText = document.getElementById('openTextArea');
+        if (!openText || countWords(openText.value) < 60) {
+            document.getElementById('openTextRequired').classList.add('show');
+            openText.focus();
+            return;
+        }
+        document.getElementById('openTextRequired').classList.remove('show');
+
+        evaluated = true;
+        let correct = 0;
+        const total = 60;
+
+        // TF
+        currentTF.forEach((q, idx) => {
+            if (userTF[idx] === q.correct) correct++;
+        });
+
+        // MCQ
+        currentMCQ.forEach((q, idx) => {
+            if (userMCQ[idx] === q.correct) correct++;
+        });
+
+        // Drag
+        if (currentDrag) {
+            let allCorrect = true;
+            currentDrag.correct.forEach((word, idx) => {
+                if (userDrag[idx] !== word) allCorrect = false;
+            });
+            if (allCorrect) correct += currentDrag.correct.length;
+        }
+
+        // Classify
+        if (currentClassify.length > 0) {
+            currentClassify.forEach(item => {
+                if (userClassify[item.event] === item.act) correct++;
+            });
+        }
+
+        // Short
+        currentShort.forEach((q, idx) => {
+            const userAns = userShort[idx] || '';
+            if (checkKeywords(userAns, q.keywords)) correct++;
+        });
+
+        // Open text (no points, but required to pass)
+
+        const { grade, percentage } = calculateGrade(correct, total);
+
+        document.getElementById('correctStat').textContent = correct;
+        document.getElementById('wrongStat').textContent = total - correct;
+        document.getElementById('percentStat').textContent = percentage + '%';
+        document.getElementById('gradeStat').textContent = grade.toFixed(1);
+        document.getElementById('gradeDisplay').textContent = grade.toFixed(1);
+
+        const passDisplay = document.getElementById('passDisplay');
+        if (grade >= 4.0) {
+            passDisplay.className = 'pass';
+            passDisplay.textContent = '🎉 PASSED! Excellent work!';
+        } else {
+            passDisplay.className = 'fail';
+            passDisplay.textContent = '📖 NOT PASSED. Review the class and try again.';
+        }
+
+        document.getElementById('results').style.display = 'block';
+        document.getElementById('evaluateBtn').disabled = true;
+
+        showCorrectAnswers();
+        document.querySelector('.results').scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+
+    // ============================================================
+    // GENERATE TEST
+    // ============================================================
+
+    function generateTest() {
+        // Section 1: TF (10 from 25)
+        currentTF = getRandomItems(tfPool, 10);
+        userTF = new Array(currentTF.length).fill(null);
+
+        // Section 2: MCQ (20 from 40)
+        currentMCQ = getRandomItems(mcqPool, 20);
+        userMCQ = new Array(currentMCQ.length).fill(null);
+
+        // Section 3: Drag (1 from 3)
+        const dragIndex = Math.floor(Math.random() * dragTexts.length);
+        currentDrag = JSON.parse(JSON.stringify(dragTexts[dragIndex]));
+        userDrag = new Array(currentDrag.blanks.length).fill(null);
+
+        // Section 4: Classify (10 from 40)
+        currentClassify = getRandomItems(classifyPool, 10);
+        userClassify = {};
+        currentClassify.forEach(item => {
+            userClassify[item.event] = null;
+        });
+
+        // Section 5: Short (10 from 20)
+        currentShort = getRandomItems(shortPool, 10);
+        userShort = new Array(currentShort.length).fill('');
+
+        // Section 6: Open (keep existing if any)
+        const openTextArea = document.getElementById('openTextArea');
+        if (openTextArea) {
+            userOpen = openTextArea.value;
+        } else {
+            userOpen = '';
+        }
+
+        evaluated = false;
+        document.getElementById('results').style.display = 'none';
+        document.getElementById('evaluateBtn').disabled = false;
+
+        renderAll();
+        updateProgress();
+    }
+
+    // ============================================================
+    // RENDER ALL
+    // ============================================================
+
+    function renderAll() {
+        renderTF();
+        renderMCQ();
+        renderDrag();
+        renderClassify();
+        renderShort();
+        renderOpen();
+    }
+
+    // ============================================================
+    // EVENT LISTENERS
+    // ============================================================
+
+    document.getElementById('evaluateBtn').addEventListener('click', evaluate);
+
+    document.getElementById('resetBtn').addEventListener('click', () => {
+        generateTest();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    document.getElementById('restartBtn').addEventListener('click', () => {
+        generateTest();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // Prevent form submission on enter key
+    document.getElementById('examForm').addEventListener('keydown', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            return false;
+        }
+    });
+
+    // ============================================================
+    // INIT
+    // ============================================================
+
+    generateTest();
+</script>
+</body>
+</html>
