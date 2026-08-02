@@ -1,0 +1,1051 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Ejercicios - Cambios Físicos y Químicos | Ciencias 7° básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            background: #ffffff;
+            border-radius: 32px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: row;
+        }
+
+        .tabs {
+            display: flex;
+            flex-direction: column;
+            width: 220px;
+            min-width: 220px;
+            background: #f1f5f9;
+            border-right: 2px solid #e2e8f0;
+            gap: 8px;
+            padding: 24px 12px;
+            flex-shrink: 0;
+        }
+
+        .tab-btn {
+            width: 100%;
+            padding: 14px 8px;
+            background: transparent;
+            border: none;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #475569;
+            cursor: pointer;
+            border-radius: 16px;
+            transition: all 0.2s ease;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            text-align: center;
+        }
+
+        .tab-btn i {
+            font-size: 1.3rem;
+        }
+
+        .tab-btn span {
+            font-size: 0.7rem;
+        }
+
+        .tab-btn.active {
+            background: #0f766e;
+            color: white;
+            box-shadow: 0 2px 8px rgba(15,118,110,0.3);
+        }
+
+        .tab-content {
+            display: none;
+            animation: fadeIn 0.3s ease;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .tab-content-container {
+            flex: 1;
+            padding: 24px;
+            overflow-y: auto;
+            max-height: 90vh;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .btn-evaluate-sidebar {
+            width: 100%;
+            margin-top: 20px;
+            padding: 14px 8px;
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: 'Inter', sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+
+        .btn-evaluate-sidebar i {
+            font-size: 1.3rem;
+        }
+
+        .btn-evaluate-sidebar:hover {
+            transform: translateY(-2px);
+            filter: brightness(0.95);
+        }
+
+        .question-card {
+            background: #f8fafc;
+            border-radius: 24px;
+            padding: 1.2rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #e2e8f0;
+            transition: all 0.2s;
+        }
+
+        .question-card.correct-highlight {
+            border-left: 6px solid #22c55e;
+            background: #f0fdf4;
+        }
+
+        .question-card.wrong-highlight {
+            border-left: 6px solid #ef4444;
+            background: #fef2f2;
+        }
+
+        .section-header {
+            background: #f1f5f9;
+            padding: 1rem;
+            border-radius: 20px;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            border-left: 4px solid #0f766e;
+        }
+
+        .section-header i {
+            font-size: 2rem;
+            color: #0f766e;
+        }
+
+        .section-header h3 {
+            color: #0f766e;
+            margin: 0;
+        }
+
+        .section-header p {
+            color: #475569;
+            font-size: 0.85rem;
+            margin-top: 4px;
+        }
+
+        .question-text {
+            font-weight: 700;
+            font-size: 1rem;
+            margin-bottom: 1rem;
+            color: #1e293b;
+        }
+
+        .correct-answer-display {
+            font-size: 0.85rem;
+            margin-top: 10px;
+            padding: 8px;
+            background: #e6f7f5;
+            border-radius: 16px;
+            color: #0f766e;
+        }
+
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+
+        .option {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 8px 12px;
+            background: white;
+            border-radius: 60px;
+            border: 1px solid #e2e8f0;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .option:hover {
+            background: #ccfbf1;
+        }
+
+        input[type="radio"], input[type="checkbox"], input[type="text"], select {
+            font-family: 'Inter', sans-serif;
+        }
+
+        input[type="text"], select {
+            padding: 12px 16px;
+            border-radius: 60px;
+            border: 1px solid #cbd5e1;
+            font-size: 0.9rem;
+            width: 100%;
+            background: white;
+        }
+
+        .results-section {
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            color: white;
+            padding: 24px 20px;
+            border-radius: 24px;
+            margin: 20px 0;
+            text-align: center;
+            display: none;
+        }
+
+        .results-section h3 {
+            font-size: 1.8rem;
+            margin-bottom: 16px;
+        }
+
+        .results-section p {
+            font-size: 1.4rem;
+            margin: 10px 0;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            justify-content: center;
+            margin-top: 20px;
+            display: none;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border-radius: 60px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            font-family: 'Inter', sans-serif;
+        }
+
+        .btn-primary {
+            background: #facc15;
+            color: #1e293b;
+        }
+
+        .btn-secondary {
+            background: #0f766e;
+            color: white;
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 2px solid #0f766e;
+            color: #0f766e;
+        }
+
+        .word-count {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 5px;
+            text-align: right;
+        }
+
+        .keywords-list {
+            background: #f1f5f9;
+            padding: 12px;
+            border-radius: 16px;
+            margin-top: 10px;
+            font-size: 0.85rem;
+        }
+
+        .tag-verdadero {
+            background: #22c55e;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .tag-falso {
+            background: #ef4444;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .section-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #0f766e;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: #f1f5f9;
+            border-radius: 16px;
+            border-left: 4px solid #0f766e;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                flex-direction: column;
+            }
+            .tabs {
+                flex-direction: row;
+                width: 100%;
+                overflow-x: auto;
+                padding: 12px;
+            }
+            .tab-btn {
+                flex-direction: row;
+                gap: 6px;
+                width: auto;
+                padding: 10px 14px;
+            }
+            .btn-evaluate-sidebar {
+                flex-direction: row;
+                margin-top: 0;
+                width: auto;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="tabs">
+        <button class="tab-btn active" data-tab="tab1"><i class="fas fa-check-circle"></i><span> MCQ Básico</span></button>
+        <button class="tab-btn" data-tab="tab2"><i class="fas fa-pen"></i><span> Completar</span></button>
+        <button class="tab-btn" data-tab="tab3"><i class="fas fa-check-double"></i><span> Selección Múltiple</span></button>
+        <button class="tab-btn" data-tab="tab4"><i class="fas fa-list"></i><span> Lista desplegable</span></button>
+        <button class="tab-btn" data-tab="tab5"><i class="fas fa-check-circle"></i><span> Verdadero/Falso</span></button>
+        <button class="btn-evaluate-sidebar" id="evaluateBtnSidebar"><i class="fas fa-check-double"></i><span> Evaluar</span></button>
+    </div>
+
+    <div class="tab-content-container" id="tabContentContainer">
+        <div id="currentSectionTitle" class="section-title">📝 Sección 1: Selección Múltiple - Conceptos básicos</div>
+
+        <div id="tab1" class="tab-content active">
+            <div class="section-header">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>📝Selección Múltiple - Conceptos básicos</h3>
+                    <p>Elige la opción correcta para cada pregunta.</p>
+                </div>
+            </div>
+            <div id="mcq-questions"></div>
+        </div>
+        <div id="tab2" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-pen"></i>
+                <div>
+                    <h3>✏️Completar frases</h3>
+                    <p>Escribe la palabra que falta en cada oración.</p>
+                </div>
+            </div>
+            <div id="gapfill-questions"></div>
+        </div>
+        <div id="tab3" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-check-double"></i>
+                <div>
+                    <h3>✅Selección Múltiple</h3>
+                    <p>Selecciona TODAS las opciones correctas. La pregunta vale 1 punto solo si seleccionas todas las correctas.</p>
+                </div>
+            </div>
+            <div id="multiselect-questions"></div>
+        </div>
+        <div id="tab4" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-list"></i>
+                <div>
+                    <h3>📋Selección de respuesta de una lista</h3>
+                    <p>Elige la opción correcta en cada menú desplegable.</p>
+                </div>
+            </div>
+            <div id="dropdown-questions"></div>
+        </div>
+        <div id="tab5" class="tab-content">
+            <div class="section-header">
+                <i class="fas fa-check-circle"></i>
+                <div>
+                    <h3>✅Verdadero / Falso</h3>
+                    <p>Elige "Verdadero" o "Falso" para cada afirmación.</p>
+                </div>
+            </div>
+            <div id="truefalse-questions"></div>
+        </div>
+
+        <div class="results-section" id="resultsSection">
+            <h3><i class="fas fa-chart-line"></i> Your Results</h3>
+            <p id="scoreDisplay">Puntaje: -- / 60</p>
+            <p id="gradeDisplay">Nota: -- (1.0 a 7.0)</p>
+            <p id="passDisplay"></p>
+        </div>
+
+        <div class="action-buttons" id="actionButtons">
+            <button class="btn btn-primary" id="restartBtn"><i class="fas fa-sync-alt"></i> Reiniciar</button>
+            <button class="btn btn-secondary" id="backToClassBtn"><i class="fas fa-chalkboard"></i> Volver a la clase</button>
+            <button class="btn btn-outline" id="backToCourseBtn"><i class="fas fa-book-open"></i> Volver al curso</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    // ======================== SECTION 1: MCQ BÁSICO (40 POOL) ========================
+    const mcqPool = [
+        { text: "¿Cuál de las siguientes es una característica de un cambio físico?", options: ["Se forma una nueva sustancia", "Es irreversible", "Cambia la forma o estado", "Se libera energía"], correct: "Cambia la forma o estado" },
+        { text: "¿Cuál de las siguientes es una característica de un cambio químico?", options: ["Se recupera la sustancia original", "Cambia la composición", "Es reversible", "Cambia la forma"], correct: "Cambia la composición" },
+        { text: "¿Qué evidencia indica que ocurrió un cambio químico?", options: ["Cambio de forma", "Cambio de estado", "Cambio de color", "Cambio de tamaño"], correct: "Cambio de color" },
+        { text: "¿Cuál de los siguientes es un ejemplo de cambio físico?", options: ["Quemar papel", "Oxidar hierro", "Derretir hielo", "Cocer un huevo"], correct: "Derretir hielo" },
+        { text: "¿Cuál de los siguientes es un ejemplo de cambio químico?", options: ["Disolver azúcar", "Evaporar agua", "Oxidar hierro", "Congelar agua"], correct: "Oxidar hierro" },
+        { text: "En un cambio físico, la sustancia...", options: ["Cambia su composición", "Cambia su forma o estado", "Forma nuevas sustancias", "Se vuelve irreversible"], correct: "Cambia su forma o estado" },
+        { text: "En un cambio químico, la sustancia...", options: ["Cambia su forma", "Cambia su estado", "Forma nuevas sustancias", "Se puede recuperar fácilmente"], correct: "Forma nuevas sustancias" },
+        { text: "¿Qué método permite recuperar el azúcar disuelta en agua?", options: ["Filtración", "Decantación", "Evaporación", "Tamización"], correct: "Evaporación" },
+        { text: "La formación de caries en los dientes es un ejemplo de:", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "La digestión de los alimentos es un ejemplo de:", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "El agua que hierve y se convierte en vapor es un ejemplo de:", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "Un papel que se quema es un ejemplo de:", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "¿Cuál de los siguientes es un cambio reversible?", options: ["Quemar papel", "Oxidar hierro", "Derretir hielo", "Cocer un huevo"], correct: "Derretir hielo" },
+        { text: "¿Cuál de los siguientes es un cambio irreversible?", options: ["Disolver azúcar", "Congelar agua", "Quemar papel", "Evaporar agua"], correct: "Quemar papel" },
+        { text: "La oxidación de un clavo de hierro es un ejemplo de:", options: ["Cambio físico", "Cambio químico", "Cambio de estado", "Cambio reversible"], correct: "Cambio químico" },
+        { text: "Al moler tiza, ¿qué tipo de cambio ocurre?", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "¿Qué tipo de cambio ocurre al cocer un huevo?", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "La evaporación del agua es un ejemplo de:", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La combustión de la madera es un ejemplo de:", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "Al disolver sal en agua, ¿qué tipo de cambio ocurre?", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La formación de óxido en un metal es un ejemplo de:", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "¿Qué evidencia NO es propia de un cambio químico?", options: ["Cambio de color", "Desprendimiento de gas", "Cambio de forma", "Cambio de temperatura"], correct: "Cambio de forma" },
+        { text: "¿Qué evidencia indica que ocurrió un cambio químico?", options: ["Cambio de forma", "Desprendimiento de gas", "Cambio de estado", "Cambio de tamaño"], correct: "Desprendimiento de gas" },
+        { text: "La solidificación del agua es un ejemplo de:", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La sublimación del hielo seco es un ejemplo de:", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La formación de un precipitado es evidencia de:", options: ["Cambio físico", "Cambio químico", "Cambio de estado", "Cambio reversible"], correct: "Cambio químico" },
+        { text: "Al quemar gas de cocina, ¿qué tipo de cambio ocurre?", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "Al cortar un trozo de papel, ¿qué tipo de cambio ocurre?", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La descomposición de una fruta es un ejemplo de:", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "¿Qué tipo de cambio ocurre al tostar pan?", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "Al romper un vidrio, ¿qué tipo de cambio ocurre?", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La condensación del vapor de agua es un ejemplo de:", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La formación de una llama es evidencia de:", options: ["Cambio físico", "Cambio químico", "Cambio de estado", "Cambio reversible"], correct: "Cambio químico" },
+        { text: "Al mezclar vinagre con bicarbonato, se produce gas. Esto es:", options: ["Cambio físico", "Cambio químico", "Cambio de estado", "Cambio reversible"], correct: "Cambio químico" },
+        { text: "La fusión de un metal es un ejemplo de:", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La oxidación del cobre es un ejemplo de:", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "Al apretar una esponja, ¿qué tipo de cambio ocurre?", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La formación de gas al hervir agua es:", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" },
+        { text: "La combustión de una vela es un ejemplo de:", options: ["Cambio físico", "Cambio químico", "Cambio reversible", "Cambio de estado"], correct: "Cambio químico" },
+        { text: "¿Qué tipo de cambio ocurre al hacer hielo en el congelador?", options: ["Cambio químico", "Cambio físico", "Combustión", "Oxidación"], correct: "Cambio físico" }
+    ];
+
+    // ======================== SECTION 2: GAP FILL (40 POOL) ========================
+    const gapFillPool = [
+        { text: "Un cambio ______________ es aquel en el que no cambia la composición de la sustancia.", answer: "físico" },
+        { text: "Un cambio ______________ es aquel en el que se forman nuevas sustancias.", answer: "químico" },
+        { text: "Los cambios físicos son generalmente ______________, es decir, se puede recuperar la sustancia original.", answer: "reversibles" },
+        { text: "Los cambios químicos son generalmente ______________, es decir, no se puede recuperar la sustancia original.", answer: "irreversibles" },
+        { text: "La ______________ del agua es un cambio físico donde el agua pasa de estado líquido a gaseoso.", answer: "evaporación" },
+        { text: "La ______________ del hierro es un cambio químico donde el metal reacciona con el oxígeno.", answer: "oxidación" },
+        { text: "La ______________ es un cambio químico en el que una sustancia reacciona rápidamente con el oxígeno liberando calor y luz.", answer: "combustión" },
+        { text: "La ______________ de los alimentos en nuestro cuerpo es un cambio químico.", answer: "digestión" },
+        { text: "La ______________ es el paso de estado sólido a líquido, un cambio físico.", answer: "fusión" },
+        { text: "La ______________ es el paso de estado líquido a sólido, un cambio físico.", answer: "solidificación" },
+        { text: "La ______________ es el paso de estado sólido a gaseoso, un cambio físico.", answer: "sublimación" },
+        { text: "La ______________ es el paso de estado gaseoso a líquido, un cambio físico.", answer: "condensación" },
+        { text: "El azúcar disuelta en agua se puede recuperar por ______________.", answer: "evaporación" },
+        { text: "Un papel que se quema se convierte en ______________ y gases.", answer: "cenizas" },
+        { text: "Cuando un clavo se oxida, se forma ______________ (herrumbre).", answer: "óxido" },
+        { text: "La ______________ es un cambio químico que ocurre cuando una fruta se oscurece al cortarla.", answer: "oxidación" },
+        { text: "Al cocer un huevo, las proteínas se ______________ y el cambio es irreversible.", answer: "desnaturalizan" },
+        { text: "La ______________ dental es un cambio químico causado por bacterias.", answer: "caries" },
+        { text: "El agua que hierve produce ______________ de vapor, pero es un cambio físico.", answer: "burbujas" },
+        { text: "La ______________ del petróleo separa sus componentes por punto de ebullición.", answer: "destilación" },
+        { text: "Un cambio físico puede ser ______________, como el hielo que se derrite y se vuelve a congelar.", answer: "reversible" },
+        { text: "La ______________ de una manzana es un cambio químico causado por microorganismos.", answer: "descomposición" },
+        { text: "Cuando un papel se arruga, solo cambia su ______________, no su composición.", answer: "forma" },
+        { text: "Al mezclar cal viva con agua, se produce una reacción que ______________ calor.", answer: "libera" },
+        { text: "La ______________ es una evidencia de cambio químico cuando se forma un sólido en un líquido.", answer: "precipitado" },
+        { text: "El ______________ de un metal es un cambio químico que ocurre al exponerlo al oxígeno y la humedad.", answer: "óxido" },
+        { text: "La ______________ es un cambio físico que ocurre cuando el agua de un charco desaparece.", answer: "evaporación" },
+        { text: "Al tostar pan, se produce un cambio ______________ porque se forman nuevas sustancias.", answer: "químico" },
+        { text: "La ______________ del agua en el congelador es un cambio físico.", answer: "solidificación" },
+        { text: "La ______________ de una vela produce luz y calor, indicando un cambio químico.", answer: "combustión" },
+        { text: "Cuando el hielo se ______________, pasa de estado sólido a líquido.", answer: "derrite" },
+        { text: "La ______________ es el proceso inverso a la evaporación.", answer: "condensación" },
+        { text: "La ______________ del agua en el ciclo hidrológico es un cambio físico.", answer: "evaporación" },
+        { text: "La ______________ de los alimentos en el estómago es un cambio químico.", answer: "digestión" },
+        { text: "La ______________ es una evidencia de cambio químico cuando se produce un cambio de color.", answer: "color" },
+        { text: "El ______________ de una lata de refresco es un cambio físico.", answer: "aplastamiento" },
+        { text: "La ______________ de la leche al agregar limón es un cambio químico.", answer: "cortado" },
+        { text: "La ______________ es el paso de estado líquido a gaseoso.", answer: "vaporización" },
+        { text: "La ______________ es el paso de estado gaseoso a sólido (inverso a la sublimación).", answer: "deposición" },
+        { text: "La ______________ de las hojas en otoño es un cambio químico causado por la degradación de pigmentos.", answer: "decoloración" }
+    ];
+
+    // ======================== SECTION 3: MULTISELECT (40 POOL) ========================
+    const multiselectPool = [
+        { text: "¿Cuáles de los siguientes son cambios físicos?", options: ["Derretir hielo", "Quemar papel", "Disolver azúcar", "Oxidar hierro", "Evaporar agua"], correct: ["Derretir hielo", "Disolver azúcar", "Evaporar agua"] },
+        { text: "¿Cuáles de los siguientes son cambios químicos?", options: ["Cocer un huevo", "Congelar agua", "Digestión de alimentos", "Romper un papel", "Formación de caries"], correct: ["Cocer un huevo", "Digestión de alimentos", "Formación de caries"] },
+        { text: "¿Qué evidencias indican que ocurrió un cambio químico?", options: ["Cambio de color", "Cambio de forma", "Desprendimiento de gas", "Cambio de tamaño", "Cambio de temperatura"], correct: ["Cambio de color", "Desprendimiento de gas", "Cambio de temperatura"] },
+        { text: "¿Cuáles de los siguientes son cambios reversibles?", options: ["Derretir hielo", "Quemar papel", "Disolver azúcar", "Oxidar hierro", "Evaporar agua"], correct: ["Derretir hielo", "Disolver azúcar", "Evaporar agua"] },
+        { text: "¿Cuáles de los siguientes son cambios irreversibles?", options: ["Cocer un huevo", "Congelar agua", "Quemar papel", "Disolver azúcar", "Oxidar hierro"], correct: ["Cocer un huevo", "Quemar papel", "Oxidar hierro"] },
+        { text: "¿Qué cambios ocurren en la naturaleza?", options: ["Evaporación del agua", "Oxidación del hierro", "Combustión en incendios", "Descomposición de hojas", "Congelación de lagos"], correct: ["Evaporación del agua", "Oxidación del hierro", "Combustión en incendios", "Descomposición de hojas", "Congelación de lagos"] },
+        { text: "¿Cuáles de los siguientes son ejemplos de cambios físicos en el hogar?", options: ["Congelar alimentos", "Tostar pan", "Hervir agua", "Cocinar carne", "Cortar verduras"], correct: ["Congelar alimentos", "Hervir agua", "Cortar verduras"] },
+        { text: "¿Cuáles de los siguientes son ejemplos de cambios químicos en el hogar?", options: ["Tostar pan", "Hervir agua", "Formación de caries", "Congelar alimentos", "Quemar gas"], correct: ["Tostar pan", "Formación de caries", "Quemar gas"] },
+        { text: "¿Qué cambios ocurren en la industria del petróleo?", options: ["Destilación (físico)", "Craqueo (químico)", "Combustión (químico)", "Condensación (físico)", "Evaporación (físico)"], correct: ["Destilación (físico)", "Craqueo (químico)", "Combustión (químico)", "Condensación (físico)"] },
+        { text: "¿Qué características son propias de los cambios físicos?", options: ["Cambian la forma", "Cambian la composición", "Son reversibles", "Forman nuevas sustancias", "Cambian el estado"], correct: ["Cambian la forma", "Son reversibles", "Cambian el estado"] },
+        { text: "¿Qué características son propias de los cambios químicos?", options: ["Cambian la forma", "Cambian la composición", "Son irreversibles", "Forman nuevas sustancias", "Cambian el estado"], correct: ["Cambian la composición", "Son irreversibles", "Forman nuevas sustancias"] },
+        { text: "¿Cuáles de los siguientes son ejemplos de cambios físicos?", options: ["Moler tiza", "Quemar papel", "Romper un vaso", "Oxidar hierro", "Disolver sal en agua"], correct: ["Moler tiza", "Romper un vaso", "Disolver sal en agua"] },
+        { text: "¿Cuáles de los siguientes son ejemplos de cambios químicos?", options: ["Cocer un huevo", "Disolver azúcar", "Digestión de alimentos", "Congelar agua", "Formación de óxido"], correct: ["Cocer un huevo", "Digestión de alimentos", "Formación de óxido"] },
+        { text: "¿Qué evidencias indican que ocurrió un cambio químico?", options: ["Formación de precipitado", "Cambio de forma", "Emisión de luz", "Cambio de tamaño", "Liberación de calor"], correct: ["Formación de precipitado", "Emisión de luz", "Liberación de calor"] },
+        { text: "¿Cuáles de los siguientes procesos son cambios físicos?", options: ["Fusión del hielo", "Combustión de madera", "Evaporación del agua", "Oxidación del cobre", "Solidificación del agua"], correct: ["Fusión del hielo", "Evaporación del agua", "Solidificación del agua"] },
+        { text: "¿Cuáles de los siguientes procesos son cambios químicos?", options: ["Combustión de madera", "Evaporación del agua", "Oxidación del cobre", "Digestión de alimentos", "Fusión del hielo"], correct: ["Combustión de madera", "Oxidación del cobre", "Digestión de alimentos"] },
+        { text: "¿Qué ejemplos son cambios físicos en la cocina?", options: ["Hervir agua", "Tostar pan", "Cortar verduras", "Cocinar carne", "Derretir mantequilla"], correct: ["Hervir agua", "Cortar verduras", "Derretir mantequilla"] },
+        { text: "¿Qué ejemplos son cambios químicos en la cocina?", options: ["Tostar pan", "Hervir agua", "Cocinar carne", "Cortar verduras", "Dorar cebolla"], correct: ["Tostar pan", "Cocinar carne", "Dorar cebolla"] },
+        { text: "¿Cuáles de los siguientes son cambios físicos en el ciclo del agua?", options: ["Evaporación", "Condensación", "Combustión", "Solidificación", "Sublimación"], correct: ["Evaporación", "Condensación", "Solidificación", "Sublimación"] },
+        { text: "¿Cuáles de los siguientes son cambios químicos en la naturaleza?", options: ["Fotosíntesis", "Evaporación del agua", "Combustión de incendios", "Descomposición de hojas", "Solidificación del agua"], correct: ["Fotosíntesis", "Combustión de incendios", "Descomposición de hojas"] },
+        { text: "¿Qué cambios ocurren en los experimentos descritos en la clase?", options: ["Cal viva + agua (químico)", "Metales + ácido (químico)", "Cocer huevo (químico)", "Hielo derritiéndose (físico)", "Azúcar en agua (físico)"], correct: ["Cal viva + agua (químico)", "Metales + ácido (químico)", "Cocer huevo (químico)", "Hielo derritiéndose (físico)", "Azúcar en agua (físico)"] },
+        { text: "¿Qué características son propias de los cambios físicos?", options: ["Cambian el tamaño", "Cambian la composición", "Son reversibles", "Forman nuevas sustancias", "Cambian la forma"], correct: ["Cambian el tamaño", "Son reversibles", "Cambian la forma"] },
+        { text: "¿Qué características son propias de los cambios químicos?", options: ["Forman nuevas sustancias", "Cambian el estado", "Son irreversibles", "Cambian la forma", "Cambian la composición"], correct: ["Forman nuevas sustancias", "Son irreversibles", "Cambian la composición"] },
+        { text: "¿Cuáles de los siguientes son ejemplos de cambios químicos?", options: ["Oxidación del hierro", "Disolución de sal en agua", "Combustión del papel", "Derretir mantequilla", "Formación de caries"], correct: ["Oxidación del hierro", "Combustión del papel", "Formación de caries"] },
+        { text: "¿Cuáles de los siguientes son ejemplos de cambios físicos?", options: ["Romper un lápiz", "Quemar una vela", "Disolver azúcar en agua", "Oxidar un clavo", "Doblar un alambre"], correct: ["Romper un lápiz", "Disolver azúcar en agua", "Doblar un alambre"] },
+        { text: "¿Qué evidencias son propias de cambios químicos?", options: ["Cambio de color", "Cambio de estado", "Desprendimiento de gas", "Cambio de forma", "Cambio de temperatura"], correct: ["Cambio de color", "Desprendimiento de gas", "Cambio de temperatura"] },
+        { text: "¿Cuáles de los siguientes son cambios reversibles?", options: ["Disolver sal en agua", "Quemar papel", "Derretir hielo", "Cocer un huevo", "Evaporar agua"], correct: ["Disolver sal en agua", "Derretir hielo", "Evaporar agua"] },
+        { text: "¿Cuáles de los siguientes son cambios irreversibles?", options: ["Quemar papel", "Evaporar agua", "Oxidar hierro", "Disolver azúcar", "Cocer un huevo"], correct: ["Quemar papel", "Oxidar hierro", "Cocer un huevo"] },
+        { text: "¿Qué cambios ocurren al cocinar?", options: ["Hervir agua (físico)", "Tostar pan (químico)", "Cocer carne (químico)", "Derretir mantequilla (físico)", "Dorar cebolla (químico)"], correct: ["Hervir agua (físico)", "Tostar pan (químico)", "Cocer carne (químico)", "Derretir mantequilla (físico)", "Dorar cebolla (químico)"] },
+        { text: "¿Qué cambios ocurren en los fenómenos naturales?", options: ["Evaporación del agua (físico)", "Erupción volcánica (físico y químico)", "Incendio forestal (químico)", "Deshielo glacial (físico)", "Descomposición de hojas (químico)"], correct: ["Evaporación del agua (físico)", "Erupción volcánica (físico y químico)", "Incendio forestal (químico)", "Deshielo glacial (físico)", "Descomposición de hojas (químico)"] },
+        { text: "¿Qué cambios son ejemplos de cambios físicos?", options: ["Sublimación del hielo seco", "Combustión del gas", "Condensación del vapor", "Oxidación del hierro", "Fusión del metal"], correct: ["Sublimación del hielo seco", "Condensación del vapor", "Fusión del metal"] },
+        { text: "¿Qué cambios son ejemplos de cambios químicos?", options: ["Combustión del gas", "Condensación del vapor", "Oxidación del hierro", "Fusión del metal", "Descomposición de alimentos"], correct: ["Combustión del gas", "Oxidación del hierro", "Descomposición de alimentos"] },
+        { text: "¿Qué características son propias de los cambios físicos?", options: ["No cambia la composición", "Cambia la composición", "Es reversible", "Es irreversible", "Cambia el estado"], correct: ["No cambia la composición", "Es reversible", "Cambia el estado"] },
+        { text: "¿Qué características son propias de los cambios químicos?", options: ["No cambia la composición", "Cambia la composición", "Es reversible", "Es irreversible", "Forma nuevas sustancias"], correct: ["Cambia la composición", "Es irreversible", "Forma nuevas sustancias"] },
+        { text: "¿Cuáles de los siguientes son cambios físicos en la naturaleza?", options: ["Congelación de lagos", "Combustión de incendios", "Evaporación del agua", "Oxidación de metales", "Deshielo de glaciares"], correct: ["Congelación de lagos", "Evaporación del agua", "Deshielo de glaciares"] },
+        { text: "¿Cuáles de los siguientes son cambios químicos en la naturaleza?", options: ["Combustión de incendios", "Evaporación del agua", "Oxidación de metales", "Deshielo de glaciares", "Descomposición de hojas"], correct: ["Combustión de incendios", "Oxidación de metales", "Descomposición de hojas"] },
+        { text: "¿Qué cambios ocurren en el experimento de la cal viva con agua?", options: ["Se libera calor (químico)", "Se forma hidróxido de calcio (químico)", "Cambia la temperatura (químico)", "Es irreversible (químico)", "El agua se evapora (físico)"], correct: ["Se libera calor (químico)", "Se forma hidróxido de calcio (químico)", "Cambia la temperatura (químico)", "Es irreversible (químico)"] },
+        { text: "¿Qué cambios ocurren en el experimento de metales con ácido?", options: ["Se produce gas hidrógeno (químico)", "Algunos metales reaccionan (químico)", "El cobre no reacciona (químico)", "Se libera calor (químico)", "Es irreversible (químico)"], correct: ["Se produce gas hidrógeno (químico)", "Algunos metales reaccionan (químico)", "El cobre no reacciona (químico)", "Se libera calor (químico)", "Es irreversible (químico)"] },
+        { text: "¿Qué cambios ocurren al cocer un huevo?", options: ["Las proteínas se desnaturalizan (químico)", "Cambia la textura (químico)", "Cambia el color (químico)", "Es irreversible (químico)", "El agua hierve (físico)"], correct: ["Las proteínas se desnaturalizan (químico)", "Cambia la textura (químico)", "Cambia el color (químico)", "Es irreversible (químico)", "El agua hierve (físico)"] },
+        { text: "¿Qué cambios ocurren en la destilación del petróleo?", options: ["Separación por ebullición (físico)", "Condensación (físico)", "Craqueo (químico)", "Combustión (químico)", "Evaporación (físico)"], correct: ["Separación por ebullición (físico)", "Condensación (físico)", "Craqueo (químico)", "Combustión (químico)", "Evaporación (físico)"] }
+    ];
+
+    // ======================== SECTION 4: DROPDOWN (40 POOL) ========================
+    const dropdownPool = [
+        { text: "El hielo que se derrite es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "El papel que se quema es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "La disolución de azúcar en agua es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La oxidación del hierro es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "La evaporación del agua es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La cocción de un huevo es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "La solidificación del agua es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La combustión del gas es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "La fusión del hielo es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La formación de caries es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "La digestión de alimentos es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "La condensación del vapor es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La oxidación del cobre es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "La sublimación del hielo seco es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La descomposición de una manzana es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al tostar pan, se produce un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al cortar un trozo de papel, se produce un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "Al quemar una vela, se produce un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al mezclar vinagre con bicarbonato, se produce un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al doblar un alambre, se produce un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La formación de óxido en un metal es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "La evaporación del agua de un charco es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La combustión de la madera es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al moler tiza, se produce un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La formación de un precipitado es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al congelar agua, se produce un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La descomposición de hojas en el bosque es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al evaporar agua con sal, se recupera la sal. Esto es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La fotosíntesis de las plantas es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al romper un vidrio, se produce un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La destilación del petróleo es un proceso que incluye cambios ______________.", options: ["Físicos", "Químicos", "Solo físicos", "Solo químicos"], correct: "Físicos" },
+        { text: "El craqueo del petróleo (romper moléculas grandes) es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al cocer un huevo, las proteínas se desnaturalizan. Esto es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al calentar cal viva con agua, se libera calor. Esto es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "La separación de una mezcla por filtración es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La combustión del gas de cocina es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al hervir agua, las burbujas que se forman son de vapor. Esto es un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" },
+        { text: "La formación de gas al mezclar vinagre y bicarbonato es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "El cambio de color de una manzana al cortarla es un cambio ______________.", options: ["Físico", "Químico"], correct: "Químico" },
+        { text: "Al derretir mantequilla en una sartén, se produce un cambio ______________.", options: ["Físico", "Químico"], correct: "Físico" }
+    ];
+
+    // ======================== SECTION 5: TRUE/FALSE (40 POOL) ========================
+    const trueFalsePool = [
+        { text: "El hielo que se derrite es un cambio químico.", correct: false },
+        { text: "La oxidación del hierro es un cambio químico.", correct: true },
+        { text: "Los cambios físicos son siempre irreversibles.", correct: false },
+        { text: "La combustión del papel produce nuevas sustancias.", correct: true },
+        { text: "La evaporación del agua es un cambio químico.", correct: false },
+        { text: "La formación de caries es un cambio químico.", correct: true },
+        { text: "En un cambio físico, la sustancia cambia su composición.", correct: false },
+        { text: "La digestión de los alimentos es un cambio químico.", correct: true },
+        { text: "El azúcar disuelta en agua se puede recuperar por evaporación.", correct: true },
+        { text: "La formación de óxido en un clavo es un cambio físico.", correct: false },
+        { text: "La cocción de un huevo es un cambio químico irreversible.", correct: true },
+        { text: "La sublimación del hielo seco es un cambio químico.", correct: false },
+        { text: "Al quemar papel, se libera energía en forma de calor y luz.", correct: true },
+        { text: "La solidificación del agua es un cambio irreversible.", correct: false },
+        { text: "La descomposición de una manzana es un cambio químico.", correct: true },
+        { text: "El agua que hierve produce vapor de agua, un cambio químico.", correct: false },
+        { text: "La formación de un precipitado es evidencia de un cambio químico.", correct: true },
+        { text: "Al moler tiza, se forma una nueva sustancia.", correct: false },
+        { text: "La combustión de una vela es un cambio químico.", correct: true },
+        { text: "Al congelar agua, se produce un cambio químico.", correct: false },
+        { text: "La oxidación del cobre es un cambio químico.", correct: true },
+        { text: "Al tostar pan, se produce un cambio químico.", correct: true },
+        { text: "La fusión del hielo es un cambio irreversible.", correct: false },
+        { text: "La formación de gas en una reacción química es una evidencia de cambio químico.", correct: true },
+        { text: "Al romper un papel, se produce un cambio químico.", correct: false },
+        { text: "La descomposición de hojas en el bosque es un cambio físico.", correct: false },
+        { text: "La condensación del vapor de agua es un cambio físico.", correct: true },
+        { text: "La fotosíntesis es un cambio químico.", correct: true },
+        { text: "Al disolver sal en agua, se produce un cambio químico.", correct: false },
+        { text: "La formación de óxido en un metal es un cambio físico.", correct: false },
+        { text: "Al quemar gas de cocina, se produce un cambio químico.", correct: true },
+        { text: "La sublimación es un cambio de estado físico.", correct: true },
+        { text: "La destilación del petróleo es un proceso que solo involucra cambios físicos.", correct: false },
+        { text: "El craqueo del petróleo es un cambio químico.", correct: true },
+        { text: "Al cocer un huevo, las proteínas se desnaturalizan (cambio químico).", correct: true },
+        { text: "La separación de una mezcla por filtración es un cambio químico.", correct: false },
+        { text: "Al calentar cal viva con agua, se libera calor (cambio químico).", correct: true },
+        { text: "La evaporación del agua de un charco es un cambio químico.", correct: false },
+        { text: "La formación de gas al mezclar vinagre y bicarbonato es un cambio químico.", correct: true },
+        { text: "Al derretir mantequilla, se produce un cambio químico.", correct: false }
+    ];
+
+    // ======================== FUNCIONES DE UTILIDAD ========================
+    function getRandomItems(pool, n) {
+        const shuffled = [...pool];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, n);
+    }
+
+    // ======================== NOMBRES DE SECCIONES ========================
+    const sectionNames = {
+        tab1: '📝 Sección 1',
+        tab2: '✏️ Sección 2',
+        tab3: '✅ Sección 3',
+        tab4: '📋 Sección 4',
+        tab5: '✅ Sección 5'
+    };
+
+    let currentMcq = [], currentGap = [], currentMultiselect = [], currentDropdown = [], currentTrueFalse = [];
+    let mcqAnswers = [], gapAnswers = [], multiselectAnswers = [], dropdownAnswers = [], trueFalseAnswers = [];
+    let evaluated = false;
+    const QUESTIONS_PER_SECTION = 12;
+
+    // ======================== ACTUALIZAR TÍTULO DE SECCIÓN Y SCROLL TO TOP ========================
+    function updateSectionTitle(tabId) {
+        const titleDiv = document.getElementById('currentSectionTitle');
+        if (titleDiv) {
+            titleDiv.textContent = sectionNames[tabId] || '';
+        }
+    }
+
+    function scrollToTop() {
+        const container = document.getElementById('tabContentContainer');
+        if (container) {
+            container.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+    }
+
+    // ======================== RENDER FUNCTIONS ========================
+    function renderMcq() {
+        const container = document.getElementById('mcq-questions');
+        container.innerHTML = '';
+        currentMcq.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `mcq-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="radio" name="mcq_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(mcqAnswers[idx]) {
+                const radios = div.querySelectorAll(`input[name="mcq_${idx}"]`);
+                radios.forEach(radio => { if(radio.value === mcqAnswers[idx]) radio.checked = true; });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => { if(!evaluated) mcqAnswers[idx] = e.target.value; });
+            });
+        });
+    }
+
+    function renderGapFill() {
+        const container = document.getElementById('gapfill-questions');
+        container.innerHTML = '';
+        const correctAnswers = currentGap.map(q => q.answer.toLowerCase());
+        const allPossibleAnswers = gapFillPool.map(q => q.answer.toLowerCase());
+        const possibleDistractors = allPossibleAnswers.filter(ans => !correctAnswers.includes(ans));
+        const shuffledDistractors = [...new Set(possibleDistractors)].sort(() => Math.random() - 0.5);
+        const selectedDistractors = shuffledDistractors.slice(0, 15);
+        const wordBank = [...correctAnswers, ...selectedDistractors].sort(() => Math.random() - 0.5);
+
+        const bankDiv = document.createElement('div');
+        bankDiv.className = 'question-card';
+        bankDiv.style.marginBottom = '20px';
+        bankDiv.innerHTML = `
+            <div class="question-text" style="margin-bottom:12px;">📚 BANCO DE PALABRAS — Usa algunas de estas palabras para completar:</div>
+            <div style="display:flex; flex-wrap:wrap; gap:8px;">
+                ${wordBank.map(word => `
+                    <span style="background:#ccfbf1; color:#0f766e; border-radius:20px; padding:6px 14px; font-size:0.85rem; font-weight:500; font-family:monospace;">${word}</span>
+                `).join('')}
+            </div>
+        `;
+        container.appendChild(bankDiv);
+
+        currentGap.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `gap-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <input type="text" class="gap-input" data-idx="${idx}" placeholder="Escribe la palabra que falta..." value="${gapAnswers[idx] || ''}">
+            `;
+            container.appendChild(div);
+            const input = div.querySelector('.gap-input');
+            input.addEventListener('input', (e) => { if(!evaluated) gapAnswers[idx] = e.target.value.trim().toLowerCase(); });
+        });
+    }
+
+    function renderMultiselect() {
+        const container = document.getElementById('multiselect-questions');
+        container.innerHTML = '';
+        currentMultiselect.forEach((q, idx) => {
+            const shuffledOptions = [...q.options].sort(() => Math.random() - 0.5);
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `multiselect-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text} (Selecciona TODAS las correctas)</div>
+                <div class="options">
+                    ${shuffledOptions.map(opt => `
+                        <label class="option">
+                            <input type="checkbox" name="multiselect_${idx}" value="${opt}">
+                            <span>${opt}</span>
+                        </label>
+                    `).join('')}
+                </div>
+            `;
+            container.appendChild(div);
+            if(multiselectAnswers[idx]) {
+                const checkboxes = div.querySelectorAll(`input[type="checkbox"]`);
+                checkboxes.forEach(cb => {
+                    if(multiselectAnswers[idx].includes(cb.value)) cb.checked = true;
+                });
+            }
+            div.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                cb.addEventListener('change', (e) => {
+                    if(evaluated) return;
+                    const current = multiselectAnswers[idx] || [];
+                    if(e.target.checked) {
+                        if(!current.includes(e.target.value)) {
+                            multiselectAnswers[idx] = [...current, e.target.value];
+                        }
+                    } else {
+                        multiselectAnswers[idx] = current.filter(v => v !== e.target.value);
+                    }
+                });
+            });
+        });
+    }
+
+    function renderDropdown() {
+        const container = document.getElementById('dropdown-questions');
+        container.innerHTML = '';
+        currentDropdown.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `dropdown-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <select class="dropdown-select" data-idx="${idx}">
+                    <option value="">-- Selecciona una opción --</option>
+                    ${q.options.map(opt => `<option value="${opt}" ${dropdownAnswers[idx] === opt ? 'selected' : ''}>${opt}</option>`).join('')}
+                </select>
+            `;
+            container.appendChild(div);
+            const sel = div.querySelector('.dropdown-select');
+            sel.addEventListener('change', (e) => { if(!evaluated) dropdownAnswers[idx] = e.target.value; });
+        });
+    }
+
+    function renderTrueFalse() {
+        const container = document.getElementById('truefalse-questions');
+        container.innerHTML = '';
+        currentTrueFalse.forEach((q, idx) => {
+            const div = document.createElement('div');
+            div.className = 'question-card';
+            div.id = `tf-card-${idx}`;
+            div.innerHTML = `
+                <div class="question-text">${idx+1}. ${q.text}</div>
+                <div class="options" style="flex-direction: row; gap: 20px; flex-wrap: wrap;">
+                    <label class="option" style="flex: 0 1 auto; min-width: 120px;">
+                        <input type="radio" name="tf_${idx}" value="true">
+                        <span><span class="tag-verdadero">Verdadero</span></span>
+                    </label>
+                    <label class="option" style="flex: 0 1 auto; min-width: 120px;">
+                        <input type="radio" name="tf_${idx}" value="false">
+                        <span><span class="tag-falso">Falso</span></span>
+                    </label>
+                </div>
+            `;
+            container.appendChild(div);
+            if(trueFalseAnswers[idx] !== undefined) {
+                const radios = div.querySelectorAll(`input[name="tf_${idx}"]`);
+                radios.forEach(radio => {
+                    if(radio.value === String(trueFalseAnswers[idx])) radio.checked = true;
+                });
+            }
+            div.querySelectorAll('input[type="radio"]').forEach(radio => {
+                radio.addEventListener('change', (e) => {
+                    if(!evaluated) trueFalseAnswers[idx] = e.target.value === 'true';
+                });
+            });
+        });
+    }
+
+    function renderAll() {
+        renderMcq();
+        renderGapFill();
+        renderMultiselect();
+        renderDropdown();
+        renderTrueFalse();
+        // Actualizar título de la sección activa
+        const activeTab = document.querySelector('.tab-btn.active');
+        if (activeTab) {
+            updateSectionTitle(activeTab.getAttribute('data-tab'));
+        }
+    }
+
+    // ======================== EVALUACIÓN ========================
+    function showCorrectAnswers() {
+        // MCQ
+        currentMcq.forEach((q, idx) => {
+            const card = document.getElementById(`mcq-card-${idx}`);
+            if(!card) return;
+            const isCorrect = mcqAnswers[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.correct}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Gap Fill
+        currentGap.forEach((q, idx) => {
+            const card = document.getElementById(`gap-card-${idx}`);
+            if(!card) return;
+            const isCorrect = gapAnswers[idx] === q.answer.toLowerCase();
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.answer}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Multiselect
+        currentMultiselect.forEach((q, idx) => {
+            const card = document.getElementById(`multiselect-card-${idx}`);
+            if(!card) return;
+            const userAnswers = multiselectAnswers[idx] || [];
+            const isCorrect = userAnswers.length === q.correct.length && q.correct.every(c => userAnswers.includes(c));
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuestas correctas: ${q.correct.join(', ')}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // Dropdown
+        currentDropdown.forEach((q, idx) => {
+            const card = document.getElementById(`dropdown-card-${idx}`);
+            if(!card) return;
+            const isCorrect = dropdownAnswers[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${q.correct}`;
+                card.appendChild(correctDiv);
+            }
+        });
+        // True/False
+        currentTrueFalse.forEach((q, idx) => {
+            const card = document.getElementById(`tf-card-${idx}`);
+            if(!card) return;
+            const isCorrect = trueFalseAnswers[idx] === q.correct;
+            card.classList.add(isCorrect ? 'correct-highlight' : 'wrong-highlight');
+            if(!card.querySelector('.correct-answer-display')) {
+                const correctDiv = document.createElement('div');
+                correctDiv.className = 'correct-answer-display';
+                const label = q.correct ? 'Verdadero' : 'Falso';
+                correctDiv.innerHTML = `<i class="fas fa-info-circle"></i> Respuesta correcta: ${label}`;
+                card.appendChild(correctDiv);
+            }
+        });
+    }
+
+    function calculateAndShowResults() {
+        const maxPoints = 60;
+        let totalCorrect = 0;
+
+        // MCQ (12 pts)
+        for(let i=0; i<currentMcq.length; i++) {
+            if(mcqAnswers[i] && mcqAnswers[i] === currentMcq[i].correct) totalCorrect++;
+        }
+        // Gap Fill (12 pts)
+        for(let i=0; i<currentGap.length; i++) {
+            if(gapAnswers[i] && gapAnswers[i] === currentGap[i].answer.toLowerCase()) totalCorrect++;
+        }
+        // Multiselect (12 pts)
+        for(let i=0; i<currentMultiselect.length; i++) {
+            const userAnswers = multiselectAnswers[i] || [];
+            const correct = currentMultiselect[i].correct;
+            if(userAnswers.length === correct.length && correct.every(c => userAnswers.includes(c))) totalCorrect++;
+        }
+        // Dropdown (12 pts)
+        for(let i=0; i<currentDropdown.length; i++) {
+            if(dropdownAnswers[i] && dropdownAnswers[i] === currentDropdown[i].correct) totalCorrect++;
+        }
+        // True/False (12 pts)
+        for(let i=0; i<currentTrueFalse.length; i++) {
+            if(trueFalseAnswers[i] !== undefined && trueFalseAnswers[i] === currentTrueFalse[i].correct) totalCorrect++;
+        }
+
+        // Calcular porcentaje
+        const percentage = (totalCorrect / maxPoints) * 100;
+
+        // Calcular nota con 60% de exigencia
+        let grade = 0;
+        const passingPercentage = 60;
+
+        if (percentage >= passingPercentage) {
+            grade = 4.0 + ((percentage - passingPercentage) / (100 - passingPercentage)) * 3.0;
+        } else {
+            grade = 1.0 + (percentage / passingPercentage) * 3.0;
+        }
+        grade = Math.round(grade * 100) / 100;
+
+        const isApproved = grade >= 4.0;
+
+        document.getElementById('scoreDisplay').innerHTML = `Puntaje: ${totalCorrect} / ${maxPoints} (${Math.round(percentage)}%)`;
+        document.getElementById('gradeDisplay').innerHTML = `Nota: ${grade.toFixed(1)} (1.0 a 7.0) - Exigencia 60%`;
+        const passMsg = isApproved ? '✅ APROBADO' : '❌ NO APROBADO. Necesitas al menos un 60% (36 puntos).';
+        document.getElementById('passDisplay').innerHTML = passMsg;
+        document.getElementById('resultsSection').style.display = 'block';
+        document.getElementById('actionButtons').style.display = 'flex';
+        showCorrectAnswers();
+
+        const resultsSection = document.getElementById('resultsSection');
+        resultsSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        resultsSection.style.transition = 'box-shadow 0.3s';
+        resultsSection.style.boxShadow = '0 0 0 3px #facc15';
+        setTimeout(() => { resultsSection.style.boxShadow = 'none'; }, 1000);
+    }
+
+    function evaluateTest() {
+        if(evaluated) return;
+        evaluated = true;
+        calculateAndShowResults();
+    }
+
+    function restartTest() {
+        currentMcq = getRandomItems(mcqPool, QUESTIONS_PER_SECTION);
+        currentGap = getRandomItems(gapFillPool, QUESTIONS_PER_SECTION);
+        currentMultiselect = getRandomItems(multiselectPool, QUESTIONS_PER_SECTION);
+        currentDropdown = getRandomItems(dropdownPool, QUESTIONS_PER_SECTION);
+        currentTrueFalse = getRandomItems(trueFalsePool, QUESTIONS_PER_SECTION);
+
+        mcqAnswers = new Array(QUESTIONS_PER_SECTION).fill(null);
+        gapAnswers = new Array(QUESTIONS_PER_SECTION).fill('');
+        multiselectAnswers = new Array(QUESTIONS_PER_SECTION).fill([]);
+        dropdownAnswers = new Array(QUESTIONS_PER_SECTION).fill('');
+        trueFalseAnswers = new Array(QUESTIONS_PER_SECTION).fill(undefined);
+        evaluated = false;
+
+        document.getElementById('resultsSection').style.display = 'none';
+        document.getElementById('actionButtons').style.display = 'none';
+        renderAll();
+    }
+
+    // ======================== EVENTOS ========================
+    document.querySelectorAll('.tab-btn').forEach(btn => {
+        if(btn.id !== 'evaluateBtnSidebar') {
+            btn.addEventListener('click', function() {
+                document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+                this.classList.add('active');
+                const tabId = this.getAttribute('data-tab');
+                document.querySelectorAll('.tab-content').forEach(tab => tab.classList.remove('active'));
+                document.getElementById(tabId).classList.add('active');
+                updateSectionTitle(tabId);
+                // Scroll to top of the content container
+                scrollToTop();
+            });
+        }
+    });
+
+    document.getElementById('evaluateBtnSidebar').addEventListener('click', evaluateTest);
+    document.getElementById('restartBtn').addEventListener('click', restartTest);
+    document.getElementById('backToClassBtn').addEventListener('click', () => window.location.href = 'C_2_Quimica.html');
+    document.getElementById('backToCourseBtn').addEventListener('click', () => window.location.href = 'Quimica.html');
+
+    restartTest();
+</script>
+</body>
+</html>

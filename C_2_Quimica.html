@@ -1,0 +1,1202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Cambios Físicos y Químicos - Ciencias 7° básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 85vh;
+            max-height: 750px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 45px -12px rgba(0,0,0,0.3);
+            background: #ffffff;
+            border-radius: 32px;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.5rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: white;
+            border-radius: 32px;
+        }
+
+        .slide.active {
+            opacity: 1;
+            visibility: visible;
+            z-index: 10;
+        }
+
+        .slide::-webkit-scrollbar {
+            width: 6px;
+        }
+        .slide::-webkit-scrollbar-track {
+            background: #e9ecef;
+            border-radius: 8px;
+        }
+        .slide::-webkit-scrollbar-thumb {
+            background: #0f766e;
+            border-radius: 8px;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #0f766e, #14b8a6);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #0f766e;
+            border-left: 5px solid #14b8a6;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #0f766e;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .badge {
+            background: #ccfbf1;
+            color: #0f766e;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.75rem;
+            display: inline-block;
+            margin-bottom: 1rem;
+        }
+
+        .info-box {
+            background: #f0fdf4;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            border-left: 4px solid #14b8a6;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            padding: 1rem 1.2rem;
+            border-radius: 20px;
+            margin: 1rem 0;
+            border-left: 4px solid #ef4444;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .card {
+            background: #f7fafc;
+            border-radius: 20px;
+            padding: 1rem;
+            border: 1px solid #e2e8f0;
+            transition: transform 0.2s;
+        }
+
+        .card:hover {
+            transform: translateY(-3px);
+            border-color: #14b8a6;
+        }
+
+        .card i {
+            font-size: 2rem;
+            color: #14b8a6;
+            margin-bottom: 0.5rem;
+        }
+
+        .card-fisico {
+            border-left: 5px solid #3b82f6;
+        }
+
+        .card-fisico i {
+            color: #3b82f6;
+        }
+
+        .card-quimico {
+            border-left: 5px solid #ef4444;
+        }
+
+        .card-quimico i {
+            color: #ef4444;
+        }
+
+        .highlight {
+            background: #ccfbf1;
+            font-weight: bold;
+            padding: 0.2rem 0.4rem;
+            border-radius: 12px;
+        }
+
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .nav-btn {
+            background: white;
+            border: none;
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            box-shadow: 0 6px 14px rgba(0,0,0,0.1);
+            cursor: pointer;
+            font-size: 1.4rem;
+            transition: all 0.2s ease;
+            color: #0f766e;
+        }
+
+        .nav-btn:hover {
+            background: #0f766e;
+            color: white;
+            transform: scale(1.05);
+        }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+
+        .action {
+            background: #2d3748;
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .action:hover {
+            background: #1a202c;
+            transform: translateY(-2px);
+        }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: #cbd5e1;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .dot.active-dot {
+            background: #0f766e;
+            width: 28px;
+            border-radius: 12px;
+        }
+
+        .comparacion {
+            background: #e6f7f5;
+            border-radius: 20px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .tabla-ejemplos {
+            width: 100%;
+            border-collapse: collapse;
+            background: #f8fafc;
+            border-radius: 20px;
+            overflow: hidden;
+            margin: 0.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .tabla-ejemplos thead {
+            background: #0f766e;
+            color: white;
+        }
+
+        .tabla-ejemplos th {
+            padding: 10px;
+            text-align: left;
+        }
+
+        .tabla-ejemplos td {
+            padding: 8px 10px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .tabla-ejemplos tr:hover {
+            background: #e6f7f5;
+        }
+
+        .tag-fisico {
+            background: #3b82f6;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .tag-quimico {
+            background: #ef4444;
+            color: white;
+            padding: 2px 12px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+
+        .pasos-experimento {
+            counter-reset: paso;
+            padding-left: 0;
+        }
+
+        .pasos-experimento li {
+            list-style: none;
+            position: relative;
+            padding: 0.5rem 0 0.5rem 2.5rem;
+            font-size: 0.95rem;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        .pasos-experimento li:last-child {
+            border-bottom: none;
+        }
+
+        .pasos-experimento li::before {
+            counter-increment: paso;
+            content: counter(paso);
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 28px;
+            height: 28px;
+            background: #0f766e;
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: 700;
+        }
+
+        .diagrama-flujo {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 20px;
+            margin: 0.5rem 0;
+        }
+
+        .diagrama-flujo .paso {
+            background: #0f766e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-align: center;
+            min-width: 80px;
+        }
+
+        .diagrama-flujo .flecha {
+            color: #0f766e;
+            font-size: 1.5rem;
+            font-weight: 700;
+        }
+
+        .diagrama-flujo .paso-fisico {
+            background: #3b82f6;
+        }
+
+        .diagrama-flujo .paso-quimico {
+            background: #ef4444;
+        }
+
+        @media (max-width: 680px) {
+            .slide {
+                padding: 1.2rem;
+            }
+            h1 {
+                font-size: 1.6rem;
+            }
+            h2 {
+                font-size: 1.3rem;
+            }
+            .grid-2, .grid-3 {
+                grid-template-columns: 1fr;
+            }
+            .action {
+                padding: 6px 12px;
+                font-size: 0.7rem;
+            }
+            .diagrama-flujo {
+                flex-direction: column;
+            }
+            .diagrama-flujo .flecha {
+                transform: rotate(90deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+
+        <!-- SLIDE 0 - PORTADA -->
+        <div class="slide active" data-index="0">
+            <div class="badge">🧪 Ciencias Naturales - 7° básico</div>
+            <h1>Cambios Físicos y Químicos de la Materia</h1>
+            <p style="font-size: 1.2rem; margin-top: 0.5rem;">¿Cómo se transforma la materia que nos rodea?</p>
+            <div class="info-box" style="margin-top: 2rem;">
+                <i class="fas fa-flask"></i> <strong>En esta clase aprenderás:</strong><br>
+                ➜ ¿Qué son los cambios físicos y químicos?<br>
+                ➜ ¿Cómo diferenciar un cambio físico de uno químico?<br>
+                ➜ Ejemplos cotidianos de cada tipo de cambio<br>
+                ➜ Experimentos que demuestran estos cambios<br>
+                ➜ La importancia de los cambios en la naturaleza y la industria
+            </div>
+            <div style="margin-top: auto; text-align: center; padding: 1rem; color: #64748b;">
+                <i class="fas fa-arrow-right"></i> Presiona ▶ o desliza para continuar
+            </div>
+        </div>
+
+        <!-- SLIDE 1 - ¿Qué son los cambios de la materia? -->
+        <div class="slide" data-index="1">
+            <div class="badge">📖 CONCEPTOS BÁSICOS</div>
+            <h2>¿Qué son los cambios de la materia?</h2>
+            <p style="font-size: 1.05rem;">La materia que nos rodea está en <strong>constante transformación</strong>. Estos cambios se pueden clasificar en dos grandes grupos:</p>
+
+            <div class="grid-2" style="margin-top: 1.2rem;">
+                <div class="card card-fisico">
+                    <i class="fas fa-ice-cream"></i>
+                    <h3>Cambios Físicos</h3>
+                    <p>La sustancia <strong>cambia de forma o estado</strong>, pero <strong>su composición química no se altera</strong>. Sigue siendo la misma sustancia.</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #475569;">Ejemplo: El hielo se derrite y se convierte en agua líquida, pero sigue siendo H₂O.</p>
+                </div>
+                <div class="card card-quimico">
+                    <i class="fas fa-fire"></i>
+                    <h3>Cambios Químicos</h3>
+                    <p>La sustancia se <strong>transforma en una nueva sustancia</strong> con propiedades diferentes. <strong>Su composición química cambia</strong>.</p>
+                    <p style="font-size: 0.85rem; margin-top: 0.5rem; color: #475569;">Ejemplo: Un trozo de madera al quemarse se convierte en cenizas, humo y gases.</p>
+                </div>
+            </div>
+
+            <div class="comparacion">
+                <i class="fas fa-lightbulb"></i> <strong>Idea clave:</strong> En un cambio físico, <strong>se puede recuperar la sustancia original</strong> (es reversible). En un cambio químico, <strong>no se puede recuperar</strong> (es irreversible).
+            </div>
+        </div>
+
+        <!-- SLIDE 2 - Cambios Físicos -->
+        <div class="slide" data-index="2">
+            <div class="badge">🔵 CAMBIOS FÍSICOS</div>
+            <h2>¿Qué es un cambio físico?</h2>
+
+            <div class="grid-2">
+                <div class="card card-fisico">
+                    <i class="fas fa-list"></i>
+                    <h3>Características</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>La sustancia <strong>no cambia su composición</strong>.</li>
+                        <li>Generalmente es <strong>reversible</strong>.</li>
+                        <li>Cambia la <strong>forma, tamaño o estado</strong>.</li>
+                        <li><strong>No se forma</strong> una nueva sustancia.</li>
+                        <li>Se puede recuperar la sustancia original.</li>
+                    </ul>
+                </div>
+                <div class="card card-fisico">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>🧊 <strong>Fusión:</strong> Hielo → agua líquida</li>
+                        <li>💨 <strong>Evaporación:</strong> Agua líquida → vapor</li>
+                        <li>❄️ <strong>Solidificación:</strong> Agua líquida → hielo</li>
+                        <li>✂️ <strong>Romper</strong> un papel</li>
+                        <li>🪚 <strong>Moler</strong> tiza o café</li>
+                        <li>💧 <strong>Disolver</strong> azúcar en agua</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-check-circle"></i> <strong>¿Cómo saber si es un cambio físico?</strong><br>
+                Si <strong>al enfriar, calentar o secar</strong> la sustancia vuelve a su estado original, es un cambio físico.
+            </div>
+        </div>
+
+        <!-- SLIDE 3 - ¿Por qué disolver sal en agua es un cambio físico? (NUEVA) -->
+        <div class="slide" data-index="3">
+            <div class="badge">🧂 DISOLUCIÓN DE SAL</div>
+            <h2>¿Por qué disolver sal en agua es un cambio físico?</h2>
+
+            <div class="info-box" style="margin-bottom: 1rem;">
+                <i class="fas fa-question-circle"></i> <strong>Pregunta clave:</strong> Si la sal "desaparece" al mezclarla con agua, ¿por qué sigue siendo un cambio físico y no químico?
+            </div>
+
+            <div class="grid-2">
+                <div class="card card-fisico">
+                    <i class="fas fa-atom"></i>
+                    <h3>¿Qué ocurre a nivel molecular?</h3>
+                    <p style="font-size: 0.95rem;">La sal de mesa (NaCl) está formada por <strong>iones de sodio (Na⁺) y cloruro (Cl⁻)</strong> unidos por enlaces iónicos. Cuando se agrega al agua, las moléculas de agua (H₂O), que son polares, rodean a los iones y los <strong>separan</strong>.</p>
+                    <div style="background: #e6f7f5; padding: 0.8rem; border-radius: 16px; margin-top: 0.5rem;">
+                        <strong>NaCl (sólido) + H₂O → Na⁺ (disuelto) + Cl⁻ (disuelto)</strong>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #475569; margin-top: 0.5rem;">Los iones están separados, pero <strong>siguen siendo sodio y cloruro</strong>. No se han transformado en otra sustancia.</p>
+                </div>
+
+                <div class="card card-fisico">
+                    <i class="fas fa-undo-alt"></i>
+                    <h3>Es reversible</h3>
+                    <p style="font-size: 0.95rem;">La disolución de sal en agua es <strong>reversible</strong>. Si se calienta el agua hasta que se evapore, los iones de sodio y cloruro <strong>vuelven a unirse</strong> formando nuevamente cristales de sal.</p>
+                    <div style="background: #e6f7f5; padding: 0.8rem; border-radius: 16px; margin-top: 0.5rem;">
+                        <strong>Na⁺ (disuelto) + Cl⁻ (disueldo) → NaCl (sólido)</strong>
+                    </div>
+                    <p style="font-size: 0.85rem; color: #475569; margin-top: 0.5rem;">Esto demuestra que <strong>no se formó una nueva sustancia</strong>. La sal original se recupera completamente.</p>
+                </div>
+            </div>
+
+            <div style="background: #f1f5f9; border-radius: 20px; padding: 1rem; margin: 1rem 0;">
+                <h3 style="margin-top: 0;">🔬 Experimento: Recuperar la sal</h3>
+                <p><strong>Procedimiento:</strong></p>
+                <ol class="pasos-experimento" style="padding-left: 0;">
+                    <li>Disuelve sal en agua hasta que no se vean cristales.</li>
+                    <li>Vierte la solución en un recipiente y calienta suavemente.</li>
+                    <li>Espera a que el agua se evapore por completo.</li>
+                    <li>Observa el residuo que queda en el fondo del recipiente.</li>
+                </ol>
+                <div class="info-box" style="margin-top: 0.5rem;">
+                    <strong>Resultado:</strong> Se forman nuevamente <strong>cristales de sal</strong> en el fondo. La sal original <strong>se recupera completamente</strong>.
+                </div>
+            </div>
+
+            <div class="comparacion">
+                <i class="fas fa-lightbulb"></i> <strong>Conclusión clave:</strong> Disolver sal en agua es un <strong>cambio físico</strong> porque:
+                <ul style="margin-top: 0.5rem; margin-left: 1.5rem;">
+                    <li><strong>No cambia la composición química</strong> de la sal (sigue siendo NaCl).</li>
+                    <li>Es <strong>reversible</strong> (la sal se puede recuperar por evaporación).</li>
+                    <li><strong>No se forma una nueva sustancia</strong> con propiedades diferentes.</li>
+                    <li>Solo se separan los iones que la forman, pero no se transforman en otros elementos.</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- SLIDE 4 - Experimentos de cambios físicos -->
+        <div class="slide" data-index="4">
+            <div class="badge">🔬 EXPERIMENTOS</div>
+            <h2>Experimentando cambios físicos</h2>
+
+            <div class="card" style="margin-bottom: 1rem;">
+                <h3><i class="fas fa-flask" style="color: #0f766e;"></i> Experimento 1: Derretir hielo</h3>
+                <p><strong>Procedimiento:</strong> Coloca un cubo de hielo en un recipiente a temperatura ambiente y espera a que se derrita.</p>
+                <div class="info-box">
+                    <strong>¿Qué ocurre?</strong> El hielo (sólido) se transforma en agua líquida. Si vuelves a congelar el agua, obtienes hielo nuevamente. Es un <strong>cambio físico reversible</strong>.
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 1rem;">
+                <h3><i class="fas fa-flask" style="color: #0f766e;"></i> Experimento 2: Disolver azúcar en agua</h3>
+                <p><strong>Procedimiento:</strong> Agrega una cucharada de azúcar a un vaso con agua y revuelve hasta que se disuelva completamente.</p>
+                <div class="info-box">
+                    <strong>¿Qué ocurre?</strong> El azúcar se disuelve en el agua formando una mezcla homogénea (solución). Si calientas el agua hasta que se evapore, <strong>el azúcar queda como residuo</strong>. Es un cambio físico reversible.
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 1rem;">
+                <h3><i class="fas fa-flask" style="color: #0f766e;"></i> Experimento 3: Moler tiza</h3>
+                <p><strong>Procedimiento:</strong> Toma un trozo de tiza y muélelo hasta convertirla en polvo fino.</p>
+                <div class="info-box">
+                    <strong>¿Qué ocurre?</strong> La tiza cambia de tamaño (de sólido a polvo), pero <strong>sigue siendo tiza</strong>. Su composición química no cambió. Es un cambio físico.
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <i class="fas fa-exclamation-triangle"></i> <strong>Recuerda:</strong> En todos estos experimentos, <strong>la sustancia original se puede recuperar</strong> (por evaporación, congelación o simplemente juntando el polvo).
+            </div>
+        </div>
+
+        <!-- SLIDE 5 - Cambios Químicos -->
+        <div class="slide" data-index="5">
+            <div class="badge">🔴 CAMBIOS QUÍMICOS</div>
+            <h2>¿Qué es un cambio químico?</h2>
+
+            <div class="grid-2">
+                <div class="card card-quimico">
+                    <i class="fas fa-list"></i>
+                    <h3>Características</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>La sustancia <strong>cambia su composición</strong>.</li>
+                        <li>Es <strong>irreversible</strong> (no se puede recuperar).</li>
+                        <li>Se forman <strong>nuevas sustancias</strong>.</li>
+                        <li>Generalmente <strong>se libera o absorbe energía</strong> (calor, luz).</li>
+                        <li>Se producen <strong>cambios de color, olor, gas o precipitado</strong>.</li>
+                    </ul>
+                </div>
+                <div class="card card-quimico">
+                    <i class="fas fa-home"></i>
+                    <h3>Ejemplos cotidianos</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>🔥 <strong>Quemar</strong> un trozo de papel</li>
+                        <li>🦷 <strong>Formación de caries</strong> dental</li>
+                        <li>🔩 <strong>Oxidación</strong> de un clavo de hierro</li>
+                        <li>🍎 <strong>Descomposición</strong> de una manzana</li>
+                        <li>🥚 <strong>Cocer</strong> un huevo</li>
+                        <li>🍞 <strong>Digestión</strong> de los alimentos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-check-circle"></i> <strong>¿Cómo saber si es un cambio químico?</strong><br>
+                Si <strong>no se puede volver al estado original</strong> y aparecen nuevas sustancias, es un cambio químico.
+            </div>
+        </div>
+
+        <!-- SLIDE 6 - Evidencias de un cambio químico -->
+        <div class="slide" data-index="6">
+            <div class="badge">🔎 EVIDENCIAS</div>
+            <h2>¿Cómo reconocer un cambio químico?</h2>
+
+            <p>Existen varias <strong>señales o evidencias</strong> que indican que está ocurriendo un cambio químico:</p>
+
+            <div class="grid-3">
+                <div class="card card-quimico" style="text-align: center;">
+                    <i class="fas fa-palette" style="font-size: 2.5rem;"></i>
+                    <h3>Cambio de color</h3>
+                    <p style="font-size: 0.9rem;">Una sustancia cambia de color sin que sea por mezcla.</p>
+                    <p style="font-size: 0.8rem; color: #475569;"><strong>Ejemplo:</strong> Una manzana se oscurece al cortarla.</p>
+                </div>
+                <div class="card card-quimico" style="text-align: center;">
+                    <i class="fas fa-wind" style="font-size: 2.5rem;"></i>
+                    <h3>Desprendimiento de gas</h3>
+                    <p style="font-size: 0.9rem;">Se producen burbujas sin que el líquido hierva.</p>
+                    <p style="font-size: 0.8rem; color: #475569;"><strong>Ejemplo:</strong> Vinagre con bicarbonato de sodio.</p>
+                </div>
+                <div class="card card-quimico" style="text-align: center;">
+                    <i class="fas fa-thermometer-half" style="font-size: 2.5rem;"></i>
+                    <h3>Cambio de temperatura</h3>
+                    <p style="font-size: 0.9rem;">Se libera o absorbe calor (se calienta o enfría).</p>
+                    <p style="font-size: 0.8rem; color: #475569;"><strong>Ejemplo:</strong> Cal viva con agua (libera calor).</p>
+                </div>
+                <div class="card card-quimico" style="text-align: center;">
+                    <i class="fas fa-smog" style="font-size: 2.5rem;"></i>
+                    <h3>Formación de precipitado</h3>
+                    <p style="font-size: 0.9rem;">Aparece un sólido en una solución líquida.</p>
+                    <p style="font-size: 0.8rem; color: #475569;"><strong>Ejemplo:</strong> Leche que se corta al agregar limón.</p>
+                </div>
+                <div class="card card-quimico" style="text-align: center; grid-column: span 2;">
+                    <i class="fas fa-lightbulb" style="font-size: 2.5rem;"></i>
+                    <h3>Emisión de luz</h3>
+                    <p style="font-size: 0.9rem;">Se produce luz durante la reacción (combustión).</p>
+                    <p style="font-size: 0.8rem; color: #475569;"><strong>Ejemplo:</strong> La llama de una vela o un fósforo.</p>
+                </div>
+            </div>
+
+            <div class="comparacion">
+                <i class="fas fa-question-circle"></i> <strong>Pregunta:</strong> ¿El agua que hierve y hace burbujas es un cambio químico? <strong>¡No!</strong> Las burbujas son vapor de agua (cambio físico).
+            </div>
+        </div>
+
+        <!-- SLIDE 7 - Comparación: Físico vs Químico -->
+        <div class="slide" data-index="7">
+            <div class="badge">📊 COMPARACIÓN</div>
+            <h2>Físico vs Químico: Tabla comparativa</h2>
+
+            <div style="overflow-x: auto;">
+                <table class="tabla-ejemplos">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;">Aspecto</th>
+                            <th style="width: 40%; background: #3b82f6;">Cambio Físico</th>
+                            <th style="width: 40%; background: #ef4444;">Cambio Químico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Composición</strong></td>
+                            <td>No cambia</td>
+                            <td>Cambia, se forman nuevas sustancias</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Reversibilidad</strong></td>
+                            <td><span class="tag-fisico">Reversible</span></td>
+                            <td><span class="tag-quimico">Irreversible</span></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejemplos</strong></td>
+                            <td>Derretir hielo, disolver azúcar, moler tiza</td>
+                            <td>Quemar papel, oxidar hierro, cocer huevo</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Evidencias</strong></td>
+                            <td>Cambio de forma, tamaño o estado</td>
+                            <td>Color, gas, temperatura, precipitado</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Energía</strong></td>
+                            <td>Generalmente no se libera o absorbe energía</td>
+                            <td>Se libera o absorbe energía (calor, luz)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Recuperación</strong></td>
+                            <td>Se puede recuperar la sustancia original</td>
+                            <td>No se puede recuperar la sustancia original</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box" style="margin-top: 1rem;">
+                <i class="fas fa-lightbulb"></i> <strong>Fórmula para recordar:</strong><br>
+                <strong>Cambio Físico</strong> = <span style="color: #3b82f6;">F</span>orma cambia, <span style="color: #3b82f6;">F</span>ácil de revertir.<br>
+                <strong>Cambio Químico</strong> = <span style="color: #ef4444;">Q</span>uímica nueva, <span style="color: #ef4444;">Q</span>ueda para siempre.
+            </div>
+        </div>
+
+        <!-- SLIDE 8 - Clasificando cambios (Parte 1) -->
+        <div class="slide" data-index="8">
+            <div class="badge">✏️ PRACTICA</div>
+            <h2>Clasifica los siguientes cambios</h2>
+            <p>En la siguiente tabla, cada ejemplo ha sido clasificado. <strong>¿Estás de acuerdo?</strong> Revisa y argumenta por qué.</p>
+
+            <div style="overflow-x: auto;">
+                <table class="tabla-ejemplos">
+                    <thead>
+                        <tr>
+                            <th>Ejemplo</th>
+                            <th>Tipo de cambio</th>
+                            <th>Argumento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Mezclar agua con azúcar</td>
+                            <td><span class="tag-fisico">Físico</span></td>
+                            <td>El azúcar se disuelve pero sigue siendo azúcar. Se recupera por evaporación.</td>
+                        </tr>
+                        <tr>
+                            <td>El hielo que se derrite</td>
+                            <td><span class="tag-fisico">Físico</span></td>
+                            <td>El agua sigue siendo agua. Se puede volver a congelar.</td>
+                        </tr>
+                        <tr>
+                            <td>Un papel que se arruga</td>
+                            <td><span class="tag-fisico">Físico</span></td>
+                            <td>El papel sigue siendo papel. Solo cambió su forma.</td>
+                        </tr>
+                        <tr>
+                            <td>El agua que se evapora</td>
+                            <td><span class="tag-fisico">Físico</span></td>
+                            <td>El agua se convierte en vapor, pero sigue siendo H₂O. Se puede condensar.</td>
+                        </tr>
+                        <tr>
+                            <td>Sacar punta a un lápiz</td>
+                            <td><span class="tag-fisico">Físico</span></td>
+                            <td>La madera y la mina cambian de forma, pero siguen siendo las mismas sustancias.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="comparacion">
+                <i class="fas fa-question-circle"></i> <strong>Reflexiona:</strong> ¿Qué tienen en común todos estos ejemplos? <span style="color: #3b82f6;">¡Son reversibles!</span> Se puede volver al estado original.
+            </div>
+        </div>
+
+        <!-- SLIDE 9 - Clasificando cambios (Parte 2) -->
+        <div class="slide" data-index="9">
+            <div class="badge">✏️ PRACTICA</div>
+            <h2>Clasifica los siguientes cambios</h2>
+
+            <div style="overflow-x: auto;">
+                <table class="tabla-ejemplos">
+                    <thead>
+                        <tr>
+                            <th>Ejemplo</th>
+                            <th>Tipo de cambio</th>
+                            <th>Argumento</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Digestión de los alimentos</td>
+                            <td><span class="tag-quimico">Químico</span></td>
+                            <td>Los alimentos se transforman en nutrientes diferentes. No se puede recuperar la comida original.</td>
+                        </tr>
+                        <tr>
+                            <td>Un papel que se quema</td>
+                            <td><span class="tag-quimico">Químico</span></td>
+                            <td>El papel se convierte en cenizas y gases. No se puede recuperar el papel.</td>
+                        </tr>
+                        <tr>
+                            <td>Un clavo que se oxida</td>
+                            <td><span class="tag-quimico">Químico</span></td>
+                            <td>El hierro reacciona con el oxígeno formando óxido. No se puede recuperar el hierro puro.</td>
+                        </tr>
+                        <tr>
+                            <td>Hojas de diario que se ponen amarillas</td>
+                            <td><span class="tag-quimico">Químico</span></td>
+                            <td>La celulosa del papel se degrada. El cambio es irreversible.</td>
+                        </tr>
+                        <tr>
+                            <td>La carne que se cocina</td>
+                            <td><span class="tag-quimico">Químico</span></td>
+                            <td>Las proteínas de la carne se desnaturalizan. No se puede "descocinar" la carne.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="info-box" style="margin-top: 1rem;">
+                <i class="fas fa-lightbulb"></i> <strong>Patrón identificado:</strong> En los cambios químicos, <strong>siempre se forma una nueva sustancia</strong> y <strong>no se puede recuperar la original</strong>.
+            </div>
+        </div>
+
+        <!-- SLIDE 10 - Cambios en la naturaleza -->
+        <div class="slide" data-index="10">
+            <div class="badge">🌍 NATURALEZA</div>
+            <h2>Cambios de la materia en la naturaleza</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-cloud-rain" style="color: #3b82f6;"></i>
+                    <h3>Ciclo del agua</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>☀️ <strong>Evaporación:</strong> Agua líquida → vapor (Físico)</li>
+                        <li>☁️ <strong>Condensación:</strong> Vapor → agua líquida (Físico)</li>
+                        <li>❄️ <strong>Solidificación:</strong> Agua líquida → hielo/nieve (Físico)</li>
+                        <li>🌨️ <strong>Fusión:</strong> Nieve/hielo → agua líquida (Físico)</li>
+                        <li>☀️ <strong>Sublimación:</strong> Hielo → vapor (Físico)</li>
+                    </ul>
+                </div>
+                <div class="card">
+                    <i class="fas fa-fire" style="color: #ef4444;"></i>
+                    <h3>Fenómenos naturales</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>🌋 <strong>Erupciones volcánicas:</strong> Funden rocas (Físico) y liberan gases (Químico)</li>
+                        <li>🔥 <strong>Incendios forestales:</strong> Combustión de materia orgánica (Químico)</li>
+                        <li>🍂 <strong>Descomposición:</strong> Materia orgánica se descompone (Químico)</li>
+                        <li>🧊 <strong>Deshielo de glaciares:</strong> Cambio de estado del agua (Físico)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-thermometer-half"></i> <strong>Dato importante - Isoterma cero:</strong><br>
+                La <strong>isoterma cero</strong> es la línea que une los puntos donde la temperatura es 0°C. Separa las zonas donde la precipitación es sólida (nieve) de donde es líquida (lluvia). Los meteorólogos la usan para predecir aludes y nevazones.
+            </div>
+
+            <div class="comparacion">
+                <i class="fas fa-question-circle"></i> <strong>Para reflexionar:</strong> ¿El cambio climático está alterando los patrones de estos cambios naturales? ¿Cómo afecta esto a la disponibilidad de agua y a la agricultura?
+            </div>
+        </div>
+
+        <!-- SLIDE 11 - Cambios en la industria: El petróleo -->
+        <div class="slide" data-index="11">
+            <div class="badge">🏭 INDUSTRIA</div>
+            <h2>Cambios en la industria: El petróleo</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-oil-can"></i>
+                    <h3>Destilación fraccionada del petróleo</h3>
+                    <p>El petróleo crudo es una <strong>mezcla compleja</strong> de hidrocarburos. Se calienta en una torre de destilación y <strong>sus componentes se separan según su punto de ebullición</strong>.</p>
+                    <p style="font-size: 0.9rem; color: #475569; margin-top: 0.5rem;">
+                        <i class="fas fa-arrow-up"></i> Los más livianos suben (gas, gasolina)<br>
+                        <i class="fas fa-arrow-down"></i> Los más pesados quedan abajo (asfalto, lubricantes)
+                    </p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-list"></i>
+                    <h3>Cambios en el proceso</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li><span class="tag-fisico">Físico</span> La separación por ebullición</li>
+                        <li><span class="tag-fisico">Físico</span> La condensación de vapores</li>
+                        <li><span class="tag-quimico">Químico</span> El craqueo (romper moléculas grandes en pequeñas)</li>
+                        <li><span class="tag-quimico">Químico</span> La combustión de los combustibles</li>
+                        <li><span class="tag-quimico">Químico</span> La formación de plásticos</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-recycle"></i> <strong>Relación con Biología (OA6):</strong><br>
+                Algunos microorganismos (bacterias metanogénicas) pueden <strong>producir metano</strong> a partir de materia orgánica. Este metano es similar al que se obtiene de los yacimientos de gas natural.
+            </div>
+
+            <div class="comparacion">
+                <i class="fas fa-lightbulb"></i> <strong>Reflexión:</strong> El petróleo es un recurso <strong>no renovable</strong>. ¿Cómo podemos reducir nuestra dependencia de él y usar energías más limpias?
+            </div>
+        </div>
+
+        <!-- SLIDE 12 - Cambios en la industria: Producción de papel (NUEVA) -->
+        <div class="slide" data-index="12">
+            <div class="badge">📄 INDUSTRIA PAPELERA</div>
+            <h2>Cambios en la industria: Producción de papel</h2>
+
+            <p style="font-size: 1.05rem; margin-bottom: 1rem;">El papel es un material que usamos a diario. Su proceso de fabricación involucra <strong>cambios físicos y químicos</strong> que transforman la madera en el papel que conocemos.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <i class="fas fa-tree" style="color: #22c55e;"></i>
+                    <h3>Materia prima</h3>
+                    <p>El papel se fabrica principalmente a partir de <strong>celulosa</strong>, un polímero natural que se encuentra en la madera de los árboles (pino, eucalipto, abedul, etc.).</p>
+                    <p style="font-size: 0.85rem; color: #475569; margin-top: 0.5rem;">La madera contiene aproximadamente un <strong>40-50% de celulosa</strong>, además de lignina y otras sustancias.</p>
+                </div>
+                <div class="card">
+                    <i class="fas fa-tint" style="color: #3b82f6;"></i>
+                    <h3>Proceso de fabricación</h3>
+                    <p>El proceso industrial del papel incluye varias etapas:</p>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>🌲 <strong>Trituración</strong> de la madera</li>
+                        <li>♨️ <strong>Cocción</strong> con productos químicos</li>
+                        <li>🧹 <strong>Lavado</strong> y <strong>blanqueo</strong></li>
+                        <li>📜 <strong>Formación</strong> de la hoja de papel</li>
+                        <li>💨 <strong>Secado</strong> y <strong>prensado</strong></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="background: #f1f5f9; border-radius: 20px; padding: 1rem; margin: 1rem 0;">
+                <h3 style="margin-top: 0;">🔬 Cambios en el proceso</h3>
+                <div class="diagrama-flujo">
+                    <div class="paso">🌲<br>Trituración</div>
+                    <span class="flecha">→</span>
+                    <div class="paso paso-fisico">♨️<br>Cocción</div>
+                    <span class="flecha">→</span>
+                    <div class="paso paso-quimico">🧪<br>Blanqueo</div>
+                    <span class="flecha">→</span>
+                    <div class="paso paso-fisico">📜<br>Formación</div>
+                    <span class="flecha">→</span>
+                    <div class="paso paso-fisico">💨<br>Secado</div>
+                </div>
+                <div style="display: flex; flex-wrap: wrap; gap: 1rem; margin-top: 0.5rem; justify-content: center;">
+                    <span><span class="tag-fisico">Físico</span> Cambia la forma, tamaño o estado</span>
+                    <span><span class="tag-quimico">Químico</span> Cambia la composición química</span>
+                </div>
+            </div>
+
+            <div style="background: #f8fafc; border-radius: 20px; padding: 1rem; margin: 1rem 0; border-left: 4px solid #3b82f6;">
+                <h3 style="margin-top: 0; color: #3b82f6;"><i class="fas fa-check-circle" style="color: #3b82f6;"></i> Cambios físicos en la producción de papel</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>Trituración:</strong> La madera se reduce a pequeños trozos o astillas. <strong>No cambia su composición</strong>, solo su tamaño.</li>
+                    <li><strong>Formación de la hoja:</strong> La pasta de celulosa se extiende sobre una malla para formar una hoja. Es un <strong>cambio de forma</strong>.</li>
+                    <li><strong>Secado y prensado:</strong> Se elimina el agua por evaporación y presión. El agua <strong>se recupera</strong> como vapor.</li>
+                </ul>
+            </div>
+
+            <div style="background: #f8fafc; border-radius: 20px; padding: 1rem; margin: 1rem 0; border-left: 4px solid #ef4444;">
+                <h3 style="margin-top: 0; color: #ef4444;"><i class="fas fa-check-circle" style="color: #ef4444;"></i> Cambios químicos en la producción de papel</h3>
+                <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                    <li><strong>Cocción (proceso Kraft):</strong> La madera se cocina con sosa cáustica (NaOH) y sulfuro de sodio (Na₂S). Se <strong>disuelve la lignina</strong> (la "cola" que une las fibras) y se libera la celulosa.</li>
+                    <li><strong>Blanqueo:</strong> Se usan productos como cloro (Cl₂) o peróxido de hidrógeno (H₂O₂) para <strong>eliminar el color</strong> de la pasta y obtener papel blanco.</li>
+                    <li><strong>Reciclaje:</strong> El papel usado se descompone en fibras nuevamente. Las fibras se <strong>acortan y debilitan</strong> con cada reciclaje.</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <i class="fas fa-lightbulb"></i> <strong>Dato importante:</strong> El papel reciclado pasa por un proceso químico adicional para eliminar tintas y blanquear las fibras. <strong>Con cada reciclaje, las fibras de celulosa se acortan</strong>, por eso el papel reciclado es de menor calidad.
+            </div>
+
+            <div class="comparacion">
+                <i class="fas fa-leaf"></i> <strong>Reflexión ambiental:</strong> La producción de papel tiene un <strong>gran impacto ambiental</strong>: deforestación, consumo de agua y uso de productos químicos. ¿Cómo podemos reducir nuestro consumo de papel y fomentar el reciclaje?
+            </div>
+        </div>
+
+        <!-- SLIDE 13 - Experimentos de cambios químicos -->
+        <div class="slide" data-index="13">
+            <div class="badge">🔬 EXPERIMENTOS</div>
+            <h2>Experimentando cambios químicos</h2>
+
+            <div class="card" style="margin-bottom: 1rem; border-left: 4px solid #ef4444;">
+                <h3><i class="fas fa-flask" style="color: #ef4444;"></i> Experimento 1: Cal viva con agua</h3>
+                <p><strong>Procedimiento:</strong> Coloca óxido de calcio (cal viva) en un recipiente y agrega agua lentamente.</p>
+                <div class="warning-box">
+                    <strong>¿Qué ocurre?</strong> Se produce una <strong>reacción violenta</strong> con desprendimiento de calor (¡la mezcla hierve!) y se forma hidróxido de calcio. Es un <strong>cambio químico irreversible</strong>.
+                </div>
+                <p style="font-size: 0.85rem; color: #475569;"><i class="fas fa-shield-alt"></i> <strong>Seguridad:</strong> Usar guantes y gafas protectoras. No inhalar el polvo.</p>
+            </div>
+
+            <div class="card" style="margin-bottom: 1rem; border-left: 4px solid #ef4444;">
+                <h3><i class="fas fa-flask" style="color: #ef4444;"></i> Experimento 2: Metales con ácido</h3>
+                <p><strong>Procedimiento:</strong> Coloca diferentes metales (magnesio, hierro, zinc, cobre) en tubos de ensayo con ácido clorhídrico diluido.</p>
+                <div class="warning-box">
+                    <strong>¿Qué ocurre?</strong> Algunos metales reaccionan produciendo <strong>burbujas de gas hidrógeno</strong> (especialmente magnesio y zinc). El cobre <strong>no reacciona</strong> con este ácido. Es un <strong>cambio químico</strong>.
+                </div>
+            </div>
+
+            <div class="card" style="margin-bottom: 1rem; border-left: 4px solid #ef4444;">
+                <h3><i class="fas fa-flask" style="color: #ef4444;"></i> Experimento 3: Cocer un huevo</h3>
+                <p><strong>Procedimiento:</strong> Cuece un huevo en agua hirviendo durante 10 minutos.</p>
+                <div class="warning-box">
+                    <strong>¿Qué ocurre?</strong> La clara y la yema cambian de textura y color. <strong>No se puede volver al huevo crudo</strong>. Es un <strong>cambio químico irreversible</strong> (desnaturalización de proteínas).
+                </div>
+            </div>
+        </div>
+
+        <!-- SLIDE 14 - Cambios en el hogar y entorno -->
+        <div class="slide" data-index="14">
+            <div class="badge">🏠 HOGAR</div>
+            <h2>Cambios en el hogar y entorno</h2>
+
+            <div class="grid-2">
+                <div class="card card-fisico">
+                    <i class="fas fa-home"></i>
+                    <h3>Cambios Físicos en el hogar</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>❄️ Congelar alimentos</li>
+                        <li>💧 Hervir agua (cambio de estado)</li>
+                        <li>🧂 Disolver sal al cocinar</li>
+                        <li>✂️ Cortar frutas o verduras</li>
+                        <li>📦 Doblar o arrugar papel</li>
+                        <li>🧹 Barrer el polvo</li>
+                    </ul>
+                </div>
+                <div class="card card-quimico">
+                    <i class="fas fa-home"></i>
+                    <h3>Cambios Químicos en el hogar</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>🍞 Tostar pan</li>
+                        <li>🍎 Una fruta que se oscurece</li>
+                        <li>🦷 Formación de caries</li>
+                        <li>🔥 Quemar gas de la cocina</li>
+                        <li>🧼 Jabón que hace espuma</li>
+                        <li>🥛 Leche que se corta</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="comparacion">
+                <i class="fas fa-question-circle"></i> <strong>Desafío:</strong> Recorre tu hogar y encuentra <strong>3 cambios físicos</strong> y <strong>3 cambios químicos</strong> que ocurren diariamente. ¿Cuáles crees que son los más importantes para tu vida?
+            </div>
+        </div>
+
+        <!-- SLIDE 15 - Tabla resumen y cierre -->
+        <div class="slide" data-index="15">
+            <div class="badge">✅ SÍNTESIS</div>
+            <h2>¿Qué aprendiste hoy?</h2>
+
+            <div class="grid-2">
+                <div class="card card-fisico">
+                    <i class="fas fa-check-circle" style="color: #3b82f6;"></i>
+                    <h3>Cambios Físicos</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>No cambia la composición</li>
+                        <li><strong>Reversibles</strong></li>
+                        <li>Cambia forma, tamaño o estado</li>
+                        <li>No se forma una nueva sustancia</li>
+                        <li>Se puede recuperar la original</li>
+                    </ul>
+                </div>
+                <div class="card card-quimico">
+                    <i class="fas fa-check-circle" style="color: #ef4444;"></i>
+                    <h3>Cambios Químicos</h3>
+                    <ul style="margin-left: 1rem; margin-top: 0.5rem;">
+                        <li>Cambia la composición</li>
+                        <li><strong>Irreversibles</strong></li>
+                        <li>Se forma una <strong>nueva sustancia</strong></li>
+                        <li>Evidencias: color, gas, calor</li>
+                        <li><strong>No</strong> se puede recuperar la original</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div style="margin-top: 1.2rem;">
+                <table class="tabla-ejemplos">
+                    <thead>
+                        <tr>
+                            <th>Cambio Físico</th>
+                            <th>Cambio Químico</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Derretir hielo</td><td>Quemar papel</td></tr>
+                        <tr><td>Disolver azúcar</td><td>Oxidar hierro</td></tr>
+                        <tr><td>Moler tiza</td><td>Cocer un huevo</td></tr>
+                        <tr><td>Evaporar agua</td><td>Digestión de alimentos</td></tr>
+                        <tr><td>Romper un papel</td><td>Formación de caries</td></tr>
+                        <tr><td>Disolver sal en agua</td><td>Producción de papel (químico)</td></tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Botones de navegación -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+    <div class="dots" id="dotsContainer"></div>
+
+    <!-- Botones de acción -->
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Curso</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Ejercicios</button>
+    </div>
+</div>
+
+<script>
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            if(idx === currentIdx) {
+                slide.classList.add('active');
+            } else {
+                slide.classList.remove('active');
+            }
+        });
+        updateDots();
+    }
+
+    function nextSlide() {
+        if(currentIdx < totalSlides - 1) {
+            currentIdx++;
+            updateSlides();
+        }
+    }
+
+    function prevSlide() {
+        if(currentIdx > 0) {
+            currentIdx--;
+            updateSlides();
+        }
+    }
+
+    function updateDots() {
+        const dotsContainer = document.getElementById('dotsContainer');
+        dotsContainer.innerHTML = '';
+        for(let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if(i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => {
+                currentIdx = i;
+                updateSlides();
+            });
+            dotsContainer.appendChild(dot);
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if(e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextSlide();
+        } else if(e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevSlide();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Quimica.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_2A_Quimica.html';
+    });
+
+    // Swipe para móviles
+    let touchStartX = 0;
+    let touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => {
+        touchStartX = e.changedTouches[0].screenX;
+    });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if(touchEndX < touchStartX - 40) nextSlide();
+        if(touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    updateDots();
+</script>
+
+</body>
+</html>
