@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: Atenas y la Democracia | Historia 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffdf9;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            scrollbar-width: thin;
+            background: #fffdf9;
+            color: #2c3e2f;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #ede6db; }
+        .slide::-webkit-scrollbar-thumb { background: #c2aa82; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #7a4b1d;
+            border-left: 7px solid #e6b450;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #6b3f1a;
+            margin: 1rem 0 0.6rem 0;
+            border-bottom: 2px solid #f0dfc0;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+            color: #2d4029;
+            text-align: justify;
+        }
+
+        ul, .custom-list {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #fef0cf;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #b65717;
+        }
+
+        .info-card {
+            background: #faf6eb;
+            border-left: 6px solid #e6b450;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .info-card.green { border-left-color: #6b8f5e; }
+        .info-card.blue { border-left-color: #5b7f9e; }
+        .info-card.purple { border-left-color: #8b6b9e; }
+        .info-card.red { border-left-color: #b55a5a; }
+        .info-card.orange { border-left-color: #d48c3a; }
+        .info-card.teal { border-left-color: #3a8f8f; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            margin: 1rem 0;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+        .timeline-year {
+            min-width: 120px;
+            font-weight: bold;
+            color: #b65717;
+        }
+        .timeline-text {
+            flex: 1;
+        }
+
+        .question-sample {
+            background: #eef0e4;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            margin: 1.2rem 0 0.5rem;
+            border-left: 5px solid #c59a5b;
+        }
+
+        .badge {
+            background: #c38b44;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #d4c9b5;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+            background: #fefcf7;
+        }
+        th {
+            background: #e8dfcf;
+            color: #7a4b1d;
+            font-weight: 600;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf2;
+            border-top: 1px solid #e9dfcf;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #b47c44; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #e9dfcf;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #5d431f;
+            font-weight: 500;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(180, 140, 90, 0.4);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #5d3a1a;
+            transition: 0.2s;
+            z-index: 90;
+        }
+        .nav-arrow:hover { background: #c99f65; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        .img-placeholder {
+            background: #eae2d2;
+            border-radius: 20px;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            text-align: center;
+            font-style: italic;
+            color: #7f684a;
+            border: 1px dashed #cfbe9e;
+        }
+        .img-placeholder img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+        .img-placeholder .img-instruction {
+            font-style: normal;
+            font-weight: 500;
+            color: #6b4f2a;
+            background: #dacfb8;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        /* ===== DIAGRAMAS ===== */
+        .diagram-container {
+            background: #faf6eb;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 2px solid #e9dfcf;
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #6b3f1a;
+            margin-bottom: 1rem;
+        }
+
+        /* Diagrama: Estructura de la polis */
+        .polis-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .polis-row {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin: 0.3rem 0;
+        }
+        .polis-box {
+            background: white;
+            border-radius: 16px;
+            padding: 0.8rem 1.2rem;
+            border: 2px solid #d4c9b5;
+            min-width: 120px;
+            text-align: center;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+        }
+        .polis-box strong { color: #7a4b1d; display: block; font-size: 1.1rem; }
+        .polis-box span { font-size: 0.85rem; color: #5a4a3a; display: block; margin-top: 0.2rem; }
+        .polis-box.center { border-color: #e6b450; background: #fef8ee; }
+        .polis-arrow { font-size: 1.8rem; color: #c2aa82; display: flex; align-items: center; }
+
+        /* Diagrama: Pirámide social */
+        .pyramid-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .pyramid-level {
+            width: 100%;
+            padding: 0.3rem 0;
+            text-align: center;
+            border-radius: 8px;
+            margin: 0.15rem 0;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        .pyramid-level.noble { background: #e6b450; color: #4a2f0d; width: 25%; }
+        .pyramid-level.sacerdote { background: #d4a84a; color: #4a2f0d; width: 35%; }
+        .pyramid-level.comerciante { background: #c99a44; color: #4a2f0d; width: 50%; }
+        .pyramid-level.campesino { background: #b88a3a; color: white; width: 75%; }
+        .pyramid-level.esclavo { background: #a07a30; color: white; width: 95%; }
+        .pyramid-label { font-size: 0.75rem; color: #5a4a3a; margin-top: 0.2rem; }
+
+        /* Diagrama: Evolución política */
+        .evo-diagram {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 0.5rem;
+            flex-wrap: wrap;
+        }
+        .evo-step {
+            flex: 1;
+            min-width: 100px;
+            text-align: center;
+            background: #fefcf7;
+            border-radius: 16px;
+            padding: 0.8rem 0.5rem;
+            border: 2px solid #d4c9b5;
+        }
+        .evo-step .year { font-weight: 700; color: #b65717; font-size: 0.9rem; }
+        .evo-step .name { font-weight: 600; color: #6b3f1a; }
+        .evo-step .desc { font-size: 0.75rem; color: #5a4a3a; }
+        .evo-step.active { border-color: #e6b450; background: #fef8ee; }
+        .evo-arrow { font-size: 1.5rem; color: #c2aa82; }
+
+        /* Diagrama: Democracia ateniense (como el libro) */
+        .democracy-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.6rem;
+        }
+        .dem-row {
+            display: flex;
+            justify-content: center;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            width: 100%;
+        }
+        .dem-box {
+            background: white;
+            border-radius: 16px;
+            padding: 0.6rem 1rem;
+            border: 2px solid #d4c9b5;
+            text-align: center;
+            min-width: 100px;
+            flex: 1;
+            max-width: 200px;
+        }
+        .dem-box strong { display: block; color: #6b3f1a; font-size: 0.95rem; }
+        .dem-box span { font-size: 0.75rem; color: #5a4a3a; }
+        .dem-box .number { font-weight: 700; color: #b65717; font-size: 1.2rem; }
+        .dem-box.center-box { border-color: #e6b450; background: #fef8ee; }
+        .dem-box.blue-box { border-color: #5b7f9e; background: #f0f4f8; }
+        .dem-box.green-box { border-color: #6b8f5e; background: #f0f8ee; }
+        .dem-box.purple-box { border-color: #8b6b9e; background: #f5f0f8; }
+        .dem-box.red-box { border-color: #b55a5a; background: #f8f0f0; }
+
+        .dem-arrow-down { font-size: 1.8rem; color: #c2aa82; text-align: center; }
+
+        /* Diagrama: Grupos excluidos */
+        .excluded-diagram {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        .excluded-circle {
+            border-radius: 50%;
+            width: 100px;
+            height: 100px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0.5rem;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        .excluded-circle .pct { font-size: 1.4rem; }
+        .excluded-circle.citizen { background: #e6b450; color: #4a2f0d; }
+        .excluded-circle.women { background: #d4a84a; color: #4a2f0d; }
+        .excluded-circle.metec { background: #c99a44; color: white; }
+        .excluded-circle.slave { background: #b88a3a; color: white; }
+
+        /* Diagrama: Sistema persa */
+        .persian-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .persian-level {
+            width: 100%;
+            text-align: center;
+            padding: 0.4rem;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .persian-level.king { background: #e6b450; width: 20%; color: #4a2f0d; }
+        .persian-level.noble-real { background: #d4a84a; width: 35%; color: #4a2f0d; }
+        .persian-level.noble-prov { background: #c99a44; width: 55%; color: white; }
+        .persian-level.elite { background: #b88a3a; width: 75%; color: white; }
+        .persian-level.pueblo { background: #a07a30; width: 90%; color: white; }
+
+        /* Diagrama: Esparta */
+        .sparta-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.2rem;
+        }
+        .sparta-level {
+            width: 100%;
+            text-align: center;
+            padding: 0.3rem;
+            border-radius: 8px;
+            font-weight: 500;
+            font-size: 0.85rem;
+        }
+        .sparta-level.reyes { background: #e6b450; width: 20%; color: #4a2f0d; }
+        .sparta-level.gerusia { background: #d4a84a; width: 30%; color: #4a2f0d; }
+        .sparta-level.eforos { background: #c99a44; width: 40%; color: white; }
+        .sparta-level.espartiatas { background: #b88a3a; width: 60%; color: white; }
+        .sparta-level.periecos { background: #a07a30; width: 80%; color: white; }
+        .sparta-level.ilotas { background: #8a6a28; width: 95%; color: white; }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .timeline-year { min-width: 80px; }
+            .footer-nav { padding: 0 1rem; }
+            .btn-footer { padding: 0.4rem 1rem; font-size: 0.85rem; }
+            .nav-arrow { width: 36px; height: 36px; font-size: 1.4rem; }
+            .polis-box { min-width: 80px; padding: 0.5rem 0.8rem; }
+            .dem-box { min-width: 80px; }
+            .excluded-circle { width: 70px; height: 70px; font-size: 0.7rem; }
+            .excluded-circle .pct { font-size: 1rem; }
+            .evo-step { min-width: 70px; padding: 0.5rem 0.3rem; }
+            .evo-step .desc { font-size: 0.65rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+
+            <!-- SLIDE 1: Portada -->
+            <div class="slide">
+                <h1>🏛️ Atenas: Cuna de la Democracia</h1>
+                <p>Atenas fue una de las más importantes <span class="highlight">polis</span> (ciudades-Estado) de la Antigua Grecia. Durante el siglo V a.C., alcanzó su máximo esplendor político, económico y cultural, y se convirtió en la cuna de la <span class="highlight">democracia</span>, un sistema de gobierno que ha influido profundamente en el mundo occidental hasta nuestros días.</p>
+                <div class="info-card">
+                    <strong>📘 En esta clase aprenderemos sobre:</strong>
+                    <ul>
+                        <li>El contexto temporal y la ubicación geográfica de Atenas</li>
+                        <li>El mar Mediterráneo como espacio de intercambio</li>
+                        <li>La evolución política de Atenas: de la monarquía a la democracia</li>
+                        <li>Las reformas de Dracón, Solón, Clístenes y Pericles</li>
+                        <li>Las instituciones de la democracia ateniense</li>
+                        <li>Los límites de la democracia (ciudadanía restringida)</li>
+                        <li>La cultura, el arte y el legado de Atenas</li>
+                    </ul>
+                </div>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/YT8khSD2/image.png" alt="Acrópolis de Atenas con el Partenón al fondo" style="max-width:300px">
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión inicial:</strong> ¿Qué crees que significa la palabra "democracia"? ¿Crees que todas las personas en la antigua Atenas podían participar del gobierno?</p>
+                    <p><strong>Respuesta orientativa:</strong> Democracia significa "gobierno del pueblo" (del griego <em>demos</em> = pueblo y <em>kratos</em> = poder). Sin embargo, en Atenas, solo los varones atenienses mayores de edad podían ser ciudadanos. Mujeres, esclavos y extranjeros quedaban excluidos.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: Contexto temporal -->
+            <div class="slide">
+                <h2>📅 Contexto temporal de Grecia</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/211vvdL8/image.png" alt="Línea de tiempo de la historia de Grecia" style="max-width:400px">
+                </div>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>1150 a.C.</strong></div>
+                        <div class="timeline-text">Se fecha el inicio del primer periodo de la historia de la civilización griega (Época Oscura).</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>499 - 336 a.C.</strong></div>
+                        <div class="timeline-text"><span class="highlight">Periodo Clásico</span> — Periodo de esplendor de la civilización griega. Durante esta época se desarrolla el <strong>sistema democrático en Atenas</strong>.</div>
+                    </div>
+                </div>
+                <div class="info-card blue">
+                    <strong>📘 Periodos de la historia griega:</strong>
+                    <ul>
+                        <li><strong>Época Oscura (1100-700 a.C.):</strong> Decadencia tras la caída micénica. Pérdida de la escritura.</li>
+                        <li><strong>Época Arcaica (700-480 a.C.):</strong> Surgimiento de las <strong>polis</strong>, colonización, invención del alfabeto.</li>
+                        <li><strong>Época Clásica (480-323 a.C.):</strong> <span class="highlight">Apogeo de la democracia ateniense</span> con Pericles.</li>
+                        <li><strong>Periodo Helenístico (323-146 a.C.):</strong> Expansión de la cultura griega por las conquistas de Alejandro Magno.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿En qué periodo histórico se desarrolló la democracia ateniense?</p>
+                    <p><strong>Respuesta:</strong> Durante la <strong>Época Clásica</strong> (499-336 a.C.), específicamente en el siglo V a.C. con el gobierno de Pericles.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: El mar Mediterráneo -->
+            <div class="slide">
+                <h2>🌊 El mar Mediterráneo: un espacio ecúmene</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/5hLrs8Nj/image.png" alt="Mapa del mar Mediterráneo" style="max-width:350px">
+                </div>
+                <p>El <span class="highlight">mar Mediterráneo</span> fue el centro de la vida de los antiguos griegos. Era un mar interior que conectaba tres continentes: <strong>Europa, Asia y África</strong>.</p>
+                <div class="info-card">
+                    <strong>📘 ¿Qué es un espacio ecúmene?</strong>
+                    <p>Es un espacio <span class="highlight">poblado en forma permanente</span> por distintas culturas. Durante milenios, por el Mediterráneo han circulado millones de personas, mercaderías e ideas.</p>
+                </div>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>⚓ Características naturales del Mediterráneo</strong>
+                        <ul>
+                            <li><strong>Aguas:</strong> Escasa profundidad y pocas corrientes marinas → facilitó la navegación.</li>
+                            <li><strong>Clima:</strong> Cuatro estaciones marcadas, veranos secos y calurosos.</li>
+                            <li><strong>Tierras:</strong> Suelos que permitieron el desarrollo de la agricultura y ganadería.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>🏛️ Civilizaciones del Mediterráneo</strong>
+                        <ul>
+                            <li><strong>Griegos (2600-146 a.C.)</strong> — Sur de la península Balcánica y islas del Egeo.</li>
+                            <li><strong>Romanos (753 a.C.-476)</strong> — Península itálica.</li>
+                            <li><strong>Fenicios (1300-146 a.C.)</strong> — Grandes navegantes y comerciantes.</li>
+                            <li><strong>Egipcios (3000-31 a.C.)</strong> — Edificada en torno al Nilo.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué el mar Mediterráneo fue tan importante para el desarrollo de Grecia?</p>
+                    <p><strong>Respuesta:</strong> Porque permitió la navegación, el comercio, el contacto con otras culturas y la fundación de colonias. Fue la principal vía de comunicación entre las polis.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: El Mediterráneo en la antigüedad -->
+            <div class="slide">
+                <h2>🗺️ El Mediterráneo en la antigüedad</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/5hLrs8Nj/image.png" alt="Mapa del Mediterráneo con ciudades y civilizaciones" style="max-width:350px">
+                </div>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>📍 Ubicación de las civilizaciones</strong>
+                        <ul>
+                            <li><strong>1. Civilización romana:</strong> Península itálica</li>
+                            <li><strong>2. Civilización griega:</strong> Península Balcánica y mar Egeo</li>
+                            <li><strong>3. Civilización fenicia:</strong> Costas del Levante mediterráneo</li>
+                            <li><strong>4. Civilización egipcia:</strong> Valle del Nilo</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>📘 Patrón geográfico</strong>
+                        <ul>
+                            <li>Todas las civilizaciones se ubicaban en las <strong>costas</strong> o cerca del mar.</li>
+                            <li>El mar facilitaba el <strong>intercambio cultural y comercial</strong>.</li>
+                            <li>La navegación permitió el <strong>contacto entre culturas</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué patrón geográfico observas en la ubicación de las civilizaciones antiguas?</p>
+                    <p><strong>Respuesta:</strong> Todas se ubicaban en las costas del Mediterráneo o cerca de él, lo que facilitaba el comercio, la navegación y el intercambio cultural.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: La Antigua Grecia y su entorno geográfico -->
+            <div class="slide">
+                <h2>🏔️ La Antigua Grecia y su entorno geográfico</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/0p7cg70c/image.png" alt="Mapa de la Antigua Grecia" style="max-width:300px">
+                </div>
+                <p>La cultura griega se desarrolló en el noreste de la cuenca mediterránea, fundamentalmente en la <span class="highlight">península de los Balcanes</span>, en las costas de Asia Menor y en varias islas del mar Egeo.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>🗻 Características del relieve</strong>
+                        <ul>
+                            <li><strong>Cordones montañosos</strong> que forman valles aislados.</li>
+                            <li><strong>Costas accidentadas</strong> con numerosos puertos naturales.</li>
+                            <li>Dificultó la <strong>unificación política</strong> de Grecia.</li>
+                            <li>Favoreció la formación de <strong>polis independientes</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>🌾 Actividades económicas</strong>
+                        <ul>
+                            <li><strong>Agricultura:</strong> Olivos, vides y trigo (en el sur).</li>
+                            <li><strong>Ganadería:</strong> Cabras y ovejas.</li>
+                            <li><strong>Minería:</strong> Cobre, plata, hierro y oro.</li>
+                            <li><strong>Comercio marítimo:</strong> Actividad principal por la cercanía al mar.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 La escasez de tierras cultivables</strong>
+                    <p>Junto con la mala distribución de la propiedad y el aumento de población durante la <span class="highlight">época arcaica (800-500 a.C.)</span>, provocaron que los griegos extendieran su presencia por las costas del Mediterráneo mediante la <strong>fundación de nuevas polis</strong>.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cómo influyó el relieve en la organización política de Grecia?</p>
+                    <p><strong>Respuesta:</strong> El relieve montañoso dificultó la unificación política y favoreció la formación de polis independientes. Cada valle aislado se convirtió en una pequeña sociedad autónoma.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: La polis griega (con diagrama) -->
+            <div class="slide">
+                <h2>🏛️ La polis griega</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/nsC2vJ2j/image.png" alt="Representación de una polis griega" style="max-width:300px">
+                </div>
+                <p>La <span class="highlight">polis</span> era la unidad política fundamental de la Antigua Grecia. Los griegos se llamaban a sí mismos <strong>helenos</strong> y a su territorio <strong>Hélade</strong>.</p>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">📐 Estructura de una polis griega</div>
+                    <div class="polis-diagram">
+                        <div class="polis-row">
+                            <div class="polis-box center">
+                                <strong>🏛️ Acrópolis</strong>
+                                <span>Parte alta de la ciudad<br>Templos y santuarios</span>
+                            </div>
+                            <div class="polis-arrow">⬇️</div>
+                            <div class="polis-box">
+                                <strong>🏪 Ágora</strong>
+                                <span>Plaza pública<br>Política, comercio, cultura</span>
+                            </div>
+                            <div class="polis-arrow">⬇️</div>
+                            <div class="polis-box">
+                                <strong>🌾 Chora</strong>
+                                <span>Territorio circundante<br>Tierras agrícolas y aldeas</span>
+                            </div>
+                        </div>
+                        <div style="margin-top:0.8rem;font-size:0.85rem;color:#5a4a3a;text-align:center;">
+                            ⚓ Puerto (como El Pireo en Atenas) — conectaba la polis con el mar
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <strong>📘 Fuentes históricas sobre la polis:</strong>
+                    <ul>
+                        <li><strong>Glotz:</strong> "La división física determina, o facilita, la política".</li>
+                        <li><strong>Gómez:</strong> "Los griegos supieron adaptar y gestionar de forma creativa todo este legado".</li>
+                        <li><strong>Finley:</strong> "Todos aquellos griegos tenían conciencia de pertenecer a una cultura común".</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: La polis ateniense -->
+            <div class="slide">
+                <h2>🏙️ La polis ateniense</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/r24r9Mbg/image.png" alt="Acrópolis y Ágora de Atenas" style="max-width:300px">
+                </div>
+                <p>Atenas se ubicaba en la <span class="highlight">península del Ática</span> y pasó de ser una pequeña aldea a convertirse en una de las polis más importantes y poderosas de Grecia.</p>
+                <div class="grid-3">
+                    <div class="info-card">
+                        <strong>🏛️ La Acrópolis</strong>
+                        <p>Parte alta de la ciudad. Allí se ubicaban los principales <strong>templos</strong>, como el <strong>Partenón</strong>, dedicado a la diosa Atenea.</p>
+                    </div>
+                    <div class="info-card green">
+                        <strong>🏪 El Ágora</strong>
+                        <p>Plaza pública, centro del <strong>comercio</strong>, la <strong>política</strong> y la <strong>cultura</strong>. Espacio de reunión informal para los ciudadanos.</p>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>⚓ El Pireo</strong>
+                        <p>Puerto principal de Atenas, conectado por los <strong>Muros Largos</strong>. Centro del comercio y la actividad naval.</p>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuál era la función de la Acrópolis y el Ágora en Atenas?</p>
+                    <p><strong>Respuesta:</strong> La Acrópolis era el centro religioso (templos), mientras que el Ágora era el centro político, comercial y social (reuniones, mercados, debates).</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: Sistema político de Esparta (con diagrama) -->
+            <div class="slide">
+                <h2>⚖️ Sistema político de Esparta</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/FkGyTLtk/image.png" alt="Representación de Esparta" style="max-width:300px">
+                    <img src="https://i.ibb.co/bgk2w3z1/image.png" alt="Representación de Esparta" style="max-width:300px">
+                </div>
+                <p>Esparta era gobernada por una <span class="highlight">reducida aristocracia guerrera</span> cuyos integrantes eran los únicos que participaban de la vida política.</p>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">🏛️ Estructura política y social de Esparta</div>
+                    <div class="sparta-diagram">
+                        <div class="sparta-level reyes"><strong>👑 Diarquía</strong> — 2 reyes hereditarios con poderes limitados</div>
+                        <div class="sparta-level gerusia"><strong>Gerusía</strong> — 30 ancianos (mayores de 60 años) + reyes. Preparaban propuestas.</div>
+                        <div class="sparta-level eforos"><strong>Éforos</strong> — 5 magistrados. Máximos responsables del gobierno.</div>
+                        <div class="sparta-level espartiatas"><strong>Espartiatas (homoioi)</strong> — Ciudadanos con derechos plenos. Formaban la Apella (asamblea consultiva).</div>
+                        <div class="sparta-level periecos"><strong>Periecos</strong> — Comerciantes libres sin ciudadanía. Debían servicio militar.</div>
+                        <div class="sparta-level ilotas"><strong>Ilotas</strong> — Campesinos en semiesclavitud. Trabajaban para los espartiatas.</div>
+                    </div>
+                </div>
+
+                <div class="info-card red">
+                    <strong>📘 Características de Esparta:</strong>
+                    <ul>
+                        <li>Sociedad <strong>militarizada</strong> y disciplinada.</li>
+                        <li>Los espartiatas temían <strong>rebeliones</strong> de los grupos sometidos (ilotas).</li>
+                        <li>Las <strong>mujeres</strong> tenían un papel activo en la sociedad (ejercicios gimnásticos, organización militar), pero <strong>sin derechos políticos</strong>.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: Atenas vs. Esparta -->
+            <div class="slide">
+                <h2>⚔️ Atenas vs. Esparta: dos modelos de polis</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/ks4bVMvC/image.png" alt="Comparación Atenas-Esparta" style="max-width:300px">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>🏛️ Atenas</th>
+                            <th>⚔️ Esparta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gobierno</strong></td>
+                            <td><span class="highlight">Democracia</span></td>
+                            <td>Oligarquía militar</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Economía</strong></td>
+                            <td>Comercial, naval, abierta al exterior</td>
+                            <td>Agraria, autárquica, basada en ilotas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sociedad</strong></td>
+                            <td>Abierta, valoraba educación y artes</td>
+                            <td>Cerrada, militarista, disciplinada</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejército</strong></td>
+                            <td>Poderosa <strong>armada</strong> (trirremes)</td>
+                            <td>Poderoso ejército <strong>terrestre</strong> (hoplitas)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Educación</strong></td>
+                            <td>Formación integral (arte, filosofía, deporte)</td>
+                            <td>Formación exclusivamente militar (agogé)</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuáles eran las principales diferencias entre Atenas y Esparta?</p>
+                    <p><strong>Respuesta:</strong> Atenas era una democracia con economía comercial y armada, mientras que Esparta era una oligarquía militarista con economía agraria y ejército terrestre. Sus sociedades también eran muy diferentes: Atenas era abierta y cultural, Esparta era cerrada y disciplinada.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: Evolución política (con diagrama) -->
+            <div class="slide">
+                <h2>📜 Evolución política de Atenas</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/wFvFHr6y/image.png" alt="Línea de tiempo evolución política" style="max-width:300px">
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">📅 Línea de tiempo: evolución política de Atenas</div>
+                    <div class="evo-diagram">
+                        <div class="evo-step">
+                            <div class="year">Siglo VIII a.C.</div>
+                            <div class="name">👑 Monarquía</div>
+                            <div class="desc">Gobierno de reyes (basileus)</div>
+                        </div>
+                        <div class="evo-arrow">➡️</div>
+                        <div class="evo-step">
+                            <div class="year">683 a.C.</div>
+                            <div class="name">🏛️ Aristocracia</div>
+                            <div class="desc">Eupátridas (nobles) en el poder</div>
+                        </div>
+                        <div class="evo-arrow">➡️</div>
+                        <div class="evo-step">
+                            <div class="year">621 a.C.</div>
+                            <div class="name">📜 Dracón</div>
+                            <div class="desc">Primer código de leyes escritas</div>
+                        </div>
+                        <div class="evo-arrow">➡️</div>
+                        <div class="evo-step">
+                            <div class="year">594 a.C.</div>
+                            <div class="name">📜 Solón</div>
+                            <div class="desc">Reformas: Bulé, Heliea</div>
+                        </div>
+                        <div class="evo-arrow">➡️</div>
+                        <div class="evo-step">
+                            <div class="year">546-527 a.C.</div>
+                            <div class="name">⚔️ Pisístrato</div>
+                            <div class="desc">Tiranía popular</div>
+                        </div>
+                        <div class="evo-arrow">➡️</div>
+                        <div class="evo-step active">
+                            <div class="year">508 a.C.</div>
+                            <div class="name">🏛️ Clístenes</div>
+                            <div class="desc"><span class="highlight">Padre de la democracia</span></div>
+                        </div>
+                        <div class="evo-arrow">➡️</div>
+                        <div class="evo-step active">
+                            <div class="year">461-429 a.C.</div>
+                            <div class="name">🌟 Pericles</div>
+                            <div class="desc"><span class="highlight">Siglo de Oro</span></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <strong>📘 Bajo el sistema aristocrático:</strong>
+                    <ul>
+                        <li>Solo los <strong>eupátridas</strong> (nobles) eran ciudadanos.</li>
+                        <li>Excluidos: metecos, comerciantes, artesanos, campesinos, esclavos y <strong>mujeres</strong>.</li>
+                        <li>Las leyes eran <strong>orales</strong> y aplicadas arbitrariamente.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: Reformas de Dracón -->
+            <div class="slide">
+                <h2>📜 Las reformas de Dracón (621 a.C.)</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/5gWWVkwy/image.png" alt="Dracón escribiendo las leyes" style="max-width:300px">
+                </div>
+                <p>Dracón redactó el <span class="highlight">primer código de leyes escritas</span> de Atenas. Antes, las leyes eran orales y aplicadas por los nobles a su favor.</p>
+                <div class="grid-2">
+                    <div class="info-card green">
+                        <strong>✅ Logros</strong>
+                        <ul>
+                            <li>Puso por escrito las leyes por primera vez.</li>
+                            <li>Estableció penas específicas para cada delito.</li>
+                            <li>Limitó la arbitrariedad de los nobles.</li>
+                            <li>Permitió que los ciudadanos conocieran las leyes.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>❌ Problemas</strong>
+                        <ul>
+                            <li>Eran extremadamente <span class="highlight">severas</span> (pena de muerte para delitos menores).</li>
+                            <li>No resolvían la desigualdad económica.</li>
+                            <li>No eliminaron la esclavitud por deudas.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Fuente histórica:</strong> <em>"Incluso si alguien da muerte a alguien sin intención de hacerlo será desterrado..."</em> — Ley de Dracón sobre el homicidio.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuál fue el principal aporte de Dracón?</p>
+                    <p><strong>Respuesta:</strong> Escribió el primer código de leyes escritas, limitando la arbitrariedad de los nobles. Sin embargo, sus leyes eran muy severas ("draconianas").</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 12: Reformas de Solón -->
+            <div class="slide">
+                <h2>📜 Las reformas de Solón (594 a.C.)</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/BVmYhz0K/image.png" alt="Solón, legislador ateniense" style="max-width:300px">
+                </div>
+                <p>Solón fue un legislador que aplicó reformas profundas para solucionar la crisis social y económica de Atenas. Fue nombrado arconte con poderes especiales.</p>
+                <div class="info-card">
+                    <strong>📘 Principales reformas de Solón:</strong>
+                    <ul>
+                        <li><strong>Abolió la esclavitud por deudas</strong> (liberó a los campesinos endeudados).</li>
+                        <li>Creó la <strong>Bulé (Consejo de los Cuatrocientos)</strong>.</li>
+                        <li>Creó la <strong>Heliea</strong> (tribunal popular).</li>
+                        <li>Dividió a los ciudadanos en <strong>cuatro clases según su riqueza</strong>.</li>
+                        <li>Permitió que ciudadanos <strong>no nobles</strong> accedieran a cargos públicos.</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Fuente histórica:</strong> <em>"Porque es verdad que al pueblo le di privilegio bastantes sin nada quitarle de su dignidad ni añadirle..."</em> — Solón, Elegía.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué las reformas de Solón fueron importantes?</p>
+                    <p><strong>Respuesta:</strong> Sentaron las bases de la democracia al abolir la esclavitud por deudas y crear instituciones participativas (Bulé y Heliea).</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 13: Pisístrato -->
+            <div class="slide">
+                <h2>⚔️ Pisístrato y la tiranía (546-527 a.C.)</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/602296G3/image.png" alt="Pisístrato, tirano de Atenas">
+                </div>
+                <p>Tras las reformas de Solón, Atenas experimentó luchas internas. <span class="highlight">Pisístrato</span> instauró una <strong>tiranía</strong> (gobierno ilegítimo pero popular).</p>
+                <div class="grid-2">
+                    <div class="info-card green">
+                        <strong>✅ Logros</strong>
+                        <ul>
+                            <li>Repartió tierras entre los campesinos pobres.</li>
+                            <li>Emprendió grandes <strong>obras públicas</strong> (templos, acueductos).</li>
+                            <li>Fomentó la <strong>cultura y las artes</strong>.</li>
+                            <li>Mantuvo el orden y la estabilidad.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>❌ Problemas</strong>
+                        <ul>
+                            <li>Era un gobierno <strong>ilegítimo</strong> (no democrático).</li>
+                            <li>Concentró el poder en su persona.</li>
+                            <li>Murió antes de implementar reformas democráticas profundas.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué Pisístrato fue popular a pesar de ser un tirano?</p>
+                    <p><strong>Respuesta:</strong> Porque implementó políticas populares: repartió tierras, construyó obras públicas, fomentó la cultura y mantuvo la estabilidad.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 14: Clístenes (con diagrama) -->
+            <div class="slide">
+                <h2>🏛️ Clístenes: el padre de la democracia (508 a.C.)</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/Fkq8qF8f/image.png" alt="Clístenes, padre de la democracia" style="max-width:300px">
+                </div>
+                <p><span class="highlight">Clístenes</span> es considerado el <strong>"padre de la democracia ateniense"</strong>. Sus reformas transformaron radicalmente el sistema político.</p>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">🏛️ Reformas de Clístenes</div>
+                    <div class="grid-2" style="margin:0;">
+                        <div class="info-card blue" style="margin:0;">
+                            <strong>📋 Reorganización territorial</strong>
+                            <ul>
+                                <li>Dividió el Ática en <strong>10 tribus</strong> basadas en la <span class="highlight">vecindad</span>.</li>
+                                <li>No por parentesco o riqueza.</li>
+                                <li>Quebró el poder de las familias aristocráticas.</li>
+                            </ul>
+                        </div>
+                        <div class="info-card green" style="margin:0;">
+                            <strong>⚖️ Nuevas instituciones</strong>
+                            <ul>
+                                <li><strong>Bulé de los Quinientos</strong> (50 por tribu, sorteados).</li>
+                                <li><strong>Ostracismo</strong>: destierro por 10 años.</li>
+                                <li>Fortaleció la <strong>Ekklesía</strong> (Asamblea).</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div style="text-align:center;margin-top:0.5rem;font-weight:500;color:#6b3f1a;">
+                        🔑 Principio fundamental: <span class="highlight">Isonomía</span> — igualdad de todos los ciudadanos ante la ley
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <strong>📘 El demo:</strong> División territorial básica del pueblo ateniense, en la que se privilegió la <strong>vecindad</strong> de las personas y no su parentesco o riqueza.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué Clístenes es considerado el "padre de la democracia ateniense"?</p>
+                    <p><strong>Respuesta:</strong> Porque creó las bases institucionales de la democracia: reorganización territorial, la Bulé de los Quinientos y el ostracismo.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 15: Pericles -->
+            <div class="slide">
+                <h2>🏛️ Pericles y el Siglo de Oro (461-429 a.C.)</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/rfLQZX5R/image.png" alt="Busto de Pericles" style="max-width:300px">
+                </div>
+                <p>Pericles fue el <span class="highlight">estratega</span> (líder militar y político) más importante de Atenas. Bajo su liderazgo, la democracia alcanzó su máximo esplendor: el <strong>"Siglo de Oro"</strong>.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>📘 Reformas políticas</strong>
+                        <ul>
+                            <li><strong>Mistoforia:</strong> Pago por la participación en cargos públicos.</li>
+                            <li>Eliminó los <strong>privilegios del Areópago</strong>.</li>
+                            <li>Fortalecimiento de la <strong>Ekklesía</strong> y la <strong>Bulé</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>📘 Obras y logros culturales</strong>
+                        <ul>
+                            <li>Construcción del <strong>Partenón</strong> y la Acrópolis.</li>
+                            <li>Fomento de las <strong>artes y la filosofía</strong>.</li>
+                            <li>Atenas se convirtió en el <strong>centro cultural</strong> de Grecia.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Fuente histórica:</strong> <em>"Disfrutamos de un régimen político que no imita las leyes de los vecinos; más que imitadores de otros, en efecto, nosotros mismos servimos de modelo para algunos."</em> — Discurso fúnebre de Pericles (Tucídides).
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué fue la mistoforia y por qué fue importante?</p>
+                    <p><strong>Respuesta:</strong> Era el pago a los ciudadanos por ocupar cargos públicos. Permitió que los ciudadanos más pobres participaran en la política.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 16: Funcionamiento de la democracia (diagrama como el libro) -->
+            <div class="slide">
+                <h2>⚖️ Funcionamiento de la democracia ateniense (siglo V a.C.)</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/yFJ1NXQD/image.png" alt="Diagrama de la democracia ateniense" style="max-width:300px">
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">🏛️ Instituciones de la democracia ateniense</div>
+                    <div class="democracy-diagram">
+                        <div class="dem-row">
+                            <div class="dem-box center-box">
+                                <strong>🏛️ Ekklesía</strong>
+                                <span>Asamblea popular</span>
+                                <div class="number">~40.000</div>
+                                <span>ciudadanos</span>
+                            </div>
+                            <div class="dem-arrow-down">⬇️</div>
+                            <div class="dem-box blue-box">
+                                <strong>📋 Bulé</strong>
+                                <span>Consejo</span>
+                                <div class="number">500</div>
+                                <span>integrantes</span>
+                            </div>
+                            <div class="dem-arrow-down">⬇️</div>
+                            <div class="dem-box purple-box">
+                                <strong>⚖️ Heliea</strong>
+                                <span>Tribunal popular</span>
+                                <div class="number">6.000</div>
+                                <span>integrantes</span>
+                            </div>
+                        </div>
+                        <div class="dem-row" style="margin-top:0.5rem;">
+                            <div class="dem-box red-box">
+                                <strong>👑 Arcontes</strong>
+                                <span>Magistrados</span>
+                                <div class="number">9</div>
+                                <span>anuales</span>
+                            </div>
+                            <div class="dem-box green-box">
+                                <strong>⚔️ Estrategas</strong>
+                                <span>Generales</span>
+                                <div class="number">10</div>
+                                <span>electos</span>
+                            </div>
+                            <div class="dem-box red-box">
+                                <strong>💰 Apodectas</strong>
+                                <span>Recaudadores</span>
+                                <div class="number">10</div>
+                                <span>anuales</span>
+                            </div>
+                            <div class="dem-box purple-box">
+                                <strong>⚖️ Areópago</strong>
+                                <span>Tribunal de ex-arcontes</span>
+                                <span>cedió atribuciones a la Heliea</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <strong>📘 Características clave:</strong> Temporalidad de los cargos públicos y uso de <span class="highlight">sorteos</span> como mecanismo de elección.
+                </div>
+            </div>
+
+            <!-- SLIDE 17: Instituciones I -->
+            <div class="slide">
+                <h2>⚖️ Instituciones de la democracia I</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/m5fBHDn1/image.png" alt="Asamblea en la colina Pnyx" style="max-width:300px">
+                </div>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>🏛️ Ekklesía (Asamblea)</strong>
+                        <ul>
+                            <li>Reunión de <strong>todos los ciudadanos</strong> (~40.000).</li>
+                            <li>Aprobaba leyes, declaraba la guerra, elegía estrategas.</li>
+                            <li>Se reunía <strong>40 veces al año</strong> en la colina <span class="highlight">Pnyx</span>.</li>
+                            <li>Cualquier ciudadano podía <strong>hablar y proponer</strong> (isegoría).</li>
+                            <li>Decisiones por <strong>votación a mano alzada</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>📋 Bulé (Consejo de los Quinientos)</strong>
+                        <ul>
+                            <li>Preparaba los temas para la Asamblea.</li>
+                            <li><strong>50 ciudadanos</strong> por cada una de las 10 tribus.</li>
+                            <li>Elegidos por <span class="highlight">sorteo anual</span>.</li>
+                            <li>Supervisaban administración y finanzas.</li>
+                            <li>Se renovaban cada año.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué los atenienses preferían el sorteo para elegir cargos?</p>
+                    <p><strong>Respuesta:</strong> El sorteo se consideraba más democrático porque daba a todos la misma oportunidad de participar, evitando la corrupción y el control de los más poderosos.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 18: Instituciones II -->
+            <div class="slide">
+                <h2>⚖️ Instituciones de la democracia II</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/4w6fgqTn/image.png" alt="Tribunal ateniense" style="max-width:300px">
+                </div>
+                <div class="grid-2">
+                    <div class="info-card purple">
+                        <strong>⚖️ Heliea (Tribunal popular)</strong>
+                        <ul>
+                            <li><strong>6.000 ciudadanos</strong> sorteados como jueces.</li>
+                            <li>Decidían en casos judiciales.</li>
+                            <li>Podían <strong>anular decisiones</strong> de los magistrados.</li>
+                            <li>Veredictos por <strong>votación secreta</strong>.</li>
+                            <li>Eran el <strong>control ciudadano</strong> sobre el poder judicial.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>⚔️ Estrategas y magistrados</strong>
+                        <ul>
+                            <li><strong>10 estrategas:</strong> Generales electos por voto popular.</li>
+                            <li><strong>Arcontes:</strong> Magistrados (9), perdieron poder con Pericles.</li>
+                            <li>Todos los cargos eran <strong>temporales y rotativos</strong>.</li>
+                            <li>Pericles fue el estratega más famoso.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Principios de la democracia ateniense:</strong>
+                    <ul>
+                        <li><span class="highlight">Isonomía:</span> Igualdad ante la ley.</li>
+                        <li><span class="highlight">Isegoría:</span> Igualdad de palabra (derecho a hablar en la Asamblea).</li>
+                        <li><span class="highlight">Participación directa:</span> Los ciudadanos votaban personalmente.</li>
+                        <li><span class="highlight">Control ciudadano:</span> Tribunales y Asamblea controlaban a los gobernantes.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- SLIDE 19: Ciudadanía -->
+            <div class="slide">
+                <h2>👥 Ciudadanía en Atenas</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/84GdTG3g/image.png" alt="Ciudadanos atenienses" style="max-width:300px">
+                </div>
+                <div class="info-card">
+                    <strong>📘 Requisitos para ser ciudadano:</strong>
+                    <ul>
+                        <li>Ser <span class="highlight">varón</span> (mujeres excluidas).</li>
+                        <li>Ser <span class="highlight">mayor de edad</span> (18 años).</li>
+                        <li>Ser <span class="highlight">hijo de padre y madre atenienses</span> (ley de Pericles, 451 a.C.).</li>
+                        <li>Haber completado el entrenamiento militar (efebía).</li>
+                        <li>Estar inscrito en un <strong>demo</strong> (distrito territorial).</li>
+                    </ul>
+                </div>
+                <div class="info-card green">
+                    <strong>📘 Derechos y deberes del ciudadano:</strong>
+                    <ul>
+                        <li><strong>Derechos:</strong> Votar, ocupar cargos, participar en tribunales.</li>
+                        <li><strong>Deberes:</strong> Servir en el ejército, pagar impuestos, participar en la vida política.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué requisitos debía cumplir un hombre para ser ciudadano en Atenas?</p>
+                    <p><strong>Respuesta:</strong> Ser varón, mayor de 18 años, hijo de padre y madre atenienses, haber completado el entrenamiento militar y estar inscrito en un demo.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 20: Grupos excluidos (con diagrama) -->
+            <div class="slide">
+                <h2>🚫 Grupos excluidos de la ciudadanía</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/7d1PNY8V/image.png" alt="Mujeres, esclavos y extranjeros en Atenas" style="max-width:400px">
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">📊 ¿Quiénes participaban en Atenas?</div>
+                    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.8rem;margin-bottom:0.8rem;">
+                        <div class="excluded-circle citizen">
+                            <span class="pct">10-15%</span>
+                            Ciudadanos<br><span style="font-size:0.65rem;">~30.000-40.000</span>
+                        </div>
+                        <div class="excluded-circle women">
+                            <span class="pct">~50%</span>
+                            Mujeres<br><span style="font-size:0.65rem;">sin derechos políticos</span>
+                        </div>
+                        <div class="excluded-circle metec">
+                            <span class="pct">~15%</span>
+                            Metecos<br><span style="font-size:0.65rem;">extranjeros libres</span>
+                        </div>
+                        <div class="excluded-circle slave">
+                            <span class="pct">~30%</span>
+                            Esclavos<br><span style="font-size:0.65rem;">sin libertad ni derechos</span>
+                        </div>
+                    </div>
+                    <div style="text-align:center;font-size:0.85rem;color:#5a4a3a;">
+                        Población total de Atenas: <strong>250.000 - 300.000</strong> habitantes
+                    </div>
+                </div>
+
+                <div class="info-card red">
+                    <strong>📘 Reflexión:</strong> Aunque Atenas fue pionera en democracia, era una <span class="highlight">democracia excluyente</span>. La mayoría de la población no participaba.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué se dice que la democracia ateniense era "restringida"?</p>
+                    <p><strong>Respuesta:</strong> Porque solo los varones atenienses mayores de edad participaban. Mujeres, metecos y esclavos quedaban excluidos, representando solo el 10-15% de la población.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 21: Ostracismo -->
+            <div class="slide">
+                <h2>📝 El ostracismo: protección de la democracia</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/9H5cLFJx/image.png" alt="Óstracas (fragmentos de cerámica)" style="max-width:300px">
+                </div>
+                <p>El <span class="highlight">ostracismo</span> era un mecanismo que permitía <strong>desterrar por 10 años</strong> a cualquier ciudadano considerado una amenaza para la democracia.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>📘 ¿Cómo funcionaba?</strong>
+                        <ol style="margin-left:1rem;">
+                            <li>La Asamblea votaba si realizar el ostracismo.</li>
+                            <li>Los ciudadanos escribían nombres en <span class="highlight">óstracas</span> (fragmentos de cerámica).</li>
+                            <li>Si al menos <strong>6.000</strong> votaban, el más votado era desterrado por <strong>10 años</strong>.</li>
+                            <li>No perdía sus bienes ni ciudadanía.</li>
+                        </ol>
+                    </div>
+                    <div class="info-card green">
+                        <strong>✅ Propósito y ejemplos</strong>
+                        <ul>
+                            <li><strong>Propósito:</strong> Proteger la democracia contra posibles tiranos.</li>
+                            <li>Era una <strong>medida preventiva</strong>, no punitiva.</li>
+                            <li><strong>Ejemplo:</strong> Arístides fue desterrado por ser "demasiado justo".</li>
+                            <li>Se usó por última vez en el 417 a.C.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuál era el propósito del ostracismo?</p>
+                    <p><strong>Respuesta:</strong> Proteger la democracia eliminando temporalmente a quienes pudieran convertirse en tiranos. Era una medida preventiva.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 22: Democracia y otras formas de gobierno (Persia) -->
+            <div class="slide">
+                <h2>👑 La democracia y otras formas de gobierno</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/nsZxD1Jj/image.png" alt="Imperio Persa" style="max-width:300px">
+                </div>
+                <p>En la antigüedad existían diferentes sistemas políticos. Atenas se enfrentó a otros modelos durante las <strong>Guerras Médicas</strong> y la <strong>Guerra del Peloponeso</strong>.</p>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">🏛️ Sistema político del Imperio Persa</div>
+                    <div class="persian-diagram">
+                        <div class="persian-level king"><strong>👑 Rey</strong> — Autoridad de poder absoluto</div>
+                        <div class="persian-level noble-real"><strong>Nobleza real</strong> — Cancillería, altos funcionarios, sacerdotes, ejército real</div>
+                        <div class="persian-level noble-prov"><strong>Nobleza provincial</strong> — Sátrapas (gobernadores) en las satrapías</div>
+                        <div class="persian-level elite"><strong>Élites locales</strong> — Grupos acomodados de cada satrapía</div>
+                        <div class="persian-level pueblo"><strong>Pueblo</strong> — Campesinos, artesanos, comerciantes (sin injerencia política) + esclavos</div>
+                    </div>
+                </div>
+
+                <div class="info-card blue">
+                    <strong>📘 Diferencias con Atenas:</strong>
+                    <ul>
+                        <li><strong>Persia:</strong> Monarquía absoluta, poder centralizado, sin participación popular.</li>
+                        <li><strong>Atenas:</strong> Democracia, participación ciudadana, cargos rotativos.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿En qué se diferenciaba el sistema político persa del ateniense?</p>
+                    <p><strong>Respuesta:</strong> Persia era una monarquía absoluta con poder centralizado, mientras que Atenas era una democracia con participación ciudadana y cargos rotativos.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 23: Guerras Médicas y Guerra del Peloponeso -->
+            <div class="slide">
+                <h2>⚔️ Guerras Médicas y Guerra del Peloponeso</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/5gCc5wPc/image.png" alt="Mapa de las guerras médicas y del Peloponeso" style="max-width:300px">
+                    <img src="https://i.ibb.co/4gmZWcg8/image.png" alt="Mapa de las guerras médicas y del Peloponeso" style="max-width:300px">
+                </div>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>⚔️ Guerras Médicas (490-479 a.C.)</strong>
+                        <ul>
+                            <li>Grecia se unió (liderada por <strong>Atenas y Esparta</strong>).</li>
+                            <li>Enfrentaron al <strong>Imperio Persa</strong>.</li>
+                            <li>Grecia logró la <strong>victoria</strong>.</li>
+                            <li>Atenas se consolidó como potencia naval.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>⚔️ Guerra del Peloponeso (431-404 a.C.)</strong>
+                        <ul>
+                            <li>Conflicto entre <strong>Atenas y Esparta</strong> (y sus aliados).</li>
+                            <li>Lucharon por el <strong>control de Grecia</strong>.</li>
+                            <li><strong>Atenas fue derrotada</strong>.</li>
+                            <li>Marcó el fin del <strong>Siglo de Oro</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Consecuencias:</strong> La derrota de Atenas debilitó a Grecia y facilitó la posterior conquista de Macedonia.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué consecuencias tuvo la Guerra del Peloponeso para Atenas?</p>
+                    <p><strong>Respuesta:</strong> Atenas fue derrotada, perdió su imperio y su hegemonía. Marcó el fin del Siglo de Oro y debilitó a Grecia.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 24: Cultura griega -->
+            <div class="slide">
+                <h2>🎭 Manifestaciones de la cultura griega</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/whk76gYy/image.png" alt="Cultura griega: pintura, escultura, deporte" style="max-width:250px">
+                    <img src="https://i.ibb.co/HZGSWsk/image.png" alt="Cultura griega: pintura, escultura, deporte" style="max-width:250px">
+                    <img src="https://i.ibb.co/WWCjKcJp/image.png" alt="Cultura griega: pintura, escultura, deporte" style="max-width:250px">
+                </div>
+                <div class="grid-3">
+                    <div class="info-card blue">
+                        <strong>🎨 Pintura y escultura</strong>
+                        <ul>
+                            <li><strong>Pintura:</strong> Decoración de ánforas y vasijas. De diseños geométricos a figuras humanas.</li>
+                            <li><strong>Escultura:</strong> El <span class="highlight">Canon</span> de Policleto (proporciones ideales).</li>
+                            <li>Rostros expresivos y sensación de movimiento.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>🏃 Deporte</strong>
+                        <ul>
+                            <li>Alto valor a la <strong>preparación física</strong>.</li>
+                            <li><strong>Juegos Olímpicos</strong> (desde 776 a.C.) en honor a Zeus.</li>
+                            <li>Se realizaban cada <strong>4 años</strong> en Olimpia.</li>
+                            <li>Eran una forma de medir el tiempo.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card purple">
+                        <strong>📖 Literatura y teatro</strong>
+                        <ul>
+                            <li><strong>Épica:</strong> Homero, <em>Ilíada</em> y <em>Odisea</em>.</li>
+                            <li><strong>Teatro:</strong> Nace de las danzas a Dionisos.</li>
+                            <li><strong>Tragedia:</strong> Sófocles, Esquilo, Eurípides.</li>
+                            <li><strong>Comedia:</strong> Aristófanes (sátira política).</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuál era la importancia de los Juegos Olímpicos para los griegos?</p>
+                    <p><strong>Respuesta:</strong> Eran una competencia atlética en honor a Zeus, que unificaba a los griegos y servía como forma de medir el tiempo.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 25: Ciencias, filosofía e historia -->
+            <div class="slide">
+                <h2>🧠 Ciencias, filosofía e historia</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/Psh9zy2R/image.png" alt="Filósofos griegos" style="max-width:300px">
+                </div>
+                <p>El pensamiento griego pasó del <span class="highlight">mito</span> al <span class="highlight">logos</span> (explicación racional).</p>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>📖 Filosofía</strong>
+                        <ul>
+                            <li><strong>Sócrates:</strong> "Conócete a ti mismo".</li>
+                            <li><strong>Platón:</strong> Teoría de las Ideas, <em>La República</em>.</li>
+                            <li><strong>Aristóteles:</strong> Lógica, ética, política, ciencias.</li>
+                            <li>Reflexión sobre la <strong>ética, la política y el conocimiento</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>📜 Historia y ciencias</strong>
+                        <ul>
+                            <li><strong>Historia:</strong> Heródoto (padre de la historia) y Tucídides (historia crítica).</li>
+                            <li><strong>Medicina:</strong> Hipócrates.</li>
+                            <li><strong>Física:</strong> Arquímedes.</li>
+                            <li><strong>Geografía:</strong> Eratóstenes.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué fue el "paso del mito al logos" y por qué es importante?</p>
+                    <p><strong>Respuesta:</strong> Fue el tránsito de explicar el mundo a través de mitos a hacerlo mediante la razón y la observación. Sentó las bases de la ciencia y la filosofía occidentales.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 26: Arquitectura -->
+            <div class="slide">
+                <h2>🏗️ Arquitectura griega</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/tPYvFJkY/image.png" alt="El Partenón y templos griegos" style="max-width:300px">
+                </div>
+                <p>El principal edificio griego fue el <span class="highlight">templo</span>, construcciones rectangulares rodeadas de columnas, consideradas la morada de los dioses.</p>
+                <div class="grid-3">
+                    <div class="info-card">
+                        <strong>🏛️ Órdenes arquitectónicos</strong>
+                        <ul>
+                            <li><strong>Dórico:</strong> Columnas simples y robustas.</li>
+                            <li><strong>Jónico:</strong> Columnas más delgadas con volutas.</li>
+                            <li><strong>Corintio:</strong> Columnas con hojas de acanto.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>🏛️ El Partenón</strong>
+                        <ul>
+                            <li>Construido en la <strong>Acrópolis</strong> (447-432 a.C.).</li>
+                            <li>Dedicado a la diosa <strong>Atenea</strong>.</li>
+                            <li>Es símbolo del <strong>poder y la cultura</strong> de Atenas.</li>
+                            <li>Construido bajo el gobierno de <strong>Pericles</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>🏛️ Otros edificios</strong>
+                        <ul>
+                            <li><strong>Teatros:</strong> Espacios al aire libre para representaciones.</li>
+                            <li><strong>Estadios:</strong> Para competencias deportivas.</li>
+                            <li><strong>Ágoras:</strong> Plazas públicas y mercados.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué representa el Partenón para la cultura griega?</p>
+                    <p><strong>Respuesta:</strong> Es el símbolo del poder, la riqueza y la cultura de Atenas en su Siglo de Oro. Representa la devoción a Atenea y el apogeo del arte y la arquitectura griega.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 27: Legado -->
+            <div class="slide">
+                <h2>🌍 Legado de Atenas en el mundo actual</h2>
+                <p>Atenas nos dejó un legado inmenso que aún hoy está presente en nuestras sociedades.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>🏛️ Legado político</strong>
+                        <ul>
+                            <li>El concepto de <strong>democracia</strong>.</li>
+                            <li>La <strong>participación ciudadana</strong> en asuntos públicos.</li>
+                            <li>La <strong>igualdad ante la ley</strong> (isonomía).</li>
+                            <li>El derecho a <strong>hablar en público</strong> (isegoría).</li>
+                            <li>La <strong>rendición de cuentas</strong> de los gobernantes.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card purple">
+                        <strong>🎭 Legado cultural</strong>
+                        <ul>
+                            <li>El <strong>teatro</strong> (tragedia y comedia).</li>
+                            <li>La <strong>filosofía</strong> (Sócrates, Platón, Aristóteles).</li>
+                            <li>La <strong>historia</strong> (Heródoto, Tucídides).</li>
+                            <li>La <strong>arquitectura</strong> (columnas, templos).</li>
+                            <li>Los <strong>Juegos Olímpicos</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Diferencia con la democracia actual:</strong>
+                    <ul>
+                        <li>Atenas: <strong>Democracia directa</strong> (votaban personalmente).</li>
+                        <li>Hoy: <strong>Democracia representativa</strong> (elegimos representantes).</li>
+                        <li>Atenas: <strong>Ciudadanía restringida</strong> (excluía a mujeres, esclavos y extranjeros).</li>
+                        <li>Hoy: <strong>Sufragio universal</strong> para todos los adultos.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta final:</strong> ¿Qué aspectos de la democracia ateniense siguen vigentes en la actualidad?</p>
+                    <p><strong>Respuesta:</strong> Conceptos como la soberanía popular, la igualdad ante la ley, la participación ciudadana, el debate público y la rendición de cuentas de los gobernantes.</p>
+                </div>
+                <p style="margin-top:1.5rem;text-align:center;">📚 <strong>Fin de la clase</strong> — Practica con los ejercicios.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 27</div>
+    </div>
+
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slideCounterSpan.innerText = `Slide ${currentIndex+1} / ${totalSlides}`;
+    }
+
+    function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+            currentIndex++;
+            updateSlidePosition();
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateSlidePosition();
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+            e.preventDefault();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+            e.preventDefault();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Historia.html';
+    });
+
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_4A_Historia.html';
+    });
+
+    updateSlidePosition();
+</script>
+</body>
+</html>

@@ -1,0 +1,706 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Atenas y la Democracia | Historia 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fefdf9;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9dfcf;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e6b450;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #7a4b1d;
+        }
+
+        .subtitle {
+            color: #9b6e3e;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #faf6eb;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #e2cfb0;
+            color: #5d431f;
+        }
+
+        .section {
+            background: #fefcf7;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #e6b450;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf7;
+            border-radius: 1rem;
+            border: 1px solid #ede3d2;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3b2b1a;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(230, 180, 80, 0.15);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #b47c44;
+        }
+
+        .truefalse-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .truefalse-table th, .truefalse-table td {
+            border: 1px solid #e2cfb0;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .truefalse-table th {
+            background: #faf0e1;
+            color: #7a4b1d;
+            font-weight: 600;
+        }
+
+        select {
+            background: #fffaf2;
+            color: #2d4029;
+            border: 1px solid #d4c1a4;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #b47c44;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef8ef;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #e6b450;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3b2b1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #e2cfb0;
+            color: #5d431f;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #d4b883;
+            color: #3b2b1a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .tf-correct {
+            color: #2d6a2d;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #b33;
+            font-weight: bold;
+        }
+
+        .feedback-text {
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+        }
+
+        .correct-feedback {
+            color: #2d6a2d;
+        }
+
+        .incorrect-feedback {
+            color: #b33;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 0.5rem; }
+            .container { padding: 1rem; }
+            .info-bar { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 Ejercicios: Atenas y la Democracia</h1>
+        <div class="subtitle">Antigua Grecia · Polis · Democracia Ateniense · Reformas · Instituciones · Cultura</div>
+        <div class="subtitle">7° Básico | Historia, Geografía y Ciencias Sociales</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (30) + Verdadero/Falso (30)</div>
+        <div>✅ Exigencia: 60% | Nota máxima: 7.0</div>
+        <div>🔄 Cada vez que reinicies, las preguntas se renuevan aleatoriamente desde bancos de 100 por sección.</div>
+    </div>
+
+    <div id="examContent">
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple</div>
+            <p>Selecciona la opción correcta para cada pregunta.</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">⚖️ II. Verdadero o Falso</div>
+            <p>Selecciona Verdadero (V) o Falso (F) para cada afirmación.</p>
+            <table class="truefalse-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Historia 7° Básico | Atenas y la Democracia</div>
+</div>
+
+<script>
+    // ==================== BANCO DE PREGUNTAS (100 por sección) ====================
+    // Basado en el contenido del libro de texto
+
+    // ----- Banco de Selección Múltiple (100 preguntas) -----
+    const bankMultipleChoice = [
+        // Bloque 1: Contexto geográfico (1-10)
+        { text: "¿En qué península se ubicaba la ciudad de Atenas?", options: ["a. Península Itálica", "b. Península de los Balcanes", "c. Península Ibérica", "d. Península de Anatolia"], correct: "b" },
+        { text: "¿Qué característica del relieve griego favoreció la formación de polis independientes?", options: ["a. Grandes llanuras fértiles rodeadas de áridos desiertos", "b. Cordones montañosos que forman valles aislados", "c. Extensos desiertos alrededor de ática", "d. Grandes ríos navegables"], correct: "b" },
+        { text: "¿Cuál era el principal cultivo en la zona sur de la península de los Balcanes?", options: ["a. Arroz y maíz", "b. Olivos, vides y trigo", "c. Algodón y cacao", "d. Caña de azúcar y café"], correct: "b" },
+        { text: "¿Qué actividad económica fue especialmente importante para los griegos debido a su cercanía al mar?", options: ["a. La minería del carbón", "b. La pesca y el comercio marítimo", "c. La ganadería extensiva", "d. La industria textil"], correct: "b" },
+        { text: "¿Qué metales explotaban los griegos en sus minas?", options: ["a. Oro, plata, cobre y hierro", "b. Estaño, plomo y aluminio", "c. Mercurio y zinc", "d. Tungsteno y platino"], correct: "a" },
+        { text: "¿Qué fenómeno provocó que los griegos extendieran su presencia por el Mediterráneo mediante la fundación de colonias?", options: ["a. El exceso de tierras cultivables que llevó posteriormente a la escasez de productos", "b. La escasez de tierras cultivables y el aumento de población", "c. La abundancia de recursos naturales en las diversas tierras de Atenas", "d. La falta de interés por el comercio"], correct: "b" },
+        { text: "¿En qué periodo se produjo la expansión colonial griega?", options: ["a. Época Clásica", "b. Época Helenística", "c. Época Arcaica", "d. Época Oscura"], correct: "c" },
+        { text: "¿Cómo se llamaban a sí mismos los antiguos griegos?", options: ["a. Romanos", "b. Helenos", "c. Latinos", "d. Bárbaros"], correct: "b" },
+        { text: "¿Cómo denominaban los griegos a su territorio?", options: ["a. Magna Grecia", "b. Hélade", "c. Peloponeso", "d. Ática"], correct: "b" },
+        { text: "¿Qué característica del relieve griego dificultó las comunicaciones terrestres?", options: ["a. Grandes desiertos y extenos valles frondosos", "b. Senderos montañosos y valles aislados", "c. Extensas llanuras", "d. Grandes ríos y senderos montañosos"], correct: "b" },
+
+        // Bloque 2: El mar Mediterráneo (11-20)
+        { text: "¿Qué significa que el mar Mediterráneo fuera un espacio 'ecúmene'?", options: ["a. Que era un espacio deshabitado debido a las condiciones climáticas", "b. Que era un espacio poblado en forma permanente por distintas culturas", "c. Que era un mar de agua dulce, donde prosperaba el comercio y la agricultura", "d. Que era un espacio cerrado al comercio exclusivo del mar Mediterráneo"], correct: "b" },
+        { text: "¿Cuántos continentes conecta el mar Mediterráneo?", options: ["a. Dos: Europa y Asia", "b. Tres: Europa, Asia y África", "c. Cuatro: Europa, Asia, África y América", "d. Cinco: Europa, Asia, África, Oceanía y América"], correct: "b" },
+        { text: "¿Qué característica de las aguas del Mediterráneo facilitó la navegación?", options: ["a. Grandes olas y fuertes corrientes que afectaban a Esparta", "b. Escasa profundidad y pocas corrientes marinas", "c. Aguas congeladas la mayor parte del año en las costas de Atenas", "d. Gran cantidad de icebergs"], correct: "b" },
+        { text: "¿Qué civilización surgió en el sur de la península Balcánica y las islas del mar Egeo?", options: ["a. La civilización romana", "b. La civilización fenicia", "c. La civilización griega", "d. La civilización egipcia"], correct: "c" },
+        { text: "¿Qué civilización del Mediterráneo fue conocida por ser grandes navegantes y comerciantes?", options: ["a. Griegos", "b. Fenicios", "c. Egipcios", "d. Hititas"], correct: "b" },
+        { text: "¿Qué civilización fue especialmente conocida por ser grandes navegantes y comerciantes?", options: ["a. Los romanos", "b. Los griegos", "c. Los fenicios", "d. Los egipcios"], correct: "c" },
+        { text: "¿Qué característica del mar Mediterráneo facilitó el desarrollo de la navegación?", options: ["a. Grandes olas y fuertes vientos", "b. Escasa profundidad y pocas corrientes", "c. Aguas congeladas", "d. Gran cantidad de icebergs"], correct: "b" },
+        { text: "¿Qué característica climática del Mediterráneo favoreció los asentamientos humanos?", options: ["a. Clima frío y seco todo el año", "b. Clima con cuatro estaciones marcadas, veranos secos y calurosos", "c. Clima tropical con lluvias por períodos breves durante todo el año", "d. Clima desértico con altas temperaturas durante todo el año"], correct: "b" },
+        { text: "¿Qué civilización se edificó en torno al río Nilo?", options: ["a. La civilización romana", "b. La civilización griega", "c. La civilización egipcia", "d. La civilización fenicia"], correct: "c" },
+        { text: "¿Qué patrón geográfico comparten las civilizaciones del Mediterráneo?", options: ["a. Se ubican en zonas montañosas alejadas del mar", "b. Se ubican en las costas o cerca del mar", "c. Se ubican en el interior de los continentes", "d. Se ubican en zonas desérticas"], correct: "b" },
+
+        // Bloque 3: La polis y la ciudadanía (21-30)
+        { text: "¿Qué es una polis?", options: ["a. Una ciudad-Estado griega autónoma", "b. Un imperio unificado bajo un solo rey", "c. Una colonia griega en el Mediterráneo", "d. Un templo dedicado a los dioses"], correct: "a" },
+        { text: "¿Qué elementos conformaban una polis?", options: ["a. Solo el núcleo urbano", "b. El núcleo urbano, el espacio rural circundante y la comunidad de habitantes", "c. Solo los templos y santuarios", "d. Solo el puerto y las murallas"], correct: "b" },
+        { text: "¿Cómo se llamaba la parte alta de la ciudad donde se ubicaban los principales templos?", options: ["a. El ágora", "b. La acrópolis", "c. El puerto", "d. La chora"], correct: "b" },
+        { text: "¿Qué función cumplía el ágora en Atenas?", options: ["a. Era el centro religioso, cultural y social", "b. Era el centro político, comercial y social", "c. Era el centro militar, político y cultural", "d. Era el cementerio de la ciudad"], correct: "b" },
+        { text: "¿Cómo se llamaba el puerto principal de Atenas?", options: ["a. El Pireo", "b. El Pnyx", "c. El Ática", "d. El Peloponeso"], correct: "a" },
+        { text: "¿Qué requisito debía cumplir un hombre para ser ciudadano en Atenas?", options: ["a. Ser rico y tener tierras en Atenas", "b. Ser varón, mayor de 18 años e hijo de padre y madre atenienses", "c. Ser guerrero, mayor de 18 años y haber combatido en una guerra previamente", "d. Ser sacerdote de un templo ateniense"], correct: "b" },
+        { text: "¿Qué grupo social estaba excluido de la ciudadanía en Atenas?", options: ["a. Los comerciantes ricos", "b. Los artesanos especializados", "c. Las mujeres", "d. Los generales del ejército"], correct: "c" },
+        { text: "¿Qué porcentaje aproximado de la población ateniense tenía derechos políticos?", options: ["a. 50-60%", "b. 80-90%", "c. 10-15%", "d. 30-40%"], correct: "c" },
+        { text: "¿Cómo se llamaban los extranjeros libres que vivían en Atenas pero no tenían derechos políticos?", options: ["a. Eupátridas", "b. Metecos", "c. Ilotas", "d. Periecos"], correct: "b" },
+        { text: "¿Qué estableció la ley de Pericles del año 451 a.C. respecto a la ciudadanía?", options: ["a. Que los esclavos podían ser ciudadanos solo si habían pasado por un período de prueba de 5 años", "b. Que los ciudadanos debían ser hijos de padre y madre atenienses", "c. Que las mujeres podían votar en la Asamblea solo si estaban casadas", "d. Que los extranjeros podían ser arcontes siempre que tuviesen parejas atenienses"], correct: "b" },
+
+        // Bloque 4: Evolución política de Atenas (31-40)
+        { text: "¿Cuál fue la primera forma de gobierno de Atenas?", options: ["a. Aristocracia", "b. Democracia", "c. Monarquía", "d. Plutocracia"], correct: "c" },
+        { text: "¿Quiénes eran los eupátridas?", options: ["a. Los comerciantes más ricos de Atenas", "b. Los nobles terratenientes que gobernaban Atenas", "c. Los sacerdotes de los templos", "d. Los extranjeros residentes en Atenas"], correct: "b" },
+        { text: "¿En qué siglo se debilitó el poder del monarca en Atenas dando paso a la aristocracia?", options: ["a. Siglo VI a.C.", "b. Siglo VIII a.C.", "c. Siglo V a.C.", "d. Siglo IV a.C."], correct: "b" },
+        { text: "¿Qué grupo social ejercía el poder político en el sistema aristocrático ateniense?", options: ["a. Los metecos", "b. Los eupátridas", "c. Los comerciantes", "d. Los artesanos"], correct: "b" },
+        { text: "¿Qué fenómeno económico impulsó las transformaciones políticas en Atenas durante el siglo VII a.C.?", options: ["a. La crisis agrícola", "b. El desarrollo naval y el comercio marítimo", "c. El descubrimiento de nuevas minas de oro", "d. La conquista de nuevos territorios"], correct: "b" },
+        { text: "¿Qué tipo de gobierno se caracteriza porque el poder se concentra en el grupo más rico de la sociedad?", options: ["a. Monarquía", "b. Aristocracia", "c. Plutocracia", "d. Democracia"], correct: "c" },
+        { text: "¿Cuál era la función del Areópago en el sistema aristocrático ateniense?", options: ["a. Era la asamblea del pueblo en el ágora", "b. Era el consejo de ancianos formado por ex arcontes", "c. Era el tribunal militar ateniense", "d. Era el consejo de comerciantes que tenía participación política"], correct: "b" },
+        { text: "¿Cómo se llamaba la asamblea formada por eupátridas en el sistema aristocrático?", options: ["a. Bulé", "b. Ekklesía", "c. Heliea", "d. Gerusía"], correct: "b" },
+        { text: "¿Qué cargos ocupaban los arcontes en el sistema aristocrático ateniense?", options: ["a. Eran los generales del ejército", "b. Eran los magistrados que ocupaban los principales cargos de gobierno", "c. Eran los sacerdotes de los templos atenienses dedicados a la política", "d. Eran los representantes de los comerciantes que tenían directa relación con la aristocracia"], correct: "b" },
+        { text: "¿Qué sucedía con los arcontes al dejar sus cargos en el sistema aristocrático?", options: ["a. Eran desterrados de la ciudad", "b. Pasaban a formar parte del Areópago", "c. Perdían todos sus bienes", "d. Se convertían en esclavos"], correct: "b" },
+
+        // Bloque 5: Reformas de Dracón y Solón (41-50)
+        { text: "¿Cuál fue el principal aporte de Dracón a la política ateniense?", options: ["a. Creó la democracia", "b. Redactó el primer código de leyes escritas", "c. Abolió la esclavitud y creó la democracia ateniense", "d. Repartió tierras entre los campesinos más humildes"], correct: "b" },
+        { text: "¿Qué legislador ateniense redactó el primer código de leyes escritas?", options: ["a. Solón", "b. Clístenes", "c. Dracón", "d. Pericles"], correct: "c" },
+        { text: "¿Qué caracterizaba a las leyes de Dracón?", options: ["a. Eran muy tolerantes", "b. Eran extremadamente severas", "c. Eran orales y secretas", "d. Eran favorables a los campesinos"], correct: "b" },
+        { text: "¿Qué expresión se utiliza hoy para referirse a normas muy severas?", options: ["a. Leyes solonianas", "b. Leyes draconianas", "c. Leyes pericleanas", "d. Leyes clistenianas"], correct: "b" },
+        { text: "¿Qué problema no resolvieron las leyes de Dracón?", options: ["a. La arbitrariedad de los nobles ante los tribunales de justicia", "b. La desigualdad económica y la esclavitud por deudas", "c. La falta de leyes escritas", "d. La falta de tribunales que resolviesen crímenes bélicos"], correct: "b" },
+        { text: "¿Qué legislador abolió la esclavitud por deudas y creó la Bulé y la Heliea?", options: ["a. Dracón", "b. Clístenes", "c. Solón", "d. Pericles"], correct: "c" },
+        { text: "¿Qué institución creó Solón para preparar las leyes?", options: ["a. La Ekklesía", "b. La Bulé", "c. La Heliea", "d. El Areópago"], correct: "b" },
+        { text: "¿Qué institución creó Solón como tribunal popular?", options: ["a. La Ekklesía", "b. La Bulé", "c. La Heliea", "d. El Areópago"], correct: "c" },
+        { text: "¿Qué abolió Solón mediante sus reformas?", options: ["a. La democracia", "b. La esclavitud por deudas", "c. La propiedad privada de la aristocracias", "d. El comercio marítimo entre distintas ciudades"], correct: "b" },
+        { text: "¿En qué criterio basó Solón la división de los ciudadanos en clases?", options: ["a. Su nacimiento", "b. Su riqueza", "c. Su edad", "d. Su profesión"], correct: "b" },
+
+        // Bloque 6: Pisístrato y Clístenes (51-60)
+        { text: "¿Qué tipo de gobierno instauró Pisístrato en Atenas?", options: ["a. Una democracia", "b. Una tiranía", "c. Una monarquía", "d. Una aristocracia"], correct: "b" },
+        { text: "¿Qué medidas populares implementó Pisístrato durante su gobierno?", options: ["a. Abolió la esclavitud y dio derechos a las mujeres", "b. Repartió tierras entre los campesinos y emprendió obras públicas", "c. Creó la Asamblea y el Tribunal popular", "d. Conquistó nuevos territorios"], correct: "b" },
+        { text: "¿Qué tirano ateniense repartió tierras entre los campesinos y emprendió obras públicas?", options: ["a. Dracón", "b. Solón", "c. Clístenes", "d. Pisístrato"], correct: "d" },
+        { text: "¿Por qué se considera a Clístenes el 'padre de la democracia ateniense'?", options: ["a. Porque fue el primer rey de Atenas", "b. Porque creó las bases institucionales de la democracia", "c. Porque conquistó el Imperio Persa", "d. Porque construyó el Partenón"], correct: "b" },
+        { text: "¿Qué reformador es considerado el 'padre de la democracia ateniense'?", options: ["a. Pericles", "b. Solón", "c. Dracón", "d. Clístenes"], correct: "d" },
+        { text: "¿Cómo reorganizó Clístenes el territorio ateniense?", options: ["a. En tribus basadas en la riqueza familiar", "b. En tribus basadas en la vecindad", "c. En tribus basadas en el parentesco familiar", "d. En tribus basadas en la profesión y estrato social"], correct: "b" },
+        { text: "¿Qué es el demo en la organización política de Clístenes?", options: ["a. Una división territorial basada en la vecindad", "b. Un grupo de comerciantes que participaban activamente en la política", "c. Un tribunal de justicia dedicado solamente a temas políticos", "d. Un templo religioso"], correct: "a" },
+        { text: "¿Qué principio fundamental aplicó Clístenes en su reforma política?", options: ["a. La plutocracia", "b. La isonomía", "c. La monarquía absoluta", "d. La aristocracia hereditaria"], correct: "b" },
+        { text: "¿Qué institución creó Clístenes con 500 integrantes?", options: ["a. La Ekklesía", "b. La Bulé", "c. La Heliea", "d. El Areópago"], correct: "b" },
+        { text: "¿Cómo se elegían los miembros de la Bulé de los Quinientos?", options: ["a. Por votación popular", "b. Por herencia familiar", "c. Por sorteo anual", "d. Por designación del rey"], correct: "c" },
+
+        // Bloque 7: Pericles y el Siglo de Oro (61-70)
+        { text: "¿Qué líder ateniense impulsó la construcción del Partenón y consolidó la democracia?", options: ["a. Pericles", "b. Clístenes", "c. Pisístrato", "d. Solón"], correct: "a" },
+        { text: "¿Qué es la mistoforia?", options: ["a. El impuesto que pagaban los ciudadanos que tenían mujeres en su familia", "b. El pago a los ciudadanos por ocupar cargos públicos", "c. La esclavitud por deudas solamente para metecos", "d. El destierro de los tiranos"], correct: "b" },
+        { text: "¿Qué institución perdió sus privilegios con las reformas de Pericles?", options: ["a. La Ekklesía", "b. La Bulé", "c. El Areópago", "d. La Heliea"], correct: "c" },
+        { text: "¿Qué importante edificio se construyó durante el gobierno de Pericles?", options: ["a. El Coliseo", "b. El Partenón", "c. La Biblioteca de Alejandría", "d. El Muro de Adriano"], correct: "b" },
+        { text: "¿Cómo se conoce la época de mayor esplendor cultural de Atenas bajo el gobierno de Pericles?", options: ["a. Época Arcaica", "b. Edad de Oro", "c. Periodo Helenístico", "d. Época Oscura"], correct: "b" },
+        { text: "¿Qué permitió la mistoforia a los ciudadanos más pobres?", options: ["a. Comprar tierras que antes eran inaccesibles para ellos", "b. Participar en la política sin descuidar sus trabajos", "c. Ser elegidos reyes", "d. Comprar esclavos que permitiesen mejorar la economía"], correct: "b" },
+        { text: "¿Qué cargo ocupaba Pericles en Atenas?", options: ["a. Rey", "b. Arconte", "c. Estratega", "d. Sacerdote"], correct: "c" },
+        { text: "¿Qué efecto tuvo la mistoforia en la democracia ateniense?", options: ["a. La hizo más excluyente", "b. La hizo más inclusiva para los ciudadanos pobres", "c. Eliminó la participación ciudadana", "d. Fortaleció el poder de los nobles"], correct: "b" },
+        { text: "¿Qué obra de Tucídides contiene el famoso Discurso fúnebre de Pericles?", options: ["a. La Ilíada", "b. La Odisea", "c. La República como sociedad autocrítica", "d. Historia de la guerra del Peloponeso"], correct: "d" },
+        { text: "¿Cómo describe Pericles la democracia ateniense en su discurso fúnebre?", options: ["a. Como una imitación de las leyes de los vecinos", "b. Como un régimen que sirve de modelo para otros", "c. Como un gobierno de unos pocos", "d. Como una tiranía disfrazada"], correct: "b" },
+
+        // Bloque 8: Instituciones de la democracia (71-80)
+        { text: "¿Cuál era la institución más importante del sistema democrático ateniense?", options: ["a. La Bulé", "b. La Ekklesía", "c. La Heliea", "d. El Areópago"], correct: "b" },
+        { text: "¿Dónde se reunía la Ekklesía para discutir los asuntos políticos?", options: ["a. En el Ágora", "b. En la colina Pnyx", "c. En la Acrópolis", "d. En el Puerto del Pireo"], correct: "b" },
+        { text: "¿Cuántas veces al año se reunía aproximadamente la Ekklesía?", options: ["a. 10 veces", "b. 20 veces", "c. 40 veces", "d. 100 veces"], correct: "c" },
+        { text: "¿Cuántos integrantes tenía la Bulé?", options: ["a. 100", "b. 300", "c. 500", "d. 6000"], correct: "c" },
+        { text: "¿Cuántos integrantes tenía la Heliea (tribunal popular)?", options: ["a. 500", "b. 1000", "c. 6000", "d. 10000"], correct: "c" },
+        { text: "¿Cómo se elegían los miembros de la Heliea?", options: ["a. Por votación popular", "b. Por sorteo", "c. Por herencia familiar", "d. Por designación del rey"], correct: "b" },
+        { text: "¿Qué cargos se elegían por votación popular en Atenas?", options: ["a. Los miembros de la Bulé", "b. Los jueces de la Heliea", "c. Los estrategas", "d. Los arcontes"], correct: "c" },
+        { text: "¿Qué principio democrático significa 'igualdad de todos los ciudadanos ante la ley'?", options: ["a. Isegoría", "b. Isonomía", "c. Mistoforia", "d. Ostracismo"], correct: "b" },
+        { text: "¿Qué principio democrático significa 'el mismo derecho a dirigirse a la Asamblea'?", options: ["a. Isonomía", "b. Isegoría", "c. Mistoforia", "d. Ostracismo"], correct: "b" },
+        { text: "¿Qué función cumplía la Bulé en el sistema democrático ateniense?", options: ["a. Aprobar las leyes del parlamento, por el período que fuese necesario", "b. Preparar los proyectos de ley para la Asamblea", "c. Juzgar a los ciudadanos que cometían crimenes violentos y que atentaran a la democracia", "d. Dirigir el ejército"], correct: "b" },
+
+        // Bloque 9: Cultura griega (81-90)
+        { text: "¿Qué autor escribió la Ilíada y la Odisea?", options: ["a. Sófocles", "b. Homero", "c. Esquilo", "d. Tucídides"], correct: "b" },
+        { text: "¿Qué dios inspiró el origen del teatro griego?", options: ["a. Zeus", "b. Apolo", "c. Dionisos", "d. Atenea"], correct: "c" },
+        { text: "¿Cuáles son los dos grandes géneros teatrales creados por los griegos?", options: ["a. Tragedia y comedia", "b. Épica y lírica", "c. Drama y sátira", "d. Mito y logos"], correct: "a" },
+        { text: "¿En honor a qué dios se realizaban los Juegos Olímpicos en la Antigua Grecia?", options: ["a. Dionisios", "b. Apolo", "c. Zeus", "d. Atenea"], correct: "c" },
+        { text: "¿Qué escultor creó el Canon sobre las proporciones ideales del cuerpo humano?", options: ["a. Fidias", "b. Policleto", "c. Mirón", "d. Praxíteles"], correct: "b" },
+        { text: "¿Qué filósofo es conocido por la frase 'Conócete a ti mismo'?", options: ["a. Platón", "b. Aristóteles", "c. Sócrates", "d. Heródoto"], correct: "c" },
+        { text: "¿Quién es considerado el 'padre de la historia'?", options: ["a. Tucídides", "b. Heródoto", "c. Homero", "d. Sófocles"], correct: "b" },
+        { text: "¿Qué científico griego es conocido como el 'padre de la medicina'?", options: ["a. Arquímedes", "b. Hipócrates", "c. Eratóstenes", "d. Euclides"], correct: "b" },
+        { text: "¿Qué orden arquitectónico se caracteriza por columnas simples y robustas?", options: ["a. Jónico", "b. Corintio", "c. Dórico", "d. Compuesto"], correct: "c" },
+        { text: "¿A qué diosa estaba dedicado el Partenón?", options: ["a. Afrodita", "b. Artemisa", "c. Atenea", "d. Hera"], correct: "c" },
+
+        // Bloque 10: Esparta, Persia y legado (91-100)
+        { text: "¿Qué sistema político predominaba en Esparta?", options: ["a. Democracia", "b. Oligarquía militar", "c. Monarquía absoluta", "d. Tiranía"], correct: "b" },
+        { text: "¿Cómo se llamaban los campesinos en semiesclavitud que trabajaban para los espartiatas?", options: ["a. Metecos", "b. Ilotas", "c. Periecos", "d. Eupátridas"], correct: "b" },
+        { text: "¿Cómo se llamaba la asamblea consultiva de los espartiatas mayores de treinta años?", options: ["a. Ekklesía", "b. Apella", "c. Bulé", "d. Gerusía"], correct: "b" },
+        { text: "¿Qué conflicto enfrentó a Atenas y Esparta por el control de Grecia?", options: ["a. Las Guerras Médicas", "b. La Guerra del Peloponeso", "c. La Guerra de Troya", "d. La Guerra Púnica"], correct: "b" },
+        { text: "¿Cuál fue el resultado de la Guerra del Peloponeso?", options: ["a. Atenas fue derrotada", "b. Esparta fue derrotada", "c. Ambas ciudades se aliaron", "d. Persia conquistó Grecia"], correct: "a" },
+        { text: "¿Qué imperio enfrentó Grecia en las Guerras Médicas?", options: ["a. Imperio Romano", "b. Imperio Persa", "c. Imperio Egipcio", "d. Imperio Macedónico"], correct: "b" },
+        { text: "¿Qué diferencia fundamental existe entre la democracia ateniense y la democracia actual?", options: ["a. Atenas tenía sufragio universal", "b. Atenas tenía democracia directa; hoy es representativa", "c. Atenas no tenía elecciones", "d. Hoy no hay participación ciudadana"], correct: "b" },
+        { text: "¿Qué concepto político griego significa 'gobierno del pueblo'?", options: ["a. Aristocracia", "b. Plutocracia", "c. Democracia", "d. Monarquía"], correct: "c" },
+        { text: "¿Qué elementos del legado griego siguen presentes en la actualidad?", options: ["a. La filosofía, los juegos olímpicos, la democracia y el sistema de poder judicial", "b. La democracia, el teatro, los Juegos Olímpicos y la filosofía", "c. Los Juegos Olímpicos, la filosofía, el poder judicial y el teatro", "d. La monarquía y la aristocracia"], correct: "b" },
+        { text: "¿Qué autor griego escribió una crítica a la democracia ateniense en 'La República de los Atenienses'?", options: ["a. Tucídides", "b. Pericles", "c. Pseudo Jenofonte", "d. Platón"], correct: "c" }
+    ];
+
+    // ----- Banco de Verdadero/Falso (100 preguntas) -----
+    const bankTF = [
+        // Bloque 1: Contexto geográfico (1-10)
+        { text: "Atenas se ubicaba en la península del Ática.", correct: "V" },
+        { text: "El relieve montañoso de Grecia facilitó la unificación política del territorio.", correct: "F" },
+        { text: "Los griegos se desarrollaron como grandes navegantes debido a su cercanía al mar.", correct: "V" },
+        { text: "La agricultura en Grecia se desarrolló fácilmente en todo el territorio.", correct: "F" },
+        { text: "Los principales cultivos griegos fueron olivos, vides y trigo.", correct: "V" },
+        { text: "Los griegos explotaban minas de cobre, plata, hierro y oro.", correct: "V" },
+        { text: "La escasez de tierras cultivables provocó la expansión colonial griega.", correct: "V" },
+        { text: "Los griegos se llamaban a sí mismos 'bárbaros'.", correct: "F" },
+        { text: "Los griegos denominaban 'Hélade' a su territorio.", correct: "V" },
+        { text: "El relieve de los Balcanes se caracteriza por extensas llanuras.", correct: "F" },
+
+        // Bloque 2: El mar Mediterráneo (11-20)
+        { text: "El mar Mediterráneo es un mar interior que conecta tres continentes.", correct: "V" },
+        { text: "El mar Mediterráneo era un espacio 'ecúmene', es decir, deshabitado.", correct: "F" },
+        { text: "Las aguas del Mediterráneo tienen escasa profundidad y pocas corrientes.", correct: "V" },
+        { text: "El mar Mediterráneo era un espacio ecúmene poblado permanentemente por distintas culturas.", correct: "V" },
+        { text: "Los fenicios no fueron grandes navegantes.", correct: "F" },
+        { text: "La civilización egipcia se desarrolló en torno al río Nilo.", correct: "V" },
+        { text: "La civilización romana surgió en la península de los Balcanes.", correct: "F" },
+        { text: "El Mediterráneo tiene un clima con cuatro estaciones muy marcadas.", correct: "V" },
+        { text: "Las civilizaciones del Mediterráneo se ubicaban en el interior de los continentes.", correct: "F" },
+        { text: "Los griegos fundaron colonias en las costas del Mediterráneo.", correct: "V" },
+
+        // Bloque 3: La polis y la ciudadanía (21-30)
+        { text: "La polis era una ciudad-Estado independiente.", correct: "V" },
+        { text: "La acrópolis era el centro político y comercial de la polis.", correct: "F" },
+        { text: "El ágora era la plaza pública donde se realizaban reuniones y comercio.", correct: "V" },
+        { text: "El Pireo era el puerto principal de Atenas.", correct: "V" },
+        { text: "Todos los habitantes de Atenas eran ciudadanos con derechos políticos.", correct: "F" },
+        { text: "Los metecos eran extranjeros libres sin derechos políticos en Atenas.", correct: "V" },
+        { text: "Las mujeres atenienses tenían derechos políticos.", correct: "F" },
+        { text: "Los esclavos constituían aproximadamente un tercio de la población ateniense.", correct: "V" },
+        { text: "Solo el 10-15% de la población ateniense tenía derechos políticos.", correct: "V" },
+        { text: "Para ser ciudadano en Atenas se requería ser hijo de padre y madre atenienses.", correct: "V" },
+
+        // Bloque 4: Evolución política de Atenas (31-40)
+        { text: "La primera forma de gobierno de Atenas fue la democracia.", correct: "F" },
+        { text: "Los eupátridas eran los nobles terratenientes que gobernaban Atenas.", correct: "V" },
+        { text: "El poder del monarca en Atenas se debilitó durante el siglo VIII a.C.", correct: "V" },
+        { text: "Durante la aristocracia, todos los atenienses podían participar en el gobierno.", correct: "F" },
+        { text: "El desarrollo naval y el comercio marítimo impulsaron transformaciones políticas en Atenas.", correct: "V" },
+        { text: "La plutocracia es un gobierno donde el poder se concentra en los más ricos.", correct: "V" },
+        { text: "El Areópago era un consejo de ancianos formado por ex arcontes.", correct: "V" },
+        { text: "La Ekklesía era la asamblea formada por eupátridas en el sistema aristocrático.", correct: "V" },
+        { text: "Los arcontes eran los magistrados que ocupaban los principales cargos de gobierno.", correct: "V" },
+        { text: "Los arcontes al dejar su cargo perdían todos sus privilegios.", correct: "F" },
+
+        // Bloque 5: Reformas de Dracón y Solón (41-50)
+        { text: "Dracón redactó el primer código de leyes escritas de Atenas.", correct: "V" },
+        { text: "Las leyes de Dracón eran muy tolerantes.", correct: "F" },
+        { text: "Las 'leyes draconianas' es una expresión que se usa para normas muy severas.", correct: "V" },
+        { text: "Las reformas de Dracón eliminaron la esclavitud por deudas.", correct: "F" },
+        { text: "Solón abolió la esclavitud por deudas en Atenas.", correct: "V" },
+        { text: "Solón creó la Bulé (Consejo de los Cuatrocientos).", correct: "V" },
+        { text: "Solón creó la Heliea como tribunal popular.", correct: "V" },
+        { text: "Solón prohibió la esclavitud por deudas.", correct: "V" },
+        { text: "Solón dividió a los ciudadanos según su nacimiento.", correct: "F" },
+        { text: "Las reformas de Solón permitieron que los no nobles accedieran a cargos públicos.", correct: "V" },
+
+        // Bloque 6: Pisístrato y Clístenes (51-60)
+        { text: "Pisístrato instauró una tiranía en Atenas.", correct: "V" },
+        { text: "Pisístrato repartió tierras entre los campesinos pobres.", correct: "V" },
+        { text: "Pisístrato gobernó Atenas durante el período de mayor esplendor democrático.", correct: "F" },
+        { text: "Clístenes es considerado el 'padre de la democracia ateniense'.", correct: "V" },
+        { text: "Clístenes reorganizó el territorio ateniense en tribus basadas en la vecindad.", correct: "V" },
+        { text: "Clístenes reorganizó el territorio en tribus basadas en el parentesco familiar.", correct: "F" },
+        { text: "El demo era una división territorial basada en la vecindad.", correct: "V" },
+        { text: "La isonomía significa la desigualdad ante la ley.", correct: "F" },
+        { text: "Clístenes creó la Bulé de los Quinientos.", correct: "V" },
+        { text: "Los miembros de la Bulé de los Quinientos eran elegidos por sorteo anual.", correct: "V" },
+
+        // Bloque 7: Pericles y el Siglo de Oro (61-70)
+        { text: "Pericles gobernó Atenas durante el período de mayor esplendor cultural.", correct: "V" },
+        { text: "La mistoforia era el impuesto que pagaban los ciudadanos.", correct: "F" },
+        { text: "La mistoforia permitió que los ciudadanos pobres participaran en política.", correct: "V" },
+        { text: "Pericles eliminó los privilegios del Areópago.", correct: "V" },
+        { text: "El Partenón fue construido durante el gobierno de Pericles.", correct: "V" },
+        { text: "La época de Pericles es conocida como el 'Siglo de Oro' de Atenas.", correct: "V" },
+        { text: "Pericles era un rey de Atenas.", correct: "F" },
+        { text: "El Discurso fúnebre de Pericles fue escrito por Tucídides.", correct: "V" },
+        { text: "En su discurso, Pericles decía que Atenas imitaba a otras ciudades.", correct: "F" },
+        { text: "La mistoforia hizo que la democracia fuera menos inclusiva.", correct: "F" },
+
+        // Bloque 8: Instituciones de la democracia (71-80)
+        { text: "La Ekklesía era la institución más importante del sistema democrático ateniense.", correct: "V" },
+        { text: "La Ekklesía se reunía en la colina Pnyx.", correct: "V" },
+        { text: "La Ekklesía se reunía solo una vez al año.", correct: "F" },
+        { text: "La Bulé de los Quinientos preparaba los proyectos de ley.", correct: "V" },
+        { text: "La Heliea era el tribunal popular con 6.000 integrantes.", correct: "V" },
+        { text: "Todos los cargos en Atenas se elegían por votación popular.", correct: "F" },
+        { text: "Los estrategas se elegían por votación popular.", correct: "V" },
+        { text: "La isonomía significa igualdad ante la ley.", correct: "V" },
+        { text: "La isegoría significa el mismo derecho a hablar en la Asamblea.", correct: "V" },
+        { text: "La Bulé aprobaba las leyes en Atenas.", correct: "F" },
+
+        // Bloque 9: Cultura griega (81-90)
+        { text: "Homero escribió la Ilíada y la Odisea.", correct: "V" },
+        { text: "El teatro griego se originó en las danzas en honor a Dionisos.", correct: "V" },
+        { text: "La tragedia y la comedia son los dos géneros teatrales griegos.", correct: "V" },
+        { text: "Los Juegos Olímpicos se realizaban cada 4 años en Olimpia.", correct: "V" },
+        { text: "Los Juegos Olímpicos se realizaban en honor al dios Mercurio.", correct: "F" },
+        { text: "Policleto creó el Canon sobre las proporciones ideales del cuerpo.", correct: "V" },
+        { text: "Sócrates fue discípulo de Aristóteles.", correct: "F" },
+        { text: "Heródoto es considerado el 'padre de la historia'.", correct: "V" },
+        { text: "Hipócrates es conocido como el 'padre de la filosofía'.", correct: "F" },
+        { text: "El Partenón estaba dedicado a la diosa Atenea.", correct: "V" },
+
+        // Bloque 10: Esparta, Persia y legado (91-100)
+        { text: "Esparta era una democracia como Atenas.", correct: "F" },
+        { text: "Los ilotas eran campesinos en semiesclavitud en Esparta.", correct: "V" },
+        { text: "La Guerra del Peloponeso enfrentó a Atenas y Esparta.", correct: "V" },
+        { text: "Atenas ganó la Guerra del Peloponeso.", correct: "F" },
+        { text: "Las Guerras Médicas enfrentaron a Grecia contra el Imperio Persa.", correct: "V" },
+        { text: "La democracia ateniense era directa, no representativa.", correct: "V" },
+        { text: "La democracia actual es representativa, mientras que la ateniense era directa.", correct: "V" },
+        { text: "En la democracia ateniense, las mujeres tenían derecho a votar.", correct: "F" },
+        { text: "El sufragio en la democracia actual es universal para todos los adultos.", correct: "V" },
+        { text: "El legado griego incluye la democracia, el teatro y los Juegos Olímpicos.", correct: "V" }
+    ];
+
+    // ==================== FUNCIONES ====================
+
+    function getRandomItems(arr, count) {
+        const shuffled = [...arr];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+    }
+
+    let currentMC = [], currentTF = [];
+    let mcAnswers = [], tfAnswers = [];
+    let evaluated = false;
+
+    function renderMultipleChoice() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        currentMC.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${q.options.map(opt => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${opt.charAt(0)}" id="mc_${idx}_${opt.charAt(0)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${opt.charAt(0)}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div class="feedback-text ${mcAnswers[idx] === q.correct ? 'correct-feedback' : 'incorrect-feedback'}">${mcAnswers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta correcta: ' + q.correct}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => { mcAnswers[idx] = e.target.value; });
+                });
+            }
+        });
+    }
+
+    function renderTrueFalse() {
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+        currentTF.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellText.innerHTML = `${idx+1}. ${item.text}`;
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+            const optV = document.createElement('option');
+            optV.value = "V";
+            optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option');
+            optF.value = "F";
+            optF.textContent = "Falso (F)";
+            select.appendChild(optV);
+            select.appendChild(optF);
+            if (!evaluated && tfAnswers[idx]) {
+                if (tfAnswers[idx] === "V") optV.selected = true;
+                else if (tfAnswers[idx] === "F") optF.selected = true;
+            }
+            select.addEventListener('change', (e) => { tfAnswers[idx] = e.target.value; });
+            cellSelect.appendChild(select);
+            if (evaluated) {
+                const isCorrect = tfAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correct}`;
+                feedback.className = isCorrect ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+    }
+
+    function resetTest() {
+        evaluated = false;
+        currentMC = getRandomItems(bankMultipleChoice, 30);
+        currentTF = getRandomItems(bankTF, 30);
+        mcAnswers = new Array(30).fill(null);
+        tfAnswers = new Array(30).fill(null);
+        document.getElementById('results').style.display = 'none';
+        renderMultipleChoice();
+        renderTrueFalse();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function evaluateAll() {
+        evaluated = true;
+        let mcCorrect = 0, tfCorrect = 0;
+
+        for (let i = 0; i < currentMC.length; i++) {
+            if (mcAnswers[i] === currentMC[i].correct) mcCorrect++;
+        }
+
+        for (let i = 0; i < currentTF.length; i++) {
+            if (tfAnswers[i] === currentTF[i].correct) tfCorrect++;
+        }
+
+        const total = currentMC.length + currentTF.length;
+        const totalCorrect = mcCorrect + tfCorrect;
+        const percentage = (totalCorrect / total) * 100;
+        let grade = 0;
+        const passing = 60;
+
+        if (percentage >= passing) {
+            grade = 4.0 + ((percentage - passing) / (100 - passing)) * 3.0;
+        } else {
+            grade = 1.0 + (percentage / passing) * 3.0;
+        }
+        grade = Math.round(grade * 100) / 100;
+        const isApproved = grade >= 4.0;
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#a5662a; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrect} de ${total} (${Math.round(percentage)}%)</div>
+            <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Múltiple: ${mcCorrect}/${currentMC.length}</div>
+                <div>⚖️ V/F: ${tfCorrect}/${currentTF.length}</div>
+            </div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}">
+                <strong>${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>
+                NOTA: ${grade}
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+
+        renderMultipleChoice();
+        renderTrueFalse();
+
+        document.getElementById('restartTestBtn')?.addEventListener('click', resetTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Historia.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_4_Historia.html');
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ==================== INICIALIZACIÓN ====================
+    resetTest();
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>
