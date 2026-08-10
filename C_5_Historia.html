@@ -1,0 +1,1131 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: Esparta y los Sistemas Políticos de Grecia | Historia 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffdf9;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            scrollbar-width: thin;
+            background: #fffdf9;
+            color: #2c3e2f;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #ede6db; }
+        .slide::-webkit-scrollbar-thumb { background: #c2aa82; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #7a4b1d;
+            border-left: 7px solid #e6b450;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #6b3f1a;
+            margin: 1rem 0 0.6rem 0;
+            border-bottom: 2px solid #f0dfc0;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+            color: #2d4029;
+            text-align: justify;
+        }
+
+        ul, .custom-list {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #fef0cf;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #b65717;
+        }
+
+        .info-card {
+            background: #faf6eb;
+            border-left: 6px solid #e6b450;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .info-card.green { border-left-color: #6b8f5e; }
+        .info-card.blue { border-left-color: #5b7f9e; }
+        .info-card.purple { border-left-color: #8b6b9e; }
+        .info-card.red { border-left-color: #b55a5a; }
+        .info-card.orange { border-left-color: #d48c3a; }
+        .info-card.teal { border-left-color: #3a8f8f; }
+        .info-card.maroon { border-left-color: #8b3a3a; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            margin: 1rem 0;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+        .timeline-year {
+            min-width: 120px;
+            font-weight: bold;
+            color: #b65717;
+        }
+        .timeline-text {
+            flex: 1;
+        }
+
+        .question-sample {
+            background: #eef0e4;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            margin: 1.2rem 0 0.5rem;
+            border-left: 5px solid #c59a5b;
+        }
+
+        .badge {
+            background: #c38b44;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #d4c9b5;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+            background: #fefcf7;
+        }
+        th {
+            background: #e8dfcf;
+            color: #7a4b1d;
+            font-weight: 600;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf2;
+            border-top: 1px solid #e9dfcf;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #b47c44; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #e9dfcf;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #5d431f;
+            font-weight: 500;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(180, 140, 90, 0.4);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #5d3a1a;
+            transition: 0.2s;
+            z-index: 90;
+        }
+        .nav-arrow:hover { background: #c99f65; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        .img-placeholder {
+            background: #eae2d2;
+            border-radius: 20px;
+            margin: 1rem 0;
+            padding: 0.8rem;
+            text-align: center;
+            font-style: italic;
+            color: #7f684a;
+            border: 1px dashed #cfbe9e;
+        }
+        .img-placeholder img {
+            max-width: 100%;
+            border-radius: 12px;
+        }
+        .img-placeholder .img-instruction {
+            font-style: normal;
+            font-weight: 500;
+            color: #6b4f2a;
+            background: #dacfb8;
+            display: inline-block;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+        }
+
+        /* ===== DIAGRAMAS ===== */
+        .diagram-container {
+            background: #faf6eb;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 2px solid #e9dfcf;
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #6b3f1a;
+            margin-bottom: 1rem;
+        }
+
+        /* Diagrama: Pirámide social espartana */
+        .sparta-pyramid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .sparta-level {
+            width: 100%;
+            padding: 0.4rem 0;
+            text-align: center;
+            border-radius: 8px;
+            margin: 0.15rem 0;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2d4029;
+        }
+        .sparta-level.espartiatas { background: #e6b450; width: 20%; color: #4a2f0d; }
+        .sparta-level.periecos { background: #d4a84a; width: 45%; color: #4a2f0d; }
+        .sparta-level.ilotas { background: #b88a3a; width: 80%; color: white; }
+
+        /* Diagrama: Sistema político espartano */
+        .sparta-politic {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.3rem;
+        }
+        .sparta-politic .level {
+            width: 100%;
+            text-align: center;
+            padding: 0.4rem;
+            border-radius: 10px;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        .sparta-politic .level.reyes { background: #e6b450; width: 20%; color: #4a2f0d; }
+        .sparta-politic .level.gerusia { background: #d4a84a; width: 35%; color: #4a2f0d; }
+        .sparta-politic .level.eforos { background: #c99a44; width: 50%; color: white; }
+        .sparta-politic .level.apella { background: #b88a3a; width: 70%; color: white; }
+
+        /* Diagrama: Agogé */
+        .agoge-diagram {
+            display: flex;
+            justify-content: center;
+            gap: 0.8rem;
+            flex-wrap: wrap;
+        }
+        .agoge-step {
+            background: #fefcf7;
+            border: 2px solid #d4c9b5;
+            border-radius: 16px;
+            padding: 0.6rem 1rem;
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+        }
+        .agoge-step .age { font-weight: 700; color: #b65717; font-size: 1.1rem; }
+        .agoge-step .name { font-weight: 600; color: #6b3f1a; }
+        .agoge-step .desc { font-size: 0.75rem; color: #5a4a3a; }
+        .agoge-step.active { border-color: #e6b450; background: #fef8ee; }
+        .agoge-arrow { font-size: 1.8rem; color: #c2aa82; display: flex; align-items: center; }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .timeline-year { min-width: 80px; }
+            .footer-nav { padding: 0 1rem; }
+            .btn-footer { padding: 0.4rem 1rem; font-size: 0.85rem; }
+            .nav-arrow { width: 36px; height: 36px; font-size: 1.4rem; }
+            .agoge-step { min-width: 70px; padding: 0.4rem 0.6rem; }
+            .agoge-arrow { font-size: 1.2rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+
+            <!-- SLIDE 1: Portada -->
+            <div class="slide">
+                <h1>⚔️ Esparta y los Sistemas Políticos de Grecia</h1>
+                <p>La Antigua Grecia no fue un Estado unificado, sino un conjunto de <span class="highlight">polis</span> independientes que experimentaron diferentes formas de gobierno. Atenas y Esparta representaron dos modelos radicalmente opuestos: la <strong>democracia</strong> y la <strong>oligarquía militar</strong>.</p>
+                <div class="info-card">
+                    <strong>📘 En esta clase aprenderemos sobre:</strong>
+                    <ul>
+                        <li>La diversidad política de la Antigua Grecia</li>
+                        <li>La sociedad y el sistema político de <strong>Esparta</strong></li>
+                        <li>La <strong>Agogé</strong>, el sistema educativo militar espartano</li>
+                        <li>El ejército espartano: hoplitas y falange</li>
+                        <li>La <strong>tiranía</strong> y la <strong>oligarquía</strong> como sistemas políticos</li>
+                        <li>La comparativa entre Atenas, Esparta y otras polis</li>
+                        <li>El legado político griego en la actualidad</li>
+                    </ul>
+                </div>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/N6NBm6Dx/image.png" alt="Guerrero espartano con casco y escudo" style="max-width:300px">
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión inicial:</strong> ¿Qué diferencias crees que existían entre Atenas y Esparta? ¿Por qué Esparta no tuvo democracia como Atenas?</p>
+                    <p><strong>Respuesta orientativa:</strong> Esparta era una oligarquía militar que priorizaba la disciplina y el control sobre la participación ciudadana. Mientras Atenas valoraba la libertad y el debate, Esparta valoraba la obediencia y la guerra.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: La diversidad política griega -->
+            <div class="slide">
+                <h2>🏛️ La diversidad política griega</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/2YdZNbBz/image.png" alt="Mapa de Grecia con las principales polis" style="max-width:300px">
+                </div>
+                <p>Grecia no fue un Estado unificado, sino un conjunto de <span class="highlight">polis</span> independientes. Cada polis tenía su propio gobierno, leyes y ejército.</p>
+                <div class="grid-3">
+                    <div class="info-card blue">
+                        <strong>🏛️ Democracia</strong>
+                        <p>Gobierno del pueblo. Ejemplo: <span class="highlight">Atenas</span>. Los ciudadanos participaban directamente en las decisiones políticas.</p>
+                    </div>
+                    <div class="info-card red">
+                        <strong>⚔️ Oligarquía</strong>
+                        <p>Gobierno de unos pocos. Ejemplo: <span class="highlight">Esparta</span>. El poder estaba en manos de una minoría guerrera.</p>
+                    </div>
+                    <div class="info-card orange">
+                        <strong>👑 Tiranía</strong>
+                        <p>Gobierno de un gobernante ilegítimo. Ejemplo: <span class="highlight">Pisístrato</span> en Atenas. A veces populares, pero antidemocráticos.</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 ¿Por qué Atenas y Esparta son los modelos más estudiados?</strong>
+                    <p>Porque representan dos visiones opuestas de la sociedad y la política: la <strong>libertad y la cultura</strong> frente a la <strong>disciplina y la guerra</strong>.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué ventajas y desventajas tenía cada sistema político para los ciudadanos?</p>
+                    <p><strong>Respuesta:</strong> La democracia ofrecía participación pero podía ser inestable; la oligarquía ofrecía estabilidad pero excluía a la mayoría; la tiranía podía ser popular pero era ilegítima.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: La polis y la ciudadanía -->
+            <div class="slide">
+                <h2>👥 La polis y la ciudadanía</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/Kj7VnCx3/image.png" alt="Representación de una polis griega" style="max-width:300px">
+                </div>
+                <p>La <span class="highlight">polis</span> era la unidad política fundamental. Cada polis decidía quiénes podían ser ciudadanos y participar en el gobierno.</p>
+                <div class="info-card">
+                    <strong>📘 Ciudadano (polites):</strong>
+                    <ul>
+                        <li>Era una <span class="highlight">minoría</span> en todas las polis.</li>
+                        <li>En Atenas: varones atenienses mayores de edad.</li>
+                        <li>En Esparta: solo los <strong>espartiatas</strong> (homoioi, "los iguales").</li>
+                        <li>Excluidos en casi todas partes: <strong>mujeres, extranjeros y esclavos</strong>.</li>
+                    </ul>
+                </div>
+                <div class="grid-2">
+                    <div class="info-card green">
+                        <strong>✅ Elementos comunes</strong>
+                        <ul>
+                            <li>Lengua griega común</li>
+                            <li>Religión y mitología compartida</li>
+                            <li>Juegos Olímpicos y santuarios panhelénicos</li>
+                            <li>La idea de "ser griego" frente a los "bárbaros"</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>❌ Elementos divergentes</strong>
+                        <ul>
+                            <li>Sistemas políticos diferentes</li>
+                            <li>Conflictos constantes entre polis</li>
+                            <li>Guerra del Peloponeso (Atenas vs. Esparta)</li>
+                            <li>Modelos de sociedad opuestos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué la ciudadanía era restringida en todas las polis griegas?</p>
+                    <p><strong>Respuesta:</strong> La ciudadanía era un privilegio reservado a un grupo selecto. Se consideraba que solo ciertas personas (varones, libres, con entrenamiento militar) eran aptas para la política.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: Ubicación y características de Esparta -->
+            <div class="slide">
+                <h2>🗺️ Ubicación y características de Esparta</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/2YdZNbBz/image.png" alt="Mapa del Peloponeso con la ubicación de Esparta" style="max-width:300px">
+                </div>
+                <p>Esparta se ubicaba en el sur del <span class="highlight">Peloponeso</span>, en la región de Laconia. Fue una polis radicalmente diferente al resto de Grecia.</p>
+                <div class="info-card red">
+                    <strong>⚔️ Características principales de Esparta:</strong>
+                    <ul>
+                        <li><strong>Objetivo fundamental:</strong> formar soldados profesionales y mantener el orden interno.</li>
+                        <li><strong>No tenía murallas</strong> → "las murallas de Esparta eran sus guerreros".</li>
+                        <li>Sociedad organizada en torno a la <strong>guerra y la disciplina</strong>.</li>
+                        <li>Los espartiatas eran una <strong>minoría</strong> que dominaba a una mayoría de ilotas.</li>
+                        <li>El <strong>miedo a las rebeliones</strong> de los ilotas condicionaba toda la vida espartana.</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> Esparta era una <span class="highlight">oligarquía militar</span>. No se parecía en nada a Atenas: mientras Atenas valoraba la libertad y el debate, Esparta valoraba la obediencia y la guerra.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué Esparta no tenía murallas?</p>
+                    <p><strong>Respuesta:</strong> Los espartanos consideraban que sus guerreros eran su mejor defensa. Confiaban en su ejército, no en construcciones defensivas.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: Estructura social de Esparta (diagrama) -->
+            <div class="slide">
+                <h2>👥 Estructura social de Esparta</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/DHq3JsH1/image.png" alt="Pirámide social de Esparta" style="max-width:300px">
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">📊 Pirámide social espartana</div>
+                    <div class="sparta-pyramid">
+                        <div class="sparta-level espartiatas">
+                            <strong>👑 Espartiatas (homoioi) "los iguales"</strong>
+                            <span style="display:block;font-size:0.75rem;font-weight:400;">Ciudadanos guerreros • Derechos políticos plenos • Minoría</span>
+                        </div>
+                        <div class="sparta-level periecos">
+                            <strong>🏪 Periecos</strong>
+                            <span style="display:block;font-size:0.75rem;font-weight:400;">Habitantes libres de los alrededores • Sin derechos políticos • Comercio y artesanía</span>
+                        </div>
+                        <div class="sparta-level ilotas">
+                            <strong>⛓️ Ilotas</strong>
+                            <span style="display:block;font-size:0.75rem;font-weight:400;">Población conquistada • "Esclavos del Estado" • Sin libertad ni derechos • Mayoría</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card red">
+                    <strong>📘 Relación de dominación:</strong>
+                    <ul>
+                        <li>Los <span class="highlight">espartiatas</span> eran una minoría que mantenía el control sobre una mayoría de <span class="highlight">ilotas</span>.</li>
+                        <li>Los ilotas eran griegos sometidos que podían rebelarse → <strong>miedo constante</strong> a rebeliones.</li>
+                        <li>Este miedo justificaba el sistema militar y la disciplina extrema.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cómo influía el miedo a las rebeliones de los ilotas en la sociedad espartana?</p>
+                    <p><strong>Respuesta:</strong> El miedo justificaba la disciplina militar extrema, la educación severa (Agogé) y la existencia de la Krypteia (policía secreta). Todo estaba orientado a mantener el control.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: Sistema político de Esparta (diagrama) -->
+            <div class="slide">
+                <h2>🏛️ Sistema político de Esparta</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/TqpNzNk4/image.png" alt="Diagrama del sistema político espartano" style="max-width:300px">
+                </div>
+                <div class="info-card">
+                    <strong>📘 La peculiaridad espartana:</strong> Esparta mantenía <span class="highlight">dos reyes hereditarios</span> (diarquía), algo que la mayoría de las polis griegas había abandonado.</p>
+                </div>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">🏛️ Instituciones políticas de Esparta</div>
+                    <div class="sparta-politic">
+                        <div class="level reyes"><strong>👑 Diarquía (2 reyes)</strong> — Poderes limitados • Comandaban el ejército en guerra</div>
+                        <div class="level gerusia"><strong>Gerusía (30 miembros)</strong> — 28 ancianos (mayores de 60 años) + 2 reyes • Preparaban leyes • Tribunal supremo</div>
+                        <div class="level eforos"><strong>⚖️ Éforos (5 magistrados)</strong> — <span class="highlight">Máximo poder real</span> • Vigilaban a los reyes • Aplicaban las leyes</div>
+                        <div class="level apella"><strong>🏛️ Apella (Asamblea)</strong> — Todos los espartiatas mayores de 30 años • Aprobaban o rechazaban propuestas <span class="highlight">sin debatir</span></div>
+                    </div>
+                </div>
+
+                <div class="info-card blue">
+                    <strong>📘 Dato clave:</strong> Los <span class="highlight">éforos</span> podían desafiar incluso a un rey si no cumplía las leyes. Tenían el poder real en Esparta.
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué los éforos tenían el máximo poder en Esparta?</p>
+                    <p><strong>Respuesta:</strong> Porque vigilaban a los reyes y aseguraban que las leyes se cumplieran. Podían destituir a los reyes si fuera necesario.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: La educación espartana: la Agogé -->
+            <div class="slide">
+                <h2>⚔️ La Agogé: la educación espartana</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/JWw28DtY/image.png" alt="Jóvenes espartanos en entrenamiento" style="max-width:300px">
+                </div>
+                <p>La <span class="highlight">Agogé</span> era el sistema educativo obligatorio para todos los varones espartiatas. Su objetivo era formar <strong>guerreros leales, resistentes y disciplinados</strong>.</p>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">📚 Etapas de la Agogé</div>
+                    <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:0.5rem;">
+                        <div class="agoge-step active">
+                            <div class="age">7-17 años</div>
+                            <div class="name">Paides</div>
+                            <div class="desc">Separados de la familia • Vivían en cuarteles • Entrenamiento físico • Descalzos • Una túnica al año</div>
+                        </div>
+                        <div class="agoge-arrow">➡️</div>
+                        <div class="agoge-step">
+                            <div class="age">17-19 años</div>
+                            <div class="name">Paidiskoi</div>
+                            <div class="desc">Entrenamiento avanzado • Algunos ingresaban a la <strong>Krypteia</strong> (policía secreta)</div>
+                        </div>
+                        <div class="agoge-arrow">➡️</div>
+                        <div class="agoge-step">
+                            <div class="age">20-29 años</div>
+                            <div class="name">Hebontes</div>
+                            <div class="desc">Servicio militar activo • Vivían en las <strong>syssitia</strong> (comedores comunes)</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <strong>📘 Características de la Agogé:</strong>
+                    <ul>
+                        <li><strong>Alimentación:</strong> Intencionalmente escasa para acostumbrarlos al hambre.</li>
+                        <li><strong>Robo permitido:</strong> Debían robar comida, pero si eran atrapados → <span class="highlight">azotes severos</span>.</li>
+                        <li><strong>Relaciones pederásticas:</strong> Existía una relación institucionalizada entre jóvenes y guerreros adultos con fines educativos.</li>
+                        <li><strong>Objetivo final:</strong> Crear guerreros que antepusieran el Estado a cualquier interés personal.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué la Agogé era tan severa?</p>
+                    <p><strong>Respuesta:</strong> Para formar guerreros capaces de soportar cualquier dificultad en la guerra y de mantener el control sobre la población sometida (ilotas).</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: La Krypteia -->
+            <div class="slide">
+                <h2>🕵️ La Krypteia: la policía secreta espartana</h2>
+                <p>La <span class="highlight">Krypteia</span> era un cuerpo de élite formado por los jóvenes más aptos. Su misión era <strong>espiar y eliminar a los ilotas</strong> que pudieran rebelarse.</p>
+                <div class="info-card red">
+                    <strong>📘 Características de la Krypteia:</strong>
+                    <ul>
+                        <li>Los jóvenes más aptos eran seleccionados.</li>
+                        <li><strong>Misión:</strong> espiar y eliminar a los ilotas que pudieran rebelarse.</li>
+                        <li>El Estado declaraba formalmente la <strong>guerra a los ilotas</strong> cada otoño.</li>
+                        <li><strong>Justificación:</strong> mantener el control sobre la mayoría sometida (los ilotas superaban en número a los espartiatas).</li>
+                        <li>Operaban de noche, ocultos, con un cuchillo.</li>
+                        <li>Era una forma de <strong>terror de Estado</strong> para mantener el orden social.</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> La Krypteia era una de las instituciones más temidas en Esparta. Los ilotas vivían con el miedo constante de ser asesinados por los jóvenes espartanos.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué los espartanos necesitaban la Krypteia?</p>
+                    <p><strong>Respuesta:</strong> Porque los espartiatas eran una minoría que dominaba a una mayoría de ilotas. La Krypteia era una herramienta de control para prevenir rebeliones.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: La mujer espartana -->
+            <div class="slide">
+                <h2>👩 La mujer espartana</h2>
+                <p>La situación de la mujer en Esparta era <span class="highlight">excepcional</span> en el mundo griego: tenía <strong>más libertad</strong> que en otras polis.</p>
+                <div class="grid-2">
+                    <div class="info-card green">
+                        <strong>✅ Libertades de la mujer espartana</strong>
+                        <ul>
+                            <li>Participaban en <strong>ejercicios gimnásticos</strong> y actividades físicas.</li>
+                            <li>Podían poseer <strong>tierras y heredar bienes</strong> (a diferencia de Atenas).</li>
+                            <li>Tenían <strong>más libertad de movimiento</strong> que las mujeres atenienses.</li>
+                            <li>Recibían educación física para ser madres de guerreros fuertes.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>📘 Función principal</strong>
+                        <ul>
+                            <li><strong>Engendrar hijos fuertes</strong> para el Estado.</li>
+                            <li>Las mujeres espartanas eran vistas como <strong>"madres heroicas"</strong>.</li>
+                            <li>Se esperaba que fueran <strong>leales a Esparta</strong> por encima de todo.</li>
+                            <li>Su valor era medido por la <strong>calidad de sus hijos</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> A diferencia de Atenas, donde las mujeres estaban recluidas en el hogar, las mujeres espartanas eran educadas para ser fuertes y saludables. <span class="highlight">"Para que den hijos fuertes"</span>, decían.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué las mujeres espartanas tenían más libertades que las atenienses?</p>
+                    <p><strong>Respuesta:</strong> Porque el Estado espartano necesitaba madres fuertes para engendrar guerreros. La libertad de las mujeres era funcional al objetivo militar del Estado.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: El ejército espartano -->
+            <div class="slide">
+                <h2>⚔️ El ejército espartano: hoplitas y falange</h2>
+                <div class="img-placeholder">
+                    <img src="https://i.ibb.co/6JFSGw5y/image.png" alt="Hoplitas espartanos en formación de falange" style="max-width:300px">
+                </div>
+                <p>El ejército espartano era considerado el <span class="highlight">mejor de Grecia</span>. Su base era la infantería pesada: los <strong>hoplitas</strong>.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>🏛️ El hoplita</strong>
+                        <ul>
+                            <li>Soldado de infantería pesada.</li>
+                            <li>Equipamiento: <strong>lanza larga, escudo redondo (aspis), casco, coraza y grebas</strong>.</li>
+                            <li>El escudo protegía al soldado y también al compañero de la izquierda.</li>
+                            <li>La formación era clave: sin disciplina, la falange se rompía.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>⚔️ La falange</strong>
+                        <ul>
+                            <li>Formación compacta de <strong>8 a 16 hileras</strong> de hoplitas.</li>
+                            <li><span class="highlight">Disciplina extrema</span>: un solo error podía romper toda la formación.</li>
+                            <li>La falange exigía <strong>coordinación y entrenamiento</strong> constante.</li>
+                            <li>Por eso la <strong>Agogé</strong> era tan importante: formaba soldados que podían luchar en falange sin romper la fila.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> La falange espartana era la más temida de Grecia. Los espartanos no se retiraban ni rendían. <span class="highlight">"Con él o sobre él"</span> (con el escudo o sobre él) era su lema.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué la falange era tan efectiva?</p>
+                    <p><strong>Respuesta:</strong> Porque era una formación compacta donde los soldados se protegían mutuamente. Si todos mantenían la fila, era casi imposible romperla. Requería disciplina absoluta.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: Las syssitia -->
+            <div class="slide">
+                <h2>🍲 Las syssitia: los comedores comunes</h2>
+                <p>Los <span class="highlight">syssitia</span> eran comedores comunes donde todos los espartiatas adultos debían pertenecer. Eran una institución central de la vida espartana.</p>
+                <div class="info-card">
+                    <strong>📘 Función de las syssitia:</strong>
+                    <ul>
+                        <li><strong>Fortalecer la cohesión del grupo</strong> y eliminar diferencias individuales.</li>
+                        <li>Los miembros aportaban <strong>alimentos</strong> (contribución obligatoria).</li>
+                        <li>Quien no podía pagar su contribución podía <strong>perder la ciudadanía</strong>.</li>
+                        <li>Esto generó <strong>desigualdad social</strong> con el tiempo.</li>
+                        <li>La comida era <strong>intencionalmente sencilla</strong> (la famosa "sopa negra").</li>
+                    </ul>
+                </div>
+                <div class="info-card red">
+                    <strong>📘 Dato clave:</strong> El sistema de syssitia fue una de las causas de la <span class="highlight">decadencia de Esparta</span>. Cuando los ciudadanos empobrecían y no podían pagar su contribución, perdían la ciudadanía. Esto redujo el número de espartiatas.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cómo las syssitia contribuyeron a la decadencia de Esparta?</p>
+                    <p><strong>Respuesta:</strong> Porque los espartiatas que no podían pagar su contribución perdían la ciudadanía. Con el tiempo, el número de espartiatas se redujo, debilitando al Estado.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 12: La decadencia de Esparta -->
+            <div class="slide">
+                <h2>📉 La decadencia de Esparta</h2>
+                <p>A pesar de su poder, Esparta entró en decadencia por múltiples causas:</p>
+                <div class="grid-2">
+                    <div class="info-card red">
+                        <strong>📘 Problemas internos</strong>
+                        <ul>
+                            <li><strong>Desigualdad creciente</strong> entre "los iguales".</li>
+                            <li>La propiedad de la tierra se concentró en pocas manos.</li>
+                            <li>Menos ciudadanos podían pagar las <strong>syssitia</strong>.</li>
+                            <li><strong>Aristóteles:</strong> los éforos eran fáciles de sobornar.</li>
+                            <li>Reducción drástica del número de espartiatas.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>⚔️ Derrota militar</strong>
+                        <ul>
+                            <li><strong>Batalla de Leuctra (371 a.C.)</strong>: Tebas derrotó a Esparta.</li>
+                            <li>El mito de la invencibilidad espartana se rompió.</li>
+                            <li>Esparta perdió su hegemonía en Grecia.</li>
+                            <li>Nunca se recuperó plenamente.</li>
+                            <li>El "mito de Esparta" perduró, pero la realidad fue más compleja.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> La decadencia de Esparta demuestra que un sistema basado en la <span class="highlight">guerra y la exclusión</span> es insostenible a largo plazo. La falta de ciudadanos y la concentración de riqueza la debilitaron.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuál fue la causa principal de la decadencia de Esparta?</p>
+                    <p><strong>Respuesta:</strong> La combinación de problemas internos (desigualdad, reducción de espartiatas) y la derrota militar en Leuctra (371 a.C.), que rompió el mito de su invencibilidad.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 13: La tiranía griega -->
+            <div class="slide">
+                <h2>👑 La tiranía griega</h2>
+                <p>La <span class="highlight">tiranía</span> fue una forma de gobierno común en muchas polis griegas durante los siglos VII-VI a.C.</p>
+                <div class="info-card">
+                    <strong>📘 ¿Qué es un tirano?</strong>
+                    <ul>
+                        <li>Gobernante que tomaba el poder de forma <span class="highlight">ilegítima</span>.</li>
+                        <li>No siempre eran déspotas impopulares: algunos eran <strong>apoyados por el pueblo</strong>.</li>
+                        <li><strong>Contexto:</strong> Surgían cuando los aristócratas y el pueblo entraban en conflicto.</li>
+                        <li>Muchas veces, los tiranos limitaban el poder de los nobles y ayudaban al pueblo.</li>
+                    </ul>
+                </div>
+                <div class="grid-2">
+                    <div class="info-card green">
+                        <strong>✅ Ejemplo: Pisístrato en Atenas</strong>
+                        <ul>
+                            <li>Instauró una tiranía en Atenas (546-527 a.C.).</li>
+                            <li><strong>Repartió tierras</strong> entre los campesinos pobres.</li>
+                            <li>Emprendió <strong>obras públicas</strong> (templos, acueductos).</li>
+                            <li>Fomentó la <strong>cultura y las artes</strong>.</li>
+                            <li>Fue popular a pesar de ser un tirano.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>❌ Problemas de la tiranía</strong>
+                        <ul>
+                            <li>Gobierno <span class="highlight">ilegítimo</span> (no democrático).</li>
+                            <li>Concentración del poder en una persona.</li>
+                            <li>Sucesión muchas veces problemática.</li>
+                            <li>Podía degenerar en abusos de poder.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué los tiranos podían ser populares a pesar de ser ilegítimos?</p>
+                    <p><strong>Respuesta:</strong> Porque a veces limitaban el poder de los nobles y ayudaban al pueblo con reformas populares (reparto de tierras, obras públicas).</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 14: La oligarquía como sistema común -->
+            <div class="slide">
+                <h2>🏛️ La oligarquía como sistema común</h2>
+                <p>La <span class="highlight">oligarquía</span> era la forma de gobierno más común en Grecia, aunque menos estudiada que la democracia.</p>
+                <div class="info-card">
+                    <strong>📘 ¿Qué es una oligarquía?</strong>
+                    <ul>
+                        <li>Gobierno de <span class="highlight">"los pocos"</span>, generalmente los ricos.</li>
+                        <li>Se basaba en el poder de los <strong>aristócratas</strong> y la riqueza.</li>
+                        <li>Solo los ciudadanos ricos podían ocupar cargos públicos.</li>
+                        <li>La mayoría de la población quedaba <strong>excluida</strong>.</li>
+                    </ul>
+                </div>
+                <div class="info-card blue">
+                    <strong>📘 Ejemplos de oligarquías:</strong>
+                    <ul>
+                        <li><strong>Atenas</strong> también comenzó como una oligarquía bajo los <span class="highlight">eupátridas</span>.</li>
+                        <li><strong>Corinto</strong> y <strong>Tebas</strong> tuvieron gobiernos oligárquicos durante largos periodos.</li>
+                        <li><strong>Esparta</strong> era una oligarquía, aunque con elementos únicos (diarquía, éforos).</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Conclusión:</strong> La <span class="highlight">democracia ateniense fue la excepción</span>, no la regla. La mayoría de las polis griegas eran oligarquías o tiranías.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué la democracia ateniense fue la excepción en Grecia?</p>
+                    <p><strong>Respuesta:</strong> Porque la mayoría de las polis eran gobernadas por minorías (oligarquías) o por tiranos. La democracia requería condiciones especiales (como la riqueza comercial de Atenas).</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 15: Comparativa de sistemas políticos -->
+            <div class="slide">
+                <h2>📊 Comparativa de sistemas políticos</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>🏛️ Atenas</th>
+                            <th>⚔️ Esparta</th>
+                            <th>Otras polis</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gobierno</strong></td>
+                            <td><span class="highlight">Democracia</span></td>
+                            <td>Oligarquía militar</td>
+                            <td>Oligarquía o tiranía</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Participación</strong></td>
+                            <td>Ciudadanos varones atenienses</td>
+                            <td>Solo espartiatas</td>
+                            <td>Solo aristócratas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Educación</strong></td>
+                            <td>Integral (arte, filosofía, política)</td>
+                            <td>Solo militar (<strong>Agogé</strong>)</td>
+                            <td>Variable</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejército</strong></td>
+                            <td>Marina (trirremes)</td>
+                            <td>Ejército terrestre (hoplitas)</td>
+                            <td>Variable</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Papel de la mujer</strong></td>
+                            <td>Relegada al ámbito doméstico</td>
+                            <td><span class="highlight">Más libertad</span></td>
+                            <td>Variable</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuál era la principal diferencia entre Atenas y Esparta?</p>
+                    <p><strong>Respuesta:</strong> Atenas era una democracia que valoraba la libertad, la cultura y la educación integral, mientras que Esparta era una oligarquía militar que valoraba la disciplina, la obediencia y la guerra.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 16: El legado político griego -->
+            <div class="slide">
+                <h2>🌍 El legado político griego</h2>
+                <p>Los griegos nos legaron conceptos políticos que aún hoy son fundamentales en las democracias modernas.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>🏛️ Legado de Atenas</strong>
+                        <ul>
+                            <li><span class="highlight">Democracia</span>: el gobierno del pueblo.</li>
+                            <li><span class="highlight">Participación ciudadana</span>: la idea de que los ciudadanos deben involucrarse en política.</li>
+                            <li><span class="highlight">Debate político</span>: la Asamblea como espacio de deliberación.</li>
+                            <li><span class="highlight">Rendición de cuentas</span>: los gobernantes deben responder al pueblo.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>⚔️ Legado de Esparta</strong>
+                        <ul>
+                            <li><span class="highlight">Disciplina y orden</span>: la importancia de la ley y el control.</li>
+                            <li><span class="highlight">Servicio al Estado</span>: el individuo al servicio de la comunidad.</li>
+                            <li><span class="highlight">Control del poder</span>: los éforos vigilaban a los reyes.</li>
+                            <li><span class="highlight">Ciudadanía restringida</span>: un recordatorio de la exclusión histórica.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Limitaciones:</strong> La exclusión de <span class="highlight">mujeres, esclavos y extranjeros</span> es un recordatorio de que la democracia griega era imperfecta.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué aspectos de la democracia griega siguen vigentes en la actualidad?</p>
+                    <p><strong>Respuesta:</strong> Conceptos como la soberanía popular, la participación ciudadana, el debate público y la rendición de cuentas de los gobernantes.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 17: Comparativa final Atenas-Esparta -->
+            <div class="slide">
+                <h2>⚔️ Comparativa final: Atenas vs. Esparta</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Aspecto</th>
+                            <th>🏛️ Atenas</th>
+                            <th>⚔️ Esparta</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gobierno</strong></td>
+                            <td>Democracia</td>
+                            <td>Oligarquía militar</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Valores</strong></td>
+                            <td>Libertad, educación integral</td>
+                            <td>Disciplina, obediencia</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sociedad</strong></td>
+                            <td>Abierta, comercio, cultura</td>
+                            <td>Cerrada, guerrera, autárquica</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ciudadanía</strong></td>
+                            <td>Varones atenienses</td>
+                            <td>Solo espartiatas</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Educación</strong></td>
+                            <td>Filosofía, arte, política</td>
+                            <td>Agogé (solo guerra)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Papel de la mujer</strong></td>
+                            <td>Relegada al ámbito doméstico</td>
+                            <td>Más libertad y actividad física</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejército</strong></td>
+                            <td>Poderosa armada</td>
+                            <td>Poderoso ejército terrestre</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta final:</strong> ¿Qué modelo era mejor: la democracia ateniense o la oligarquía espartana?</p>
+                    <p><strong>Respuesta:</strong> No hay una respuesta única. Cada modelo tenía ventajas y desventajas. Atenas ofrecía libertad y participación, pero era inestable. Esparta ofrecía estabilidad y orden, pero reprimía la libertad individual.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 18: Preguntas de reflexión -->
+            <div class="slide">
+                <h2>🤔 Preguntas de reflexión</h2>
+                <div class="info-card blue">
+                    <strong>📘 Pregunta 1:</strong>
+                    <p>¿Qué modelo político era más estable: la democracia ateniense o la oligarquía espartana? ¿Por qué?</p>
+                </div>
+                <div class="info-card red">
+                    <strong>📘 Pregunta 2:</strong>
+                    <p>¿Podría considerarse la <span class="highlight">Agogé</span> espartana como una forma de <strong>totalitarismo</strong>? ¿Por qué?</p>
+                </div>
+                <div class="info-card green">
+                    <strong>📘 Pregunta 3:</strong>
+                    <p>¿Por qué la <span class="highlight">democracia ateniense</span> fue la excepción en el mundo griego?</p>
+                </div>
+                <div class="info-card orange">
+                    <strong>📘 Pregunta 4:</strong>
+                    <p>¿Qué <span class="highlight">paralelismos</span> existen entre los sistemas políticos griegos y los actuales?</p>
+                </div>
+                <div class="question-sample">
+                    <p>💡 <strong>Para reflexionar:</strong> ¿Qué podemos aprender hoy de la experiencia política de la Antigua Grecia? ¿Nos sirve para valorar mejor nuestra democracia?</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 19: Conceptos clave -->
+            <div class="slide">
+                <h2>📚 Conceptos clave</h2>
+                <div class="grid-2">
+                    <div class="info-card">
+                        <strong>🏛️ Polis</strong>
+                        <p>Ciudad-Estado independiente con su propio gobierno, leyes y ejército.</p>
+                    </div>
+                    <div class="info-card red">
+                        <strong>⚔️ Espartiatas (homoioi)</strong>
+                        <p>Ciudadanos guerreros de Esparta, considerados "los iguales".</p>
+                    </div>
+                    <div class="info-card orange">
+                        <strong>⛓️ Ilotas</strong>
+                        <p>Esclavos del Estado espartano, población sometida sin derechos.</p>
+                    </div>
+                    <div class="info-card green">
+                        <strong>🏪 Periecos</strong>
+                        <p>Habitantes libres de los alrededores de Esparta, sin derechos políticos.</p>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>📚 Agogé</strong>
+                        <p>Sistema educativo militar espartano, obligatorio para todos los varones espartiatas.</p>
+                    </div>
+                    <div class="info-card purple">
+                        <strong>🏛️ Gerusía</strong>
+                        <p>Consejo de ancianos en Esparta (28 + 2 reyes), preparaba las leyes.</p>
+                    </div>
+                    <div class="info-card maroon">
+                        <strong>⚖️ Éforos</strong>
+                        <p>Magistrados con el máximo poder real en Esparta, vigilaban a los reyes.</p>
+                    </div>
+                    <div class="info-card teal">
+                        <strong>👑 Diarquía</strong>
+                        <p>Doble realeza espartana: dos reyes hereditarios con poderes limitados.</p>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Recuerda:</strong> Estos conceptos son fundamentales para entender cómo funcionaba la sociedad y la política en Esparta.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 20: Cierre y síntesis -->
+            <div class="slide">
+                <h2>📖 Cierre y síntesis</h2>
+                <div class="info-card blue">
+                    <strong>📘 Resumen de la clase:</strong>
+                    <ul>
+                        <li>La <span class="highlight">diversidad política</span> fue una característica clave de la Grecia antigua.</li>
+                        <li><span class="highlight">Esparta</span> representó el modelo oligárquico-militar, con su sistema educativo único (Agogé).</li>
+                        <li><span class="highlight">Atenas</span> representó la excepción democrática.</li>
+                        <li>La <span class="highlight">tiranía</span> y la <span class="highlight">oligarquía</span> fueron sistemas comunes en muchas polis.</li>
+                        <li>Ambos modelos dejaron un <span class="highlight">legado</span> que aún influye en la política occidental.</li>
+                        <li>La tensión entre <span class="highlight">democracia y oligarquía</span> sigue siendo relevante hoy.</li>
+                    </ul>
+                </div>
+                <div class="info-card red">
+                    <strong>💡 Mensaje final:</strong>
+                    <p>La Antigua Grecia nos enseñó que hay <span class="highlight">distintas formas de organizar una sociedad</span>. Cada modelo tiene ventajas y desventajas. Lo importante es reflexionar sobre cuál queremos para nuestra sociedad.</p>
+                </div>
+                <p style="margin-top:1.5rem;text-align:center;">📚 <strong>Fin de la clase</strong> — Practica con los ejercicios.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 20</div>
+    </div>
+
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slideCounterSpan.innerText = `Slide ${currentIndex+1} / ${totalSlides}`;
+    }
+
+    function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+            currentIndex++;
+            updateSlidePosition();
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateSlidePosition();
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+            e.preventDefault();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+            e.preventDefault();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Historia.html';
+    });
+
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_5A_Historia.html';
+    });
+
+    updateSlidePosition();
+</script>
+</body>
+</html>

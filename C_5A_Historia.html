@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Esparta y Sistemas Políticos | Historia 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fefdf9;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9dfcf;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #e6b450;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #7a4b1d;
+        }
+
+        .subtitle {
+            color: #9b6e3e;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #faf6eb;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #e2cfb0;
+            color: #5d431f;
+        }
+
+        .section {
+            background: #fefcf7;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #e6b450;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf7;
+            border-radius: 1rem;
+            border: 1px solid #ede3d2;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3b2b1a;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(230, 180, 80, 0.15);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #b47c44;
+        }
+
+        .truefalse-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .truefalse-table th, .truefalse-table td {
+            border: 1px solid #e2cfb0;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .truefalse-table th {
+            background: #faf0e1;
+            color: #7a4b1d;
+            font-weight: 600;
+        }
+
+        .short-answer-input {
+            width: 100%;
+            padding: 0.5rem 0.8rem;
+            border: 2px solid #d4c1a4;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            background: #fffaf2;
+            color: #2d4029;
+            transition: 0.2s;
+        }
+
+        .short-answer-input:focus {
+            outline: none;
+            border-color: #b47c44;
+            box-shadow: 0 0 0 3px rgba(180, 124, 68, 0.2);
+        }
+
+        .short-answer-input:disabled {
+            background: #f0ece4;
+            cursor: not-allowed;
+        }
+
+        select {
+            background: #fffaf2;
+            color: #2d4029;
+            border: 1px solid #d4c1a4;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #b47c44;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef8ef;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #e6b450;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3b2b1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #e2cfb0;
+            color: #5d431f;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #d4b883;
+            color: #3b2b1a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .tf-correct {
+            color: #2d6a2d;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #b33;
+            font-weight: bold;
+        }
+
+        .feedback-text {
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+        }
+
+        .correct-feedback {
+            color: #2d6a2d;
+        }
+
+        .incorrect-feedback {
+            color: #b33;
+        }
+
+        .short-feedback {
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .short-feedback.correct {
+            color: #2d6a2d;
+            background: #e0f0e0;
+        }
+
+        .short-feedback.incorrect {
+            color: #b33;
+            background: #fce4e4;
+        }
+
+        .short-feedback .accepted-answers {
+            color: #5d431f;
+            font-weight: 500;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 0.5rem; }
+            .container { padding: 1rem; }
+            .info-bar { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>⚔️ Ejercicios: Esparta y Sistemas Políticos de Grecia</h1>
+        <div class="subtitle">Oligarquía · Agogé · Diarquía · Éforos · Hoplitas · Falange · Tiranía</div>
+        <div class="subtitle">7° Básico | Historia, Geografía y Ciencias Sociales</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (20) + Verdadero/Falso (20) + Respuesta Corta (10)</div>
+        <div>✅ Exigencia: 60% | Nota máxima: 7.0</div>
+        <div>🔄 Cada vez que reinicies, las preguntas se renuevan aleatoriamente desde bancos de 100, 100 y 30 preguntas respectivamente.</div>
+    </div>
+
+    <div id="examContent">
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple</div>
+            <p>Selecciona la opción correcta para cada pregunta.</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">⚖️ II. Verdadero o Falso</div>
+            <p>Selecciona Verdadero (V) o Falso (F) para cada afirmación.</p>
+            <table class="truefalse-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">✏️ III. Respuesta Corta</div>
+            <p>Escribe la palabra correcta para cada descripción. Puedes usar sinónimos o escribir con o sin tildes.</p>
+            <div id="shortAnswer"></div>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Historia 7° Básico | Esparta y Sistemas Políticos de Grecia</div>
+</div>
+
+<script>
+    // ==================== BANCO DE PREGUNTAS ====================
+
+    // ----- Banco de Selección Múltiple (100 preguntas) -----
+    const bankMultipleChoice = [
+        // Bloque 1: Diversidad política y ciudadanía (1-10)
+        { text: "¿Qué tipo de gobierno tenía Esparta?", options: ["a. Democracia", "b. Oligarquía militar", "c. Monarquía absoluta", "d. Tiranía"], correct: "b" },
+        { text: "¿Cómo se llamaban los ciudadanos guerreros de Esparta?", options: ["a. Periecos", "b. Ilotas", "c. Espartiatas", "d. Metecos"], correct: "c" },
+        { text: "¿Qué grupo social de Esparta estaba compuesto por campesinos en esclavitud?", options: ["a. Espartiatas", "b. Periecos", "c. Ilotas", "d. Éforos"], correct: "c" },
+        { text: "¿Qué grupo social de Esparta se dedicaba al comercio y la artesanía sin tener derechos políticos?", options: ["a. Ilotas", "b. Periecos", "c. Espartiatas", "d. Éforos"], correct: "b" },
+        { text: "¿Qué característica principal tenía la ciudadanía en las polis griegas?", options: ["a. Era universal para todos los habitantes", "b. Era restringida a una minoría", "c. Incluía a mujeres y extranjeros", "d. Se otorgaba por nacimiento a todos"], correct: "b" },
+        { text: "¿Qué grupos estaban excluidos de la ciudadanía en la mayoría de las polis griegas?", options: ["a. Guerreros y comerciantes", "b. Mujeres, extranjeros y esclavos", "c. Sacerdotes y artesanos", "d. Nobles y campesinos"], correct: "b" },
+        { text: "¿Qué sistema político se caracteriza por el gobierno de 'unos pocos', generalmente los ricos?", options: ["a. Democracia", "b. Oligarquía", "c. Monarquía", "d. Tiranía"], correct: "b" },
+        { text: "¿Qué sistema político se caracteriza por el gobierno de un gobernante que toma el poder de forma ilegítima?", options: ["a. Democracia", "b. Oligarquía", "c. Tiranía", "d. República"], correct: "c" },
+        { text: "¿Qué sistema político era la excepción en la Antigua Grecia?", options: ["a. Oligarquía", "b. Democracia", "c. Tiranía", "d. Monarquía"], correct: "b" },
+        { text: "¿Qué elemento común compartían todas las polis griegas a pesar de sus diferencias políticas?", options: ["a. El mismo sistema de gobierno", "b. La lengua, religión y cultura", "c. La misma moneda", "d. Un ejército unificado"], correct: "b" },
+
+        // Bloque 2: Ubicación y características de Esparta (11-20)
+        { text: "¿Dónde se ubicaba la ciudad de Esparta?", options: ["a. En la península del Ática", "b. En el sur del Peloponeso", "c. En la isla de Creta", "d. En las costas de Asia Menor"], correct: "b" },
+        { text: "¿Qué frase refleja la mentalidad defensiva de Esparta respecto a sus murallas?", options: ["a. 'Las murallas de Esparta eran sus guerreros'", "b. 'Las murallas protegen a los cobardes'", "c. 'El mar es la mejor muralla'", "d. 'Las murallas son para los débiles'"], correct: "a" },
+        { text: "¿Cuál era el objetivo fundamental de la sociedad espartana?", options: ["a. Fomentar el comercio y la cultura", "b. Expandir su territorio tanto marítimo como terrestre", "c. Desarrollar la filosofía y las artes", "d. Formar soldados profesionales y mantener el orden interno"], correct: "d" },
+        { text: "¿Qué amenaza constante condicionaba la vida en Esparta?", options: ["a. Las invasiones persas", "b. Las rebeliones de los ilotas", "c. Las guerras contra Atenas", "d. Los terremotos"], correct: "b" },
+        { text: "¿Qué región de Grecia ocupaba Esparta?", options: ["a. Laconia", "b. Ática", "c. Beocia", "d. Tesalia"], correct: "a" },
+        { text: "¿Qué relación existía entre espartiatas e ilotas?", options: ["a. Los ilotas eran la mayoría sometida a los espartiatas", "b. Eran iguales en derechos, independiente del grupo al cual pertenecían", "c. Los ilotas gobernaban a los espartiatas, por mayoría", "d. Eran aliados comerciales"], correct: "a" },
+        { text: "¿Por qué el miedo a las rebeliones era constante en Esparta?", options: ["a. Porque los espartiatas eran una minoría", "b. Porque los ilotas superaban en número a los espartiatas", "c. Porque los periecos eran hostiles", "d. Porque las mujeres se rebelaban"], correct: "b" },
+        { text: "¿Qué justificaba la disciplina militar extrema en Esparta?", options: ["a. La necesidad de conquistar nuevos territorios", "b. El miedo a las rebeliones de los ilotas", "c. La influencia de la cultura ateniense", "d. La falta de recursos naturales"], correct: "b" },
+        { text: "¿Cómo se llamaban los habitantes libres de los alrededores de Esparta?", options: ["a. Periecos", "b. Ilotas", "c. Espartiatas", "d. Metecos"], correct: "a" },
+        { text: "¿Qué grupo social era considerado 'esclavo del Estado' en Esparta?", options: ["a. Los periecos", "b. Los ilotas", "c. Los éforos", "d. Los espartiatas"], correct: "b" },
+
+        // Bloque 3: Sistema político de Esparta (21-30)
+        { text: "¿Cómo se llamaba el sistema de dos reyes en Esparta?", options: ["a. Diarquía", "b. Monarquía", "c. Triarquía", "d. Oligarquía"], correct: "a" },
+        { text: "¿Quiénes formaban la Gerusía en Esparta?", options: ["a. 5 éforos", "b. 28 guerreros + 4 reyes", "c. 28 ancianos + 2 reyes", "d. 20 ancianos + 12 guerreros"], correct: "c" },
+        { text: "¿Cuál era la función de la Gerusía en Esparta?", options: ["a. Comandar el ejército ", "b. Seleccionar a los éforos con precisión", "c. Vigilar a los reyes  y juzgarlos sin pasar por tribunales", "d. Preparar las leyes y actuar como tribunal"], correct: "d" },
+        { text: "¿Quiénes eran los éforos en Esparta?", options: ["a. 10 magistrados con el máximo poder real", "b. 8 magistrados con el máximo poder real", "c. 5 magistrados con el máximo poder real", "d. Los generales del ejército"], correct: "c" },
+        { text: "¿Qué poder tenían los éforos en Esparta?", options: ["a. Poder religioso y  militar", "b. Poder militar y político absoluto", "c. Vigilar a los reyes y aplicar las leyes", "d. Poder judicial y la capacidad de aplicar leyes a los esclavos"], correct: "c" },
+        { text: "¿Cómo se llamaba la Asamblea de los espartiatas mayores de 30 años?", options: ["a. Ekklesía", "b. Apella", "c. Bulé", "d. Heliea"], correct: "b" },
+        { text: "¿Qué característica tenía la Apella en Esparta?", options: ["a. Solo se aprobaban o rechazaban propuestas sin debatir", "b. Se podía aprobabar o rechazar distintas propuestas mediante el debate", "c. Todos los habitantes podían participar", "d. Elegía a los reyes"], correct: "a" },
+        { text: "¿Qué institución espartana tenía el 'máximo poder real'?", options: ["a. La diarquía", "b. Los éforos", "c. La Gerusía", "d. La Apella"], correct: "b" },
+        { text: "¿Qué podían hacer los éforos si un rey no cumplía las leyes?", options: ["a. Nada, los reyes eran intocables", "b. Destituirlo y ponerlo a prueba", "c. Enviarlo al exilio", "d. Declararle la guerra"], correct: "b" },
+        { text: "¿Qué diferencia fundamental existía entre la Asamblea ateniense (Ekklesía) y la espartana (Apella)?", options: ["a. En Atenas solo votaban los ricos, en Esparta todos", "b. En Atenas se podía debatir; en Esparta solo se votaba", "c. En Esparta participaban todos los habitantes, en Atenas solo los políticos", "d. No había diferencia"], correct: "b" },
+
+        // Bloque 4: La Agogé (31-40)
+        { text: "¿Cómo se llamaba el sistema educativo espartano?", options: ["a. La Paideia", "b. La Agogé", "c. La Efebía", "d. La Academia"], correct: "b" },
+        { text: "¿Cuál era el objetivo principal de la Agogé?", options: ["a. Formar filósofos con pensamiento crítico", "b. Formar guerreros leales y disciplinados", "c. Formar comerciantes capaces de dominar más de un idioma", "d. Formar poetas especializados en el cotexto púnico"], correct: "b" },
+        { text: "¿A qué edad los niños espartanos eran separados de sus familias?", options: ["a. A los 7 años", "b. A los 12 años", "c. A los 18 años", "d. A los 20 años"], correct: "a" },
+        { text: "¿Cómo se llamaba la primera etapa de la Agogé (7-17 años)?", options: ["a. Paidiskoi", "b. Hebontes", "c. Paides", "d. Krypteia"], correct: "c" },
+        { text: "¿Cómo se llamaba la segunda etapa de la Agogé (17-19 años)?", options: ["a. Paides", "b. Paidiskoi", "c. Hebontes", "d. Krypteia"], correct: "b" },
+        { text: "¿Cómo se llamaba la tercera etapa de la Agogé (20-29 años)?", options: ["a. Paides", "b. Paidiskoi", "c. Hebontes", "d. Krypteia"], correct: "c" },
+        { text: "¿Qué práctica era parte del entrenamiento en la Agogé?", options: ["a. Estudiar filosofía y entrenar con adultos", "b. Robar comida y recibir azotes si eran atrapados", "c. Aprender a tocar instrumentos y aprender de política", "d. Estudiar astronomía y entrenar con militares"], correct: "b" },
+        { text: "¿Qué característica tenía la alimentación en la Agogé?", options: ["a. Era abundante y variada", "b. Incluía una gran variedad de alimentos exóticos", "c. Era igual para todos", "d. Era intencionalmente escasa"], correct: "d" },
+        { text: "¿Qué institución espartana estaba formada por los jóvenes más aptos de la Agogé?", options: ["a. La Gerusía", "b. La Krypteia", "c. Los éforos", "d. La Apella"], correct: "b" },
+        { text: "¿Qué relación existía entre jóvenes y guerreros adultos en la Agogé?", options: ["a. Relación de enemistad con la finalidad de formar políticos", "b. No tenían relación de ningún tipo", "c. Relación institucionalizada con fines educativos", "d. Relación de competencia con fines militares a futuro"], correct: "c" },
+
+        // Bloque 5: La Krypteia (41-50)
+        { text: "¿Cuál era la misión de la Krypteia en Esparta?", options: ["a. Espiar y eliminar a los ilotas peligrosos", "b. Vigilar y llevar ante la justicia a los reyes corruptos", "c. Enseñar a los jóvenes a luchar correctamente", "d. Comandar el ejército"], correct: "a" },
+        { text: "¿Cómo operaba la Krypteia?", options: ["a. De día y a la vista de todos", "b. De noche y ocultos", "c. Solo en ceremonias públicas", "d. En el extranjero"], correct: "b" },
+        { text: "¿Qué declaraba el Estado espartano cada otoño?", options: ["a. La guerra a Atenas", "b. La guerra a los ilotas", "c. La paz con los persas", "d. Una fiesta religiosa"], correct: "b" },
+        { text: "¿Qué justificación tenía la Krypteia?", options: ["a. Mantener el control sobre la mayoría sometida", "b. Entrenar a todos los jóvenes en el arte de la guerra", "c. Proteger la ciudad de invasores y terroristas", "d. Recaudar impuestos"], correct: "a" },
+        { text: "¿Qué instrumento utilizaban los miembros de la Krypteia?", options: ["a. Una lanza", "b. Un corbo", "c. Una espada", "d. Un cuchillo"], correct: "d" },
+        { text: "¿Cómo se puede describir la Krypteia?", options: ["a. Como una institución educativa", "b. Como una forma de terror de Estado", "c. Como un tribunal de justicia", "d. Como una asamblea popular"], correct: "b" },
+        { text: "¿Qué temían los espartiatas de los ilotas?", options: ["a. Que emigraran a otras polis", "b. Que se rebelaran contra ellos", "c. Que se convirtieran en comerciantes", "d. Que se aliaran con Atenas"], correct: "b" },
+        { text: "¿Cómo se seleccionaba a los miembros de la Krypteia?", options: ["a. Entre los jóvenes más aptos de la Agogé", "b. Por herencia familiar y linajes nobles", "c. Por votación popular entre los Ilotas", "d. Por designación de los reyes y votado por los espartiatas"], correct: "a" },
+        { text: "¿Qué relación numérica existía entre espartiatas e ilotas?", options: ["a. Los espartiatas eran el cuádruple de los ilotas", "b. Los espartiatas superaban en número a los ilotas", "c. Los ilotas superaban en número a los espartiatas", "d. Los periecos eran la mayoría"], correct: "c" },
+        { text: "¿Qué objetivo perseguía la Krypteia con la eliminación de ilotas?", options: ["a. Recaudar impuestos", "b. Prevenir rebeliones", "c. Expandir el territorio", "d. Aumentar el comercio"], correct: "b" },
+
+        // Bloque 6: La mujer espartana (51-60)
+        { text: "¿Qué característica tenía la mujer espartana en comparación con la ateniense?", options: ["a. Tenía menos derechos", "b. Tenía más libertad", "c. No existían diferencias", "d. No podía salir de casa"], correct: "b" },
+        { text: "¿Qué actividades realizaban las mujeres espartanas?", options: ["a. Solo labores domésticas", "b. Ejercicios gimnásticos y actividades físicas", "c. Comercio y política", "d. Solo religión"], correct: "b" },
+        { text: "¿Qué derechos tenían las mujeres espartanas que las atenienses no tenían?", options: ["a. Podían votar y participan en la política", "b. Podían poseer tierras y heredar bienes", "c. Podían ser estrategas y militares", "d. Podían ser sacerdotisas y estar activas en la política"], correct: "b" },
+        { text: "¿Cuál era la función principal de la mujer espartana según el Estado?", options: ["a. Gobernar la ciudad y velar por el crecimiento apropiado de la población", "b. Comerciar con otras polis y restaurar el comercio centralizado", "c. Engendrar hijos fuertes para el Estado", "d. Administrar justicia equitativamente e indiscriminadamente"], correct: "c" },
+        { text: "¿Cómo eran vistas las mujeres espartanas?", options: ["a. Como subordinadas al hombre", "b. Como 'madres heroicas'", "c. Como iguales a los hombres en todo", "d. Como propiedad del Estado"], correct: "b" },
+        { text: "¿Qué frase refleja la función de la mujer espartana?", options: ["a. 'La mujer debe ser obediente'", "b. 'Para que den hijos fuertes'", "c. 'La mujer no debe hablar en público'", "d. 'La mujer es inferior al hombre'"], correct: "b" },
+        { text: "¿Qué diferencia había en la educación de las mujeres espartanas?", options: ["a. No recibían educación", "b. Recibían educación física para ser madres fuertes", "c. Recibían educación filosófica y sobre el sistema político", "d. Aprendían diversos oficios y sobre el cuidado de sus hijos"], correct: "b" },
+        { text: "¿Qué valor se medía en las mujeres espartanas?", options: ["a. Su riqueza", "b. La calidad de sus hijos", "c. Su belleza", "d. Su habilidad para el comercio"], correct: "b" },
+        { text: "¿Por qué el Estado espartano permitía más libertades a las mujeres?", options: ["a. Porque valoraba la igualdad entre hombres y mujeres", "b. Porque necesitaba madres fuertes para guerreros", "c. Porque las mujeres gobernaban principalmente en Esparta", "d. Porque no tenía esclavos"], correct: "b" },
+        { text: "¿Qué contraste existía entre la mujer ateniense y la espartana?", options: ["a. La ateniense era más libre y tenía igualdad política", "b. La espartana tenía más libertad y actividad física", "c. No existía ningún contraste entre ambas mujeres", "d. La espartana tenía más poder político y libertad"], correct: "b" },
+
+        // Bloque 7: El ejército espartano (61-70)
+        { text: "¿Cómo se llamaba el soldado de infantería pesada espartano?", options: ["a. Hoplita", "b. Peltasta", "c. Trirreme", "d. Espartano"], correct: "a" },
+        { text: "¿Qué equipamiento llevaba un hoplita?", options: ["a. Casco, coraza, arco y flechas", "b. Lanza, escudo, casco, coraza y grebas", "c. Casco, coraza, gebras, hacha y mazo", "d. Escudo, casco, coraza, espada y daga"], correct: "b" },
+        { text: "¿Cómo se llamaba la formación compacta de hoplitas espartanos?", options: ["a. La falange", "b. La legión", "c. El círculo", "d. La columna"], correct: "a" },
+        { text: "¿Cuántas hileras tenía aproximadamente la falange espartana?", options: ["a. 2-4 hileras", "b. 8-16 hileras", "c. 20-30 hileras", "d. 50 hileras"], correct: "b" },
+        { text: "¿Qué exigía la falange a los soldados espartanos?", options: ["a. Creatividad individual", "b. Sigilo y disciplina estricta", "c. Velocidad y descoordinación total", "d. Disciplina y coordinación extrema"], correct: "d" },
+        { text: "¿Qué lema atribuían los espartanos a sus guerreros?", options: ["a. 'Por la libertad o la muerte'", "b. 'Morir de pie, antes que vivir de rodillas'", "c. 'Por el honor de Esparta'", "d. 'Con él o sobre él'"], correct: "d" },
+        { text: "¿Qué significaba el lema 'Con él o sobre él'?", options: ["a. Con el escudo o sobre él muerto", "b. Con el casco o sobre el escudo", "c. Con la lanza o sobre ella", "d. Con el enemigo o sobre él"], correct: "a" },
+        { text: "¿Qué protegía el escudo de un hoplita además de a sí mismo?", options: ["a. Al compañero de la izquierda", "b. Al compañero de la derecha", "c. Al general", "d. A los reyes"], correct: "a" },
+        { text: "¿Por qué el ejército espartano era considerado el mejor de Grecia?", options: ["a. Por su tecnología", "b. Por sus temibles habilidades con diferentes armas", "c. Por su gran número de soldados", "d. Por su disciplina y entrenamiento"], correct: "d" },
+        { text: "¿Qué importancia tenía la Agogé para el ejército espartano?", options: ["a. Formaba soldados que podían luchar en falange sin romper la fila", "b. Formaba soldados y militares con especializaciones", "c. Enseñaba artes marciales, lucha grecoromana y sobre el sistema político", "d. Solo entrenaba a los generales"], correct: "a" },
+
+        // Bloque 8: Las syssitia (71-80)
+        { text: "¿Qué eran los syssitia en Esparta?", options: ["a. Los comedores comunes de los espartiatas" , "b. Los templos religiosos multiculturales", "c. Los comedores usados por militares y la Krypteia", "d. Los tribunales de justicia"], correct: "a" },
+        { text: "¿Qué función tenían los syssitia?", options: ["a. Celebrar fiestas religiosas importantes", "b. Administrar justicia en juicios rápidos", "c. Entrenar a los soldados", "d. Fortalecer la cohesión del grupo"], correct: "d" },
+        { text: "¿Qué consecuencia tenía no poder pagar la contribución a los syssitia?", options: ["a. Ser desterrado", "b. Perder la ciudadanía", "c. Ser enviado al exilio", "d. Ser ejecutado"], correct: "b" },
+        { text: "¿Qué problema generó el sistema de syssitia con el tiempo?", options: ["a. Aumentó la población de forma exponencial", "b. Redujo la economía local", "c. Redujo el número de espartiatas", "d. Redujo la democracia, llevando a una tiranía"], correct: "c" },
+        { text: "¿Cómo se llamaba la famosa sopa espartana?", options: ["a. Sopa de lentejas", "b. Sopa negra", "c. Sopa de verduras", "d. Sopa de pescado"], correct: "b" },
+        { text: "¿Qué característica tenía la comida en los syssitia?", options: ["a. Era abundante y lujosa", "b. Era intencionalmente sencilla", "c. Era exclusiva para los reyes", "d. Incluía alimentos exóticos"], correct: "b" },
+        { text: "¿Qué institución espartana contribuyó a la decadencia de Esparta?", options: ["a. La Gerusía", "b. Los syssitia", "c. La Krypteia", "d. La diarquía"], correct: "b" },
+        { text: "¿Qué crítica hizo Aristóteles sobre los éforos?", options: ["a. Que eran muy poderosos", "b. Que eran fáciles de sobornar", "c. Que eran débiles", "d. Que no tenían poder"], correct: "b" },
+        { text: "¿Qué efecto tuvo la concentración de tierra en Esparta?", options: ["a. Aumentó el número de ciudadanos", "b. Redujo el número de espartiatas", "c. Mejoró la economía", "d. Fortaleció la democracia"], correct: "b" },
+        { text: "¿Qué problema interno tuvo Esparta en sus últimos años?", options: ["a. La falta de esclavos", "b. La desigualdad creciente", "c. El exceso de población", "d. La falta de alimentos"], correct: "b" },
+
+        // Bloque 9: Decadencia y legado de Esparta (81-90)
+        { text: "¿En qué batalla los tebanos derrotaron a Esparta?", options: ["a. Batalla de Maratón", "b. Batalla de Leuctra", "c. Batalla de Salamina", "d. Batalla de Platea"], correct: "b" },
+        { text: "¿Qué consecuencias tuvo la batalla de Leuctra para Esparta?", options: ["a. Perdió su hegemonía en Grecia", "b. Conquistó nuevos territorios", "c. Se alió con Atenas", "d. No tuvo consecuencias"], correct: "a" },
+        { text: "¿Qué rompió la batalla de Leuctra?", options: ["a. La alianza con Atenas yh otras polis", "b. El mito sobre la maldición espartana", "c. La religión espartana", "d. El mito de la invencibilidad espartana"], correct: "d" },
+        { text: "¿Qué legado político dejó Esparta a la historia?", options: ["a. La democracia y su importancia política", "b. La importancia de la disciplina y el control", "c. La libertad individual y su control mediante policías encubiertos", "d. El arte y la filosofía espartana, que deribó al estoicismo"], correct: "b" },
+        { text: "¿Qué concepto político griego significa 'gobierno de unos pocos'?", options: ["a. Democracia", "b. Oligarquía", "c. Monarquía", "d. Tiranía"], correct: "b" },
+        { text: "¿Qué concepto político griego significa 'gobierno de un gobernante ilegítimo'?", options: ["a. Democracia", "b. Oligarquía", "c. Tiranía", "d. República"], correct: "c" },
+        { text: "¿Qué legado político dejó Atenas a la historia?", options: ["a. La oligarquía", "b. La democracia", "c. La tiranía", "d. La monarquía"], correct: "b" },
+        { text: "¿Qué limitación tenían todos los sistemas políticos griegos?", options: ["a. La exclusión de mujeres, esclavos y extranjeros", "b. La falta de leyes escritas y juzgados especializados", "c. La ausencia de tribunales y falta de control político", "d. La falta de ejército centralizado"], correct: "a" },
+        { text: "¿Qué lección podemos aprender de la experiencia política griega?", options: ["a. Que la democracia siempre es mejor", "b. Que cada sistema tiene ventajas y desventajas", "c. Que la oligarquía es el mejor sistema", "d. Que la tiranía es la mejor opción"], correct: "b" },
+        { text: "¿Qué conflicto enfrentó a Atenas y Esparta?", options: ["a. Las Guerras Médicas", "b. La Guerra del Peloponeso", "c. La Guerra de Troya", "d. La Guerra Púnica"], correct: "b" },
+
+        // Bloque 10: Tiranía y otros sistemas (91-100)
+        { text: "¿Qué tirano ateniense repartió tierras entre los campesinos?", options: ["a. Dracón", "b. Solón", "c. Pisístrato", "d. Clístenes"], correct: "c" },
+        { text: "¿Qué legislador ateniense redactó el primer código de leyes escritas?", options: ["a. Solón", "b. Dracón", "c. Clístenes", "d. Pericles"], correct: "b" },
+        { text: "¿Qué legislador abolió la esclavitud por deudas en Atenas?", options: ["a. Dracón", "b. Clístenes", "c. Solón", "d. Pericles"], correct: "c" },
+        { text: "¿Qué reformador es considerado el 'padre de la democracia ateniense'?", options: ["a. Solón", "b. Dracón", "c. Clístenes", "d. Pericles"], correct: "c" },
+        { text: "¿Qué líder ateniense consolidó la democracia e impulsó la construcción del Partenón?", options: ["a. Solón", "b. Clístenes", "c. Pericles", "d. Pisístrato"], correct: "c" },
+        { text: "¿Qué sistema político era el más común en la Antigua Grecia?", options: ["a. La democracia", "b. La oligarquía", "c. La monarquía", "d. La tiranía"], correct: "b" },
+        { text: "¿Qué polis griega es famosa por haber tenido una democracia?", options: ["a. Esparta", "b. Atenas", "c. Corinto", "d. Tebas"], correct: "b" },
+        { text: "¿Qué polis griega es famosa por su oligarquía militar?", options: ["a. Atenas", "b. Esparta", "c. Corinto", "d. Tebas"], correct: "b" },
+        { text: "¿Qué palabra griega significa 'ciudad-Estado'?", options: ["a. Polis", "b. Demos", "c. Kratos", "d. Ekklesía"], correct: "a" },
+        { text: "¿Qué concepto político griego significa 'gobierno del pueblo'?", options: ["a. Aristocracia", "b. Plutocracia", "c. Democracia", "d. Monarquía"], correct: "c" }
+    ];
+
+    // ----- Banco de Verdadero/Falso (100 preguntas) -----
+    const bankTF = [
+        // Bloque 1: Diversidad política y ciudadanía (1-10)
+        { text: "Esparta era una democracia como Atenas.", correct: "F" },
+        { text: "Los espartiatas eran los ciudadanos guerreros de Esparta.", correct: "V" },
+        { text: "Los ilotas eran campesinos libres en Esparta.", correct: "F" },
+        { text: "Los periecos tenían derechos políticos en Esparta.", correct: "F" },
+        { text: "La ciudadanía en las polis griegas era universal.", correct: "F" },
+        { text: "Mujeres, extranjeros y esclavos estaban excluidos de la ciudadanía en la mayoría de las polis.", correct: "V" },
+        { text: "La oligarquía es el gobierno de unos pocos.", correct: "V" },
+        { text: "La tiranía es un gobierno legítimo.", correct: "F" },
+        { text: "La democracia ateniense fue la excepción en la Antigua Grecia.", correct: "V" },
+        { text: "Todas las polis griegas compartían la misma lengua y religión.", correct: "V" },
+
+        // Bloque 2: Ubicación y características de Esparta (11-20)
+        { text: "Esparta se ubicaba en el sur del Peloponeso.", correct: "V" },
+        { text: "Esparta tenía murallas gigantes para protegerse.", correct: "F" },
+        { text: "El objetivo fundamental de Esparta era formar soldados profesionales.", correct: "V" },
+        { text: "Los espartiatas temían las rebeliones de los ilotas.", correct: "V" },
+        { text: "Los ilotas eran mayoría en Esparta.", correct: "V" },
+        { text: "Los periecos eran los esclavos de Esparta.", correct: "F" },
+        { text: "Los ilotas eran considerados 'esclavos del Estado'.", correct: "V" },
+        { text: "Los espartiatas eran una minoría que dominaba a una mayoría de ilotas.", correct: "V" },
+        { text: "El miedo a las rebeliones justificaba la disciplina militar espartana.", correct: "V" },
+        { text: "Los periecos se dedicaban al comercio y la artesanía.", correct: "V" },
+
+        // Bloque 3: Sistema político de Esparta (21-30)
+        { text: "Esparta tenía dos reyes hereditarios (diarquía).", correct: "V" },
+        { text: "La Gerusía estaba formada por 5 éforos.", correct: "F" },
+        { text: "La Gerusía preparaba las leyes en Esparta.", correct: "V" },
+        { text: "Los éforos tenían el máximo poder real en Esparta.", correct: "V" },
+        { text: "Los éforos vigilaban a los reyes espartanos.", correct: "V" },
+        { text: "La Apella era la Asamblea espartana donde se podía debatir libremente.", correct: "F" },
+        { text: "En la Apella solo se aprobaban o rechazaban propuestas sin debatir.", correct: "V" },
+        { text: "Los éforos podían destituir a un rey si no cumplía las leyes.", correct: "V" },
+        { text: "La Asamblea ateniense (Ekklesía) permitía el debate político.", correct: "V" },
+        { text: "La Apella espartana permitía el debate político.", correct: "F" },
+
+        // Bloque 4: La Agogé (31-40)
+        { text: "La Agogé era el sistema educativo espartano.", correct: "V" },
+        { text: "La Agogé formaba filósofos y artistas.", correct: "F" },
+        { text: "Los niños espartanos eran separados de sus familias a los 7 años.", correct: "V" },
+        { text: "La primera etapa de la Agogé se llamaba Paides.", correct: "V" },
+        { text: "La segunda etapa de la Agogé se llamaba Hebontes.", correct: "F" },
+        { text: "La tercera etapa de la Agogé se llamaba Krypteia.", correct: "F" },
+        { text: "En la Agogé los jóvenes debían robar comida y si eran atrapados recibían azotes.", correct: "V" },
+        { text: "La alimentación en la Agogé era abundante.", correct: "F" },
+        { text: "La Krypteia estaba formada por los jóvenes más aptos de la Agogé.", correct: "V" },
+        { text: "La Agogé preparaba a los espartanos para la guerra.", correct: "V" },
+
+        // Bloque 5: La Krypteia (41-50)
+        { text: "La Krypteia era la policía secreta espartana.", correct: "V" },
+        { text: "La Krypteia vigilaba a los reyes espartanos.", correct: "F" },
+        { text: "La Krypteia eliminaba a los ilotas peligrosos.", correct: "V" },
+        { text: "La Krypteia operaba de día y a la vista de todos.", correct: "F" },
+        { text: "El Estado espartano declaraba la guerra a los ilotas cada otoño.", correct: "V" },
+        { text: "La Krypteia era una forma de terror de Estado.", correct: "V" },
+        { text: "Los ilotas superaban en número a los espartiatas.", correct: "V" },
+        { text: "La Krypteia utilizaba lanzas para eliminar a los ilotas.", correct: "F" },
+        { text: "La Krypteia prevenía rebeliones en Esparta.", correct: "V" },
+        { text: "Los miembros de la Krypteia eran seleccionados por sorteo.", correct: "F" },
+
+        // Bloque 6: La mujer espartana (51-60)
+        { text: "Las mujeres espartanas tenían más libertad que las atenienses.", correct: "V" },
+        { text: "Las mujeres espartanas realizaban ejercicios gimnásticos.", correct: "V" },
+        { text: "Las mujeres espartanas podían poseer tierras y heredar bienes.", correct: "V" },
+        { text: "La función principal de la mujer espartana era engendrar hijos fuertes.", correct: "V" },
+        { text: "Las mujeres espartanas eran consideradas 'madres heroicas'.", correct: "V" },
+        { text: "Las mujeres espartanas no tenían libertad de movimiento.", correct: "F" },
+        { text: "Las mujeres espartanas recibían educación física.", correct: "V" },
+        { text: "El Estado espartano valoraba la libertad de las mujeres por igualdad.", correct: "F" },
+        { text: "Las mujeres atenienses tenían más libertad que las espartanas.", correct: "F" },
+        { text: "La mujer espartana era valorada por la calidad de sus hijos.", correct: "V" },
+
+        // Bloque 7: El ejército espartano (61-70)
+        { text: "El soldado de infantería pesada espartano se llamaba hoplita.", correct: "V" },
+        { text: "El hoplita llevaba arco y flechas.", correct: "F" },
+        { text: "La falange era la formación compacta de hoplitas.", correct: "V" },
+        { text: "La falange tenía 8-16 hileras de soldados.", correct: "V" },
+        { text: "La falange exigía disciplina y coordinación extrema.", correct: "V" },
+        { text: "El lema espartano era 'Con él o sobre él'.", correct: "V" },
+        { text: "El escudo del hoplita protegía solo a su dueño.", correct: "F" },
+        { text: "El ejército espartano era el mejor de Grecia por su disciplina.", correct: "V" },
+        { text: "La Agogé formaba soldados que podían luchar en falange.", correct: "V" },
+        { text: "Los espartanos se retiraban fácilmente en combate.", correct: "F" },
+
+        // Bloque 8: Las syssitia (71-80)
+        { text: "Los syssitia eran los comedores comunes de los espartiatas.", correct: "V" },
+        { text: "Los syssitia fortalecían la cohesión del grupo espartano.", correct: "V" },
+        { text: "Quien no podía pagar los syssitia perdía la ciudadanía.", correct: "V" },
+        { text: "Los syssitia aumentaron el número de espartiatas.", correct: "F" },
+        { text: "La sopa negra era la famosa comida espartana.", correct: "V" },
+        { text: "La comida en los syssitia era lujosa y abundante.", correct: "F" },
+        { text: "Los syssitia contribuyeron a la decadencia de Esparta.", correct: "V" },
+        { text: "Aristóteles criticó a los éforos por ser fáciles de sobornar.", correct: "V" },
+        { text: "La concentración de tierras redujo el número de espartiatas.", correct: "V" },
+        { text: "La desigualdad en Esparta disminuyó con el tiempo.", correct: "F" },
+
+        // Bloque 9: Decadencia y legado de Esparta (81-90)
+        { text: "La batalla de Leuctra fue una victoria espartana.", correct: "F" },
+        { text: "Esparta perdió su hegemonía tras la batalla de Leuctra.", correct: "V" },
+        { text: "El mito de la invencibilidad espartana se rompió en Leuctra.", correct: "V" },
+        { text: "Esparta dejó como legado la importancia de la disciplina.", correct: "V" },
+        { text: "La democracia es un legado de Esparta.", correct: "F" },
+        { text: "La oligarquía es el gobierno de unos pocos.", correct: "V" },
+        { text: "La tiranía es un gobierno legítimo.", correct: "F" },
+        { text: "Todos los sistemas políticos griegos excluían a mujeres y esclavos.", correct: "V" },
+        { text: "La experiencia política griega nos enseña que cada sistema tiene ventajas y desventajas.", correct: "V" },
+        { text: "La Guerra del Peloponeso enfrentó a Atenas y Esparta.", correct: "V" },
+
+        // Bloque 10: Tiranía y otros sistemas (91-100)
+        { text: "Pisístrato fue un tirano popular en Atenas.", correct: "V" },
+        { text: "Dracón redactó el primer código de leyes escritas.", correct: "V" },
+        { text: "Solón abolió la esclavitud por deudas.", correct: "V" },
+        { text: "Clístenes es considerado el 'padre de la democracia'.", correct: "V" },
+        { text: "Pericles consolidó la democracia ateniense.", correct: "V" },
+        { text: "La democracia era el sistema político más común en Grecia.", correct: "F" },
+        { text: "Atenas es famosa por su democracia.", correct: "V" },
+        { text: "Esparta es famosa por su democracia.", correct: "F" },
+        { text: "La palabra 'polis' significa ciudad-Estado.", correct: "V" },
+        { text: "El concepto 'democracia' significa 'gobierno del pueblo'.", correct: "V" }
+    ];
+
+    // ----- Banco de Respuesta Corta (30 preguntas) -----
+    const bankShortAnswer = [
+        { description: "Ciudad-Estado independiente de la Antigua Grecia.", accepted: ["polis"] },
+        { description: "Ciudadanos guerreros de Esparta, considerados 'los iguales'.", accepted: ["espartiatas", "homoioi"] },
+        { description: "Población conquistada por Esparta, considerada 'esclava del Estado'.", accepted: ["ilotas", "ilota"] },
+        { description: "Habitantes libres de los alrededores de Esparta, sin derechos políticos.", accepted: ["periecos", "perieco"] },
+        { description: "Sistema educativo militar obligatorio para los varones espartiatas.", accepted: ["agoge", "agogé"] },
+        { description: "Consejo de ancianos en Esparta (28 + 2 reyes).", accepted: ["gerusia", "gerusía"] },
+        { description: "Magistrados con el máximo poder real en Esparta.", accepted: ["eforos", "éforos"] },
+        { description: "Sistema de dos reyes hereditarios en Esparta.", accepted: ["diarquia", "diarquía"] },
+        { description: "Asamblea de los espartiatas mayores de 30 años.", accepted: ["apella"] },
+        { description: "Policía secreta espartana que eliminaba ilotas peligrosos.", accepted: ["krypteia"] },
+        { description: "Soldado de infantería pesada en el ejército espartano.", accepted: ["hoplita"] },
+        { description: "Formación compacta de hoplitas en el ejército espartano.", accepted: ["falange"] },
+        { description: "Comedores comunes donde los espartiatas compartían sus comidas.", accepted: ["syssitia"] },
+        { description: "Gobierno de 'unos pocos', generalmente los ricos.", accepted: ["oligarquia", "oligarquía"] },
+        { description: "Gobierno de un gobernante que toma el poder de forma ilegítima.", accepted: ["tirania", "tiranía"] },
+        { description: "Gobernante ilegítimo que repartió tierras en Atenas.", accepted: ["pisistrato"] },
+        { description: "Legislador que redactó el primer código de leyes escritas en Atenas.", accepted: ["dracón", "dracon"] },
+        { description: "Legislador que abolió la esclavitud por deudas en Atenas.", accepted: ["solón"] },
+        { description: "Reformador considerado el 'padre de la democracia ateniense'.", accepted: ["clistenes", "clístenes"] },
+        { description: "Líder que consolidó la democracia y construyó el Partenón.", accepted: ["pericles"] },
+        { description: "Primera etapa de la Agogé (7-17 años).", accepted: ["paides"] },
+        { description: "Segunda etapa de la Agogé (17-19 años).", accepted: ["paidiskoi"] },
+        { description: "Tercera etapa de la Agogé (20-29 años).", accepted: ["hebontes"] },
+        { description: "Forma de gobierno donde el poder reside en el pueblo.", accepted: ["democracia"] },
+        { description: "¿Qué palabra usaban los griegos para referirse a los extranjeros que no hablaban su idioma?", accepted: ["barbaro", "bárbaro", "barbaros", "bárbaros"] },
+        { description: "Batalla donde Tebas derrotó a Esparta (371 a.C.).", accepted: ["leuctra"] },
+        { description: "Región de Grecia donde se ubicaba Esparta.", accepted: ["laconia"] },
+        { description: "Palabra griega que significa 'gobierno del pueblo'.", accepted: ["democracia"] },
+        { description: "¿Qué palabra griega significa 'igualdad ante la ley'?", accepted: ["isonomia", "isonomía"] },
+        { description: "Ciudadano varón que participaba en la política griega.", accepted: ["polites"] }
+    ];
+
+    // ==================== FUNCIONES ====================
+
+    function getRandomItems(arr, count) {
+        const shuffled = [...arr];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+    }
+
+    let currentMC = [], currentTF = [], currentSA = [];
+    let mcAnswers = [], tfAnswers = [], saAnswers = [];
+    let evaluated = false;
+
+    function normalizeText(text) {
+        return text.toLowerCase().trim().replace(/[áéíóú]/g, function(m) {
+            return { 'á':'a', 'é':'e', 'í':'i', 'ó':'o', 'ú':'u' }[m] || m;
+        });
+    }
+
+    function isAnswerAccepted(userAnswer, acceptedList) {
+        const normalized = normalizeText(userAnswer);
+        return acceptedList.some(accepted => normalizeText(accepted) === normalized);
+    }
+
+    function renderMultipleChoice() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        currentMC.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${q.options.map(opt => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${opt.charAt(0)}" id="mc_${idx}_${opt.charAt(0)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${opt.charAt(0)}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div class="feedback-text ${mcAnswers[idx] === q.correct ? 'correct-feedback' : 'incorrect-feedback'}">${mcAnswers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta correcta: ' + q.correct}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => { mcAnswers[idx] = e.target.value; });
+                });
+            }
+        });
+    }
+
+    function renderTrueFalse() {
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+        currentTF.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellText.innerHTML = `${idx+1}. ${item.text}`;
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+            const optV = document.createElement('option');
+            optV.value = "V";
+            optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option');
+            optF.value = "F";
+            optF.textContent = "Falso (F)";
+            select.appendChild(optV);
+            select.appendChild(optF);
+            if (!evaluated && tfAnswers[idx]) {
+                if (tfAnswers[idx] === "V") optV.selected = true;
+                else if (tfAnswers[idx] === "F") optF.selected = true;
+            }
+            select.addEventListener('change', (e) => { tfAnswers[idx] = e.target.value; });
+            cellSelect.appendChild(select);
+            if (evaluated) {
+                const isCorrect = tfAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correct}`;
+                feedback.className = isCorrect ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+    }
+
+    function renderShortAnswer() {
+        const container = document.getElementById('shortAnswer');
+        container.innerHTML = '';
+        currentSA.forEach((item, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${item.description}</p>
+                <input type="text" class="short-answer-input" id="sa_${idx}" ${evaluated ? 'disabled' : ''} value="${evaluated ? saAnswers[idx] || '' : ''}" placeholder="Escribe tu respuesta...">
+                ${evaluated ? `<div class="short-feedback ${isAnswerAccepted(saAnswers[idx] || '', item.accepted) ? 'correct' : 'incorrect'}">${isAnswerAccepted(saAnswers[idx] || '', item.accepted) ? '✅ Correcto' : '❌ Incorrecto. Respuestas aceptadas: ' + item.accepted.join(', ')}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            if (!evaluated) {
+                const input = document.getElementById(`sa_${idx}`);
+                input.addEventListener('input', (e) => {
+                    saAnswers[idx] = e.target.value;
+                });
+            }
+        });
+    }
+
+    function resetTest() {
+        evaluated = false;
+        currentMC = getRandomItems(bankMultipleChoice, 20);
+        currentTF = getRandomItems(bankTF, 20);
+        currentSA = getRandomItems(bankShortAnswer, 10);
+        mcAnswers = new Array(20).fill(null);
+        tfAnswers = new Array(20).fill(null);
+        saAnswers = new Array(10).fill(null);
+        document.getElementById('results').style.display = 'none';
+        renderMultipleChoice();
+        renderTrueFalse();
+        renderShortAnswer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function evaluateAll() {
+        evaluated = true;
+        let mcCorrect = 0, tfCorrect = 0, saCorrect = 0;
+
+        for (let i = 0; i < currentMC.length; i++) {
+            if (mcAnswers[i] === currentMC[i].correct) mcCorrect++;
+        }
+
+        for (let i = 0; i < currentTF.length; i++) {
+            if (tfAnswers[i] === currentTF[i].correct) tfCorrect++;
+        }
+
+        for (let i = 0; i < currentSA.length; i++) {
+            if (isAnswerAccepted(saAnswers[i] || '', currentSA[i].accepted)) saCorrect++;
+        }
+
+        const total = currentMC.length + currentTF.length + currentSA.length;
+        const totalCorrect = mcCorrect + tfCorrect + saCorrect;
+        const percentage = (totalCorrect / total) * 100;
+        let grade = 0;
+        const passing = 60;
+
+        if (percentage >= passing) {
+            grade = 4.0 + ((percentage - passing) / (100 - passing)) * 3.0;
+        } else {
+            grade = 1.0 + (percentage / passing) * 3.0;
+        }
+        grade = Math.round(grade * 100) / 100;
+        const isApproved = grade >= 4.0;
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#a5662a; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrect} de ${total} (${Math.round(percentage)}%)</div>
+            <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Múltiple: ${mcCorrect}/${currentMC.length}</div>
+                <div>⚖️ V/F: ${tfCorrect}/${currentTF.length}</div>
+                <div>✏️ Respuesta Corta: ${saCorrect}/${currentSA.length}</div>
+            </div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}">
+                <strong>${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>
+                NOTA: ${grade}
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+
+        renderMultipleChoice();
+        renderTrueFalse();
+        renderShortAnswer();
+
+        document.getElementById('restartTestBtn')?.addEventListener('click', resetTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Historia.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_5_Historia.html');
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ==================== INICIALIZACIÓN ====================
+    resetTest();
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>
