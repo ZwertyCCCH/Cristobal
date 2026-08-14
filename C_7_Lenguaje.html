@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: Análisis de Textos Narrativos | Lengua y Literatura 7°</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #fef6f0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffaf6;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            scrollbar-width: thin;
+            background: #fffaf6;
+            color: #3a1f0d;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #f0e0d0; }
+        .slide::-webkit-scrollbar-thumb { background: #c9753c; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #b5431a;
+            border-left: 7px solid #d9531e;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #c4450c;
+            margin: 1rem 0 0.6rem 0;
+            border-bottom: 2px solid #f0cfb0;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #d9672e;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        h4 {
+            font-size: 1.1rem;
+            color: #b5431a;
+            margin: 0.6rem 0 0.2rem;
+            font-weight: 600;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+            color: #3a2a1a;
+            text-align: justify;
+        }
+
+        ul, .custom-list {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #fce4d0;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #c95a1c;
+        }
+
+        .info-card {
+            background: #fef0e6;
+            border-left: 6px solid #d9531e;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .info-card-success {
+            border-left-color: #2d8f5c;
+            background: #edf7f0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf4;
+            border-top: 1px solid #f0cfb0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #d95b2b; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #f0cfb0;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #8a3c10;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(200, 100, 50, 0.4);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #8a3c10;
+            transition: 0.2s;
+            z-index: 90;
+            user-select: none;
+        }
+        .nav-arrow:hover { background: #d95b2b; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 0.82rem;
+            margin: 1rem 0;
+        }
+
+        .comparison-table th {
+            background: #d9531e;
+            color: white;
+            padding: 0.5rem 0.8rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 0.5rem 0.8rem;
+            border-bottom: 1px solid #f0cfb0;
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #fdf5ee;
+        }
+
+        .comparison-table tr:hover {
+            background: #fce4d0;
+        }
+
+        .slide {
+            opacity: 0;
+            animation: fadeSlide 0.4s ease forwards;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-sample {
+            background: #fdf0e8;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            margin: 1.2rem 0 0.5rem;
+            border-left: 5px solid #d95b2b;
+        }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.4rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .comparison-table { font-size: 0.7rem; }
+            .comparison-table th, .comparison-table td { padding: 0.3rem 0.5rem; }
+            .nav-arrow { width: 36px; height: 36px; font-size: 1.4rem; }
+            .nav-left { left: 6px; }
+            .nav-right { right: 6px; }
+            .btn-footer { padding: 0.4rem 1rem; font-size: 0.8rem; }
+            .footer-nav { padding: 0 0.8rem; flex-wrap: wrap; height: auto; gap: 0.3rem; }
+            .btn-group { gap: 0.4rem; flex-wrap: wrap; }
+            .slide-counter { font-size: 0.7rem; padding: 0.2rem 0.8rem; }
+        }
+
+        @media (max-width: 500px) {
+            .footer-nav { height: auto; padding: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+            <!-- ============================================ -->
+            <!-- SLIDE 1: PORTADA -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h1>📖 Analizando Textos Narrativos</h1>
+                <p style="font-size: 1.2rem; color: #5a3a1a;">Lengua y Literatura - 7° Básico</p>
+                <p style="font-size: 1.1rem; color: #7a4a2a; margin-bottom: 1rem;">Colegio Pedro de Valdivia</p>
+
+                <div class="info-card">
+                    <p><strong>Objetivos de la clase:</strong></p>
+                    <ul>
+                        <li>Comprender los elementos que componen un texto narrativo.</li>
+                        <li>Analizar cómo el narrador, los personajes, el conflicto y el ambiente construyen una historia.</li>
+                        <li>Formular interpretaciones de textos narrativos basadas en la evidencia.</li>
+                    </ul>
+                </div>
+
+                <div class="question-sample">
+                    <p><strong>Pregunta de reflexión inicial</strong></p>
+                    <p>¿Qué hace que una historia sea interesante? ¿Qué elementos crees que son necesarios para que un relato atrape a su lector?</p>
+                    <p style="color: #7a4a2a; font-style: italic;">Respuesta orientativa: Una historia interesante suele tener personajes con los que podemos identificarnos, un conflicto que nos mantiene en tensión, y un ambiente que nos transporta a otro mundo. También es importante cómo está contada (el narrador) y la estructura de la historia (planteamiento, desarrollo y desenlace).</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 2: INTRODUCCIÓN A LA NARRACIÓN -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>¿Qué es una narración?</h2>
+                <p>Una <span class="highlight">narración</span> es un tipo de texto en el que se cuentan hechos reales o imaginarios que les suceden a unos personajes en un lugar y tiempo determinados.</p>
+                <p>Las narraciones nos permiten explorar diferentes dimensiones de la experiencia humana, reflexionar sobre nosotros mismos y comprender el mundo que nos rodea.</p>
+
+                <div class="info-card">
+                    <p><strong>Objetivo de Aprendizaje (OA 2):</strong></p>
+                    <p>Reflexionar sobre las diferentes dimensiones de la experiencia humana, propia y ajena, a partir de la lectura de obras literarias [citation:6].</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 ¿Dónde encontramos narraciones?</strong></p>
+                        <ul>
+                            <li>Cuentos</li>
+                            <li>Novelas</li>
+                            <li>Fábulas</li>
+                            <li>Leyendas</li>
+                            <li>Noticias</li>
+                        </ul>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 ¿Qué elementos tiene?</strong></p>
+                        <ul>
+                            <li>Narrador</li>
+                            <li>Personajes</li>
+                            <li>Acción (conflicto)</li>
+                            <li>Ambiente (tiempo y espacio)</li>
+                            <li>Trama (estructura)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 3: EL NARRADOR -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>📢 El Narrador</h2>
+                <p>El <span class="highlight">narrador</span> es la voz que cuenta la historia. No es el autor, sino un elemento más del texto. Su identidad y punto de vista influyen en cómo percibimos la historia.</p>
+
+                <div class="info-card">
+                    <p><strong>Objetivo de Aprendizaje (OA 3):</strong></p>
+                    <p>Analizar las narraciones considerando cuándo habla el narrador y cuándo hablan los personajes [citation:5].</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Narrador en Primera Persona</strong></p>
+                        <p>Cuenta la historia usando "yo". Participa en los hechos o es testigo de ellos.</p>
+                        <ul>
+                            <li><strong>Protagonista:</strong> El personaje principal cuenta su propia historia.</li>
+                            <li><strong>Testigo:</strong> Un personaje secundario cuenta lo que ve.</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: "Esa noche me sentí observado..."</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Narrador en Tercera Persona</strong></p>
+                        <p>Cuenta la historia usando "él", "ella" o "ellos". Está fuera de la historia.</p>
+                        <ul>
+                            <li><strong>Omnisciente:</strong> Sabe todo sobre los personajes y sus pensamientos.</li>
+                            <li><strong>Testigo:</strong> Solo cuenta lo que ve y escucha.</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: "El niño no sabía que alguien lo observaba desde la sombra."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 4: EL CONFLICTO -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>⚡ El Conflicto</h2>
+                <p>El <span class="highlight">conflicto</span> es el motor de la historia. Es el problema o la situación que los personajes deben enfrentar [citation:5].</p>
+
+                <div class="info-card">
+                    <p><strong>Objetivo de Aprendizaje (OA 3):</strong></p>
+                    <p>Analizar las narraciones considerando el o los conflictos de la historia [citation:5].</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Conflicto Interno</strong></p>
+                        <p>Ocurre dentro de la mente del personaje. Es una lucha entre sus deseos, miedos o convicciones.</p>
+                        <ul>
+                            <li>Persona vs. Sí Mismo</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: "El niño dudaba entre decir la verdad o proteger a su amigo."</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Conflicto Externo</strong></p>
+                        <p>Ocurre cuando el personaje se enfrenta a una fuerza externa.</p>
+                        <ul>
+                            <li>Persona vs. Persona</li>
+                            <li>Persona vs. Sociedad</li>
+                            <li>Persona vs. Naturaleza</li>
+                            <li>Persona vs. Destino</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: "El detective debía atrapar al ladrón antes de que escapara."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 5: ESTRUCTURA DE LA NARRACIÓN -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>📐 Estructura de la Narración</h2>
+                <p>La <span class="highlight">estructura</span> es la forma en que se organizan los hechos de la historia. Generalmente, sigue un patrón de tres partes [citation:8].</p>
+
+                <div class="info-card">
+                    <p><strong>Objetivo de Aprendizaje (OA 3):</strong></p>
+                    <p>Analizar las narraciones considerando la disposición temporal de los hechos [citation:5].</p>
+                </div>
+
+                <div class="grid-3">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Situación Inicial</strong></p>
+                        <p>Se presentan los personajes, el ambiente y la situación inicial. Todo está en equilibrio.</p>
+                        <p style="font-size: 0.9rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: "Había una vez un reino en paz..."</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Complicación</strong></p>
+                        <p>Un hecho rompe el equilibrio y da origen al conflicto. La historia se pone en movimiento.</p>
+                        <p style="font-size: 0.9rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: "Un dragón llegó al reino y sembró el terror."</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Desarrollo y Desenlace</strong></p>
+                        <p>Los personajes intentan resolver el conflicto (desarrollo). Finalmente, el conflicto se resuelve (desenlace).</p>
+                        <p style="font-size: 0.9rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: "El caballero venció al dragón y el reino volvió a la paz."</p>
+                    </div>
+                </div>
+                <div class="info-card" style="border-left-color: #d9531e; background: #fef0e6; margin-top: 0.5rem;">
+                    <p style="text-align: center; font-size: 0.9rem;"><strong>¿Qué pasaría si la historia comenzara por el final? ¿Cómo cambiaría la experiencia de lectura?</strong></p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 6: LOS PERSONAJES -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>👥 Los Personajes</h2>
+                <p>Los <span class="highlight">personajes</span> son los seres que viven la historia. A través de ellos, el lector experimenta el conflicto y la trama [citation:5].</p>
+
+                <div class="info-card">
+                    <p><strong>Objetivo de Aprendizaje (OA 3):</strong></p>
+                    <p>Analizar las narraciones considerando el papel que juega cada personaje en el conflicto y cómo sus acciones afectan a otros personajes [citation:5].</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Según su Rol</strong></p>
+                        <ul>
+                            <li><strong>Protagonista:</strong> El personaje principal, que vive el conflicto central.</li>
+                            <li><strong>Antagonista:</strong> El personaje que se opone al protagonista.</li>
+                            <li><strong>Secundarios:</strong> Personajes que acompañan al protagonista y ayudan a desarrollar la trama.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 ¿Cómo los conocemos?</strong></p>
+                        <ul>
+                            <li>Por lo que <strong>dicen</strong> (sus diálogos).</li>
+                            <li>Por lo que <strong>hacen</strong> (sus acciones).</li>
+                            <li>Por lo que <strong>el narrador dice</strong> de ellos.</li>
+                            <li>Por lo que <strong>otros personajes</strong> dicen de ellos.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 7: EL AMBIENTE -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>📍 El Ambiente</h2>
+                <p>El <span class="highlight">ambiente</span> es el contexto espacio-temporal en el que se desarrolla la historia. Incluye el lugar, la época y la atmósfera que envuelve los hechos.</p>
+
+                <div class="info-card">
+                    <p><strong>Objetivo de Aprendizaje (OA 3):</strong></p>
+                    <p>Analizar las narraciones considerando los elementos en común con otros textos leídos y el efecto de ciertas acciones en el desarrollo de la historia [citation:5][citation:8].</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Espacio</strong></p>
+                        <p>El lugar donde ocurren los hechos. Puede ser físico (una casa, un bosque) o social (una comunidad, un país).</p>
+                        <p style="font-size: 0.9rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: "La historia transcurre en un pequeño pueblo costero."</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>🔹 Tiempo</strong></p>
+                        <ul>
+                            <li><strong>Época histórica:</strong> ¿Cuándo ocurre? (Pasado, presente, futuro).</li>
+                            <li><strong>Duración:</strong> ¿Cuánto tiempo abarca la historia? (días, años).</li>
+                            <li><strong>Orden:</strong> ¿Los hechos se cuentan en orden cronológico o no?</li>
+                        </ul>
+                        <p style="font-size: 0.9rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: "Todo sucedió en una fría noche de invierno."</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 8: APLICACIÓN PRÁCTICA -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>📝 Aplicación Práctica</h2>
+                <p>Lee el siguiente cuento y luego responde las preguntas para poner en práctica lo aprendido.</p>
+
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #fdf5ee;">
+                    <p><strong>El Secreto del Bosque</strong></p>
+                    <p style="font-size: 0.9rem; line-height: 1.6; font-style: italic;">
+                        En un pequeño pueblo rodeado de un frondoso bosque, vivía un niño llamado Tomás. Tomás era curioso y valiente, y siempre había soñado con explorar el corazón del bosque, un lugar que los adultos del pueblo llamaban "el bosque oscuro". Decían que nadie que se adentraba en él volvía igual.
+
+                        Un día, Tomás decidió ignorar las advertencias. Tomó una linterna y un poco de comida, y se internó en la espesura. Al principio, todo era paz y silencio, solo roto por el canto de los pájaros. Pero a medida que avanzaba, la luz del sol se fue filtrando con dificultad entre las altas copas de los árboles, y el camino se volvió más sinuoso.
+
+                        De repente, Tomás escuchó un susurro entre los arbustos. Se detuvo en seco. Un temblor recorrió su espalda. "¿Quién está ahí?", preguntó con voz apenas audible. Un momento de silencio, y luego una suave voz respondió: "No tengas miedo. No soy un fantasma. Solo soy un habitante del bosque." Tomás respiró aliviado y vio a una anciana con cabellos plateados y ojos brillantes.
+
+                        "Me llamo Elara", dijo la anciana. "Y sé por qué has venido. Buscas la 'llama eterna', la leyenda de nuestro pueblo. Pero para encontrarla, primero debes comprender el secreto del bosque." La anciana le entregó un mapa y desapareció entre los árboles. Tomás comprendió que su aventura apenas comenzaba.
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 Pregunta 1</strong></p>
+                        <p>¿Qué tipo de narrador cuenta la historia?</p>
+                        <p style="font-size: 0.9rem; font-style: italic;">a) Narrador protagonista<br>b) Narrador omnisciente en tercera persona<br>c) Narrador testigo en primera persona<br>d) Narrador protagonista en tercera persona</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 Pregunta 2</strong></p>
+                        <p>¿Cuál es el principal conflicto que enfrenta Tomás?</p>
+                        <p style="font-size: 0.9rem; font-style: italic;">a) Un conflicto interno con su miedo.<br>b) Un conflicto externo con Elara.<br>c) Un conflicto con los adultos del pueblo.<br>d) Una lucha contra la naturaleza y sus propios límites.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 9: ANÁLISIS Y DESAFÍO -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>🧠 Analizando la Historia</h2>
+
+                <div class="info-card">
+                    <p><strong>Objetivo de Aprendizaje (OA 7):</strong></p>
+                    <p>Formular una interpretación de los textos literarios, considerando la experiencia personal y el contexto de la obra [citation:8][citation:12].</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 Pregunta 3: Interpretación</strong></p>
+                        <p>¿Qué crees que simboliza el "bosque oscuro" en la historia? ¿Podría representar algo más que un lugar físico? Explica tu respuesta.</p>
+                        <p style="font-size: 0.9rem; font-style: italic;">Pista: Piensa en cómo el bosque es descrito y en la reacción de los adultos.</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 Pregunta 4: Conexión Personal</strong></p>
+                        <p>¿Te has enfrentado alguna vez a una situación que otros consideraban "peligrosa" o "imposible", pero que tú sentías que debías intentar? ¿Cómo te sentiste?</p>
+                        <p style="font-size: 0.9rem; font-style: italic;">Esta pregunta te ayuda a conectar la historia con tu propia experiencia.</p>
+                    </div>
+                </div>
+
+                <div class="info-card" style="border-left-color: #d9531e; background: #fef0e6; margin-top: 0.5rem;">
+                    <p><strong>🎯 Desafío:</strong> Escribe un breve párrafo (3-5 oraciones) en el que expliques cuál es el mensaje o enseñanza principal de "El Secreto del Bosque". Utiliza evidencia del texto para apoyar tu respuesta.</p>
+                </div>
+
+                <p style="margin-top: 1.5rem; text-align: center; font-size: 1.1rem; color: #8a4a20;"><strong>Fin de la clase</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FOOTER NAV -->
+    <!-- ============================================ -->
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 / 9</div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FLECHAS DE NAVEGACIÓN -->
+    <!-- ============================================ -->
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+    let isTransitioning = false;
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+        slideCounterSpan.innerText = 'Diapositiva ' + (currentIndex + 1) + ' / ' + totalSlides;
+
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentIndex);
+        });
+
+        const activeSlide = slides[currentIndex];
+        if (activeSlide) {
+            activeSlide.scrollTop = 0;
+        }
+    }
+
+    function goToSlide(index) {
+        if (isTransitioning) return;
+        if (index < 0 || index >= totalSlides) return;
+
+        isTransitioning = true;
+        currentIndex = index;
+        updateSlidePosition();
+
+        setTimeout(() => {
+            const activeSlide = slides[currentIndex];
+            if (activeSlide) {
+                activeSlide.scrollTop = 0;
+            }
+            isTransitioning = false;
+        }, 150);
+    }
+
+    function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+            goToSlide(currentIndex + 1);
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            goToSlide(currentIndex - 1);
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+            e.preventDefault();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+            e.preventDefault();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', function() {
+        window.location.href = 'Lenguaje.html';
+    });
+
+    document.getElementById('goToExercisesBtn').addEventListener('click', function() {
+        window.location.href = 'C_7A_Lenguaje.html';
+    });
+
+    updateSlidePosition();
+</script>
+</body>
+</html>

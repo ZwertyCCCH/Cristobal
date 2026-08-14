@@ -1,0 +1,1599 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ejercicios: Comprensión Lectora | Lengua 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #fef6f0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fffaf6;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0cfb0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #d9531e;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #b5431a;
+        }
+
+        .subtitle {
+            color: #c95a1c;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #fef0e6;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #f0cfb0;
+            color: #8a3c10;
+        }
+
+        .section {
+            background: #fefcf8;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #d9531e;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #c4450c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .text-container {
+            background: #fef0e6;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid #f0cfb0;
+            font-size: 0.95rem;
+            line-height: 1.8;
+            color: #3a2a1a;
+            white-space: pre-wrap;
+            font-family: 'Georgia', 'Times New Roman', serif;
+            max-height: 450px;
+            overflow-y: auto;
+        }
+
+        .text-container strong {
+            font-style: normal;
+            color: #b5431a;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf8;
+            border-radius: 1rem;
+            border: 1px solid #f0cfb0;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3a2a1a;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(217, 83, 30, 0.1);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #d9531e;
+        }
+
+        .tf-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .tf-table th, .tf-table td {
+            border: 1px solid #f0cfb0;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .tf-table th {
+            background: #fef0e6;
+            color: #b5431a;
+            font-weight: 600;
+        }
+
+        select {
+            background: #fffaf2;
+            color: #2d4029;
+            border: 1px solid #f0cfb0;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .open-question-card {
+            background: #fef0e6;
+            padding: 1rem;
+            border-radius: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .open-title {
+            font-weight: 600;
+            color: #c4450c;
+            margin-bottom: 0.5rem;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 0.8rem;
+            border-radius: 1rem;
+            border: 1px solid #f0cfb0;
+            background: #fefff8;
+            font-family: inherit;
+            font-size: 0.9rem;
+            resize: vertical;
+        }
+
+        .word-count {
+            font-size: 0.85rem;
+            color: #7a4a2a;
+            margin-top: 0.3rem;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #d95b2b;
+            transform: scale(1.02);
+        }
+
+        .btn-evaluate:disabled {
+            background: #b0a07c;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef0e6;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #d9531e;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3a2a1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #f0cfb0;
+            color: #8a3c10;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #e0b48a;
+            color: #5a2a0a;
+        }
+
+        .correct-feedback {
+            color: #2d6a2d;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        .incorrect-feedback {
+            color: #b33;
+            font-weight: bold;
+            font-size: 0.85rem;
+            margin-top: 0.3rem;
+        }
+
+        .tf-correct {
+            color: #2d6a2d;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #b33;
+            font-weight: bold;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .open-warning {
+            color: #b33;
+            font-weight: bold;
+            font-size: 0.9rem;
+            margin-top: 0.5rem;
+            display: none;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 0.8rem; }
+            .container { padding: 1rem; }
+            h1 { font-size: 1.5rem; }
+            .info-bar { flex-direction: column; text-align: center; }
+            .text-container { font-size: 0.85rem; max-height: 300px; }
+            .btn-evaluate { width: 100%; }
+            .tf-table { font-size: 0.8rem; }
+            .tf-table th, .tf-table td { padding: 0.3rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 Ejercicios: Comprensión Lectora</h1>
+        <div class="subtitle">Análisis de Textos Narrativos</div>
+        <div class="subtitle">7° Básico | Lengua y Literatura | Colegio Pedro de Valdivia</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (25 preguntas) + Verdadero/Falso (35 preguntas) + Desarrollo (1 pregunta)</div>
+        <div>📖 <strong>Textos:</strong> "El bate de béisbol" y "Los Hobbits y la hierba para pipa"</div>
+        <div>✅ Exigencia: 60% para nota 4.0 | Nota máxima: 7.0</div>
+        <div>📝 Pregunta abierta: mínimo 80 palabras para evaluar</div>
+    </div>
+
+    <div id="examContent">
+        <!-- ============================================ -->
+        <!-- TEXTO 1: EL BATE DE BÉISBOL -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title">📖 Texto 1: "El bate de béisbol"</div>
+            <div class="text-container" id="texto1Container">
+                <strong>El bate de béisbol</strong><br><br>
+                El último día de mi primer año de bachillerato, un bate de béisbol me golpeó en pleno rostro. Uno de mis compañeros intentó hacer un movimiento largo para pegarle a la pelota, pero el bate se le resbaló y voló hacia mí antes de golpearme directamente entre los ojos. No conservo el recuerdo del momento justo del impacto.
+
+                El bate me aplastó la cara de tal manera que la nariz se me convirtió en una especie de letra «U» distorsionada. El golpe literalmente provocó que el tejido blando de mi cerebro se incrustara en la pared posterior del cráneo. De inmediato mi cerebro comenzó a inflamarse como una ola expansiva que recorrió el interior de mi cabeza. Una fracción de segundo bastó para que yo terminara con la nariz rota, con fracturas múltiples en el cráneo y con las cuencas de los ojos hechas añicos.
+
+                Cuando abrí los ojos, pude ver a la gente a mi alrededor mirándome fijamente y corriendo a ayudarme. Dirigí la mirada hacia abajo y me di cuenta de las manchas rojas en mi ropa. Uno de mis compañeros se quitó la playera y me la pasó. La usé para bloquear el chorro de sangre que me escurría de la nariz fracturada. Conmocionado y confuso, no era capaz de darme cuenta de la seriedad de mi accidente.
+
+                El maestro me rodeó los hombros con el brazo y comenzamos a caminar lentamente por el largo camino que conducía a la enfermería escolar. Cruzamos el campo de béisbol, bajamos la colina y volvimos a entrar a la escuela. Había varias manos tocando mis costados y sosteniéndome. Nadie parecía darse cuenta de que cada minuto era importante.
+
+                Cuando llegamos a la enfermería, la enfermera me hizo una serie de preguntas. —¿En qué año estamos? —En 1998 —respondí. En realidad se trataba del año 2002. —¿Quién es el presidente de los Estados Unidos? —Bill Clinton —dije. La respuesta correcta era George W. Bush. —¿Cómo se llama tu mamá? —Eh, eh —dudé. Pasaron diez segundos. —Patti —dije tranquilamente, sin darme cuenta de que me había tomado diez segundos recordar el nombre de mi madre.
+
+                Esa es la última pregunta que recuerdo. Mi cuerpo era incapaz de soportar la rápida inflamación de mi cerebro y perdí la conciencia antes de que la ambulancia llegara. Minutos después, la ambulancia me sacaba de la escuela en dirección al hospital local.
+
+                Poco después de llegar al hospital, mi cuerpo comenzó a colapsar. Estaba luchando por realizar las funciones más básicas como tragar y respirar. Sufrí la primera convulsión de ese día. Después dejé de respirar por completo. Mientras los doctores se apuraban a suministrarme oxígeno, tomaron la decisión de llevarme a otro hospital que contara con el equipo necesario para controlar una situación tan delicada. De inmediato solicitaron un helicóptero que me trasladara a un hospital mejor equipado en Cincinnati.
+
+                Una camilla me llevó rodando desde la sala de emergencias hasta el helipuerto que estaba cruzando la calle. La camilla se sacudía conforme avanzaba en el accidentado pavimento de la calle mientras una enfermera bombeaba oxígeno de forma manual hasta mis pulmones. Mi madre, que había llegado al hospital un poco antes, se subió al helicóptero conmigo y durante todo el trayecto me sostuvo la mano, aunque yo seguía inconsciente y era incapaz de respirar por mí mismo.
+
+                Mientras mi madre viajaba conmigo en el helicóptero, mi padre fue a casa a ver cómo estaban mi hermana y mi hermano y a comunicarles las malas noticias. Tuvo que esforzarse para contener las lágrimas cuando le explicó a mi hermana que no podría asistir a su graduación de bachillerato que sería esa misma noche. Después de encargar a mis hermanos con amigos y familiares, manejó hasta Cincinnati para encontrarse con mi madre en el hospital.
+
+                Cuando mi mamá y yo aterrizamos en el techo del hospital, un equipo de casi veinte doctores y enfermeros ya nos esperaba en el helipuerto para llevarme a la unidad de traumatología. Para entonces la inflamación de mi cerebro era tan severa que estaba sufriendo repetidas convulsiones postraumáticas. Cuanto antes debían operarme los huesos rotos de la cabeza, pero no estaba en condiciones de soportar una cirugía. Después de otra convulsión más, la tercera del día, me indujeron un estado de coma y me colocaron un respirador artificial.
+
+                El hospital donde estábamos no le resultaba extraño a mis padres. Diez años antes habían entrado al mismo edificio después de que mi hermana fue diagnosticada con leucemia a los 3 años. Por entonces yo tenía 5 años y mi hermano tan solo 6 meses. Después de dos años y medio de tratamientos de quimioterapia, punciones espinales y biopsias de médula espinal, mi hermana menor por fin salió del hospital contenta, sana y sin cáncer. Ahora, después de diez años de vida normal, mis padres se encontraban de nuevo en el mismo lugar pero con otro de sus hijos.
+
+                Cuando entré en coma, el hospital envió a un sacerdote y a una trabajadora social para confortar a mis padres. Se trataba del mismo sacerdote que habían conocido una década antes, el día en que se enteraron de que mi hermana tenía cáncer.
+
+                Conforme se fue haciendo de noche, una serie de aparatos se encargaron de mantenerme con vida. Mis padres pasaron la noche en una colchoneta del hospital con gran inquietud: por momentos caían rendidos de cansancio para enseguida despertar llenos de preocupación. Tiempo después, mi madre me contó que esa había sido una de las peores noches de su vida.
+
+                Afortunadamente a la mañana siguiente mi respiración se había normalizado a tal punto que los doctores se sintieron confiados de sacarme del coma inducido. Cuando por fin recuperé la conciencia, descubrí que había perdido el sentido del olfato. Para hacer una prueba, una enfermera me pidió que me sonara la nariz y que a continuación olfateara un jugo de manzana. Mi sentido del olfato regresó, pero el hecho de sonarme provocó que el aire pasara a través de las fracturas que tenía en la cuenca del ojo, lo cual empujó el globo ocular izquierdo hacia fuera. El globo quedó salido de la cuenca, sostenido apenas por el párpado y el nervio óptico que lo unía a mi cerebro.
+
+                El oftalmólogo afirmó que mi ojo gradualmente volvería a su sitio conforme el aire saliera de la cuenca, pero le era imposible determinar cuánto tiempo le tomaría recuperar su posición normal. Me habían programado para una cirugía una semana después para darme un poco más de tiempo para recuperarme. Todavía tenía el aspecto de alguien que hubiera estado en el lado equivocado de un cuadrilátero de boxeo, pero de cualquier manera me dieron autorización para salir del hospital. Regresé a casa con la nariz rota, media docena de fracturas faciales y el ojo izquierdo desprendido de su órbita.
+
+                Los meses siguientes fueron muy duros. Tenía la impresión de que todo en mi vida había sido puesto en pausa. Tuve visión doble por semanas y, literalmente, no podía ver en una sola dirección. A mi ojo le tomó más de un mes regresar a su posición original. Entre las convulsiones y los problemas con la vista, pasaron ocho meses antes de que pudiera volver a conducir un coche. En las sesiones de terapia física tuve que practicar patrones motores básicos como caminar en línea recta. Estaba determinado a no permitir que mis heridas me doblegaran, pero debo admitir que, en más de una ocasión, me sentí deprimido y abrumado.
+
+                Cuando regresé al campo de béisbol justo un año después, fue muy doloroso darme cuenta de lo mucho que me faltaba por conseguir. El béisbol siempre había formado parte de mi vida. Mi padre había jugado para las ligas menores de los Cardenales de San Luis y yo soñaba con jugar también en las ligas profesionales. Después de haber pasado meses en rehabilitación, lo que más deseaba era volver a jugar béisbol.
+
+                Pero mi regreso al campo no se dio de buena manera. Cuando comenzó la temporada, fui el único jugador de segundo grado que no pasó a formar parte del equipo principal de la escuela. Por el contrario, fui relegado a formar parte del equipo de primer grado. Yo había jugado béisbol desde que tenía 4 años, y para alguien que había dedicado tanto tiempo y esfuerzo a un deporte, haber sido rechazado del equipo principal había sido muy humillante. Recuerdo con nitidez el día en que me comunicaron la noticia. Me senté en mi auto y lloré mientras desesperadamente recorría con la mano el cuadrante de la radio para encontrar una melodía que me hiciera sentir mejor.
+
+                Después de un año de inseguridades, cuando ya había llegado al tercer grado de bachillerato, logré ser admitido en el equipo principal de la escuela. Sin embargo, casi nunca pude entrar al campo de juego. Jugué 11 entradas en la temporada, lo cual apenas equivale a un juego completo.
+
+                A pesar de mi deslucida participación en la temporada escolar, seguí creyendo que podía lograr convertirme en un gran jugador. Y tuve la certeza de que si las cosas iban a mejorar, yo sería el único responsable de lograrlo. El momento decisivo llegó dos años después de mi accidente, cuando entré a la Universidad Denison. Se trataba de un nuevo comienzo y la universidad era el lugar donde descubriría el poder de los pequeños hábitos.
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN I: SELECCIÓN MÚLTIPLE (25 preguntas) -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple (25 preguntas)</div>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- TEXTO 2: LOS HOBBITS Y LA HIERBA PARA PIPA -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title">📖 Texto 2: "Los Hobbits y la hierba para pipa"</div>
+            <div class="text-container" id="texto2Container">
+                <strong>Los Hobbits y la hierba para pipa</strong><br><br>
+                Hay otra cosa entre los antiguos Hobbits que merece mencionarse; un hábito sorprendente: absorbían o inhalaban, a través de pipas de arcilla o madera, el humo de la combustión de una hierba llamada hoja o hierba para pipa, quizás una variedad de la Nicotiana. Hay mucho misterio en el origen de esta costumbre peculiar, o de este «arte», como los Hobbits preferían llamarlo. Todo lo que se descubrió en la antigüedad sobre el tema fue recopilado por Meriadoc Brandigamo (más tarde señor de Los Gamos) y puesto que él y el tabaco de la Cuaderna del Sur son parte de la historia que sigue, sus comentarios en la introducción al Herbario de la Comarca merecen ser citados aquí.
+
+                «Este arte, dice, es el único que podemos reclamar como de invención nuestra. En qué época empezaron a fumar los Hobbits es un enigma; todas las leyendas e historias familiares lo dan por sabido; durante años la gente de la Comarca fumó diversas hierbas, algunas malolientes, otras aromáticas. Pero todos los documentos concuerdan en un punto: Tobold Corneta de Valle Largo en la Cuaderna del Sur fue el primero que cultivó un verdadero tabaco de pipa en los días de Isengrim II, alrededor del año 1070 de la Cronología de la Comarca. Los mejores cultivos todavía provienen de ese distrito, especialmente las variedades que ahora se conocen como Hoja Valle Largo, Viejo Toby y Estrella Sureña.
+
+                »No está registrado cómo el viejo Toby obtuvo la planta, pues murió sin decírselo a nadie. Sabía mucho sobre hierbas, aunque no era viajero. Se cuenta que en su juventud iba a menudo a Bree; ciertamente nunca se alejó de la Comarca más allá de Bree. Por lo tanto es muy posible que haya conocido esta planta en Bree, donde hoy se da bien en la vertiente sur de la colina; los Hobbits de Bree pretenden haber sido los primeros fumadores de esta hierba. Aseguran, por supuesto, que se adelantaron en todo a la gente de la Comarca, a quienes llaman "colonos"; pero en este caso la pretensión es, a mi entender, probablemente cierta, pues todo indica que fue en Bree donde nació el arte de fumar la verdadera hierba, y desde allí se extendió en el curso de los últimos siglos entre los Enanos y algunos otros pueblos, como los Montaraces, los Magos y los vagabundos que iban y venían aún por aquella antigua encrucijada de caminos. El centro y hogar de este arte se encuentra, pues, en la posada de Bree, El Poney Pisador, propiedad de la familia Mantecona desde épocas remotas.
+
+                »Al mismo tiempo, mis propias observaciones en los viajes que hice al sur me convencieron de que la hierba no es originaria de nuestra región, sino que vino del Anduin inferior hacia el norte, traída, creo yo, del otro lado del Mar por los Hombres de Oesternesse. Crece en abundancia en Gondor, y allí es más grande y exuberante que en el norte, donde nunca se la encuentra en estado salvaje; florece sólo en lugares cálidos y abrigados, como Valle Largo. Los Hombres de Gondor la llaman galenas dulce, y la aprecian por la fragancia de las flores. Desde esas tierras la habrían llevado al norte remontando el Camino Verde durante los largos siglos que median entre la llegada de Elendil y nuestros días. Pero hasta los Dúnedain de Gondor nos otorgan este crédito: los Hobbits fueron los primeros que la fumaron en pipa. Ni siquiera los Magos lo intentaron antes que nosotros. Aunque un mago que conocí adquirió este arte mucho tiempo atrás, mostrándose tan hábil como en todas las otras cosas a las que llegó a dedicarse.»
+
+                La Comarca se dividía en cuatro distritos, las Cuadernas, denominadas del Norte, del Sur, del Este y del Oeste y éstas a su vez en regiones que aún llevaban los nombres de algunas de las viejas familias principales, aunque en la época de esta historia esos nombres no se encontraban sólo en las regiones respectivas. Casi todos los Tuk vivían aún en las Tierras de Tuk, lo que no ocurría con muchas otras familias, tales como los Bolsón o los Boffin.
+
+                La Comarca en ese entonces apenas tenía «gobierno». Las familias cuidaban en general de sus propios asuntos y dedicaban la mayor parte del día al cultivo y consumo de alimentos. En otras cuestiones eran por lo común gente generosa, tranquila y poco ambiciosa, de modo que las heredades, granjas, talleres y pequeñas industrias tendían a conservarse invariables durante generaciones.
+
+                La antigua tradición que hablaba de un rey de Fornost o Norburgo, como lo llamaban muy al norte de la Comarca, se conservaba aún, por supuesto. Pero no había habido rey durante casi mil años y las ruinas de Norburgo estaban cubiertas de hierba. Sin embargo, los Hobbits se acordaban aún de pueblos salvajes y criaturas malignas (como los trolls) que no habían oído hablar del rey. Atribuían al antiguo rey todas las leyes esenciales y por lo general las aceptaban de buen grado, ya que eran Los Preceptos (como ellos decían) a la vez antiguos y justos.
+
+                Es verdad que la familia Tuk ocupó una posición preeminente durante mucho tiempo; el cargo de Thain había pasado de los Gamoviejo a los Tuk algunos siglos antes y desde entonces el jefe Tuk había llevado siempre ese título. El Thain era jefe de la Asamblea de la Comarca y capitán del acantonamiento y la tropa. Pero como la tropa y la Asamblea eran convocadas sólo en casos de emergencia, que ya no ocurrían, la dignidad del Thain era apenas nominal. A la familia Tuk se la respetaba especialmente, pues seguía siendo numerosa y muy rica y tenía la capacidad de producir en cada generación personajes recios, de costumbres peculiares, y aun de temperamento aventurero. Estas últimas cualidades, sin embargo, eran más toleradas (en los ricos) que generalmente aprobadas. No obstante, se mantuvo la costumbre de llamar el Tuk al jefe de la familia, y se agregaba al nombre -si era necesario- un número, como por ejemplo Isengrim Ñ.
+
+                El único oficial verdadero en la Comarca era en esa época el Alcalde de Cavada Grande (o de la Comarca) y que era elegido cada siete años en la Feria Libre de las Quebradas Blancas, en Lithe, es decir, a mediados del verano. Como alcalde, su casi única obligación consistía en presidir los banquetes en las fiestas de la Comarca, que se celebraban con frecuencia. Pero a la alcaldía se agregaban los oficios de jefe de Correos y Primer Oficial, de modo que el alcalde ordenaba tanto los servicios de mensajeros como los policiales. Estos eran los únicos servicios de la Comarca, y los mensajeros, los más numerosos y los más atareados. Los Hobbits no eran todos instruidos, de ningún modo; pero los que lo eran escribían constantemente a todos los amigos y algunos parientes que vivían más allá de una tarde de marcha.
+
+                Oficiales era el nombre que los Hobbits daban a sus policías o al equivalente más cercano. Por supuesto, no llevaban uniforme (cosas así eran completamente desconocidas), sino una simple pluma en el sombrero, y en la práctica eran guardias campestres, más que policías y se ocupaban más de los animales extraviados que de las gentes. En toda la Comarca sólo había doce: tres en cada Cuaderna, para trabajos internos. Un cuerpo bastante mayor, que variaba de acuerdo con la necesidad, estaba dedicado a «batir las fronteras» e impedir que los Extraños de cualquier clase, grandes o pequeños, molestaran demasiado.
+
+                En la época en que empieza esta historia, los Fronteros, como se los llamaba, se habían multiplicado mucho. Había numerosos informes y quejas acerca de personas y criaturas extravías que merodeaban fuera o dentro de los lindes: primer signo de que todo no estaba completamente en orden, como lo había estado siempre, excepto en cuentos y leyendas de otro tiempo. Muy pocos prestaron atención a tales indicios y ni siquiera Bilbo tenía aún noción de lo que esto presagiaba. Habían pasado sesenta años desde que emprendiera el memorable viaje, y era viejo hasta para los Hobbits, quienes alcanzaban a veces los cien años, pero evidentemente conservaba mucho de la considerable fortuna que había traído de vuelta. Cuánto, o cuán poco, no lo había revelado a nadie, ni siquiera a Frodo, su sobrino favorito. Y todavía guardaba en secreto el Anillo que había encontrado.
+            </div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN II: VERDADERO O FALSO (35 preguntas) -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title">⚖️ II. Verdadero o Falso (35 preguntas)</div>
+            <table class="tf-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN III: PREGUNTA ABIERTA -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title">📝 III. Pregunta Abierta (sin puntaje)</div>
+            <div class="open-question-card">
+                <div class="open-title">❓ Pregunta</div>
+                <p>El texto "Los Hobbits y la hierba para pipa" presenta información sobre la cultura y costumbres de los Hobbits. Imagina que eres un investigador de la Comarca y has descubierto un nuevo manuscrito que revela cómo los Hobbits aprendieron a fumar. Escribe un relato breve (mínimo 80 palabras) en el que narres cómo fue ese descubrimiento. Puedes incluir personajes, lugares y detalles que aparecen en el texto.</p>
+                <p style="font-size: 0.85rem; color: #7a4a2a; margin-top: 0.3rem;"><strong>Requisito:</strong> Tu respuesta debe tener al menos 80 palabras.</p>
+                <textarea id="openAnswerInput" rows="8" placeholder="Escribe aquí tu respuesta (mínimo 80 palabras)..." disabled="false"></textarea>
+                <div class="word-count" id="wordCount">Palabras: 0</div>
+                <div class="open-warning" id="openWarning">⚠️ Debes escribir al menos 80 palabras para poder evaluar el test.</div>
+            </div>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Lengua y Literatura 7° Básico | Colegio Pedro de Valdivia</div>
+</div>
+
+<script>
+    // =============================================
+    // TEXTO 1: POOL DE 70 PREGUNTAS DE ALTERNATIVAS
+    // =============================================
+const poolAlternativas = [
+    // ============================================
+    // PREGUNTAS SOBRE EL ACCIDENTE Y SUS CONSECUENCIAS INMEDIATAS (1-20)
+    // ============================================
+    {
+        pregunta: "¿Qué parte del cuerpo fue golpeada directamente por el bate?",
+        opciones: ["a) La nariz", "b) La frente", "c) Entre los ojos", "d) La mejilla"],
+        correcta: "c"
+    },
+    {
+        pregunta: "¿Qué forma adoptó la nariz del narrador después del golpe?",
+        opciones: ["a) Una letra 'S'", "b) Una letra 'U' distorsionada", "c) Una letra 'V'", "d) Una letra 'O'"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué provocó el golpe en el cerebro del narrador?",
+        opciones: ["a) Una hemorragia interna", "b) Que el tejido blando se incrustara en la pared posterior del cráneo", "c) La pérdida de memoria inmediata", "d) La pérdida del habla"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué le pasó a la nariz del narrador después del impacto?",
+        opciones: ["a) Se rompió", "b) Se quedó intacta", "c) Se inflamó levemente", "d) Se cortó"],
+        correcta: "a"
+    },
+    {
+        pregunta: "¿Qué tipo de fracturas sufrió el narrador en el cráneo?",
+        opciones: ["a) Una sola fractura", "b) Fracturas múltiples", "c) No tuvo fracturas", "d) Solo una fisura"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué usó el narrador para detener el sangrado de su nariz?",
+        opciones: ["a) Una toalla", "b) La playera de un compañero", "c) Su propia camisa", "d) Gasas de la enfermería"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Cómo se sentía el narrador inmediatamente después del accidente?",
+        opciones: ["a) Consciente de la gravedad", "b) Conmocionado y confuso", "c) Tranquilo y sereno", "d) Furioso con su compañero"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Quién acompañó al narrador a la enfermería?",
+        opciones: ["a) Su madre", "b) El maestro", "c) Su compañero", "d) El director"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué preguntas le hizo la enfermera al narrador?",
+        opciones: ["a) Sobre su familia", "b) Sobre el año, el presidente y el nombre de su madre", "c) Sobre su edad y su nombre", "d) Sobre el accidente"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué año respondió el narrador cuando le preguntaron en qué año estaban?",
+        opciones: ["a) 2002", "b) 1998", "c) 2000", "d) 1999"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué presidente mencionó el narrador cuando le preguntaron quién era el presidente de EE.UU.?",
+        opciones: ["a) George W. Bush", "b) Bill Clinton", "c) Barack Obama", "d) Donald Trump"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Cuánto tiempo le tomó al narrador recordar el nombre de su madre?",
+        opciones: ["a) 5 segundos", "b) 10 segundos", "c) 20 segundos", "d) 1 minuto"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué le ocurrió al narrador después de responder las preguntas de la enfermera?",
+        opciones: ["a) Se recuperó rápidamente", "b) Perdió la conciencia", "c) Fue trasladado a su casa", "d) Le dieron el alta"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué medio de transporte utilizaron para trasladar al narrador al hospital de Cincinnati?",
+        opciones: ["a) Ambulancia", "b) Helicóptero", "c) Avión", "d) Automóvil"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Quién acompañó al narrador en el helicóptero?",
+        opciones: ["a) Su padre", "b) Su madre", "c) Su hermana", "d) El maestro"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué función realizaba una enfermera durante el traslado en helicóptero?",
+        opciones: ["a) Tomar su temperatura", "b) Bombear oxígeno manualmente", "c) Hablarle para mantenerlo consciente", "d) Administrar medicamentos"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué le dijo el padre a la hermana del narrador esa noche?",
+        opciones: ["a) Que su hermano estaba bien", "b) Que no podría asistir a su graduación", "c) Que el accidente no fue grave", "d) Que debía ir al hospital"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Cuántos doctores y enfermeros esperaban al narrador en el helipuerto de Cincinnati?",
+        opciones: ["a) 5", "b) 10", "c) 15", "d) Casi 20"],
+        correcta: "d"
+    },
+    {
+        pregunta: "¿Cuántas convulsiones sufrió el narrador antes de ser inducido al coma?",
+        opciones: ["a) Una", "b) Dos", "c) Tres", "d) Cuatro"],
+        correcta: "c"
+    },
+    {
+        pregunta: "¿Qué le colocaron al narrador después de inducirlo al coma?",
+        opciones: ["a) Un marcapasos", "b) Un respirador artificial", "c) Un monitor cardíaco", "d) Una sonda nasal"],
+        correcta: "b"
+    },
+    // ============================================
+    // PREGUNTAS SOBRE LA FAMILIA Y EL HOSPITAL (21-30)
+    // ============================================
+    {
+        pregunta: "¿Qué enfermedad había tenido la hermana del narrador diez años antes?",
+        opciones: ["a) Diabetes", "b) Leucemia", "c) Asma", "d) Epilepsia"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué edad tenía la hermana del narrador cuando fue diagnosticada con leucemia?",
+        opciones: ["a) 3 años", "b) 5 años", "c) 6 meses", "d) 10 años"],
+        correcta: "a"
+    },
+    {
+        pregunta: "¿Cuánto tiempo duró el tratamiento de quimioterapia de la hermana del narrador?",
+        opciones: ["a) 6 meses", "b) 1 año", "c) 2 años y medio", "d) 5 años"],
+        correcta: "c"
+    },
+    {
+        pregunta: "¿Quién fue enviado para confortar a los padres del narrador cuando entró en coma?",
+        opciones: ["a) Un psicólogo", "b) Un sacerdote y una trabajadora social", "c) Un amigo de la familia", "d) Un familiar"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué relación tenía el sacerdote con los padres del narrador?",
+        opciones: ["a) Era un desconocido", "b) Era el mismo que los había acompañado cuando su hermana tuvo cáncer", "c) Era un amigo de la familia", "d) Era el padre del narrador"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Dónde pasaron la noche los padres del narrador en el hospital?",
+        opciones: ["a) En una habitación privada", "b) En una colchoneta", "c) En la sala de espera", "d) En el auto"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué le dijo la madre al narrador sobre la noche que pasaron en el hospital?",
+        opciones: ["a) Que fue una noche tranquila", "b) Que fue una de las peores noches de su vida", "c) Que no recordaba esa noche", "d) Que fue una noche cualquiera"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué objetos usaban los doctores para mantener con vida al narrador durante la noche?",
+        opciones: ["a) Medicamentos", "b) Una serie de aparatos", "c) Terapias alternativas", "d) Masajes"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué edad tenía el narrador cuando su hermana fue diagnosticada con leucemia?",
+        opciones: ["a) 3 años", "b) 5 años", "c) 6 meses", "d) 10 años"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué edad tenía el hermano menor del narrador cuando su hermana fue diagnosticada con leucemia?",
+        opciones: ["a) 3 años", "b) 5 años", "c) 6 meses", "d) 10 años"],
+        correcta: "c"
+    },
+    // ============================================
+    // PREGUNTAS SOBRE LA RECUPERACIÓN (31-45)
+    // ============================================
+    {
+        pregunta: "¿Qué sentido perdió el narrador al despertar del coma?",
+        opciones: ["a) La vista", "b) El olfato", "c) El gusto", "d) El oído"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué provocó que el ojo izquierdo del narrador se saliera de su órbita?",
+        opciones: ["a) Un golpe", "b) Sonarse la nariz", "c) Una convulsión", "d) La cirugía"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué le dijo el oftalmólogo sobre el ojo izquierdo del narrador?",
+        opciones: ["a) Que necesitaría cirugía inmediata", "b) Que gradualmente volvería a su sitio", "c) Que perdería la vista", "d) Que debía extraerlo"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Cuánto tiempo después de la lesión se programó la cirugía del narrador?",
+        opciones: ["a) 3 días", "b) 1 semana", "c) 1 mes", "d) 3 meses"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Cuánto tiempo le tomó al ojo del narrador regresar a su posición original?",
+        opciones: ["a) 1 semana", "b) 2 semanas", "c) Más de un mes", "d) 6 meses"],
+        correcta: "c"
+    },
+    {
+        pregunta: "¿Cuántos meses pasaron antes de que el narrador pudiera conducir un coche?",
+        opciones: ["a) 3 meses", "b) 6 meses", "c) 8 meses", "d) 12 meses"],
+        correcta: "c"
+    },
+    {
+        pregunta: "¿Qué tuvo que practicar el narrador en las sesiones de terapia física?",
+        opciones: ["a) Lanzar pelotas", "b) Caminar en línea recta", "c) Leer en voz alta", "d) Escribir"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué sintió el narrador cuando regresó al campo de béisbol un año después?",
+        opciones: ["a) Alegría", "b) Dolor por lo mucho que le faltaba por conseguir", "c) Indiferencia", "d) Miedo"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué problema de visión tuvo el narrador durante semanas después del accidente?",
+        opciones: ["a) Visión borrosa", "b) Visión doble", "c) Ceguera parcial", "d) Visión nublada"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué le pidió la enfermera al narrador para verificar su olfato?",
+        opciones: ["a) Que olfateara un jugo de manzana", "b) Que olfateara flores", "c) Que olfateara comida", "d) Que olfateara perfume"],
+        correcta: "a"
+    },
+    {
+        pregunta: "¿Qué lesiones faciales tuvo el narrador al salir del hospital?",
+        opciones: ["a) Solo la nariz rota", "b) Media docena de fracturas faciales", "c) Un solo golpe en la mejilla", "d) Solo el ojo izquierdo lesionado"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué sucedió cuando el narrador se sonó la nariz en el hospital?",
+        opciones: ["a) Dejó de sangrar", "b) El aire pasó a través de las fracturas y empujó su ojo hacia fuera", "c) Recuperó el olfato", "d) Le dieron el alta"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué le dijo la enfermera al narrador después de la prueba del olfato?",
+        opciones: ["a) Que necesitaba cirugía", "b) Que su sentido del olfato había regresado", "c) Que perdería la vista", "d) Que debía quedarse en el hospital"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué tipo de cirugía le habían programado al narrador?",
+        opciones: ["a) Cirugía de corazón", "b) Cirugía de la cabeza", "c) Cirugía de la pierna", "d) Cirugía de la mano"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué aspecto tenía el narrador cuando salió del hospital?",
+        opciones: ["a) Como si hubiera estado en un cuadrilátero de boxeo", "b) Como si estuviera sano", "c) Como si no hubiera pasado nada", "d) Como si hubiera estado de vacaciones"],
+        correcta: "a"
+    },
+    // ============================================
+    // PREGUNTAS SOBRE EL BÉISBOL Y LA SUPERACIÓN (46-60)
+    // ============================================
+    {
+        pregunta: "¿Qué soñaba hacer el narrador en el béisbol?",
+        opciones: ["a) Ser entrenador", "b) Jugar en las ligas profesionales", "c) Ser árbitro", "d) Ser comentarista"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué equipo había jugado el padre del narrador en las ligas menores?",
+        opciones: ["a) Los Yankees de Nueva York", "b) Los Cardenales de San Luis", "c) Los Dodgers de Los Ángeles", "d) Los Medias Rojas de Boston"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué sucedió cuando comenzó la temporada de béisbol después del accidente?",
+        opciones: ["a) Fue el mejor jugador", "b) Fue el único jugador de segundo grado que no pasó al equipo principal", "c) Decidió no jugar", "d) Fue capitán del equipo"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿A qué equipo fue relegado el narrador después del accidente?",
+        opciones: ["a) Al equipo principal", "b) Al equipo de primer grado", "c) Al equipo de reserva", "d) Al equipo de novatos"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué hizo el narrador cuando le comunicaron que no había pasado al equipo principal?",
+        opciones: ["a) Se enojó", "b) Lloró en su auto", "c) Se fue a entrenar", "d) Habló con el entrenador"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿En qué grado de bachillerato logró el narrador ser admitido en el equipo principal?",
+        opciones: ["a) Primer grado", "b) Segundo grado", "c) Tercer grado", "d) Cuarto grado"],
+        correcta: "c"
+    },
+    {
+        pregunta: "¿Cuántas entradas jugó el narrador en la temporada de bachillerato?",
+        opciones: ["a) 5", "b) 11", "c) 20", "d) 30"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿A qué universidad entró el narrador dos años después del accidente?",
+        opciones: ["a) Harvard", "b) Denison", "c) Yale", "d) Stanford"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué descubrió el narrador en la universidad?",
+        opciones: ["a) El amor", "b) El poder de los pequeños hábitos", "c) Una nueva carrera", "d) Un nuevo deporte"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué emoción sintió el narrador cuando le comunicaron que no había pasado al equipo principal?",
+        opciones: ["a) Alegría", "b) Humillación", "c) Indiferencia", "d) Rabia"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué hizo el narrador mientras recorría el cuadrante de la radio en su auto?",
+        opciones: ["a) Llamó a su padre", "b) Buscó una melodía que lo hiciera sentir mejor", "c) Escuchó las noticias", "d) Apagó la radio"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué pensaba el narrador sobre su futuro en el béisbol a pesar de su deslucida participación?",
+        opciones: ["a) Que nunca podría ser un gran jugador", "b) Que seguía creyendo que podía lograrlo", "c) Que debía rendirse", "d) Que no le importaba"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Quién era el único responsable de mejorar según el narrador?",
+        opciones: ["a) Su entrenador", "b) Su padre", "c) Él mismo", "d) Su familia"],
+        correcta: "c"
+    },
+    {
+        pregunta: "¿Qué representa la universidad para el narrador?",
+        opciones: ["a) Un lugar para olvidar el pasado", "b) Un nuevo comienzo", "c) Un lugar para rendirse", "d) Un lugar para huir"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Cuántos años tenía el narrador cuando su hermana fue diagnosticada con leucemia?",
+        opciones: ["a) 3 años", "b) 5 años", "c) 6 meses", "d) 10 años"],
+        correcta: "b"
+    },
+    // ============================================
+    // PREGUNTAS SOBRE DETALLES ESPECÍFICOS DEL TEXTO (61-70)
+    // ============================================
+    {
+        pregunta: "¿Qué deporte practicaba el narrador al momento del accidente?",
+        opciones: ["a) Fútbol", "b) Béisbol", "c) Baloncesto", "d) Tenis"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿En qué grado de bachillerato estaba el narrador cuando ocurrió el accidente?",
+        opciones: ["a) Primer grado", "b) Segundo grado", "c) Tercer grado", "d) Cuarto grado"],
+        correcta: "a"
+    },
+    {
+        pregunta: "¿Qué le pasó al narrador después de la primera convulsión en el hospital local?",
+        opciones: ["a) Se recuperó", "b) Dejó de respirar por completo", "c) Se despertó", "d) Habló con su madre"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué tomaron los doctores después de que el narrador dejó de respirar?",
+        opciones: ["a) La decisión de operarlo", "b) La decisión de trasladarlo a otro hospital", "c) La decisión de darle el alta", "d) La decisión de suspender el tratamiento"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué hacía la enfermera en el camino hacia el helipuerto?",
+        opciones: ["a) Tomar fotos", "b) Bombear oxígeno de forma manual", "c) Hablar con el narrador", "d) Llamar a la familia"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué le pidió el narrador a su madre cuando estaba inconsciente?",
+        opciones: ["a) Que no llorara", "b) No pidió nada, estaba inconsciente", "c) Que llamara a su padre", "d) Que le diera la mano"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué hizo el padre del narrador después de dejar a sus hermanos con amigos y familiares?",
+        opciones: ["a) Fue al hospital de Cincinnati", "b) Se quedó en casa", "c) Fue a trabajar", "d) Fue a la graduación de su hija"],
+        correcta: "a"
+    },
+    {
+        pregunta: "¿Cuál fue la tercera convulsión que sufrió el narrador?",
+        opciones: ["a) La primera del día", "b) La segunda del día", "c) La tercera del día", "d) La última del día"],
+        correcta: "c"
+    },
+    {
+        pregunta: "¿Qué le pidió el narrador a una enfermera después de recuperar la conciencia?",
+        opciones: ["a) Que le diera de comer", "b) Que le hiciera una prueba de olfato", "c) Que llamara a su madre", "d) Que le diera el alta"],
+        correcta: "b"
+    },
+    {
+        pregunta: "¿Qué le dijo el narrador a su madre sobre la noche en el hospital?",
+        opciones: ["a) Que fue una noche tranquila", "b) No se menciona que le haya dicho algo, fue su madre quien le contó", "c) Que fue una noche divertida", "d) Que no recordaba nada"],
+        correcta: "b"
+    }
+];
+
+    // =============================================
+    // TEXTO 2: POOL DE 100 PREGUNTAS V/F
+    // =============================================
+const poolVF = [
+    // ============================================
+    // PREGUNTAS SOBRE LA HIERBA Y EL ARTE DE FUMAR (1-20)
+    // ============================================
+    {
+        texto: "Los Hobbits fumaban a través de pipas de arcilla o madera.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Hobbits llamaban 'vicio' a la costumbre de fumar.",
+        correcta: "F"
+    },
+    {
+        texto: "Meriadoc Brandigamo recopiló información sobre el origen de la hierba para pipa.",
+        correcta: "V"
+    },
+    {
+        texto: "Meriadoc Brandigamo era un Enano.",
+        correcta: "F"
+    },
+    {
+        texto: "Tobold Corneta fue el primero en cultivar tabaco de pipa en la Comarca.",
+        correcta: "V"
+    },
+    {
+        texto: "Tobold Corneta era un viajero experimentado.",
+        correcta: "F"
+    },
+    {
+        texto: "Las variedades de tabaco mencionadas son Hoja Valle Largo, Viejo Toby y Estrella Sureña.",
+        correcta: "V"
+    },
+    {
+        texto: "La hierba para pipa se originó en la Comarca.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Hobbits de Bree afirman haber sido los primeros fumadores de la hierba.",
+        correcta: "V"
+    },
+    {
+        texto: "El arte de fumar se extendió desde Bree a otros pueblos.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Magos fueron los primeros en fumar la hierba.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Hombres de Gondor llamaban a la hierba 'galenas dulce'.",
+        correcta: "V"
+    },
+    {
+        texto: "La hierba crece en estado salvaje en el norte.",
+        correcta: "F"
+    },
+    {
+        texto: "La hierba llegó a la Comarca desde el Anduin inferior.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Hombres de Oesternesse trajeron la hierba del otro lado del Mar.",
+        correcta: "V"
+    },
+    {
+        texto: "La posada El Poney Pisador era propiedad de la familia Mantecona.",
+        correcta: "V"
+    },
+    {
+        texto: "Bilbo Bolsón era el señor de Los Gamos.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Hobbits fumaban hierbas aromáticas y malolientes antes del tabaco.",
+        correcta: "V"
+    },
+    {
+        texto: "Tobold Corneta murió sin revelar cómo obtuvo la planta.",
+        correcta: "V"
+    },
+    {
+        texto: "Tobold Corneta viajó más allá de Bree.",
+        correcta: "F"
+    },
+    // ============================================
+    // PREGUNTAS SOBRE LA ORGANIZACIÓN DE LA COMARCA (21-40)
+    // ============================================
+    {
+        texto: "Los Hobbits de Bree llamaban 'colonos' a los de la Comarca.",
+        correcta: "V"
+    },
+    {
+        texto: "La hierba para pipa se cultiva mejor en lugares fríos.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Enanos aprendieron a fumar gracias a los Hobbits.",
+        correcta: "V"
+    },
+    {
+        texto: "El centro del arte de fumar se encuentra en la posada El Poney Pisador.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Magos nunca aprendieron a fumar.",
+        correcta: "F"
+    },
+    {
+        texto: "La Comarca se dividía en cuatro Cuadernas.",
+        correcta: "V"
+    },
+    {
+        texto: "Las Cuadernas se llamaban del Norte, del Sur, del Este y del Oeste.",
+        correcta: "V"
+    },
+    {
+        texto: "Todos los Tuk vivían en las Tierras de Tuk.",
+        correcta: "F"
+    },
+    {
+        texto: "La familia Tuk había ocupado siempre el cargo de Thain.",
+        correcta: "F"
+    },
+    {
+        texto: "El Thain era el jefe de la Asamblea de la Comarca.",
+        correcta: "V"
+    },
+    {
+        texto: "El Alcalde de Cavada Grande era elegido cada cinco años.",
+        correcta: "F"
+    },
+    {
+        texto: "El Alcalde era elegido en la Feria Libre de las Quebradas Blancas.",
+        correcta: "V"
+    },
+    {
+        texto: "El Alcalde también era jefe de Correos y Primer Oficial.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Oficiales llevaban uniforme.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Oficiales llevaban una pluma en el sombrero como distintivo.",
+        correcta: "V"
+    },
+    {
+        texto: "En toda la Comarca había doce Oficiales.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Fronteros se encargaban de los animales extraviados.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Fronteros se habían multiplicado en la época de la historia.",
+        correcta: "V"
+    },
+    {
+        texto: "El Alcalde presidía los banquetes de la Comarca.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Hobbits no tenían ningún tipo de gobierno.",
+        correcta: "F"
+    },
+    // ============================================
+    // PREGUNTAS SOBRE LAS FAMILIAS Y EL THAIN (41-60)
+    // ============================================
+    {
+        texto: "La familia Tuk era respetada por su riqueza y número.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Tuk eran conocidos por su temperamento tranquilo.",
+        correcta: "F"
+    },
+    {
+        texto: "El jefe de la familia Tuk se llamaba 'el Tuk'.",
+        correcta: "V"
+    },
+    {
+        texto: "Había un rey en la Comarca durante la época de la historia.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Hobbits recordaban al rey de Fornost o Norburgo.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Preceptos eran leyes antiguas y justas atribuidas al antiguo rey.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Hobbits no eran instruidos en absoluto.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Hobbits escribían constantemente a amigos y parientes.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Oficiales eran principalmente guardias campestres.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Fronteros se encargaban de los trabajos internos de la Comarca.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Extraños eran bienvenidos en la Comarca.",
+        correcta: "F"
+    },
+    {
+        texto: "Bilbo Bolsón era el sobrino de Frodo.",
+        correcta: "F"
+    },
+    {
+        texto: "Bilbo había emprendido un viaje memorable sesenta años antes.",
+        correcta: "V"
+    },
+    {
+        texto: "Bilbo guardaba en secreto el Anillo que había encontrado.",
+        correcta: "V"
+    },
+    {
+        texto: "Bilbo había revelado a Frodo cuánta fortuna había traído.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Hobbits alcanzaban a veces los cien años.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Fronteros se llamaban así por su labor en las fronteras.",
+        correcta: "V"
+    },
+    {
+        texto: "La Comarca tenía un gobierno centralizado y fuerte.",
+        correcta: "F"
+    },
+    {
+        texto: "La familia Gamoviejo había sido Thain antes que los Tuk.",
+        correcta: "V"
+    },
+    {
+        texto: "El Thain era un cargo de gran poder y relevancia en la época.",
+        correcta: "F"
+    },
+    // ============================================
+    // PREGUNTAS SOBRE LA HIERBA Y SU ORIGEN (61-80)
+    // ============================================
+    {
+        texto: "Los Tuk eran considerados personajes de costumbres peculiares.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Hobbits de Bree se adelantaron en todo a los de la Comarca.",
+        correcta: "V"
+    },
+    {
+        texto: "La hierba para pipa es originaria de la Comarca según Meriadoc.",
+        correcta: "F"
+    },
+    {
+        texto: "Meriadoc viajó al sur y observó la hierba en Gondor.",
+        correcta: "V"
+    },
+    {
+        texto: "La hierba es más exuberante en el norte que en Gondor.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Hombres de Gondor aprecian la hierba por su fragancia.",
+        correcta: "V"
+    },
+    {
+        texto: "El Camino Verde era la ruta por la que llegó la hierba.",
+        correcta: "V"
+    },
+    {
+        texto: "Elendil fue quien trajo la hierba a la Comarca.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Dúnedain de Gondor reconocen que los Hobbits fueron los primeros fumadores.",
+        correcta: "V"
+    },
+    {
+        texto: "Un mago que Meriadoc conoció adquirió el arte de fumar.",
+        correcta: "V"
+    },
+    {
+        texto: "El mago era hábil en todas las cosas a las que se dedicaba.",
+        correcta: "V"
+    },
+    {
+        texto: "La Asamblea de la Comarca se convocaba con frecuencia.",
+        correcta: "F"
+    },
+    {
+        texto: "El Alcalde era el único oficial verdadero en la Comarca.",
+        correcta: "V"
+    },
+    {
+        texto: "La elección del Alcalde se realizaba en Lithe, a mediados del verano.",
+        correcta: "V"
+    },
+    {
+        texto: "Los mensajeros eran los servicios más numerosos de la Comarca.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Oficiales se ocupaban principalmente de las personas.",
+        correcta: "F"
+    },
+    {
+        texto: "El cuerpo de Fronteros variaba de acuerdo con la necesidad.",
+        correcta: "V"
+    },
+    {
+        texto: "Los Fronteros impedían que los Extraños molestaran demasiado.",
+        correcta: "V"
+    },
+    {
+        texto: "Los informes sobre criaturas extrañas eran comunes en la Comarca.",
+        correcta: "F"
+    },
+    {
+        texto: "Bilbo tenía plena conciencia de lo que presagiaban los informes.",
+        correcta: "F"
+    },
+    // ============================================
+    // PREGUNTAS SOBRE BILBO Y LA HISTORIA (81-100)
+    // ============================================
+    {
+        texto: "El viaje de Bilbo había ocurrido ochenta años antes.",
+        correcta: "F"
+    },
+    {
+        texto: "Bilbo era considerado viejo incluso para los estándares de los Hobbits.",
+        correcta: "V"
+    },
+    {
+        texto: "Frodo era el sobrino favorito de Bilbo.",
+        correcta: "V"
+    },
+    {
+        texto: "Bilbo había revelado el secreto del Anillo a Frodo.",
+        correcta: "F"
+    },
+    {
+        texto: "Bilbo ya no tenía la fortuna que había traído de su viaje.",
+        correcta: "F"
+    },
+    {
+        texto: "La familia Bolsón ya no vivía en su región original.",
+        correcta: "F"
+    },
+    {
+        texto: "La Comarca tenía leyes establecidas por el rey de Fornost.",
+        correcta: "V"
+    },
+    {
+        texto: "Las ruinas de Norburgo estaban cubiertas de hierba.",
+        correcta: "V"
+    },
+    {
+        texto: "Los trolls eran criaturas que habían oído hablar del rey.",
+        correcta: "F"
+    },
+    {
+        texto: "El cargo de Thain había pasado de los Tuk a los Gamoviejo.",
+        correcta: "F"
+    },
+    {
+        texto: "El Thain tenía autoridad sobre el Alcalde.",
+        correcta: "F"
+    },
+    {
+        texto: "La tropa de la Comarca se convocaba en casos de emergencia.",
+        correcta: "V"
+    },
+    {
+        texto: "La familia Tuk producía personajes de temperamento aventurero.",
+        correcta: "V"
+    },
+    {
+        texto: "Las cualidades aventureras de los Tuk eran siempre aprobadas.",
+        correcta: "F"
+    },
+    {
+        texto: "El jefe de la familia Tuk se llamaba Isengrim Ñ.",
+        correcta: "V"
+    },
+    {
+        texto: "La alcaldía de Cavada Grande se heredaba.",
+        correcta: "F"
+    },
+    {
+        texto: "Los banquetes de la Comarca se celebraban con poca frecuencia.",
+        correcta: "F"
+    },
+    {
+        texto: "Los Oficiales no llevaban uniforme.",
+        correcta: "V"
+    },
+    {
+        texto: "Los mensajeros eran los servicios menos atareados de la Comarca.",
+        correcta: "F"
+    },
+    {
+        texto: "El rey de Fornost había muerto hacía mil años.",
+        correcta: "V"
+    }
+];
+
+    // =============================================
+    // FUNCIONES DE SELECCIÓN ALEATORIA
+    // =============================================
+    function seleccionarElementos(arr, cantidad) {
+        const copia = [...arr];
+        const seleccionados = [];
+        for (let i = 0; i < cantidad && copia.length > 0; i++) {
+            const indice = Math.floor(Math.random() * copia.length);
+            seleccionados.push(copia.splice(indice, 1)[0]);
+        }
+        return seleccionados;
+    }
+
+    // =============================================
+    // SELECCIÓN DE PREGUNTAS
+    // =============================================
+    const preguntasMC = seleccionarElementos(poolAlternativas, 25);
+    const preguntasVF = seleccionarElementos(poolVF, 35);
+
+    // =============================================
+    // ESTADO DE RESPUESTAS
+    // =============================================
+    let respuestasMC = new Array(preguntasMC.length).fill(null);
+    let respuestasVF = new Array(preguntasVF.length).fill(null);
+    let respuestaOpen = "";
+    let evaluado = false;
+    let openWordCount = 0;
+
+    // =============================================
+    // RENDERIZADO
+    // =============================================
+    function renderizarTodo() {
+        // --- Renderizar Selección Múltiple ---
+        const containerMC = document.getElementById('multipleChoice');
+        containerMC.innerHTML = '';
+
+        preguntasMC.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.id = `mc-${idx}`;
+
+            const p = document.createElement('p');
+            p.innerHTML = `<strong>${idx + 1}.</strong> ${q.pregunta}`;
+            qDiv.appendChild(p);
+
+            const ul = document.createElement('ul');
+            ul.className = 'options';
+
+            const letras = ['a', 'b', 'c', 'd'];
+            q.opciones.forEach((opt, optIdx) => {
+                const li = document.createElement('li');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `mc-${idx}`;
+                radio.value = letras[optIdx];
+                radio.id = `mc-${idx}-${letras[optIdx]}`;
+                radio.disabled = evaluado;
+
+                if (respuestasMC[idx] === letras[optIdx]) {
+                    radio.checked = true;
+                }
+
+                if (!evaluado) {
+                    radio.addEventListener('change', function() {
+                        respuestasMC[idx] = this.value;
+                        guardarRespuestas();
+                    });
+                }
+
+                const label = document.createElement('label');
+                label.htmlFor = `mc-${idx}-${letras[optIdx]}`;
+                label.textContent = ` ${opt}`;
+
+                li.appendChild(radio);
+                li.appendChild(label);
+                ul.appendChild(li);
+            });
+
+            qDiv.appendChild(ul);
+
+            // Feedback si evaluado
+            if (evaluado) {
+                const esCorrecta = respuestasMC[idx] === q.correcta;
+                const feedback = document.createElement('div');
+                feedback.className = esCorrecta ? 'correct-feedback' : 'incorrect-feedback';
+                if (esCorrecta) {
+                    feedback.textContent = '✅ Correcto';
+                } else {
+                    feedback.textContent = `❌ Incorrecto. La respuesta correcta era: ${q.correcta}) ${q.opciones.find(o => o.startsWith(q.correcta))}`;
+                }
+                qDiv.appendChild(feedback);
+            }
+
+            containerMC.appendChild(qDiv);
+        });
+
+        // --- Renderizar Verdadero/Falso ---
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+
+        preguntasVF.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+
+            cellText.innerHTML = `<strong>${idx + 1}.</strong> ${item.texto}`;
+
+            const select = document.createElement('select');
+            select.disabled = evaluado;
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+
+            const optV = document.createElement('option');
+            optV.value = "V";
+            optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option');
+            optF.value = "F";
+            optF.textContent = "Falso (F)";
+            select.appendChild(optV);
+            select.appendChild(optF);
+
+            if (!evaluado && respuestasVF[idx]) {
+                if (respuestasVF[idx] === "V") optV.selected = true;
+                else if (respuestasVF[idx] === "F") optF.selected = true;
+            }
+
+            select.addEventListener('change', function(e) {
+                respuestasVF[idx] = e.target.value;
+                guardarRespuestas();
+            });
+
+            cellSelect.appendChild(select);
+
+            // Feedback si evaluado
+            if (evaluado) {
+                const esCorrecta = respuestasVF[idx] === item.correcta;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.8rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = esCorrecta ? '✅ Correcto' : `❌ Incorrecto. Respuesta: ${item.correcta}`;
+                feedback.className = esCorrecta ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+
+        // --- Renderizar Pregunta Abierta ---
+        const textarea = document.getElementById('openAnswerInput');
+        const wordCountDiv = document.getElementById('wordCount');
+        const warningDiv = document.getElementById('openWarning');
+
+        if (!evaluado) {
+            textarea.disabled = false;
+            textarea.value = respuestaOpen;
+
+            textarea.addEventListener('input', function() {
+                respuestaOpen = this.value;
+                const palabras = respuestaOpen.trim().split(/\s+/).filter(p => p.length > 0);
+                openWordCount = palabras.length;
+                wordCountDiv.textContent = `Palabras: ${openWordCount}`;
+                if (openWordCount >= 80) {
+                    warningDiv.style.display = 'none';
+                } else {
+                    warningDiv.style.display = 'block';
+                }
+                guardarRespuestas();
+            });
+
+            // Inicializar contador
+            if (respuestaOpen.trim().length > 0) {
+                const palabras = respuestaOpen.trim().split(/\s+/).filter(p => p.length > 0);
+                openWordCount = palabras.length;
+                wordCountDiv.textContent = `Palabras: ${openWordCount}`;
+                if (openWordCount >= 80) {
+                    warningDiv.style.display = 'none';
+                } else {
+                    warningDiv.style.display = 'block';
+                }
+            }
+        } else {
+            textarea.disabled = true;
+            textarea.value = respuestaOpen;
+            const palabras = respuestaOpen.trim().split(/\s+/).filter(p => p.length > 0);
+            openWordCount = palabras.length;
+            wordCountDiv.textContent = `Palabras: ${openWordCount}`;
+            warningDiv.style.display = 'none';
+        }
+    }
+
+    // =============================================
+    // GUARDAR Y CARGAR RESPUESTAS
+    // =============================================
+    function guardarRespuestas() {
+        try {
+            localStorage.setItem('respuestasC7A_v2', JSON.stringify({
+                mc: respuestasMC,
+                vf: respuestasVF,
+                open: respuestaOpen
+            }));
+        } catch (e) {}
+    }
+
+    function cargarRespuestas() {
+        try {
+            const data = localStorage.getItem('respuestasC7A_v2');
+            if (data) {
+                const parsed = JSON.parse(data);
+                if (parsed.mc) respuestasMC = parsed.mc;
+                if (parsed.vf) respuestasVF = parsed.vf;
+                if (parsed.open) respuestaOpen = parsed.open;
+            }
+        } catch (e) {}
+    }
+
+    // =============================================
+    // EVALUACIÓN
+    // =============================================
+    function evaluarTodo() {
+        // Verificar que la pregunta abierta tenga al menos 80 palabras
+        const textarea = document.getElementById('openAnswerInput');
+        const palabras = respuestaOpen.trim().split(/\s+/).filter(p => p.length > 0);
+
+        if (palabras.length < 80) {
+            const warningDiv = document.getElementById('openWarning');
+            warningDiv.style.display = 'block';
+            warningDiv.textContent = '⚠️ Debes escribir al menos 80 palabras para poder evaluar el test.';
+            warningDiv.style.color = '#b33';
+            warningDiv.style.fontWeight = 'bold';
+            warningDiv.style.fontSize = '1rem';
+            return;
+        }
+
+        evaluado = true;
+
+        // Contar correctas en MC
+        let mcCorrectas = 0;
+        preguntasMC.forEach((q, idx) => {
+            if (respuestasMC[idx] === q.correcta) mcCorrectas++;
+        });
+
+        // Contar correctas en VF
+        let vfCorrectas = 0;
+        preguntasVF.forEach((item, idx) => {
+            if (respuestasVF[idx] === item.correcta) vfCorrectas++;
+        });
+
+        const totalMC = preguntasMC.length;
+        const totalVF = preguntasVF.length;
+        const totalPreguntas = totalMC + totalVF;
+        const totalCorrectas = mcCorrectas + vfCorrectas;
+        const porcentaje = (totalCorrectas / totalPreguntas) * 100;
+
+        let nota = 0;
+        const exigencia = 60;
+
+        if (porcentaje >= exigencia) {
+            nota = 4.0 + ((porcentaje - exigencia) / (100 - exigencia)) * 3.0;
+        } else {
+            nota = 1.0 + (porcentaje / exigencia) * 3.0;
+        }
+        nota = Math.round(nota * 100) / 100;
+        const aprobado = nota >= 4.0;
+
+        // Deshabilitar botón
+        document.getElementById('evaluateBtn').disabled = true;
+
+        // Mostrar resultados
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#c4450c; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrectas} de ${totalPreguntas} (${Math.round(porcentaje)}%)</div>
+            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Selección Múltiple: ${mcCorrectas}/${totalMC}</div>
+                <div>⚖️ Verdadero/Falso: ${vfCorrectas}/${totalVF}</div>
+            </div>
+            <div class="grade-box ${aprobado ? 'approved' : 'failed'}">
+                <strong>${aprobado ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>
+                NOTA: ${nota.toFixed(1)}
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+
+        // Renderizar con feedback
+        renderizarTodo();
+
+        // Eventos de botones
+        document.getElementById('restartTestBtn')?.addEventListener('click', reiniciarTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Lenguaje.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_7_Lenguaje.html');
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // =============================================
+    // REINICIAR TEST
+    // =============================================
+    function reiniciarTest() {
+        evaluado = false;
+        document.getElementById('evaluateBtn').disabled = false;
+
+        // Seleccionar nuevas preguntas
+        const nuevasMC = seleccionarElementos(poolAlternativas, 25);
+        const nuevasVF = seleccionarElementos(poolVF, 35);
+
+        // Reemplazar arrays
+        preguntasMC.length = 0;
+        preguntasMC.push(...nuevasMC);
+        preguntasVF.length = 0;
+        preguntasVF.push(...nuevasVF);
+
+        // Reiniciar respuestas
+        respuestasMC = new Array(preguntasMC.length).fill(null);
+        respuestasVF = new Array(preguntasVF.length).fill(null);
+        respuestaOpen = "";
+        openWordCount = 0;
+
+        document.getElementById('results').style.display = 'none';
+        localStorage.removeItem('respuestasC7A_v2');
+        renderizarTodo();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =============================================
+    // INICIALIZACIÓN
+    // =============================================
+    cargarRespuestas();
+    renderizarTodo();
+
+    document.getElementById('evaluateBtn').addEventListener('click', evaluarTodo);
+</script>
+</body>
+</html>
