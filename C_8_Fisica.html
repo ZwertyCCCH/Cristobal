@@ -1,0 +1,1298 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Clase 8: Rocas | 7° Básico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1628;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+            padding-bottom: 80px;
+        }
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1300px;
+            height: 85vh;
+            max-height: 800px;
+            background: #0d1b2a;
+            border-radius: 28px;
+            overflow: hidden;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+            border: 1px solid #1a365d;
+        }
+        .slides-wrapper { position: relative; width: 100%; height: 100%; }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2.5rem 3rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease, visibility 0.5s ease;
+            overflow-y: auto;
+            background: #0d1b2a;
+            color: #e2e8f0;
+        }
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; }
+        .slide::-webkit-scrollbar { width: 5px; }
+        .slide::-webkit-scrollbar-track { background: #1a365d; border-radius: 10px; }
+        .slide::-webkit-scrollbar-thumb { background: #2b6cb0; border-radius: 10px; }
+        .slide-number {
+            position: absolute; bottom: 20px; right: 30px;
+            font-size: 0.75rem; color: #4a7a9c;
+            background: #0d1b2a; padding: 0.2rem 0.8rem;
+            border-radius: 20px; border: 1px solid #1a365d; z-index: 15;
+        }
+        .nav-arrow {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            z-index: 20; background: rgba(26,54,93,0.7);
+            border: 1px solid #2b6cb0; color: #90cdf4;
+            width: 48px; height: 48px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            cursor: pointer; font-size: 1.3rem;
+            transition: all 0.3s ease; backdrop-filter: blur(5px);
+        }
+        .nav-arrow:hover:not(:disabled) { background: #2b6cb0; color: white; transform: translateY(-50%) scale(1.05); }
+        .nav-arrow:disabled { opacity: 0.3; cursor: not-allowed; }
+        .nav-arrow-left { left: 15px; }
+        .nav-arrow-right { right: 15px; }
+        .dots-container {
+            position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%);
+            display: flex; gap: 8px; z-index: 15;
+            background: rgba(13,27,42,0.8); padding: 6px 14px;
+            border-radius: 30px; border: 1px solid #1a365d;
+        }
+        .dot { width: 10px; height: 10px; border-radius: 50%; background: #1a365d; cursor: pointer; transition: all 0.3s ease; }
+        .dot.active { background: #2b6cb0; width: 24px; border-radius: 12px; }
+        .dot:hover { background: #4a7a9c; }
+        .fixed-footer {
+            position: fixed; bottom: 0; left: 0; right: 0;
+            background: rgba(13,27,42,0.95); backdrop-filter: blur(10px);
+            padding: 0.8rem 2rem; display: flex; justify-content: center;
+            gap: 2rem; border-top: 1px solid #1a365d; z-index: 1000;
+        }
+        .footer-btn {
+            background: transparent; border: 1px solid #2b6cb0;
+            color: #90cdf4; padding: 0.6rem 2rem;
+            border-radius: 30px; font-size: 0.95rem; font-weight: 600;
+            cursor: pointer; transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif; display: flex; align-items: center; gap: 8px;
+        }
+        .footer-btn:hover { background: #2b6cb0; color: white; transform: translateY(-2px); }
+        .footer-btn.primary { background: #2b6cb0; color: white; }
+        .footer-btn.primary:hover { background: #3182ce; }
+        h1 { font-size: 2.8rem; font-weight: 800; color: #90cdf4; margin-bottom: 0.5rem; }
+        h2 { font-size: 2rem; font-weight: 700; color: #63b3ed; margin-bottom: 1rem; border-left: 4px solid #2b6cb0; padding-left: 1rem; }
+        h3 { font-size: 1.2rem; font-weight: 600; color: #90cdf4; margin: 0.8rem 0 0.4rem 0; }
+        .badge {
+            display: inline-block; background: #2b6cb0; color: white;
+            padding: 0.2rem 1rem; border-radius: 30px; font-size: 0.7rem;
+            font-weight: 600; margin-bottom: 0.8rem; letter-spacing: 0.5px;
+        }
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.2rem; margin: 0.8rem 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 0.8rem 0; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin: 0.8rem 0; }
+        .card {
+            background: rgba(26,54,93,0.4); border-radius: 16px;
+            padding: 1.2rem; border: 1px solid #1a365d;
+            transition: all 0.2s ease;
+        }
+        .card:hover { border-color: #2b6cb0; background: rgba(26,54,93,0.6); }
+        .card i { font-size: 1.6rem; color: #63b3ed; margin-bottom: 0.5rem; }
+        .card h4 { color: #90cdf4; font-size: 1rem; margin-bottom: 0.4rem; }
+        .card p, .card li { color: #cbd5e1; font-size: 0.85rem; line-height: 1.5; }
+        .card ul { padding-left: 1.2rem; margin-top: 0.3rem; }
+        .card ul li { margin-bottom: 0.2rem; }
+        .card img { width: 100%; border-radius: 12px; margin-bottom: 0.5rem; border: 1px solid #1a365d; }
+        .highlight { color: #63b3ed; font-weight: 600; }
+        .info-box {
+            background: rgba(26,54,93,0.5); padding: 1rem 1.2rem;
+            border-radius: 16px; margin: 0.8rem 0; border-left: 4px solid #2b6cb0;
+        }
+        .info-box i { color: #63b3ed; margin-right: 8px; }
+        .info-box strong { color: #90cdf4; }
+        .comparison-table {
+            width: 100%; border-collapse: collapse; margin: 0.8rem 0; font-size: 0.85rem;
+        }
+        .comparison-table th { background: #1a365d; color: #90cdf4; padding: 0.6rem; text-align: left; }
+        .comparison-table td { border: 1px solid #1a365d; padding: 0.6rem; color: #cbd5e1; }
+        .comparison-table tr:nth-child(even) { background: rgba(26,54,93,0.3); }
+        .cycle-image { width: 100%; max-height: 400px; object-fit: contain; border-radius: 12px; border: 1px solid #1a365d; }
+        .rock-image { width: 100%; border-radius: 12px; margin-bottom: 0.5rem; border: 1px solid #1a365d; }
+        @media (max-width: 768px) {
+            body { padding: 10px; padding-bottom: 70px; }
+            .slides-container { height: 80vh; border-radius: 20px; }
+            .slide { padding: 1.2rem 1.5rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .nav-arrow { width: 36px; height: 36px; font-size: 1rem; }
+            .nav-arrow-left { left: 8px; }
+            .nav-arrow-right { right: 8px; }
+            .fixed-footer { padding: 0.5rem 1rem; gap: 1rem; }
+            .footer-btn { padding: 0.4rem 1.2rem; font-size: 0.8rem; }
+            .dots-container { bottom: 12px; padding: 4px 10px; }
+            .dot { width: 8px; height: 8px; }
+            .dot.active { width: 18px; }
+            .slide-number { bottom: 12px; right: 16px; font-size: 0.6rem; }
+            .cycle-image { max-height: 250px; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <button class="nav-arrow nav-arrow-left" id="prevBtn"><i class="fas fa-chevron-left"></i></button>
+    <button class="nav-arrow nav-arrow-right" id="nextBtn"><i class="fas fa-chevron-right"></i></button>
+    <div class="dots-container" id="dotsContainer"></div>
+    <div class="slides-wrapper" id="slidesWrapper"></div>
+</div>
+
+<div class="fixed-footer">
+    <button class="footer-btn" id="cursoBtn"><i class="fas fa-book-open"></i> Curso</button>
+    <button class="footer-btn primary" id="ejerciciosBtn"><i class="fas fa-pen-alt"></i> Ejercicios</button>
+</div>
+
+<script>
+    // ================================================================
+    // SLIDES - ROCAS (INFORMACIÓN COMPLETA)
+    // ================================================================
+
+    const slides = [
+
+        // === SLIDE 0: PORTADA ===
+        {
+            title: "Las Rocas",
+            content: `
+                <div style="display:flex; flex-direction:column; justify-content:center; height:100%;">
+                    <div class="badge">Clase 8 - Ciencias Naturales</div>
+                    <h1 style="font-size:3.2rem;">Las Rocas</h1>
+                    <p style="font-size:1.3rem; color:#90cdf4; margin:0.5rem 0;">Tipos de rocas • Ciclo de las rocas • Características</p>
+                    <div style="margin-top:1.5rem; display:flex; gap:1.5rem; flex-wrap:wrap;">
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-gem" style="color:#63b3ed;"></i> Ígneas
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-layer-group" style="color:#63b3ed;"></i> Sedimentarias
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.2rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-bolt" style="color:#63b3ed;"></i> Metamórficas
+                        </div>
+                    </div>
+                    <div style="margin-top:2rem; color:#4a7a9c; font-size:0.9rem;">
+                        <i class="fas fa-arrow-right"></i> Usa las flechas ← → para navegar
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 1: INTRODUCCIÓN A LAS ROCAS ===
+        {
+            title: "🪨 Introducción a las rocas",
+            content: `
+                <div class="badge">Rocas - Introducción</div>
+                <h2>¿Qué son las rocas?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-gem"></i>
+                        <h4>Definición</h4>
+                        <p>Una <span class="highlight">roca</span> es una <span class="highlight">mezcla heterogénea</span> de varios <span class="highlight">minerales</span> que se forma de manera natural.</p>
+                        <p style="margin-top:0.5rem;">Las rocas están compuestas por uno o más minerales y pueden tener diferentes texturas, colores y composiciones químicas.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>Clasificación general</h4>
+                        <p>Según su origen y proceso de formación, las rocas se dividen en <span class="highlight">tres grandes grupos</span>:</p>
+                        <ul>
+                            <li><span class="highlight">Ígneas</span>: Solidificación de magma o lava</li>
+                            <li><span class="highlight">Sedimentarias</span>: Compactación de sedimentos</li>
+                            <li><span class="highlight">Metamórficas</span>: Transformación por presión y calor</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> Las rocas están en <span class="highlight">constante transformación</span> a través del <span class="highlight">ciclo de las rocas</span>, donde un tipo de roca puede convertirse en otro.
+                </div>
+            `
+        },
+
+        // === SLIDE 2: ROCAS ÍGNEAS - INTRODUCCIÓN ===
+        {
+            title: "🔥 Rocas ígneas",
+            content: `
+                <div class="badge">Rocas - Ígneas</div>
+                <h2>¿Qué son las rocas ígneas?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-fire"></i>
+                        <h4>Formación</h4>
+                        <p>Se forman a partir de la <span class="highlight">solidificación del magma</span> en el interior de la Tierra o de la <span class="highlight">lava</span> en la superficie.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-thermometer-half"></i>
+                        <h4>Tipos según enfriamiento</h4>
+                        <ul>
+                            <li><span class="highlight">Intrusivas</span>: Enfriamiento <strong>lento</strong> en el interior → cristales grandes (ej. granito)</li>
+                            <li><span class="highlight">Extrusivas</span>: Enfriamiento <strong>rápido</strong> en la superficie → cristales pequeños o sin cristales (ej. basalto, obsidiana)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Característica:</strong> Las rocas ígneas son las <span class="highlight">más abundantes</span> en la corteza terrestre y constituyen aproximadamente el <span class="highlight">65%</span> de la corteza continental.
+                </div>
+            `
+        },
+
+        // === SLIDE 3: GRANITO ===
+        {
+            title: "🧱 Granito",
+            content: `
+                <div class="badge">Rocas ígneas</div>
+                <h2>Granito</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/Csms4J36/image.png" alt="Granito" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Ígnea intrusiva</li>
+                            <li><span class="highlight">Enfriamiento</span>: Lento en el interior de la Tierra</li>
+                            <li><span class="highlight">Textura</span>: Granular, cristales visibles a simple vista</li>
+                            <li><span class="highlight">Color</span>: Claro (blanco, gris, rosado) por su alto contenido de cuarzo y feldespato</li>
+                            <li><span class="highlight">Composición</span>: Cuarzo, feldespato (ortosa y plagioclasa), mica (biotita o moscovita)</li>
+                            <li><span class="highlight">Dureza</span>: Alta (6-7 en la escala de Mohs)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Es la <span class="highlight">roca más común</span> en la corteza continental</li>
+                            <li>Forma la mayor parte de los <span class="highlight">batolitos</span> (grandes masas de roca ígnea)</li>
+                            <li>Se utiliza ampliamente en <span class="highlight">construcción</span> (encimeras, suelos, monumentos)</li>
+                            <li>Ejemplo famoso: El <span class="highlight">Monte Rushmore</span> en EE.UU. está tallado en granito</li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El granito es <span class="highlight">resistente a la erosión</span>, por eso forma montañas y cerros prominentes.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 4: BASALTO ===
+        {
+            title: "🪨 Basalto",
+            content: `
+                <div class="badge">Rocas ígneas</div>
+                <h2>Basalto</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/WdNPyBq/image.png" alt="Basalto" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Ígnea extrusiva</li>
+                            <li><span class="highlight">Enfriamiento</span>: Rápido en la superficie terrestre</li>
+                            <li><span class="highlight">Textura</span>: Fina, con cristales pequeños que requieren lupa para verse</li>
+                            <li><span class="highlight">Color</span>: Oscuro (negro o gris oscuro) por alto contenido de minerales ferromagnesianos</li>
+                            <li><span class="highlight">Composición</span>: Plagioclasa (calcica), piroxeno, olivino</li>
+                            <li><span class="highlight">Dureza</span>: Moderada (5-6 en la escala de Mohs)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Es la <span class="highlight">roca más común</span> en la <span class="highlight">corteza oceánica</span></li>
+                            <li>Forma el <span class="highlight">fondo de los océanos</span> y las <span class="highlight">dorsales oceánicas</span></li>
+                            <li>También se encuentra en <span class="highlight">islas volcánicas</span> (ej. Hawái, Islandia)</li>
+                            <li>En Chile: Forma parte de la <span class="highlight">Cordillera de la Costa</span> y del fondo marino frente a nuestras costas</li>
+                            <li>Se utiliza en <span class="highlight">construcción</span> como material de relleno y en <span class="highlight">carreteras</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El basalto es la roca <span class="highlight">más voluminosa</span> de la Tierra, formando la mayor parte de la litosfera oceánica.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 5: OBSIDIANA ===
+        {
+            title: "🪨 Obsidiana",
+            content: `
+                <div class="badge">Rocas ígneas</div>
+                <h2>Obsidiana</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/pjK3JJMy/image.png" alt="Obsidiana" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Ígnea extrusiva</li>
+                            <li><span class="highlight">Enfriamiento</span>: Extremadamente rápido (casi instantáneo)</li>
+                            <li><span class="highlight">Textura</span>: Vítrea (vidriosa), <span class="highlight">sin estructura cristalina</span></li>
+                            <li><span class="highlight">Color</span>: Negro, gris oscuro, a veces con bandas o manchas</li>
+                            <li><span class="highlight">Composición</span>: Similar al granito y la riolita (rica en sílice)</li>
+                            <li><span class="highlight">Dureza</span>: 5-5.5 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Es un <span class="highlight">vidrio volcánico</span> natural</li>
+                            <li>Se rompe con <span class="highlight">bordes extremadamente filosos</span> (fractura concoidea)</li>
+                            <li>Fue utilizada por culturas prehistóricas para fabricar <span class="highlight">herramientas</span> y <span class="highlight">armas</span> (puntas de flecha, cuchillos)</li>
+                            <li>Los <span class="highlight">aztecas</span> la llamaban "iztli" y la usaban para hacer cuchillos ceremoniales</li>
+                            <li>En Chile: Se encuentra en zonas volcánicas de la <span class="highlight">Cordillera de los Andes</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato curioso:</strong> La obsidiana se utilizaba en la antigüedad para fabricar <span class="highlight">espejos</span> y objetos decorativos.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 6: SIENITA ===
+        {
+            title: "🪨 Sienita",
+            content: `
+                <div class="badge">Rocas ígneas</div>
+                <h2>Sienita</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/8LyBwgd1/image.png" alt="Sienita" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Ígnea intrusiva</li>
+                            <li><span class="highlight">Enfriamiento</span>: Lento en el interior</li>
+                            <li><span class="highlight">Textura</span>: Granular, cristales visibles a simple vista</li>
+                            <li><span class="highlight">Color</span>: Claro (gris, rosado, rojo) similar al granito</li>
+                            <li><span class="highlight">Composición</span>: Principalmente <span class="highlight">feldespato alcalino</span> (ortosa) con poca o <span class="highlight">ninguna cantidad de cuarzo</span></li>
+                            <li><span class="highlight">Dureza</span>: 6-6.5 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Se diferencia del granito por su <span class="highlight">falta de cuarzo</span> (menos del 5%)</li>
+                            <li>Contiene <span class="highlight">feldespato alcalino</span> (ortosa) y <span class="highlight">anfíboles</span></li>
+                            <li>Es menos común que el granito</li>
+                            <li>Se encuentra en <span class="highlight">intrusiones ígneas</span> asociadas a granitos y dioritas</li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span>, especialmente en la zona central</li>
+                            <li>Se utiliza en <span class="highlight">construcción</span> como piedra ornamental</li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La sienita recibe su nombre de la ciudad de <span class="highlight">Siena</span> (Egipto), donde se extraía en la antigüedad.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 7: PIEDRA PÓMEZ ===
+        {
+            title: "🪨 Piedra Pómez",
+            content: `
+                <div class="badge">Rocas ígneas</div>
+                <h2>Piedra Pómez (Pumita)</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/MkDYhwSM/image.png" alt="Piedra pómez" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Ígnea extrusiva</li>
+                            <li><span class="highlight">Enfriamiento</span>: Rápido con gases atrapados</li>
+                            <li><span class="highlight">Textura</span>: <span class="highlight">Muy porosa</span> (parece una esponja) por la expansión de gases</li>
+                            <li><span class="highlight">Color</span>: Gris, blanco, a veces amarillento</li>
+                            <li><span class="highlight">Composición</span>: Rica en sílice (vidrio volcánico con burbujas)</li>
+                            <li><span class="highlight">Dureza</span>: 6 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li><span class="highlight">Flota en el agua</span> por su baja densidad</li>
+                            <li>Se forma cuando el gas se expande rápidamente dentro de <span class="highlight">lava viscosa</span></li>
+                            <li>Las burbujas quedan atrapadas al solidificarse</li>
+                            <li>Se utiliza en <span class="highlight">cosmética</span> (exfoliantes) y en <span class="highlight">construcción</span> (bloques ligeros)</li>
+                            <li>También se usa para <span class="highlight">lijar</span> y pulir superficies</li>
+                            <li>En Chile: Se encuentra en zonas volcánicas como el <span class="highlight">Complejo Volcánico Puyehue-Cordón Caulle</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato curioso:</strong> La piedra pómez puede <span class="highlight">viajar miles de kilómetros flotando</span> en el océano después de una erupción.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 8: RIOLITA ===
+        {
+            title: "🪨 Riolita",
+            content: `
+                <div class="badge">Rocas ígneas</div>
+                <h2>Riolita</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/VY9wpgwL/image.png" alt="Riolita" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Ígnea extrusiva</li>
+                            <li><span class="highlight">Enfriamiento</span>: Rápido en la superficie</li>
+                            <li><span class="highlight">Textura</span>: Fina o vítrea, a veces con bandas de flujo</li>
+                            <li><span class="highlight">Color</span>: Claro (gris, rosado, amarillento, blanco)</li>
+                            <li><span class="highlight">Composición</span>: Similar al granito (rica en <span class="highlight">sílice</span>), con cuarzo y feldespato</li>
+                            <li><span class="highlight">Dureza</span>: 6-7 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Es la <span class="highlight">equivalente extrusivo</span> del granito</li>
+                            <li>Puede presentar <span class="highlight">estructura fluidal</span> (bandas paralelas) por el flujo de lava</li>
+                            <li>Contiene <span class="highlight">cristales de cuarzo y feldespato</span> en una matriz vítrea</li>
+                            <li>Se encuentra en <span class="highlight">domos de lava</span> y flujos volcánicos</li>
+                            <li>En Chile: Presente en el <span class="highlight">Complejo Volcánico Chaitén</span> y otras zonas volcánicas</li>
+                            <li>Se utiliza en <span class="highlight">construcción</span> y como <span class="highlight">piedra ornamental</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La erupción del <span class="highlight">Chaitén (2008)</span> expulsó grandes cantidades de riolita, formando un domo de lava.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 9: DIORITA ===
+        {
+            title: "🪨 Diorita",
+            content: `
+                <div class="badge">Rocas ígneas</div>
+                <h2>Diorita</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/RkCxYLRB/image.png" alt="Diorita" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Ígnea intrusiva</li>
+                            <li><span class="highlight">Enfriamiento</span>: Lento en el interior</li>
+                            <li><span class="highlight">Textura</span>: Granular, cristales visibles a simple vista</li>
+                            <li><span class="highlight">Color</span>: Gris oscuro a verde oscuro (más oscuro que el granito)</li>
+                            <li><span class="highlight">Composición</span>: Principalmente <span class="highlight">plagioclasa</span> y <span class="highlight">hornblenda</span> (anfíbol)</li>
+                            <li><span class="highlight">Dureza</span>: 6-7 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Es la <span class="highlight">equivalente intrusiva</span> de la andesita</li>
+                            <li>Contiene <span class="highlight">menos cuarzo</span> que el granito (generalmente menos del 5%)</li>
+                            <li>Los minerales oscuros (hornblenda, biotita) le dan su color característico</li>
+                            <li>Se encuentra en <span class="highlight">batolitos</span> y <span class="highlight">stockes</span> asociados a arcos volcánicos</li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span>, especialmente en la zona central</li>
+                            <li>Se utiliza en <span class="highlight">construcción</span> y como <span class="highlight">piedra ornamental</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La diorita fue utilizada por los <span class="highlight">egipcios</span> para tallar estatuas y monumentos.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 10: ROCAS SEDIMENTARIAS - INTRODUCCIÓN ===
+        {
+            title: "🏜️ Rocas sedimentarias",
+            content: `
+                <div class="badge">Rocas - Sedimentarias</div>
+                <h2>¿Qué son las rocas sedimentarias?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-water"></i>
+                        <h4>Formación</h4>
+                        <p>Se forman por la <span class="highlight">compactación y cementación</span> de <span class="highlight">sedimentos</span> que provienen de la erosión de otras rocas.</p>
+                        <p style="margin-top:0.5rem;">El proceso incluye: <span class="highlight">erosión → transporte → sedimentación → compactación</span></p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-layer-group"></i>
+                        <h4>Características</h4>
+                        <ul>
+                            <li>Suelen tener <span class="highlight">capas o estratos</span> visibles</li>
+                            <li>Pueden contener <span class="highlight">fósiles</span></li>
+                            <li>Cubren aproximadamente el <span class="highlight">75%</span> de la superficie terrestre</li>
+                            <li>Son <span class="highlight">más porosas</span> que las rocas ígneas y metamórficas</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> Las rocas sedimentarias son la principal fuente de <span class="highlight">combustibles fósiles</span> (carbón, petróleo, gas natural) y de <span class="highlight">acuíferos</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 11: ARENISCA ===
+        {
+            title: "🪨 Arenisca",
+            content: `
+                <div class="badge">Rocas sedimentarias</div>
+                <h2>Arenisca</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/whf49CxR/image.png" alt="Arenisca" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Sedimentaria detrítica</li>
+                            <li><span class="highlight">Formación</span>: Compactación de <span class="highlight">granos de arena</span></li>
+                            <li><span class="highlight">Textura</span>: Granulosa (se sienten los granos al tacto)</li>
+                            <li><span class="highlight">Color</span>: Gris, castaño, rojo, amarillo, según el cemento y los minerales</li>
+                            <li><span class="highlight">Composición</span>: Principalmente <span class="highlight">cuarzo</span> y <span class="highlight">feldespato</span></li>
+                            <li><span class="highlight">Porosidad</span>: Alta (espacios entre granos)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>El tamaño de los granos es <span class="highlight">0.06 a 2 mm</span></li>
+                            <li>El cemento puede ser de <span class="highlight">sílice, calcita u óxido de hierro</span></li>
+                            <li>Las variedades más comunes incluyen <span class="highlight">cuarcita arenosa</span> y <span class="highlight">arkosa</span></li>
+                            <li>Se utiliza en <span class="highlight">construcción</span> (piedra de sillería) y en la fabricación de <span class="highlight">vidrio</span></li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span> y en la <span class="highlight">Cordillera de la Costa</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La arenisca es una de las rocas más utilizadas en <span class="highlight">arquitectura</span> por su facilidad de tallado.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 12: CALIZA ===
+        {
+            title: "🪨 Caliza",
+            content: `
+                <div class="badge">Rocas sedimentarias</div>
+                <h2>Caliza</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/LDyWjML6/image.png" alt="Caliza" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Sedimentaria química (orgánica)</li>
+                            <li><span class="highlight">Formación</span>: Acumulación de <span class="highlight">carbonato de calcio</span> (CaCO₃) de restos de organismos marinos</li>
+                            <li><span class="highlight">Textura</span>: Fina a cristalina, a veces con fósiles visibles</li>
+                            <li><span class="highlight">Color</span>: Blanco, gris azulado, negro, marrón</li>
+                            <li><span class="highlight">Composición</span>: Principalmente <span class="highlight">calcita</span> (CaCO₃)</li>
+                            <li><span class="highlight">Dureza</span>: 3 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li><span class="highlight">Reacciona con ácidos</span> produciendo efervescencia (CO₂)</li>
+                            <li>Se forma en <span class="highlight">mares cálidos y poco profundos</span></li>
+                            <li>Puede contener <span class="highlight">fósiles</span> de conchas y corales</li>
+                            <li>Se utiliza en <span class="highlight">construcción</span>, <span class="highlight">cemento</span>, <span class="highlight">cal</span> y <span class="highlight">agricultura</span></li>
+                            <li>Es la roca que forma las <span class="highlight">cuevas</span> (estalactitas y estalagmitas)</li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span> y en la zona central</li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El <span class="highlight">mármol</span> es caliza que ha sufrido metamorfismo.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 13: CONGLOMERADO ===
+        {
+            title: "🪨 Conglomerado",
+            content: `
+                <div class="badge">Rocas sedimentarias</div>
+                <h2>Conglomerado</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/jkd34fpM/image.png" alt="Conglomerado" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Sedimentaria detrítica</li>
+                            <li><span class="highlight">Formación</span>: Compactación de <span class="highlight">fragmentos redondeados</span> (guijarros, cantos rodados)</li>
+                            <li><span class="highlight">Textura</span>: <span class="highlight">Fragmentos visibles</span> redondeados incrustados en una matriz</li>
+                            <li><span class="highlight">Color</span>: Variable según los fragmentos (gris, marrón, rojizo)</li>
+                            <li><span class="highlight">Composición</span>: Fragmentos de roca (cuarzo, granito, etc.) y cemento</li>
+                            <li><span class="highlight">Tamaño de fragmentos</span>: > 2 mm</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Los fragmentos son <span class="highlight">redondeados</span> porque han sido transportados por agua durante mucho tiempo</li>
+                            <li>El cemento puede ser de <span class="highlight">sílice, calcita u óxido de hierro</span></li>
+                            <li>Se forma en <span class="highlight">ríos, playas y ambientes de alta energía</span></li>
+                            <li>Se utiliza como <span class="highlight">material de construcción</span> y en <span class="highlight">carreteras</span></li>
+                            <li>En Chile: Presente en depósitos fluviales y en la <span class="highlight">Cordillera de los Andes</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La <span class="highlight">brecha</span> es similar al conglomerado, pero con fragmentos <span class="highlight">angulares</span> (no redondeados).
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 14: BRECHA ===
+        {
+            title: "🪨 Brecha",
+            content: `
+                <div class="badge">Rocas sedimentarias</div>
+                <h2>Brecha</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/4RPgd5vM/image.png" alt="Brecha" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Sedimentaria detrítica</li>
+                            <li><span class="highlight">Formación</span>: Compactación de <span class="highlight">fragmentos angulares</span> (con bordes filosos)</li>
+                            <li><span class="highlight">Textura</span>: <span class="highlight">Fragmentos angulares</span> visibles incrustados en una matriz</li>
+                            <li><span class="highlight">Color</span>: Variable según los fragmentos (gris, marrón, rojizo)</li>
+                            <li><span class="highlight">Composición</span>: Fragmentos de roca (cuarzo, granito, etc.) y cemento</li>
+                            <li><span class="highlight">Tamaño de fragmentos</span>: > 2 mm</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Los fragmentos son <span class="highlight">angulares</span> porque han sido transportados <span class="highlight">poca distancia</span></li>
+                            <li>Puede formarse por <span class="highlight">deslizamientos</span> o por <span class="highlight">actividad volcánica</span> (brecha volcánica)</li>
+                            <li>Se encuentra en <span class="highlight">ambientes de montaña</span> y en <span class="highlight">fallas geológicas</span></li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span> y en zonas de fallas tectónicas</li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La <span class="highlight">brecha de falla</span> se forma por la fricción de rocas a lo largo de una falla geológica.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 15: LUTITA ===
+        {
+            title: "🪨 Lutita",
+            content: `
+                <div class="badge">Rocas sedimentarias</div>
+                <h2>Lutita</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/CK3kdbfF/image.png" alt="Lutita" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Sedimentaria detrítica</li>
+                            <li><span class="highlight">Formación</span>: Compactación de <span class="highlight">arcilla</span> y <span class="highlight">limo</span></li>
+                            <li><span class="highlight">Textura</span>: <span class="highlight">Grano muy fino</span>, suave al tacto (no se sienten los granos)</li>
+                            <li><span class="highlight">Color</span>: Gris oscuro, negro, a veces marrón o rojizo</li>
+                            <li><span class="highlight">Composición</span>: Minerales arcillosos (caolinita, illita), cuarzo fino</li>
+                            <li><span class="highlight">Dureza</span>: Baja (1-2 en la escala de Mohs)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Se <span class="highlight">parte en láminas delgadas</span> (fisibilidad)</li>
+                            <li>Es la <span class="highlight">roca sedimentaria más abundante</span></li>
+                            <li>Se forma en <span class="highlight">ambientes tranquilos</span> (lagos, fondos marinos profundos)</li>
+                            <li>Puede contener <span class="highlight">fósiles</span> bien conservados</li>
+                            <li>Es el material de partida para la formación del <span class="highlight">esquisto</span> (metamorfismo)</li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span> y en la zona central</li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> Las lutitas son la roca <span class="highlight">más común</span> en los depósitos sedimentarios del mundo.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 16: TOBA VOLCÁNICA ===
+        {
+            title: "🪨 Toba volcánica",
+            content: `
+                <div class="badge">Rocas sedimentarias</div>
+                <h2>Toba volcánica</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/279RjSqY/image.png" alt="Toba volcánica" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Sedimentaria piroclástica</li>
+                            <li><span class="highlight">Formación</span>: Compactación de <span class="highlight">ceniza volcánica</span> y fragmentos expulsados</li>
+                            <li><span class="highlight">Textura</span>: Porosa, ligera, con fragmentos visibles de <span class="highlight">pómez y ceniza</span></li>
+                            <li><span class="highlight">Color</span>: Gris, marrón claro, a veces blanco</li>
+                            <li><span class="highlight">Composición</span>: Fragmentos de vidrio volcánico, pómez, minerales</li>
+                            <li><span class="highlight">Dureza</span>: Baja a moderada (variable)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Se forma a partir de <span class="highlight">cenizas volcánicas</span> expulsadas durante erupciones</li>
+                            <li>Los fragmentos se <span class="highlight">compactan y cementan</span> con el tiempo</li>
+                            <li>Puede contener <span class="highlight">cristales</span> de cuarzo, feldespato y mica</li>
+                            <li>Se utiliza en <span class="highlight">construcción</span> (bloques ligeros) y como <span class="highlight">material de filtración</span></li>
+                            <li>En Chile: Presente en zonas volcánicas activas como <span class="highlight">Villarrica, Llaima y Chaitén</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La toba volcánica es la roca que forma la <span class="highlight">ciudad de Roma</span> (el Tufo romano).
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 17: ROCAS METAMÓRFICAS - INTRODUCCIÓN ===
+        {
+            title: "⚡ Rocas metamórficas",
+            content: `
+                <div class="badge">Rocas - Metamórficas</div>
+                <h2>¿Qué son las rocas metamórficas?</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-bolt"></i>
+                        <h4>Formación</h4>
+                        <p>Se forman a partir de <span class="highlight">cualquier tipo de roca</span> que experimenta un <span class="highlight">incremento de presión y/o temperatura</span> en el interior de la Tierra.</p>
+                        <p style="margin-top:0.5rem;">A diferencia de las rocas ígneas, las metamórficas <span class="highlight">no experimentan fusión</span> durante su transformación.</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-thermometer-half"></i>
+                        <h4>Tipos de metamorfismo</h4>
+                        <ul>
+                            <li><span class="highlight">Metamorfismo de contacto</span>: Calor de magma cercano</li>
+                            <li><span class="highlight">Metamorfismo regional</span>: Grandes áreas por presión y calor (formación de montañas)</li>
+                            <li><span class="highlight">Metamorfismo de impacto</span>: Por impacto de meteoritos</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> Las rocas metamórficas suelen tener <span class="highlight">foliación</span> (bandas o láminas) debido a la orientación de los minerales bajo presión.
+                </div>
+            `
+        },
+
+        // === SLIDE 18: MÁRMOL ===
+        {
+            title: "🪨 Mármol",
+            content: `
+                <div class="badge">Rocas metamórficas</div>
+                <h2>Mármol</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/fzbW6qn2/image.png" alt="Mármol" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Metamórfica (metamorfismo de la <span class="highlight">caliza</span>)</li>
+                            <li><span class="highlight">Formación</span>: Caliza expuesta a <span class="highlight">calor y presión</span></li>
+                            <li><span class="highlight">Textura</span>: Compacta, cristalina, con cristales de calcita visibles</li>
+                            <li><span class="highlight">Color</span>: Blanco, traslúcido, con vetas de colores (gris, rosa, verde, negro)</li>
+                            <li><span class="highlight">Composición</span>: <span class="highlight">Calcita</span> (CaCO₃) recristalizada</li>
+                            <li><span class="highlight">Dureza</span>: 3-4 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Es <span class="highlight">muy utilizado en escultura y arquitectura</span> (estatuas, columnas, revestimientos)</li>
+                            <li>Reacciona con ácidos (como la caliza)</li>
+                            <li>Las vetas de colores se deben a <span class="highlight">impurezas</span> (arcilla, óxidos de hierro)</li>
+                            <li>El <span class="highlight">mármol de Carrara</span> (Italia) es uno de los más famosos del mundo</li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span> (ej. Mármol de Calama)</li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El <span class="highlight">David de Miguel Ángel</span> está tallado en mármol de Carrara.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 19: ESQUISTO ===
+        {
+            title: "🪨 Esquisto",
+            content: `
+                <div class="badge">Rocas metamórficas</div>
+                <h2>Esquisto</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/3YzFG57d/image.png" alt="Esquisto" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Metamórfica (metamorfismo de <span class="highlight">lutita</span> o arcilla)</li>
+                            <li><span class="highlight">Formación</span>: Lutita expuesta a <span class="highlight">calor y presión</span> moderados a altos</li>
+                            <li><span class="highlight">Textura</span>: <span class="highlight">Láminas o escamas</span> que se pueden separar fácilmente (foliación pronunciada)</li>
+                            <li><span class="highlight">Color</span>: Variado (verde, gris, negro, rojo, plateado)</li>
+                            <li><span class="highlight">Composición</span>: Mica (biotita, moscovita), cuarzo, granate, estaurolita</li>
+                            <li><span class="highlight">Dureza</span>: 3-5 en la escala de Mohs (variable)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Presenta <span class="highlight">brillo micáceo</span> debido a la mica</li>
+                            <li>Los minerales están <span class="highlight">orientados en capas paralelas</span></li>
+                            <li>Puede contener <span class="highlight">porfiroblastos</span> (cristales grandes como granate)</li>
+                            <li>Se utiliza en <span class="highlight">construcción</span> (pizarras) y como <span class="highlight">piedra ornamental</span></li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span> y en la <span class="highlight">Cordillera de la Costa</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El esquisto es la roca metamórfica <span class="highlight">más común</span> en las zonas de subducción.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 20: GNEIS ===
+        {
+            title: "🪨 Gneis",
+            content: `
+                <div class="badge">Rocas metamórficas</div>
+                <h2>Gneis</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/pr9tDjjB/image.png" alt="Gneis" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Metamórfica (metamorfismo de <span class="highlight">granito</span> o rocas ígneas)</li>
+                            <li><span class="highlight">Formación</span>: Alto grado de metamorfismo (alta presión y temperatura)</li>
+                            <li><span class="highlight">Textura</span>: <span class="highlight">Bandas alternadas</span> de minerales claros y oscuros</li>
+                            <li><span class="highlight">Color</span>: Gris, rosado, blanco con bandas oscuras</li>
+                            <li><span class="highlight">Composición</span>: Cuarzo, feldespato, mica (bandeados)</li>
+                            <li><span class="highlight">Dureza</span>: 6-7 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Las bandas se forman por la <span class="highlight">separación de minerales</span> durante el metamorfismo</li>
+                            <li>Las bandas claras son de <span class="highlight">cuarzo y feldespato</span></li>
+                            <li>Las bandas oscuras son de <span class="highlight">mica y anfíboles</span></li>
+                            <li>Es una roca <span class="highlight">muy resistente</span> a la erosión</li>
+                            <li>Se utiliza en <span class="highlight">construcción</span> y como <span class="highlight">piedra ornamental</span></li>
+                            <li>En Chile: Presente en el <span class="highlight">basamento cristalino</span> de la Cordillera de los Andes</li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> El gneis es una de las rocas <span class="highlight">más antiguas</span> de la Tierra, con más de <span class="highlight">3.000 millones de años</span>.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 21: CUARCITA ===
+        {
+            title: "🪨 Cuarcita",
+            content: `
+                <div class="badge">Rocas metamórficas</div>
+                <h2>Cuarcita</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/RT23TsM9/image.png" alt="Cuarcita" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Metamórfica (metamorfismo de la <span class="highlight">arenisca</span>)</li>
+                            <li><span class="highlight">Formación</span>: Arenisca expuesta a <span class="highlight">calor y presión</span></li>
+                            <li><span class="highlight">Textura</span>: Compacta, <span class="highlight">muy dura</span>, los granos de arena se fusionan</li>
+                            <li><span class="highlight">Color</span>: Blanco, gris claro, a veces rojizo</li>
+                            <li><span class="highlight">Composición</span>: <span class="highlight">Cuarzo</span> (SiO₂) casi puro</li>
+                            <li><span class="highlight">Dureza</span>: 7 en la escala de Mohs (muy dura)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Es <span class="highlight">extremadamente dura y resistente</span></li>
+                            <li>Se rompe a través de los <span class="highlight">granos de arena</span> (no entre ellos)</li>
+                            <li>No reacciona con ácidos</li>
+                            <li>Se utiliza como <span class="highlight">piedra de construcción</span> y para fabricar <span class="highlight">vidrio</span></li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span> y en el <span class="highlight">Desierto de Atacama</span></li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La cuarcita es más dura que el <span class="highlight">acero</span> y se utiliza para fabricar <span class="highlight">herramientas de corte</span>.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 22: PIZARRA ===
+        {
+            title: "🪨 Pizarra",
+            content: `
+                <div class="badge">Rocas metamórficas</div>
+                <h2>Pizarra</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/5hj8XwJ4/image.png" alt="Pizarra" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Metamórfica (metamorfismo de <span class="highlight">lutita</span> de bajo grado)</li>
+                            <li><span class="highlight">Formación</span>: Lutita expuesta a <span class="highlight">baja presión y temperatura</span></li>
+                            <li><span class="highlight">Textura</span>: <span class="highlight">Se parte en láminas delgadas y planas</span> (pizarrosidad)</li>
+                            <li><span class="highlight">Color</span>: Gris oscuro, negro, a veces verde o púrpura</li>
+                            <li><span class="highlight">Composición</span>: Arcilla metamorfizada (mica, cuarzo fino)</li>
+                            <li><span class="highlight">Dureza</span>: 2-3 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Se utiliza tradicionalmente en <span class="highlight">techos de casas</span> (pizarras para tejados)</li>
+                            <li>También se usa para fabricar <span class="highlight">pizarras escolares</span> (de ahí su nombre)</li>
+                            <li>Es <span class="highlight">resistente a la intemperie</span> y al agua</li>
+                            <li>El color oscuro se debe a la presencia de <span class="highlight">materia orgánica</span> o sulfuros</li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span> y en la zona central</li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La pizarra se utiliza desde la <span class="highlight">Edad Media</span> para techos de iglesias y castillos.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 23: SERPENTINITA ===
+        {
+            title: "🪨 Serpentinita",
+            content: `
+                <div class="badge">Rocas metamórficas</div>
+                <h2>Serpentinita</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <img src="https://i.ibb.co/HfbYJQrb/image.png" alt="Serpentinita" class="rock-image">
+                        <h4>Características</h4>
+                        <ul>
+                            <li><span class="highlight">Tipo</span>: Metamórfica (metamorfismo del <span class="highlight">manto</span>)</li>
+                            <li><span class="highlight">Formación</span>: Metamorfismo de <span class="highlight">peridotita</span> (roca del manto) con agua</li>
+                            <li><span class="highlight">Textura</span>: Masiva, a veces fibrosa o escamosa, textura cerosa</li>
+                            <li><span class="highlight">Color</span>: <span class="highlight">Verde oscuro</span>, verde oliva, a veces negro con vetas</li>
+                            <li><span class="highlight">Composición</span>: <span class="highlight">Serpentina</span> (mineral hidratado de magnesio y silicio)</li>
+                            <li><span class="highlight">Dureza</span>: 3-5 en la escala de Mohs</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Información adicional</h4>
+                        <ul>
+                            <li>Se forma en <span class="highlight">zonas de subducción</span> donde rocas del manto se hidratan</li>
+                            <li>Es la roca <span class="highlight">oficial de California</span> (EE.UU.)</li>
+                            <li>Tiene un aspecto <span class="highlight">ceroso o grasoso</span></li>
+                            <li>A veces se utiliza como <span class="highlight">piedra ornamental</span></li>
+                            <li>En Chile: Presente en la <span class="highlight">Cordillera de los Andes</span>, especialmente en zonas de ofiolitas</li>
+                        </ul>
+                        <div class="info-box" style="margin-top:0.5rem;">
+                            <i class="fas fa-lightbulb"></i> <strong>Dato:</strong> La serpentinita se forma por la <span class="highlight">interacción de rocas del manto con agua</span>, un proceso clave en las zonas de subducción.
+                        </div>
+                    </div>
+                </div>
+            `
+        },
+
+        // === SLIDE 24: TABLA RESUMEN DE TIPOS DE ROCAS ===
+        {
+            title: "📊 Tabla resumen de tipos de rocas",
+            content: `
+                <div class="badge">Rocas - Resumen</div>
+                <h2>Tabla comparativa de tipos de rocas</h2>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Característica</th>
+                            <th>Ígneas</th>
+                            <th>Sedimentarias</th>
+                            <th>Metamórficas</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Origen</strong></td>
+                            <td>Solidificación de magma o lava</td>
+                            <td>Compactación de sedimentos</td>
+                            <td>Transformación por presión y calor</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Proceso</strong></td>
+                            <td>Enfriamiento y cristalización</td>
+                            <td>Erosión → Transporte → Sedimentación → Compactación</td>
+                            <td>Recristalización sin fusión</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Textura</strong></td>
+                            <td>Granular (cristales) o vítrea</td>
+                            <td>Clástica (fragmentos) o química</td>
+                            <td>Foliada (bandas) o no foliada</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fósiles</strong></td>
+                            <td>No contienen fósiles</td>
+                            <td><span class="highlight">Sí contienen fósiles</span></td>
+                            <td>Generalmente no contienen fósiles</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Porosidad</strong></td>
+                            <td>Baja (poco porosa)</td>
+                            <td><span class="highlight">Alta</span> (muy porosa)</td>
+                            <td>Media a baja</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ejemplos</strong></td>
+                            <td>Granito, Basalto, Obsidiana</td>
+                            <td>Arenisca, Caliza, Conglomerado</td>
+                            <td>Mármol, Esquisto, Gneis</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dureza</strong></td>
+                            <td>Alta (6-7 en Mohs)</td>
+                            <td>Baja a media (1-5 en Mohs)</td>
+                            <td>Media a alta (3-7 en Mohs)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Porcentaje de la corteza</strong></td>
+                            <td><span class="highlight">65%</span> (corteza continental)</td>
+                            <td><span class="highlight">75%</span> (superficie)</td>
+                            <td>Variable</td>
+                        </tr>
+                    </tbody>
+                </table>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Idea clave:</strong> Las rocas pueden <span class="highlight">transformarse de un tipo a otro</span> a través del <span class="highlight">ciclo de las rocas</span>.
+                </div>
+            `
+        },
+
+        // === SLIDE 25: CICLO DE LAS ROCAS - DIAGRAMA ===
+        {
+            title: "🔄 Ciclo de las rocas",
+            content: `
+                <div class="badge">Rocas - Ciclo</div>
+                <h2>El ciclo de las rocas</h2>
+                <div style="text-align:center; margin:0.8rem 0;">
+                    <img src="https://i.ibb.co/gFJKVjF3/image.png" alt="Ciclo de las rocas" class="cycle-image">
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Idea central:</strong> El ciclo de las rocas muestra cómo las rocas se <span class="highlight">transforman constantemente</span> de un tipo a otro a través de procesos geológicos.
+                </div>
+            `
+        },
+
+        // === SLIDE 26: CICLO DE LAS ROCAS - EXPLICACIÓN ===
+        {
+            title: "🔄 Ciclo de las rocas - Explicación",
+            content: `
+                <div class="badge">Rocas - Ciclo</div>
+                <h2>Explicación del ciclo de las rocas</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Roca ígnea → Sedimentaria</h4>
+                        <ul>
+                            <li><span class="highlight">Erosión</span> y <span class="highlight">meteorización</span> desgastan la roca</li>
+                            <li>Los fragmentos son <span class="highlight">transportados</span> por agua, viento o hielo</li>
+                            <li>Los sedimentos se <span class="highlight">depositan</span> y <span class="highlight">compactan</span></li>
+                            <li>Se forma <span class="highlight">roca sedimentaria</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Roca sedimentaria → Metamórfica</h4>
+                        <ul>
+                            <li>La roca sedimentaria es <span class="highlight">enterrada</span> a gran profundidad</li>
+                            <li>Experimenta <span class="highlight">alta presión y temperatura</span></li>
+                            <li>Los minerales <span class="highlight">recristalizan</span> sin fundirse</li>
+                            <li>Se forma <span class="highlight">roca metamórfica</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Roca metamórfica → Ígnea</h4>
+                        <ul>
+                            <li>La roca metamórfica se <span class="highlight">funde</span> por temperaturas extremas</li>
+                            <li>Se convierte en <span class="highlight">magma</span></li>
+                            <li>El magma <span class="highlight">asciende</span> y se enfría</li>
+                            <li>Se forma <span class="highlight">roca ígnea</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-arrow-up"></i>
+                        <h4>Roca ígnea → Metamórfica</h4>
+                        <ul>
+                            <li>La roca ígnea es <span class="highlight">enterrada</span> a gran profundidad</li>
+                            <li>Experimenta <span class="highlight">presión y temperatura</span></li>
+                            <li>Los minerales <span class="highlight">recristalizan</span> sin fundirse</li>
+                            <li>Se forma <span class="highlight">roca metamórfica</span></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Importante:</strong> El ciclo de las rocas <span class="highlight">no sigue un orden fijo</span>. Una roca puede transformarse directamente en otro tipo sin pasar por los pasos intermedios.
+                </div>
+            `
+        },
+
+        // === SLIDE 27: CICLO DE LAS ROCAS - EJEMPLOS ===
+        {
+            title: "🔄 Ciclo de las rocas - Ejemplos",
+            content: `
+                <div class="badge">Rocas - Ciclo</div>
+                <h2>Ejemplos de transformaciones en el ciclo de las rocas</h2>
+                <div class="grid-2">
+                    <div class="card">
+                        <h4>Granito → Arenisca → Cuarcita</h4>
+                        <ul>
+                            <li><span class="highlight">Granito</span> (ígnea) se erosiona</li>
+                            <li>Los granos de cuarzo forman <span class="highlight">arenisca</span> (sedimentaria)</li>
+                            <li>La arenisca se metamorfiza en <span class="highlight">cuarcita</span> (metamórfica)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Caliza → Mármol</h4>
+                        <ul>
+                            <li><span class="highlight">Caliza</span> (sedimentaria) se entierra</li>
+                            <li>Calor y presión la transforman en <span class="highlight">mármol</span> (metamórfico)</li>
+                            <li>Si el mármol se funde, forma <span class="highlight">magma</span> y luego <span class="highlight">granito</span></li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Basalto → Esquisto → Gneis</h4>
+                        <ul>
+                            <li><span class="highlight">Basalto</span> (ígnea) se metamorfiza</li>
+                            <li>Primero forma <span class="highlight">esquisto</span> (metamórfico)</li>
+                            <li>Más presión y calor lo transforman en <span class="highlight">gneis</span> (metamórfico)</li>
+                        </ul>
+                    </div>
+                    <div class="card">
+                        <h4>Lutita → Pizarra → Esquisto</h4>
+                        <ul>
+                            <li><span class="highlight">Lutita</span> (sedimentaria) se entierra</li>
+                            <li>Bajo presión forma <span class="highlight">pizarra</span> (metamórfica)</li>
+                            <li>Más presión y calor forman <span class="highlight">esquisto</span> (metamórfico)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-box">
+                    <i class="fas fa-lightbulb"></i> <strong>Dato clave:</strong> El ciclo de las rocas puede tardar <span class="highlight">millones de años</span> en completarse.
+                </div>
+            `
+        },
+
+        // === SLIDE 28: CIERRE ===
+        {
+            title: "🎯 ¡Clase completada!",
+            content: `
+                <div style="display:flex; flex-direction:column; justify-content:center; align-items:center; height:100%; text-align:center;">
+                    <div class="badge">Clase 8 - Completada</div>
+                    <h1 style="font-size:2.8rem;">🎯 ¡Has completado la clase!</h1>
+                    <p style="font-size:1.2rem; color:#90cdf4; margin:1rem 0;">Las Rocas</p>
+                    <div style="display:flex; gap:2rem; flex-wrap:wrap; justify-content:center; margin:1.5rem 0;">
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.5rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-check-circle" style="color:#63b3ed;"></i> 28 slides de contenido
+                        </div>
+                        <div style="background:rgba(26,54,93,0.5); padding:0.5rem 1.5rem; border-radius:30px; border:1px solid #1a365d;">
+                            <i class="fas fa-gem" style="color:#63b3ed;"></i> Rocas ígneas, sedimentarias y metamórficas
+                        </div>
+                    </div>
+                    <p style="color:#4a7a9c; font-size:0.9rem;">Presiona <span class="highlight">"Ejercicios"</span> para poner a prueba tus conocimientos.</p>
+                </div>
+            `
+        }
+    ];
+
+    // ================================================================
+    // LÓGICA DE NAVEGACIÓN
+    // ================================================================
+
+    let currentSlide = 0;
+    const totalSlides = slides.length;
+
+    function renderSlides() {
+        const wrapper = document.getElementById('slidesWrapper');
+        wrapper.innerHTML = '';
+        slides.forEach((slide, index) => {
+            const div = document.createElement('div');
+            div.className = 'slide';
+            if (index === 0) div.classList.add('active');
+            div.setAttribute('data-index', index);
+            div.innerHTML = `
+                ${slide.content}
+                <div class="slide-number">${index + 1} / ${totalSlides}</div>
+            `;
+            wrapper.appendChild(div);
+        });
+        updateDots();
+        updateButtons();
+    }
+
+    function updateDots() {
+        const container = document.getElementById('dotsContainer');
+        container.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot';
+            if (i === currentSlide) dot.classList.add('active');
+            dot.addEventListener('click', () => goToSlide(i));
+            container.appendChild(dot);
+        }
+    }
+
+    function updateButtons() {
+        document.getElementById('prevBtn').disabled = currentSlide === 0;
+        document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+    }
+
+    function goToSlide(index) {
+        if (index < 0 || index >= totalSlides) return;
+        currentSlide = index;
+        const slidesElements = document.querySelectorAll('.slide');
+        slidesElements.forEach((slide, i) => {
+            slide.classList.toggle('active', i === currentSlide);
+        });
+        updateDots();
+        updateButtons();
+    }
+
+    function nextSlide() {
+        if (currentSlide < totalSlides - 1) goToSlide(currentSlide + 1);
+    }
+
+    function prevSlide() {
+        if (currentSlide > 0) goToSlide(currentSlide - 1);
+    }
+
+    document.getElementById('prevBtn').addEventListener('click', prevSlide);
+    document.getElementById('nextBtn').addEventListener('click', nextSlide);
+
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+    });
+
+    document.getElementById('cursoBtn').addEventListener('click', () => {
+        window.location.href = 'Fisica.html';
+    });
+
+    document.getElementById('ejerciciosBtn').addEventListener('click', () => {
+        window.location.href = 'C_8A_Fisica.html';
+    });
+
+    renderSlides();
+</script>
+
+</body>
+</html>

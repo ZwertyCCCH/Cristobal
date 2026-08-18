@@ -1,0 +1,1819 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ejercicios: Rocas | Ciencias 7°</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #0a1628;
+            color: #e2e8f0;
+            padding: 2rem;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #0d1b2a;
+            border-radius: 28px;
+            padding: 2rem;
+            border: 1px solid #1a365d;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.6);
+        }
+        .header {
+            text-align: center;
+            padding-bottom: 1.5rem;
+            border-bottom: 2px solid #1a365d;
+            margin-bottom: 1.5rem;
+        }
+        .header h1 { font-size: 2.2rem; color: #90cdf4; margin-bottom: 0.3rem; }
+        .header .subtitle { color: #4a7a9c; font-size: 0.9rem; }
+        .header .badge {
+            display: inline-block;
+            background: #2b6cb0;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.5px;
+        }
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(26,54,93,0.4);
+            padding: 0.8rem 1.5rem;
+            border-radius: 16px;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            border: 1px solid #1a365d;
+        }
+        .info-bar span { color: #90cdf4; font-weight: 600; }
+        .info-bar .highlight-info { color: #63b3ed; }
+        .section {
+            background: rgba(26,54,93,0.2);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 4px solid #2b6cb0;
+        }
+        .section-title {
+            font-size: 1.2rem;
+            color: #90cdf4;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+        }
+        .question-card {
+            background: rgba(26,54,93,0.3);
+            border-radius: 16px;
+            padding: 1.2rem 1.5rem;
+            margin-bottom: 1rem;
+            border: 1px solid #1a365d;
+            transition: all 0.3s ease;
+        }
+        .question-card:hover { border-color: #2b6cb0; }
+        .question-card.correct { border-left: 5px solid #22c55e; background: rgba(34,197,94,0.1); }
+        .question-card.incorrect { border-left: 5px solid #ef4444; background: rgba(239,68,68,0.1); }
+        .question-number {
+            font-size: 0.75rem;
+            color: #4a7a9c;
+            margin-bottom: 0.3rem;
+        }
+        .question-text {
+            font-size: 1rem;
+            font-weight: 500;
+            margin-bottom: 0.8rem;
+            color: #e2e8f0;
+            line-height: 1.5;
+        }
+        .options {
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            padding-left: 0.5rem;
+        }
+        .options label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            transition: all 0.2s ease;
+            color: #cbd5e1;
+            font-size: 0.9rem;
+        }
+        .options label:hover { background: rgba(43,108,176,0.2); }
+        .options input[type="radio"] {
+            accent-color: #2b6cb0;
+            transform: scale(1.1);
+            flex-shrink: 0;
+        }
+        .options input[type="radio"]:disabled {
+            accent-color: #4a7a9c;
+            cursor: not-allowed;
+        }
+        .feedback-text {
+            margin-top: 0.6rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            display: none;
+        }
+        .feedback-text.show { display: block; }
+        .feedback-text.correct-fb {
+            background: rgba(34,197,94,0.15);
+            color: #8bc34a;
+            border-left: 3px solid #22c55e;
+        }
+        .feedback-text.incorrect-fb {
+            background: rgba(239,68,68,0.15);
+            color: #ff8a80;
+            border-left: 3px solid #ef4444;
+        }
+        .respuesta-marcada {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            margin-top: 0.3rem;
+            padding: 0.3rem 0.6rem;
+            background: rgba(26,54,93,0.3);
+            border-radius: 8px;
+            display: inline-block;
+        }
+        .vf-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            max-width: 400px;
+            margin: 0.5rem 0;
+        }
+        .vf-btn {
+            background: rgba(26,54,93,0.4);
+            border: 2px solid #1a365d;
+            border-radius: 12px;
+            padding: 0.6rem 1rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.95rem;
+            text-align: center;
+            font-weight: 600;
+            color: #cbd5e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .vf-btn:hover:not(.disabled) { background: rgba(43,108,176,0.3); border-color: #2b6cb0; }
+        .vf-btn.selected-v { background: #22c55e; border-color: #22c55e; color: white; }
+        .vf-btn.selected-f { background: #ef4444; border-color: #ef4444; color: white; }
+        .vf-btn.correct-answer { background: #22c55e; border-color: #22c55e; color: white; }
+        .vf-btn.wrong-answer { background: #ef4444; border-color: #ef4444; color: white; }
+        .vf-btn.disabled { cursor: default; opacity: 0.7; }
+        .correcciones-container {
+            margin-top: 0.8rem;
+            padding: 0.8rem;
+            background: rgba(26,54,93,0.2);
+            border-radius: 12px;
+            border: 1px solid #1a365d;
+            display: none;
+        }
+        .correcciones-container.visible { display: block; }
+        .correcciones-container .label {
+            font-weight: 600;
+            color: #90cdf4;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+        }
+        .correcciones-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+        .corr-btn {
+            background: rgba(26,54,93,0.3);
+            border: 2px solid #1a365d;
+            border-radius: 10px;
+            padding: 0.5rem 0.8rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 0.9rem;
+            text-align: left;
+            color: #cbd5e1;
+            font-family: 'Inter', sans-serif;
+        }
+        .corr-btn:hover:not(.disabled) { background: rgba(43,108,176,0.2); border-color: #2b6cb0; }
+        .corr-btn.selected { background: #2b6cb0; border-color: #2b6cb0; color: white; }
+        .corr-btn.correct-answer { background: #22c55e; border-color: #22c55e; color: white; }
+        .corr-btn.wrong-answer { background: #ef4444; border-color: #ef4444; color: white; }
+        .corr-btn.disabled { cursor: default; opacity: 0.7; }
+
+        /* ===== IDENTIFICACIÓN DE ROCAS - ESTILOS CON INPUTS ===== */
+        .rock-item {
+            background: rgba(26,54,93,0.3);
+            border-radius: 16px;
+            padding: 1.2rem;
+            border: 1px solid #1a365d;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+        .rock-item:hover { border-color: #2b6cb0; }
+        .rock-item.correct { border-left: 5px solid #22c55e; background: rgba(34,197,94,0.1); }
+        .rock-item.incorrect { border-left: 5px solid #ef4444; background: rgba(239,68,68,0.1); }
+        .rock-item img {
+            max-width: 100%;
+            max-height: 200px;
+            border-radius: 12px;
+            border: 1px solid #1a365d;
+            margin-bottom: 0.8rem;
+            object-fit: contain;
+            background: #0d1b2a;
+        }
+        .rock-inputs {
+            width: 100%;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+        .rock-input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+        }
+        .rock-input-group label {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: #90cdf4;
+        }
+        .rock-input-group input {
+            background: rgba(13,27,42,0.6);
+            border: 2px solid #1a365d;
+            border-radius: 10px;
+            padding: 0.6rem 0.8rem;
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            font-family: 'Inter', sans-serif;
+            transition: border-color 0.3s;
+            width: 100%;
+        }
+        .rock-input-group input:focus {
+            outline: none;
+            border-color: #2b6cb0;
+        }
+        .rock-input-group input:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+        .rock-input-group input.correct-input {
+            border-color: #22c55e;
+            background: rgba(34,197,94,0.1);
+        }
+        .rock-input-group input.incorrect-input {
+            border-color: #ef4444;
+            background: rgba(239,68,68,0.1);
+        }
+        .rock-feedback {
+            grid-column: 1 / -1;
+            margin-top: 0.5rem;
+            padding: 0.5rem 0.8rem;
+            border-radius: 10px;
+            font-size: 0.85rem;
+            display: none;
+        }
+        .rock-feedback.show { display: block; }
+        .rock-feedback.correct-fb {
+            background: rgba(34,197,94,0.15);
+            color: #8bc34a;
+            border-left: 3px solid #22c55e;
+        }
+        .rock-feedback.incorrect-fb {
+            background: rgba(239,68,68,0.15);
+            color: #ff8a80;
+            border-left: 3px solid #ef4444;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 280px;
+            margin: 1.5rem auto;
+            background: #2b6cb0;
+            color: white;
+            border: none;
+            padding: 0.9rem;
+            border-radius: 30px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-evaluate:hover { background: #3182ce; transform: translateY(-2px); }
+        .btn-evaluate:disabled {
+            background: #4a7a9c;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .results {
+            background: rgba(26,54,93,0.5);
+            border-radius: 20px;
+            padding: 1.5rem 2rem;
+            margin-top: 1.5rem;
+            border: 2px solid #2b6cb0;
+            display: none;
+        }
+        .results h3 {
+            color: #90cdf4;
+            font-size: 1.6rem;
+            text-align: center;
+            margin-bottom: 0.5rem;
+        }
+        .results .score {
+            font-size: 1.3rem;
+            text-align: center;
+            margin: 0.5rem 0;
+        }
+        .results .grade {
+            font-size: 2rem;
+            text-align: center;
+            padding: 0.5rem;
+            border-radius: 16px;
+            font-weight: bold;
+        }
+        .results .grade.approved {
+            background: rgba(34,197,94,0.2);
+            color: #8bc34a;
+        }
+        .results .grade.failed {
+            background: rgba(239,68,68,0.2);
+            color: #ff8a80;
+        }
+        .results .details {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin: 0.8rem 0;
+            font-size: 0.9rem;
+            color: #94a3b8;
+        }
+        .results .details span { color: #e2e8f0; }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+        }
+        .btn {
+            padding: 0.6rem 1.8rem;
+            border-radius: 30px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+        }
+        .btn-primary { background: #facc15; color: #0a1628; }
+        .btn-primary:hover { background: #fde047; transform: translateY(-2px); }
+        .btn-secondary { background: #2b6cb0; color: white; }
+        .btn-secondary:hover { background: #3182ce; transform: translateY(-2px); }
+        .btn-outline { background: transparent; border: 2px solid #2b6cb0; color: #90cdf4; }
+        .btn-outline:hover { background: #2b6cb0; color: white; transform: translateY(-2px); }
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #4a7a9c;
+        }
+
+        @media (max-width: 768px) {
+            body { padding: 1rem; }
+            .container { padding: 1rem; }
+            .header h1 { font-size: 1.5rem; }
+            .info-bar { font-size: 0.75rem; padding: 0.5rem 1rem; }
+            .question-text { font-size: 0.9rem; }
+            .options label { font-size: 0.8rem; }
+            .btn-evaluate { width: 100%; }
+            .results { padding: 1rem; }
+            .results .grade { font-size: 1.5rem; }
+            .vf-grid { max-width: 100%; }
+            .rock-inputs { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="header">
+        <div class="badge">Ejercicios - Clase 8</div>
+        <h1>🪨 Ejercicios: Rocas</h1>
+        <div class="subtitle">7° Básico | Ciencias Naturales | Preguntas aleatorias</div>
+    </div>
+
+    <div class="info-bar">
+        <span>📋 <span class="highlight-info" id="totalQuestions">30</span> preguntas</span>
+        <span>✅ Exigencia: <span class="highlight-info">60%</span> (nota 4.0)</span>
+        <span>🎯 Nota máxima: <span class="highlight-info">7.0</span></span>
+        <span>📝 <span class="highlight-info" id="answeredCount">0</span> respondidas</span>
+    </div>
+
+    <div id="examContent"></div>
+
+    <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar Respuestas</button>
+
+    <div id="results" class="results"></div>
+
+    <div class="footer">Basado en la Clase 8: Rocas</div>
+</div>
+
+<script>
+    // ================================================================
+    // POOL DE ROCAS PARA IDENTIFICACIÓN (CON URLs DE IMÁGENES)
+    // ================================================================
+    const rocasIdentificacion = [
+        { nombre: "Granito", clasificacion: "ígnea", imagen: "https://i.ibb.co/Csms4J36/image.png" },
+        { nombre: "Basalto", clasificacion: "ígnea", imagen: "https://i.ibb.co/WdNPyBq/image.png" },
+        { nombre: "Obsidiana", clasificacion: "ígnea", imagen: "https://i.ibb.co/pjK3JJMy/image.png" },
+        { nombre: "Sienita", clasificacion: "ígnea", imagen: "https://i.ibb.co/8LyBwgd1/image.png" },
+        { nombre: "Piedra pómez", clasificacion: "ígnea", imagen: "https://i.ibb.co/MkDYhwSM/image.png" },
+        { nombre: "Riolita", clasificacion: "ígnea", imagen: "https://i.ibb.co/VY9wpgwL/image.png" },
+        { nombre: "Diorita", clasificacion: "ígnea", imagen: "https://i.ibb.co/RkCxYLRB/image.png" },
+        { nombre: "Arenisca", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/whf49CxR/image.png" },
+        { nombre: "Caliza", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/LDyWjML6/image.png" },
+        { nombre: "Conglomerado", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/jkd34fpM/image.png" },
+        { nombre: "Brecha", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/4RPgd5vM/image.png" },
+        { nombre: "Lutita", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/CK3kdbfF/image.png" },
+        { nombre: "Toba volcánica", clasificacion: "sedimentaria", imagen: "https://i.ibb.co/279RjSqY/image.png" },
+        { nombre: "Mármol", clasificacion: "metamórfica", imagen: "https://i.ibb.co/fzbW6qn2/image.png" },
+        { nombre: "Esquisto", clasificacion: "metamórfica", imagen: "https://i.ibb.co/3YzFG57d/image.png" },
+        { nombre: "Gneis", clasificacion: "metamórfica", imagen: "https://i.ibb.co/pr9tDjjB/image.png" },
+        { nombre: "Cuarcita", clasificacion: "metamórfica", imagen: "https://i.ibb.co/RT23TsM9/image.png" },
+        { nombre: "Pizarra", clasificacion: "metamórfica", imagen: "https://i.ibb.co/5hj8XwJ4/image.png" },
+        { nombre: "Serpentinita", clasificacion: "metamórfica", imagen: "https://i.ibb.co/HfbYJQrb/image.png" }
+    ];
+
+    // ================================================================
+    // SINÓNIMOS PARA NORMALIZAR NOMBRES DE ROCAS
+    // ================================================================
+    const sinonimos = {
+        "granito": ["granito"],
+        "basalto": ["basalto"],
+        "obsidiana": ["obsidiana"],
+        "sienita": ["sienita"],
+        "piedra pómez": ["piedra pómez", "pumita"],
+        "riolita": ["riolita"],
+        "diorita": ["diorita"],
+        "arenisca": ["arenisca"],
+        "caliza": ["caliza"],
+        "conglomerado": ["conglomerado"],
+        "brecha": ["brecha"],
+        "lutita": ["lutita"],
+        "toba volcánica": ["toba volcánica", "toba"],
+        "mármol": ["mármol"],
+        "esquisto": ["esquisto"],
+        "gneis": ["gneis"],
+        "cuarcita": ["cuarcita"],
+        "pizarra": ["pizarra"],
+        "serpentinita": ["serpentinita"]
+    };
+
+    function normalizarTexto(texto) {
+        return texto.trim().toLowerCase().replace(/\s+/g, ' ');
+    }
+
+    function esNombreCorrecto(ingresado, correcto) {
+        const normalizado = normalizarTexto(ingresado);
+        const sinonimosCorrectos = sinonimos[correcto.toLowerCase()] || [correcto.toLowerCase()];
+        return sinonimosCorrectos.some(s => normalizado === s);
+    }
+
+    // ================================================================
+    // POOL DE PREGUNTAS DE SELECCIÓN MÚLTIPLE - 40 PREGUNTAS
+    // ================================================================
+
+    const poolMC = [
+        // ROCAS ÍGNEAS (10 preguntas)
+        {
+            text: "¿Qué tipo de roca se forma por la solidificación del magma en el interior de la Tierra?",
+            options: ["Roca sedimentaria", "Roca ígnea intrusiva", "Roca ígnea extrusiva", "Roca metamórfica"],
+            correct: "Roca ígnea intrusiva"
+        },
+        {
+            text: "¿Cuál de las siguientes es una roca ígnea intrusiva?",
+            options: ["Basalto", "Obsidiana", "Granito", "Riolita"],
+            correct: "Granito"
+        },
+        {
+            text: "¿Qué tipo de enfriamiento caracteriza a las rocas ígneas extrusivas?",
+            options: ["Lento en el interior", "Rápido en la superficie", "Muy lento en el manto", "Instantáneo en el núcleo"],
+            correct: "Rápido en la superficie"
+        },
+        {
+            text: "¿Qué roca ígnea es conocida como 'vidrio volcánico' por su textura vítrea?",
+            options: ["Granito", "Basalto", "Obsidiana", "Piedra pómez"],
+            correct: "Obsidiana"
+        },
+        {
+            text: "¿Qué característica tiene la piedra pómez que la hace flotar en el agua?",
+            options: ["Alto contenido de hierro", "Muy porosa por gases atrapados", "Es muy densa", "Contiene mucho cuarzo"],
+            correct: "Muy porosa por gases atrapados"
+        },
+        {
+            text: "¿Qué roca ígnea es la más abundante en la corteza continental?",
+            options: ["Basalto", "Granito", "Obsidiana", "Piedra pómez"],
+            correct: "Granito"
+        },
+        {
+            text: "¿Qué roca ígnea forma el fondo de los océanos?",
+            options: ["Granito", "Riolita", "Basalto", "Sienita"],
+            correct: "Basalto"
+        },
+        {
+            text: "¿Qué minerales componen principalmente el granito?",
+            options: ["Cuarzo y feldespato", "Olivino y piroxeno", "Calcita y arcilla", "Mica y granate"],
+            correct: "Cuarzo y feldespato"
+        },
+        {
+            text: "¿Qué roca ígnea es la equivalente extrusiva del granito?",
+            options: ["Basalto", "Riolita", "Andesita", "Diorita"],
+            correct: "Riolita"
+        },
+        {
+            text: "¿Qué roca ígnea se diferencia del granito por su falta de cuarzo?",
+            options: ["Diorita", "Sienita", "Riolita", "Basalto"],
+            correct: "Sienita"
+        },
+
+        // ROCAS SEDIMENTARIAS (10 preguntas)
+        {
+            text: "¿Qué proceso forma las rocas sedimentarias?",
+            options: ["Solidificación de magma", "Compactación y cementación de sedimentos", "Transformación por presión y calor", "Cristalización del magma"],
+            correct: "Compactación y cementación de sedimentos"
+        },
+        {
+            text: "¿Cuál de las siguientes es una roca sedimentaria?",
+            options: ["Granito", "Mármol", "Arenisca", "Gneis"],
+            correct: "Arenisca"
+        },
+        {
+            text: "¿Qué roca sedimentaria está compuesta principalmente por carbonato de calcio (CaCO₃)?",
+            options: ["Arenisca", "Lutita", "Caliza", "Conglomerado"],
+            correct: "Caliza"
+        },
+        {
+            text: "¿Qué característica tienen las rocas sedimentarias respecto a los fósiles?",
+            options: ["Nunca contienen fósiles", "Sí pueden contener fósiles", "Solo contienen fósiles de plantas", "Contienen fósiles de animales acuáticos únicamente"],
+            correct: "Sí pueden contener fósiles"
+        },
+        {
+            text: "¿Qué roca sedimentaria se forma por la compactación de arcilla y limo?",
+            options: ["Arenisca", "Lutita", "Caliza", "Conglomerado"],
+            correct: "Lutita"
+        },
+        {
+            text: "¿Qué diferencia al conglomerado de la brecha?",
+            options: ["El tamaño de los fragmentos", "El color de los fragmentos", "La forma de los fragmentos (redondeados vs. angulares)", "La composición química"],
+            correct: "La forma de los fragmentos (redondeados vs. angulares)"
+        },
+        {
+            text: "¿Qué roca sedimentaria se forma por la compactación de ceniza volcánica?",
+            options: ["Arenisca", "Lutita", "Toba volcánica", "Caliza"],
+            correct: "Toba volcánica"
+        },
+        {
+            text: "¿Qué porcentaje de la superficie terrestre cubren las rocas sedimentarias?",
+            options: ["25%", "50%", "75%", "90%"],
+            correct: "75%"
+        },
+        {
+            text: "¿Qué roca sedimentaria reacciona con ácidos produciendo efervescencia?",
+            options: ["Arenisca", "Lutita", "Caliza", "Conglomerado"],
+            correct: "Caliza"
+        },
+        {
+            text: "¿Qué tipo de roca sedimentaria es la más abundante en los depósitos sedimentarios?",
+            options: ["Arenisca", "Lutita", "Caliza", "Conglomerado"],
+            correct: "Lutita"
+        },
+
+        // ROCAS METAMÓRFICAS (10 preguntas)
+        {
+            text: "¿Qué tipo de roca se forma por la transformación de otras rocas debido a presión y calor?",
+            options: ["Roca ígnea", "Roca sedimentaria", "Roca metamórfica", "Roca volcánica"],
+            correct: "Roca metamórfica"
+        },
+        {
+            text: "¿Qué roca metamórfica se forma a partir de la caliza?",
+            options: ["Esquisto", "Gneis", "Mármol", "Pizarra"],
+            correct: "Mármol"
+        },
+        {
+            text: "¿Qué roca metamórfica se forma a partir de la lutita?",
+            options: ["Mármol", "Esquisto", "Gneis", "Cuarcita"],
+            correct: "Esquisto"
+        },
+        {
+            text: "¿Qué característica presentan muchas rocas metamórficas como el esquisto?",
+            options: ["Porosidad alta", "Foliación (bandas o láminas)", "Textura vítrea", "Ausencia de minerales"],
+            correct: "Foliación (bandas o láminas)"
+        },
+        {
+            text: "¿Qué roca metamórfica es extremadamente dura y se usa para fabricar herramientas de corte?",
+            options: ["Mármol", "Esquisto", "Cuarcita", "Pizarra"],
+            correct: "Cuarcita"
+        },
+        {
+            text: "¿Qué roca metamórfica se utiliza tradicionalmente para techos de casas?",
+            options: ["Mármol", "Esquisto", "Gneis", "Pizarra"],
+            correct: "Pizarra"
+        },
+        {
+            text: "¿Qué roca metamórfica presenta bandas alternadas de minerales claros y oscuros?",
+            options: ["Mármol", "Esquisto", "Gneis", "Cuarcita"],
+            correct: "Gneis"
+        },
+        {
+            text: "¿Qué roca metamórfica se forma por la hidratación de rocas del manto en zonas de subducción?",
+            options: ["Mármol", "Serpentinita", "Cuarcita", "Pizarra"],
+            correct: "Serpentinita"
+        },
+        {
+            text: "¿Qué tipo de metamorfismo ocurre por el calor de un magma cercano?",
+            options: ["Metamorfismo regional", "Metamorfismo de contacto", "Metamorfismo de impacto", "Metamorfismo dinámico"],
+            correct: "Metamorfismo de contacto"
+        },
+        {
+            text: "¿Qué roca metamórfica se utiliza para fabricar pizarras escolares?",
+            options: ["Mármol", "Esquisto", "Gneis", "Pizarra"],
+            correct: "Pizarra"
+        },
+
+        // CICLO DE LAS ROCAS (10 preguntas)
+        {
+            text: "¿Qué proceso convierte una roca ígnea en una roca sedimentaria?",
+            options: ["Fusión", "Erosión y compactación", "Metamorfismo", "Cristalización"],
+            correct: "Erosión y compactación"
+        },
+        {
+            text: "¿Qué proceso convierte una roca sedimentaria en una roca metamórfica?",
+            options: ["Fusión", "Erosión", "Presión y calor", "Compactación"],
+            correct: "Presión y calor"
+        },
+        {
+            text: "¿Qué proceso convierte una roca metamórfica en una roca ígnea?",
+            options: ["Erosión", "Fusión y enfriamiento", "Compactación", "Metamorfismo"],
+            correct: "Fusión y enfriamiento"
+        },
+        {
+            text: "¿Qué roca se forma cuando la arenisca se somete a metamorfismo?",
+            options: ["Mármol", "Cuarcita", "Esquisto", "Gneis"],
+            correct: "Cuarcita"
+        },
+        {
+            text: "¿Qué roca se forma cuando la caliza se somete a metamorfismo?",
+            options: ["Mármol", "Cuarcita", "Esquisto", "Gneis"],
+            correct: "Mármol"
+        },
+        {
+            text: "¿Qué roca se forma cuando la lutita se somete a metamorfismo de bajo grado?",
+            options: ["Mármol", "Cuarcita", "Pizarra", "Gneis"],
+            correct: "Pizarra"
+        },
+        {
+            text: "¿Qué roca se forma cuando la lutita se somete a metamorfismo de alto grado?",
+            options: ["Mármol", "Cuarcita", "Esquisto", "Gneis"],
+            correct: "Esquisto"
+        },
+        {
+            text: "¿Qué roca se forma cuando el granito se somete a metamorfismo de alto grado?",
+            options: ["Mármol", "Cuarcita", "Esquisto", "Gneis"],
+            correct: "Gneis"
+        },
+        {
+            text: "¿Qué proceso convierte una roca metamórfica en una roca sedimentaria?",
+            options: ["Fusión", "Erosión y compactación", "Metamorfismo", "Cristalización"],
+            correct: "Erosión y compactación"
+        },
+        {
+            text: "¿Qué proceso convierte una roca sedimentaria directamente en una roca ígnea?",
+            options: ["Erosión", "Fusión y enfriamiento", "Compactación", "Presión y calor"],
+            correct: "Fusión y enfriamiento"
+        }
+    ];
+
+    // ================================================================
+    // POOL DE PREGUNTAS V/F - 40 PREGUNTAS
+    // ================================================================
+
+    const poolVF = [
+        // ROCAS ÍGNEAS (10)
+        {
+            texto: "El granito es una roca ígnea extrusiva que se forma por enfriamiento rápido en la superficie.",
+            correcta: "F",
+            opcionesFalso: [
+                "El granito es una roca ígnea intrusiva que se forma por enfriamiento lento en el interior.",
+                "El granito es una roca ígnea extrusiva que se forma por enfriamiento rápido en la superficie.",
+                "El granito es una roca sedimentaria."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La obsidiana es un vidrio volcánico natural que se rompe con bordes extremadamente filosos.",
+            correcta: "V",
+            opcionesFalso: [
+                "La obsidiana es un vidrio volcánico natural que se rompe con bordes extremadamente filosos.",
+                "La obsidiana es una roca sedimentaria de grano fino.",
+                "La obsidiana es una roca metamórfica con foliación."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El basalto es la roca más común en la corteza continental.",
+            correcta: "F",
+            opcionesFalso: [
+                "El basalto es la roca más común en la corteza oceánica.",
+                "El basalto es la roca más común en la corteza continental.",
+                "El basalto es una roca metamórfica."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Las rocas ígneas constituyen aproximadamente el 65% de la corteza continental.",
+            correcta: "V",
+            opcionesFalso: [
+                "Las rocas ígneas constituyen aproximadamente el 65% de la corteza continental.",
+                "Las rocas ígneas constituyen aproximadamente el 25% de la corteza continental.",
+                "Las rocas ígneas constituyen aproximadamente el 75% de la superficie terrestre."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La piedra pómez flota en el agua debido a su alta densidad.",
+            correcta: "F",
+            opcionesFalso: [
+                "La piedra pómez flota en el agua debido a su baja densidad y porosidad.",
+                "La piedra pómez flota en el agua debido a su alta densidad.",
+                "La piedra pómez no flota en el agua."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La sienita se diferencia del granito por su falta de cuarzo.",
+            correcta: "V",
+            opcionesFalso: [
+                "La sienita se diferencia del granito por su falta de cuarzo.",
+                "La sienita se diferencia del granito por su mayor contenido de cuarzo.",
+                "La sienita y el granito son la misma roca."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La riolita es la equivalente extrusiva del granito.",
+            correcta: "V",
+            opcionesFalso: [
+                "La riolita es la equivalente extrusiva del granito.",
+                "El basalto es la equivalente extrusiva del granito.",
+                "La diorita es la equivalente extrusiva del granito."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La diorita es una roca ígnea extrusiva de color claro.",
+            correcta: "F",
+            opcionesFalso: [
+                "La diorita es una roca ígnea intrusiva de color gris oscuro a verde oscuro.",
+                "La diorita es una roca ígnea extrusiva de color claro.",
+                "La diorita es una roca sedimentaria."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Las rocas ígneas intrusivas tienen cristales grandes porque el enfriamiento es lento.",
+            correcta: "V",
+            opcionesFalso: [
+                "Las rocas ígneas intrusivas tienen cristales grandes porque el enfriamiento es lento.",
+                "Las rocas ígneas intrusivas tienen cristales pequeños porque el enfriamiento es rápido.",
+                "Las rocas ígneas intrusivas no tienen cristales."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La erupción del volcán Chaitén en 2008 expulsó grandes cantidades de basalto.",
+            correcta: "F",
+            opcionesFalso: [
+                "La erupción del volcán Chaitén en 2008 expulsó grandes cantidades de riolita.",
+                "La erupción del volcán Chaitén en 2008 expulsó grandes cantidades de basalto.",
+                "La erupción del volcán Chaitén en 2008 expulsó grandes cantidades de granito."
+            ],
+            indiceCorrecto: 0
+        },
+
+        // ROCAS SEDIMENTARIAS (10)
+        {
+            texto: "Las rocas sedimentarias cubren aproximadamente el 75% de la superficie terrestre.",
+            correcta: "V",
+            opcionesFalso: [
+                "Las rocas sedimentarias cubren aproximadamente el 75% de la superficie terrestre.",
+                "Las rocas sedimentarias cubren aproximadamente el 25% de la superficie terrestre.",
+                "Las rocas sedimentarias cubren aproximadamente el 100% de la superficie terrestre."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La arenisca está compuesta principalmente por carbonato de calcio (CaCO₃).",
+            correcta: "F",
+            opcionesFalso: [
+                "La arenisca está compuesta principalmente por granos de cuarzo y feldespato.",
+                "La arenisca está compuesta principalmente por carbonato de calcio (CaCO₃).",
+                "La arenisca está compuesta principalmente por arcilla."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La caliza reacciona con ácidos produciendo efervescencia (CO₂).",
+            correcta: "V",
+            opcionesFalso: [
+                "La caliza reacciona con ácidos produciendo efervescencia (CO₂).",
+                "La caliza no reacciona con ácidos.",
+                "La caliza reacciona con ácidos produciendo calor."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El conglomerado se forma con fragmentos angulares (con bordes filosos).",
+            correcta: "F",
+            opcionesFalso: [
+                "El conglomerado se forma con fragmentos redondeados (guijarros).",
+                "El conglomerado se forma con fragmentos angulares (con bordes filosos).",
+                "El conglomerado se forma con arcilla."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La brecha se forma con fragmentos angulares (con bordes filosos).",
+            correcta: "V",
+            opcionesFalso: [
+                "La brecha se forma con fragmentos angulares (con bordes filosos).",
+                "La brecha se forma con fragmentos redondeados.",
+                "La brecha se forma con arcilla."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La lutita es la roca sedimentaria más abundante en los depósitos sedimentarios.",
+            correcta: "V",
+            opcionesFalso: [
+                "La lutita es la roca sedimentaria más abundante en los depósitos sedimentarios.",
+                "La arenisca es la roca sedimentaria más abundante.",
+                "La caliza es la roca sedimentaria más abundante."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La toba volcánica se forma por la compactación de arena de playa.",
+            correcta: "F",
+            opcionesFalso: [
+                "La toba volcánica se forma por la compactación de ceniza volcánica.",
+                "La toba volcánica se forma por la compactación de arena de playa.",
+                "La toba volcánica se forma por la solidificación del magma."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El proceso de formación de rocas sedimentarias incluye: erosión → transporte → sedimentación → compactación.",
+            correcta: "V",
+            opcionesFalso: [
+                "El proceso de formación de rocas sedimentarias incluye: erosión → transporte → sedimentación → compactación.",
+                "El proceso de formación de rocas sedimentarias incluye: fusión → enfriamiento → cristalización.",
+                "El proceso de formación de rocas sedimentarias incluye: presión → calor → recristalización."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Las rocas sedimentarias son la principal fuente de combustibles fósiles (carbón, petróleo, gas natural).",
+            correcta: "V",
+            opcionesFalso: [
+                "Las rocas sedimentarias son la principal fuente de combustibles fósiles (carbón, petróleo, gas natural).",
+                "Las rocas ígneas son la principal fuente de combustibles fósiles.",
+                "Las rocas metamórficas son la principal fuente de combustibles fósiles."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La caliza es la roca que forma las cuevas con estalactitas y estalagmitas.",
+            correcta: "V",
+            opcionesFalso: [
+                "La caliza es la roca que forma las cuevas con estalactitas y estalagmitas.",
+                "El granito es la roca que forma las cuevas.",
+                "El basalto es la roca que forma las cuevas."
+            ],
+            indiceCorrecto: 0
+        },
+
+        // ROCAS METAMÓRFICAS (10)
+        {
+            texto: "El mármol se forma a partir de la arenisca por metamorfismo.",
+            correcta: "F",
+            opcionesFalso: [
+                "El mármol se forma a partir de la caliza por metamorfismo.",
+                "El mármol se forma a partir de la arenisca por metamorfismo.",
+                "El mármol se forma a partir del granito por metamorfismo."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El esquisto se forma a partir de la lutita por metamorfismo.",
+            correcta: "V",
+            opcionesFalso: [
+                "El esquisto se forma a partir de la lutita por metamorfismo.",
+                "El esquisto se forma a partir de la caliza por metamorfismo.",
+                "El esquisto se forma a partir del granito por metamorfismo."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El gneis presenta bandas alternadas de minerales claros y oscuros.",
+            correcta: "V",
+            opcionesFalso: [
+                "El gneis presenta bandas alternadas de minerales claros y oscuros.",
+                "El gneis es una roca de grano fino sin bandas.",
+                "El gneis es una roca sedimentaria."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La cuarcita es una roca metamórfica que se forma a partir de la caliza.",
+            correcta: "F",
+            opcionesFalso: [
+                "La cuarcita se forma a partir de la arenisca por metamorfismo.",
+                "La cuarcita se forma a partir de la caliza por metamorfismo.",
+                "La cuarcita se forma a partir del granito por metamorfismo."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La pizarra se utiliza tradicionalmente para techos de casas y pizarras escolares.",
+            correcta: "V",
+            opcionesFalso: [
+                "La pizarra se utiliza tradicionalmente para techos de casas y pizarras escolares.",
+                "La pizarra se utiliza para fabricar vidrio.",
+                "La pizarra se utiliza para fabricar herramientas de corte."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La serpentinita se forma en zonas de subducción por la hidratación de rocas del manto.",
+            correcta: "V",
+            opcionesFalso: [
+                "La serpentinita se forma en zonas de subducción por la hidratación de rocas del manto.",
+                "La serpentinita se forma en la superficie por erosión.",
+                "La serpentinita se forma por solidificación del magma."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El mármol de Carrara es famoso por ser utilizado por Miguel Ángel para el David.",
+            correcta: "V",
+            opcionesFalso: [
+                "El mármol de Carrara es famoso por ser utilizado por Miguel Ángel para el David.",
+                "El mármol de Carrara es famoso por ser utilizado para fabricar vidrio.",
+                "El mármol de Carrara es famoso por ser utilizado para techos."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El gneis es una de las rocas más antiguas de la Tierra, con más de 3.000 millones de años.",
+            correcta: "V",
+            opcionesFalso: [
+                "El gneis es una de las rocas más antiguas de la Tierra, con más de 3.000 millones de años.",
+                "El gneis es una roca reciente, con menos de 100 millones de años.",
+                "El gneis es una roca sedimentaria."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El esquisto es la roca metamórfica más común en las zonas de subducción.",
+            correcta: "V",
+            opcionesFalso: [
+                "El esquisto es la roca metamórfica más común en las zonas de subducción.",
+                "El mármol es la roca metamórfica más común en las zonas de subducción.",
+                "La cuarcita es la roca metamórfica más común en las zonas de subducción."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La pizarra se forma por metamorfismo de alto grado de la lutita.",
+            correcta: "F",
+            opcionesFalso: [
+                "La pizarra se forma por metamorfismo de bajo grado de la lutita.",
+                "La pizarra se forma por metamorfismo de alto grado de la lutita.",
+                "La pizarra se forma por metamorfismo de la caliza."
+            ],
+            indiceCorrecto: 0
+        },
+
+        // CICLO DE LAS ROCAS (10)
+        {
+            texto: "El ciclo de las rocas muestra cómo las rocas se transforman constantemente de un tipo a otro.",
+            correcta: "V",
+            opcionesFalso: [
+                "El ciclo de las rocas muestra cómo las rocas se transforman constantemente de un tipo a otro.",
+                "El ciclo de las rocas muestra que las rocas nunca cambian.",
+                "El ciclo de las rocas muestra solo la formación de rocas ígneas."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Una roca ígnea puede convertirse en sedimentaria mediante el proceso de fusión.",
+            correcta: "F",
+            opcionesFalso: [
+                "Una roca ígnea puede convertirse en sedimentaria mediante erosión y compactación.",
+                "Una roca ígnea puede convertirse en sedimentaria mediante fusión.",
+                "Una roca ígnea no puede convertirse en sedimentaria."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Una roca sedimentaria puede convertirse en metamórfica mediante presión y calor.",
+            correcta: "V",
+            opcionesFalso: [
+                "Una roca sedimentaria puede convertirse en metamórfica mediante presión y calor.",
+                "Una roca sedimentaria puede convertirse en metamórfica mediante erosión.",
+                "Una roca sedimentaria no puede convertirse en metamórfica."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Una roca metamórfica puede convertirse en ígnea mediante fusión y enfriamiento.",
+            correcta: "V",
+            opcionesFalso: [
+                "Una roca metamórfica puede convertirse en ígnea mediante fusión y enfriamiento.",
+                "Una roca metamórfica puede convertirse en ígnea mediante compactación.",
+                "Una roca metamórfica no puede convertirse en ígnea."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El ciclo de las rocas sigue un orden fijo y obligatorio.",
+            correcta: "F",
+            opcionesFalso: [
+                "El ciclo de las rocas no sigue un orden fijo; una roca puede transformarse directamente en otro tipo.",
+                "El ciclo de las rocas sigue un orden fijo y obligatorio.",
+                "El ciclo de las rocas solo ocurre en una dirección."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La arenisca se puede metamorfizar en cuarcita.",
+            correcta: "V",
+            opcionesFalso: [
+                "La arenisca se puede metamorfizar en cuarcita.",
+                "La arenisca se puede metamorfizar en mármol.",
+                "La arenisca no se puede metamorfizar."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La caliza se puede metamorfizar en esquisto.",
+            correcta: "F",
+            opcionesFalso: [
+                "La caliza se puede metamorfizar en mármol.",
+                "La caliza se puede metamorfizar en esquisto.",
+                "La caliza no se puede metamorfizar."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El ciclo de las rocas puede tardar millones de años en completarse.",
+            correcta: "V",
+            opcionesFalso: [
+                "El ciclo de las rocas puede tardar millones de años en completarse.",
+                "El ciclo de las rocas se completa en días.",
+                "El ciclo de las rocas se completa en segundos."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El granito se puede metamorfizar en gneis.",
+            correcta: "V",
+            opcionesFalso: [
+                "El granito se puede metamorfizar en gneis.",
+                "El granito se puede metamorfizar en mármol.",
+                "El granito no se puede metamorfizar."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La lutita se puede metamorfizar en pizarra y luego en esquisto.",
+            correcta: "V",
+            opcionesFalso: [
+                "La lutita se puede metamorfizar en pizarra y luego en esquisto.",
+                "La lutita se puede metamorfizar directamente en gneis.",
+                "La lutita no se puede metamorfizar."
+            ],
+            indiceCorrecto: 0
+        }
+    ];
+
+    // ================================================================
+    // FUNCIONES DE SELECCIÓN ALEATORIA
+    // ================================================================
+
+    function shuffleArray(arr) {
+        const a = [...arr];
+        for (let i = a.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [a[i], a[j]] = [a[j], a[i]];
+        }
+        return a;
+    }
+
+    function seleccionarElementos(arr, cantidad) {
+        const copia = [...arr];
+        const seleccionados = [];
+        for (let i = 0; i < cantidad && copia.length > 0; i++) {
+            const indice = Math.floor(Math.random() * copia.length);
+            seleccionados.push(copia.splice(indice, 1)[0]);
+        }
+        return seleccionados;
+    }
+
+    function mezclarArray(arr) {
+        const copia = [...arr];
+        for (let i = copia.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copia[i], copia[j]] = [copia[j], copia[i]];
+        }
+        return copia;
+    }
+
+    // ================================================================
+    // SELECCIÓN DE PREGUNTAS
+    // ================================================================
+
+    let preguntasMC = seleccionarElementos(poolMC, 15);
+    let preguntasVF = seleccionarElementos(poolVF, 15);
+    let preguntasIdentificacion = seleccionarElementos(rocasIdentificacion, 6);
+
+    // ================================================================
+    // ESTADO DE RESPUESTAS
+    // ================================================================
+
+    let respuestasMC = new Array(preguntasMC.length).fill(null);
+    let respuestasVF = preguntasVF.map(() => ({ vf: null, correccion: null }));
+    let respuestasIdentificacion = preguntasIdentificacion.map(() => ({ nombre: '', clasificacion: '' }));
+    let evaluado = false;
+
+    // ================================================================
+    // RENDERIZADO
+    // ================================================================
+
+    function renderizarTodo() {
+        renderizarMC();
+        renderizarVF();
+        renderizarIdentificacion();
+        actualizarContador();
+    }
+
+    function renderizarMC() {
+        const container = document.getElementById('mcContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        preguntasMC.forEach((q, idx) => {
+            const opcionesMezcladas = mezclarArray(q.options);
+            const textoCorrecto = q.correct;
+
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question-card';
+            qDiv.id = `mc-${idx}`;
+
+            const number = document.createElement('div');
+            number.className = 'question-number';
+            number.textContent = `Pregunta ${idx + 1} de ${preguntasMC.length}`;
+            qDiv.appendChild(number);
+
+            const text = document.createElement('div');
+            text.className = 'question-text';
+            text.textContent = q.text;
+            qDiv.appendChild(text);
+
+            const grid = document.createElement('div');
+            grid.className = 'options';
+
+            opcionesMezcladas.forEach((opt, optIdx) => {
+                const label = document.createElement('label');
+                const radio = document.createElement('input');
+                radio.type = 'radio';
+                radio.name = `mc_${idx}`;
+                radio.value = opt;
+
+                if (evaluado) {
+                    radio.disabled = true;
+                    if (respuestasMC[idx] === opt) {
+                        radio.checked = true;
+                    }
+                    if (opt === textoCorrecto) {
+                        label.style.color = '#8bc34a';
+                    } else if (respuestasMC[idx] === opt && opt !== textoCorrecto) {
+                        label.style.color = '#ff8a80';
+                    }
+                } else {
+                    if (respuestasMC[idx] === opt) {
+                        radio.checked = true;
+                    }
+                    radio.addEventListener('change', function() {
+                        if (!evaluado) {
+                            respuestasMC[idx] = this.value;
+                            actualizarContador();
+                        }
+                    });
+                }
+
+                const span = document.createElement('span');
+                span.textContent = opt;
+                label.appendChild(radio);
+                label.appendChild(span);
+                grid.appendChild(label);
+            });
+
+            qDiv.appendChild(grid);
+
+            if (evaluado) {
+                const esCorrecta = respuestasMC[idx] === textoCorrecto;
+                qDiv.classList.add(esCorrecta ? 'correct' : 'incorrect');
+
+                const fb = document.createElement('div');
+                fb.className = `feedback-text show ${esCorrecta ? 'correct-fb' : 'incorrect-fb'}`;
+                if (esCorrecta) {
+                    fb.innerHTML = '✅ Correcto';
+                } else {
+                    fb.innerHTML = `❌ Incorrecto. Respuesta correcta: <strong>${textoCorrecto}</strong>`;
+                }
+                qDiv.appendChild(fb);
+
+                const marcada = document.createElement('div');
+                marcada.className = 'respuesta-marcada';
+                if (respuestasMC[idx]) {
+                    marcada.textContent = `Tu respuesta: "${respuestasMC[idx]}"`;
+                } else {
+                    marcada.textContent = 'No respondiste esta pregunta';
+                }
+                qDiv.appendChild(marcada);
+            }
+
+            container.appendChild(qDiv);
+        });
+    }
+
+    function renderizarVF() {
+        const container = document.getElementById('vfContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        preguntasVF.forEach((q, idx) => {
+            const correccionesMezcladas = mezclarArray(q.opcionesFalso);
+            const textoCorrecto = q.opcionesFalso[q.indiceCorrecto];
+
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question-card';
+            qDiv.id = `vf-${idx}`;
+
+            const number = document.createElement('div');
+            number.className = 'question-number';
+            number.textContent = `Pregunta ${preguntasMC.length + idx + 1} de ${preguntasMC.length + preguntasVF.length + preguntasIdentificacion.length}`;
+            qDiv.appendChild(number);
+
+            const text = document.createElement('div');
+            text.className = 'question-text';
+            text.textContent = q.texto;
+            qDiv.appendChild(text);
+
+            const vfGrid = document.createElement('div');
+            vfGrid.className = 'vf-grid';
+
+            const btnV = document.createElement('button');
+            btnV.className = 'vf-btn';
+            btnV.textContent = 'Verdadero (V)';
+            btnV.dataset.vf = 'V';
+
+            const btnF = document.createElement('button');
+            btnF.className = 'vf-btn';
+            btnF.textContent = 'Falso (F)';
+            btnF.dataset.vf = 'F';
+
+            if (evaluado) {
+                btnV.classList.add('disabled');
+                btnF.classList.add('disabled');
+
+                const vfSeleccionado = respuestasVF[idx].vf;
+                const correccionSeleccionada = respuestasVF[idx].correccion;
+
+                let esCorrecta = false;
+                if (q.correcta === 'V' && vfSeleccionado === 'V') {
+                    esCorrecta = true;
+                } else if (q.correcta === 'F' && vfSeleccionado === 'F' && correccionSeleccionada === textoCorrecto) {
+                    esCorrecta = true;
+                }
+
+                qDiv.classList.add(esCorrecta ? 'correct' : 'incorrect');
+
+                if (vfSeleccionado === 'V') {
+                    btnV.classList.add('selected-v');
+                    if (q.correcta === 'V') {
+                        btnV.classList.add('correct-answer');
+                    } else {
+                        btnV.classList.add('wrong-answer');
+                    }
+                } else if (vfSeleccionado === 'F') {
+                    btnF.classList.add('selected-f');
+                }
+
+                if (vfSeleccionado !== q.correcta) {
+                    if (q.correcta === 'V') {
+                        btnV.classList.add('correct-answer');
+                    } else {
+                        btnF.classList.add('correct-answer');
+                    }
+                }
+
+                const fb = document.createElement('div');
+                fb.className = `feedback-text show ${esCorrecta ? 'correct-fb' : 'incorrect-fb'}`;
+                if (esCorrecta) {
+                    fb.textContent = '✅ Correcto';
+                } else {
+                    let mensaje = '❌ Incorrecto. ';
+                    if (vfSeleccionado !== q.correcta) {
+                        mensaje += `La afirmación era ${q.correcta === 'V' ? 'Verdadera' : 'Falsa'}. `;
+                        if (q.correcta === 'F') {
+                            mensaje += `Corrección correcta: "${textoCorrecto}"`;
+                        } else {
+                            mensaje += 'La afirmación era Verdadera.';
+                        }
+                    } else if (q.correcta === 'F' && vfSeleccionado === 'F' && correccionSeleccionada !== textoCorrecto) {
+                        mensaje += `Corrección correcta: "${textoCorrecto}"`;
+                    }
+                    fb.textContent = mensaje;
+                }
+                qDiv.appendChild(fb);
+
+                const marcada = document.createElement('div');
+                marcada.className = 'respuesta-marcada';
+                let textoRespuesta = '';
+                if (vfSeleccionado === 'V') {
+                    textoRespuesta = 'Verdadero (V)';
+                } else if (vfSeleccionado === 'F') {
+                    textoRespuesta = `Falso (F) - Corrección: "${correccionSeleccionada || 'No seleccionada'}"`;
+                } else {
+                    textoRespuesta = 'No respondiste esta pregunta';
+                }
+                marcada.textContent = `Tu respuesta: ${textoRespuesta}`;
+                qDiv.appendChild(marcada);
+
+                if (q.correcta === 'F') {
+                    const correctaDiv = document.createElement('div');
+                    correctaDiv.className = 'respuesta-marcada';
+                    correctaDiv.style.background = 'rgba(34,197,94,0.2)';
+                    correctaDiv.style.border = '1px solid #22c55e';
+                    correctaDiv.textContent = `Corrección correcta: "${textoCorrecto}"`;
+                    qDiv.appendChild(correctaDiv);
+                }
+
+            } else {
+                if (respuestasVF[idx].vf === 'V') {
+                    btnV.classList.add('selected-v');
+                } else if (respuestasVF[idx].vf === 'F') {
+                    btnF.classList.add('selected-f');
+                }
+
+                btnV.addEventListener('click', function() {
+                    if (evaluado) return;
+                    btnV.classList.add('selected-v');
+                    btnV.classList.remove('selected-f');
+                    btnF.classList.remove('selected-v');
+                    btnF.classList.remove('selected-f');
+                    respuestasVF[idx].vf = 'V';
+                    respuestasVF[idx].correccion = null;
+                    const corrContainer = document.getElementById(`correcciones-${idx}`);
+                    if (corrContainer) corrContainer.classList.remove('visible');
+                    actualizarContador();
+                });
+
+                btnF.addEventListener('click', function() {
+                    if (evaluado) return;
+                    btnF.classList.add('selected-f');
+                    btnF.classList.remove('selected-v');
+                    btnV.classList.remove('selected-v');
+                    btnV.classList.remove('selected-f');
+                    respuestasVF[idx].vf = 'F';
+                    respuestasVF[idx].correccion = null;
+                    const corrContainer = document.getElementById(`correcciones-${idx}`);
+                    if (corrContainer) corrContainer.classList.add('visible');
+                    actualizarContador();
+                });
+            }
+
+            vfGrid.appendChild(btnV);
+            vfGrid.appendChild(btnF);
+            qDiv.appendChild(vfGrid);
+
+            const corrContainer = document.createElement('div');
+            corrContainer.className = 'correcciones-container';
+            corrContainer.id = `correcciones-${idx}`;
+
+            if (!evaluado && respuestasVF[idx].vf === 'F') {
+                corrContainer.classList.add('visible');
+            }
+
+            const label = document.createElement('div');
+            label.className = 'label';
+            label.textContent = 'Si es falsa, selecciona la corrección correcta:';
+            corrContainer.appendChild(label);
+
+            const corrGrid = document.createElement('div');
+            corrGrid.className = 'correcciones-grid';
+
+            correccionesMezcladas.forEach((opt, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = 'corr-btn';
+                btn.textContent = opt;
+                btn.dataset.idx = optIdx;
+
+                if (evaluado) {
+                    btn.classList.add('disabled');
+                    if (respuestasVF[idx].correccion === opt) {
+                        btn.classList.add('selected');
+                        if (opt === textoCorrecto) {
+                            btn.classList.add('correct-answer');
+                        } else {
+                            btn.classList.add('wrong-answer');
+                        }
+                    } else if (opt === textoCorrecto) {
+                        btn.classList.add('correct-answer');
+                    }
+                } else {
+                    if (respuestasVF[idx].vf === 'F' && respuestasVF[idx].correccion === opt) {
+                        btn.classList.add('selected');
+                    }
+
+                    btn.addEventListener('click', function() {
+                        if (evaluado) return;
+                        if (respuestasVF[idx].vf !== 'F') return;
+                        corrGrid.querySelectorAll('.corr-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        respuestasVF[idx].correccion = opt;
+                        actualizarContador();
+                    });
+                }
+
+                corrGrid.appendChild(btn);
+            });
+
+            corrContainer.appendChild(corrGrid);
+            qDiv.appendChild(corrContainer);
+
+            container.appendChild(qDiv);
+        });
+    }
+
+    function renderizarIdentificacion() {
+        const container = document.getElementById('identificacionContainer');
+        if (!container) return;
+        container.innerHTML = '';
+
+        preguntasIdentificacion.forEach((roca, idx) => {
+            const div = document.createElement('div');
+            div.className = 'rock-item';
+            div.id = `rock-${idx}`;
+
+            const number = document.createElement('div');
+            number.className = 'question-number';
+            number.textContent = `Pregunta ${preguntasMC.length + preguntasVF.length + idx + 1} de ${preguntasMC.length + preguntasVF.length + preguntasIdentificacion.length}`;
+            div.appendChild(number);
+
+            const text = document.createElement('div');
+            text.className = 'question-text';
+            text.textContent = 'Identifica esta roca:';
+            div.appendChild(text);
+
+            const img = document.createElement('img');
+            img.src = roca.imagen;
+            img.alt = roca.nombre;
+            div.appendChild(img);
+
+            const inputsDiv = document.createElement('div');
+            inputsDiv.className = 'rock-inputs';
+
+            // Input para clasificación
+            const clasifGroup = document.createElement('div');
+            clasifGroup.className = 'rock-input-group';
+            const clasifLabel = document.createElement('label');
+            clasifLabel.textContent = 'Clasificación:';
+            const clasifInput = document.createElement('input');
+            clasifInput.type = 'text';
+            clasifInput.id = `rock-clasificacion-${idx}`;
+            clasifInput.placeholder = 'ígnea, sedimentaria o metamórfica';
+
+            if (evaluado) {
+                clasifInput.disabled = true;
+                const clasifIngresada = normalizarTexto(respuestasIdentificacion[idx].clasificacion);
+                const clasifCorrecta = roca.clasificacion.toLowerCase();
+                const esCorrecta = clasifIngresada === clasifCorrecta;
+                if (esCorrecta) {
+                    clasifInput.classList.add('correct-input');
+                } else {
+                    clasifInput.classList.add('incorrect-input');
+                }
+            } else {
+                clasifInput.addEventListener('input', function() {
+                    respuestasIdentificacion[idx].clasificacion = this.value;
+                    actualizarContador();
+                });
+            }
+
+            clasifGroup.appendChild(clasifLabel);
+            clasifGroup.appendChild(clasifInput);
+            inputsDiv.appendChild(clasifGroup);
+
+            // Input para nombre
+            const nombreGroup = document.createElement('div');
+            nombreGroup.className = 'rock-input-group';
+            const nombreLabel = document.createElement('label');
+            nombreLabel.textContent = 'Nombre:';
+            const nombreInput = document.createElement('input');
+            nombreInput.type = 'text';
+            nombreInput.id = `rock-nombre-${idx}`;
+            nombreInput.placeholder = 'Nombre de la roca';
+
+            if (evaluado) {
+                nombreInput.disabled = true;
+                const nombreIngresado = normalizarTexto(respuestasIdentificacion[idx].nombre);
+                const esCorrecto = esNombreCorrecto(nombreIngresado, roca.nombre);
+                if (esCorrecto) {
+                    nombreInput.classList.add('correct-input');
+                } else {
+                    nombreInput.classList.add('incorrect-input');
+                }
+            } else {
+                nombreInput.addEventListener('input', function() {
+                    respuestasIdentificacion[idx].nombre = this.value;
+                    actualizarContador();
+                });
+            }
+
+            nombreGroup.appendChild(nombreLabel);
+            nombreGroup.appendChild(nombreInput);
+            inputsDiv.appendChild(nombreGroup);
+
+            // Feedback
+            const fb = document.createElement('div');
+            fb.className = 'rock-feedback';
+            fb.id = `rock-fb-${idx}`;
+
+            if (evaluado) {
+                const clasifIngresada = normalizarTexto(respuestasIdentificacion[idx].clasificacion);
+                const nombreIngresado = normalizarTexto(respuestasIdentificacion[idx].nombre);
+                const clasifCorrecta = roca.clasificacion.toLowerCase();
+                const nombreCorrecto = esNombreCorrecto(nombreIngresado, roca.nombre);
+
+                const clasifOk = clasifIngresada === clasifCorrecta;
+                const nombreOk = nombreCorrecto;
+
+                if (clasifOk && nombreOk) {
+                    div.classList.add('correct');
+                    fb.className = 'rock-feedback show correct-fb';
+                    fb.innerHTML = '✅ Clasificación correcta | ✅ Nombre correcto';
+                } else if (clasifOk && !nombreOk) {
+                    div.classList.add('incorrect');
+                    fb.className = 'rock-feedback show incorrect-fb';
+                    fb.innerHTML = `✅ Clasificación correcta | ❌ Nombre incorrecto. Correcto: <strong>${roca.nombre}</strong>`;
+                } else if (!clasifOk && nombreOk) {
+                    div.classList.add('incorrect');
+                    fb.className = 'rock-feedback show incorrect-fb';
+                    fb.innerHTML = `❌ Clasificación incorrecta. Correcto: <strong>${roca.clasificacion}</strong> | ✅ Nombre correcto`;
+                } else {
+                    div.classList.add('incorrect');
+                    fb.className = 'rock-feedback show incorrect-fb';
+                    fb.innerHTML = `❌ Clasificación incorrecta. Correcto: <strong>${roca.clasificacion}</strong> | ❌ Nombre incorrecto. Correcto: <strong>${roca.nombre}</strong>`;
+                }
+
+                // Mostrar respuesta del usuario
+                const respuestaUsuario = document.createElement('div');
+                respuestaUsuario.className = 'respuesta-marcada';
+                respuestaUsuario.style.marginTop = '0.5rem';
+                respuestaUsuario.innerHTML = `Tu respuesta: <strong>${respuestasIdentificacion[idx].clasificacion || 'No ingresado'}</strong> | <strong>${respuestasIdentificacion[idx].nombre || 'No ingresado'}</strong>`;
+                inputsDiv.appendChild(respuestaUsuario);
+            }
+
+            inputsDiv.appendChild(fb);
+            div.appendChild(inputsDiv);
+            container.appendChild(div);
+        });
+    }
+
+    function actualizarContador() {
+        let respondidas = 0;
+
+        respuestasMC.forEach(a => { if (a !== null) respondidas++; });
+
+        respuestasVF.forEach(r => {
+            if (r.vf !== null && (r.vf === 'V' || (r.vf === 'F' && r.correccion !== null))) {
+                respondidas++;
+            }
+        });
+
+        respuestasIdentificacion.forEach(r => {
+            if (r.clasificacion.trim() !== '' && r.nombre.trim() !== '') {
+                respondidas++;
+            }
+        });
+
+        document.getElementById('answeredCount').textContent = respondidas;
+        document.getElementById('totalQuestions').textContent = preguntasMC.length + preguntasVF.length + preguntasIdentificacion.length;
+    }
+
+    // ================================================================
+    // EVALUACIÓN
+    // ================================================================
+
+    function evaluarTodo() {
+        evaluado = true;
+        document.getElementById('evaluateBtn').disabled = true;
+
+        let mcCorrectas = 0;
+        let vfCorrectas = 0;
+        let identCorrectas = 0;
+
+        preguntasMC.forEach((q, idx) => {
+            const textoCorrecto = q.correct;
+            if (respuestasMC[idx] === textoCorrecto) {
+                mcCorrectas++;
+            }
+        });
+
+        preguntasVF.forEach((q, idx) => {
+            const vfSeleccionado = respuestasVF[idx].vf;
+            const correccionSeleccionada = respuestasVF[idx].correccion;
+            const textoCorrecto = q.opcionesFalso[q.indiceCorrecto];
+
+            if (q.correcta === 'V' && vfSeleccionado === 'V') {
+                vfCorrectas++;
+            } else if (q.correcta === 'F' && vfSeleccionado === 'F' && correccionSeleccionada === textoCorrecto) {
+                vfCorrectas++;
+            }
+        });
+
+        preguntasIdentificacion.forEach((roca, idx) => {
+            const clasifIngresada = normalizarTexto(respuestasIdentificacion[idx].clasificacion);
+            const nombreIngresado = normalizarTexto(respuestasIdentificacion[idx].nombre);
+            const clasifCorrecta = roca.clasificacion.toLowerCase();
+            const nombreCorrecto = esNombreCorrecto(nombreIngresado, roca.nombre);
+
+            if (clasifIngresada === clasifCorrecta && nombreCorrecto) {
+                identCorrectas++;
+            }
+        });
+
+        renderizarTodo();
+
+        const totalMC = preguntasMC.length;
+        const totalVF = preguntasVF.length;
+        const totalIdent = preguntasIdentificacion.length;
+        const totalPreguntas = totalMC + totalVF + totalIdent;
+        const totalCorrectas = mcCorrectas + vfCorrectas + identCorrectas;
+        const porcentaje = (totalCorrectas / totalPreguntas) * 100;
+
+        let nota = 0;
+        const exigencia = 60;
+
+        if (porcentaje >= exigencia) {
+            nota = 4.0 + ((porcentaje - exigencia) / (100 - exigencia)) * 3.0;
+        } else {
+            nota = 1.0 + (porcentaje / exigencia) * 3.0;
+        }
+        nota = Math.round(nota * 100) / 100;
+        const aprobado = nota >= 4.0;
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.style.display = 'block';
+        resultsDiv.innerHTML = `
+            <h3>📊 Resultados</h3>
+            <div class="score">✅ Respuestas correctas: <span style="color:#63b3ed;">${totalCorrectas}</span> de ${totalPreguntas}</div>
+            <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:0.5rem 0; font-size:0.9rem; color:#94a3b8;">
+                <div>📌 Selección Múltiple: <span style="color:#e2e8f0;">${mcCorrectas}/${totalMC}</span></div>
+                <div>⚖️ Verdadero/Falso: <span style="color:#e2e8f0;">${vfCorrectas}/${totalVF}</span></div>
+                <div>🪨 Identificación: <span style="color:#e2e8f0;">${identCorrectas}/${totalIdent}</span></div>
+            </div>
+            <div class="grade ${aprobado ? 'approved' : 'failed'}">
+                ${aprobado ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}<br>
+                <strong>NOTA FINAL: ${nota.toFixed(1)}</strong>
+            </div>
+            <div class="details">
+                <span>📈 Porcentaje: ${Math.round(porcentaje)}%</span>
+                <span>✅ Exigencia: 60%</span>
+            </div>
+            <div class="action-buttons">
+                <button class="btn btn-primary" id="restartBtn">🔄 Reiniciar Test</button>
+                <button class="btn btn-secondary" id="backToClassBtn">📚 Volver a la Clase</button>
+                <button class="btn btn-outline" id="backToCourseBtn">🏠 Volver al Curso</button>
+            </div>
+        `;
+
+        document.getElementById('restartBtn').addEventListener('click', restartTest);
+        document.getElementById('backToClassBtn').addEventListener('click', () => {
+            window.location.href = 'C_8_Fisica.html';
+        });
+        document.getElementById('backToCourseBtn').addEventListener('click', () => {
+            window.location.href = 'Fisica.html';
+        });
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ================================================================
+    // REINICIAR TEST
+    // ================================================================
+
+    function restartTest() {
+        evaluado = false;
+        document.getElementById('evaluateBtn').disabled = false;
+
+        preguntasMC = seleccionarElementos(poolMC, 15);
+        preguntasVF = seleccionarElementos(poolVF, 15);
+        preguntasIdentificacion = seleccionarElementos(rocasIdentificacion, 6);
+
+        respuestasMC = new Array(preguntasMC.length).fill(null);
+        respuestasVF = preguntasVF.map(() => ({ vf: null, correccion: null }));
+        respuestasIdentificacion = preguntasIdentificacion.map(() => ({ nombre: '', clasificacion: '' }));
+
+        document.getElementById('results').style.display = 'none';
+        renderizarTodo();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // ================================================================
+    // INICIALIZACIÓN
+    // ================================================================
+
+    function crearEstructura() {
+        const container = document.getElementById('examContent');
+        container.innerHTML = '';
+
+        const mcSection = document.createElement('div');
+        mcSection.className = 'section';
+        mcSection.id = 'mcSection';
+        mcSection.innerHTML = `
+            <div class="section-title"><i class="fas fa-radio"></i> I. Selección Múltiple (15 preguntas)</div>
+            <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:1rem;">Selecciona la opción correcta para cada pregunta.</p>
+            <div id="mcContainer"></div>
+        `;
+        container.appendChild(mcSection);
+
+        const vfSection = document.createElement('div');
+        vfSection.className = 'section';
+        vfSection.id = 'vfSection';
+        vfSection.innerHTML = `
+            <div class="section-title"><i class="fas fa-balance-scale"></i> II. Verdadero o Falso (15 preguntas)</div>
+            <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:1rem;">
+                Primero selecciona si la afirmación es <strong style="color:#90cdf4;">Verdadera</strong> o <strong style="color:#90cdf4;">Falsa</strong>.
+                Si seleccionas <strong style="color:#90cdf4;">Falso</strong>, deberás elegir la opción de corrección correcta.
+            </p>
+            <div id="vfContainer"></div>
+        `;
+        container.appendChild(vfSection);
+
+        const identSection = document.createElement('div');
+        identSection.className = 'section';
+        identSection.id = 'identSection';
+        identSection.innerHTML = `
+            <div class="section-title"><i class="fas fa-image"></i> III. Identificación de Rocas (6 preguntas)</div>
+            <p style="color:#94a3b8; font-size:0.9rem; margin-bottom:1rem;">
+                Observa la imagen de la roca y escribe su <strong style="color:#90cdf4;">nombre</strong> y su <strong style="color:#90cdf4;">clasificación</strong> (ígnea, sedimentaria o metamórfica).
+            </p>
+            <div id="identificacionContainer"></div>
+        `;
+        container.appendChild(identSection);
+    }
+
+    crearEstructura();
+    renderizarTodo();
+
+    document.getElementById('evaluateBtn').addEventListener('click', evaluarTodo);
+
+    console.log('✅ Pool de preguntas cargado.');
+    console.log(`  MC: ${poolMC.length} preguntas`);
+    console.log(`  VF: ${poolVF.length} preguntas`);
+    console.log(`  Identificación: ${rocasIdentificacion.length} rocas`);
+</script>
+</body>
+</html>
