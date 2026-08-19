@@ -1,0 +1,1674 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover, user-scalable=yes">
+    <title>Unit 3 · Getting Around Town</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        /* ===== RESET & BASE ===== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0b1a2e 0%, #1a2f3f 40%, #0f1e2b 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        .slides-container {
+            position: relative;
+            width: 100%;
+            max-width: 1200px;
+            height: 90vh;
+            max-height: 820px;
+            margin: 0 auto;
+            overflow: hidden;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.7);
+            background: #0b1a2e;
+            border-radius: 32px;
+            border: 1px solid rgba(255,255,255,0.06);
+        }
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* ===== SLIDES ===== */
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 2rem 2.8rem;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s ease-in-out;
+            overflow-y: auto;
+            background: #0b1a2e;
+            border-radius: 32px;
+            color: #e2e8f0;
+        }
+        .slide.active { opacity: 1; visibility: visible; z-index: 10; }
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #1a2f3f; border-radius: 8px; }
+        .slide::-webkit-scrollbar-thumb { background: #00b4d8; border-radius: 8px; }
+
+        /* ===== TYPOGRAPHY ===== */
+        .badge {
+            background: rgba(0, 180, 216, 0.2);
+            color: #00b4d8;
+            padding: 0.25rem 1.2rem;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.7rem;
+            display: inline-block;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            margin-bottom: 0.8rem;
+            border: 1px solid rgba(0, 180, 216, 0.2);
+        }
+        .badge-gold { background: rgba(244, 206, 80, 0.15); color: #f4ce50; border-color: rgba(244, 206, 80, 0.2); }
+        .badge-purple { background: rgba(162, 155, 254, 0.15); color: #a29bfe; border-color: rgba(162, 155, 254, 0.2); }
+        .badge-green { background: rgba(85, 239, 196, 0.15); color: #55efc4; border-color: rgba(85, 239, 196, 0.2); }
+        .badge-rose { background: rgba(233, 69, 96, 0.15); color: #e94560; border-color: rgba(233, 69, 96, 0.2); }
+
+        h1 {
+            font-size: 2.6rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00b4d8, #f4ce50, #00b4d8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 0.3rem;
+            line-height: 1.15;
+        }
+        h2 {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: #f4ce50;
+            border-left: 5px solid #00b4d8;
+            padding-left: 1rem;
+            margin: 1.2rem 0 1rem 0;
+        }
+        h3 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #a29bfe;
+            margin: 1rem 0 0.6rem 0;
+        }
+        h4 {
+            font-size: 1.05rem;
+            font-weight: 600;
+            color: #f4ce50;
+            margin: 0.8rem 0 0.4rem 0;
+        }
+        .subtitle {
+            font-size: 1.1rem;
+            color: #b2bec3;
+            margin-bottom: 0.5rem;
+        }
+
+        /* ===== CARDS & BOXES ===== */
+        .info-box {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 20px;
+            padding: 1.2rem;
+            margin: 0.8rem 0;
+        }
+        .info-box.blue { border-left: 4px solid #00b4d8; background: rgba(0, 180, 216, 0.06); }
+        .info-box.gold { border-left: 4px solid #f4ce50; background: rgba(244, 206, 80, 0.06); }
+        .info-box.purple { border-left: 4px solid #a29bfe; background: rgba(162, 155, 254, 0.06); }
+        .info-box.green { border-left: 4px solid #55efc4; background: rgba(85, 239, 196, 0.06); }
+        .info-box.rose { border-left: 4px solid #e94560; background: rgba(233, 69, 96, 0.06); }
+        .info-box.quote {
+            border-left: 4px solid #f4ce50;
+            background: rgba(244, 206, 80, 0.04);
+            font-style: italic;
+            font-size: 0.95rem;
+        }
+
+        .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 0.8rem 0; }
+        .grid-3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin: 0.8rem 0; }
+        .grid-4 { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.8rem; margin: 0.8rem 0; }
+
+        .card {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 16px;
+            padding: 1rem;
+            transition: all 0.2s;
+        }
+        .card:hover { background: rgba(255, 255, 255, 0.07); transform: translateY(-2px); }
+        .card .icon { font-size: 1.8rem; margin-bottom: 0.4rem; }
+        .card .title { font-weight: 700; color: #f4ce50; font-size: 0.95rem; }
+        .card .desc { font-size: 0.85rem; color: #b2bec3; margin-top: 0.3rem; line-height: 1.5; }
+
+        /* ===== TABLES ===== */
+        .lit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0.8rem 0;
+            font-size: 0.85rem;
+        }
+        .lit-table th {
+            background: rgba(0, 180, 216, 0.2);
+            color: #f4ce50;
+            padding: 0.6rem;
+            text-align: left;
+            font-weight: 700;
+            border-bottom: 2px solid #00b4d8;
+        }
+        .lit-table td {
+            padding: 0.5rem 0.6rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            vertical-align: top;
+        }
+        .lit-table tr:hover td { background: rgba(255, 255, 255, 0.02); }
+
+        /* ===== HIGHLIGHTS ===== */
+        .highlight-blue { color: #00b4d8; font-weight: 600; }
+        .highlight-gold { color: #f4ce50; font-weight: 600; }
+        .highlight-purple { color: #a29bfe; font-weight: 600; }
+        .highlight-green { color: #55efc4; font-weight: 600; }
+        .highlight-rose { color: #e94560; font-weight: 600; }
+
+        /* ===== QUOTE BOX ===== */
+        .quote-box {
+            background: rgba(244, 206, 80, 0.05);
+            border: 1px solid rgba(244, 206, 80, 0.15);
+            border-radius: 16px;
+            padding: 1.2rem;
+            margin: 0.8rem 0;
+            position: relative;
+        }
+        .quote-box::before {
+            content: '"';
+            font-size: 3rem;
+            color: rgba(244, 206, 80, 0.15);
+            position: absolute;
+            top: 0.2rem;
+            left: 0.6rem;
+            font-family: Georgia, serif;
+        }
+        .quote-box .quote-text {
+            font-family: 'Georgia', serif;
+            font-size: 1.05rem;
+            font-style: italic;
+            color: #f4ce50;
+            padding-left: 1.5rem;
+        }
+        .quote-box .quote-source {
+            font-size: 0.8rem;
+            color: #b2bec3;
+            text-align: right;
+            margin-top: 0.4rem;
+            font-style: normal;
+        }
+
+        /* ===== VOCAB LIST ===== */
+        .vocab-list {
+            list-style: none;
+            padding: 0;
+        }
+        .vocab-list li {
+            padding: 0.3rem 0.6rem;
+            margin: 0.2rem 0;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 8px;
+            font-size: 0.85rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+        .vocab-list li .word { font-weight: 600; color: #f4ce50; }
+        .vocab-list li .meaning { color: #b2bec3; font-size: 0.8rem; }
+        .vocab-list li .trans { color: #55efc4; font-size: 0.8rem; }
+
+        .tag {
+            display: inline-block;
+            padding: 0.15rem 0.6rem;
+            border-radius: 20px;
+            font-size: 0.6rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin: 0.1rem 0.2rem;
+        }
+        .tag-blue { background: rgba(0, 180, 216, 0.2); color: #00b4d8; }
+        .tag-gold { background: rgba(244, 206, 80, 0.2); color: #f4ce50; }
+        .tag-purple { background: rgba(162, 155, 254, 0.2); color: #a29bfe; }
+        .tag-green { background: rgba(85, 239, 196, 0.15); color: #55efc4; }
+        .tag-rose { background: rgba(233, 69, 96, 0.2); color: #e94560; }
+
+        .example-box {
+            background: rgba(0, 180, 216, 0.05);
+            border: 1px solid rgba(0, 180, 216, 0.15);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+        }
+        .example-box .en { color: #f4ce50; font-weight: 500; }
+        .example-box .es { color: #b2bec3; font-size: 0.9rem; }
+
+        /* ===== DIALOGUE BOX ===== */
+        .dialogue-box {
+            background: rgba(162, 155, 254, 0.05);
+            border: 1px solid rgba(162, 155, 254, 0.15);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin: 0.5rem 0;
+        }
+        .dialogue-box .speaker { color: #a29bfe; font-weight: 600; }
+        .dialogue-box .line { color: #e2e8f0; margin: 0.2rem 0; }
+        .dialogue-box .trans { color: #b2bec3; font-size: 0.85rem; }
+
+        /* ===== NAVIGATION ===== */
+        .nav-buttons {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+        .nav-btn {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            cursor: pointer;
+            font-size: 1.3rem;
+            transition: all 0.2s ease;
+            color: #b2bec3;
+            backdrop-filter: blur(10px);
+        }
+        .nav-btn:hover { background: #00b4d8; color: white; transform: scale(1.05); border-color: #00b4d8; }
+        .nav-btn:disabled { opacity: 0.3; cursor: not-allowed; transform: none !important; }
+
+        .action-buttons {
+            position: absolute;
+            bottom: 20px;
+            left: 20px;
+            z-index: 20;
+            display: flex;
+            gap: 12px;
+        }
+        .action {
+            background: rgba(255, 255, 255, 0.06);
+            color: #b2bec3;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 10px 18px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            backdrop-filter: blur(10px);
+            font-family: 'Inter', sans-serif;
+        }
+        .action:hover { background: #00b4d8; color: white; transform: translateY(-2px); }
+
+        .dots {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 10px;
+            z-index: 20;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 255, 255, 0.12);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        .dot.active-dot { background: #00b4d8; width: 28px; border-radius: 12px; }
+
+        .theme-card {
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            border-radius: 12px;
+            padding: 0.8rem 1rem;
+            margin: 0.4rem 0;
+        }
+        .theme-card .theme-name { font-weight: 700; color: #f4ce50; font-size: 1rem; }
+        .theme-card .theme-desc { font-size: 0.85rem; color: #b2bec3; margin-top: 0.2rem; line-height: 1.5; }
+
+        @media (max-width: 768px) {
+            .slide { padding: 1.2rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.4rem; }
+            .grid-2, .grid-3, .grid-4 { grid-template-columns: 1fr; }
+            .action { padding: 6px 12px; font-size: 0.7rem; }
+            .nav-btn { width: 40px; height: 40px; font-size: 1rem; }
+            .lit-table { font-size: 0.7rem; }
+            .lit-table th, .lit-table td { padding: 0.3rem 0.4rem; }
+        }
+        @media (max-width: 480px) {
+            .slide { padding: 0.8rem; }
+            h1 { font-size: 1.4rem; }
+            h2 { font-size: 1.1rem; padding-left: 0.6rem; }
+            .badge { font-size: 0.55rem; padding: 0.15rem 0.8rem; }
+            .info-box { padding: 0.8rem; }
+            .quote-box .quote-text { font-size: 0.9rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="slides-container">
+    <div class="slides-wrapper" id="slidesWrapper">
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 0 - PORTADA -->
+        <!-- ============================================================ -->
+        <div class="slide active" data-index="0">
+            <div class="badge">🚀 English · 9th Grade</div>
+            <h1>Unit 3 · Getting Around Town</h1>
+            <p class="subtitle" style="font-size:1.2rem; color:#b2bec3;">
+                <strong style="color:#f4ce50;">Transport, mobility, and urban life</strong>
+            </p>
+            <div style="margin-top:1rem; display:flex; flex-wrap:wrap; gap:0.6rem;">
+                <span class="tag tag-blue">🚌 Transport</span>
+                <span class="tag tag-gold">📖 Vocabulary</span>
+                <span class="tag tag-purple">📝 Grammar</span>
+                <span class="tag tag-green">🌱 Sustainability</span>
+                <span class="tag tag-rose">🌍 Culture</span>
+            </div>
+            <div class="info-box blue" style="margin-top:1.5rem;">
+                <i class="fas fa-bus" style="color:#00b4d8;"></i>
+                <strong style="color:#00b4d8;">What you will learn:</strong><br>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                ✅ Discuss transport and mobility in cities<br>
+                ✅ Expand vocabulary: transport, movement, problems &amp; solutions<br>
+                ✅ Master future forms: Present Simple, be going to, will<br>
+                ✅ Use imperatives and modal verbs effectively<br>
+                ✅ Explore sustainability, technology, and culture<br>
+                ✅ Write a formal letter proposing improvements
+                </span>
+            </div>
+            <div style="margin-top:auto; text-align:center; padding:0.5rem; color:#636e72; font-size:0.8rem;">
+                <i class="fas fa-arrow-right"></i> Press ▶ or swipe to begin
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 1 - INTRODUCTION: WHY TRANSPORT MATTERS -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="1">
+            <div class="badge badge-gold">🌍 Introduction</div>
+            <h2>Why Does Transport Matter?</h2>
+            <p style="color:#b2bec3; margin-bottom:1rem;">
+                Transport is essential for modern life. It connects people, places, and opportunities.
+            </p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🏙️</div>
+                    <div class="title">Urban Mobility</div>
+                    <div class="desc">
+                        In cities, millions of people move every day. Efficient transport systems are vital for economic growth, social inclusion, and quality of life.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">La movilidad urbana es clave para el desarrollo de las ciudades.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🌱</div>
+                    <div class="title">Environmental Impact</div>
+                    <div class="desc">
+                        Transport is responsible for about 25% of global CO₂ emissions. Choosing sustainable options like walking, cycling, and public transport is essential for the planet.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">El transporte sostenible es crucial para reducir el impacto ambiental.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">👥</div>
+                    <div class="title">Social Equality</div>
+                    <div class="desc">
+                        Access to affordable, reliable transport determines opportunities for education, work, and social life. Young people and low-income groups are often the most affected.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">El transporte accesible es una cuestión de igualdad social.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">📱</div>
+                    <div class="title">Technology &amp; Innovation</div>
+                    <div class="desc">
+                        From apps to electric vehicles, technology is transforming how we travel. The future of transport is connected, autonomous, and shared.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">La tecnología está revolucionando la movilidad.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box gold">
+                <i class="fas fa-lightbulb" style="color:#f4ce50;"></i>
+                <strong style="color:#f4ce50;">Think about it:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                How do you get to school? What do you like or dislike about your daily journey?
+                <br><span style="color:#55efc4;">¿Cómo vas a la escuela? ¿Qué te gusta o no te gusta de tu viaje diario?</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 2 - VOCABULARY: TYPES OF TRANSPORT -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="2">
+            <div class="badge">📚 Vocabulary</div>
+            <h2>Types of Transport</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Different ways to get around the city.</p>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon">🚌</div>
+                    <div class="title">Public Transport</div>
+                    <div class="desc">
+                        <strong>bus</strong> · <strong>train</strong> · <strong>metro / subway</strong> · <strong>tram</strong> · <strong>ferry</strong>
+                        <br><span style="color:#55efc4; font-size:0.75rem;">autobús, tren, metro, tranvía, ferry</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚲</div>
+                    <div class="title">Active Transport</div>
+                    <div class="desc">
+                        <strong>walking</strong> · <strong>cycling</strong> · <strong>scooter</strong> · <strong>skateboard</strong>
+                        <br><span style="color:#55efc4; font-size:0.75rem;">caminar, bicicleta, patinete, patineta</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚗</div>
+                    <div class="title">Private Transport</div>
+                    <div class="desc">
+                        <strong>car</strong> · <strong>motorbike</strong> · <strong>taxi</strong> · <strong>rideshare</strong> (Uber, Cabify)
+                        <br><span style="color:#55efc4; font-size:0.75rem;">coche, moto, taxi, vehículo de ridesharing</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">⚡</div>
+                    <div class="title">Electric &amp; New</div>
+                    <div class="desc">
+                        <strong>electric scooter</strong> · <strong>e-bike</strong> · <strong>hoverboard</strong> · <strong>autonomous car</strong>
+                        <br><span style="color:#55efc4; font-size:0.75rem;">patinete eléctrico, bicicleta eléctrica, hoverboard, coche autónomo</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚢</div>
+                    <div class="title">Water Transport</div>
+                    <div class="desc">
+                        <strong>boat</strong> · <strong>ferry</strong> · <strong>water taxi</strong> · <strong>hovercraft</strong>
+                        <br><span style="color:#55efc4; font-size:0.75rem;">barco, ferry, taxi acuático, aerodeslizador</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">✈️</div>
+                    <div class="title">Air Transport</div>
+                    <div class="desc">
+                        <strong>plane</strong> · <strong>helicopter</strong> · <strong>drone</strong> · <strong>air taxi</strong>
+                        <br><span style="color:#55efc4; font-size:0.75rem;">avión, helicóptero, dron, taxi aéreo</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> I usually take the <strong>metro</strong> to school because it's faster than the <strong>bus</strong>.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> Normalmente tomo el <strong>metro</strong> para ir a la escuela porque es más rápido que el <strong>autobús</strong>.</div>
+            </div>
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> Many people are switching to <strong>electric scooters</strong> for short trips.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> Muchas personas están cambiando a <strong>patinetes eléctricos</strong> para viajes cortos.</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 3 - VOCABULARY: PARTS OF THE CITY -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="3">
+            <div class="badge">📚 Vocabulary</div>
+            <h2>Parts of the City</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Essential places and infrastructure for getting around.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🛣️</div>
+                    <div class="title">Roads &amp; Streets</div>
+                    <div class="desc">
+                        <strong>street / road</strong> · <strong>avenue</strong> · <strong>boulevard</strong> · <strong>alley</strong> · <strong>motorway / highway</strong> · <strong>roundabout</strong> · <strong>crosswalk / pedestrian crossing</strong>
+                        <br><span style="color:#55efc4; font-size:0.75rem;">calle, avenida, bulevar, callejón, autopista, rotonda, paso de peatones</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🏗️</div>
+                    <div class="title">Infrastructure</div>
+                    <div class="desc">
+                        <strong>bridge</strong> · <strong>tunnel</strong> · <strong>overpass</strong> · <strong>cycle lane</strong> · <strong>bus stop</strong> · <strong>train station</strong> · <strong>underground station</strong> · <strong>parking lot</strong>
+                        <br><span style="color:#55efc4; font-size:0.75rem;">puente, túnel, paso elevado, carril bici, parada de autobús, estación de tren, estación de metro, estacionamiento</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🏙️</div>
+                    <div class="title">Urban Spaces</div>
+                    <div class="desc">
+                        <strong>square / plaza</strong> · <strong>park</strong> · <strong>pedestrian zone</strong> · <strong>market</strong> · <strong>shopping centre</strong>
+                        <br><span style="color:#55efc4; font-size:0.75rem;">plaza, parque, zona peatonal, mercado, centro comercial</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚦</div>
+                    <div class="title">Traffic &amp; Safety</div>
+                    <div class="desc">
+                        <strong>traffic light</strong> · <strong>road sign</strong> · <strong>speed bump</strong> · <strong>guardrail</strong> · <strong>pavement / sidewalk</strong>
+                        <br><span style="color:#55efc4; font-size:0.75rem;">semáforo, señal de tráfico, badén / reductor de velocidad, barrera, acera / vereda</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> Turn left at the <strong>roundabout</strong> and drive past the <strong>shopping centre</strong>.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> Gira a la izquierda en la <strong>rotonda</strong> y pasa por delante del <strong>centro comercial</strong>.</div>
+            </div>
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> Cyclists should always use the <strong>cycle lane</strong> for safety.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> Los ciclistas siempre deben usar el <strong>carril bici</strong> por seguridad.</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 4 - VOCABULARY: TRANSPORT COLLOCATIONS -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="4">
+            <div class="badge">📚 Vocabulary</div>
+            <h2>Transport Collocations</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Common verb + noun combinations used with transport.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <div class="title">Common Collocations</div>
+                    <div class="desc">
+                        <strong>arrive on time</strong> — llegar a tiempo<br>
+                        <strong>be delayed</strong> — estar retrasado<br>
+                        <strong>get a lift</strong> — recibir un aventón<br>
+                        <strong>pay a fare</strong> — pagar el boleto<br>
+                        <strong>look up a timetable</strong> — buscar un horario<br>
+                        <strong>set off for school</strong> — salir rumbo a la escuela<br>
+                        <strong>queue for a bus</strong> — hacer fila para el autobús<br>
+                        <strong>find the best route</strong> — encontrar la mejor ruta
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚫</div>
+                    <div class="title">Problem Collocations</div>
+                    <div class="desc">
+                        <strong>be stuck in traffic</strong> — estar atrapado en el tráfico<br>
+                        <strong>miss the bus/train</strong> — perder el autobús/tren<br>
+                        <strong>get lost</strong> — perderse<br>
+                        <strong>run out of fuel</strong> — quedarse sin combustible<br>
+                        <strong>have a flat tyre</strong> — tener un neumático pinchado<br>
+                        <strong>break down</strong> — averiarse<br>
+                        <strong>get a ticket / fine</strong> — recibir una multa
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> I <strong>set off for school</strong> at 7:15 am, but I often <strong>get stuck in traffic</strong>.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> <strong>Salgo para la escuela</strong> a las 7:15 am, pero a menudo <strong>me quedo atrapado en el tráfico</strong>.</div>
+            </div>
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> If you <strong>look up the timetable</strong>, you won't <strong>miss the train</strong>.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> Si <strong>buscas el horario</strong>, no <strong>perderás el tren</strong>.</div>
+            </div>
+
+            <div class="info-box gold">
+                <i class="fas fa-lightbulb" style="color:#f4ce50;"></i>
+                <strong style="color:#f4ce50;">Tip:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Learn collocations as complete phrases, not as separate words. They sound more natural to native speakers.
+                <br><span style="color:#55efc4;">Aprende las colocaciones como frases completas, no como palabras sueltas. Suenan más naturales.</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 5 - VOCABULARY: MOVEMENT VERBS -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="5">
+            <div class="badge">📚 Vocabulary</div>
+            <h2>Verbs of Movement</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Describe how you move around the city.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🚶</div>
+                    <div class="title">Walking &amp; Moving</div>
+                    <div class="desc">
+                        <strong>walk along</strong> — caminar a lo largo de<br>
+                        <strong>walk past</strong> — caminar pasando por<br>
+                        <strong>walk across</strong> — caminar a través de<br>
+                        <strong>go through</strong> — atravesar<br>
+                        <strong>cross over</strong> — cruzar<br>
+                        <strong>turn around</strong> — darse la vuelta<br>
+                        <strong>look around</strong> — mirar alrededor<br>
+                        <strong>go towards</strong> — ir hacia
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚌</div>
+                    <div class="title">Vehicles &amp; Transport</div>
+                    <div class="desc">
+                        <strong>get on</strong> — subir (bus/tren/avión)<br>
+                        <strong>get off</strong> — bajar (bus/tren/avión)<br>
+                        <strong>get into</strong> — entrar (coche/taxi)<br>
+                        <strong>get out of</strong> — salir de (coche/taxi)<br>
+                        <strong>take off</strong> — despegar (avión)<br>
+                        <strong>land</strong> — aterrizar (avión)<br>
+                        <strong>accelerate</strong> — acelerar<br>
+                        <strong>brake</strong> — frenar
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> <strong>Walk along</strong> the river and <strong>go through</strong> the park to get to the station.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> <strong>Camina</strong> a lo largo del río y <strong>atraviesa</strong> el parque para llegar a la estación.</div>
+            </div>
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> <strong>Get on</strong> the bus at the stop and <strong>get off</strong> at the third stop.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> <strong>Sube</strong> al autobús en la parada y <strong>bájate</strong> en la tercera parada.</div>
+            </div>
+
+            <div class="dialogue-box">
+                <div class="speaker">👤 Person A:</div>
+                <div class="line">"Excuse me, how do I get to the museum?"</div>
+                <div class="trans">"Disculpe, ¿cómo llego al museo?"</div>
+                <div class="speaker" style="margin-top:0.3rem;">👤 Person B:</div>
+                <div class="line">"<strong>Walk past</strong> the church, <strong>cross over</strong> the bridge, and you'll see it."</div>
+                <div class="trans">"<strong>Pase</strong> por delante de la iglesia, <strong>cruza</strong> el puente, y lo verá."</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 6 - VOCABULARY: PROBLEMS AND SOLUTIONS -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="6">
+            <div class="badge badge-rose">🚨 Vocabulary</div>
+            <h2>Problems &amp; Solutions</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Common transport issues and how to solve them.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🚦</div>
+                    <div class="title">Problems</div>
+                    <div class="desc">
+                        <strong>traffic jam</strong> — atascos / embotellamientos<br>
+                        <strong>rush hour</strong> — hora punta<br>
+                        <strong>roadworks</strong> — obras en la carretera<br>
+                        <strong>accident</strong> — accidente<br>
+                        <strong>overcrowding</strong> — sobrepoblación / aglomeración<br>
+                        <strong>pollution</strong> — contaminación<br>
+                        <strong>noise pollution</strong> — contaminación acústica<br>
+                        <strong>lack of parking</strong> — falta de estacionamiento
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">💡</div>
+                    <div class="title">Solutions</div>
+                    <div class="desc">
+                        <strong>carpooling / car-sharing</strong> — compartir coche<br>
+                        <strong>bike-sharing</strong> — bicicletas compartidas<br>
+                        <strong>electric vehicles</strong> — vehículos eléctricos<br>
+                        <strong>pedestrianisation</strong> — peatonalización<br>
+                        <strong>improved public transport</strong> — transporte público mejorado<br>
+                        <strong>cycle lanes</strong> — carriles bici<br>
+                        <strong>congestion charge</strong> — peaje por congestión<br>
+                        <strong>green spaces</strong> — espacios verdes
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> During <strong>rush hour</strong>, the city is full of <strong>traffic jams</strong>. We need more <strong>cycle lanes</strong> and <strong>better public transport</strong>.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> Durante la <strong>hora punta</strong>, la ciudad está llena de <strong>atascos</strong>. Necesitamos más <strong>carriles bici</strong> y un <strong>mejor transporte público</strong>.</div>
+            </div>
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> <strong>Carpooling</strong> and <strong>electric vehicles</strong> can reduce <strong>pollution</strong> in cities.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> <strong>Compartir coche</strong> y los <strong>vehículos eléctricos</strong> pueden reducir la <strong>contaminación</strong> en las ciudades.</div>
+            </div>
+
+            <div class="info-box green">
+                <i class="fas fa-recycle" style="color:#55efc4;"></i>
+                <strong style="color:#55efc4;">Think about it:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                What transport problems exist in your city? What solutions would you propose?
+                <br><span style="color:#55efc4;">¿Qué problemas de transporte existen en tu ciudad? ¿Qué soluciones propondrías?</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 7 - GRAMMAR: PRESENT SIMPLE FOR FUTURE -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="7">
+            <div class="badge">📝 Grammar</div>
+            <h2>Present Simple for Future</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">
+                We use the <strong>present simple</strong> to talk about <strong>timetables, schedules</strong> and <strong>fixed future events</strong>.
+            </p>
+
+            <div class="info-box blue">
+                <i class="fas fa-clock" style="color:#00b4d8;"></i>
+                <strong style="color:#00b4d8;">RULE:</strong>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                Use the present simple for events that depend on a clock or calendar — not personal plans.
+                <br><span style="color:#55efc4;">Usa el presente simple para eventos que dependen de un reloj o calendario — no para planes personales.</span>
+                </span>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <div class="title">Correct Uses</div>
+                    <div class="desc">
+                        <strong>The train leaves at 6 pm.</strong><br>
+                        <span style="color:#55efc4;">El tren sale a las 6 pm.</span><br><br>
+                        <strong>What time does the film start?</strong><br>
+                        <span style="color:#55efc4;">¿A qué hora empieza la película?</span><br><br>
+                        <strong>My class finishes at 12:30 tomorrow.</strong><br>
+                        <span style="color:#55efc4;">Mi clase termina a las 12:30 mañana.</span><br><br>
+                        <strong>The museum opens at 10 am on Sundays.</strong><br>
+                        <span style="color:#55efc4;">El museo abre a las 10 am los domingos.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">❌</div>
+                    <div class="title">Common Mistakes</div>
+                    <div class="desc">
+                        <strong style="color:#e94560;">I will leave at 8 am.</strong> <span style="color:#b2bec3;">→ Use present simple for fixed schedules.</span><br>
+                        <span style="color:#55efc4;">Usa presente simple para horarios fijos.</span><br><br>
+                        <strong style="color:#e94560;">What time does the film starts?</strong> <span style="color:#b2bec3;">→ No "s" on the main verb in questions.</span><br>
+                        <span style="color:#55efc4;">Sin "s" en el verbo principal en preguntas.</span><br><br>
+                        <strong style="color:#e94560;">The bus is going to arrive at 8 am.</strong> <span style="color:#b2bec3;">→ Use present simple for timetables.</span><br>
+                        <span style="color:#55efc4;">Usa presente simple para horarios.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> The plane <strong>departs</strong> at 9:15 am and <strong>arrives</strong> in Paris at 11:30 am.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> El avión <strong>sale</strong> a las 9:15 am y <strong>llega</strong> a París a las 11:30 am.</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 8 - GRAMMAR: BE GOING TO -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="8">
+            <div class="badge">📝 Grammar</div>
+            <h2>Be Going To</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">
+                We use <strong>be going to</strong> to talk about <strong>plans and intentions</strong> for the future.
+            </p>
+
+            <div class="info-box purple">
+                <i class="fas fa-calendar" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">RULE:</strong>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                Use "be going to" + infinitive for personal plans, intentions, and things you have decided to do.
+                <br><span style="color:#55efc4;">Usa "be going to" + infinitivo para planes personales, intenciones y cosas que has decidido hacer.</span>
+                </span>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <div class="title">Examples</div>
+                    <div class="desc">
+                        <strong>I'm going to visit my grandma this weekend.</strong><br>
+                        <span style="color:#55efc4;">Voy a visitar a mi abuela este fin de semana.</span><br><br>
+                        <strong>We're going to take the train to the beach.</strong><br>
+                        <span style="color:#55efc4;">Vamos a tomar el tren a la playa.</span><br><br>
+                        <strong>She's going to study engineering at university.</strong><br>
+                        <span style="color:#55efc4;">Ella va a estudiar ingeniería en la universidad.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">📝</div>
+                    <div class="title">Form</div>
+                    <div class="desc">
+                        <strong>Subject + be (am/is/are) + going to + infinitive</strong><br><br>
+                        <strong>I am going to walk to school.</strong><br>
+                        <span style="color:#55efc4;">Voy a caminar a la escuela.</span><br><br>
+                        <strong>They are not going to take the bus.</strong><br>
+                        <span style="color:#55efc4;">No van a tomar el autobús.</span><br><br>
+                        <strong>Are you going to cycle there?</strong><br>
+                        <span style="color:#55efc4;">¿Vas a ir en bicicleta allí?</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> I <strong>am going to hire</strong> a bike to explore the city tomorrow.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> <strong>Voy a alquilar</strong> una bicicleta para explorar la ciudad mañana.</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 9 - GRAMMAR: WILL -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="9">
+            <div class="badge">📝 Grammar</div>
+            <h2>Will</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">
+                We use <strong>will</strong> for <strong>predictions, promises, offers, spontaneous decisions</strong>, and <strong>facts about the future</strong>.
+            </p>
+
+            <div class="info-box rose">
+                <i class="fas fa-star" style="color:#e94560;"></i>
+                <strong style="color:#e94560;">RULE:</strong>
+                <span style="color:#b2bec3; font-size:0.9rem;">
+                Use "will" + infinitive for predictions, promises, offers, and decisions made at the moment of speaking.
+                <br><span style="color:#55efc4;">Usa "will" + infinitivo para predicciones, promesas, ofrecimientos y decisiones tomadas en el momento de hablar.</span>
+                </span>
+            </div>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🔮</div>
+                    <div class="title">Predictions</div>
+                    <div class="desc">
+                        <strong>I think electric cars will become more popular.</strong><br>
+                        <span style="color:#55efc4;">Creo que los coches eléctricos serán más populares.</span><br><br>
+                        <strong>The traffic will be terrible at rush hour.</strong><br>
+                        <span style="color:#55efc4;">El tráfico será terrible en hora punta.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🤝</div>
+                    <div class="title">Promises &amp; Offers</div>
+                    <div class="desc">
+                        <strong>I will call you when I arrive.</strong><br>
+                        <span style="color:#55efc4;">Te llamaré cuando llegue.</span><br><br>
+                        <strong>I will help you carry your bags.</strong><br>
+                        <span style="color:#55efc4;">Te ayudaré a llevar tus bolsas.</span><br><br>
+                        <strong>Don't worry, I will give you a lift.</strong><br>
+                        <span style="color:#55efc4;">No te preocupes, te llevaré en coche.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> "I don't have a ticket." — "Don't worry, I <strong>will buy</strong> one for you."</div>
+                <div class="es"><i class="fas fa-quote-right"></i> "No tengo boleto." — "No te preocupes, <strong>te compraré</strong> uno."</div>
+            </div>
+
+            <div class="info-box gold">
+                <i class="fas fa-lightbulb" style="color:#f4ce50;"></i>
+                <strong style="color:#f4ce50;">Contrast:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                <strong>Present Simple:</strong> fixed schedule <em>(The train leaves at 6 pm.)</em><br>
+                <strong>Be going to:</strong> plan/intention <em>(I'm going to take the train.)</em><br>
+                <strong>Will:</strong> prediction/promise/offer <em>(I think it will be on time.)</em>
+                <br><span style="color:#55efc4;">Presente Simple: horario fijo / Be going to: plan / Will: predicción/promesa/ofrecimiento.</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 10 - GRAMMAR: THE IMPERATIVE -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="10">
+            <div class="badge">📝 Grammar</div>
+            <h2>The Imperative</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">
+                We use the imperative for <strong>directions, orders, warnings</strong> and <strong>suggestions</strong>.
+            </p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <div class="title">Affirmative</div>
+                    <div class="desc">
+                        <strong>Use the base form of the verb.</strong><br>
+                        "<strong>Turn</strong> left at the traffic light."<br>
+                        <span style="color:#55efc4;">Gira a la izquierda en el semáforo.</span><br><br>
+                        "<strong>Walk</strong> along the river."<br>
+                        <span style="color:#55efc4;">Camina a lo largo del río.</span><br><br>
+                        "<strong>Get</strong> on the bus at the station."<br>
+                        <span style="color:#55efc4;">Sube al autobús en la estación.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚫</div>
+                    <div class="title">Negative</div>
+                    <div class="desc">
+                        <strong>Don't + verb</strong><br>
+                        "<strong>Don't cross</strong> the road here."<br>
+                        <span style="color:#55efc4;">No cruces la calle aquí.</span><br><br>
+                        "<strong>Don't forget</strong> your ticket."<br>
+                        <span style="color:#55efc4;">No olvides tu boleto.</span><br><br>
+                        "<strong>Don't run</strong> in the station."<br>
+                        <span style="color:#55efc4;">No corras en la estación.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">👥</div>
+                    <div class="title">Suggestions (Let's)</div>
+                    <div class="desc">
+                        <strong>Let's + verb</strong><br>
+                        "<strong>Let's take</strong> the bus."<br>
+                        <span style="color:#55efc4;">Tomemos el autobús.</span><br><br>
+                        "<strong>Let's go</strong> through the park."<br>
+                        <span style="color:#55efc4;">Atravesemos el parque.</span><br><br>
+                        "<strong>Let's hire</strong> a bike."<br>
+                        <span style="color:#55efc4;">Alquilemos una bicicleta.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">⚠️</div>
+                    <div class="title">Warnings</div>
+                    <div class="desc">
+                        <strong>Be careful!</strong><br>
+                        "<strong>Be</strong> careful! The floor is wet."<br>
+                        <span style="color:#55efc4;">¡Ten cuidado! El suelo está mojado.</span><br><br>
+                        "<strong>Watch out</strong> for the traffic!"<br>
+                        <span style="color:#55efc4;">¡Cuidado con el tráfico!</span><br><br>
+                        "<strong>Mind</strong> the gap!" (on the train)<br>
+                        <span style="color:#55efc4;">¡Cuidado con el hueco!</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> <strong>Go</strong> straight ahead, <strong>walk past</strong> the church, and <strong>turn</strong> right.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> <strong>Sigue</strong> recto, <strong>pasa</strong> por delante de la iglesia y <strong>gira</strong> a la derecha.</div>
+            </div>
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> <strong>Don't miss</strong> the last train! <strong>Let's hurry</strong> to the station.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> ¡<strong>No pierdas</strong> el último tren! <strong>Apresurémonos</strong> a la estación.</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 11 - GRAMMAR: MODAL VERBS FOR TRANSPORT -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="11">
+            <div class="badge">📝 Grammar</div>
+            <h2>Modal Verbs for Transport</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">
+                Modals express <strong>possibility, necessity, permission, ability</strong> and <strong>obligation</strong>.
+            </p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🟢</div>
+                    <div class="title">Possibility &amp; Permission</div>
+                    <div class="desc">
+                        <strong>Can / Could</strong> — permission, ability, possibility<br>
+                        "<strong>Can</strong> I get a discount with my student ID?"<br>
+                        <span style="color:#55efc4;">¿Puedo obtener un descuento con mi carnet de estudiante?</span><br><br>
+                        "<strong>Could</strong> you tell me the way to the station?"<br>
+                        <span style="color:#55efc4;">¿Podrías decirme el camino a la estación?</span><br><br>
+                        "<strong>May</strong> I have a map of the city?"<br>
+                        <span style="color:#55efc4;">¿Puedo tener un mapa de la ciudad?</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🔴</div>
+                    <div class="title">Obligation &amp; Necessity</div>
+                    <div class="desc">
+                        <strong>Must / Should</strong> — obligation, advice, recommendation<br>
+                        "You <strong>must</strong> buy a ticket before you get on the train."<br>
+                        <span style="color:#55efc4;">Debes comprar un boleto antes de subir al tren.</span><br><br>
+                        "You <strong>should</strong> take the metro; it's faster."<br>
+                        <span style="color:#55efc4;">Deberías tomar el metro; es más rápido.</span><br><br>
+                        "You <strong>mustn't</strong> use your phone while driving."<br>
+                        <span style="color:#55efc4;">No debes usar el teléfono mientras conduces.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> You <strong>can</strong> buy tickets online, but you <strong>must</strong> print them before the trip.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> <strong>Puedes</strong> comprar boletos en línea, pero <strong>debes</strong> imprimirlos antes del viaje.</div>
+            </div>
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> <strong>Could</strong> you tell me if this bus goes to the city centre?</div>
+                <div class="es"><i class="fas fa-quote-right"></i> ¿<strong>Podrías</strong> decirme si este autobús va al centro de la ciudad?</div>
+            </div>
+
+            <div class="info-box purple">
+                <i class="fas fa-lightbulb" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">Modal Verbs Summary:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                <strong>Can:</strong> ability, permission, possibility<br>
+                <strong>Could:</strong> polite request, possibility, past ability<br>
+                <strong>May:</strong> formal permission, possibility<br>
+                <strong>Must:</strong> strong obligation, rule<br>
+                <strong>Should:</strong> advice, recommendation
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 12 - ORACY: EXPRESSING OPINIONS -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="12">
+            <div class="badge badge-purple">🗣️ Oracy</div>
+            <h2>Expressing Opinions</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Use these phrases to share your thoughts and respond to others.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">💬</div>
+                    <div class="title">Giving Opinions</div>
+                    <div class="desc">
+                        <strong>In my opinion...</strong> — En mi opinión...<br>
+                        <strong>As far as I'm concerned...</strong> — Por lo que a mí respecta...<br>
+                        <strong>I believe that...</strong> — Creo que...<br>
+                        <strong>From my point of view...</strong> — Desde mi punto de vista...<br>
+                        <strong>It seems to me that...</strong> — Me parece que...<br>
+                        <strong>Personally, I think...</strong> — Personalmente, creo...
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">👂</div>
+                    <div class="title">Responding to Opinions</div>
+                    <div class="desc">
+                        <strong>I think so, too.</strong> — Yo también lo creo.<br>
+                        <strong>You're right.</strong> — Tienes razón.<br>
+                        <strong>That's a good point.</strong> — Es un buen punto.<br>
+                        <strong>I agree with you.</strong> — Estoy de acuerdo contigo.<br>
+                        <strong>I'm not sure about that because...</strong> — No estoy seguro de eso porque...<br>
+                        <strong>I see your point, but...</strong> — Entiendo tu punto, pero...
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialogue-box">
+                <div class="speaker">👤 Person A:</div>
+                <div class="line">"<strong>In my opinion</strong>, cycling is the best way to get around the city. It's healthy and eco-friendly."</div>
+                <div class="trans">"<strong>En mi opinión</strong>, la bicicleta es la mejor forma de moverse por la ciudad. Es saludable y ecológica."</div>
+                <div class="speaker" style="margin-top:0.3rem;">👤 Person B:</div>
+                <div class="line">"<strong>I agree with you</strong>, but it can be dangerous if there aren't enough cycle lanes."</div>
+                <div class="trans">"<strong>Estoy de acuerdo contigo</strong>, pero puede ser peligroso si no hay suficientes carriles bici."</div>
+                <div class="speaker" style="margin-top:0.3rem;">👤 Person C:</div>
+                <div class="line">"<strong>That's a good point</strong>. The city should invest more in cycling infrastructure."</div>
+                <div class="trans">"<strong>Es un buen punto</strong>. La ciudad debería invertir más en infraestructura para bicicletas."</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 13 - ORACY: NEGOTIATING & AGREEING -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="13">
+            <div class="badge badge-purple">🗣️ Oracy</div>
+            <h2>Negotiating &amp; Agreeing</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Use these phrases to negotiate, make suggestions, and reach agreements.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🤝</div>
+                    <div class="title">Negotiating</div>
+                    <div class="desc">
+                        <strong>How about we...?</strong> — ¿Qué tal si...?<br>
+                        <strong>We could always...</strong> — Siempre podríamos...<br>
+                        <strong>What if we...?</strong> — ¿Y si...?<br>
+                        <strong>Perhaps we could...</strong> — Quizás podríamos...<br>
+                        <strong>Would you prefer to...?</strong> — ¿Preferirías...?<br>
+                        <strong>I understand, but...</strong> — Entiendo, pero...
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">✅</div>
+                    <div class="title">Agreeing &amp; Compromising</div>
+                    <div class="desc">
+                        <strong>That sounds good.</strong> — Suena bien.<br>
+                        <strong>I'm on board with that.</strong> — Estoy de acuerdo con eso.<br>
+                        <strong>We're in agreement.</strong> — Estamos de acuerdo.<br>
+                        <strong>Let's go with that.</strong> — Vayamos con eso.<br>
+                        <strong>That seems reasonable.</strong> — Parece razonable.<br>
+                        <strong>I think we've reached an agreement.</strong> — Creo que hemos llegado a un acuerdo.
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialogue-box">
+                <div class="speaker">👤 Person A:</div>
+                <div class="line">"<strong>How about we</strong> take the bus to the city centre and then walk to the museum?"</div>
+                <div class="trans">"<strong>¿Qué tal si</strong> tomamos el autobús al centro y luego caminamos al museo?"</div>
+                <div class="speaker" style="margin-top:0.3rem;">👤 Person B:</div>
+                <div class="line">"<strong>We could always</strong> take the metro instead. It's faster."</div>
+                <div class="trans">"<strong>Siempre podríamos</strong> tomar el metro. Es más rápido."</div>
+                <div class="speaker" style="margin-top:0.3rem;">👤 Person A:</div>
+                <div class="line">"<strong>I understand</strong>, but the metro station is far from the museum. <strong>What if we</strong> take the bus and walk 10 minutes?"</div>
+                <div class="trans">"<strong>Entiendo</strong>, pero la estación de metro está lejos del museo. <strong>¿Y si</strong> tomamos el autobús y caminamos 10 minutos?"</div>
+                <div class="speaker" style="margin-top:0.3rem;">👤 Person B:</div>
+                <div class="line">"<strong>That sounds good</strong>. Let's do that."</div>
+                <div class="trans">"<strong>Suena bien</strong>. Hagamos eso."</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 14 - ORACY: POLITE REQUESTS & APOLOGIES -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="14">
+            <div class="badge badge-purple">🗣️ Oracy</div>
+            <h2>Polite Requests &amp; Apologies</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Being polite is essential when interacting with strangers in transport situations.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🙏</div>
+                    <div class="title">Polite Requests</div>
+                    <div class="desc">
+                        <strong>Can I have...?</strong> — ¿Puedo tener...?<br>
+                        <strong>Could you...?</strong> — ¿Podrías...?<br>
+                        <strong>Would you mind...?</strong> — ¿Te importaría...?<br>
+                        <strong>I'd like to..., please.</strong> — Me gustaría..., por favor.<br>
+                        <strong>Could you tell me...?</strong> — ¿Podrías decirme...?<br>
+                        <strong>Is it possible to...?</strong> — ¿Es posible...?
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">😊</div>
+                    <div class="title">Apologies &amp; Thanks</div>
+                    <div class="desc">
+                        <strong>I'm sorry, but...</strong> — Lo siento, pero...<br>
+                        <strong>I do apologize.</strong> — Disculpa.<br>
+                        <strong>I'm terribly sorry.</strong> — Lo siento muchísimo.<br>
+                        <strong>I didn't mean to...</strong> — No fue mi intención...<br>
+                        <strong>Thanks a million!</strong> — ¡Muchísimas gracias!<br>
+                        <strong>I really appreciate it.</strong> — Lo aprecio mucho.
+                    </div>
+                </div>
+            </div>
+
+            <div class="dialogue-box">
+                <div class="speaker">👤 Person A:</div>
+                <div class="line">"<strong>Excuse me, could you tell me</strong> which bus goes to the train station?"</div>
+                <div class="trans">"<strong>Disculpe, ¿podría decirme</strong> qué autobús va a la estación de tren?"</div>
+                <div class="speaker" style="margin-top:0.3rem;">👤 Person B:</div>
+                <div class="line">"<strong>Certainly</strong>. You need to take bus number 42."</div>
+                <div class="trans">"<strong>Claro</strong>. Necesitas tomar el autobús número 42."</div>
+                <div class="speaker" style="margin-top:0.3rem;">👤 Person A:</div>
+                <div class="line">"<strong>I'm terribly sorry</strong> to bother you, but <strong>could you tell me</strong> where the bus stop is?"</div>
+                <div class="trans">"<strong>Disculpe las molestias</strong>, pero <strong>¿podría decirme</strong> dónde está la parada de autobús?"</div>
+                <div class="speaker" style="margin-top:0.3rem;">👤 Person B:</div>
+                <div class="line">"It's just around the corner. <strong>Don't worry</strong>."</div>
+                <div class="trans">"Está a la vuelta de la esquina. <strong>No se preocupe</strong>."</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 15 - READING: COOL CITY APPS -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="15">
+            <div class="badge badge-gold">📖 Reading</div>
+            <h2>Cool City Apps!</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">We spoke to teenagers around the world about the apps they use to get around cities.</p>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon">🎫</div>
+                    <div class="title">Event Apps</div>
+                    <div class="desc">
+                        Find concerts, sports games and festivals happening today.<br>
+                        They tell you how near you are to events and sell tickets.<br>
+                        Some give voice instructions for directions.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Encuentra conciertos, deportes y festivales. Venden entradas y dan indicaciones.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚶</div>
+                    <div class="title">Walking Apps</div>
+                    <div class="desc">
+                        Free maps to explore big cities.<br>
+                        Some include games where you get points for walking past important places!<br>
+                        Others tell interactive stories as you walk along historical streets.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Mapas gratuitos con juegos e historias interactivas para explorar la ciudad.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🏃</div>
+                    <div class="title">Running Apps</div>
+                    <div class="desc">
+                        Combine exercise with fun!<br>
+                        A lion can appear on your map and tell you to run!<br>
+                        Discover street art and places tourists don't normally see.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Combina ejercicio con diversión. ¡Un león te dice que corras! Descubre arte callejero.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box green">
+                <i class="fas fa-question-circle" style="color:#55efc4;"></i>
+                <strong style="color:#55efc4;">Discussion:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Which app would you like to try? Why? Are these apps popular in your area?<br>
+                <span style="color:#55efc4;">¿Qué aplicación te gustaría probar? ¿Por qué? ¿Son populares estas aplicaciones en tu área?</span>
+                </span>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> <strong>Walking apps</strong> are great because they are <strong>free</strong> and <strong>educational</strong>. You can learn about the city while exercising!</div>
+                <div class="es"><i class="fas fa-quote-right"></i> <strong>Las aplicaciones para caminar</strong> son geniales porque son <strong>gratuitas</strong> y <strong>educativas</strong>. ¡Puedes aprender sobre la ciudad mientras haces ejercicio!</div>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 16 - READING: SUSTAINABLE TRANSPORT -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="16">
+            <div class="badge badge-green">🌱 Reading</div>
+            <h2>Sustainable Transport Around the World</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Different cities are adopting innovative solutions for sustainable mobility.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🇳🇱</div>
+                    <div class="title">Amsterdam, Netherlands</div>
+                    <div class="desc">
+                        <strong>Cycling capital</strong> of the world. Over 60% of journeys are made by bike.<br>
+                        Extensive network of <strong>cycle lanes</strong> and <strong>bike parking</strong> facilities.<br>
+                        Electric cargo bikes are becoming popular for deliveries.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Capital mundial de la bicicleta. Más del 60% de los viajes se hacen en bici.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🇯🇵</div>
+                    <div class="title">Tokyo, Japan</div>
+                    <div class="desc">
+                        World's most efficient <strong>public transport</strong> system.<br>
+                        Trains arrive every 2-3 minutes and are <strong>always on time</strong>.<br>
+                        Many people use <strong>electric bikes</strong> for short trips.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">El sistema de transporte público más eficiente del mundo. Los trenes siempre llegan a tiempo.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🇨🇴</div>
+                    <div class="title">Medellín, Colombia</div>
+                    <div class="desc">
+                        Famous for its <strong>cable car system</strong> connecting hillside communities.<br>
+                        Integrated with metro, buses, and bike lanes.<br>
+                        Reduced travel time and improved access for low-income areas.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Famoso por su sistema de teleférico que conecta comunidades en las colinas.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🇬🇧</div>
+                    <div class="title">London, UK</div>
+                    <div class="desc">
+                        <strong>Congestion charge</strong> reduces traffic in the city centre.<br>
+                        Extensive <strong>cycle hire</strong> network (Boris Bikes).<br>
+                        Investment in <strong>electric buses</strong> and low-emission zones.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Peaje por congestión y red de alquiler de bicicletas. Inversión en autobuses eléctricos.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box gold">
+                <i class="fas fa-lightbulb" style="color:#f4ce50;"></i>
+                <strong style="color:#f4ce50;">Reflection:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                What can your city learn from these examples? Which solution would work best in your area?
+                <br><span style="color:#55efc4;">¿Qué puede aprender tu ciudad de estos ejemplos? ¿Qué solución funcionaría mejor en tu área?</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 17 - READING: THE FUTURE OF TRANSPORT -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="17">
+            <div class="badge badge-rose">🚀 Reading</div>
+            <h2>The Future of Transport</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Incredible innovations are shaping how we will travel in the coming decades.</p>
+
+            <div class="grid-3">
+                <div class="card">
+                    <div class="icon">🚗</div>
+                    <div class="title">Autonomous Vehicles</div>
+                    <div class="desc">
+                        Self-driving cars are already being tested in many cities.<br>
+                        They could reduce accidents, traffic jams, and parking problems.<br>
+                        However, there are concerns about safety and job losses.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Coches autónomos que podrían reducir accidentes y atascos.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🚀</div>
+                    <div class="title">Hyperloop</div>
+                    <div class="desc">
+                        A high-speed transport system using pods in vacuum tubes.<br>
+                        Could travel at speeds of over 1,000 km/h!<br>
+                        Could connect cities in minutes instead of hours.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Sistema de transporte de alta velocidad en tubos al vacío. ¡Más de 1.000 km/h!</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🛸</div>
+                    <div class="title">Flying Taxis</div>
+                    <div class="desc">
+                        Electric vertical take-off and landing vehicles (eVTOL).<br>
+                        Companies like Uber and Airbus are developing them.<br>
+                        Could reduce traffic on the ground but raise safety concerns.
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Taxis voladores eléctricos que podrían reducir el tráfico en tierra.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box purple">
+                <i class="fas fa-question-circle" style="color:#a29bfe;"></i>
+                <strong style="color:#a29bfe;">Debate:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Which future transport innovation excites you most? Which one worries you? Why?
+                <br><span style="color:#55efc4;">¿Qué innovación de transporte del futuro te entusiasma más? ¿Cuál te preocupa? ¿Por qué?</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 18 - WRITING: FORMAL LETTER -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="18">
+            <div class="badge">✍️ Writing</div>
+            <h2>Writing a Formal Letter</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">
+                Write a <strong>formal letter to the mayor</strong> proposing improvements to transport in your city.
+            </p>
+
+            <div class="info-box blue">
+                <i class="fas fa-pen" style="color:#00b4d8;"></i>
+                <strong style="color:#00b4d8;">Structure of a Formal Letter:</strong>
+                <div style="color:#b2bec3; font-size:0.85rem; margin-top:0.5rem; line-height:1.8;">
+                    <strong>1. Sender's Address:</strong> Your address (top right)<br>
+                    <strong>2. Date:</strong> The date you're writing<br>
+                    <strong>3. Recipient's Address:</strong> The mayor's office (left)<br>
+                    <strong>4. Salutation:</strong> Dear Mayor [Name],<br>
+                    <strong>5. Introduction:</strong> State why you are writing<br>
+                    <strong>6. Body:</strong> Describe the problem and your proposed solution<br>
+                    <strong>7. Conclusion:</strong> Request action and thank them<br>
+                    <strong>8. Closing:</strong> Yours sincerely / Yours faithfully<br>
+                    <strong>9. Signature:</strong> Your full name
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en" style="font-weight:600;">Sample Introduction:</div>
+                <div class="en"><i class="fas fa-quote-left"></i> I am writing to express my concern about the transport situation for young people in our city. Many students rely on public transport to get to school, but the buses are often delayed and overcrowded.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> Escribo para expresar mi preocupación por la situación del transporte para los jóvenes en nuestra ciudad. Muchos estudiantes dependen del transporte público para ir a la escuela, pero los autobuses a menudo llegan tarde y están abarrotados.</div>
+            </div>
+
+            <div class="example-box">
+                <div class="en" style="font-weight:600;">Sample Conclusion:</div>
+                <div class="en"><i class="fas fa-quote-left"></i> I would like to request that you consider investing in more cycle lanes and improving the frequency of buses during rush hour. I look forward to your response.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> Me gustaría solicitar que considere invertir en más carriles bici y mejorar la frecuencia de los autobuses durante la hora punta. Quedo atento a su respuesta.</div>
+            </div>
+
+            <div class="info-box gold">
+                <i class="fas fa-lightbulb" style="color:#f4ce50;"></i>
+                <strong style="color:#f4ce50;">Language Tip:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                Use formal language: <strong>"I would like to suggest..."</strong> instead of <strong>"I think..."</strong>.<br>
+                Use <strong>"Firstly", "Furthermore", "In addition"</strong> to structure your arguments.
+                <br><span style="color:#55efc4;">Usa lenguaje formal: "Me gustaría sugerir..." en lugar de "Creo que...". Usa conectores para estructurar tus argumentos.</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 19 - SUSTAINABILITY & SAFETY -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="19">
+            <div class="badge badge-green">🌱 Sustainability</div>
+            <h2>Sustainability &amp; Road Safety</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">Key concepts for responsible urban mobility.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">🌍</div>
+                    <div class="title">Sustainable Mobility</div>
+                    <div class="desc">
+                        <strong>What is sustainable transport?</strong><br>
+                        Transport that has low impact on the environment, is affordable, and accessible to all.<br><br>
+                        <strong>Key principles:</strong><br>
+                        • Reduce carbon emissions<br>
+                        • Promote active transport (walking, cycling)<br>
+                        • Invest in public transport<br>
+                        • Use renewable energy<br>
+                        • Reduce traffic congestion<br>
+                        <span style="color:#55efc4; font-size:0.75rem;">Transporte con bajo impacto ambiental, asequible y accesible para todos.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🛡️</div>
+                    <div class="title">Road Safety</div>
+                    <div class="desc">
+                        <strong>Essential rules:</strong><br>
+                        • Always wear a helmet when cycling.<br>
+                        • Use crosswalks to cross the street.<br>
+                        • Follow traffic lights and road signs.<br>
+                        • Don't use your phone while walking near traffic.<br>
+                        • Be aware of your surroundings.<br>
+                        • Wear bright clothing at night.<br>
+                        <span style="color:#55efc4; font-size:0.75rem;">Reglas esenciales: usa casco, cruza por los pasos peatonales, sigue las señales, no uses el teléfono cerca del tráfico.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <div class="en"><i class="fas fa-quote-left"></i> <strong>Always wear</strong> a helmet when cycling. <strong>Don't use</strong> your phone while crossing the street.</div>
+                <div class="es"><i class="fas fa-quote-right"></i> <strong>Siempre usa</strong> casco cuando vayas en bicicleta. <strong>No uses</strong> el teléfono mientras cruzas la calle.</div>
+            </div>
+
+            <div class="info-box green">
+                <i class="fas fa-recycle" style="color:#55efc4;"></i>
+                <strong style="color:#55efc4;">Your commitment:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                What can you do to make your daily transport more sustainable and safer?
+                <br><span style="color:#55efc4;">¿Qué puedes hacer para que tu transporte diario sea más sostenible y seguro?</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 20 - TECHNOLOGY & CULTURE -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="20">
+            <div class="badge badge-purple">📱 Technology</div>
+            <h2>Technology &amp; Culture in Transport</h2>
+            <p style="color:#b2bec3; margin-bottom:0.8rem;">How technology and culture shape the way we move.</p>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">📱</div>
+                    <div class="title">Technology</div>
+                    <div class="desc">
+                        <strong>Navigation apps:</strong> Google Maps, Waze, Citymapper<br>
+                        <strong>Ride-hailing apps:</strong> Uber, Cabify, Didi<br>
+                        <strong>Bike-sharing apps:</strong> Lime, Bird, Mobike<br>
+                        <strong>Smart ticketing:</strong> Contactless payments, QR codes<br>
+                        <strong>Real-time tracking:</strong> Live bus/train arrival times<br>
+                        <strong>EV charging:</strong> Apps to find charging stations
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Aplicaciones de navegación, ridesharing, bicicletas compartidas, pago sin contacto, seguimiento en tiempo real.</span>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🌍</div>
+                    <div class="title">Culture &amp; Transport</div>
+                    <div class="desc">
+                        <strong>Japan:</strong> Punctuality, silence on trains, queuing<br>
+                        <strong>Netherlands:</strong> Cycling as a way of life, bike culture<br>
+                        <strong>Italy:</strong> Walking, scooters, bustling streets<br>
+                        <strong>UK:</strong> Double-decker buses, the Tube, courtesy<br>
+                        <strong>Chile:</strong> Transantiago, micros, walking culture<br>
+                        <strong>Colombia:</strong> Cable cars, Ciclovía (car-free Sundays)
+                        <br><span style="color:#55efc4; font-size:0.75rem;">Cada país tiene una cultura de transporte única: puntualidad en Japón, bicicletas en Países Bajos, autobuses de dos pisos en Reino Unido.</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box gold">
+                <i class="fas fa-lightbulb" style="color:#f4ce50;"></i>
+                <strong style="color:#f4ce50;">Discussion:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                What transport apps do you use? How do you think culture affects the way people travel?<br>
+                <span style="color:#55efc4;">¿Qué aplicaciones de transporte usas? ¿Cómo crees que la cultura afecta la forma en que las personas viajan?</span>
+                </span>
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- SLIDE 21 - WRAP UP -->
+        <!-- ============================================================ -->
+        <div class="slide" data-index="21">
+            <div class="badge badge-gold">🎯 Wrap Up</div>
+            <h2>What You Have Learned</h2>
+
+            <div class="grid-2">
+                <div class="card">
+                    <div class="icon">📚</div>
+                    <div class="title">Vocabulary</div>
+                    <div class="desc">
+                        Types of transport · Parts of the city · Transport collocations · Movement verbs · Transport problems &amp; solutions · Sustainable transport terms
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">📝</div>
+                    <div class="title">Grammar</div>
+                    <div class="desc">
+                        Present Simple for future · Be going to · Will · The Imperative · Modal verbs (can, could, must, should, may, might)
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">🗣️</div>
+                    <div class="title">Oracy</div>
+                    <div class="desc">
+                        Expressing opinions · Responding to opinions · Negotiating &amp; agreeing · Polite requests · Apologies &amp; thanks
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="icon">✍️</div>
+                    <div class="title">Writing</div>
+                    <div class="desc">
+                        Formal letter structure · Formal language · Proposing solutions · Using connectors (Firstly, Furthermore, In addition)
+                    </div>
+                </div>
+            </div>
+
+            <div class="info-box blue">
+                <i class="fas fa-check-circle" style="color:#00b4d8;"></i>
+                <strong style="color:#00b4d8;">Now you can:</strong>
+                <span style="color:#b2bec3; font-size:0.85rem;">
+                ✅ Discuss transport and mobility in cities<br>
+                ✅ Use a wide range of transport vocabulary<br>
+                ✅ Use future forms and imperatives correctly<br>
+                ✅ Write a formal letter proposing improvements<br>
+                ✅ Understand sustainability and road safety<br>
+                ✅ Compare transport in different cultures
+                </span>
+            </div>
+
+            <div style="text-align:center; margin-top:0.8rem; color:#b2bec3; font-size:0.85rem;">
+                <i class="fas fa-arrow-right"></i> Go to the exercises page to test your understanding!
+            </div>
+        </div>
+
+    </div>
+
+    <!-- ===== NAVIGATION ===== -->
+    <div class="nav-buttons">
+        <button class="nav-btn" id="prevSlide"><i class="fas fa-chevron-left"></i></button>
+        <button class="nav-btn" id="nextSlide"><i class="fas fa-chevron-right"></i></button>
+    </div>
+
+    <div class="dots" id="dotsContainer"></div>
+
+    <div class="action-buttons">
+        <button class="action" id="goToCourseBtn"><i class="fas fa-book-open"></i> Course</button>
+        <button class="action" id="goToExercisesBtn"><i class="fas fa-pen-alt"></i> Exercises</button>
+    </div>
+</div>
+
+<script>
+    // ============================================================
+    // NAVIGATION LOGIC
+    // ============================================================
+    const slides = document.querySelectorAll('.slide');
+    let currentIdx = 0;
+    const totalSlides = slides.length;
+
+    function updateSlides() {
+        slides.forEach((slide, idx) => {
+            slide.classList.toggle('active', idx === currentIdx);
+        });
+        updateDots();
+        updateButtons();
+    }
+
+    function nextSlide() {
+        if (currentIdx < totalSlides - 1) { currentIdx++; updateSlides(); }
+    }
+    function prevSlide() {
+        if (currentIdx > 0) { currentIdx--; updateSlides(); }
+    }
+
+    function updateDots() {
+        const container = document.getElementById('dotsContainer');
+        container.innerHTML = '';
+        for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.classList.add('dot');
+            if (i === currentIdx) dot.classList.add('active-dot');
+            dot.addEventListener('click', () => { currentIdx = i; updateSlides(); });
+            container.appendChild(dot);
+        }
+    }
+
+    function updateButtons() {
+        document.getElementById('prevSlide').disabled = currentIdx === 0;
+        document.getElementById('nextSlide').disabled = currentIdx === totalSlides - 1;
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') { e.preventDefault(); nextSlide(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prevSlide(); }
+    });
+
+    let touchStartX = 0, touchEndX = 0;
+    const container = document.querySelector('.slides-container');
+    container.addEventListener('touchstart', (e) => { touchStartX = e.changedTouches[0].screenX; });
+    container.addEventListener('touchend', (e) => {
+        touchEndX = e.changedTouches[0].screenX;
+        if (touchEndX < touchStartX - 40) nextSlide();
+        if (touchEndX > touchStartX + 40) prevSlide();
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Ingles.html';
+    });
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_9A_Ingles.html';
+    });
+
+    updateDots();
+    updateButtons();
+</script>
+</body>
+</html>
