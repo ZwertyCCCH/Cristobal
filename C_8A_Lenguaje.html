@@ -1,0 +1,2146 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ejercicios: El extraño caso del Dr. Jekyll y Mr. Hyde | Lengua 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', 'Segoe UI', serif;
+            background: #fef6f0;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: #fffaf6;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #f0cfb0;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #d9531e;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #b5431a;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .subtitle {
+            color: #c95a1c;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #fef0e6;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #f0cfb0;
+            color: #8a3c10;
+        }
+
+        .section {
+            background: #fefcf8;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #d9531e;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #c4450c;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf8;
+            border-radius: 1rem;
+            border: 2px solid #f0cfb0;
+            transition: border-color 0.3s;
+        }
+
+        .question.correcta {
+            border-color: #2d8f5c;
+            background: #edf7f0;
+        }
+
+        .question.incorrecta {
+            border-color: #c4450c;
+            background: #fce8e0;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3a2a1a;
+            font-size: 1.05rem;
+        }
+
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+
+        .options-grid .option-btn {
+            background: #fef0e6;
+            border: 2px solid #f0cfb0;
+            border-radius: 0.8rem;
+            padding: 0.5rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.95rem;
+            text-align: left;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .options-grid .option-btn:hover {
+            background: #fce4d0;
+            border-color: #c9753c;
+        }
+
+        .options-grid .option-btn.selected {
+            background: #d9531e;
+            border-color: #d9531e;
+            color: white;
+        }
+
+        .options-grid .option-btn.correct-answer {
+            background: #2d8f5c;
+            border-color: #2d8f5c;
+            color: white;
+        }
+
+        .options-grid .option-btn.wrong-answer {
+            background: #c4450c;
+            border-color: #c4450c;
+            color: white;
+        }
+
+        .options-grid .option-btn.disabled {
+            cursor: default;
+            opacity: 0.9;
+        }
+
+        .vf-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            max-width: 400px;
+            margin: 0.5rem 0;
+        }
+
+        .vf-grid .vf-btn {
+            background: #fef0e6;
+            border: 2px solid #f0cfb0;
+            border-radius: 0.8rem;
+            padding: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+            text-align: center;
+            font-weight: 600;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .vf-grid .vf-btn:hover {
+            background: #fce4d0;
+            border-color: #c9753c;
+        }
+
+        .vf-grid .vf-btn.selected-v {
+            background: #2d8f5c;
+            border-color: #2d8f5c;
+            color: white;
+        }
+
+        .vf-grid .vf-btn.selected-f {
+            background: #c4450c;
+            border-color: #c4450c;
+            color: white;
+        }
+
+        .vf-grid .vf-btn.correct-answer {
+            background: #2d8f5c;
+            border-color: #2d8f5c;
+            color: white;
+        }
+
+        .vf-grid .vf-btn.wrong-answer {
+            background: #c4450c;
+            border-color: #c4450c;
+            color: white;
+        }
+
+        .vf-grid .vf-btn.disabled {
+            cursor: default;
+            opacity: 0.9;
+        }
+
+        .correcciones-container {
+            margin-top: 0.8rem;
+            padding: 0.8rem;
+            background: #fdf5ee;
+            border-radius: 0.8rem;
+            border: 1px solid #f0cfb0;
+            display: none;
+        }
+
+        .correcciones-container.visible {
+            display: block;
+        }
+
+        .correcciones-container .label {
+            font-weight: 600;
+            color: #b5431a;
+            margin-bottom: 0.5rem;
+            font-size: 0.95rem;
+        }
+
+        .correcciones-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 0.5rem;
+        }
+
+        .correcciones-grid .corr-btn {
+            background: #fffaf6;
+            border: 2px solid #f0cfb0;
+            border-radius: 0.8rem;
+            padding: 0.5rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.95rem;
+            text-align: left;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .correcciones-grid .corr-btn:hover {
+            background: #fce4d0;
+            border-color: #c9753c;
+        }
+
+        .correcciones-grid .corr-btn.selected {
+            background: #d9531e;
+            border-color: #d9531e;
+            color: white;
+        }
+
+        .correcciones-grid .corr-btn.correct-answer {
+            background: #2d8f5c;
+            border-color: #2d8f5c;
+            color: white;
+        }
+
+        .correcciones-grid .corr-btn.wrong-answer {
+            background: #c4450c;
+            border-color: #c4450c;
+            color: white;
+        }
+
+        .correcciones-grid .corr-btn.disabled {
+            cursor: default;
+            opacity: 0.9;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .btn-evaluate:hover {
+            background: #d95b2b;
+            transform: scale(1.02);
+        }
+
+        .btn-evaluate:disabled {
+            background: #b0a07c;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef0e6;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #d9531e;
+        }
+
+        .results.visible {
+            display: block;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3a2a1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #f0cfb0;
+            color: #8a3c10;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .action-btn:hover {
+            background: #e0b48a;
+            color: #5a2a0a;
+        }
+
+        .feedback-text {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .feedback-text.correcta {
+            color: #2d6a2d;
+        }
+
+        .feedback-text.incorrecta {
+            color: #b33;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .question-number {
+            color: #b5431a;
+            font-weight: 700;
+        }
+
+        .respuesta-marcada {
+            font-size: 0.9rem;
+            color: #5a3a1a;
+            margin-top: 0.3rem;
+            padding: 0.3rem 0.6rem;
+            background: #fdf5ee;
+            border-radius: 0.4rem;
+            display: inline-block;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 0.8rem; }
+            .container { padding: 1rem; }
+            h1 { font-size: 1.5rem; }
+            .info-bar { flex-direction: column; text-align: center; }
+            .btn-evaluate { width: 100%; }
+            .options-grid { grid-template-columns: 1fr; }
+            .vf-grid { max-width: 100%; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 Ejercicios: El extraño caso del Dr. Jekyll y Mr. Hyde</h1>
+        <div class="subtitle">Análisis de la obra | 7° Básico | Lengua y Literatura</div>
+        <div class="subtitle">Colegio Pedro de Valdivia</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (25 preguntas) + Verdadero/Falso (25 preguntas)</div>
+        <div>✅ Exigencia: 60% para nota 4.0 | Nota máxima: 7.0</div>
+        <div>📝 Total de preguntas: 50</div>
+    </div>
+
+    <div id="examContent">
+        <!-- ============================================ -->
+        <!-- SECCIÓN I: SELECCIÓN MÚLTIPLE (25 preguntas) -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple (25 preguntas)</div>
+            <p style="color: #7a4a2a; font-size: 0.95rem; margin-bottom: 1rem;">Selecciona la opción correcta para cada pregunta.</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECCIÓN II: VERDADERO O FALSO (25 preguntas) -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title">⚖️ II. Verdadero o Falso (25 preguntas)</div>
+            <p style="color: #7a4a2a; font-size: 0.95rem; margin-bottom: 1rem;">
+                Primero selecciona si la afirmación es <strong>Verdadera</strong> o <strong>Falsa</strong>. 
+                Si seleccionas <strong>Falso</strong>, deberás elegir la opción de corrección correcta.
+            </p>
+            <div id="verdaderoFalso"></div>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Lengua y Literatura 7° Básico | Colegio Pedro de Valdivia</div>
+</div>
+
+<script>
+    // =============================================
+    // POOL DE PREGUNTAS DE SELECCIÓN MÚLTIPLE (60)
+    // =============================================
+    const poolAlternativas = [
+        // Bloque 1: Personajes y sus características (1-12)
+        {
+            pregunta: "¿Cómo describe Enfield a Mr. Hyde cuando lo ve por primera vez?",
+            opciones: [
+                "Como un hombre alto, elegante y de buenos modales que inspira respeto",
+                "Como un hombre que inspira repulsión sin que se pueda explicar por qué",
+                "Como un anciano bondadoso que camina con dificultad",
+                "Como un joven tímido, callado y de aspecto frágil que da mucha desconfianza"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué profesión tiene Gabriel John Utterson?",
+            opciones: [
+                "Médico especialista en enfermedades respiratorias",
+                "Abogado dedicado a temas de herencias",
+                "Científico investigador en química",
+                "Profesor de literatura clásica"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cómo reacciona Utterson la primera vez que ve a Hyde?",
+            opciones: [
+                "Siente lástima por su aspecto desaliñado",
+                "Siente curiosidad por conocerlo mejor",
+                "Siente una profunda repulsión y miedo",
+                "Siente indiferencia y sigue su camino"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué le dice Jekyll a Utterson sobre su relación con Hyde?",
+            opciones: [
+                "Que Hyde es su enemigo y quiere destruirlo, sin importar las consecuencias",
+                "Que siente un tremendo afecto por él y que no puede deshacerse de él",
+                "Que Hyde es su empleado y hace los trabajos sucios",
+                "Que Hyde es su hermano perdido hace muchos años"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué característica física tienen en común las personas que ven a Hyde?",
+            opciones: [
+                "Todas lo describen como un hombre apuesto y bien parecido",
+                "Todas sienten una sensación de deformidad sin poder precisar qué es",
+                "Todas dicen que es muy alto, de complexión robusta y siempre vestido formalmente",
+                "Todas afirman que es calvo y de edad avanzada"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué personaje es descrito como 'un hombre de cara arrugada, jamás iluminada por una sonrisa'?",
+            opciones: [
+                "El Dr. Jekyll, el famoso científico londinense",
+                "Mr. Hyde, el misterioso visitante nocturno",
+                "Gabriel John Utterson, el abogado de confianza",
+                "El Dr. Lanyon, el médico racionalista"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué hace Hyde cuando Enfield lo confronta por el atropello de la niña?",
+            opciones: [
+                "Intenta huir corriendo por las calles oscuras",
+                "Se ofrece a pagar una compensación económica",
+                "Golpea a Enfield y lo deja inconsciente",
+                "Niega haber hecho algo malo y se retira"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cómo describe el Dr. Lanyon a Jekyll cuando Utterson lo visita?",
+            opciones: [
+                "Como un gran amigo y colega de confianza",
+                "Como alguien que se ha vuelto demasiado extravagante para él",
+                "Como un científico brillante y respetado",
+                "Como un hombre honesto, recto en todo momento e introvertido"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué le dice Hyde a Utterson cuando se encuentran frente a la puerta del laboratorio?",
+            opciones: [
+                "Que lo estaba esperando para conversar sobre algo importante",
+                "Que Jekyll no está en casa en ese momento",
+                "Que quiere ser su amigo y confidente personal",
+                "Que lo está buscando para causarle mucho daño"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cuál es la actitud de Poole hacia Hyde?",
+            opciones: [
+                "Lo admira profundamente y lo respeta",
+                "Lo teme y desconfía de sus intenciones",
+                "Lo considera un buen amigo de su amo",
+                "Lo ignora por completo y no le habla"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué le pide Jekyll a Utterson que haga en caso de que él desaparezca?",
+            opciones: [
+                "Que destruya todas sus investigaciones científicas",
+                "Que proteja los intereses de Hyde en todo momento",
+                "Que se case con su prima y herede su fortuna",
+                "Que venda todas sus propiedades y se vaya"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué personaje se desmaya al presenciar el asesinato de Sir Danvers Carew?",
+            opciones: [
+                "El Dr. Lanyon, que estaba cerca del lugar",
+                "La camarera que miraba desde su ventana",
+                "Utterson, que llegó minutos después",
+                "Enfield, que pasaba por la calle"
+            ],
+            correcta: 1
+        },
+        // Bloque 2: Acciones y eventos importantes (13-24)
+        {
+            pregunta: "¿Qué sucede cuando Enfield y Hyde chocan en la calle?",
+            opciones: [
+                "Hyde se disculpa cortésmente y se retira",
+                "Hyde pisotea a la niña caída y sigue caminando",
+                "Hyde ayuda a la niña a levantarse del suelo",
+                "Hyde huye despavorido sin mirar atrás"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Dónde consigue Hyde el dinero para pagar la compensación a la niña?",
+            opciones: [
+                "En su casa de Soho donde vive escondido",
+                "En la puerta trasera del laboratorio de Jekyll",
+                "En un banco cercano donde tiene una cuenta",
+                "En la casa de Utterson cuando nadie mira"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué descubre Utterson cuando visita la casa de Hyde en Soho?",
+            opciones: [
+                "Que Hyde vive en la pobreza absoluta y eso no le complace",
+                "Que las habitaciones están amuebladas con lujo y buen gusto",
+                "Que la casa está vacía y completamente abandonada",
+                "Que Hyde tiene una familia numerosa escondida en la ciudad"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué encuentra la policía en la chimenea de la casa de Hyde?",
+            opciones: [
+                "Dinero en efectivo escondido entre las cenizas",
+                "Un talonario de cheques que había sido quemado",
+                "Una carta de Jekyll con instrucciones secretas",
+                "El arma del crimen envuelta en un paño"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué ocurre cuando Lanyon recibe la carta de Jekyll pidiéndole ayuda?",
+            opciones: [
+                "La ignora por completo y sigue su vida normal",
+                "Va inmediatamente a la casa de Jekyll y cumple las instrucciones",
+                "Llama a la policía para denunciar la situación tan compleja",
+                "Le escribe una carta rechazando la petición por desconfianza de él"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cuánto tiempo tarda el herrero en abrir la puerta del laboratorio de Jekyll?",
+            opciones: [
+                "Unos minutos porque la puerta es vieja",
+                "Casi dos horas debido a la cerradura",
+                "Todo el día sin lograr abrirla",
+                "Una semana hasta que llega otro herrero"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué sucede cuando el enviado de Jekyll bebe la poción en casa de Lanyon?",
+            opciones: [
+                "Se duerme profundamente y no despierta",
+                "Se transforma en el Dr. Jekyll ante sus ojos",
+                "Se desvanece en el aire sin dejar rastro",
+                "Se convierte en una bestia salvaje e incontrolable"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué encuentra Utterson en el escritorio de Jekyll después de la muerte de Hyde?",
+            opciones: [
+                "Un testamento que lo nombra a él como heredero",
+                "Una carta de despedida para Poole y los criados",
+                "Un mapa del tesoro con indicaciones precisas",
+                "Una fotografía de Hyde con una dedicatoria"
+            ],
+            correcta: 0
+        },
+        {
+            pregunta: "¿Qué le dice Jekyll a Utterson sobre la carta que recibió de Hyde después del asesinato?",
+            opciones: [
+                "Que la escribió para amenazar su vida",
+                "Que la escribió para despedirse y asegurar que estaba a salvo",
+                "Que la escribió para pedirle más dinero",
+                "Que la escribió para confesar el crimen y entregarse a la policía"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué ocurre con el cuerpo de Jekyll al final de la novela?",
+            opciones: [
+                "Es encontrado vivo y sano en su dormitorio",
+                "Nunca se encuentra su cuerpo en ninguna parte",
+                "Es encontrado muerto en el laboratorio junto a Hyde",
+                "Es enterrado por Utterson en secreto"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cuál es la reacción de los criados cuando Utterson llega a la casa de Jekyll la última noche?",
+            opciones: [
+                "Están tranquilos y trabajando como normalmente lo hacen",
+                "Están reunidos en el atrio, asustados y llorando",
+                "Han huido de la casa y no hay nadie",
+                "Están celebrando una fiesta ruidosa"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué le dice Poole a Utterson sobre los pasos que escucha en la habitación de arriba?",
+            opciones: [
+                "Que son los pasos seguros y pesados del Dr. Jekyll",
+                "Que son pasos extrañamente elásticos y ligeros, distintos a los de Jekyll",
+                "Que no ha escuchado ningún paso en toda la noche, lo cual le parece extraño",
+                "Que son los pasos de un animal encerrado"
+            ],
+            correcta: 1
+        },
+        // Bloque 3: El laboratorio y la poción (25-36)
+        {
+            pregunta: "¿Qué contiene el cajón que Jekyll le pide a Lanyon que recoja?",
+            opciones: [
+                "Documentos legales y cartas personales",
+                "Unos polvos, una ampolla y un cuaderno",
+                "Joyas, dinero y objetos de valor",
+                "Cartas de amor y recuerdos de juventud"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué color adquiere la mezcla de la poción antes de la transformación final?",
+            opciones: [
+                "Rojo brillante como la sangre",
+                "Verde acuoso y transparente",
+                "Azul profundo como el océano",
+                "Amarillo dorado como el sol"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué ocurre cuando Jekyll bebe la poción por primera vez?",
+            opciones: [
+                "Nada, la poción no tiene ningún efecto",
+                "Experimenta espasmos atroces y se transforma en Hyde",
+                "Se desmaya y no recuerda lo que pasó en el último tiempo",
+                "Se siente más fuerte y saludable que antes"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cómo se siente Jekyll después de su primera transformación en Hyde?",
+            opciones: [
+                "Aterrorizado y profundamente arrepentido",
+                "Exultante, liberado y con energía renovada",
+                "Indiferente y sin emociones intensas",
+                "Confundido y desorientado sin saber qué pasó"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué descubre Jekyll cuando se mira al espejo después de convertirse en Hyde por primera vez?",
+            opciones: [
+                "Que es más alto, fuerte y robusto",
+                "Que es más pequeño, ágil y joven",
+                "Que no ha cambiado en absoluto",
+                "Que se ha convertido en un anciano"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué palabra aparece repetidamente en el cuaderno de notas de Jekyll?",
+            opciones: [
+                "'Éxito' junto a fechas demasiado importantes",
+                "'Fracaso' con varios signos de exclamación",
+                "'Doble' en varias anotaciones",
+                "'Poción' en todas las páginas"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué ocurre cuando Jekyll intenta usar las nuevas sales para preparar la poción?",
+            opciones: [
+                "La poción funciona mejor que antes",
+                "La poción produce una transformación incompleta",
+                "La poción no tiene ningún efecto sobre él",
+                "La poción produce una explosión peligrosa en el corto tiempo"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué le dice Jekyll a Lanyon sobre el cajón que debe recoger?",
+            opciones: [
+                "Que contiene su testamento y últimas voluntades",
+                "Que su vida, honor y razón dependen de ello",
+                "Que contiene un regalo costoso para Lanyon",
+                "Que contiene dinero para pagar una deuda"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué ingrediente clave falta en la poción cuando Jekyll intenta prepararla de nuevo?",
+            opciones: [
+                "La tintura roja que da el color y sabor a la mezcla",
+                "Las sales especiales que activan el efecto",
+                "El agua destilada para la mezcla",
+                "El alcohol que conserva la mezcla"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué le hace sospechar a Jekyll que la primera cantidad de sales era impura?",
+            opciones: [
+                "Que las nuevas sales tenían un olor diferente",
+                "Que las nuevas sales no producían el mismo efecto",
+                "Que las nuevas sales eran de un color distinto",
+                "Que las nuevas sales venían de otro proveedor"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Dónde guarda Jekyll los ingredientes para la poción?",
+            opciones: [
+                "En su dormitorio principal, guardado bajo llave",
+                "En la habitación de arriba del laboratorio",
+                "En la cocina donde prepara la comida",
+                "En el sótano oscuro y abandonado"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cómo describe Jekyll la sensación de la metamorfosis?",
+            opciones: [
+                "Como un sueño placentero y relajante",
+                "Como espasmos atroces, náusea mortal y horror",
+                "Como una sensación indolora y demasiado breve",
+                "Como una experiencia espiritual y muy divina"
+            ],
+            correcta: 1
+        },
+        // Bloque 4: La dualidad y la naturaleza humana (37-48)
+        {
+            pregunta: "¿Cuál es la teoría de Jekyll sobre la naturaleza humana?",
+            opciones: [
+                "Que el hombre es puramente bueno por naturaleza",
+                "Que el hombre es puramente malo y pecador",
+                "Que el hombre es verazmente dos naturalezas",
+                "Que el hombre es un animal sin conciencia"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué representa Hyde en relación con Jekyll?",
+            opciones: [
+                "Su hijo ilegítimo y desconocido",
+                "Su lado bueno y generoso",
+                "Su lado malo y sus instintos primarios",
+                "Su conciencia y sentido moral"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué descubre Jekyll sobre su control sobre Hyde?",
+            opciones: [
+                "Que siempre puede controlarlo con facilidad",
+                "Que poco a poco va perdiendo el control",
+                "Que Hyde nunca se manifiesta sin la poción",
+                "Que puede controlar a Hyde con la mente"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cuál es la principal diferencia entre Jekyll y Hyde según la confesión?",
+            opciones: [
+                "Hyde es más inteligente y astuto que otros personajes",
+                "Jekyll es más fuerte físicamente, así como también más cruel y despiadado",
+                "Hyde está hecho solo de mal mientras que Jekyll es una mezcla",
+                "Jekyll es más joven y apuesto"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué le sucede a Jekyll si se duerme o cabecea en su butaca?",
+            opciones: [
+                "Tiene pesadillas sobre Hyde y sus crímenes",
+                "Se despierta transformado en Hyde",
+                "Duerme profundamente sin soñar",
+                "Despierta con energía renovada"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cómo describe Jekyll los sentimientos de Hyde hacia él?",
+            opciones: [
+                "Con amor y gratitud sincera hacia su creador",
+                "Con indiferencia y despreocupación",
+                "Con odio y desprecio profundo",
+                "Con compasión y lástima"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué ocurre con las fuerzas de Jekyll y Hyde a medida que avanza la historia?",
+            opciones: [
+                "Las fuerzas de ambos se mantienen iguales a lo largo del tiempo",
+                "Las fuerzas de Jekyll aumentan y las de Hyde disminuyen",
+                "Las fuerzas de Jekyll disminuyen y las de Hyde aumentan",
+                "Ambos se debilitan al mismo ritmo"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué piensa Jekyll cuando se da cuenta de que Hyde ha empezado a crecer?",
+            opciones: [
+                "Que es una buena señal de mejoría en su salud",
+                "Que el equilibrio de su naturaleza se está trastocando",
+                "Que Hyde se está volviendo más amable y compasivo",
+                "Que debe celebrar este cambio"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cómo describe Jekyll la crueldad de Hyde?",
+            opciones: [
+                "Como un acto de justicia necesaria para la sociedad",
+                "Como la crueldad de un hombre de piedra",
+                "Como un juego infantil sin importancia para él",
+                "Como una necesidad médica inevitable"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué elemento común tienen la personalidad de Jekyll y la de Hyde?",
+            opciones: [
+                "La memoria compartida",
+                "El sentido del humor",
+                "La bondad de espíritu",
+                "La inteligencia superior"
+            ],
+            correcta: 0
+        },
+        {
+            pregunta: "¿Qué es más fuerte en Hyde según la confesión de Jekyll?",
+            opciones: [
+                "Su deseo de hacer el bien a otros",
+                "Su amor por la ciencia y el conocimiento",
+                "Su amor por la vida y la supervivencia",
+                "Su deseo de ayudar a los necesitados"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Cómo se siente Jekyll al despertar transformado en Hyde sin haber tomado la poción?",
+            opciones: [
+                "Indiferente y sin preocupación",
+                "Aterrorizado y profundamente confundido",
+                "Contento y aliviado por el cambio",
+                "Sorprendido pero feliz de ver a Hyde"
+            ],
+            correcta: 1
+        },
+        // Bloque 5: Símbolos y escenarios (49-54)
+        {
+            pregunta: "¿Qué representa la niebla en la novela?",
+            opciones: [
+                "La prosperidad económica de Londres",
+                "La confusión moral y los secretos ocultos",
+                "La claridad del pensamiento y la razón",
+                "La alegría de vivir y la esperanza"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué simboliza el laboratorio de Jekyll?",
+            opciones: [
+                "Un lugar de paz y tranquilidad para la meditación profunda",
+                "El espacio donde se traspasan los límites éticos de la ciencia",
+                "Una sala de reuniones sociales elegante y lujosa",
+                "Un dormitorio común sin importancia alguna"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué simboliza la puerta trasera de la casa de Jekyll?",
+            opciones: [
+                "La entrada a la riqueza y la prosperidad",
+                "El acceso al mundo oculto de Hyde",
+                "La salida de emergencia de la casa",
+                "La entrada principal de la vivienda"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué representa el espejo en el laboratorio de Jekyll?",
+            opciones: [
+                "La vanidad y el orgullo del personaje",
+                "La reflexión de la identidad y la dualidad",
+                "Un simple objeto decorativo sin valor",
+                "La ventana al mundo exterior desconocido y peligroso"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué simboliza el bastón utilizado en el asesinato?",
+            opciones: [
+                "El poder y la autoridad de Utterson sobre Hyde",
+                "La conexión entre Jekyll y el crimen de Hyde",
+                "La riqueza y estatus de la víctima Sir Danvers Carew",
+                "La autoridad de la ley y la justicia"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cómo se describe el barrio de Soho donde vive Hyde?",
+            opciones: [
+                "Como un lugar elegante y lujoso con tiendas de alta gama",
+                "Como un callejón miserable con bares y tiendas pobres",
+                "Como un parque tranquilo y arbolado donde pasean las familias",
+                "Como una zona industrial en crecimiento"
+            ],
+            correcta: 1
+        },
+        // Bloque 6: Eventos clave y desenlace (55-60)
+        {
+            pregunta: "¿Qué hace Utterson cuando ve a Hyde por primera vez cerca del laboratorio?",
+            opciones: [
+                "Lo saluda cortésmente y se presenta con él",
+                "Le pide que le deje mirarlo a la cara",
+                "Llama a la policía inmediatamente",
+                "Huye asustado sin mirar atrás"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué le dice Poole a Utterson sobre la persona que está en el laboratorio?",
+            opciones: [
+                "Que es definitivamente el Dr. Jekyll y que está muy enfermo",
+                "Que no es el Dr. Jekyll y que es casi un enano",
+                "Que no ha visto a nadie en todo el día y que la casa está vacía",
+                "Que es un invitado de Jekyll"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Con qué instrumento derriban la puerta del laboratorio?",
+            opciones: [
+                "Con un martillo de gran tamaño",
+                "Con un hacha de la sala anatómica",
+                "Con un ariete de la construcción",
+                "Con una palanca de hierro pesado"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Qué ve Utterson cuando entra al laboratorio al final de la novela?",
+            opciones: [
+                "A Jekyll vivo y saludable en su sillón",
+                "A Hyde vivo pero gravemente herido",
+                "El cadáver de Hyde que se ha suicidado",
+                "El laboratorio vacío y en completo desorden"
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "¿Qué olor se percibe en el laboratorio después de la muerte de Hyde?",
+            opciones: [
+                "Olor a rosas y flores frescas",
+                "Olor a almendras amargas",
+                "Olor a quemado y azufre",
+                "Olor a mar y salinidad"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "¿Cuál es el destino final de Utterson después de leer la confesión de Jekyll?",
+            opciones: [
+                "Se convierte en el nuevo Jekyll y continúa los experimentos científicos",
+                "Reflexiona sobre la trágica lección y guarda silencio para proteger la reputación de Jekyll",
+                "Publica la confesión para que todos sepan la verdad sobre Hyde y Jekyll",
+                "Se va a vivir a la casa de Jekyll y la hereda para siempre"
+            ],
+            correcta: 1
+        }
+    ];
+
+    // =============================================
+    // POOL DE PREGUNTAS V/F (60)
+    // =============================================
+    const poolVF = [
+        // Bloque 1: Personajes (1-15)
+        {
+            texto: "Utterson es un médico que trabaja con el Dr. Jekyll.",
+            correcta: "F",
+            opcionesFalso: [
+                "Utterson es abogado, no médico.",
+                "Utterson es científico, no médico.",
+                "Utterson es profesor, no médico."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Mr. Hyde es descrito como una persona que inspira repulsión y miedo sin que se pueda explicar exactamente por qué.",
+            correcta: "V",
+            opcionesFalso: [
+                "Mr. Hyde es descrito como una persona que inspira repulsión y miedo sin que se pueda explicar exactamente por qué.",
+                "Mr. Hyde es descrito como una persona que inspira simpatía y afecto entre los demás.",
+                "Mr. Hyde es descrito como una persona que inspira admiración y respeto entre los demás."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Poole es el mayordomo que trabaja en la casa del Dr. Jekyll.",
+            correcta: "V",
+            opcionesFalso: [
+                "Poole es el mayordomo que trabaja en la casa del Dr. Jekyll.",
+                "Poole es el cocinero de la casa del Dr. Jekyll y el jardinero.",
+                "Poole es el jardinero de la casa del Dr. Jekyll."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El Dr. Lanyon es un abogado amigo de Jekyll y Utterson.",
+            correcta: "F",
+            opcionesFalso: [
+                "El Dr. Lanyon es médico, no abogado.",
+                "El Dr. Lanyon es científico, no abogado.",
+                "El Dr. Lanyon es profesor, no abogado."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Richard Enfield es el primo de Utterson y quien le cuenta la historia de Hyde.",
+            correcta: "V",
+            opcionesFalso: [
+                "Richard Enfield es el primo de Utterson y quien le cuenta la historia de Hyde.",
+                "Richard Enfield es el hermano de Utterson.",
+                "Richard Enfield es un amigo de la infancia de Utterson."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Hyde es descrito como un hombre alto, fuerte y de aspecto agradable.",
+            correcta: "F",
+            opcionesFalso: [
+                "Hyde es descrito como pequeño, ágil y repulsivo.",
+                "Hyde es descrito como un hombre de altura mediana y rasgos comunes.",
+                "Hyde es descrito como un hombre alto y delgado."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Sir Danvers Carew es un respetado parlamentario asesinado por Hyde.",
+            correcta: "V",
+            opcionesFalso: [
+                "Sir Danvers Carew es un respetado diputado distrital asesinado por Hyde.",
+                "Sir Danvers Carew es un respetado juez asesinado por Hyde.",
+                "Sir Danvers Carew es un respetado médico asesinado por Hyde."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La camarera que presencia el asesinato de Sir Danvers Carew es una amiga cercana de Utterson.",
+            correcta: "F",
+            opcionesFalso: [
+                "La camarera es una testigo anónima que vive cerca del río.",
+                "La camarera es la hermana de Utterson.",
+                "La camarera es la esposa de Utterson."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Jekyll le dice a Utterson que siente un tremendo afecto por Hyde.",
+            correcta: "V",
+            opcionesFalso: [
+                "Jekyll le dice a Utterson que siente un tremendo odio por Hyde.",
+                "Jekyll le dice a Utterson que odia a Hyde.",
+                "Jekyll le dice a Utterson que no conoce a Hyde."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Bradshaw es el mayordomo de la casa de Utterson.",
+            correcta: "F",
+            opcionesFalso: [
+                "Bradshaw es el criado de Jekyll que ayuda a Poole en la última noche.",
+                "Bradshaw es el cocinero de Utterson que ayuda a Jekyll en la última noche.",
+                "Bradshaw es el jardinero de Utterson que dejó solo a Jekyll cuando necesitaba ayuda."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La gobernanta de la casa de Hyde en Soho es arrestada por complicidad en el asesinato.",
+            correcta: "F",
+            opcionesFalso: [
+                "La gobernanta coopera con la policía y les da información.",
+                "La gobernanta huye de la ciudad y jamás vuelve por miedo a las represalias.",
+                "La gobernanta es asesinada por Hyde."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Utterson siente simpatía y compasión por Hyde cuando lo ve por primera vez.",
+            correcta: "F",
+            opcionesFalso: [
+                "Utterson siente una profunda repulsión y miedo hacia Hyde.",
+                "Utterson siente indiferencia hacia Hyde.",
+                "Utterson siente una gran admiración por Hyde, pero la oculta."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El Dr. Lanyon y el Dr. Jekyll eran amigos desde la universidad.",
+            correcta: "V",
+            opcionesFalso: [
+                "El Dr. Lanyon y el Dr. Jekyll eran conocidos desde la preparatoria.",
+                "El Dr. Lanyon y el Dr. Jekyll eran enemigos desde la universidad.",
+                "El Dr. Lanyon y el Dr. Jekyll no se conocían."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Hyde tiene una llave para entrar a la casa de Jekyll.",
+            correcta: "V",
+            opcionesFalso: [
+                "Hyde tiene una llave para entrar a la casa de Lanyon.",
+                "Hyde entra a la casa de Jekyll por la ventana.",
+                "Hyde nunca entra a la casa de Jekyll."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El Dr. Jekyll es descrito como un hombre de cara arrugada que nunca sonríe.",
+            correcta: "F",
+            opcionesFalso: [
+                "Esa descripción corresponde a Utterson, no a Jekyll.",
+                "Esa descripción corresponde a Lanyon, no a Jekyll.",
+                "Esa descripción corresponde a Enfield, no a Jekyll."
+            ],
+            indiceCorrecto: 0
+        },
+        // Bloque 2: Acciones y eventos (16-30)
+        {
+            texto: "Hyde atropella a una niña en una calle de Londres y continúa caminando sin ayudarla.",
+            correcta: "V",
+            opcionesFalso: [
+                "Hyde atropella a una niña en una calle de New York y continúa caminando sin ayudarla.",
+                "Hyde atropella a una niña y la ayuda inmediatamente llevandola al hospital más cercano.",
+                "Hyde atropella a una niña y huye corriendo."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Hyde paga la compensación a la niña con un cheque firmado por el Dr. Lanyon.",
+            correcta: "F",
+            opcionesFalso: [
+                "El cheque está firmado por el Dr. Jekyll.",
+                "El cheque está firmado por Utterson.",
+                "El cheque está firmado por Enfield."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Enfield y Utterson son los únicos testigos del atropello de la niña.",
+            correcta: "F",
+            opcionesFalso: [
+                "También están presentes el médico, el padre de la niña y otras personas.",
+                "Solo Enfield es testigo del atropello, pero estaba ebrio cuando sucedió.",
+                "Solo Utterson es testigo del atropello, pero estaba ebrio cuando sucedió."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Hyde se ofrece voluntariamente a pagar una compensación por el atropello de la niña.",
+            correcta: "V",
+            opcionesFalso: [
+                "Hyde se ofrece voluntariamente a pagar una compensación por el atropello de Utterson.",
+                "Jekyll se ofrece voluntariamente a pagar una compensación por el atropello de la niña.",
+                "Hyde huye sin ofrecer compensación."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Utterson nunca logra encontrarse con Hyde cara a cara.",
+            correcta: "F",
+            opcionesFalso: [
+                "Utterson se encuentra con Hyde frente a la puerta del laboratorio.",
+                "Utterson se encuentra con Hyde en la entrada del banco.",
+                "Utterson se encuentra con Hyde en la casa de Enfield."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La policía encuentra una carta de Jekyll en la casa de Hyde después del asesinato.",
+            correcta: "F",
+            opcionesFalso: [
+                "La policía encuentra la otra mitad del bastón y un talonario de cheques quemado.",
+                "La policía encuentra una carta de Utterson.",
+                "La policía encuentra una carta de Lanyon."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El Dr. Lanyon muere poco después de presenciar la transformación de Hyde en Jekyll.",
+            correcta: "V",
+            opcionesFalso: [
+                "El Dr. Lanyon muere poco después de presenciar la transformación de Jekyll en Hyde.",
+                "El Dr. Lanyon sobrevive y se recupera.",
+                "El Dr. Lanyon no presencia ninguna transformación."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Hyde es capturado por la policía inmediatamente después del asesinato de Sir Danvers Carew.",
+            correcta: "F",
+            opcionesFalso: [
+                "Hyde logra huir y desaparece sin ser capturado.",
+                "Hyde es capturado al día siguiente.",
+                "Hyde es capturado por los vecinos."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Jekyll muestra a Utterson una carta de Hyde en la que asegura estar a salvo.",
+            correcta: "V",
+            opcionesFalso: [
+                "Jekyll muestra a Utterson un podcast de Hyde en el que asegura estar a salvo.",
+                "Jekyll muestra a Utterson una carta de Hyde en la que asegura estar sin vida.",
+                "Jekyll niega haber recibido una carta de Hyde."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Utterson quema la carta de Hyde sin leerla completamente.",
+            correcta: "F",
+            opcionesFalso: [
+                "Utterson lee la carta y la guarda en su caja fuerte.",
+                "Utterson lee la carta y la destruye.",
+                "Utterson lee la carta y se la devuelve a Jekyll."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El herrero tarda casi dos horas en abrir la puerta del laboratorio de Jekyll.",
+            correcta: "V",
+            opcionesFalso: [
+                "El herrero tarda casi diez horas en abrir la puerta del laboratorio de Jekyll.",
+                "El herrero tarda minutos en abrir la puerta.",
+                "El herrero no puede abrir la puerta."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Lanyon se niega a ayudar a Jekyll cuando recibe su carta.",
+            correcta: "F",
+            opcionesFalso: [
+                "Lanyon sigue todas las instrucciones de Jekyll al pie de la letra.",
+                "Lanyon ignora la carta de Jekyll.",
+                "Lanyon siguió solo algunas instrucciones de Jekyll y solo en algunos momentos."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La camarera que presencia el asesinato de Carew se desmaya del horror.",
+            correcta: "V",
+            opcionesFalso: [
+                "La camarera que presencia el asesinato de Carew lo olvidó por el horror.",
+                "La camarera huye sin desmayarse.",
+                "La camarera no presencia el asesinato."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Jekyll logra mantener a Hyde bajo control sin ningún problema hasta el final.",
+            correcta: "F",
+            opcionesFalso: [
+                "Jekyll pierde el control y Hyde comienza a manifestarse sin la poción.",
+                "Jekyll nunca pierde el control de Hyde.",
+                "Hyde desaparece sin causar problemas a Jekyll."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Utterson y Poole encuentran a Jekyll vivo y escondido en el laboratorio.",
+            correcta: "F",
+            opcionesFalso: [
+                "Utterson y Poole encuentran el cadáver de Hyde, pero nunca encuentran el cuerpo de Jekyll.",
+                "Utterson y Poole encuentran el cadáver de Jekyll en su dormitorio.",
+                "Utterson y Poole encuentran el cadáver de Jekyll en el jardín de su vecino."
+            ],
+            indiceCorrecto: 0
+        },
+        // Bloque 3: La poción y la transformación (31-45)
+        {
+            texto: "La primera transformación de Jekyll en Hyde ocurre sin dolor ni sufrimiento.",
+            correcta: "F",
+            opcionesFalso: [
+                "Jekyll experimenta espasmos atroces, náusea mortal y horror.",
+                "Jekyll experimenta una sensación placentera y a la vez aterradora.",
+                "Jekyll no siente nada durante la transformación."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Cuando Jekyll se transforma en Hyde por primera vez, se siente más joven, ágil y libre.",
+            correcta: "V",
+            opcionesFalso: [
+                "Cuando Jekyll se transforma en Jairo por primera vez, se siente más joven, ágil y libre.",
+                "Cuando Jekyll se transforma en Jairo por primera vez, se siente más viejo y cansado.",
+                "Cuando Jekyll se transforma en Hyde por primera vez, no siente ningún cambio."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Hyde es más pequeño y más joven que Jekyll.",
+            correcta: "V",
+            opcionesFalso: [
+                "Hyde es más pequeño y más viejo que Jekyll.",
+                "Hyde es más grande y más viejo que Jekyll.",
+                "Hyde tiene la misma edad y estatura que Jekyll."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La poción funciona igual de bien siempre que Jekyll la prepara.",
+            correcta: "F",
+            opcionesFalso: [
+                "Con el tiempo, la poción deja de funcionar debido a la falta de sales adecuadas.",
+                "La poción funciona mejor con el tiempo.",
+                "La poción nunca falla en su efecto."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Las sales que Jekyll utilizaba originalmente para la poción resultaron ser impuras, y las nuevas sales no funcionan.",
+            correcta: "V",
+            opcionesFalso: [
+                "Las sales que Jekyll utilizaba originalmente para la poción resultaron ser puras, y las nuevas sales no funcionan.",
+                "Las sales que Jekyll utilizaba originalmente eran puras y funcionaban perfectamente, pero las nuevas sales están contaminadas.",
+                "Las nuevas sales funcionan mejor que las originales."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Jekyll nunca experimenta una transformación involuntaria.",
+            correcta: "F",
+            opcionesFalso: [
+                "Jekyll empieza a despertarse transformado en Hyde sin haber tomado la poción.",
+                "Jekyll solo se transforma cuando él quiere.",
+                "Jekyll controla siempre las transformaciones."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El cuaderno de notas de Jekyll contiene principalmente fechas y la palabra 'doble'.",
+            correcta: "V",
+            opcionesFalso: [
+                "El cuaderno de notas de Jekyll contiene principalmente fechas y la palabra 'triple'.",
+                "El cuaderno de notas de Jekyll contiene principalmente poemas.",
+                "El cuaderno de notas de Jekyll contiene principalmente recetas de cocina."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La poción que toma Hyde en casa de Lanyon lo convierte en un ser completamente diferente al Dr. Jekyll.",
+            correcta: "V",
+            opcionesFalso: [
+                "La poción que toma Hyde en casa de Lanyon lo convierte en un ser completamente idéntico al Dr. Jekyll.",
+                "La poción que toma Hyde no tiene ningún efecto.",
+                "La poción que toma Hyde lo convierte en un animal."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Jekyll puede transformarse en Hyde con solo pensarlo, sin necesidad de la poción.",
+            correcta: "F",
+            opcionesFalso: [
+                "Jekyll necesita la poción para transformarse, aunque luego la transformación se vuelve involuntaria.",
+                "Jekyll necesita la poción para transformarse y además debe ser de noche, aunque luego la transformación se vuelve involuntaria.",
+                "Jekyll no necesita nada para transformarse."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La mezcla de la poción adquiere un color rojo intenso antes de la transformación final.",
+            correcta: "F",
+            opcionesFalso: [
+                "La mezcla adquiere un color verde acuoso.",
+                "La mezcla adquiere un color azul intenso.",
+                "La mezcla adquiere un color amarillo dorado."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Jekyll descubre que la nueva cantidad de sales no produce el segundo cambio de color en la poción.",
+            correcta: "V",
+            opcionesFalso: [
+                "Jekyll descubre que la nueva cantidad de sales producen otro cambio de color en la poción.",
+                "Jekyll descubre que las nuevas sales mejoran la poción.",
+                "Jekyll descubre que las nuevas sales son iguales a las originales."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Hyde puede transformarse en Jekyll sin necesidad de la poción.",
+            correcta: "F",
+            opcionesFalso: [
+                "Hyde necesita la poción para transformarse en Jekyll.",
+                "Hyde puede transformarse en Jekyll sin la poción.",
+                "Hyde nunca se transforma en Jekyll."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La primera transformación en Hyde ocurre cuando Jekyll está dormido.",
+            correcta: "F",
+            opcionesFalso: [
+                "La primera transformación ocurre cuando Jekyll está despierto y bebe la poción voluntariamente.",
+                "La primera transformación ocurre cuando Jekyll está en un sueño y piensa en transformarse.",
+                "La primera transformación ocurre cuando Jekyll por accidente toma la poción."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Jekyll afirma que la droga por sí misma no es ni divina ni diabólica.",
+            correcta: "V",
+            opcionesFalso: [
+                "Jekyll afirma que la droga por sí misma es diabólica.",
+                "Jekyll afirma que la droga es divina.",
+                "Jekyll afirma que la droga es diabólica."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La dificultad inicial de Jekyll era desembarazarse del cuerpo de Jekyll para convertirse en Hyde.",
+            correcta: "V",
+            opcionesFalso: [
+                "La dificultad inicial de Jekyll era desembarazarse del cuerpo de Hyde para convvolder a ser Jekyll.",
+                "La dificultad inicial de Jekyll era controlar a Hyde.",
+                "La dificultad inicial de Jekyll era crear la poción."
+            ],
+            indiceCorrecto: 0
+        },
+        // Bloque 4: Símbolos y significados (46-50)
+        {
+            texto: "La niebla en la novela simboliza confusión moral y secretos.",
+            correcta: "V",
+            opcionesFalso: [
+                "La niebla en la novela simboliza confusión emocional y revelaciones.",
+                "La niebla en la novela simboliza la claridad que tienen los personajes.",
+                "La niebla en la novela simboliza prosperidad."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La puerta trasera de Jekyll representa la entrada a la parte respetable de su vida.",
+            correcta: "F",
+            opcionesFalso: [
+                "La puerta trasera representa la entrada a su vida secreta y oculta.",
+                "La puerta trasera representa la entrada a su casa principal.",
+                "La puerta trasera representa la salida de emergencia."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El espejo en el laboratorio de Jekyll refleja la verdadera naturaleza de quien se mira en él.",
+            correcta: "V",
+            opcionesFalso: [
+                "El espejo en el laboratorio de Jekyll refleja la falsa naturaleza de quien se mira en él.",
+                "El espejo en el laboratorio de Jekyll es un objeto decorativo.",
+                "El espejo en el laboratorio de Jekyll está roto, por lo cual no refleja correctamente."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El bastón utilizado en el asesinato de Carew era un regalo de Utterson a Hyde.",
+            correcta: "F",
+            opcionesFalso: [
+                "El bastón era un regalo de Utterson a Jekyll.",
+                "El bastón era un regalo de Hyde a Utterson.",
+                "El bastón era un regalo de Lanyon a Jekyll."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El barrio de Soho donde vive Hyde es descrito como un lugar elegante y sofisticado.",
+            correcta: "F",
+            opcionesFalso: [
+                "Soho es descrito como un callejón miserable con bares y tiendas pobres.",
+                "Soho es descrito como un barrio residencial.",
+                "Soho es descrito como una zona industrial."
+            ],
+            indiceCorrecto: 0
+        },
+        // Bloque 5: Eventos del final de la obra (51-60)
+        {
+            texto: "Poole acude a Utterson porque cree que su amo ha sido asesinado.",
+            correcta: "V",
+            opcionesFalso: [
+                "Poole acude a Lanyon porque cree que su amo ha sido asesinado.",
+                "Poole acude a Hyde para pedirle un préstamo 5000 olades.",
+                "Poole acude a Utterson para despedirse."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Utterson se niega a ayudar a Poole cuando este le pide que vaya a la casa de Jekyll.",
+            correcta: "F",
+            opcionesFalso: [
+                "Utterson va inmediatamente con Poole a la casa de Jekyll.",
+                "Utterson se niega a ir a la casa de Jekyll por miedo.",
+                "Utterson le dice a Poole que espere."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Los criados de la casa de Jekyll están reunidos en el atrio porque están celebrando una fiesta.",
+            correcta: "F",
+            opcionesFalso: [
+                "Los criados están reunidos en el atrio porque tienen miedo y están asustados.",
+                "Los criados están reunidos en el atrio para una reunión de emergencia.",
+                "Los criados están reunidos en el atrio para cenar junto a Utterson."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Utterson y Poole derriban la puerta del laboratorio con un martillo.",
+            correcta: "F",
+            opcionesFalso: [
+                "Utterson y Poole usan un hacha para derribar la puerta.",
+                "Utterson y Poole usan una palanca.",
+                "Utterson y Poole usan un ariete."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Cuando entran al laboratorio, encuentran a Jekyll sentado en su sillón leyendo un libro.",
+            correcta: "F",
+            opcionesFalso: [
+                "Cuando entran al laboratorio, encuentran el cadáver de Hyde en el suelo.",
+                "Cuando entran al laboratorio, encuentran a Jekyll durmiendo.",
+                "Cuando entran al laboratorio, encuentran el laboratorio vacío."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El cuerpo de Hyde está vestido con ropa que le queda perfectamente.",
+            correcta: "F",
+            opcionesFalso: [
+                "La ropa es demasiado grande para Hyde, de la talla de Jekyll.",
+                "La ropa es demasiado pequeña para Hyde.",
+                "Hyde está desnudo."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Utterson encuentra un testamento en el que Jekyll lo nombra a él como heredero.",
+            correcta: "V",
+            opcionesFalso: [
+                "Utterson encuentra un testamento en el que Jekyll nombra a Utterson como heredero.",
+                "Utterson encuentra un testamento en el que Jekyll nombra a Hyde como heredero.",
+                "Utterson encuentra un testamento en el que Jekyll nombra a Lanyon como heredero."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "La confesión de Jekyll revela que Hyde era un antiguo amigo de la universidad.",
+            correcta: "F",
+            opcionesFalso: [
+                "La confesión de Jekyll revela que Hyde era su otra personalidad creada por la poción.",
+                "La confesión de Jekyll revela que Hyde era su hermano.",
+                "La confesión de Jekyll revela que Hyde era su primo lejano con el cual tenía una relación complicada."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "Utterson decide publicar la confesión de Jekyll para que todos conozcan la verdad.",
+            correcta: "F",
+            opcionesFalso: [
+                "Utterson decide guardar silencio para proteger la reputación de su amigo.",
+                "Utterson decide publicar la confesión en el diario oficial de Londres.",
+                "Utterson decide destruir la confesión."
+            ],
+            indiceCorrecto: 0
+        },
+        {
+            texto: "El final de la novela muestra a Utterson reflexionando sobre la trágica lección de Jekyll.",
+            correcta: "V",
+            opcionesFalso: [
+                "El final de la novela muestra a Utterson hablando con Jekyll.",
+                "El final de la novela muestra a Utterson celebrando.",
+                "El final de la novela muestra a Utterson olvidando todo."
+            ],
+            indiceCorrecto: 0
+        }
+    ];
+
+    // =============================================
+    // FUNCIONES DE SELECCIÓN ALEATORIA
+    // =============================================
+    function seleccionarElementos(arr, cantidad) {
+        const copia = [...arr];
+        const seleccionados = [];
+        for (let i = 0; i < cantidad && copia.length > 0; i++) {
+            const indice = Math.floor(Math.random() * copia.length);
+            seleccionados.push(copia.splice(indice, 1)[0]);
+        }
+        return seleccionados;
+    }
+
+    function mezclarArray(arr) {
+        const copia = [...arr];
+        for (let i = copia.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copia[i], copia[j]] = [copia[j], copia[i]];
+        }
+        return copia;
+    }
+
+    // =============================================
+    // SELECCIÓN DE PREGUNTAS
+    // =============================================
+    let preguntasMC = seleccionarElementos(poolAlternativas, 25);
+    let preguntasVF = seleccionarElementos(poolVF, 25);
+
+    // =============================================
+    // ESTADO DE RESPUESTAS
+    // =============================================
+    // MC: almacena el texto de la opción seleccionada (null = no seleccionada)
+    let respuestasMC = new Array(preguntasMC.length).fill(null);
+    // VF: { vf: 'V' | 'F' | null, correccion: texto | null }
+    let respuestasVF = preguntasVF.map(() => ({ vf: null, correccion: null }));
+    let evaluado = false;
+
+    // Almacenar el orden de las opciones para cada pregunta
+    let ordenOpcionesMC = [];
+    let ordenCorreccionesVF = [];
+
+    // =============================================
+    // RENDERIZADO
+    // =============================================
+    function renderizarTodo() {
+        renderizarMC();
+        renderizarVF();
+    }
+
+    function renderizarMC() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        ordenOpcionesMC = [];
+
+        preguntasMC.forEach((q, idx) => {
+            // Mezclar opciones
+            const opcionesMezcladas = mezclarArray(q.opciones);
+            ordenOpcionesMC.push(opcionesMezcladas);
+            const textoCorrecto = q.opciones[q.correcta];
+            const nuevoIndiceCorrecto = opcionesMezcladas.indexOf(textoCorrecto);
+
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.id = `mc-${idx}`;
+
+            const p = document.createElement('p');
+            p.innerHTML = `<span class="question-number">${idx + 1}.</span> ${q.pregunta}`;
+            qDiv.appendChild(p);
+
+            // Grid de opciones
+            const grid = document.createElement('div');
+            grid.className = 'options-grid';
+
+            opcionesMezcladas.forEach((opt, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.dataset.idx = optIdx;
+
+                // Si ya está evaluado, mostrar estados
+                if (evaluado) {
+                    btn.classList.add('disabled');
+                    if (respuestasMC[idx] === opt) {
+                        btn.classList.add('selected');
+                        if (opt === textoCorrecto) {
+                            btn.classList.add('correct-answer');
+                        } else {
+                            btn.classList.add('wrong-answer');
+                        }
+                    } else if (opt === textoCorrecto) {
+                        btn.classList.add('correct-answer');
+                    }
+                } else {
+                    if (respuestasMC[idx] === opt) {
+                        btn.classList.add('selected');
+                    }
+                    btn.addEventListener('click', function() {
+                        if (evaluado) return;
+                        grid.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        respuestasMC[idx] = opt;
+                    });
+                }
+
+                grid.appendChild(btn);
+            });
+
+            qDiv.appendChild(grid);
+
+            // Si está evaluado, mostrar feedback y colores
+            if (evaluado) {
+                const esCorrecta = respuestasMC[idx] === textoCorrecto;
+                qDiv.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+
+                const feedback = document.createElement('div');
+                feedback.className = `feedback-text ${esCorrecta ? 'correcta' : 'incorrecta'}`;
+                if (esCorrecta) {
+                    feedback.textContent = '✅ Correcto';
+                } else {
+                    feedback.textContent = `❌ Incorrecto. Respuesta correcta: "${textoCorrecto}"`;
+                }
+                qDiv.appendChild(feedback);
+
+                // Mostrar respuesta marcada
+                const marcada = document.createElement('div');
+                marcada.className = 'respuesta-marcada';
+                if (respuestasMC[idx]) {
+                    marcada.textContent = `Tu respuesta: "${respuestasMC[idx]}"`;
+                } else {
+                    marcada.textContent = 'No respondiste esta pregunta';
+                }
+                qDiv.appendChild(marcada);
+            }
+
+            container.appendChild(qDiv);
+        });
+    }
+
+    function renderizarVF() {
+        const container = document.getElementById('verdaderoFalso');
+        container.innerHTML = '';
+        ordenCorreccionesVF = [];
+
+        preguntasVF.forEach((q, idx) => {
+            // Mezclar opciones de corrección
+            const correccionesMezcladas = mezclarArray(q.opcionesFalso);
+            ordenCorreccionesVF.push(correccionesMezcladas);
+            const textoCorrecto = q.opcionesFalso[q.indiceCorrecto];
+
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.id = `vf-${idx}`;
+
+            const p = document.createElement('p');
+            p.innerHTML = `<span class="question-number">${idx + 1}.</span> ${q.texto}`;
+            qDiv.appendChild(p);
+
+            // Grid de V/F
+            const vfGrid = document.createElement('div');
+            vfGrid.className = 'vf-grid';
+
+            const btnV = document.createElement('button');
+            btnV.className = 'vf-btn';
+            btnV.textContent = 'Verdadero (V)';
+            btnV.dataset.vf = 'V';
+
+            const btnF = document.createElement('button');
+            btnF.className = 'vf-btn';
+            btnF.textContent = 'Falso (F)';
+            btnF.dataset.vf = 'F';
+
+            // Si ya está evaluado, mostrar estados
+            if (evaluado) {
+                btnV.classList.add('disabled');
+                btnF.classList.add('disabled');
+
+                // Determinar si la respuesta es correcta
+                const vfSeleccionado = respuestasVF[idx].vf;
+                const correccionSeleccionada = respuestasVF[idx].correccion;
+
+                let esCorrecta = false;
+                if (q.correcta === 'V' && vfSeleccionado === 'V') {
+                    esCorrecta = true;
+                } else if (q.correcta === 'F' && vfSeleccionado === 'F' && correccionSeleccionada === textoCorrecto) {
+                    esCorrecta = true;
+                }
+
+                qDiv.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+
+                // Marcar botones
+                if (vfSeleccionado === 'V') {
+                    btnV.classList.add('selected-v');
+                    if (q.correcta === 'V') {
+                        btnV.classList.add('correct-answer');
+                    } else {
+                        btnV.classList.add('wrong-answer');
+                    }
+                } else if (vfSeleccionado === 'F') {
+                    btnF.classList.add('selected-f');
+                    // La corrección se muestra abajo
+                }
+
+                // Mostrar respuesta correcta en V/F si es diferente
+                if (vfSeleccionado !== q.correcta) {
+                    // Mostrar cuál era la correcta
+                    if (q.correcta === 'V') {
+                        btnV.classList.add('correct-answer');
+                    } else {
+                        btnF.classList.add('correct-answer');
+                    }
+                }
+
+                // Feedback
+                const feedback = document.createElement('div');
+                feedback.className = `feedback-text ${esCorrecta ? 'correcta' : 'incorrecta'}`;
+                if (esCorrecta) {
+                    feedback.textContent = '✅ Correcto';
+                } else {
+                    let mensaje = '❌ Incorrecto. ';
+                    if (vfSeleccionado !== q.correcta) {
+                        mensaje += `La afirmación era ${q.correcta === 'V' ? 'Verdadera' : 'Falsa'}. `;
+                        if (q.correcta === 'F') {
+                            mensaje += `Corrección correcta: "${textoCorrecto}"`;
+                        } else {
+                            mensaje += 'La afirmación era Verdadera.';
+                        }
+                    } else if (q.correcta === 'F' && vfSeleccionado === 'F' && correccionSeleccionada !== textoCorrecto) {
+                        mensaje += `Corrección correcta: "${textoCorrecto}"`;
+                    }
+                    feedback.textContent = mensaje;
+                }
+                qDiv.appendChild(feedback);
+
+                // Mostrar respuesta marcada
+                const marcada = document.createElement('div');
+                marcada.className = 'respuesta-marcada';
+                let textoRespuesta = '';
+                if (vfSeleccionado === 'V') {
+                    textoRespuesta = 'Verdadero (V)';
+                } else if (vfSeleccionado === 'F') {
+                    textoRespuesta = `Falso (F) - Corrección: "${correccionSeleccionada || 'No seleccionada'}"`;
+                } else {
+                    textoRespuesta = 'No respondiste esta pregunta';
+                }
+                marcada.textContent = `Tu respuesta: ${textoRespuesta}`;
+                qDiv.appendChild(marcada);
+
+                // Mostrar la corrección correcta
+                if (q.correcta === 'F') {
+                    const correctaDiv = document.createElement('div');
+                    correctaDiv.className = 'respuesta-marcada';
+                    correctaDiv.style.background = '#e0f0e0';
+                    correctaDiv.style.border = '1px solid #2d8f5c';
+                    correctaDiv.textContent = `Corrección correcta: "${textoCorrecto}"`;
+                    qDiv.appendChild(correctaDiv);
+                }
+
+            } else {
+                // Comportamiento normal sin evaluar
+                if (respuestasVF[idx].vf === 'V') {
+                    btnV.classList.add('selected-v');
+                } else if (respuestasVF[idx].vf === 'F') {
+                    btnF.classList.add('selected-f');
+                }
+
+                btnV.addEventListener('click', function() {
+                    if (evaluado) return;
+                    btnV.classList.add('selected-v');
+                    btnV.classList.remove('selected-f');
+                    btnF.classList.remove('selected-v');
+                    btnF.classList.remove('selected-f');
+                    respuestasVF[idx].vf = 'V';
+                    respuestasVF[idx].correccion = null;
+                    const corrContainer = document.getElementById(`correcciones-${idx}`);
+                    if (corrContainer) corrContainer.classList.remove('visible');
+                });
+
+                btnF.addEventListener('click', function() {
+                    if (evaluado) return;
+                    btnF.classList.add('selected-f');
+                    btnF.classList.remove('selected-v');
+                    btnV.classList.remove('selected-v');
+                    btnV.classList.remove('selected-f');
+                    respuestasVF[idx].vf = 'F';
+                    respuestasVF[idx].correccion = null;
+                    const corrContainer = document.getElementById(`correcciones-${idx}`);
+                    if (corrContainer) corrContainer.classList.add('visible');
+                });
+            }
+
+            vfGrid.appendChild(btnV);
+            vfGrid.appendChild(btnF);
+            qDiv.appendChild(vfGrid);
+
+            // Contenedor de correcciones
+            const corrContainer = document.createElement('div');
+            corrContainer.className = 'correcciones-container';
+            corrContainer.id = `correcciones-${idx}`;
+
+            if (!evaluado && respuestasVF[idx].vf === 'F') {
+                corrContainer.classList.add('visible');
+            }
+
+            const label = document.createElement('div');
+            label.className = 'label';
+            label.textContent = 'Si es falsa, selecciona la corrección correcta:';
+            corrContainer.appendChild(label);
+
+            const corrGrid = document.createElement('div');
+            corrGrid.className = 'correcciones-grid';
+
+            correccionesMezcladas.forEach((opt, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = 'corr-btn';
+                btn.textContent = opt;
+                btn.dataset.idx = optIdx;
+
+                if (evaluado) {
+                    btn.classList.add('disabled');
+                    if (respuestasVF[idx].correccion === opt) {
+                        btn.classList.add('selected');
+                        if (opt === textoCorrecto) {
+                            btn.classList.add('correct-answer');
+                        } else {
+                            btn.classList.add('wrong-answer');
+                        }
+                    } else if (opt === textoCorrecto) {
+                        btn.classList.add('correct-answer');
+                    }
+                } else {
+                    if (respuestasVF[idx].vf === 'F' && respuestasVF[idx].correccion === opt) {
+                        btn.classList.add('selected');
+                    }
+
+                    btn.addEventListener('click', function() {
+                        if (evaluado) return;
+                        if (respuestasVF[idx].vf !== 'F') return;
+                        corrGrid.querySelectorAll('.corr-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        respuestasVF[idx].correccion = opt;
+                    });
+                }
+
+                corrGrid.appendChild(btn);
+            });
+
+            corrContainer.appendChild(corrGrid);
+            qDiv.appendChild(corrContainer);
+
+            container.appendChild(qDiv);
+        });
+    }
+
+    // =============================================
+    // EVALUACIÓN
+    // =============================================
+    function evaluarTodo() {
+        evaluado = true;
+        document.getElementById('evaluateBtn').disabled = true;
+
+        // Contar correctas
+        let mcCorrectas = 0;
+        let vfCorrectas = 0;
+
+        // MC
+        preguntasMC.forEach((q, idx) => {
+            const textoCorrecto = q.opciones[q.correcta];
+            if (respuestasMC[idx] === textoCorrecto) {
+                mcCorrectas++;
+            }
+        });
+
+        // VF
+        preguntasVF.forEach((q, idx) => {
+            const vfSeleccionado = respuestasVF[idx].vf;
+            const correccionSeleccionada = respuestasVF[idx].correccion;
+            const textoCorrecto = q.opcionesFalso[q.indiceCorrecto];
+
+            if (q.correcta === 'V' && vfSeleccionado === 'V') {
+                vfCorrectas++;
+            } else if (q.correcta === 'F' && vfSeleccionado === 'F' && correccionSeleccionada === textoCorrecto) {
+                vfCorrectas++;
+            }
+        });
+
+        // Re-renderizar con feedback
+        renderizarTodo();
+
+        const totalMC = preguntasMC.length;
+        const totalVF = preguntasVF.length;
+        const totalPreguntas = totalMC + totalVF;
+        const totalCorrectas = mcCorrectas + vfCorrectas;
+        const porcentaje = (totalCorrectas / totalPreguntas) * 100;
+
+        let nota = 0;
+        const exigencia = 60;
+
+        if (porcentaje >= exigencia) {
+            nota = 4.0 + ((porcentaje - exigencia) / (100 - exigencia)) * 3.0;
+        } else {
+            nota = 1.0 + (porcentaje / exigencia) * 3.0;
+        }
+        nota = Math.round(nota * 100) / 100;
+        const aprobado = nota >= 4.0;
+
+        // Mostrar resultados
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#c4450c; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrectas} de ${totalPreguntas} (${Math.round(porcentaje)}%)</div>
+            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Selección Múltiple: ${mcCorrectas}/${totalMC}</div>
+                <div>⚖️ Verdadero/Falso: ${vfCorrectas}/${totalVF}</div>
+            </div>
+            <div class="grade-box ${aprobado ? 'approved' : 'failed'}">
+                <strong>${aprobado ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>
+                NOTA: ${nota.toFixed(1)}
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.classList.add('visible');
+
+        // Eventos de botones
+        document.getElementById('restartTestBtn')?.addEventListener('click', reiniciarTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Lenguaje.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_8_Lenguaje.html');
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // =============================================
+    // REINICIAR TEST
+    // =============================================
+    function reiniciarTest() {
+        evaluado = false;
+        document.getElementById('evaluateBtn').disabled = false;
+
+        // Seleccionar nuevas preguntas
+        const nuevasMC = seleccionarElementos(poolAlternativas, 25);
+        const nuevasVF = seleccionarElementos(poolVF, 25);
+
+        preguntasMC = nuevasMC;
+        preguntasVF = nuevasVF;
+
+        respuestasMC = new Array(preguntasMC.length).fill(null);
+        respuestasVF = preguntasVF.map(() => ({ vf: null, correccion: null }));
+
+        document.getElementById('results').classList.remove('visible');
+        renderizarTodo();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =============================================
+    // INICIALIZACIÓN
+    // =============================================
+    renderizarTodo();
+
+    document.getElementById('evaluateBtn').addEventListener('click', evaluarTodo);
+</script>
+</body>
+</html>
