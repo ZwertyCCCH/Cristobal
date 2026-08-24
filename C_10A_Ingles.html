@@ -104,10 +104,6 @@
         }
         .question.correcta { border-color: #55efc4; background: rgba(85, 239, 196, 0.06); }
         .question.incorrecta { border-color: #e94560; background: rgba(233, 69, 96, 0.06); }
-        .question.parcial {
-            border-color: #f4ce50;
-            background: rgba(244, 206, 80, 0.06);
-        }
         .question p {
             margin-bottom: 0.5rem;
             font-weight: 500;
@@ -288,54 +284,6 @@
             opacity: 0.9;
         }
 
-        /* ===== Completar párrafo (Sección D) ===== */
-        .fill-paragraph {
-            color: #e2e8f0;
-            font-size: 0.95rem;
-            line-height: 1.9;
-            margin: 0.5rem 0;
-        }
-        .fill-paragraph .blank-input {
-            background: rgba(255, 255, 255, 0.06);
-            border: 2px solid rgba(255, 255, 255, 0.1);
-            border-radius: 0.4rem;
-            padding: 0.15rem 0.4rem;
-            color: #e2e8f0;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.9rem;
-            width: 110px;
-            transition: 0.2s;
-            display: inline-block;
-        }
-        .fill-paragraph .blank-input:focus {
-            border-color: #00b4d8;
-            outline: none;
-            background: rgba(0, 180, 216, 0.05);
-        }
-        .fill-paragraph .blank-input.correct-answer {
-            border-color: #55efc4;
-            background: rgba(85, 239, 196, 0.1);
-        }
-        .fill-paragraph .blank-input.wrong-answer {
-            border-color: #e94560;
-            background: rgba(233, 69, 96, 0.1);
-        }
-        .fill-paragraph .blank-input.disabled {
-            pointer-events: none;
-            opacity: 0.8;
-        }
-        .fill-paragraph .blank-number {
-            color: #00b4d8;
-            font-weight: 700;
-            font-size: 0.7rem;
-            vertical-align: super;
-        }
-        .fill-paragraph .blank-label {
-            color: #636e72;
-            font-size: 0.75rem;
-            margin-left: 0.2rem;
-        }
-
         .btn-evaluate {
             display: block;
             width: 260px;
@@ -425,43 +373,12 @@
         }
         .feedback-text.correcta { color: #55efc4; }
         .feedback-text.incorrecta { color: #e94560; }
-        .feedback-text.parcial { color: #f4ce50; }
 
         .footer {
             text-align: center;
             margin-top: 1.5rem;
             font-size: 0.7rem;
             color: #636e72;
-        }
-
-        /* ===== Mapa ===== */
-        .map-container {
-            background: rgba(255, 255, 255, 0.04);
-            border: 1px solid rgba(255, 255, 255, 0.08);
-            border-radius: 1rem;
-            padding: 1rem;
-            margin-bottom: 1.2rem;
-            text-align: center;
-        }
-        .map-container svg {
-            max-width: 100%;
-            height: auto;
-        }
-        .map-legend {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 0.6rem 1.1rem;
-            margin-top: 0.8rem;
-            font-size: 0.8rem;
-            color: #b2bec3;
-        }
-        .map-legend span { display: inline-flex; align-items: center; gap: 6px; }
-        .map-legend .dot {
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            display: inline-block;
         }
 
         @media (max-width: 700px) {
@@ -474,7 +391,6 @@
             .vf-grid { max-width: 100%; }
             .word-bank { gap: 0.3rem; }
             .word-token { font-size: 0.8rem; padding: 0.2rem 0.5rem; }
-            .fill-paragraph .blank-input { width: 80px; font-size: 0.8rem; }
         }
     </style>
 </head>
@@ -482,13 +398,13 @@
 <div class="container">
     <div class="header">
         <h1>📝 Unit 3 · Getting Around Town</h1>
-        <div class="subtitle">Advanced Exercises · Set C · 4 Sections | 9th Grade</div>
+        <div class="subtitle">Advanced Exercises · Set C · 3 Sections | 9th Grade</div>
     </div>
 
     <div class="info-bar">
-        <div>📋 <strong>Sections:</strong> MC (8) · Word Order (8) · True/False (8) · Fill Paragraph (2 textos × 5 blanks = 10 pts)</div>
+        <div>📋 <strong>Sections:</strong> Multiple Choice (8) · Word Order (8) · True/False with Text (8)</div>
         <div>✅ Passing grade: <strong>60%</strong> (4.0) · Max: 7.0</div>
-        <div>📝 Total: <strong>34 points</strong></div>
+        <div>📝 Total: <strong>24 questions</strong> (1 point each)</div>
     </div>
 
     <div id="examContent">
@@ -518,117 +434,6 @@
             <p style="color: #b2bec3; font-size: 0.95rem; margin-bottom: 1rem;">Read the text below and select <strong>True</strong> or <strong>False</strong> for each statement. (1 point each)</p>
             <div id="readingText" class="reading-text"></div>
             <div id="trueFalse"></div>
-        </div>
-
-        <!-- ============================================ -->
-        <!-- SECTION D: COMPLETE THE PARAGRAPH (2 textos × 5 blanks) -->
-        <!-- ============================================ -->
-        <div class="section">
-            <div class="section-title"><i class="fas fa-pen-fancy"></i> D. Complete the Paragraph (2 texts × 5 blanks = 10 points)</div>
-            <p style="color: #b2bec3; font-size: 0.95rem; margin-bottom: 1rem;">Look at the map and complete the directions with the missing words. <strong>Each correct blank = 1 point.</strong></p>
-
-            <div class="map-container">
-                <svg viewBox="0 0 600 520" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="0" y="0" width="600" height="520" fill="#0f1e2b" rx="16"/>
-
-                    <!-- Roads (vertical) -->
-                    <rect x="135" y="40" width="30" height="440" fill="#2d3f4f"/>
-                    <rect x="285" y="40" width="30" height="440" fill="#2d3f4f"/>
-                    <rect x="435" y="40" width="30" height="440" fill="#2d3f4f"/>
-                    <!-- Roads (horizontal) -->
-                    <rect x="40" y="85" width="520" height="30" fill="#2d3f4f"/>
-                    <rect x="40" y="235" width="520" height="30" fill="#2d3f4f"/>
-                    <rect x="40" y="385" width="520" height="30" fill="#2d3f4f"/>
-
-                    <!-- Road center lines -->
-                    <line x1="150" y1="40" x2="150" y2="480" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
-                    <line x1="300" y1="40" x2="300" y2="480" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
-                    <line x1="450" y1="40" x2="450" y2="480" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
-                    <line x1="40" y1="100" x2="560" y2="100" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
-                    <line x1="40" y1="250" x2="560" y2="250" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
-                    <line x1="40" y1="400" x2="560" y2="400" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
-
-                    <!-- Street names -->
-                    <text x="150" y="30" fill="#b2bec3" font-size="13" text-anchor="middle" font-family="Inter, sans-serif">First St.</text>
-                    <text x="300" y="30" fill="#b2bec3" font-size="13" text-anchor="middle" font-family="Inter, sans-serif">Second St.</text>
-                    <text x="450" y="30" fill="#b2bec3" font-size="13" text-anchor="middle" font-family="Inter, sans-serif">Third St.</text>
-                    <text x="50" y="96" fill="#b2bec3" font-size="13" text-anchor="start" font-family="Inter, sans-serif">Elm Avenue</text>
-                    <text x="50" y="246" fill="#b2bec3" font-size="13" text-anchor="start" font-family="Inter, sans-serif">Oak Avenue</text>
-                    <text x="50" y="396" fill="#b2bec3" font-size="13" text-anchor="start" font-family="Inter, sans-serif">Main Street</text>
-
-                    <!-- Compass -->
-                    <g transform="translate(535,45)">
-                        <circle r="16" fill="rgba(255,255,255,0.06)" stroke="#00b4d8" stroke-width="1.5"/>
-                        <text y="-4" fill="#f4ce50" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">N</text>
-                        <text y="14" fill="#b2bec3" font-size="9" text-anchor="middle" font-family="Inter, sans-serif">S</text>
-                    </g>
-
-                    <!-- Buildings / places -->
-                    <!-- Bank: First & Elm -->
-                    <g>
-                        <rect x="130" y="80" width="40" height="40" rx="8" fill="#e94560"/>
-                        <text x="150" y="105" fill="#0b1a2e" font-size="16" text-anchor="middle">🏦</text>
-                        <text x="150" y="140" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Bank</text>
-                    </g>
-                    <!-- Bus Station: Second & Elm -->
-                    <g>
-                        <rect x="280" y="80" width="40" height="40" rx="8" fill="#00b4d8"/>
-                        <text x="300" y="105" fill="#0b1a2e" font-size="16" text-anchor="middle">🚌</text>
-                        <text x="300" y="140" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Bus Station</text>
-                    </g>
-                    <!-- Post Office: Third & Elm -->
-                    <g>
-                        <rect x="430" y="80" width="40" height="40" rx="8" fill="#f4ce50"/>
-                        <text x="450" y="105" fill="#0b1a2e" font-size="16" text-anchor="middle">📮</text>
-                        <text x="450" y="140" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Post Office</text>
-                    </g>
-                    <!-- Supermarket: First & Oak -->
-                    <g>
-                        <rect x="130" y="230" width="40" height="40" rx="8" fill="#55efc4"/>
-                        <text x="150" y="255" fill="#0b1a2e" font-size="16" text-anchor="middle">🛒</text>
-                        <text x="150" y="290" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Supermarket</text>
-                    </g>
-                    <!-- Hospital: Second & Oak -->
-                    <g>
-                        <rect x="280" y="230" width="40" height="40" rx="8" fill="#e94560"/>
-                        <text x="300" y="255" fill="#0b1a2e" font-size="16" text-anchor="middle">🏥</text>
-                        <text x="300" y="290" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Hospital</text>
-                    </g>
-                    <!-- Cinema: Third & Oak -->
-                    <g>
-                        <rect x="430" y="230" width="40" height="40" rx="8" fill="#a29bfe"/>
-                        <text x="450" y="255" fill="#0b1a2e" font-size="16" text-anchor="middle">🎬</text>
-                        <text x="450" y="290" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Cinema</text>
-                    </g>
-                    <!-- School: First & Main -->
-                    <g>
-                        <rect x="130" y="380" width="40" height="40" rx="8" fill="#00b4d8"/>
-                        <text x="150" y="405" fill="#0b1a2e" font-size="16" text-anchor="middle">🏫</text>
-                        <text x="150" y="440" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">School</text>
-                    </g>
-                    <!-- Library: Second & Main -->
-                    <g>
-                        <rect x="280" y="380" width="40" height="40" rx="8" fill="#f4ce50"/>
-                        <text x="300" y="405" fill="#0b1a2e" font-size="16" text-anchor="middle">📚</text>
-                        <text x="300" y="440" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Library</text>
-                    </g>
-                    <!-- Park: Third & Main -->
-                    <g>
-                        <rect x="430" y="380" width="40" height="40" rx="8" fill="#55efc4"/>
-                        <text x="450" y="405" fill="#0b1a2e" font-size="16" text-anchor="middle">🌳</text>
-                        <text x="450" y="440" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Park</text>
-                    </g>
-                </svg>
-                <div class="map-legend">
-                    <span><span class="dot" style="background:#00b4d8"></span>Bus Station / School</span>
-                    <span><span class="dot" style="background:#e94560"></span>Bank / Hospital</span>
-                    <span><span class="dot" style="background:#f4ce50"></span>Post Office / Library</span>
-                    <span><span class="dot" style="background:#55efc4"></span>Supermarket / Park</span>
-                    <span><span class="dot" style="background:#a29bfe"></span>Cinema</span>
-                </div>
-            </div>
-
-            <div id="fillParagraph"></div>
         </div>
 
         <button class="btn-evaluate" id="evaluateBtn">✅ Evaluate answers</button>
@@ -725,7 +530,7 @@
                 "get a lift"
             ],
             correcta: 1
-        },  
+        },
         {
             pregunta: "You leave your house at 7:30 am to go to school. What are you doing?",
             opciones: [
@@ -780,10 +585,10 @@
         {
             pregunta: "You want to go to the other side of the park without going around it. What should you do?",
             opciones: [
-                "walk past",
-                "go through",
-                "turn around",
-                "walk along"
+                "walk past the park",
+                "go through the park",
+                "turn around the park",
+                "walk along the park"
             ],
             correcta: 1
         },
@@ -859,7 +664,7 @@
             correcta: 1
         },
         {
-            pregunta: "You have decided to take the bus to school tomorrow because your car is broken. Which sentence best expresses this?",
+            pregunta: "You have decided to take the bus to school tomorrow because your car is broken. Which sentence best expresses this plan?",
             opciones: [
                 "I take the bus to school tomorrow.",
                 "I will take the bus to school tomorrow.",
@@ -879,7 +684,7 @@
             correcta: 1
         },
         {
-            pregunta: "The phone rings and you answer it. Your friend asks if you can help them. You say:",
+            pregunta: "The phone rings and you answer it. Your friend asks if you can help them with something urgent. You say:",
             opciones: [
                 "I help you.",
                 "I'm going to help you.",
@@ -899,7 +704,7 @@
             correcta: 1
         },
         {
-            pregunta: "You have been planning to visit your grandma for weeks. You tell your friend:",
+            pregunta: "You have been planning to visit your grandma for weeks and you have already booked the train. You tell your friend:",
             opciones: [
                 "I visit my grandma this weekend.",
                 "I will visit my grandma this weekend.",
@@ -909,7 +714,7 @@
             correcta: 2
         },
         {
-            pregunta: "You are at a restaurant and you decide to order pasta. You say to the waiter:",
+            pregunta: "You are at a restaurant and you suddenly decide to order pasta. You say to the waiter:",
             opciones: [
                 "I have the pasta.",
                 "I will have the pasta.",
@@ -926,15 +731,15 @@
                 "The bus is going to arrive late today.",
                 "The bus arriving late today."
             ],
-            correcta: 2 
+            correcta: 2
         },
         {
-            pregunta: "You have already bought tickets for a concert next Friday. You tell your friend:",
+            pregunta: "You have bought tickets for a concert next Friday. You tell your friend:",
             opciones: [
                 "We see a concert next Friday.",
                 "We will see a concert next Friday.",
                 "We're going to see a concert next Friday.",
-                "We are seeing a concert next Tuesday."
+                "We seeing a concert next Friday."
             ],
             correcta: 2
         },
@@ -1284,216 +1089,6 @@
     ];
 
     // =============================================
-    // SECCIÓN D: COMPLETAR PÁRRAFO (40 preguntas)
-    // =============================================
-    // Cada pregunta tiene:
-    // - instruccion: "To get from [A] to [B]"
-    // - párrafo con espacios en blanco marcados como __1__, __2__, etc.
-    // - respuestas: array con las palabras esperadas en orden (5 respuestas cada una)
-    const poolFill = [
-        {
-            instruccion: "School → Library",
-            parrafo: "To get from the School to the Library, start by going __1__ along Main Street. Walk past the __2__ on your left. Continue straight until you reach the intersection with __3__ Street. The Library is on your __4__, just after the corner.",
-            respuestas: ["straight", "supermarket", "Second", "right"]
-        },
-        {
-            instruccion: "Bank → Hospital",
-            parrafo: "If you are at the Bank and you want to go to the Hospital, walk __1__ along First Street until you reach __2__ Avenue. Turn __3__ and walk straight. The Hospital is on your __4__, next to the __5__.",
-            respuestas: ["straight", "Oak", "right", "right", "supermarket"]
-        },
-        {
-            instruccion: "Cinema → Post Office",
-            parrafo: "To go from the Cinema to the Post Office, go __1__ along Third Street. The Post Office is on your __2__, just before the corner with __3__ Avenue. You will pass the __4__ on your left.",
-            respuestas: ["straight", "left", "Elm", "bus station"]
-        },
-        {
-            instruccion: "Library → Park",
-            parrafo: "Starting from the Library, walk __1__ along Main Street. Continue past the __2__ on your right until you reach __3__ Street. The Park is on your __4__, on the corner.",
-            respuestas: ["straight", "cinema", "Third", "right"]
-        },
-        {
-            instruccion: "Supermarket → Bus Station",
-            parrafo: "From the Supermarket, go __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Bus Station is on your __5__.",
-            respuestas: ["straight", "right", "Elm", "Second", "left"]
-        },
-        {
-            instruccion: "Hospital → School",
-            parrafo: "To get from the Hospital to the School, walk __1__ along Second Street. Turn __2__ onto __3__ Street. Continue straight until you reach the intersection with __4__ Avenue. The School is on your __5__.",
-            respuestas: ["straight", "left", "Main", "Elm", "left"]
-        },
-        {
-            instruccion: "Bus Station → Cinema",
-            parrafo: "From the Bus Station, walk __1__ along Second Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Cinema is on your __5__.",
-            respuestas: ["straight", "right", "Oak", "Third", "right"]
-        },
-        {
-            instruccion: "Post Office → Library",
-            parrafo: "Starting at the Post Office, go __1__ along Third Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Library is on your __5__.",
-            respuestas: ["straight", "left", "Main", "Elm", "left"]
-        },
-        {
-            instruccion: "Park → Bank",
-            parrafo: "To go from the Park to the Bank, walk __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Bank is on your __5__.",
-            respuestas: ["straight", "left", "First", "Elm", "left"]
-        },
-        {
-            instruccion: "School → Supermarket",
-            parrafo: "From the School, go __1__ along First Street. The Supermarket is on your __2__, just before the corner with __3__ Avenue. You will pass the __4__ on your left.",
-            respuestas: ["straight", "right", "Oak", "bank"]
-        },
-        {
-            instruccion: "Bank → Library",
-            parrafo: "To get from the Bank to the Library, walk __1__ along First Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Library is on your __5__.",
-            respuestas: ["straight", "right", "Main", "Elm", "right"]
-        },
-        {
-            instruccion: "Cinema → Hospital",
-            parrafo: "From the Cinema, go __1__ along Third Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Hospital is on your __5__.",
-            respuestas: ["straight", "left", "Oak", "Second", "left"]
-        },
-        {
-            instruccion: "Library → Bus Station",
-            parrafo: "To go from the Library to the Bus Station, walk __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Bus Station is on your __5__.",
-            respuestas: ["straight", "right", "Second", "Elm", "right"]
-        },
-        {
-            instruccion: "Supermarket → Park",
-            parrafo: "From the Supermarket, go __1__ along First Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Park is on your __5__.",
-            respuestas: ["straight", "left", "Main", "Elm", "left"]
-        },
-        {
-            instruccion: "Hospital → Cinema",
-            parrafo: "To get from the Hospital to the Cinema, walk __1__ along Second Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Cinema is on your __5__.",
-            respuestas: ["straight", "right", "Oak", "Third", "right"]
-        },
-        {
-            instruccion: "Bus Station → School",
-            parrafo: "From the Bus Station, walk __1__ along Second Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The School is on your __5__.",
-            respuestas: ["straight", "left", "Main", "Elm", "left"]
-        },
-        {
-            instruccion: "Post Office → Supermarket",
-            parrafo: "To go from the Post Office to the Supermarket, walk __1__ along Third Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Supermarket is on your __5__.",
-            respuestas: ["straight", "left", "First", "Elm", "left"]
-        },
-        {
-            instruccion: "Bank → Cinema",
-            parrafo: "Starting at the Bank, go __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Cinema is on your __5__.",
-            respuestas: ["straight", "right", "Oak", "Third", "right"]
-        },
-        {
-            instruccion: "School → Post Office",
-            parrafo: "To get from the School to the Post Office, walk __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Post Office is on your __5__.",
-            respuestas: ["straight", "right", "Elm", "Third", "right"]
-        },
-        {
-            instruccion: "Library → Hospital",
-            parrafo: "From the Library, go __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Hospital is on your __5__.",
-            respuestas: ["straight", "left", "Second", "Oak", "left"]
-        },
-        {
-            instruccion: "Cinema → Bank",
-            parrafo: "To go from the Cinema to the Bank, walk __1__ along Third Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Bank is on your __5__.",
-            respuestas: ["straight", "left", "First", "Elm", "left"]
-        },
-        {
-            instruccion: "Park → Library",
-            parrafo: "Starting at the Park, go __1__ along Main Street. The Library is on your __2__, just after the corner with __3__ Street. You will pass the __4__ on your left.",
-            respuestas: ["straight", "left", "Second", "cinema"]
-        },
-        {
-            instruccion: "Supermarket → Hospital",
-            parrafo: "From the Supermarket, walk __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Hospital is on your __5__.",
-            respuestas: ["straight", "right", "Oak", "Second", "right"]
-        },
-        {
-            instruccion: "Bus Station → Bank",
-            parrafo: "To get from the Bus Station to the Bank, walk __1__ along Second Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Bank is on your __5__.",
-            respuestas: ["straight", "left", "Elm", "First", "left"]
-        },
-        {
-            instruccion: "Post Office → Cinema",
-            parrafo: "From the Post Office, go __1__ along Third Street. The Cinema is on your __2__, just before the corner with __3__ Avenue. You will pass the __4__ on your left.",
-            respuestas: ["straight", "right", "Oak", "hospital"]
-        },
-        {
-            instruccion: "School → Bank",
-            parrafo: "To go from the School to the Bank, walk __1__ along First Street. The Bank is on your __2__, just after the corner with __3__ Avenue. You will pass the __4__ on your left.",
-            respuestas: ["straight", "left", "Elm", "supermarket"]
-        },
-        {
-            instruccion: "Library → Cinema",
-            parrafo: "Starting at the Library, go __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Cinema is on your __5__.",
-            respuestas: ["straight", "right", "Third", "Oak", "right"]
-        },
-        {
-            instruccion: "Bank → Post Office",
-            parrafo: "From the Bank, walk __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Post Office is on your __5__.",
-            respuestas: ["straight", "right", "Elm", "Third", "right"]
-        },
-        {
-            instruccion: "Hospital → Library",
-            parrafo: "To get from the Hospital to the Library, walk __1__ along Second Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Library is on your __5__.",
-            respuestas: ["straight", "left", "Main", "Elm", "left"]
-        },
-        {
-            instruccion: "Cinema → School",
-            parrafo: "From the Cinema, go __1__ along Third Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The School is on your __5__.",
-            respuestas: ["straight", "left", "First", "Elm", "left"]
-        },
-        {
-            instruccion: "Park → Hospital",
-            parrafo: "Starting at the Park, walk __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Hospital is on your __5__.",
-            respuestas: ["straight", "left", "Second", "Oak", "left"]
-        },
-        {
-            instruccion: "Supermarket → Library",
-            parrafo: "To go from the Supermarket to the Library, walk __1__ along First Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Library is on your __5__.",
-            respuestas: ["straight", "right", "Main", "Elm", "right"]
-        },
-        {
-            instruccion: "Bus Station → Park",
-            parrafo: "From the Bus Station, go __1__ along Second Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Park is on your __5__.",
-            respuestas: ["straight", "left", "Main", "Elm", "left"]
-        },
-        {
-            instruccion: "School → Cinema",
-            parrafo: "To get from the School to the Cinema, walk __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Cinema is on your __5__.",
-            respuestas: ["straight", "right", "Oak", "Third", "right"]
-        },
-        {
-            instruccion: "Bank → Park",
-            parrafo: "Starting at the Bank, go __1__ along First Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Park is on your __5__.",
-            respuestas: ["straight", "right", "Main", "Elm", "right"]
-        },
-        {
-            instruccion: "Library → Supermarket",
-            parrafo: "From the Library, walk __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Supermarket is on your __5__.",
-            respuestas: ["straight", "left", "First", "Oak", "left"]
-        },
-        {
-            instruccion: "Hospital → Bank",
-            parrafo: "To get from the Hospital to the Bank, walk __1__ along Second Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Bank is on your __5__.",
-            respuestas: ["straight", "left", "Elm", "First", "left"]
-        },
-        {
-            instruccion: "Cinema → Bus Station",
-            parrafo: "From the Cinema, go __1__ along Third Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Bus Station is on your __5__.",
-            respuestas: ["straight", "left", "Elm", "Second", "left"]
-        },
-        {
-            instruccion: "Post Office → Hospital",
-            parrafo: "Starting at the Post Office, walk __1__ along Third Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Hospital is on your __5__.",
-            respuestas: ["straight", "left", "Oak", "Second", "left"]
-        },
-        {
-            instruccion: "Bank → School",
-            parrafo: "To go from the Bank to the School, walk __1__ along First Street. The School is on your __2__, just after the corner with __3__ Avenue. You will pass the __4__ on your left.",
-            respuestas: ["straight", "left", "Main", "supermarket"]
-        }
-    ];
-
-    // =============================================
     // FUNCIONES DE SELECCIÓN ALEATORIA
     // =============================================
     function seleccionarElementos(arr, cantidad) {
@@ -1531,16 +1126,12 @@
 
     let textoVFActual = seleccionarTextoYPreguntas();
 
-    // Seleccionar SOLO 2 preguntas de Fill Paragraph (cada una con 5 blanks)
-    let preguntasFill = seleccionarElementos(poolFill, 2);
-
     // =============================================
     // ESTADO DE RESPUESTAS
     // =============================================
     let respuestasMC = new Array(preguntasMC.length).fill(null);
     let respuestasWO = preguntasWO.map(() => ({ orden: [] }));
     let respuestasVF = textoVFActual.preguntas.map(() => ({ vf: null }));
-    let respuestasFill = preguntasFill.map(() => []); // cada pregunta tiene un array de respuestas
 
     let evaluado = false;
 
@@ -1551,107 +1142,6 @@
         renderizarMC();
         renderizarWO();
         renderizarVF();
-        renderizarFill();
-    }
-
-    function renderizarFill() {
-        const container = document.getElementById('fillParagraph');
-        container.innerHTML = '';
-
-        preguntasFill.forEach((q, idx) => {
-            const qDiv = document.createElement('div');
-            qDiv.className = 'question';
-            qDiv.id = `fill-${idx}`;
-
-            const p = document.createElement('p');
-            p.innerHTML = `<span class="question-number">${idx + 1}.</span> Complete the directions: <strong style="color:#f4ce50;">${q.instruccion}</strong>`;
-            qDiv.appendChild(p);
-
-            const parrafo = document.createElement('div');
-            parrafo.className = 'fill-paragraph';
-
-            const partes = q.parrafo.split(/(__\d+__)/g);
-            let blankCounter = 0;
-            let totalBlanks = q.respuestas.length;
-
-            partes.forEach((parte) => {
-                if (parte.match(/__\d+__/)) {
-                    const input = document.createElement('input');
-                    input.className = 'blank-input';
-                    input.type = 'text';
-                    input.id = `fill-${idx}-blank-${blankCounter}`;
-                    input.placeholder = `...`;
-
-                    if (evaluado) {
-                        input.classList.add('disabled');
-                        const respuestaUsuario = respuestasFill[idx]?.[blankCounter] || '';
-                        const respuestaCorrecta = q.respuestas[blankCounter] || '';
-                        const esCorrecta = respuestaUsuario.toLowerCase().trim() === respuestaCorrecta.toLowerCase().trim();
-                        if (esCorrecta) {
-                            input.classList.add('correct-answer');
-                            input.value = respuestaUsuario || respuestaCorrecta;
-                        } else {
-                            input.classList.add('wrong-answer');
-                            input.value = respuestaUsuario || '';
-                            input.placeholder = `→ ${respuestaCorrecta}`;
-                        }
-                    } else {
-                        if (respuestasFill[idx]?.[blankCounter]) {
-                            input.value = respuestasFill[idx][blankCounter];
-                        }
-                        input.addEventListener('input', function() {
-                            if (evaluado) return;
-                            if (!respuestasFill[idx]) {
-                                respuestasFill[idx] = [];
-                            }
-                            respuestasFill[idx][blankCounter] = this.value;
-                        });
-                    }
-
-                    const numberSpan = document.createElement('span');
-                    numberSpan.className = 'blank-number';
-                    numberSpan.textContent = `(${blankCounter + 1})`;
-
-                    parrafo.appendChild(numberSpan);
-                    parrafo.appendChild(input);
-                    blankCounter++;
-                } else {
-                    parrafo.appendChild(document.createTextNode(parte));
-                }
-            });
-
-            qDiv.appendChild(parrafo);
-
-            if (evaluado) {
-                // Contar cuántas respuestas correctas tiene
-                let correctas = 0;
-                q.respuestas.forEach((correcta, bi) => {
-                    const userAnswer = respuestasFill[idx]?.[bi] || '';
-                    if (userAnswer.toLowerCase().trim() === correcta.toLowerCase().trim()) {
-                        correctas++;
-                    }
-                });
-
-                if (correctas === totalBlanks) {
-                    qDiv.classList.add('correcta');
-                } else if (correctas === 0) {
-                    qDiv.classList.add('incorrecta');
-                } else {
-                    qDiv.classList.add('parcial');
-                }
-
-                const feedback = document.createElement('div');
-                feedback.className = `feedback-text ${correctas === totalBlanks ? 'correcta' : (correctas === 0 ? 'incorrecta' : 'parcial')}`;
-                if (correctas === totalBlanks) {
-                    feedback.textContent = `✅ All ${totalBlanks} blanks correct! (+${totalBlanks} pts)`;
-                } else {
-                    feedback.textContent = `❌ ${correctas}/${totalBlanks} correct. Correct answers: ${q.respuestas.map((r, i) => `${i+1}: "${r}"`).join(', ')}`;
-                }
-                qDiv.appendChild(feedback);
-            }
-
-            container.appendChild(qDiv);
-        });
     }
 
     function renderizarMC() {
@@ -1903,7 +1393,11 @@
 
                 const feedback = document.createElement('div');
                 feedback.className = `feedback-text ${esCorrecta ? 'correcta' : 'incorrecta'}`;
-                feedback.textContent = esCorrecta ? '✅ Correct (+1 pt)' : '❌ Incorrect. The statement was ' + (q.correcta === 'V' ? 'True' : 'False') + '.';
+                if (esCorrecta) {
+                    feedback.textContent = '✅ Correct (+1 pt)';
+                } else {
+                    feedback.textContent = '❌ Incorrect. The statement was ' + (q.correcta === 'V' ? 'True' : 'False') + '.';
+                }
                 qDiv.appendChild(feedback);
 
             } else {
@@ -1947,14 +1441,12 @@
         document.getElementById('evaluateBtn').disabled = true;
 
         let totalCorrectas = 0;
-        let totalPuntos = 0;
         let maxPuntos = 0;
 
         // MC: 8 puntos
         preguntasMC.forEach((q, idx) => {
             const textoCorrecto = q.opciones[q.correcta];
             if (respuestasMC[idx] === textoCorrecto) totalCorrectas++;
-            totalPuntos++;
             maxPuntos++;
         });
 
@@ -1962,27 +1454,13 @@
         preguntasWO.forEach((q, idx) => {
             const palabrasCorrectas = q.respuesta.replace(/[.!?]/g, '').split(' ');
             if (respuestasWO[idx].orden.join(' ') === palabrasCorrectas.join(' ')) totalCorrectas++;
-            totalPuntos++;
             maxPuntos++;
         });
 
         // VF: 8 puntos
         textoVFActual.preguntas.forEach((q, idx) => {
             if (respuestasVF[idx]?.vf === q.correcta) totalCorrectas++;
-            totalPuntos++;
             maxPuntos++;
-        });
-
-        // Fill Paragraph: cada blank correcto = 1 punto
-        preguntasFill.forEach((q, idx) => {
-            q.respuestas.forEach((correcta, bi) => {
-                const userAnswer = respuestasFill[idx]?.[bi] || '';
-                if (userAnswer.toLowerCase().trim() === correcta.toLowerCase().trim()) {
-                    totalCorrectas++;
-                }
-                totalPuntos++;
-                maxPuntos++;
-            });
         });
 
         renderizarTodo();
@@ -2009,13 +1487,6 @@
                 <div>📌 MC: ${preguntasMC.filter((q, i) => respuestasMC[i] === q.opciones[q.correcta]).length}/8</div>
                 <div>📝 WO: ${preguntasWO.filter((q, i) => respuestasWO[i].orden.join(' ') === q.respuesta.replace(/[.!?]/g, '').split(' ').join(' ')).length}/8</div>
                 <div>⚖️ VF: ${textoVFActual.preguntas.filter((q, i) => respuestasVF[i]?.vf === q.correcta).length}/8</div>
-                <div>✍️ Fill: ${preguntasFill.reduce((acc, q, idx) => {
-                    let correctas = 0;
-                    q.respuestas.forEach((r, bi) => {
-                        if ((respuestasFill[idx]?.[bi] || '').toLowerCase().trim() === r.toLowerCase().trim()) correctas++;
-                    });
-                    return acc + correctas;
-                }, 0)}/10</div>
             </div>
             <div class="grade-box ${aprobado ? 'approved' : 'failed'}">
                 <strong>${aprobado ? '🎉 PASSED 🎉' : '📖 FAILED 📖'}</strong><br>
@@ -2043,12 +1514,10 @@
         preguntasMC = seleccionarElementos(poolMC, 8);
         preguntasWO = seleccionarElementos(poolWO, 8);
         textoVFActual = seleccionarTextoYPreguntas();
-        preguntasFill = seleccionarElementos(poolFill, 2);
 
         respuestasMC = new Array(preguntasMC.length).fill(null);
         respuestasWO = preguntasWO.map(() => ({ orden: [] }));
         respuestasVF = textoVFActual.preguntas.map(() => ({ vf: null }));
-        respuestasFill = preguntasFill.map(() => []);
 
         document.getElementById('results').classList.remove('visible');
         renderizarTodo();
