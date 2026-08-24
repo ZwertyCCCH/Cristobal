@@ -1,0 +1,2066 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Ejercicios · Unit 3 · Getting Around Town | Inglés 9°</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: linear-gradient(135deg, #0b1a2e 0%, #1a2f3f 40%, #0f1e2b 100%);
+            padding: 2rem;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+        }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 2rem;
+            padding: 2rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.3);
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #00b4d8;
+            padding-bottom: 1rem;
+        }
+        h1 {
+            font-size: 2rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #00b4d8, #f4ce50, #00b4d8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            font-family: 'Inter', sans-serif;
+        }
+        .subtitle { color: #a29bfe; font-size: 0.9rem; }
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+            color: #b2bec3;
+        }
+        .info-bar strong { color: #f4ce50; }
+
+        .section {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #00b4d8;
+            border: 1px solid rgba(255, 255, 255, 0.06);
+        }
+        .section-title {
+            font-size: 1.3rem;
+            color: #f4ce50;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 700;
+            font-family: 'Inter', sans-serif;
+        }
+        .section-title i { color: #00b4d8; }
+
+        .reading-text {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1.2rem;
+            margin-bottom: 1.2rem;
+            color: #b2bec3;
+            font-size: 0.95rem;
+            line-height: 1.7;
+        }
+        .reading-text .title {
+            color: #f4ce50;
+            font-weight: 700;
+            font-size: 1.05rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 1rem;
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            transition: border-color 0.3s;
+        }
+        .question.correcta { border-color: #55efc4; background: rgba(85, 239, 196, 0.06); }
+        .question.incorrecta { border-color: #e94560; background: rgba(233, 69, 96, 0.06); }
+        .question.parcial {
+            border-color: #f4ce50;
+            background: rgba(244, 206, 80, 0.06);
+        }
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #e2e8f0;
+            font-size: 1.05rem;
+        }
+        .question p .question-number { color: #00b4d8; font-weight: 700; }
+
+        /* ===== Selección Múltiple ===== */
+        .options-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+        }
+        .options-grid .option-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0.8rem;
+            padding: 0.5rem 0.8rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 0.95rem;
+            text-align: left;
+            font-family: 'Inter', sans-serif;
+            color: #b2bec3;
+        }
+        .options-grid .option-btn:hover {
+            background: rgba(0, 180, 216, 0.1);
+            border-color: #00b4d8;
+            color: #e2e8f0;
+        }
+        .options-grid .option-btn.selected {
+            background: #00b4d8;
+            border-color: #00b4d8;
+            color: white;
+        }
+        .options-grid .option-btn.correct-answer {
+            background: #55efc4;
+            border-color: #55efc4;
+            color: #0b1a2e;
+        }
+        .options-grid .option-btn.wrong-answer {
+            background: #e94560;
+            border-color: #e94560;
+            color: white;
+        }
+        .options-grid .option-btn.disabled {
+            cursor: default;
+            opacity: 0.9;
+        }
+
+        /* ===== Reordenar palabras ===== */
+        .word-bank {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin: 0.5rem 0;
+            padding: 0.8rem;
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 0.8rem;
+            border: 1px dashed rgba(255, 255, 255, 0.1);
+            min-height: 3rem;
+        }
+        .word-token {
+            background: rgba(0, 180, 216, 0.15);
+            border: 2px solid rgba(0, 180, 216, 0.3);
+            border-radius: 0.5rem;
+            padding: 0.3rem 0.7rem;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Inter', sans-serif;
+        }
+        .word-token:hover {
+            background: rgba(0, 180, 216, 0.25);
+            transform: scale(1.05);
+        }
+        .word-token.used {
+            opacity: 0.3;
+            cursor: default;
+            pointer-events: none;
+        }
+        .word-token.correct-answer {
+            background: #55efc4;
+            color: #0b1a2e;
+            border-color: #55efc4;
+        }
+        .word-token.wrong-answer {
+            background: #e94560;
+            color: white;
+            border-color: #e94560;
+        }
+        .word-token.disabled { cursor: default; opacity: 0.6; }
+
+        .sentence-builder {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.3rem;
+            padding: 0.5rem;
+            min-height: 2.5rem;
+            border-radius: 0.5rem;
+            background: rgba(255, 255, 255, 0.03);
+            border: 1px dashed rgba(255, 255, 255, 0.08);
+            margin: 0.5rem 0;
+        }
+        .sentence-builder .placed-word {
+            background: rgba(0, 180, 216, 0.2);
+            border: 1px solid rgba(0, 180, 216, 0.3);
+            border-radius: 0.3rem;
+            padding: 0.2rem 0.5rem;
+            font-size: 0.9rem;
+            color: #e2e8f0;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .sentence-builder .placed-word:hover { background: rgba(233, 69, 96, 0.3); }
+        .sentence-builder .placed-word.correct-answer {
+            background: #55efc4;
+            color: #0b1a2e;
+            border-color: #55efc4;
+        }
+        .sentence-builder .placed-word.wrong-answer {
+            background: #e94560;
+            color: white;
+            border-color: #e94560;
+        }
+
+        /* ===== Verdadero/Falso ===== */
+        .vf-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+            max-width: 400px;
+            margin: 0.5rem 0;
+        }
+        .vf-grid .vf-btn {
+            background: rgba(255, 255, 255, 0.04);
+            border: 2px solid rgba(255, 255, 255, 0.06);
+            border-radius: 0.8rem;
+            padding: 0.7rem;
+            cursor: pointer;
+            transition: 0.2s;
+            font-size: 1rem;
+            text-align: center;
+            font-weight: 600;
+            font-family: 'Inter', sans-serif;
+            color: #b2bec3;
+        }
+        .vf-grid .vf-btn:hover {
+            background: rgba(0, 180, 216, 0.1);
+            border-color: #00b4d8;
+            color: #e2e8f0;
+        }
+        .vf-grid .vf-btn.selected-v {
+            background: #55efc4;
+            border-color: #55efc4;
+            color: #0b1a2e;
+        }
+        .vf-grid .vf-btn.selected-f {
+            background: #e94560;
+            border-color: #e94560;
+            color: white;
+        }
+        .vf-grid .vf-btn.correct-answer {
+            background: #55efc4;
+            border-color: #55efc4;
+            color: #0b1a2e;
+        }
+        .vf-grid .vf-btn.wrong-answer {
+            background: #e94560;
+            border-color: #e94560;
+            color: white;
+        }
+        .vf-grid .vf-btn.disabled {
+            cursor: default;
+            opacity: 0.9;
+        }
+
+        /* ===== Completar párrafo (Sección D) ===== */
+        .fill-paragraph {
+            color: #e2e8f0;
+            font-size: 0.95rem;
+            line-height: 1.9;
+            margin: 0.5rem 0;
+        }
+        .fill-paragraph .blank-input {
+            background: rgba(255, 255, 255, 0.06);
+            border: 2px solid rgba(255, 255, 255, 0.1);
+            border-radius: 0.4rem;
+            padding: 0.15rem 0.4rem;
+            color: #e2e8f0;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            width: 110px;
+            transition: 0.2s;
+            display: inline-block;
+        }
+        .fill-paragraph .blank-input:focus {
+            border-color: #00b4d8;
+            outline: none;
+            background: rgba(0, 180, 216, 0.05);
+        }
+        .fill-paragraph .blank-input.correct-answer {
+            border-color: #55efc4;
+            background: rgba(85, 239, 196, 0.1);
+        }
+        .fill-paragraph .blank-input.wrong-answer {
+            border-color: #e94560;
+            background: rgba(233, 69, 96, 0.1);
+        }
+        .fill-paragraph .blank-input.disabled {
+            pointer-events: none;
+            opacity: 0.8;
+        }
+        .fill-paragraph .blank-number {
+            color: #00b4d8;
+            font-weight: 700;
+            font-size: 0.7rem;
+            vertical-align: super;
+        }
+        .fill-paragraph .blank-label {
+            color: #636e72;
+            font-size: 0.75rem;
+            margin-left: 0.2rem;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #00b4d8;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            font-family: 'Inter', sans-serif;
+        }
+        .btn-evaluate:hover {
+            background: #0090b0;
+            transform: scale(1.02);
+        }
+        .btn-evaluate:disabled {
+            background: rgba(255, 255, 255, 0.1);
+            color: #636e72;
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: rgba(255, 255, 255, 0.04);
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #00b4d8;
+        }
+        .results.visible { display: block; }
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #e2e8f0;
+        }
+        .score-box .correct-count { color: #55efc4; font-weight: 700; }
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+        .approved {
+            background: rgba(85, 239, 196, 0.15);
+            color: #55efc4;
+            border: 1px solid #55efc4;
+        }
+        .failed {
+            background: rgba(233, 69, 96, 0.15);
+            color: #e94560;
+            border: 1px solid #e94560;
+        }
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+        .action-btn {
+            background: rgba(255, 255, 255, 0.06);
+            color: #b2bec3;
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+            font-family: 'Inter', sans-serif;
+        }
+        .action-btn:hover {
+            background: #00b4d8;
+            color: white;
+            border-color: #00b4d8;
+        }
+        .feedback-text {
+            margin-top: 0.5rem;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        .feedback-text.correcta { color: #55efc4; }
+        .feedback-text.incorrecta { color: #e94560; }
+        .feedback-text.parcial { color: #f4ce50; }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #636e72;
+        }
+
+        /* ===== Mapa ===== */
+        .map-container {
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 1rem;
+            padding: 1rem;
+            margin-bottom: 1.2rem;
+            text-align: center;
+        }
+        .map-container svg {
+            max-width: 100%;
+            height: auto;
+        }
+        .map-legend {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.6rem 1.1rem;
+            margin-top: 0.8rem;
+            font-size: 0.8rem;
+            color: #b2bec3;
+        }
+        .map-legend span { display: inline-flex; align-items: center; gap: 6px; }
+        .map-legend .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 0.8rem; }
+            .container { padding: 1rem; }
+            h1 { font-size: 1.5rem; }
+            .info-bar { flex-direction: column; text-align: center; }
+            .btn-evaluate { width: 100%; }
+            .options-grid { grid-template-columns: 1fr; }
+            .vf-grid { max-width: 100%; }
+            .word-bank { gap: 0.3rem; }
+            .word-token { font-size: 0.8rem; padding: 0.2rem 0.5rem; }
+            .fill-paragraph .blank-input { width: 80px; font-size: 0.8rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>📝 Unit 3 · Getting Around Town</h1>
+        <div class="subtitle">Advanced Exercises · Set C · 4 Sections | 9th Grade</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Sections:</strong> MC (8) · Word Order (8) · True/False (8) · Fill Paragraph (2 textos × 5 blanks = 10 pts)</div>
+        <div>✅ Passing grade: <strong>60%</strong> (4.0) · Max: 7.0</div>
+        <div>📝 Total: <strong>34 points</strong></div>
+    </div>
+
+    <div id="examContent">
+        <!-- ============================================ -->
+        <!-- SECTION A: MULTIPLE CHOICE (8 questions) -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-check-circle"></i> A. Multiple Choice (8 questions)</div>
+            <p style="color: #b2bec3; font-size: 0.95rem; margin-bottom: 1rem;">Choose the best option for each question. (1 point each)</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION B: WORD ORDER (8 questions) -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-sort"></i> B. Put the Words in Order (8 questions)</div>
+            <p style="color: #b2bec3; font-size: 0.95rem; margin-bottom: 1rem;">Click on the words in the correct order to form a sentence. (1 point each)</p>
+            <div id="wordOrder"></div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION C: TRUE/FALSE WITH TEXT (8 questions) -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-balance-scale"></i> C. True or False (8 questions)</div>
+            <p style="color: #b2bec3; font-size: 0.95rem; margin-bottom: 1rem;">Read the text below and select <strong>True</strong> or <strong>False</strong> for each statement. (1 point each)</p>
+            <div id="readingText" class="reading-text"></div>
+            <div id="trueFalse"></div>
+        </div>
+
+        <!-- ============================================ -->
+        <!-- SECTION D: COMPLETE THE PARAGRAPH (2 textos × 5 blanks) -->
+        <!-- ============================================ -->
+        <div class="section">
+            <div class="section-title"><i class="fas fa-pen-fancy"></i> D. Complete the Paragraph (2 texts × 5 blanks = 10 points)</div>
+            <p style="color: #b2bec3; font-size: 0.95rem; margin-bottom: 1rem;">Look at the map and complete the directions with the missing words. <strong>Each correct blank = 1 point.</strong></p>
+
+            <div class="map-container">
+                <svg viewBox="0 0 600 520" xmlns="http://www.w3.org/2000/svg">
+                    <rect x="0" y="0" width="600" height="520" fill="#0f1e2b" rx="16"/>
+
+                    <!-- Roads (vertical) -->
+                    <rect x="135" y="40" width="30" height="440" fill="#2d3f4f"/>
+                    <rect x="285" y="40" width="30" height="440" fill="#2d3f4f"/>
+                    <rect x="435" y="40" width="30" height="440" fill="#2d3f4f"/>
+                    <!-- Roads (horizontal) -->
+                    <rect x="40" y="85" width="520" height="30" fill="#2d3f4f"/>
+                    <rect x="40" y="235" width="520" height="30" fill="#2d3f4f"/>
+                    <rect x="40" y="385" width="520" height="30" fill="#2d3f4f"/>
+
+                    <!-- Road center lines -->
+                    <line x1="150" y1="40" x2="150" y2="480" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
+                    <line x1="300" y1="40" x2="300" y2="480" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
+                    <line x1="450" y1="40" x2="450" y2="480" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
+                    <line x1="40" y1="100" x2="560" y2="100" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
+                    <line x1="40" y1="250" x2="560" y2="250" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
+                    <line x1="40" y1="400" x2="560" y2="400" stroke="#f4ce50" stroke-width="1.5" stroke-dasharray="6,6" opacity="0.4"/>
+
+                    <!-- Street names -->
+                    <text x="150" y="30" fill="#b2bec3" font-size="13" text-anchor="middle" font-family="Inter, sans-serif">First St.</text>
+                    <text x="300" y="30" fill="#b2bec3" font-size="13" text-anchor="middle" font-family="Inter, sans-serif">Second St.</text>
+                    <text x="450" y="30" fill="#b2bec3" font-size="13" text-anchor="middle" font-family="Inter, sans-serif">Third St.</text>
+                    <text x="50" y="96" fill="#b2bec3" font-size="13" text-anchor="start" font-family="Inter, sans-serif">Elm Avenue</text>
+                    <text x="50" y="246" fill="#b2bec3" font-size="13" text-anchor="start" font-family="Inter, sans-serif">Oak Avenue</text>
+                    <text x="50" y="396" fill="#b2bec3" font-size="13" text-anchor="start" font-family="Inter, sans-serif">Main Street</text>
+
+                    <!-- Compass -->
+                    <g transform="translate(535,45)">
+                        <circle r="16" fill="rgba(255,255,255,0.06)" stroke="#00b4d8" stroke-width="1.5"/>
+                        <text y="-4" fill="#f4ce50" font-size="11" text-anchor="middle" font-family="Inter, sans-serif">N</text>
+                        <text y="14" fill="#b2bec3" font-size="9" text-anchor="middle" font-family="Inter, sans-serif">S</text>
+                    </g>
+
+                    <!-- Buildings / places -->
+                    <!-- Bank: First & Elm -->
+                    <g>
+                        <rect x="130" y="80" width="40" height="40" rx="8" fill="#e94560"/>
+                        <text x="150" y="105" fill="#0b1a2e" font-size="16" text-anchor="middle">🏦</text>
+                        <text x="150" y="140" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Bank</text>
+                    </g>
+                    <!-- Bus Station: Second & Elm -->
+                    <g>
+                        <rect x="280" y="80" width="40" height="40" rx="8" fill="#00b4d8"/>
+                        <text x="300" y="105" fill="#0b1a2e" font-size="16" text-anchor="middle">🚌</text>
+                        <text x="300" y="140" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Bus Station</text>
+                    </g>
+                    <!-- Post Office: Third & Elm -->
+                    <g>
+                        <rect x="430" y="80" width="40" height="40" rx="8" fill="#f4ce50"/>
+                        <text x="450" y="105" fill="#0b1a2e" font-size="16" text-anchor="middle">📮</text>
+                        <text x="450" y="140" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Post Office</text>
+                    </g>
+                    <!-- Supermarket: First & Oak -->
+                    <g>
+                        <rect x="130" y="230" width="40" height="40" rx="8" fill="#55efc4"/>
+                        <text x="150" y="255" fill="#0b1a2e" font-size="16" text-anchor="middle">🛒</text>
+                        <text x="150" y="290" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Supermarket</text>
+                    </g>
+                    <!-- Hospital: Second & Oak -->
+                    <g>
+                        <rect x="280" y="230" width="40" height="40" rx="8" fill="#e94560"/>
+                        <text x="300" y="255" fill="#0b1a2e" font-size="16" text-anchor="middle">🏥</text>
+                        <text x="300" y="290" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Hospital</text>
+                    </g>
+                    <!-- Cinema: Third & Oak -->
+                    <g>
+                        <rect x="430" y="230" width="40" height="40" rx="8" fill="#a29bfe"/>
+                        <text x="450" y="255" fill="#0b1a2e" font-size="16" text-anchor="middle">🎬</text>
+                        <text x="450" y="290" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Cinema</text>
+                    </g>
+                    <!-- School: First & Main -->
+                    <g>
+                        <rect x="130" y="380" width="40" height="40" rx="8" fill="#00b4d8"/>
+                        <text x="150" y="405" fill="#0b1a2e" font-size="16" text-anchor="middle">🏫</text>
+                        <text x="150" y="440" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">School</text>
+                    </g>
+                    <!-- Library: Second & Main -->
+                    <g>
+                        <rect x="280" y="380" width="40" height="40" rx="8" fill="#f4ce50"/>
+                        <text x="300" y="405" fill="#0b1a2e" font-size="16" text-anchor="middle">📚</text>
+                        <text x="300" y="440" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Library</text>
+                    </g>
+                    <!-- Park: Third & Main -->
+                    <g>
+                        <rect x="430" y="380" width="40" height="40" rx="8" fill="#55efc4"/>
+                        <text x="450" y="405" fill="#0b1a2e" font-size="16" text-anchor="middle">🌳</text>
+                        <text x="450" y="440" fill="#e2e8f0" font-size="13" text-anchor="middle" font-family="Inter, sans-serif" font-weight="600">Park</text>
+                    </g>
+                </svg>
+                <div class="map-legend">
+                    <span><span class="dot" style="background:#00b4d8"></span>Bus Station / School</span>
+                    <span><span class="dot" style="background:#e94560"></span>Bank / Hospital</span>
+                    <span><span class="dot" style="background:#f4ce50"></span>Post Office / Library</span>
+                    <span><span class="dot" style="background:#55efc4"></span>Supermarket / Park</span>
+                    <span><span class="dot" style="background:#a29bfe"></span>Cinema</span>
+                </div>
+            </div>
+
+            <div id="fillParagraph"></div>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluate answers</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">English 9th Grade · Unit 3 · Getting Around Town · Set C</div>
+</div>
+
+<script>
+    // =============================================
+    // POOL DE PREGUNTAS (40 cada sección)
+    // =============================================
+
+    // ===== SECCIÓN A: SELECCIÓN MÚLTIPLE (40) =====
+    const poolMC = [
+        // ===== Situaciones de transporte (1-10) =====
+        {
+            pregunta: "You are waiting for the bus. It is 8:15 am and the bus was supposed to arrive at 8:00 am. What do you say?",
+            opciones: [
+                "The bus is on time.",
+                "The bus is delayed.",
+                "The bus is early.",
+                "The bus is cancelled."
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "Your friend offers to drive you to school because you missed the bus. What does your friend give you?",
+            opciones: [
+                "a fare",
+                "a lift",
+                "a timetable",
+                "a route"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are in a new city and you don't know how to get to the museum. What should you do?",
+            opciones: [
+                "look up a timetable",
+                "ask for directions",
+                "pay a fare",
+                "hire a bike"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You want to explore the city by bicycle but you don't own one. What can you do?",
+            opciones: [
+                "buy a bike",
+                "hire a bike",
+                "steal a bike",
+                "repair a bike"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "There are many people waiting at the bus stop. You have to _____ the bus.",
+            opciones: [
+                "run for",
+                "queue for",
+                "look up",
+                "set off for"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are going to school and you want to arrive before the bell rings. What do you need to do?",
+            opciones: [
+                "arrive on time",
+                "arrive early",
+                "arrive late",
+                "be delayed"
+            ],
+            correcta: 0
+        },
+        {
+            pregunta: "You are using Google Maps to find the quickest way to the train station. What are you doing?",
+            opciones: [
+                "looking up a timetable",
+                "finding the best route",
+                "asking for directions",
+                "paying a fare"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You get on the bus but you haven't paid yet. The driver asks you to give money for the journey. What do you need to do?",
+            opciones: [
+                "look up a timetable",
+                "pay a fare",
+                "ask for directions",
+                "get a lift"
+            ],
+            correcta: 1
+        },  
+        {
+            pregunta: "You leave your house at 7:30 am to go to school. What are you doing?",
+            opciones: [
+                "arriving at school",
+                "setting off for school",
+                "finishing school",
+                "queueing for school"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are cycling to school and there is a designated path for cyclists. What should you use?",
+            opciones: [
+                "the road",
+                "the cycle lane",
+                "the pavement",
+                "the motorway"
+            ],
+            correcta: 1
+        },
+        // ===== Situaciones de movimiento (11-20) =====
+        {
+            pregunta: "You are walking down the street and you see a beautiful building. You stop to look at it. What are you doing?",
+            opciones: [
+                "walking past",
+                "looking around",
+                "turning around",
+                "crossing over"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are walking in the wrong direction. Someone tells you to go back. What should you do?",
+            opciones: [
+                "walk past",
+                "turn around",
+                "look around",
+                "go through"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are standing at the side of a busy road and you need to get to the other side. What do you need to do?",
+            opciones: [
+                "walk along the street",
+                "cross over the street",
+                "go through the street",
+                "walk past the street"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You want to go to the other side of the park without going around it. What should you do?",
+            opciones: [
+                "walk past",
+                "go through",
+                "turn around",
+                "walk along"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are walking beside the river enjoying the view. What are you doing?",
+            opciones: [
+                "crossing over",
+                "walking along",
+                "walking past",
+                "going through"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You walk in front of the cinema and continue walking without stopping. What did you do?",
+            opciones: [
+                "walk along",
+                "walk past",
+                "cross over",
+                "go through"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are on a bus and you have arrived at your stop. What should you do?",
+            opciones: [
+                "get on",
+                "get off",
+                "get into",
+                "get around"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are at the train station and you need to board the train. What should you do?",
+            opciones: [
+                "get off",
+                "get on",
+                "get into",
+                "get out of"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are looking for your friend in a crowded square. You look at everything around you. What are you doing?",
+            opciones: [
+                "looking up",
+                "looking around",
+                "turning around",
+                "walking around"
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "The road is blocked and you need to go to the other side. What do you need to do?",
+            opciones: [
+                "go through",
+                "go towards",
+                "turn around",
+                "walk past"
+            ],
+            correcta: 0
+        },
+        // ===== Uso de tiempos verbales en contexto (21-30) =====
+        {
+            pregunta: "Your train is scheduled to depart at 6 pm. It is now 5:45 pm. Which sentence is the most natural way to express this fixed schedule?",
+            opciones: [
+                "The train will leave at 6 pm.",
+                "The train leaves at 6 pm.",
+                "The train is leaving at 6 pm.",
+                "The train going to leave at 6 pm."
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You have decided to take the bus to school tomorrow because your car is broken. Which sentence best expresses this?",
+            opciones: [
+                "I take the bus to school tomorrow.",
+                "I will take the bus to school tomorrow.",
+                "I'm going to take the bus to school tomorrow.",
+                "I taking the bus to school tomorrow."
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "You are looking at dark clouds in the sky. What do you say to your friend?",
+            opciones: [
+                "It rains today.",
+                "It is going to rain today.",
+                "It will rain today.",
+                "It raining today."
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "The phone rings and you answer it. Your friend asks if you can help them. You say:",
+            opciones: [
+                "I help you.",
+                "I'm going to help you.",
+                "I will help you.",
+                "I helping you."
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "You are reading the train schedule. It says the next train to London is at 10:15. Which sentence is correct?",
+            opciones: [
+                "The next train will leave at 10:15.",
+                "The next train leaves at 10:15.",
+                "The next train is leaving at 10:15.",
+                "The next train leaving at 10:15."
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You have been planning to visit your grandma for weeks. You tell your friend:",
+            opciones: [
+                "I visit my grandma this weekend.",
+                "I will visit my grandma this weekend.",
+                "I'm going to visit my grandma this weekend.",
+                "I visiting my grandma this weekend."
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "You are at a restaurant and you decide to order pasta. You say to the waiter:",
+            opciones: [
+                "I have the pasta.",
+                "I will have the pasta.",
+                "I'm going to have the pasta.",
+                "I having the pasta."
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "The bus schedule says the bus arrives at 8 am. It is now 8:15 am and the bus hasn't arrived. You tell your friend:",
+            opciones: [
+                "The bus arrives late today.",
+                "The bus will arrive late today.",
+                "The bus is going to arrive late today.",
+                "The bus arriving late today."
+            ],
+            correcta: 2 
+        },
+        {
+            pregunta: "You have already bought tickets for a concert next Friday. You tell your friend:",
+            opciones: [
+                "We see a concert next Friday.",
+                "We will see a concert next Friday.",
+                "We're going to see a concert next Friday.",
+                "We are seeing a concert next Tuesday."
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "The museum closes at 6 pm. It is now 5:30 pm. Which sentence is correct?",
+            opciones: [
+                "The museum will close at 6 pm.",
+                "The museum closes at 6 pm.",
+                "The museum is closing at 6 pm.",
+                "The museum closing at 6 pm."
+            ],
+            correcta: 1
+        },
+        // ===== Uso de imperativos y modales en contexto (31-40) =====
+        {
+            pregunta: "You are giving directions to a tourist. Which sentence is the most natural way to give the instruction?",
+            opciones: [
+                "You turn left at the traffic lights.",
+                "Turning left at the traffic lights.",
+                "Turn left at the traffic lights.",
+                "To turn left at the traffic lights."
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "You are in a library and someone is talking loudly. What do you say politely?",
+            opciones: [
+                "Be quiet!",
+                "You are quiet.",
+                "Please be quiet.",
+                "To be quiet."
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "You are in a car with your friend and they are driving too fast. What do you say?",
+            opciones: [
+                "Slow down!",
+                "You slow down!",
+                "Slowing down!",
+                "To slow down."
+            ],
+            correcta: 0
+        },
+        {
+            pregunta: "You want to suggest going to the park with your friends. What do you say?",
+            opciones: [
+                "We go to the park.",
+                "Let's go to the park.",
+                "We will go to the park.",
+                "Going to the park."
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are at the bus stop and you don't have a ticket. The bus is arriving. What should you do?",
+            opciones: [
+                "You can get on the bus.",
+                "You must buy a ticket before you get on.",
+                "You should wait for the next bus.",
+                "You may get on without a ticket."
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are in a hurry and you need to get to the station quickly. Which is the best advice?",
+            opciones: [
+                "You must take the bus.",
+                "You should take the metro; it's faster.",
+                "You can walk to the station.",
+                "You may take a taxi."
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You are at the train station and you want to ask for information politely. What do you say?",
+            opciones: [
+                "Give me the train times.",
+                "Tell me when the train leaves.",
+                "Could you tell me when the train leaves?",
+                "I need the train times."
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "You are lost in a new city and you see a police officer. What do you say politely?",
+            opciones: [
+                "Tell me the way to the station.",
+                "Show me the way to the station.",
+                "Can you tell me the way to the station, please?",
+                "I want to go to the station."
+            ],
+            correcta: 2
+        },
+        {
+            pregunta: "You are on a train and there is a sign that says 'No smoking'. What does this mean?",
+            opciones: [
+                "You can smoke on the train.",
+                "You must not smoke on the train.",
+                "You should smoke on the train.",
+                "You may smoke on the train."
+            ],
+            correcta: 1
+        },
+        {
+            pregunta: "You want to offer help to an elderly person who is carrying heavy bags. What do you say?",
+            opciones: [
+                "I help you.",
+                "Let me help you.",
+                "You need help.",
+                "I'm going to help you."
+            ],
+            correcta: 1
+        }
+    ];
+
+    // ===== SECCIÓN B: REORDENAR PALABRAS (40) =====
+    const poolWO = [
+        // ===== Transporte y movimiento (1-10) =====
+        {
+            palabras: ["I", "walk", "to", "school", "every", "day"],
+            respuesta: "I walk to school every day."
+        },
+        {
+            palabras: ["We", "take", "the", "bus", "to", "school"],
+            respuesta: "We take the bus to school."
+        },
+        {
+            palabras: ["Turn", "left", "at", "the", "traffic", "lights"],
+            respuesta: "Turn left at the traffic lights."
+        },
+        {
+            palabras: ["Don't", "cross", "the", "street", "here"],
+            respuesta: "Don't cross the street here."
+        },
+        {
+            palabras: ["Let's", "hire", "a", "bike"],
+            respuesta: "Let's hire a bike."
+        },
+        {
+            palabras: ["Get", "off", "the", "train", "at", "the", "station"],
+            respuesta: "Get off the train at the station."
+        },
+        {
+            palabras: ["Walk", "past", "the", "church"],
+            respuesta: "Walk past the church."
+        },
+        {
+            palabras: ["Go", "through", "the", "park"],
+            respuesta: "Go through the park."
+        },
+        {
+            palabras: ["The", "train", "always", "arrives", "on", "time"],
+            respuesta: "The train always arrives on time."
+        },
+        {
+            palabras: ["The", "bus", "is", "often", "delayed"],
+            respuesta: "The bus is often delayed."
+        },
+        // ===== Preguntas y horarios (11-20) =====
+        {
+            palabras: ["What", "time", "does", "the", "train", "leave"],
+            respuesta: "What time does the train leave?"
+        },
+        {
+            palabras: ["I", "set", "off", "for", "school", "at", "seven"],
+            respuesta: "I set off for school at seven."
+        },
+        {
+            palabras: ["We", "need", "to", "find", "the", "best", "route"],
+            respuesta: "We need to find the best route."
+        },
+        {
+            palabras: ["You", "should", "ask", "for", "directions"],
+            respuesta: "You should ask for directions."
+        },
+        {
+            palabras: ["Always", "use", "the", "cycle", "lane"],
+            respuesta: "Always use the cycle lane."
+        },
+        {
+            palabras: ["The", "train", "leaves", "at", "six", "pm"],
+            respuesta: "The train leaves at six pm."
+        },
+        {
+            palabras: ["What", "time", "does", "the", "film", "start"],
+            respuesta: "What time does the film start?"
+        },
+        {
+            palabras: ["My", "class", "finishes", "at", "twelve", "tomorrow"],
+            respuesta: "My class finishes at twelve tomorrow."
+        },
+        {
+            palabras: ["I'm", "going", "to", "take", "the", "bus"],
+            respuesta: "I'm going to take the bus."
+        },
+        {
+            palabras: ["I", "will", "help", "you"],
+            respuesta: "I will help you."
+        },
+        // ===== Futuro y predicciones (21-30) =====
+        {
+            palabras: ["The", "plane", "does", "not", "arrive", "until", "eleven"],
+            respuesta: "The plane does not arrive until eleven."
+        },
+        {
+            palabras: ["The", "concert", "starts", "at", "eight", "tonight"],
+            respuesta: "The concert starts at eight tonight."
+        },
+        {
+            palabras: ["We", "are", "going", "to", "visit", "the", "museum"],
+            respuesta: "We are going to visit the museum."
+        },
+        {
+            palabras: ["I", "will", "call", "you", "later"],
+            respuesta: "I will call you later."
+        },
+        {
+            palabras: ["What", "are", "you", "going", "to", "do", "tomorrow"],
+            respuesta: "What are you going to do tomorrow?"
+        },
+        {
+            palabras: ["The", "museum", "opens", "at", "ten", "am"],
+            respuesta: "The museum opens at ten am."
+        },
+        {
+            palabras: ["I", "think", "it", "won't", "rain", "today"],
+            respuesta: "I think it won't rain today."
+        },
+        {
+            palabras: ["When", "are", "you", "going", "to", "leave"],
+            respuesta: "When are you going to leave?"
+        },
+        {
+            palabras: ["Which", "station", "does", "the", "train", "depart", "from"],
+            respuesta: "Which station does the train depart from?"
+        },
+        {
+            palabras: ["I'm", "going", "to", "buy", "a", "ticket"],
+            respuesta: "I'm going to buy a ticket."
+        },
+        // ===== Imperativos y modales (31-40) =====
+        {
+            palabras: ["Please", "close", "the", "door"],
+            respuesta: "Please close the door."
+        },
+        {
+            palabras: ["Don't", "forget", "your", "ticket"],
+            respuesta: "Don't forget your ticket."
+        },
+        {
+            palabras: ["Let's", "take", "the", "bus"],
+            respuesta: "Let's take the bus."
+        },
+        {
+            palabras: ["Be", "careful", "the", "floor", "is", "wet"],
+            respuesta: "Be careful! The floor is wet."
+        },
+        {
+            palabras: ["You", "must", "wait", "here"],
+            respuesta: "You must wait here."
+        },
+        {
+            palabras: ["You", "should", "take", "the", "metro"],
+            respuesta: "You should take the metro."
+        },
+        {
+            palabras: ["May", "I", "have", "a", "map"],
+            respuesta: "May I have a map?"
+        },
+        {
+            palabras: ["Don't", "use", "your", "phone", "while", "driving"],
+            respuesta: "Don't use your phone while driving."
+        },
+        {
+            palabras: ["Could", "you", "tell", "me", "the", "way"],
+            respuesta: "Could you tell me the way?"
+        },
+        {
+            palabras: ["You", "must", "fasten", "your", "seatbelt"],
+            respuesta: "You must fasten your seatbelt."
+        }
+    ];
+
+    // ===== SECCIÓN C: TEXTO + PREGUNTAS V/F (40 preguntas en total, distribuidas en 4 textos) =====
+    const textosVF = [
+        {
+            texto: "Urban transport has changed dramatically in the last twenty years. Many cities are now promoting cycling and walking as healthy, sustainable alternatives to driving. In Amsterdam, over 60% of all journeys are made by bicycle. The city has invested heavily in cycle lanes and bike parking facilities. Similarly, London has introduced a congestion charge to reduce traffic in the city centre. This fee discourages drivers from entering the busiest areas during peak hours. The money collected is used to improve public transport. Many young people in London now prefer to use electric scooters for short trips. They are affordable, easy to use, and environmentally friendly. However, some people argue that e-scooters are dangerous and should be banned. Despite this, the trend towards sustainable urban mobility continues to grow.",
+            preguntas: [
+                { texto: "Amsterdam has over 60% of journeys made by bicycle.", correcta: "V" },
+                { texto: "London introduced a congestion charge to increase traffic.", correcta: "F" },
+                { texto: "Young people in London prefer to use electric scooters for short trips.", correcta: "V" },
+                { texto: "The money from the congestion charge is used to improve public transport.", correcta: "V" },
+                { texto: "Cycling and walking are not sustainable alternatives to driving.", correcta: "F" },
+                { texto: "Electric scooters are considered affordable and environmentally friendly.", correcta: "V" },
+                { texto: "The congestion charge encourages drivers to enter the city centre.", correcta: "F" },
+                { texto: "Amsterdam has invested in cycle lanes and bike parking facilities.", correcta: "V" },
+                { texto: "E-scooters are universally considered safe for all users.", correcta: "F" },
+                { texto: "The text suggests sustainable urban mobility is growing.", correcta: "V" }
+            ]
+        },
+        {
+            texto: "The way young people travel to school has changed significantly. In many countries, teenagers no longer walk or cycle to school. Instead, they are driven by their parents or take the bus. This change has several consequences. Firstly, traffic congestion increases during school hours. Secondly, young people are less active, which can affect their health. Some schools have introduced 'walking buses' where a group of children walk together with a teacher. This encourages physical activity and reduces traffic. In addition, many cities are investing in safe cycle lanes to encourage cycling. However, safety concerns remain a major issue. Parents worry about traffic accidents and stranger danger. To address this, some schools provide cycling lessons and safety training. There is also a growing movement to promote public transport use among students. With student discounts and improved services, more teenagers are choosing the bus over the car.",
+            preguntas: [
+                { texto: "Teenagers are more likely to walk or cycle to school now than in the past.", correcta: "F" },
+                { texto: "Traffic congestion increases during school hours because parents drive their children.", correcta: "V" },
+                { texto: "'Walking buses' encourage physical activity and reduce traffic.", correcta: "V" },
+                { texto: "Safety concerns are a major issue for parents who worry about their children cycling.", correcta: "V" },
+                { texto: "Schools never provide cycling lessons or safety training for students.", correcta: "F" },
+                { texto: "Student discounts make public transport less attractive to teenagers.", correcta: "F" },
+                { texto: "More teenagers are choosing the bus over the car due to improved services and discounts.", correcta: "V" },
+                { texto: "The text states that young people are more active now than in the past.", correcta: "F" },
+                { texto: "Cities are investing in safe cycle lanes to encourage cycling.", correcta: "V" },
+                { texto: "Parents never worry about traffic accidents when their children cycle.", correcta: "F" }
+            ]
+        },
+        {
+            texto: "Public transport is essential for modern cities. It reduces traffic, lowers emissions, and provides mobility for all citizens. However, many young people avoid buses and trains because they find them unreliable and overcrowded. A survey of London teenagers revealed that they prefer tickets they can use on their phones rather than paper tickets. They also want cheaper fares and more frequent services during rush hour. In response, transport companies are introducing new technologies. Contactless payment is now standard in many cities. Real-time tracking apps allow passengers to see exactly when their bus will arrive. Some cities are also introducing express bus routes to speed up journeys. Despite these improvements, many young people still see cycling and walking as more attractive options. They are free, healthy, and environmentally friendly. The challenge for transport authorities is to make public transport as convenient and appealing as these alternatives.",
+            preguntas: [
+                { texto: "Public transport reduces traffic and lowers emissions.", correcta: "V" },
+                { texto: "Young people find public transport reliable and comfortable.", correcta: "F" },
+                { texto: "London teenagers prefer paper tickets over phone tickets.", correcta: "F" },
+                { texto: "Transport companies are introducing new technologies to improve services.", correcta: "V" },
+                { texto: "Contactless payment is now standard in many cities.", correcta: "V" },
+                { texto: "Real-time tracking apps show passengers when their bus will arrive.", correcta: "V" },
+                { texto: "Express bus routes are being introduced to slow down journeys.", correcta: "F" },
+                { texto: "Cycling and walking are seen as expensive alternatives to public transport.", correcta: "F" },
+                { texto: "Teenagers want cheaper fares and more frequent services during rush hour.", correcta: "V" },
+                { texto: "The text says public transport is not essential for modern cities.", correcta: "F" }
+            ]
+        },
+        {
+            texto: "The future of transport looks exciting. In the next decade, we will see more electric vehicles on our roads. Many governments are planning to ban the sale of new petrol and diesel cars by 2030. This is a crucial step towards reducing carbon emissions. At the same time, autonomous vehicles are being tested in several cities. These self-driving cars could reduce accidents and traffic jams. However, they also raise questions about job losses and data privacy. In the air, flying taxis are being developed by companies like Uber and Airbus. These electric vertical take-off vehicles could revolutionize urban travel. For long distances, the Hyperloop promises to connect cities in minutes. This high-speed transport system uses pods in vacuum tubes to travel at over 1,000 km/h. While these innovations are exciting, they also require significant investment. The biggest challenge is ensuring that new transport systems are accessible and affordable for everyone.",
+            preguntas: [
+                { texto: "Many governments plan to ban the sale of new petrol and diesel cars by 2030.", correcta: "V" },
+                { texto: "Autonomous vehicles are already widely available in all cities.", correcta: "F" },
+                { texto: "Self-driving cars could reduce accidents and traffic jams.", correcta: "V" },
+                { texto: "Flying taxis are being developed by companies like Uber and Airbus.", correcta: "V" },
+                { texto: "The Hyperloop can travel at speeds of over 1,000 km/h.", correcta: "V" },
+                { texto: "The Hyperloop uses pods in vacuum tubes.", correcta: "V" },
+                { texto: "Electric vehicles are not important for reducing carbon emissions.", correcta: "F" },
+                { texto: "The main challenge is ensuring new transport systems are accessible and affordable.", correcta: "V" },
+                { texto: "Autonomous vehicles raise questions about job losses and data privacy.", correcta: "V" },
+                { texto: "The text says that new transport systems do not require significant investment.", correcta: "F" }
+            ]
+        }
+    ];
+
+    // =============================================
+    // SECCIÓN D: COMPLETAR PÁRRAFO (40 preguntas)
+    // =============================================
+    // Cada pregunta tiene:
+    // - instruccion: "To get from [A] to [B]"
+    // - párrafo con espacios en blanco marcados como __1__, __2__, etc.
+    // - respuestas: array con las palabras esperadas en orden (5 respuestas cada una)
+    const poolFill = [
+        {
+            instruccion: "School → Library",
+            parrafo: "To get from the School to the Library, start by going __1__ along Main Street. Walk past the __2__ on your left. Continue straight until you reach the intersection with __3__ Street. The Library is on your __4__, just after the corner.",
+            respuestas: ["straight", "supermarket", "Second", "right"]
+        },
+        {
+            instruccion: "Bank → Hospital",
+            parrafo: "If you are at the Bank and you want to go to the Hospital, walk __1__ along First Street until you reach __2__ Avenue. Turn __3__ and walk straight. The Hospital is on your __4__, next to the __5__.",
+            respuestas: ["straight", "Oak", "right", "right", "supermarket"]
+        },
+        {
+            instruccion: "Cinema → Post Office",
+            parrafo: "To go from the Cinema to the Post Office, go __1__ along Third Street. The Post Office is on your __2__, just before the corner with __3__ Avenue. You will pass the __4__ on your left.",
+            respuestas: ["straight", "left", "Elm", "bus station"]
+        },
+        {
+            instruccion: "Library → Park",
+            parrafo: "Starting from the Library, walk __1__ along Main Street. Continue past the __2__ on your right until you reach __3__ Street. The Park is on your __4__, on the corner.",
+            respuestas: ["straight", "cinema", "Third", "right"]
+        },
+        {
+            instruccion: "Supermarket → Bus Station",
+            parrafo: "From the Supermarket, go __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Bus Station is on your __5__.",
+            respuestas: ["straight", "right", "Elm", "Second", "left"]
+        },
+        {
+            instruccion: "Hospital → School",
+            parrafo: "To get from the Hospital to the School, walk __1__ along Second Street. Turn __2__ onto __3__ Street. Continue straight until you reach the intersection with __4__ Avenue. The School is on your __5__.",
+            respuestas: ["straight", "left", "Main", "Elm", "left"]
+        },
+        {
+            instruccion: "Bus Station → Cinema",
+            parrafo: "From the Bus Station, walk __1__ along Second Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Cinema is on your __5__.",
+            respuestas: ["straight", "right", "Oak", "Third", "right"]
+        },
+        {
+            instruccion: "Post Office → Library",
+            parrafo: "Starting at the Post Office, go __1__ along Third Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Library is on your __5__.",
+            respuestas: ["straight", "left", "Main", "Elm", "left"]
+        },
+        {
+            instruccion: "Park → Bank",
+            parrafo: "To go from the Park to the Bank, walk __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Bank is on your __5__.",
+            respuestas: ["straight", "left", "First", "Elm", "left"]
+        },
+        {
+            instruccion: "School → Supermarket",
+            parrafo: "From the School, go __1__ along First Street. The Supermarket is on your __2__, just before the corner with __3__ Avenue. You will pass the __4__ on your left.",
+            respuestas: ["straight", "right", "Oak", "bank"]
+        },
+        {
+            instruccion: "Bank → Library",
+            parrafo: "To get from the Bank to the Library, walk __1__ along First Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Library is on your __5__.",
+            respuestas: ["straight", "right", "Main", "Elm", "right"]
+        },
+        {
+            instruccion: "Cinema → Hospital",
+            parrafo: "From the Cinema, go __1__ along Third Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Hospital is on your __5__.",
+            respuestas: ["straight", "left", "Oak", "Second", "left"]
+        },
+        {
+            instruccion: "Library → Bus Station",
+            parrafo: "To go from the Library to the Bus Station, walk __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Bus Station is on your __5__.",
+            respuestas: ["straight", "right", "Second", "Elm", "right"]
+        },
+        {
+            instruccion: "Supermarket → Park",
+            parrafo: "From the Supermarket, go __1__ along First Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Park is on your __5__.",
+            respuestas: ["straight", "left", "Main", "Elm", "left"]
+        },
+        {
+            instruccion: "Hospital → Cinema",
+            parrafo: "To get from the Hospital to the Cinema, walk __1__ along Second Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Cinema is on your __5__.",
+            respuestas: ["straight", "right", "Oak", "Third", "right"]
+        },
+        {
+            instruccion: "Bus Station → School",
+            parrafo: "From the Bus Station, walk __1__ along Second Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The School is on your __5__.",
+            respuestas: ["straight", "left", "Main", "Elm", "left"]
+        },
+        {
+            instruccion: "Post Office → Supermarket",
+            parrafo: "To go from the Post Office to the Supermarket, walk __1__ along Third Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Supermarket is on your __5__.",
+            respuestas: ["straight", "left", "First", "Elm", "left"]
+        },
+        {
+            instruccion: "Bank → Cinema",
+            parrafo: "Starting at the Bank, go __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Cinema is on your __5__.",
+            respuestas: ["straight", "right", "Oak", "Third", "right"]
+        },
+        {
+            instruccion: "School → Post Office",
+            parrafo: "To get from the School to the Post Office, walk __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Post Office is on your __5__.",
+            respuestas: ["straight", "right", "Elm", "Third", "right"]
+        },
+        {
+            instruccion: "Library → Hospital",
+            parrafo: "From the Library, go __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Hospital is on your __5__.",
+            respuestas: ["straight", "left", "Second", "Oak", "left"]
+        },
+        {
+            instruccion: "Cinema → Bank",
+            parrafo: "To go from the Cinema to the Bank, walk __1__ along Third Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Bank is on your __5__.",
+            respuestas: ["straight", "left", "First", "Elm", "left"]
+        },
+        {
+            instruccion: "Park → Library",
+            parrafo: "Starting at the Park, go __1__ along Main Street. The Library is on your __2__, just after the corner with __3__ Street. You will pass the __4__ on your left.",
+            respuestas: ["straight", "left", "Second", "cinema"]
+        },
+        {
+            instruccion: "Supermarket → Hospital",
+            parrafo: "From the Supermarket, walk __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Hospital is on your __5__.",
+            respuestas: ["straight", "right", "Oak", "Second", "right"]
+        },
+        {
+            instruccion: "Bus Station → Bank",
+            parrafo: "To get from the Bus Station to the Bank, walk __1__ along Second Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Bank is on your __5__.",
+            respuestas: ["straight", "left", "Elm", "First", "left"]
+        },
+        {
+            instruccion: "Post Office → Cinema",
+            parrafo: "From the Post Office, go __1__ along Third Street. The Cinema is on your __2__, just before the corner with __3__ Avenue. You will pass the __4__ on your left.",
+            respuestas: ["straight", "right", "Oak", "hospital"]
+        },
+        {
+            instruccion: "School → Bank",
+            parrafo: "To go from the School to the Bank, walk __1__ along First Street. The Bank is on your __2__, just after the corner with __3__ Avenue. You will pass the __4__ on your left.",
+            respuestas: ["straight", "left", "Elm", "supermarket"]
+        },
+        {
+            instruccion: "Library → Cinema",
+            parrafo: "Starting at the Library, go __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Cinema is on your __5__.",
+            respuestas: ["straight", "right", "Third", "Oak", "right"]
+        },
+        {
+            instruccion: "Bank → Post Office",
+            parrafo: "From the Bank, walk __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Post Office is on your __5__.",
+            respuestas: ["straight", "right", "Elm", "Third", "right"]
+        },
+        {
+            instruccion: "Hospital → Library",
+            parrafo: "To get from the Hospital to the Library, walk __1__ along Second Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Library is on your __5__.",
+            respuestas: ["straight", "left", "Main", "Elm", "left"]
+        },
+        {
+            instruccion: "Cinema → School",
+            parrafo: "From the Cinema, go __1__ along Third Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The School is on your __5__.",
+            respuestas: ["straight", "left", "First", "Elm", "left"]
+        },
+        {
+            instruccion: "Park → Hospital",
+            parrafo: "Starting at the Park, walk __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Hospital is on your __5__.",
+            respuestas: ["straight", "left", "Second", "Oak", "left"]
+        },
+        {
+            instruccion: "Supermarket → Library",
+            parrafo: "To go from the Supermarket to the Library, walk __1__ along First Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Library is on your __5__.",
+            respuestas: ["straight", "right", "Main", "Elm", "right"]
+        },
+        {
+            instruccion: "Bus Station → Park",
+            parrafo: "From the Bus Station, go __1__ along Second Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Park is on your __5__.",
+            respuestas: ["straight", "left", "Main", "Elm", "left"]
+        },
+        {
+            instruccion: "School → Cinema",
+            parrafo: "To get from the School to the Cinema, walk __1__ along First Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Cinema is on your __5__.",
+            respuestas: ["straight", "right", "Oak", "Third", "right"]
+        },
+        {
+            instruccion: "Bank → Park",
+            parrafo: "Starting at the Bank, go __1__ along First Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Park is on your __5__.",
+            respuestas: ["straight", "right", "Main", "Elm", "right"]
+        },
+        {
+            instruccion: "Library → Supermarket",
+            parrafo: "From the Library, walk __1__ along Main Street. Turn __2__ onto __3__ Street. Continue straight until you reach __4__ Avenue. The Supermarket is on your __5__.",
+            respuestas: ["straight", "left", "First", "Oak", "left"]
+        },
+        {
+            instruccion: "Hospital → Bank",
+            parrafo: "To get from the Hospital to the Bank, walk __1__ along Second Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Bank is on your __5__.",
+            respuestas: ["straight", "left", "Elm", "First", "left"]
+        },
+        {
+            instruccion: "Cinema → Bus Station",
+            parrafo: "From the Cinema, go __1__ along Third Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Bus Station is on your __5__.",
+            respuestas: ["straight", "left", "Elm", "Second", "left"]
+        },
+        {
+            instruccion: "Post Office → Hospital",
+            parrafo: "Starting at the Post Office, walk __1__ along Third Street. Turn __2__ onto __3__ Avenue. Continue straight until you reach __4__ Street. The Hospital is on your __5__.",
+            respuestas: ["straight", "left", "Oak", "Second", "left"]
+        },
+        {
+            instruccion: "Bank → School",
+            parrafo: "To go from the Bank to the School, walk __1__ along First Street. The School is on your __2__, just after the corner with __3__ Avenue. You will pass the __4__ on your left.",
+            respuestas: ["straight", "left", "Main", "supermarket"]
+        }
+    ];
+
+    // =============================================
+    // FUNCIONES DE SELECCIÓN ALEATORIA
+    // =============================================
+    function seleccionarElementos(arr, cantidad) {
+        const copia = [...arr];
+        const seleccionados = [];
+        for (let i = 0; i < cantidad && copia.length > 0; i++) {
+            const indice = Math.floor(Math.random() * copia.length);
+            seleccionados.push(copia.splice(indice, 1)[0]);
+        }
+        return seleccionados;
+    }
+
+    function mezclarArray(arr) {
+        const copia = [...arr];
+        for (let i = copia.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [copia[i], copia[j]] = [copia[j], copia[i]];
+        }
+        return copia;
+    }
+
+    // Seleccionar preguntas
+    let preguntasMC = seleccionarElementos(poolMC, 8);
+    let preguntasWO = seleccionarElementos(poolWO, 8);
+
+    // Seleccionar 1 texto y 8 preguntas V/F
+    function seleccionarTextoYPreguntas() {
+        const textoAleatorio = textosVF[Math.floor(Math.random() * textosVF.length)];
+        const preguntasSeleccionadas = seleccionarElementos(textoAleatorio.preguntas, 8);
+        return {
+            texto: textoAleatorio.texto,
+            preguntas: preguntasSeleccionadas
+        };
+    }
+
+    let textoVFActual = seleccionarTextoYPreguntas();
+
+    // Seleccionar SOLO 2 preguntas de Fill Paragraph (cada una con 5 blanks)
+    let preguntasFill = seleccionarElementos(poolFill, 2);
+
+    // =============================================
+    // ESTADO DE RESPUESTAS
+    // =============================================
+    let respuestasMC = new Array(preguntasMC.length).fill(null);
+    let respuestasWO = preguntasWO.map(() => ({ orden: [] }));
+    let respuestasVF = textoVFActual.preguntas.map(() => ({ vf: null }));
+    let respuestasFill = preguntasFill.map(() => []); // cada pregunta tiene un array de respuestas
+
+    let evaluado = false;
+
+    // =============================================
+    // RENDERIZADO
+    // =============================================
+    function renderizarTodo() {
+        renderizarMC();
+        renderizarWO();
+        renderizarVF();
+        renderizarFill();
+    }
+
+    function renderizarFill() {
+        const container = document.getElementById('fillParagraph');
+        container.innerHTML = '';
+
+        preguntasFill.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.id = `fill-${idx}`;
+
+            const p = document.createElement('p');
+            p.innerHTML = `<span class="question-number">${idx + 1}.</span> Complete the directions: <strong style="color:#f4ce50;">${q.instruccion}</strong>`;
+            qDiv.appendChild(p);
+
+            const parrafo = document.createElement('div');
+            parrafo.className = 'fill-paragraph';
+
+            const partes = q.parrafo.split(/(__\d+__)/g);
+            let blankCounter = 0;
+            let totalBlanks = q.respuestas.length;
+
+            partes.forEach((parte) => {
+                if (parte.match(/__\d+__/)) {
+                    const input = document.createElement('input');
+                    input.className = 'blank-input';
+                    input.type = 'text';
+                    input.id = `fill-${idx}-blank-${blankCounter}`;
+                    input.placeholder = `...`;
+
+                    if (evaluado) {
+                        input.classList.add('disabled');
+                        const respuestaUsuario = respuestasFill[idx]?.[blankCounter] || '';
+                        const respuestaCorrecta = q.respuestas[blankCounter] || '';
+                        const esCorrecta = respuestaUsuario.toLowerCase().trim() === respuestaCorrecta.toLowerCase().trim();
+                        if (esCorrecta) {
+                            input.classList.add('correct-answer');
+                            input.value = respuestaUsuario || respuestaCorrecta;
+                        } else {
+                            input.classList.add('wrong-answer');
+                            input.value = respuestaUsuario || '';
+                            input.placeholder = `→ ${respuestaCorrecta}`;
+                        }
+                    } else {
+                        if (respuestasFill[idx]?.[blankCounter]) {
+                            input.value = respuestasFill[idx][blankCounter];
+                        }
+                        input.addEventListener('input', function() {
+                            if (evaluado) return;
+                            if (!respuestasFill[idx]) {
+                                respuestasFill[idx] = [];
+                            }
+                            respuestasFill[idx][blankCounter] = this.value;
+                        });
+                    }
+
+                    const numberSpan = document.createElement('span');
+                    numberSpan.className = 'blank-number';
+                    numberSpan.textContent = `(${blankCounter + 1})`;
+
+                    parrafo.appendChild(numberSpan);
+                    parrafo.appendChild(input);
+                    blankCounter++;
+                } else {
+                    parrafo.appendChild(document.createTextNode(parte));
+                }
+            });
+
+            qDiv.appendChild(parrafo);
+
+            if (evaluado) {
+                // Contar cuántas respuestas correctas tiene
+                let correctas = 0;
+                q.respuestas.forEach((correcta, bi) => {
+                    const userAnswer = respuestasFill[idx]?.[bi] || '';
+                    if (userAnswer.toLowerCase().trim() === correcta.toLowerCase().trim()) {
+                        correctas++;
+                    }
+                });
+
+                if (correctas === totalBlanks) {
+                    qDiv.classList.add('correcta');
+                } else if (correctas === 0) {
+                    qDiv.classList.add('incorrecta');
+                } else {
+                    qDiv.classList.add('parcial');
+                }
+
+                const feedback = document.createElement('div');
+                feedback.className = `feedback-text ${correctas === totalBlanks ? 'correcta' : (correctas === 0 ? 'incorrecta' : 'parcial')}`;
+                if (correctas === totalBlanks) {
+                    feedback.textContent = `✅ All ${totalBlanks} blanks correct! (+${totalBlanks} pts)`;
+                } else {
+                    feedback.textContent = `❌ ${correctas}/${totalBlanks} correct. Correct answers: ${q.respuestas.map((r, i) => `${i+1}: "${r}"`).join(', ')}`;
+                }
+                qDiv.appendChild(feedback);
+            }
+
+            container.appendChild(qDiv);
+        });
+    }
+
+    function renderizarMC() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+
+        preguntasMC.forEach((q, idx) => {
+            const opcionesMezcladas = mezclarArray(q.opciones);
+            const textoCorrecto = q.opciones[q.correcta];
+
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.id = `mc-${idx}`;
+
+            const p = document.createElement('p');
+            p.innerHTML = `<span class="question-number">${idx + 1}.</span> ${q.pregunta}`;
+            qDiv.appendChild(p);
+
+            const grid = document.createElement('div');
+            grid.className = 'options-grid';
+
+            opcionesMezcladas.forEach((opt, optIdx) => {
+                const btn = document.createElement('button');
+                btn.className = 'option-btn';
+                btn.textContent = opt;
+                btn.dataset.idx = optIdx;
+
+                if (evaluado) {
+                    btn.classList.add('disabled');
+                    if (respuestasMC[idx] === opt) {
+                        btn.classList.add('selected');
+                        if (opt === textoCorrecto) {
+                            btn.classList.add('correct-answer');
+                        } else {
+                            btn.classList.add('wrong-answer');
+                        }
+                    } else if (opt === textoCorrecto) {
+                        btn.classList.add('correct-answer');
+                    }
+                } else {
+                    if (respuestasMC[idx] === opt) {
+                        btn.classList.add('selected');
+                    }
+                    btn.addEventListener('click', function() {
+                        if (evaluado) return;
+                        grid.querySelectorAll('.option-btn').forEach(b => b.classList.remove('selected'));
+                        btn.classList.add('selected');
+                        respuestasMC[idx] = opt;
+                    });
+                }
+
+                grid.appendChild(btn);
+            });
+
+            qDiv.appendChild(grid);
+
+            if (evaluado) {
+                const esCorrecta = respuestasMC[idx] === textoCorrecto;
+                qDiv.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+
+                const feedback = document.createElement('div');
+                feedback.className = `feedback-text ${esCorrecta ? 'correcta' : 'incorrecta'}`;
+                feedback.textContent = esCorrecta ? '✅ Correct (+1 pt)' : `❌ Incorrect. Correct answer: "${textoCorrecto}"`;
+                qDiv.appendChild(feedback);
+            }
+
+            container.appendChild(qDiv);
+        });
+    }
+
+    function renderizarWO() {
+        const container = document.getElementById('wordOrder');
+        container.innerHTML = '';
+
+        preguntasWO.forEach((q, idx) => {
+            const palabrasMezcladas = mezclarArray(q.palabras);
+            const respuestaCorrecta = q.respuesta;
+
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.id = `wo-${idx}`;
+
+            const p = document.createElement('p');
+            p.innerHTML = `<span class="question-number">${idx + 1}.</span> Put the words in order to form a sentence:`;
+            qDiv.appendChild(p);
+
+            const wordBank = document.createElement('div');
+            wordBank.className = 'word-bank';
+            wordBank.id = `wordbank-${idx}`;
+
+            const placedWords = document.createElement('div');
+            placedWords.className = 'sentence-builder';
+            placedWords.id = `placed-${idx}`;
+
+            let disponibles = [...palabrasMezcladas];
+            let colocadas = [];
+
+            if (evaluado) {
+                const palabrasCorrectas = respuestaCorrecta.replace(/[.!?]/g, '').split(' ');
+                const esCorrecta = respuestasWO[idx].orden.join(' ') === palabrasCorrectas.join(' ');
+                qDiv.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+
+                palabrasCorrectas.forEach((pal) => {
+                    const span = document.createElement('span');
+                    span.className = 'placed-word';
+                    if (esCorrecta) {
+                        span.classList.add('correct-answer');
+                    } else {
+                        span.classList.add('wrong-answer');
+                    }
+                    span.textContent = pal;
+                    placedWords.appendChild(span);
+                });
+
+                const feedback = document.createElement('div');
+                feedback.className = `feedback-text ${esCorrecta ? 'correcta' : 'incorrecta'}`;
+                feedback.textContent = esCorrecta ? '✅ Correct (+1 pt)' : `❌ Incorrect. Correct answer: "${respuestaCorrecta}"`;
+                qDiv.appendChild(feedback);
+
+                wordBank.style.opacity = '0.3';
+                wordBank.style.pointerEvents = 'none';
+
+            } else {
+                function renderWordBank() {
+                    wordBank.innerHTML = '';
+                    disponibles.forEach((pal) => {
+                        const token = document.createElement('button');
+                        token.className = 'word-token';
+                        token.textContent = pal;
+                        token.addEventListener('click', function() {
+                            if (evaluado) return;
+                            const idxPal = disponibles.indexOf(pal);
+                            if (idxPal > -1) {
+                                disponibles.splice(idxPal, 1);
+                                colocadas.push(pal);
+                                respuestasWO[idx].orden = [...colocadas];
+                                renderWordBank();
+                                renderPlacedWords();
+                            }
+                        });
+                        wordBank.appendChild(token);
+                    });
+                }
+
+                function renderPlacedWords() {
+                    placedWords.innerHTML = '';
+                    colocadas.forEach((pal, i) => {
+                        const span = document.createElement('span');
+                        span.className = 'placed-word';
+                        span.textContent = pal;
+                        span.addEventListener('click', function() {
+                            if (evaluado) return;
+                            const idxPal = colocadas.indexOf(pal);
+                            if (idxPal > -1) {
+                                colocadas.splice(idxPal, 1);
+                                disponibles.push(pal);
+                                respuestasWO[idx].orden = [...colocadas];
+                                renderWordBank();
+                                renderPlacedWords();
+                            }
+                        });
+                        placedWords.appendChild(span);
+                    });
+                }
+
+                if (respuestasWO[idx].orden.length > 0) {
+                    const ordenPrev = respuestasWO[idx].orden;
+                    const palabrasDisponibles = [...palabrasMezcladas];
+                    colocadas = [];
+                    disponibles = [...palabrasMezcladas];
+                    ordenPrev.forEach((pal) => {
+                        const idxPal = disponibles.indexOf(pal);
+                        if (idxPal > -1) {
+                            disponibles.splice(idxPal, 1);
+                            colocadas.push(pal);
+                        }
+                    });
+                    respuestasWO[idx].orden = [...colocadas];
+                }
+
+                renderWordBank();
+                renderPlacedWords();
+            }
+
+            qDiv.appendChild(wordBank);
+            qDiv.appendChild(placedWords);
+            container.appendChild(qDiv);
+        });
+    }
+
+    function renderizarVF() {
+        const container = document.getElementById('trueFalse');
+        container.innerHTML = '';
+
+        const readingDiv = document.getElementById('readingText');
+        readingDiv.innerHTML = `<div class="title">📖 Read the text carefully:</div>${textoVFActual.texto}`;
+
+        textoVFActual.preguntas.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.id = `vf-${idx}`;
+
+            const p = document.createElement('p');
+            p.innerHTML = `<span class="question-number">${idx + 1}.</span> ${q.texto}`;
+            qDiv.appendChild(p);
+
+            const vfGrid = document.createElement('div');
+            vfGrid.className = 'vf-grid';
+
+            const btnV = document.createElement('button');
+            btnV.className = 'vf-btn';
+            btnV.textContent = 'True (V)';
+            btnV.dataset.vf = 'V';
+
+            const btnF = document.createElement('button');
+            btnF.className = 'vf-btn';
+            btnF.textContent = 'False (F)';
+            btnF.dataset.vf = 'F';
+
+            if (evaluado) {
+                btnV.classList.add('disabled');
+                btnF.classList.add('disabled');
+
+                const vfSeleccionado = respuestasVF[idx]?.vf || null;
+                const esCorrecta = vfSeleccionado === q.correcta;
+                qDiv.classList.add(esCorrecta ? 'correcta' : 'incorrecta');
+
+                if (vfSeleccionado === 'V') {
+                    btnV.classList.add('selected-v');
+                    if (q.correcta === 'V') {
+                        btnV.classList.add('correct-answer');
+                    } else {
+                        btnV.classList.add('wrong-answer');
+                    }
+                } else if (vfSeleccionado === 'F') {
+                    btnF.classList.add('selected-f');
+                    if (q.correcta === 'F') {
+                        btnF.classList.add('correct-answer');
+                    } else {
+                        btnF.classList.add('wrong-answer');
+                    }
+                }
+
+                if (q.correcta === 'V') {
+                    btnV.classList.add('correct-answer');
+                } else {
+                    btnF.classList.add('correct-answer');
+                }
+
+                const feedback = document.createElement('div');
+                feedback.className = `feedback-text ${esCorrecta ? 'correcta' : 'incorrecta'}`;
+                feedback.textContent = esCorrecta ? '✅ Correct (+1 pt)' : '❌ Incorrect. The statement was ' + (q.correcta === 'V' ? 'True' : 'False') + '.';
+                qDiv.appendChild(feedback);
+
+            } else {
+                if (respuestasVF[idx]?.vf === 'V') {
+                    btnV.classList.add('selected-v');
+                } else if (respuestasVF[idx]?.vf === 'F') {
+                    btnF.classList.add('selected-f');
+                }
+
+                btnV.addEventListener('click', function() {
+                    if (evaluado) return;
+                    btnV.classList.add('selected-v');
+                    btnV.classList.remove('selected-f');
+                    btnF.classList.remove('selected-v');
+                    btnF.classList.remove('selected-f');
+                    respuestasVF[idx] = { vf: 'V' };
+                });
+
+                btnF.addEventListener('click', function() {
+                    if (evaluado) return;
+                    btnF.classList.add('selected-f');
+                    btnF.classList.remove('selected-v');
+                    btnV.classList.remove('selected-v');
+                    btnV.classList.remove('selected-f');
+                    respuestasVF[idx] = { vf: 'F' };
+                });
+            }
+
+            vfGrid.appendChild(btnV);
+            vfGrid.appendChild(btnF);
+            qDiv.appendChild(vfGrid);
+            container.appendChild(qDiv);
+        });
+    }
+
+    // =============================================
+    // EVALUACIÓN
+    // =============================================
+    function evaluarTodo() {
+        evaluado = true;
+        document.getElementById('evaluateBtn').disabled = true;
+
+        let totalCorrectas = 0;
+        let totalPuntos = 0;
+        let maxPuntos = 0;
+
+        // MC: 8 puntos
+        preguntasMC.forEach((q, idx) => {
+            const textoCorrecto = q.opciones[q.correcta];
+            if (respuestasMC[idx] === textoCorrecto) totalCorrectas++;
+            totalPuntos++;
+            maxPuntos++;
+        });
+
+        // WO: 8 puntos
+        preguntasWO.forEach((q, idx) => {
+            const palabrasCorrectas = q.respuesta.replace(/[.!?]/g, '').split(' ');
+            if (respuestasWO[idx].orden.join(' ') === palabrasCorrectas.join(' ')) totalCorrectas++;
+            totalPuntos++;
+            maxPuntos++;
+        });
+
+        // VF: 8 puntos
+        textoVFActual.preguntas.forEach((q, idx) => {
+            if (respuestasVF[idx]?.vf === q.correcta) totalCorrectas++;
+            totalPuntos++;
+            maxPuntos++;
+        });
+
+        // Fill Paragraph: cada blank correcto = 1 punto
+        preguntasFill.forEach((q, idx) => {
+            q.respuestas.forEach((correcta, bi) => {
+                const userAnswer = respuestasFill[idx]?.[bi] || '';
+                if (userAnswer.toLowerCase().trim() === correcta.toLowerCase().trim()) {
+                    totalCorrectas++;
+                }
+                totalPuntos++;
+                maxPuntos++;
+            });
+        });
+
+        renderizarTodo();
+
+        const porcentaje = (totalCorrectas / maxPuntos) * 100;
+        let nota = 0;
+        const exigencia = 60;
+
+        if (porcentaje >= exigencia) {
+            nota = 4.0 + ((porcentaje - exigencia) / (100 - exigencia)) * 3.0;
+        } else {
+            nota = 1.0 + (porcentaje / exigencia) * 3.0;
+        }
+        nota = Math.round(nota * 100) / 100;
+        const aprobado = nota >= 4.0;
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#f4ce50; text-align:center;">📊 Results</h3>
+            <div class="score-box">
+                ✅ Correct: <span class="correct-count">${totalCorrectas}</span> of ${maxPuntos} points (${Math.round(porcentaje)}%)
+            </div>
+            <div style="display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin:0.5rem 0; color:#b2bec3; font-size:0.85rem;">
+                <div>📌 MC: ${preguntasMC.filter((q, i) => respuestasMC[i] === q.opciones[q.correcta]).length}/8</div>
+                <div>📝 WO: ${preguntasWO.filter((q, i) => respuestasWO[i].orden.join(' ') === q.respuesta.replace(/[.!?]/g, '').split(' ').join(' ')).length}/8</div>
+                <div>⚖️ VF: ${textoVFActual.preguntas.filter((q, i) => respuestasVF[i]?.vf === q.correcta).length}/8</div>
+                <div>✍️ Fill: ${preguntasFill.reduce((acc, q, idx) => {
+                    let correctas = 0;
+                    q.respuestas.forEach((r, bi) => {
+                        if ((respuestasFill[idx]?.[bi] || '').toLowerCase().trim() === r.toLowerCase().trim()) correctas++;
+                    });
+                    return acc + correctas;
+                }, 0)}/10</div>
+            </div>
+            <div class="grade-box ${aprobado ? 'approved' : 'failed'}">
+                <strong>${aprobado ? '🎉 PASSED 🎉' : '📖 FAILED 📖'}</strong><br>
+                GRADE: ${nota.toFixed(1)}
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Restart test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Go to course</button>
+                <button class="action-btn" id="goToClassBtn">📖 Back to class</button>
+            </div>
+        `;
+        resultsDiv.classList.add('visible');
+
+        document.getElementById('restartTestBtn')?.addEventListener('click', reiniciarTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Ingles.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_10_Ingles.html');
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    function reiniciarTest() {
+        evaluado = false;
+        document.getElementById('evaluateBtn').disabled = false;
+
+        preguntasMC = seleccionarElementos(poolMC, 8);
+        preguntasWO = seleccionarElementos(poolWO, 8);
+        textoVFActual = seleccionarTextoYPreguntas();
+        preguntasFill = seleccionarElementos(poolFill, 2);
+
+        respuestasMC = new Array(preguntasMC.length).fill(null);
+        respuestasWO = preguntasWO.map(() => ({ orden: [] }));
+        respuestasVF = textoVFActual.preguntas.map(() => ({ vf: null }));
+        respuestasFill = preguntasFill.map(() => []);
+
+        document.getElementById('results').classList.remove('visible');
+        renderizarTodo();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    // =============================================
+    // INICIALIZACIÓN
+    // =============================================
+    renderizarTodo();
+
+    document.getElementById('evaluateBtn').addEventListener('click', evaluarTodo);
+</script>
+</body>
+</html>
