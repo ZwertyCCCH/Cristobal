@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: El extraño caso del Dr. Jekyll y Mr. Hyde | Lengua y Literatura 7°</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Georgia', 'Times New Roman', 'Segoe UI', serif;
+            background: #fef6f0;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffaf6;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2.5rem 3rem;
+            scrollbar-width: thin;
+            background: #fffaf6;
+            color: #3a1f0d;
+        }
+
+        .slide::-webkit-scrollbar { width: 8px; }
+        .slide::-webkit-scrollbar-track { background: #f0e0d0; }
+        .slide::-webkit-scrollbar-thumb { background: #c9753c; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.8rem;
+            color: #b5431a;
+            border-left: 7px solid #d9531e;
+            padding-left: 1.5rem;
+            margin-bottom: 1.5rem;
+            font-weight: 700;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        h2 {
+            font-size: 2.2rem;
+            color: #c4450c;
+            margin: 1.2rem 0 0.8rem 0;
+            border-bottom: 3px solid #f0cfb0;
+            display: inline-block;
+            padding-bottom: 0.3rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        h3 {
+            font-size: 1.6rem;
+            color: #d9672e;
+            margin: 1rem 0 0.6rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        h4 {
+            font-size: 1.3rem;
+            color: #b5431a;
+            margin: 0.8rem 0 0.3rem;
+            font-weight: 700;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        p, li {
+            font-size: 1.2rem;
+            line-height: 1.7;
+            margin-bottom: 0.8rem;
+            color: #3a2a1a;
+            text-align: justify;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        ul, .custom-list {
+            margin-left: 2rem;
+            margin-bottom: 1.2rem;
+        }
+
+        ul li, .custom-list li {
+            font-size: 1.15rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .highlight {
+            background: #fce4d0;
+            padding: 0.1rem 0.4rem;
+            border-radius: 5px;
+            font-weight: 700;
+            color: #c95a1c;
+        }
+
+        .info-card {
+            background: #fef0e6;
+            border-left: 6px solid #d9531e;
+            padding: 1rem 2rem;
+            margin: 1.2rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .info-card-success {
+            border-left-color: #2d8f5c;
+            background: #edf7f0;
+        }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.5rem;
+            margin: 1.2rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.2rem;
+            margin: 1.2rem 0;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf4;
+            border-top: 1px solid #f0cfb0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #c4450c;
+            color: white;
+            border: none;
+            padding: 0.6rem 2rem;
+            border-radius: 40px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+        .btn-footer:hover { background: #d95b2b; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #f0cfb0;
+            padding: 0.4rem 1.5rem;
+            border-radius: 40px;
+            color: #8a3c10;
+            font-weight: 500;
+            font-size: 1rem;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(200, 100, 50, 0.4);
+            backdrop-filter: blur(3px);
+            width: 56px;
+            height: 56px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2.2rem;
+            color: #8a3c10;
+            transition: 0.2s;
+            z-index: 90;
+            user-select: none;
+        }
+        .nav-arrow:hover { background: #d95b2b; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 1rem;
+            margin: 1.2rem 0;
+            font-family: 'Georgia', 'Times New Roman', serif;
+        }
+
+        .comparison-table th {
+            background: #d9531e;
+            color: white;
+            padding: 0.7rem 1rem;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table td {
+            padding: 0.7rem 1rem;
+            border-bottom: 1px solid #f0cfb0;
+            vertical-align: top;
+            font-size: 1.05rem;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: #fdf5ee;
+        }
+
+        .comparison-table tr:hover {
+            background: #fce4d0;
+        }
+
+        .slide {
+            opacity: 0;
+            animation: fadeSlide 0.4s ease forwards;
+        }
+
+        .slide.active {
+            opacity: 1;
+        }
+
+        @keyframes fadeSlide {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .question-sample {
+            background: #fdf0e8;
+            border-radius: 24px;
+            padding: 1.2rem 2rem;
+            margin: 1.5rem 0 0.5rem;
+            border-left: 5px solid #d95b2b;
+        }
+
+        .question-sample p {
+            font-size: 1.2rem;
+        }
+
+        .character-card {
+            background: #fdf5ee;
+            border-radius: 16px;
+            padding: 1rem 1.5rem;
+            border-left: 5px solid #c9753c;
+            margin: 0.6rem 0;
+        }
+
+        .character-card p {
+            font-size: 1.15rem;
+            margin-bottom: 0.2rem;
+        }
+
+        .character-card strong {
+            color: #b5431a;
+            font-size: 1.2rem;
+        }
+
+        .summary-box {
+            background: #f5ebe3;
+            border-radius: 18px;
+            padding: 1.5rem 2rem;
+            margin: 1.2rem 0;
+            border: 1px solid #e0c8b8;
+            line-height: 1.8;
+        }
+
+        .summary-box p {
+            font-size: 1.15rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .theme-tag {
+            display: inline-block;
+            background: #d9531e;
+            color: white;
+            padding: 0.2rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin: 0.2rem 0.2rem;
+        }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1.2rem; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.6rem; }
+            h3 { font-size: 1.3rem; }
+            p, li { font-size: 1rem; }
+            .grid-2, .grid-3 { grid-template-columns: 1fr; }
+            .comparison-table { font-size: 0.85rem; }
+            .comparison-table th, .comparison-table td { padding: 0.4rem 0.6rem; }
+            .nav-arrow { width: 40px; height: 40px; font-size: 1.6rem; }
+            .nav-left { left: 6px; }
+            .nav-right { right: 6px; }
+            .btn-footer { padding: 0.4rem 1rem; font-size: 0.9rem; }
+            .footer-nav { padding: 0 0.8rem; flex-wrap: wrap; height: auto; gap: 0.3rem; }
+            .btn-group { gap: 0.4rem; flex-wrap: wrap; }
+            .slide-counter { font-size: 0.8rem; padding: 0.2rem 0.8rem; }
+            .character-card { padding: 0.6rem 0.8rem; }
+            .character-card p { font-size: 1rem; }
+            .summary-box { padding: 1rem; }
+            .summary-box p { font-size: 1rem; }
+            .question-sample { padding: 1rem; }
+            .question-sample p { font-size: 1rem; }
+        }
+
+        @media (max-width: 500px) {
+            .footer-nav { height: auto; padding: 0.5rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+            <!-- ============================================ -->
+            <!-- SLIDE 1: PORTADA -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h1>🔍 El extraño caso del Dr. Jekyll y Mr. Hyde</h1>
+                <p style="font-size: 1.4rem; color: #5a3a1a;">Lengua y Literatura - 7° Básico</p>
+                <p style="font-size: 1.3rem; color: #7a4a2a; margin-bottom: 1.5rem;">Colegio Pedro de Valdivia</p>
+
+                <div class="info-card">
+                    <p><strong>Objetivos de la clase:</strong></p>
+                    <ul>
+                        <li>Analizar los elementos narrativos en <em>"El extraño caso del Dr. Jekyll y Mr. Hyde"</em>.</li>
+                        <li>Identificar la dualidad humana como tema central de la obra.</li>
+                        <li>Reflexionar sobre la relación entre la literatura y la sociedad victoriana.</li>
+                        <li>Formular interpretaciones personales basadas en evidencia del texto.</li>
+                    </ul>
+                </div>
+
+                <div class="question-sample">
+                    <p><strong>Pregunta de reflexión inicial</strong></p>
+                    <p>¿Qué significa "ser uno mismo"? ¿Es posible separar completamente nuestro lado bueno de nuestro lado malo?</p>
+                    <p style="color: #7a4a2a; font-style: italic; font-size: 1.1rem;">Respuesta orientativa: La novela plantea que el ser humano es una mezcla compleja de bien y mal, y que intentar separar estas dos naturalezas puede tener consecuencias desastrosas.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 2: CONTEXTO Y AUTOR -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>📚 Contexto y Autor</h2>
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.3rem;">Robert Louis Stevenson</strong></p>
+                        <ul>
+                            <li>Nació en Edimburgo, Escocia (1850-1894).</li>
+                            <li>Autor de <em>La isla del tesoro</em> y <em>El extraño caso del Dr. Jekyll y Mr. Hyde</em>.</li>
+                            <li>Su vida estuvo marcada por la tuberculosis, lo que influyó en su visión de la dualidad humana.</li>
+                            <li>Escribió la novela en 1886, inspirado por un sueño.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.3rem;">Contexto histórico: época victoriana</strong></p>
+                        <ul>
+                            <li>Rigidez moral y obsesión por las apariencias y la reputación.</li>
+                            <li>Avances científicos y el auge del positivismo.</li>
+                            <li>Londres como ciudad dual: riqueza y pobreza, respetabilidad y crimen.</li>
+                            <li>El miedo al "otro" y a lo desconocido.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card" style="border-left-color: #d9531e; background: #fef0e6; margin-top: 0.5rem;">
+                    <p><strong>Objetivo de Aprendizaje (OA 2):</strong> Reflexionar sobre las diferentes dimensiones de la experiencia humana a partir de la lectura de obras literarias.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 3: RESUMEN DETALLADO DE LA OBRA -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>📖 Resumen detallado</h2>
+                <div class="summary-box">
+                    <p>La novela comienza con el abogado <span class="highlight">Gabriel John Utterson</span>, quien escucha una inquietante historia de su primo <span class="highlight">Richard Enfield</span>. Enfield relata haber visto a un hombre pequeño y repulsivo, llamado <span class="highlight">Edward Hyde</span>, atropellar brutalmente a una niña y luego pagar una compensación con un cheque firmado por el respetado <span class="highlight">Dr. Henry Jekyll</span>.</p>
+
+                    <p>Utterson, que es el abogado y amigo de Jekyll, investiga la extraña relación entre ambos. Descubre que el testamento de Jekyll deja todas sus pertenencias a Hyde en caso de muerte o desaparición. Al encontrarse con Hyde, Utterson siente una profunda y inexplicable repulsión.</p>
+
+                    <p>Un año después, el <span class="highlight">asesinato de Sir Danvers Carew</span>, un respetado parlamentario, conmociona a Londres. El arma homicida es un bastón que Utterson había regalado a Jekyll, y una criada identifica a Hyde como el asesino. Hyde desaparece sin dejar rastro. Jekyll muestra una carta de Hyde asegurando que está a salvo, pero Utterson sospecha que la carta fue escrita por el propio Jekyll.</p>
+
+                    <p>El <span class="highlight">Dr. Lanyon</span>, amigo común de Utterson y Jekyll, muere en circunstancias misteriosas, dejando un sobre lacrado para Utterson con instrucciones de no abrirlo hasta después de la muerte o desaparición de Jekyll.</p>
+
+                    <p>Jekyll se vuelve cada vez más recluso. Finalmente, el mayordomo <span class="highlight">Poole</span> visita a Utterson angustiado, convencido de que su amo ha sido asesinado. Irrumpen en el laboratorio y encuentran el cuerpo de Hyde, que se ha suicidado. No hay rastro de Jekyll.</p>
+
+                    <p>Utterson encuentra dos documentos: la carta de Lanyon y la <span class="highlight">confesión de Jekyll</span>. En ella, Jekyll revela que descubrió una poción que le permitía separar su lado bueno del malo, transformándose en Hyde. La libertad de ser Hyde se volvió adictiva, y Jekyll perdió el control. La provisión de sales necesarias para la poción se agotó, dejando a Jekyll atrapado como Hyde para siempre. Incapaz de soportar la culpa y el horror, decide suicidarse.</p>
+                </div>
+
+                <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem;">
+                    <span class="theme-tag">Dualidad</span>
+                    <span class="theme-tag" style="background: #2d8f5c;">Represión</span>
+                    <span class="theme-tag" style="background: #8a3c10;">Ciencia</span>
+                    <span class="theme-tag" style="background: #b5431a;">Amistad</span>
+                    <span class="theme-tag" style="background: #6b4a3a;">Sociedad victoriana</span>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 4: ESTRUCTURA NARRATIVA -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>📐 Estructura narrativa</h2>
+                <p>La novela está organizada como un <span class="highlight">rompecabezas narrativo</span> que se va resolviendo progresivamente a través de diferentes voces.</p>
+
+                <div class="grid-3">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">1. Misterio inicial</strong></p>
+                        <p style="font-size: 1.05rem;">Enfield cuenta a Utterson la historia de Hyde y la niña. Se presenta el testamento de Jekyll. Se establece el enigma: ¿quién es Hyde y qué relación tiene con Jekyll?</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">2. Investigación</strong></p>
+                        <p style="font-size: 1.05rem;">Utterson investiga a Hyde. El asesinato de Sir Danvers Carew y la desaparición de Hyde. La muerte de Lanyon y su carta sellada.</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">3. Revelación</strong></p>
+                        <p style="font-size: 1.05rem;">El relato de Lanyon y la confesión de Jekyll revelan la verdadera naturaleza de Hyde y el trágico destino de Jekyll.</p>
+                    </div>
+                </div>
+
+                <div class="info-card" style="border-left-color: #d9531e; background: #fef0e6; margin-top: 0.5rem;">
+                    <p><strong>Objetivo de Aprendizaje (OA 3):</strong> Analizar las narraciones considerando la disposición temporal de los hechos.</p>
+                </div>
+
+                <div class="question-sample" style="margin-top: 0.5rem;">
+                    <p><strong>Pregunta de análisis:</strong> ¿Por qué crees que Stevenson eligió contar la historia desde múltiples perspectivas en lugar de hacerlo directamente desde el punto de vista de Jekyll?</p>
+                    <p style="font-size: 1.05rem; font-style: italic;">La estructura fragmentaria mantiene el misterio, crea suspenso y permite al lector descubrir la verdad al mismo tiempo que los personajes.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 5: PERSONAJES -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>👥 Personajes principales</h2>
+
+                <div class="character-card">
+                    <p><strong>Dr. Henry Jekyll</strong> — Científico respetable que busca separar su lado bueno del malo. Representa la <span class="highlight">represión victoriana</span> y el deseo de control. Es un hombre de gran reputación que oculta una vida de "placeres indignos".</p>
+                </div>
+                <div class="character-card">
+                    <p><strong>Mr. Edward Hyde</strong> — La encarnación del mal y los instintos primarios. Pequeño, ágil y repulsivo. Representa la <span class="highlight">libertad sin restricciones morales</span>. Su sola presencia provoca repulsión en quien lo ve.</p>
+                </div>
+                <div class="character-card">
+                    <p><strong>Gabriel John Utterson</strong> — Abogado amigo de Jekyll. Es la voz de la <span class="highlight">razón y la lealtad</span>. Actúa como el investigador de la historia. Su lealtad a Jekyll es inquebrantable.</p>
+                </div>
+                <div class="character-card">
+                    <p><strong>Dr. Hastie Lanyon</strong> — Médico racionalista. Representa la <span class="highlight">ciencia ortodoxa</span>. Su muerte tras presenciar la transformación simboliza el colapso de su visión del mundo.</p>
+                </div>
+                <div class="character-card">
+                    <p><strong>Poole</strong> — El mayordomo de Jekyll. Es el primero en sospechar que algo terrible ha sucedido. Representa la <span class="highlight">lealtad y la observación</span> de quienes conocen los hábitos de su amo.</p>
+                </div>
+
+                <div class="info-card" style="border-left-color: #d9531e; background: #fef0e6; margin-top: 0.5rem;">
+                    <p><strong>Objetivo de Aprendizaje (OA 3):</strong> Analizar el papel que juega cada personaje en el conflicto y cómo sus acciones afectan a otros personajes.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 6: CONFLICTO Y DUALIDAD -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>⚡ El conflicto central</h2>
+                <p>El conflicto principal es la <span class="highlight">lucha interna de Jekyll</span> entre su naturaleza buena y su naturaleza malvada.</p>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">🔹 Conflicto Interno</strong></p>
+                        <p style="font-size: 1.05rem;">Jekyll lucha contra sus propios deseos y la tentación de liberar a Hyde. Es una batalla entre la razón y el instinto, entre la moral y el placer.</p>
+                        <p style="font-size: 1.05rem; font-style: italic; margin-top: 0.3rem;">"El hombre no es verazmente uno, sino verazmente dos."</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">🔹 Conflicto Externo</strong></p>
+                        <p style="font-size: 1.05rem;">Jekyll (como Hyde) se enfrenta a la <span class="highlight">sociedad y a la justicia</span>. También hay un conflicto con su amigo Lanyon, que representa la ciencia tradicional.</p>
+                        <p style="font-size: 1.05rem; font-style: italic; margin-top: 0.3rem;">Ejemplo: El asesinato de Sir Danvers Carew y la persecución de Hyde.</p>
+                    </div>
+                </div>
+
+                <div class="info-card" style="border-left-color: #d9531e; background: #fef0e6; margin-top: 0.5rem;">
+                    <p><strong>Objetivo de Aprendizaje (OA 3):</strong> Analizar las narraciones considerando el o los conflictos de la historia.</p>
+                </div>
+
+                <div class="question-sample" style="margin-top: 0.5rem;">
+                    <p><strong>Pregunta para reflexionar:</strong> ¿Podría considerarse que el verdadero conflicto de la novela es la lucha de Jekyll contra sí mismo? ¿Por qué?</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 7: AMBIENTE Y SIMBOLISMO -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>📍 Ambiente y simbolismo</h2>
+                <p>El ambiente en la novela no es solo un telón de fondo, sino que <span class="highlight">refuerza los temas centrales</span> de la obra.</p>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">🔹 Espacio</strong></p>
+                        <ul>
+                            <li><strong>Londres victoriano:</strong> Ciudad dividida entre el lujo de Cavendish Square y la miseria de Soho.</li>
+                            <li><strong>El laboratorio:</strong> Espacio secreto donde Jekyll realiza sus experimentos. Es el lugar donde la ciencia traspasa los límites.</li>
+                            <li><strong>La puerta trasera:</strong> Entrada al mundo oculto de Hyde. Simboliza el acceso a la parte oscura de la identidad.</li>
+                            <li><strong>La casa de Jekyll:</strong> Fachada respetable que oculta un interior oscuro y secreto.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">🔹 Símbolos</strong></p>
+                        <ul>
+                            <li><strong>La niebla:</strong> Confusión moral y secretos. Oculta la verdad.</li>
+                            <li><strong>El espejo:</strong> Reflexión de la identidad y la dualidad. Muestra la verdadera naturaleza de Jekyll.</li>
+                            <li><strong>La poción:</strong> El deseo humano de controlar la naturaleza y separar el bien del mal.</li>
+                            <li><strong>El bastón:</strong> Objeto que conecta a Jekyll con el crimen de Hyde.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-card" style="border-left-color: #d9531e; background: #fef0e6; margin-top: 0.5rem;">
+                    <p><strong>Objetivo de Aprendizaje (OA 3):</strong> Analizar los elementos en común con otros textos leídos y el efecto de ciertas acciones en el desarrollo de la historia.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 8: TEMAS Y MENSAJES -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>💭 Temas y mensajes de la obra</h2>
+                <p>La novela aborda temas universales que siguen siendo relevantes hoy en día.</p>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">La dualidad humana</strong></p>
+                        <p style="font-size: 1.05rem;">El tema central: el ser humano es una mezcla de bien y mal. Intentar separar estas dos naturalezas es antinatural y destructivo.</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">La represión y la máscara social</strong></p>
+                        <p style="font-size: 1.05rem;">Crítica a la sociedad victoriana que valora más las apariencias que la autenticidad. La represión genera una explosión más violenta.</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">La ciencia y sus límites</strong></p>
+                        <p style="font-size: 1.05rem;">Jekyll traspasa los límites éticos en nombre del conocimiento. La ciencia sin moral es peligrosa.</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong style="font-size: 1.2rem;">La amistad y la lealtad</strong></p>
+                        <p style="font-size: 1.05rem;">La lealtad de Utterson a Jekyll es inquebrantable. La amistad es un ancla a la humanidad y a la moral.</p>
+                    </div>
+                </div>
+
+                <div class="info-card" style="border-left-color: #d9531e; background: #fef0e6; margin-top: 0.5rem;">
+                    <p><strong>Mensaje principal:</strong> La novela advierte sobre los peligros de la represión y la negación de la propia naturaleza. El ser humano debe aceptar su complejidad y no intentar dividirse.</p>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 9: APLICACIÓN PRÁCTICA -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>📝 Aplicación práctica</h2>
+                <p>Lee el siguiente fragmento de la novela y responde las preguntas.</p>
+
+                <div class="info-card" style="border-left-color: #2d8f5c; background: #fdf5ee;">
+                    <p><strong>Fragmento de "La confesión de Henry Jekyll"</strong></p>
+                    <p style="font-size: 1.05rem; line-height: 1.8; font-style: italic;">
+                        "El hombre no es verazmente uno, sino verazmente dos. Digo dos, porque mis conocimientos no han ido más allá. Otros seguirán, otros llevarán adelante estas investigaciones, y no hay que excluir que el hombre, en último análisis, pueda revelarse una mera asociación de sujetos distintos, incongruentes e independientes. He aprendido a reconocer la fundamental y originaria dualidad del hombre. Considerando las dos naturalezas que se disputaban el campo de mi conciencia, entendí que se podía decir, con igual verdad, ser una como ser otra."
+                    </p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 Pregunta 1</strong></p>
+                        <p style="font-size: 1.05rem;">¿Qué tipo de narrador encontramos en este fragmento?</p>
+                        <p style="font-size: 1rem; font-style: italic;">a) Narrador testigo en tercera persona.<br>b) Narrador omnisciente.<br>c) <span class="highlight">Narrador protagonista en primera persona.</span><br>d) Narrador en segunda persona.</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 Pregunta 2</strong></p>
+                        <p style="font-size: 1.05rem;">¿Qué idea central plantea Jekyll en este fragmento?</p>
+                        <p style="font-size: 1rem; font-style: italic;">a) Que el ser humano es una mezcla de bien y mal.<br>b) <span class="highlight">Que el ser humano puede ser dividido en dos personas.</span><br>c) Que el mal es más fuerte que el bien.<br>d) Que la ciencia puede resolver todos los problemas.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ============================================ -->
+            <!-- SLIDE 10: ANÁLISIS Y DESAFÍO -->
+            <!-- ============================================ -->
+            <div class="slide">
+                <h2>🧠 Analizando la obra</h2>
+
+                <div class="info-card">
+                    <p><strong>Objetivo de Aprendizaje (OA 7):</strong> Formular una interpretación de los textos literarios, considerando la experiencia personal y el contexto de la obra.</p>
+                </div>
+
+                <div class="grid-2">
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 Pregunta 3: Interpretación</strong></p>
+                        <p style="font-size: 1.05rem;">¿Qué crees que simboliza la figura de Hyde en relación con la sociedad victoriana? ¿Cómo se relaciona con el miedo al "otro"?</p>
+                        <p style="font-size: 1rem; font-style: italic;">Pista: Piensa en cómo la sociedad victoriana reprimía los instintos y las pasiones. Hyde representa todo lo que la sociedad quería ocultar.</p>
+                    </div>
+                    <div class="info-card" style="border-left-color: #2d8f5c; background: #edf7f0;">
+                        <p><strong>📌 Pregunta 4: Conexión personal</strong></p>
+                        <p style="font-size: 1.05rem;">¿Crees que todos tenemos un "Hyde" dentro de nosotros? ¿Qué situaciones podrían hacer que ese lado oscuro emergiera?</p>
+                        <p style="font-size: 1rem; font-style: italic;">Esta pregunta te invita a reflexionar sobre tu propia naturaleza y sobre cómo la sociedad influye en nuestro comportamiento.</p>
+                    </div>
+                </div>
+
+                <div class="info-card" style="border-left-color: #d9531e; background: #fef0e6; margin-top: 0.5rem;">
+                    <p><strong>🎯 Desafío final:</strong> Escribe un breve párrafo (5-7 oraciones) en el que expliques cuál es el mensaje principal de la novela. Utiliza <span class="highlight">evidencia del texto</span> para apoyar tu respuesta.</p>
+                </div>
+
+                <p style="margin-top: 2rem; text-align: center; font-size: 1.3rem; color: #8a4a20; font-family: 'Georgia', serif;"><strong>Fin de la clase</strong></p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FOOTER NAV -->
+    <!-- ============================================ -->
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Diapositiva 1 / 10</div>
+    </div>
+
+    <!-- ============================================ -->
+    <!-- FLECHAS DE NAVEGACIÓN -->
+    <!-- ============================================ -->
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+    let isTransitioning = false;
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = 'translateX(-' + (currentIndex * 100) + '%)';
+        slideCounterSpan.innerText = 'Diapositiva ' + (currentIndex + 1) + ' / ' + totalSlides;
+
+        slides.forEach((slide, index) => {
+            slide.classList.toggle('active', index === currentIndex);
+        });
+
+        const activeSlide = slides[currentIndex];
+        if (activeSlide) {
+            activeSlide.scrollTop = 0;
+        }
+    }
+
+    function goToSlide(index) {
+        if (isTransitioning) return;
+        if (index < 0 || index >= totalSlides) return;
+
+        isTransitioning = true;
+        currentIndex = index;
+        updateSlidePosition();
+
+        setTimeout(() => {
+            const activeSlide = slides[currentIndex];
+            if (activeSlide) {
+                activeSlide.scrollTop = 0;
+            }
+            isTransitioning = false;
+        }, 150);
+    }
+
+    function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+            goToSlide(currentIndex + 1);
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            goToSlide(currentIndex - 1);
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+            e.preventDefault();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+            e.preventDefault();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', function() {
+        window.location.href = 'Lenguaje.html';
+    });
+
+    document.getElementById('goToExercisesBtn').addEventListener('click', function() {
+        window.location.href = 'C_9A_Lenguaje.html';
+    });
+
+    updateSlidePosition();
+</script>
+</body>
+</html>
