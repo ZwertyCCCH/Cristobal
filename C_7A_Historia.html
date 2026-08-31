@@ -375,14 +375,13 @@
         { text: "¿Qué conflicto enfrentó a Roma y Cartago por el control del Mediterráneo?", options: ["Guerras Púnicas", "Guerras Médicas", "Guerras del Peloponeso", "Guerras de Galia"], correct: 0 },
         { text: "¿Qué general cartaginés cruzó los Alpes con elefantes?", options: ["Aníbal", "Asdrúbal", "Amílcar", "Escipión"], correct: 0 },
         { text: "¿Qué consecuencia social tuvo la expansión territorial de Roma?", options: ["Enriquecimiento de patricios y empobrecimiento de campesinos", "Mayor igualdad social", "Eliminación de la esclavitud", "Distribución equitativa de tierras"], correct: 0 },
-        { text: "¿Quiénes intentaron reformar el sistema agrario en Roma?", options: ["Los hermanos Graco", "Julio César", "Augusto", "Mario y Sila"], correct: 0 },
         { text: "¿Qué general romano conquistó la Galia?", options: ["Julio César", "Augusto", "Pompeyo", "Marco Antonio"], correct: 0 },
 
         // Imperio (21-28)
         { text: "¿Quién fue el primer emperador romano?", options: ["Octavio Augusto", "Julio César", "Tiberio", "Constantino"], correct: 0 },
         { text: "¿Cómo se llamó el período de paz y estabilidad del Imperio romano?", options: ["Pax Romana", "Pax Augusta", "Mare Nostrum", "Res Publica"], correct: 0 },
-        { text: "¿Qué emperador declaró la libertad de culto a los cristianos en el 313 d.C.?", options: ["Constantino", "Teodosio", "Diocleciano", "Augusto"], correct: 0 },
-        { text: "¿Qué emperador reconoció el cristianismo como religión oficial en el 380 d.C.?", options: ["Teodosio", "Constantino", "Julio César", "Nerón"], correct: 0 },
+        { text: "¿Qué emperador declaró la libertad de culto a los cristianos?", options: ["Constantino", "Teodosio", "Diocleciano", "Augusto"], correct: 0 },
+        { text: "¿Qué emperador reconoció el cristianismo como religión oficial?", options: ["Teodosio", "Constantino", "Julio César", "Nerón"], correct: 0 },
         { text: "¿Qué título usó Augusto para no parecer un monarca absoluto?", options: ["Princeps", "Rex", "Dictador", "Cónsul"], correct: 0 },
         { text: "¿Qué caracterizó al Bajo Imperio romano?", options: ["La monarquía militar y poder absoluto", "La armonía con el Senado", "La república", "La democracia"], correct: 0 },
         { text: "¿Cuál era la función del Coliseo romano?", options: ["Espacio de entretenimiento con luchas de gladiadores", "Templo religioso", "Sede del Senado", "Palacio imperial"], correct: 0 },
@@ -486,7 +485,6 @@
         { description: "Túneles subterráneos donde los cristianos se reunían y enterraban a sus muertos durante las persecuciones.", accepted: ["catacumbas"] },
         { description: "Ciudad que Constantino fundó como nueva capital del Imperio romano, actualmente llamada Estambul.", accepted: ["constantinopla"] },
         { description: "Emperador que dividió el Imperio romano en Occidental y Oriental.", accepted: ["teodosio"] },
-        { description: "Año en que cayó el Imperio romano de Occidente, tras la destitución del último emperador.", accepted: ["476"] }
     ];
 
     // ==================== FUNCIONES ====================
@@ -602,7 +600,7 @@
             qDiv.innerHTML = `
                 <p><strong>${idx+1}.</strong> ${item.description}</p>
                 <input type="text" class="short-answer-input" id="sa_${idx}" ${evaluated ? 'disabled' : ''} value="${evaluated ? saAnswers[idx] || '' : ''}" placeholder="Escribe tu respuesta (máx. 3 palabras)...">
-                ${evaluated ? `<div class="short-feedback ${isAnswerAccepted(saAnswers[idx] || '', item.accepted) ? 'correct' : 'incorrect'}">${isAnswerAccepted(saAnswers[idx] || '', item.accepted) ? '✅ Correcto' : '❌ Incorrecto'}</div>` : ''}
+${evaluated ? `<div class="short-feedback ${isAnswerAccepted(saAnswers[idx] || '', item.accepted) ? 'correct' : 'incorrect'}">${isAnswerAccepted(saAnswers[idx] || '', item.accepted) ? '✅ Correcto' : '❌ Incorrecto. Respuesta: ' + item.accepted.join(', ')}</div>` : ''}
             `;
             container.appendChild(qDiv);
             if (!evaluated) {
