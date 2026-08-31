@@ -1,0 +1,1152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>Clase: Antigua Roma | Historia 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            overflow: hidden;
+            height: 100vh;
+            width: 100vw;
+        }
+
+        .presentation-container {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            background: #fffdf9;
+        }
+
+        .slides-wrapper {
+            width: 100%;
+            height: calc(100% - 70px);
+            overflow: hidden;
+        }
+
+        .slides {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            transition: transform 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            will-change: transform;
+        }
+
+        .slide {
+            flex: 0 0 100%;
+            height: 100%;
+            overflow-y: auto;
+            padding: 2rem 2.5rem;
+            scrollbar-width: thin;
+            background: #fffdf9;
+            color: #2c3e2f;
+        }
+
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: #ede6db; }
+        .slide::-webkit-scrollbar-thumb { background: #c2aa82; border-radius: 8px; }
+
+        h1 {
+            font-size: 2.4rem;
+            color: #7a4b1d;
+            border-left: 7px solid #b55a3a;
+            padding-left: 1.2rem;
+            margin-bottom: 1.2rem;
+            font-weight: 700;
+        }
+
+        h2 {
+            font-size: 1.8rem;
+            color: #6b3f1a;
+            margin: 1rem 0 0.6rem 0;
+            border-bottom: 2px solid #f0dfc0;
+            display: inline-block;
+            padding-bottom: 0.2rem;
+        }
+
+        h3 {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin: 0.8rem 0 0.4rem;
+        }
+
+        p, li {
+            font-size: 1rem;
+            line-height: 1.5;
+            margin-bottom: 0.7rem;
+            color: #2d4029;
+            text-align: justify;
+        }
+
+        ul, .custom-list {
+            margin-left: 1.8rem;
+            margin-bottom: 1rem;
+        }
+
+        .highlight {
+            background: #fef0cf;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #b65717;
+        }
+
+        .highlight-red {
+            background: #fce4e4;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #b33;
+        }
+
+        .highlight-blue {
+            background: #e4ecf8;
+            padding: 0.1rem 0.3rem;
+            border-radius: 5px;
+            font-weight: 600;
+            color: #2a5a8a;
+        }
+
+        .info-card {
+            background: #faf6eb;
+            border-left: 6px solid #b55a3a;
+            padding: 0.8rem 1.5rem;
+            margin: 1rem 0;
+            border-radius: 18px;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05);
+        }
+
+        .info-card.green { border-left-color: #6b8f5e; }
+        .info-card.blue { border-left-color: #5b7f9e; }
+        .info-card.purple { border-left-color: #8b6b9e; }
+        .info-card.red { border-left-color: #b55a5a; }
+        .info-card.orange { border-left-color: #d48c3a; }
+        .info-card.teal { border-left-color: #3a8f8f; }
+        .info-card.maroon { border-left-color: #8b3a3a; }
+        .info-card.gold { border-left-color: #c9a84c; }
+
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3 {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .grid-4 {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.8rem;
+            margin: 1rem 0;
+        }
+
+        .timeline {
+            display: flex;
+            flex-direction: column;
+            margin: 1rem 0;
+        }
+        .timeline-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 0.8rem;
+        }
+        .timeline-year {
+            min-width: 120px;
+            font-weight: bold;
+            color: #b65717;
+        }
+        .timeline-text {
+            flex: 1;
+        }
+
+        .question-sample {
+            background: #eef0e4;
+            border-radius: 24px;
+            padding: 1rem 1.8rem;
+            margin: 1.2rem 0 0.5rem;
+            border-left: 5px solid #c59a5b;
+        }
+
+        .badge {
+            background: #b55a3a;
+            color: white;
+            font-size: 0.7rem;
+            padding: 0.2rem 0.7rem;
+            border-radius: 30px;
+            display: inline-block;
+            margin-right: 0.6rem;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+        th, td {
+            border: 1px solid #d4c9b5;
+            padding: 8px 10px;
+            text-align: left;
+            vertical-align: top;
+            background: #fefcf7;
+        }
+        th {
+            background: #e8dfcf;
+            color: #7a4b1d;
+            font-weight: 600;
+        }
+
+        .footer-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            height: 70px;
+            background: #fffaf2;
+            border-top: 1px solid #e9dfcf;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 2rem;
+            z-index: 100;
+            backdrop-filter: blur(6px);
+        }
+
+        .btn-group { display: flex; gap: 1rem; }
+        .btn-footer {
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.5rem 1.8rem;
+            border-radius: 40px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-footer:hover { background: #b47c44; transform: scale(1.02); }
+
+        .slide-counter {
+            background: #e9dfcf;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+            color: #5d431f;
+            font-weight: 500;
+        }
+
+        .nav-arrow {
+            position: fixed;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(180, 140, 90, 0.4);
+            backdrop-filter: blur(3px);
+            width: 48px;
+            height: 48px;
+            border-radius: 60px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            font-size: 2rem;
+            color: #5d3a1a;
+            transition: 0.2s;
+            z-index: 90;
+        }
+        .nav-arrow:hover { background: #c99f65; color: white; }
+        .nav-left { left: 16px; }
+        .nav-right { right: 16px; }
+
+        /* Diagramas */
+        .diagram-container {
+            background: #faf6eb;
+            border-radius: 20px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border: 2px solid #e9dfcf;
+        }
+
+        .diagram-title {
+            text-align: center;
+            font-weight: 700;
+            font-size: 1.1rem;
+            color: #6b3f1a;
+            margin-bottom: 1rem;
+        }
+
+        .roman-pyramid {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            width: 100%;
+        }
+        .roman-level {
+            width: 100%;
+            padding: 0.4rem 0;
+            text-align: center;
+            border-radius: 8px;
+            margin: 0.15rem 0;
+            font-weight: 600;
+            font-size: 0.85rem;
+            color: #2d4029;
+        }
+        .roman-level.emperador { background: #e6b450; width: 18%; color: #4a2f0d; }
+        .roman-level.senadores { background: #d4a84a; width: 30%; color: #4a2f0d; }
+        .roman-level.ecuestre { background: #c99a44; width: 45%; color: white; }
+        .roman-level.plebeyos { background: #b88a3a; width: 65%; color: white; }
+        .roman-level.esclavos { background: #a07a30; width: 90%; color: white; }
+
+        .institutions-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.8rem;
+        }
+        .institution-box {
+            background: #fefcf7;
+            border: 2px solid #d4c9b5;
+            border-radius: 12px;
+            padding: 0.6rem;
+            text-align: center;
+        }
+        .institution-box strong { color: #6b3f1a; display: block; }
+        .institution-box span { font-size: 0.8rem; color: #5a4a3a; }
+
+        @media (max-width: 700px) {
+            .slide { padding: 1rem; }
+            h1 { font-size: 1.6rem; }
+            h2 { font-size: 1.3rem; }
+            .grid-2, .grid-3, .grid-4, .institutions-grid { grid-template-columns: 1fr; }
+            .timeline-year { min-width: 80px; }
+            .footer-nav { padding: 0 1rem; }
+            .btn-footer { padding: 0.4rem 1rem; font-size: 0.85rem; }
+            .nav-arrow { width: 36px; height: 36px; font-size: 1.4rem; }
+        }
+    </style>
+</head>
+<body>
+<div class="presentation-container">
+    <div class="slides-wrapper">
+        <div class="slides" id="slidesContainer">
+
+            <!-- SLIDE 1: Portada -->
+            <div class="slide">
+                <h1>🏛️ Roma: La Ciudad Eterna</h1>
+                <p>Roma pasó de ser un pequeño poblado a la capital de uno de los <span class="highlight">imperios más extensos y poderosos</span> de la Antigüedad. En sus <strong>doce siglos de historia</strong> (753 a.C. - 476 d.C.), desarrolló un <span class="highlight">espíritu práctico y organizativo</span> que dejó un legado político, jurídico y cultural que aún perdura en la actualidad.</p>
+                <div class="info-card">
+                    <strong>📘 En esta clase aprenderemos sobre:</strong>
+                    <ul>
+                        <li>La <strong>geografía</strong> de la península itálica y su influencia</li>
+                        <li>La <strong>Monarquía</strong>, la <strong>República</strong> y el <strong>Imperio</strong> romano</li>
+                        <li>Las <strong>instituciones</strong> políticas romanas</li>
+                        <li>La <strong>expansión territorial</strong> y sus consecuencias</li>
+                        <li>La <strong>romanización</strong> y la cultura romana</li>
+                        <li>El <strong>derecho romano</strong> y su legado</li>
+                        <li>El <strong>cristianismo</strong>: de religión perseguida a religión oficial</li>
+                        <li>La <strong>caída del Imperio de Occidente</strong></li>
+                        <li>El <strong>legado</strong> de Roma en la actualidad</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta de reflexión inicial:</strong> ¿Qué sabes sobre la Antigua Roma? ¿Qué elementos de la cultura romana crees que siguen presentes en nuestra sociedad?</p>
+                    <p><strong>Respuesta orientativa:</strong> Roma nos legó el derecho, el latín (base del español), la república como forma de gobierno, el calendario juliano, los acueductos y caminos, entre muchos otros elementos.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 2: Contexto temporal -->
+            <div class="slide">
+                <h2>📅 Contexto temporal de Roma</h2>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>753 a.C.</strong></div>
+                        <div class="timeline-text">Fundación de Roma (según la tradición).</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>509 a.C.</strong></div>
+                        <div class="timeline-text"><span class="highlight">Abolición de la monarquía</span> e inicio de la <strong>República</strong>.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>27 a.C.</strong></div>
+                        <div class="timeline-text"><span class="highlight">Fin de la República</span> e inicio del <strong>Imperio</strong> con Octavio Augusto.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>476 d.C.</strong></div>
+                        <div class="timeline-text"><span class="highlight-red">Caída del Imperio romano de Occidente</span>. Fin de la Edad Antigua e inicio de la Edad Media.</div>
+                    </div>
+                </div>
+                <div class="info-card blue">
+                    <strong>📘 Periodos de la historia romana:</strong>
+                    <ul>
+                        <li><strong>Monarquía (753-509 a.C.):</strong> Reyes etruscos y latinos.</li>
+                        <li><strong>República (509-27 a.C.):</strong> Gobierno de senadores y magistrados.</li>
+                        <li><strong>Imperio (27 a.C.-476 d.C.):</strong> Gobierno de emperadores.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuánto tiempo duró la civilización romana?</p>
+                    <p><strong>Respuesta:</strong> Aproximadamente <strong>12 siglos</strong> (desde el 753 a.C. hasta el 476 d.C.), uno de los imperios más longevos de la historia.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 3: Entorno geográfico -->
+            <div class="slide">
+                <h2>🗺️ Entorno geográfico de Roma</h2>
+                <p>Roma se ubicaba en la <span class="highlight">península itálica</span>, en el centro del mar Mediterráneo. Su posición estratégica fue clave para su expansión.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>🗻 Características del territorio</strong>
+                        <ul>
+                            <li><strong>Península itálica:</strong> En el centro del Mediterráneo.</li>
+                            <li><strong>Río Tíber:</strong> Abastecía de agua y servía como vía de comunicación.</li>
+                            <li><strong>Relieve montañoso:</strong> Los Apeninos atraviesan la península.</li>
+                            <li><strong>Suelos fértiles:</strong> Favorecieron la agricultura.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>🌾 Recursos naturales</strong>
+                        <ul>
+                            <li><strong>Agricultura:</strong> Cereales, vides y olivos.</li>
+                            <li><strong>Ganadería:</strong> Ovejas y cabras.</li>
+                            <li><strong>Minería:</strong> Hierro, cobre, plomo y bronce.</li>
+                            <li><strong>Mar Mediterráneo:</strong> <span class="highlight">Mare Nostrum</span> ("Nuestro mar") para los romanos.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> Roma fue fundada a orillas del <span class="highlight">río Tíber</span>, en una posición estratégica que permitía controlar el comercio y las comunicaciones entre el norte y el sur de Italia.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cómo influyó la geografía en el desarrollo de Roma?</p>
+                    <p><strong>Respuesta:</strong> Su ubicación central en el Mediterráneo, su cercanía al mar y sus tierras fértiles permitieron el desarrollo agrícola, el comercio y la posterior expansión militar y cultural.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 4: La fundación de Roma -->
+            <div class="slide">
+                <h2>🐺 La fundación de Roma: mito y realidad</h2>
+                <p>Según la tradición, Roma fue fundada en el <span class="highlight">753 a.C.</span> por <strong>Rómulo y Remo</strong>, dos hermanos gemelos criados por una loba.</p>
+                <div class="grid-2">
+                    <div class="info-card gold">
+                        <strong>📖 El mito de Rómulo y Remo</strong>
+                        <ul>
+                            <li>Hijos del dios Marte y la vestal Rea Silvia.</li>
+                            <li>Abandonados en el río Tíber y salvados por una <strong>loba</strong>.</li>
+                            <li>Fundaron Roma en el lugar donde fueron encontrados.</li>
+                            <li>Rómulo mató a Remo y se convirtió en el <strong>primer rey</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>📘 La realidad histórica</strong>
+                        <ul>
+                            <li>Roma se formó por la <strong>unión de aldeas</strong> latinas y sabinas.</li>
+                            <li>Ubicadas en las <strong>siete colinas</strong> (Palatino, Capitolino, etc.).</li>
+                            <li>Influencia de los <strong>etruscos</strong> en los primeros siglos.</li>
+                            <li>La fecha del 753 a.C. fue establecida por el historiador <strong>Varrón</strong>.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué es importante el mito de Rómulo y Remo para los romanos?</p>
+                    <p><strong>Respuesta:</strong> El mito daba a los romanos un origen divino y heroico. La loba se convirtió en un <strong>símbolo de la ciudad</strong>, representando la fuerza y la supervivencia.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 5: La monarquía romana -->
+            <div class="slide">
+                <h2>👑 La monarquía romana (753-509 a.C.)</h2>
+                <p>Roma fue gobernada por <span class="highlight">siete reyes</span> según la tradición. Los primeros fueron latinos y los últimos <strong>etruscos</strong>.</p>
+                <div class="info-card">
+                    <strong>📘 Características de la monarquía:</strong>
+                    <ul>
+                        <li>El rey concentraba el <strong>poder político, militar y religioso</strong>.</li>
+                        <li>El rey era asesorado por el <strong>Senado</strong> (consejo de ancianos).</li>
+                        <li>Existía una <strong>Asamblea popular</strong> que elegía al rey.</li>
+                        <li>Los <strong>etruscos</strong> tuvieron una gran influencia cultural y política.</li>
+                    </ul>
+                </div>
+                <div class="info-card red">
+                    <strong>📘 Fin de la monarquía:</strong>
+                    <ul>
+                        <li>El último rey, <strong>Tarquinio el Soberbio</strong>, fue expulsado en el <span class="highlight">509 a.C.</span></li>
+                        <li>Motivo: su tiranía y el abuso de poder.</li>
+                        <li>Se instauró la <strong>República</strong> para evitar la concentración de poder.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué los romanos expulsaron a su último rey?</p>
+                    <p><strong>Respuesta:</strong> Por el abuso de poder de Tarquinio el Soberbio. Los romanos decidieron crear un sistema donde el poder no estuviera concentrado en una sola persona.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 6: La República romana -->
+            <div class="slide">
+                <h2>🏛️ La República romana (509-27 a.C.)</h2>
+                <p>La <span class="highlight">República</span> fue un sistema de gobierno donde el poder no se concentraba en una sola persona. Su nombre viene del latín <em>"res publica"</em>, que significa <strong>"cosa pública"</strong>.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>📘 Características de la República:</strong>
+                        <ul>
+                            <li><strong>Separación de poderes.</strong></li>
+                            <li><strong>Magistraturas electivas, temporales y responsables.</strong></li>
+                            <li><strong>Colegialidad:</strong> los cargos eran ejercidos por más de una persona.</li>
+                            <li><strong>Gratuidad:</strong> no se recibía sueldo.</li>
+                            <li><strong>Sometimiento a la ley.</strong></li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>⚔️ La lucha patricio-plebeya</strong>
+                        <ul>
+                            <li><strong>Patricios:</strong> aristócratas, monopolizaban el poder.</li>
+                            <li><strong>Plebeyos:</strong> ciudadanos libres sin derechos políticos.</li>
+                            <li>Los plebeyos presionaron por <strong>igualdad política</strong>.</li>
+                            <li>Logros: <strong>Ley de las XII Tablas</strong> y acceso a magistraturas.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué significa la expresión "res publica"?</p>
+                    <p><strong>Respuesta:</strong> Significa <strong>"cosa pública"</strong> o "asunto del pueblo". La República era un gobierno que debía servir al interés público, no al de unos pocos.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 7: Las instituciones republicanas -->
+            <div class="slide">
+                <h2>⚖️ Las instituciones de la República</h2>
+                <p>La República romana se sostenía sobre tres pilares que se controlaban mutuamente:</p>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">🏛️ Los tres pilares de la República</div>
+                    <div class="institutions-grid">
+                        <div class="institution-box">
+                            <strong>👑 Magistraturas</strong>
+                            <span>Poder ejecutivo (monárquico)</span>
+                            <ul style="text-align:left;font-size:0.8rem;margin-top:0.3rem;">
+                                <li>Cónsules (2)</li>
+                                <li>Pretores</li>
+                                <li>Ediles</li>
+                                <li>Cuestores</li>
+                            </ul>
+                        </div>
+                        <div class="institution-box">
+                            <strong>🏛️ Senado</strong>
+                            <span>Poder aristocrático</span>
+                            <ul style="text-align:left;font-size:0.8rem;margin-top:0.3rem;">
+                                <li>Consejo de ancianos</li>
+                                <li>300 miembros (vitalicios)</li>
+                                <li>Asesoraban a los magistrados</li>
+                                <li>Controlaban las finanzas</li>
+                            </ul>
+                        </div>
+                        <div class="institution-box">
+                            <strong>🗳️ Asambleas</strong>
+                            <span>Poder democrático</span>
+                            <ul style="text-align:left;font-size:0.8rem;margin-top:0.3rem;">
+                                <li>Comicios centuriados</li>
+                                <li>Comicios tributos</li>
+                                <li>Elegían magistrados</li>
+                                <li>Aprobaban leyes</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card">
+                    <strong>📘 Principio fundamental:</strong> Las magistraturas eran <span class="highlight">electivas, temporales, responsables, gratuitas y colegiadas</span>. Esto evitaba la concentración de poder.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cómo se controlaban mutuamente las instituciones republicanas?</p>
+                    <p><strong>Respuesta:</strong> Las magistraturas gobernaban, el Senado asesoraba y controlaba las finanzas, y las Asambleas elegían a los magistrados y aprobaban las leyes. Había un equilibrio de poderes.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 8: La Ley de las XII Tablas -->
+            <div class="slide">
+                <h2>📜 La Ley de las XII Tablas (451-450 a.C.)</h2>
+                <p>Las <span class="highlight">XII Tablas</span> fueron el <strong>primer código de leyes escritas</strong> de Roma. Antes, las leyes eran orales y aplicadas arbitrariamente por los patricios.</p>
+                <div class="grid-2">
+                    <div class="info-card green">
+                        <strong>✅ Importancia de las XII Tablas</strong>
+                        <ul>
+                            <li>Pusieron por escrito las leyes.</li>
+                            <li>Limitaron la <strong>arbitrariedad</strong> de los patricios.</li>
+                            <li>Permitieron a los ciudadanos <strong>conocer</strong> las leyes.</li>
+                            <li>Sentaron las bases del <strong>derecho romano</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>📘 Contenido de las XII Tablas</strong>
+                        <ul>
+                            <li>Normas sobre <strong>propiedad</strong> y herencias.</li>
+                            <li>Regulación de <strong>deudas</strong> y contratos.</li>
+                            <li>Procedimientos <strong>judiciales</strong>.</li>
+                            <li>Penalización de <strong>delitos</strong>.</li>
+                            <li>Normas sobre <strong>familia</strong> y matrimonio.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> Las XII Tablas estuvieron expuestas en el <span class="highlight">Foro Romano</span> para que todos los ciudadanos pudieran leerlas. Este fue un gran avance hacia la <strong>igualdad ante la ley</strong>.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué fue tan importante la Ley de las XII Tablas?</p>
+                    <p><strong>Respuesta:</strong> Porque puso por escrito las leyes, terminando con la arbitrariedad de los patricios y permitiendo que todos los ciudadanos conocieran sus derechos y obligaciones.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 9: La expansión territorial de Roma -->
+            <div class="slide">
+                <h2>⚔️ La expansión territorial de Roma</h2>
+                <p>Durante la República, Roma expandió su dominio hasta convertirse en la <span class="highlight">principal potencia del Mediterráneo</span>.</p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>Siglo IV-III a.C.</strong></div>
+                        <div class="timeline-text">Conquista de la <span class="highlight">península itálica</span>.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>264-146 a.C.</strong></div>
+                        <div class="timeline-text"><span class="highlight-red">Guerras Púnicas</span> vs. Cartago. Roma conquista el Mediterráneo occidental.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>Siglo II a.C.</strong></div>
+                        <div class="timeline-text">Conquista de Grecia y el Mediterráneo oriental.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>Siglo I a.C.</strong></div>
+                        <div class="timeline-text">Conquista de Galia (Julio César), Egipto y territorios de Asia Menor.</div>
+                    </div>
+                </div>
+                <div class="info-card red">
+                    <strong>📘 El ejército romano:</strong>
+                    <ul>
+                        <li>Fue clave para la expansión.</li>
+                        <li><strong>Disciplinado y eficiente.</strong></li>
+                        <li>Avanzados <strong>armamentos y técnicas bélicas</strong>.</li>
+                        <li>Legiones y centurias como unidades básicas.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué fueron las Guerras Púnicas?</p>
+                    <p><strong>Respuesta:</strong> Fueron tres guerras entre Roma y Cartago (264-146 a.C.) por el control del Mediterráneo. Roma resultó victoriosa y destruyó Cartago.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 10: Consecuencias de la expansión -->
+            <div class="slide">
+                <h2>📈 Consecuencias de la expansión</h2>
+                <p>La expansión territorial trajo grandes <span class="highlight">riquezas</span>, pero también profundas <span class="highlight-red">desigualdades</span> y <span class="highlight-red">conflictos</span>.</p>
+                <div class="grid-2">
+                    <div class="info-card green">
+                        <strong>✅ Beneficios</strong>
+                        <ul>
+                            <li><strong>Riquezas:</strong> Botines de guerra, impuestos, comercio.</li>
+                            <li><strong>Tierras:</strong> Nuevas provincias para cultivar.</li>
+                            <li><strong>Esclavos:</strong> Mano de obra barata.</li>
+                            <li><strong>Poder:</strong> Roma se convirtió en la potencia dominante.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>❌ Problemas</strong>
+                        <ul>
+                            <li><strong>Desigualdad:</strong> Los patricios se enriquecieron, los campesinos se empobrecieron.</li>
+                            <li><strong>Concentración de tierras:</strong> Los ricos compraron pequeñas propiedades.</li>
+                            <li><strong>Desempleo:</strong> Muchos campesinos perdieron sus tierras.</li>
+                            <li><strong>Conflictos sociales:</strong> Rebeliones y luchas por la tierra.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Las reformas de los Graco:</strong>
+                    <ul>
+                        <li><strong>Tiberio Graco</strong> y <strong>Cayo Graco</strong> intentaron reformas agrarias.</li>
+                        <li>Propuesta: repartir tierras a los campesinos pobres.</li>
+                        <li>Fueron <span class="highlight-red">asesinados</span> por la oposición aristocrática.</li>
+                        <li>Sus reformas fracasaron, pero mostraron la <strong>crisis social</strong> de Roma.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué consecuencias sociales tuvo la expansión de Roma?</p>
+                    <p><strong>Respuesta:</strong> Aumentó la desigualdad: los patricios se enriquecieron mientras los campesinos perdían sus tierras. Esto generó conflictos sociales y crisis políticas.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 11: La crisis de la República -->
+            <div class="slide">
+                <h2>⚔️ La crisis de la República</h2>
+                <p>El sistema republicano se debilitó por las <span class="highlight-red">guerras civiles</span> y la concentración de poder en manos de generales ambiciosos.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>📘 Causas de la crisis:</strong>
+                        <ul>
+                            <li><strong>Guerras civiles:</strong> Generales se enfrentaban por el poder.</li>
+                            <li><strong>Corrupción:</strong> Compra de votos y sobornos.</li>
+                            <li><strong>Desigualdad:</strong> Ricos contra pobres.</li>
+                            <li><strong>Ejércitos personales:</strong> Generales leales a sus soldados, no a la República.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>⚔️ Figuras clave</strong>
+                        <ul>
+                            <li><strong>Mario</strong> y <strong>Sila</strong>: rivales en guerras civiles.</li>
+                            <li><strong>Julio César:</strong> Conquistó la Galia, cruzó el Rubicón y se hizo dictador.</li>
+                            <li><strong>Asesinato de César:</strong> 44 a.C. por senadores que temían su poder.</li>
+                            <li><strong>Octavio (Augusto):</strong> Venció a Marco Antonio y se convirtió en el primer emperador.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> El <span class="highlight">asesinato de Julio César</span> en el 44 a.C. no restauró la República. Tras años de guerras civiles, su hijo adoptivo <span class="highlight">Octavio</span> se convirtió en el primer emperador en el <strong>27 a.C.</strong></p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué cayó la República romana?</p>
+                    <p><strong>Respuesta:</strong> Por las guerras civiles, la concentración de poder en generales ambiciosos, la corrupción y la profunda desigualdad social. El sistema republicano no pudo resolver estos problemas.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 12: El Imperio romano -->
+            <div class="slide">
+                <h2>🏛️ El Imperio romano (27 a.C. - 476 d.C.)</h2>
+                <p>El <span class="highlight">Imperio</span> comenzó con <strong>Octavio Augusto</strong>, quien concentró todos los poderes y se convirtió en el <strong>primer emperador</strong>.</p>
+                <div class="grid-2">
+                    <div class="info-card gold">
+                        <strong>👑 El emperador</strong>
+                        <ul>
+                            <li><strong>Concentraba</strong> el poder político, militar y religioso.</li>
+                            <li><strong>Augusto</strong> prefirió el título de <em>"princeps"</em> (primer ciudadano).</li>
+                            <li>Con el tiempo, el emperador fue visto como <strong>divino</strong>.</li>
+                            <li>El Senado y las magistraturas perdieron relevancia.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>📘 La Pax Romana</strong>
+                        <ul>
+                            <li>Periodo de <span class="highlight">paz y estabilidad</span> (siglos I-II d.C.).</li>
+                            <li><strong>Pax Augusta</strong> o "Paz de Augusto".</li>
+                            <li>Florecieron el <strong>comercio</strong> y la <strong>cultura</strong>.</li>
+                            <li>Roma alcanzó su <strong>máxima extensión</strong> en el siglo II d.C.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Alto Imperio (27 a.C. - 235 d.C.) y Bajo Imperio (235-476 d.C.):</strong>
+                    <ul>
+                        <li><strong>Alto Imperio:</strong> Armonía con el Senado ("diarquía augustea").</li>
+                        <li><strong>Bajo Imperio:</strong> Monarquía militar y poder absoluto del emperador.</li>
+                        <li>El emperador basó su autoridad en <span class="highlight">bases teocráticas</span> (delegación divina).</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué fue la Pax Romana?</p>
+                    <p><strong>Respuesta:</strong> Fue un periodo de paz y estabilidad en el Imperio romano que duró aproximadamente dos siglos (desde Augusto hasta el siglo II d.C.). Fue una época de prosperidad y desarrollo cultural.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 13: La sociedad romana imperial -->
+            <div class="slide">
+                <h2>👥 La sociedad romana imperial</h2>
+                <p>La sociedad romana era <span class="highlight">jerarquizada</span> y <span class="highlight-red">esclavista</span>. La ciudadanía se fue ampliando con el tiempo.</p>
+
+                <div class="diagram-container">
+                    <div class="diagram-title">📊 Pirámide social romana</div>
+                    <div class="roman-pyramid">
+                        <div class="roman-level emperador">
+                            <strong>👑 Emperador</strong>
+                            <span style="display:block;font-size:0.7rem;font-weight:400;">Máxima autoridad</span>
+                        </div>
+                        <div class="roman-level senadores">
+                            <strong>🏛️ Senadores</strong>
+                            <span style="display:block;font-size:0.7rem;font-weight:400;">Aristocracia • Ricos terratenientes</span>
+                        </div>
+                        <div class="roman-level ecuestre">
+                            <strong>🐴 Orden ecuestre</strong>
+                            <span style="display:block;font-size:0.7rem;font-weight:400;">Comerciantes y funcionarios • Ricos pero sin linaje</span>
+                        </div>
+                        <div class="roman-level plebeyos">
+                            <strong>👨‍🌾 Plebeyos</strong>
+                            <span style="display:block;font-size:0.7rem;font-weight:400;">Ciudadanos comunes • Artesanos, comerciantes, campesinos</span>
+                        </div>
+                        <div class="roman-level esclavos">
+                            <strong>⛓️ Esclavos</strong>
+                            <span style="display:block;font-size:0.7rem;font-weight:400;">Sin libertad • Considerados propiedad • Minoría en la cima</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-card red">
+                    <strong>📘 Características de la sociedad romana:</strong>
+                    <ul>
+                        <li>Era una sociedad <span class="highlight-red">esclavista</span>.</li>
+                        <li>Los esclavos se dedicaban a todo tipo de labores.</li>
+                        <li>La ciudadanía se fue <strong>ampliando</strong> con el tiempo.</li>
+                        <li>La familia era <strong>patriarcal</strong> (el <em>pater familias</em> tenía autoridad absoluta).</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cómo era la sociedad romana?</p>
+                    <p><strong>Respuesta:</strong> Era jerarquizada y esclavista. Los ciudadanos se dividían en patricios, plebeyos y esclavos. La ciudadanía se fue ampliando con el tiempo a los habitantes de las provincias.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 14: Romanización -->
+            <div class="slide">
+                <h2>🌍 Romanización: la cultura como dominio</h2>
+                <p>La <span class="highlight">romanización</span> fue el proceso mediante el cual Roma extendió su <strong>organización, forma de vida y cultura</strong> a los pueblos conquistados.</p>
+                <div class="info-card blue">
+                    <strong>📘 Elementos de la romanización:</strong>
+                    <ul>
+                        <li><strong>Administración única</strong> para todas las provincias.</li>
+                        <li><strong>Ciudadanía:</strong> Concesión de derechos a los habitantes de las provincias.</li>
+                        <li><strong>Ejército:</strong> Incorporación de soldados de las provincias.</li>
+                        <li><strong>Latín:</strong> Lengua oficial del Imperio.</li>
+                        <li><strong>Derecho romano:</strong> Universalización de las leyes.</li>
+                        <li><strong>Red de caminos:</strong> Conexión de todo el Imperio.</li>
+                        <li><strong>Ciudades:</strong> Fundación de centros urbanos a semejanza de Roma.</li>
+                    </ul>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Frase clave:</strong> <em>"Roma nació con una misión: reunir las civilizaciones que la habían precedido, fusionándolas y difundiéndolas en toda Europa y la cuenca del Mediterráneo."</em> — Indro Montanelli.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué fue la romanización?</p>
+                    <p><strong>Respuesta:</strong> Fue el proceso por el cual Roma extendió su cultura, leyes, lengua y forma de vida a los pueblos conquistados. No fue solo dominación militar, sino también cultural.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 15: El derecho romano -->
+            <div class="slide">
+                <h2>⚖️ El derecho romano</h2>
+                <p>Roma creó un <span class="highlight">sistema jurídico</span> que sentó las bases del derecho occidental. Su legado jurídico es uno de los más importantes de la historia.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>📘 Tipos de derecho:</strong>
+                        <ul>
+                            <li><strong>Ius civilis (derecho civil):</strong> Para los ciudadanos romanos.</li>
+                            <li><strong>Ius gentium (derecho de gentes):</strong> Aplicado a los pueblos conquistados.</li>
+                            <li>Con el tiempo, ambos sistemas se <strong>fusionaron</strong>.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card green">
+                        <strong>📘 Principios del derecho romano:</strong>
+                        <ul>
+                            <li><strong>Igualdad ante la ley.</strong></li>
+                            <li><strong>Presunción de inocencia.</strong></li>
+                            <li><strong>Derecho a la defensa.</strong></li>
+                            <li><strong>La ley está por sobre los gobernantes.</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> El derecho romano sigue siendo estudiado en las <span class="highlight">universidades</span> y ha influido en los sistemas jurídicos de todo el mundo occidental, incluido <strong>Chile</strong>.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Cuál es la importancia del derecho romano?</p>
+                    <p><strong>Respuesta:</strong> Es la base del derecho occidental. Principios como la igualdad ante la ley, la presunción de inocencia y el derecho a la defensa provienen de Roma.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 16: Religión romana -->
+            <div class="slide">
+                <h2>⛩️ Religión romana</h2>
+                <p>Los romanos fueron <span class="highlight">politeístas</span> y tenían la particularidad de <strong>incorporar</strong> los cultos de los pueblos que conquistaban.</p>
+                <div class="grid-2">
+                    <div class="info-card gold">
+                        <strong>⛩️ Características de la religión romana:</strong>
+                        <ul>
+                            <li><strong>Politeísta:</strong> Creían en múltiples dioses.</li>
+                            <li><strong>Incorporaban</strong> dioses de otros pueblos.</li>
+                            <li>Existían dioses <strong>locales</strong> y dioses de <strong>culto imperial</strong>.</li>
+                            <li>Los <strong>rituales</strong> eran muy importantes.</li>
+                            <li>La religión estaba <strong>integrada</strong> en la vida política.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>🏛️ Religión y política</strong>
+                        <ul>
+                            <li>El emperador era el <strong>pontífice máximo</strong>.</li>
+                            <li>Los rituales religiosos eran <strong>públicos</strong> y oficiales.</li>
+                            <li>La religión <strong>legitimaba</strong> el poder político.</li>
+                            <li>Los cristianos fueron perseguidos por <strong>negarse</strong> a rendir culto al emperador.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué característica tenía la religión romana?</p>
+                    <p><strong>Respuesta:</strong> Era politeísta y muy tolerante con los cultos de otros pueblos. Los romanos incorporaban dioses extranjeros a su panteón. Sin embargo, perseguían a quienes se negaban a rendir culto al emperador, como los cristianos.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 17: Origen del cristianismo -->
+            <div class="slide">
+                <h2>✝️ Origen del cristianismo</h2>
+                <p>El cristianismo nació en la provincia romana de <span class="highlight">Judea</span> durante el reinado de Augusto, con la predicación de <strong>Jesús de Nazaret</strong>.</p>
+                <div class="info-card gold">
+                    <strong>📘 El mensaje de Jesús:</strong>
+                    <ul>
+                        <li><strong>Anunció el Reino de Dios.</strong></li>
+                        <li><strong>Salvación eterna.</strong></li>
+                        <li><strong>Amor al prójimo.</strong></li>
+                        <li><strong>Igualdad</strong> de todos como hijos de un único Dios.</li>
+                    </ul>
+                </div>
+                <div class="info-card red">
+                    <strong>📘 La condena de Jesús:</strong>
+                    <ul>
+                        <li>Fue condenado a muerte <strong>crucificado</strong>.</li>
+                        <li>Motivo: sus detractores lo acusaron de <strong>blasfemia</strong>.</li>
+                        <li>El procónsul romano <strong>Poncio Pilato</strong> autorizó la ejecución.</li>
+                        <li>Tras su muerte, sus <strong>apóstoles</strong> difundieron su mensaje.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué mensaje predicaba Jesús de Nazaret?</p>
+                    <p><strong>Respuesta:</strong> Anunciaba el Reino de Dios, la salvación eterna, el amor al prójimo y la igualdad de todos como hijos de un único Dios. Este mensaje era revolucionario para la época.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 18: Expansión y persecución del cristianismo -->
+            <div class="slide">
+                <h2>🔥 Expansión y persecución del cristianismo</h2>
+                <p>El cristianismo se difundió rápidamente por el Imperio a pesar de las <span class="highlight-red">persecuciones</span>. Los cristianos fueron considerados <strong>traidores</strong> por negarse a rendir culto al emperador.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>📘 Factores que favorecieron la expansión:</strong>
+                        <ul>
+                            <li><strong>Pax Romana:</strong> Paz y orden en el Imperio.</li>
+                            <li><strong>Red de caminos:</strong> Facilitaba la comunicación.</li>
+                            <li><strong>Lengua común:</strong> Griego y latín.</li>
+                            <li><strong>Mensaje de igualdad:</strong> Atraía a los más desfavorecidos.</li>
+                            <li><strong>Organización:</strong> Comunidades solidarias.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card red">
+                        <strong>⚔️ Persecuciones</strong>
+                        <ul>
+                            <li>Los cristianos se negaban a <strong>adorar</strong> al emperador.</li>
+                            <li>Eran considerados <strong>traidores</strong> del Estado.</li>
+                            <li>Persecuciones especialmente duras en los siglos <strong>III y IV</strong>.</li>
+                            <li>Emperadores como <strong>Decio</strong> y <strong>Diocleciano</strong> los persiguieron.</li>
+                            <li>Los cristianos se reunían en <strong>catacumbas</strong> para evitar ser descubiertos.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Por qué los romanos persiguieron a los cristianos?</p>
+                    <p><strong>Respuesta:</strong> Porque se negaban a rendir culto al emperador y a los dioses romanos. Eran considerados traidores al Estado y una amenaza para el orden imperial.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 19: El cristianismo como religión oficial -->
+            <div class="slide">
+                <h2>✝️ El cristianismo, religión oficial del Imperio</h2>
+                <p>El cristianismo pasó de ser una <span class="highlight-red">religión perseguida</span> a la <span class="highlight">religión oficial</span> del Imperio romano en menos de un siglo.</p>
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>313 d.C.</strong></div>
+                        <div class="timeline-text"><span class="highlight">Edicto de Milán</span>: El emperador <strong>Constantino</strong> declaró la <strong>libertad de culto</strong> para los cristianos.</div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-year">📅 <strong>380 d.C.</strong></div>
+                        <div class="timeline-text"><span class="highlight">Edicto de Tesalónica</span>: El emperador <strong>Teodosio</strong> reconoció el cristianismo como la <strong>religión oficial</strong> del Imperio.</div>
+                    </div>
+                </div>
+                <div class="info-card blue">
+                    <strong>📘 Consecuencias:</strong>
+                    <ul>
+                        <li>El cristianismo se convirtió en la religión <strong>dominante</strong>.</li>
+                        <li>La Iglesia católica ganó <strong>poder político y económico</strong>.</li>
+                        <li>El emperador y la Iglesia se <strong>alianon</strong>.</li>
+                        <li>El cristianismo se convirtió en un <strong>factor de unidad</strong> en el Imperio.</li>
+                    </ul>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué estableció el Edicto de Milán?</p>
+                    <p><strong>Respuesta:</strong> El Edicto de Milán (313 d.C.) estableció la <strong>libertad de culto</strong> para los cristianos en el Imperio romano, poniendo fin a las persecuciones.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 20: Caída del Imperio de Occidente -->
+            <div class="slide">
+                <h2>📉 Caída del Imperio de Occidente (476 d.C.)</h2>
+                <p>El Imperio romano de Occidente cayó en el <span class="highlight-red">476 d.C.</span> cuando el último emperador, <strong>Rómulo Augústulo</strong>, fue destituido por los pueblos germanos.</p>
+                <div class="grid-2">
+                    <div class="info-card red">
+                        <strong>📘 Causas internas:</strong>
+                        <ul>
+                            <li><strong>Revueltas internas</strong> y conflictos sociales.</li>
+                            <li><strong>Debilitamiento del ejército</strong> y las fronteras.</li>
+                            <li><strong>Crisis económica</strong> y caída de impuestos.</li>
+                            <li><strong>Corrupción</strong> y mala administración.</li>
+                            <li><strong>Desinterés</strong> por el mundo exterior.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card blue">
+                        <strong>⚔️ Causas externas:</strong>
+                        <ul>
+                            <li><strong>Invasiones de pueblos germanos</strong>.</li>
+                            <li>Pueblos como <strong>visigodos, vándalos y ostrogodos</strong>.</li>
+                            <li>Roma ya no pudo contener las <strong>fronteras</strong>.</li>
+                            <li>Los germanos se establecieron en el Imperio.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="info-card">
+                    <strong>📘 Dato clave:</strong> La caída del Imperio de Occidente marcó el <span class="highlight">fin de la Edad Antigua</span> y el <span class="highlight">inicio de la Edad Media</span>. El Imperio de Oriente (Bizancio) sobrevivió casi mil años más.</p>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta:</strong> ¿Qué causó la caída del Imperio romano de Occidente?</p>
+                    <p><strong>Respuesta:</strong> Fue un proceso multicausal: problemas internos (revueltas, crisis económica, corrupción) y externos (invasiones de pueblos germanos). El Imperio ya no pudo mantener sus fronteras.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 21: El legado de Roma -->
+            <div class="slide">
+                <h2>🌍 El legado de Roma en la actualidad</h2>
+                <p>Roma nos legó una herencia que aún está presente en nuestras sociedades. Su influencia se extiende desde la política hasta la lengua y el derecho.</p>
+                <div class="grid-2">
+                    <div class="info-card blue">
+                        <strong>🏛️ Legado político</strong>
+                        <ul>
+                            <li><strong>República</strong> como forma de gobierno.</li>
+                            <li><strong>Separación de poderes</strong>.</li>
+                            <li><strong>Ciudadanía</strong> y derechos políticos.</li>
+                            <li><strong>Senado</strong> como institución.</li>
+                            <li>El concepto de <strong>"res publica"</strong> (cosa pública).</li>
+                        </ul>
+                    </div>
+                    <div class="info-card purple">
+                        <strong>⚖️ Legado jurídico</strong>
+                        <ul>
+                            <li><strong>Igualdad ante la ley.</strong></li>
+                            <li><strong>Presunción de inocencia.</strong></li>
+                            <li><strong>Derecho a la defensa.</strong></li>
+                            <li>Base del <strong>derecho occidental</strong>.</li>
+                            <li>Estudiado en las universidades hasta hoy.</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="grid-2">
+                    <div class="info-card green">
+                        <strong>🗣️ Legado lingüístico</strong>
+                        <ul>
+                            <li>El <strong>latín</strong> fue la lengua del Imperio.</li>
+                            <li>Las <strong>lenguas romances</strong> derivan del latín: <strong>español, francés, italiano, portugués, rumano</strong>.</li>
+                            <li>Muchas palabras del vocabulario cotidiano provienen del latín.</li>
+                        </ul>
+                    </div>
+                    <div class="info-card gold">
+                        <strong>🏗️ Legado cultural</strong>
+                        <ul>
+                            <li><strong>Arquitectura:</strong> Acueductos, calzadas, anfiteatros.</li>
+                            <li><strong>Urbanismo:</strong> Ciudades planificadas.</li>
+                            <li><strong>Calendario juliano</strong> (base del actual).</li>
+                            <li><strong>Literatura, filosofía e historia.</strong></li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="question-sample">
+                    <p>❓ <strong>Pregunta final:</strong> ¿Qué aspectos del legado romano siguen presentes en nuestra sociedad?</p>
+                    <p><strong>Respuesta:</strong> El derecho romano, las lenguas romances (como el español), la república como forma de gobierno, la arquitectura, el calendario, y muchos conceptos políticos y jurídicos.</p>
+                </div>
+            </div>
+
+            <!-- SLIDE 22: Cierre y síntesis -->
+            <div class="slide">
+                <h2>📖 Cierre y síntesis</h2>
+                <div class="info-card blue">
+                    <strong>📘 Resumen de la clase:</strong>
+                    <ul>
+                        <li><span class="highlight">Roma</span> comenzó como una pequeña ciudad en el siglo VIII a.C.</li>
+                        <li>Tuvo tres formas de gobierno: <strong>Monarquía, República e Imperio</strong>.</li>
+                        <li>La <strong>República</strong> creó instituciones que limitaban el poder y sentaron las bases de la política occidental.</li>
+                        <li>La <strong>expansión</strong> territorial trajo riquezas pero también desigualdades y crisis.</li>
+                        <li>El <strong>Imperio</strong> fue la etapa de mayor esplendor, con la Pax Romana.</li>
+                        <li>El <strong>derecho romano</strong> es la base del derecho occidental.</li>
+                        <li>El <strong>cristianismo</strong> pasó de ser perseguido a ser la religión oficial.</li>
+                        <li>El Imperio de Occidente cayó en el <strong>476 d.C.</strong> por causas internas y externas.</li>
+                        <li>El <strong>legado</strong> de Roma sigue presente en la política, el derecho, la lengua y la cultura.</li>
+                    </ul>
+                </div>
+                <div class="info-card red">
+                    <strong>💡 Mensaje final:</strong>
+                    <p>Roma nos enseñó que un imperio puede construirse sobre la base del <span class="highlight">derecho, la organización y la cultura</span>. Su legado perdura porque supo <span class="highlight">integrar</span> a los pueblos conquistados y <span class="highlight">universalizar</span> su civilización.</p>
+                </div>
+                <p style="margin-top:1.5rem;text-align:center;">📚 <strong>Fin de la clase</strong> — Practica con los ejercicios.</p>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="footer-nav">
+        <div class="btn-group">
+            <button class="btn-footer" id="goToCourseBtn">📘 Ir al curso</button>
+            <button class="btn-footer" id="goToExercisesBtn">✍️ Ejercicios</button>
+        </div>
+        <div class="slide-counter" id="slideCounter">Slide 1 / 22</div>
+    </div>
+
+    <div class="nav-arrow nav-left" id="prevSlide">❮</div>
+    <div class="nav-arrow nav-right" id="nextSlide">❯</div>
+</div>
+
+<script>
+    const slidesContainer = document.getElementById('slidesContainer');
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    let currentIndex = 0;
+    const slideCounterSpan = document.getElementById('slideCounter');
+
+    function updateSlidePosition() {
+        slidesContainer.style.transform = `translateX(-${currentIndex * 100}%)`;
+        slideCounterSpan.innerText = `Slide ${currentIndex+1} / ${totalSlides}`;
+    }
+
+    function nextSlide() {
+        if (currentIndex < totalSlides - 1) {
+            currentIndex++;
+            updateSlidePosition();
+        }
+    }
+
+    function prevSlide() {
+        if (currentIndex > 0) {
+            currentIndex--;
+            updateSlidePosition();
+        }
+    }
+
+    document.getElementById('nextSlide').addEventListener('click', nextSlide);
+    document.getElementById('prevSlide').addEventListener('click', prevSlide);
+
+    window.addEventListener('keydown', (e) => {
+        if (e.key === 'ArrowRight') {
+            nextSlide();
+            e.preventDefault();
+        } else if (e.key === 'ArrowLeft') {
+            prevSlide();
+            e.preventDefault();
+        }
+    });
+
+    document.getElementById('goToCourseBtn').addEventListener('click', () => {
+        window.location.href = 'Historia.html';
+    });
+
+    document.getElementById('goToExercisesBtn').addEventListener('click', () => {
+        window.location.href = 'C_6A_Historia.html';
+    });
+
+    updateSlidePosition();
+</script>
+</body>
+</html>

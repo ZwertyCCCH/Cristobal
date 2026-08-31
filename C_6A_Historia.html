@@ -1,0 +1,441 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Antigua Roma | Historia 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fefdf9;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9dfcf;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #b55a3a;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #7a4b1d;
+        }
+
+        .subtitle {
+            color: #9b6e3e;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #faf6eb;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #e2cfb0;
+            color: #5d431f;
+        }
+
+        .section {
+            background: #fefcf7;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #b55a3a;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf7;
+            border-radius: 1rem;
+            border: 1px solid #ede3d2;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3b2b1a;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 1rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(181, 90, 58, 0.15);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #b55a3a;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #b47c44;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef8ef;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #b55a3a;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3b2b1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #e2cfb0;
+            color: #5d431f;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #d4b883;
+            color: #3b2b1a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .feedback-text {
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+        }
+
+        .correct-feedback {
+            color: #2d6a2d;
+        }
+
+        .incorrect-feedback {
+            color: #b33;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 0.5rem; }
+            .container { padding: 1rem; }
+            .info-bar { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🏛️ Ejercicios: Antigua Roma</h1>
+        <div class="subtitle">Monarquía · República · Imperio · Derecho Romano · Cristianismo · Caída del Imperio</div>
+        <div class="subtitle">7° Básico | Historia, Geografía y Ciencias Sociales</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Sección:</strong> Selección Múltiple (25 preguntas)</div>
+        <div>✅ Exigencia: 60% | Nota máxima: 7.0</div>
+        <div>🔄 Cada vez que reinicies, las preguntas se renuevan aleatoriamente desde un banco de 70 preguntas.</div>
+    </div>
+
+    <div id="examContent">
+        <div class="section">
+            <div class="section-title">📌 Selección Múltiple</div>
+            <p>Selecciona la opción correcta para cada pregunta.</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Historia 7° Básico | Antigua Roma</div>
+</div>
+
+<script>
+    // ==================== BANCO DE PREGUNTAS (70 preguntas) ====================
+    const bankMultipleChoice = [
+        // Bloque 1: Contexto y geografía (1-7)
+        { text: "¿En qué año se fundó Roma según la tradición?", options: ["a. 753 a.C.", "b. 509 a.C.", "c. 27 a.C.", "d. 476 d.C."], correct: "a" },
+        { text: "¿Qué río fue fundamental para el desarrollo de Roma?", options: ["a. Nilo", "b. Tíber", "c. Éufrates", "d. Indo"], correct: "b" },
+        { text: "¿Cómo llamaban los romanos al mar Mediterráneo?", options: ["a. Mare Magnum", "b. Mare Nostrum", "c. Mare Internum", "d. Mare Liberum"], correct: "b" },
+        { text: "¿Qué península ocupaba la civilización romana?", options: ["a. Península de los Balcanes", "b. Península itálica", "c. Península ibérica", "d. Península de Anatolia"], correct: "b" },
+        { text: "¿Qué recurso natural era abundante en la península itálica?", options: ["a. Oro", "b. Hierro, cobre y plomo", "c. Estaño", "d. Aluminio"], correct: "b" },
+        { text: "¿Qué cultivo era característico de la agricultura romana?", options: ["a. Arroz", "b. Cereales, vides y olivos", "c. Algodón", "d. Cacao"], correct: "b" },
+        { text: "¿Qué cordillera atraviesa la península itálica?", options: ["a. Los Alpes", "b. Los Apeninos", "c. Los Pirineos", "d. Los Cárpatos"], correct: "b" },
+
+        // Bloque 2: Fundación y monarquía (8-13)
+        { text: "¿Quiénes fueron, según el mito, los fundadores de Roma?", options: ["a. Rómulo y Remo", "b. Julio César y Augusto", "c. Mario y Sila", "d. Graco y Catón"], correct: "a" },
+        { text: "¿Qué animal salvó, según el mito, a Rómulo y Remo?", options: ["a. Un águila", "b. Una loba", "c. Un león", "d. Un oso"], correct: "b" },
+        { text: "¿Cuál fue la primera forma de gobierno en Roma?", options: ["a. República", "b. Imperio", "c. Monarquía", "d. Democracia"], correct: "c" },
+        { text: "¿Qué pueblo influyó en los primeros siglos de Roma?", options: ["a. Griegos", "b. Fenicios", "c. Etruscos", "d. Persas"], correct: "c" },
+        { text: "¿Cómo se llamaba el último rey de Roma, expulsado en el 509 a.C.?", options: ["a. Rómulo", "b. Numa Pompilio", "c. Tarquinio el Soberbio", "d. Servio Tulio"], correct: "c" },
+        { text: "¿Qué institución asesoraba al rey en la monarquía romana?", options: ["a. El Senado", "b. La Asamblea", "c. Los cónsules", "d. Los pretores"], correct: "a" },
+
+        // Bloque 3: La República (14-24)
+        { text: "¿Qué significa la expresión 'res publica'?", options: ["a. La cosa del rey", "b. La cosa pública", "c. El gobierno del pueblo", "d. La paz romana"], correct: "b" },
+        { text: "¿En qué año se instauró la República romana?", options: ["a. 753 a.C.", "b. 509 a.C.", "c. 27 a.C.", "d. 476 d.C."], correct: "b" },
+        { text: "¿Cómo se llamaba el grupo social que monopolizaba el poder en la República romana?", options: ["a. Plebeyos", "b. Patricios", "c. Esclavos", "d. Metecos"], correct: "b" },
+        { text: "¿Qué principio de la República romana establecía que los cargos eran ejercidos por más de una persona?", options: ["a. Temporalidad", "b. Colegialidad", "c. Responsabilidad", "d. Gratuidad"], correct: "b" },
+        { text: "¿Cuántos cónsules había en la República romana?", options: ["a. 1", "b. 2", "c. 5", "d. 10"], correct: "b" },
+        { text: "¿Qué institución romana era un consejo de ancianos con funciones asesoras?", options: ["a. La Asamblea", "b. El Senado", "c. Los cónsules", "d. Los pretores"], correct: "b" },
+        { text: "¿Qué eran las XII Tablas en la República romana?", options: ["a. Un templo", "b. El primer código de leyes escritas", "c. Un monumento conmemorativo", "d. Un tratado de paz"], correct: "b" },
+        { text: "¿Qué grupo social luchó por igualdad política en la República romana?", options: ["a. Patricios", "b. Plebeyos", "c. Esclavos", "d. Senadores"], correct: "b" },
+        { text: "¿Qué garantizaba la Ley de las XII Tablas?", options: ["a. La igualdad ante la ley", "b. La esclavitud", "c. El poder absoluto del rey", "d. La conquista de nuevos territorios"], correct: "a" },
+        { text: "¿Qué carácter tenían las magistraturas en la República romana?", options: ["a. Hereditarias", "b. Electivas y temporales", "c. Vitalicias", "d. Reales"], correct: "b" },
+        { text: "¿Qué función cumplía el Senado en la República romana?", options: ["a. Elegir al rey", "b. Asesorar a los magistrados y controlar las finanzas", "c. Dirigir el ejército", "d. Administrar justicia en las provincias"], correct: "b" },
+
+        // Bloque 4: Expansión y consecuencias (25-32)
+        { text: "¿Qué conflicto enfrentó a Roma y Cartago por el control del Mediterráneo?", options: ["a. Guerras Médicas", "b. Guerras Púnicas", "c. Guerras del Peloponeso", "d. Guerras de Galia"], correct: "b" },
+        { text: "¿Quién fue el general cartaginés que cruzó los Alpes con elefantes?", options: ["a. Aníbal", "b. Asdrúbal", "c. Amílcar", "d. Escipión"], correct: "a" },
+        { text: "¿Qué consecuencia social tuvo la expansión territorial de Roma?", options: ["a. Mayor igualdad social", "b. Enriquecimiento de patricios y empobrecimiento de campesinos", "c. Eliminación de la esclavitud", "d. Distribución equitativa de tierras"], correct: "b" },
+        { text: "¿Quiénes intentaron reformar el sistema agrario en Roma?", options: ["a. Julio César", "b. Los hermanos Graco", "c. Augusto", "d. Mario y Sila"], correct: "b" },
+        { text: "¿Qué pasó con los hermanos Graco por sus reformas agrarias?", options: ["a. Fueron elegidos cónsules", "b. Fueron asesinados", "c. Se convirtieron en emperadores", "d. Lograron repartir todas las tierras"], correct: "b" },
+        { text: "¿Qué general romano conquistó la Galia?", options: ["a. Augusto", "b. Julio César", "c. Pompeyo", "d. Marco Antonio"], correct: "b" },
+        { text: "¿Cuándo fue asesinado Julio César?", options: ["a. 509 a.C.", "b. 44 a.C.", "c. 27 a.C.", "d. 476 d.C."], correct: "b" },
+        { text: "¿Quién fue el primer emperador romano?", options: ["a. Julio César", "b. Octavio Augusto", "c. Tiberio", "d. Constantino"], correct: "b" },
+
+        // Bloque 5: El Imperio (33-42)
+        { text: "¿En qué año se inició el Imperio romano?", options: ["a. 509 a.C.", "b. 27 a.C.", "c. 44 a.C.", "d. 476 d.C."], correct: "b" },
+        { text: "¿Cómo se llamó el período de paz y estabilidad del Imperio romano?", options: ["a. Pax Augusta", "b. Pax Romana", "c. Mare Nostrum", "d. Res Publica"], correct: "b" },
+        { text: "¿Qué emperador declaró la libertad de culto a los cristianos en el 313 d.C.?", options: ["a. Teodosio", "b. Constantino", "c. Diocleciano", "d. Augusto"], correct: "b" },
+        { text: "¿Qué emperador reconoció el cristianismo como religión oficial del Imperio en el 380 d.C.?", options: ["a. Constantino", "b. Teodosio", "c. Julio César", "d. Nerón"], correct: "b" },
+        { text: "¿Cómo se llamaba el título que usó Augusto para no parecer un monarca absoluto?", options: ["a. Rex", "b. Princeps", "c. Dictador", "d. Cónsul"], correct: "b" },
+        { text: "¿Qué caracterizó al Alto Imperio romano?", options: ["a. El poder absoluto del emperador", "b. La armonía con el Senado", "c. La caída del Imperio", "d. La persecución de cristianos"], correct: "b" },
+        { text: "¿Qué caracterizó al Bajo Imperio romano?", options: ["a. La república", "b. La monarquía militar y poder absoluto", "c. La democracia", "d. La división del Imperio"], correct: "b" },
+        { text: "¿Qué cultura influyó en la arquitectura y el urbanismo romano?", options: ["a. Egipcia", "b. Griega", "c. Persa", "d. Fenicia"], correct: "b" },
+        { text: "¿Cuál era la función del Coliseo romano?", options: ["a. Templo religioso", "b. Espacio de entretenimiento con luchas de gladiadores", "c. Sede del Senado", "d. Palacio imperial"], correct: "b" },
+        { text: "¿Qué construcciones eran características de la ingeniería romana?", options: ["a. Pirámides", "b. Acueductos, calzadas y puentes", "c. Zigurats", "d. Menhires"], correct: "b" },
+
+        // Bloque 6: Derecho y cultura (43-50)
+        { text: "¿Qué derecho se aplicaba a los ciudadanos romanos?", options: ["a. Ius gentium", "b. Ius civilis", "c. Ius naturale", "d. Ius divinum"], correct: "b" },
+        { text: "¿Qué derecho se aplicaba a los pueblos conquistados?", options: ["a. Ius civilis", "b. Ius gentium", "c. Ius naturale", "d. Ius divinum"], correct: "b" },
+        { text: "¿Qué principio del derecho romano establece que la ley está por sobre los gobernantes?", options: ["a. Imperio de la ley", "b. Colegialidad", "c. Temporalidad", "d. Gratuidad"], correct: "a" },
+        { text: "¿Qué lengua era la oficial del Imperio romano?", options: ["a. Griego", "b. Latín", "c. Etrusco", "d. Fenicio"], correct: "b" },
+        { text: "¿Qué lenguas derivan del latín?", options: ["a. Alemán, inglés y neerlandés", "b. Español, francés, italiano, portugués y rumano", "c. Griego, búlgaro y serbio", "d. Árabe, hebreo y turco"], correct: "b" },
+        { text: "¿Qué institución romana sigue presente en muchos parlamentos actuales?", options: ["a. La monarquía", "b. El Senado", "c. La dictadura", "d. La tiranía"], correct: "b" },
+        { text: "¿Qué sistema de gobierno romano inspiró las democracias modernas?", options: ["a. La monarquía", "b. La república", "c. La tiranía", "d. La oligarquía"], correct: "b" },
+        { text: "¿Qué principio jurídico romano significa 'presunción de inocencia'?", options: ["a. El acusado debe probar su inocencia", "b. El acusado es inocente hasta que se demuestre lo contrario", "c. El acusado es culpable hasta que se demuestre lo contrario", "d. El acusado no tiene derecho a defensa"], correct: "b" },
+
+        // Bloque 7: Cristianismo y caída del Imperio (51-58)
+        { text: "¿Qué son las catacumbas?", options: ["a. Templos romanos", "b. Túneles subterráneos usados por los cristianos como cementerios", "c. Palacios imperiales", "d. Mercados romanos"], correct: "b" },
+        { text: "¿Qué emperador dividió el Imperio romano?", options: ["a. Constantino", "b. Teodosio", "c. Augusto", "d. Julio César"], correct: "b" },
+        { text: "¿En qué año cayó el Imperio romano de Occidente?", options: ["a. 509 a.C.", "b. 27 a.C.", "c. 476 d.C.", "d. 1453 d.C."], correct: "c" },
+        { text: "¿Quién fue el último emperador romano de Occidente?", options: ["a. Rómulo Augústulo", "b. Augusto", "c. Julio César", "d. Constantino"], correct: "a" },
+
+        // Bloque 8: Legado y conceptos clave (59-70)
+        { text: "¿Qué concepto romano significa 'cosa pública' y se refiere al bien común?", options: ["a. Res publica", "b. Imperium", "c. Civitas", "d. Senatus"], correct: "a" },
+        { text: "¿Qué es el derecho romano?", options: ["a. Un conjunto de mitos", "b. El sistema jurídico que creó Roma y base del derecho occidental", "c. Una religión", "d. Un sistema de escritura"], correct: "b" },
+        { text: "¿Qué legado de Roma sigue vigente en la actualidad?", options: ["a. La monarquía absoluta", "b. El derecho, la lengua y la república", "c. La esclavitud", "d. El politeísmo"], correct: "b" },
+        { text: "¿Qué grupo social de Roma era considerado 'propiedad' y no tenía derechos?", options: ["a. Patricios", "b. Plebeyos", "c. Esclavos", "d. Senadores"], correct: "c" },
+        { text: "¿Qué era el Foro Romano?", options: ["a. Un templo", "b. El centro político, religioso y comercial de Roma", "c. Un palacio imperial", "d. Un acueducto"], correct: "b" },
+        { text: "¿Qué emperador romano es conocido por haber dividido el Imperio?", options: ["a. Constantino", "b. Teodosio", "c. Diocleciano", "d. Julio César"], correct: "b" },
+        { text: "¿Qué elemento cultural romano fue adoptado por los pueblos conquistados?", options: ["a. El idioma latín", "b. La lengua griega", "c. La escritura cuneiforme", "d. Los jeroglíficos"], correct: "a" },
+        { text: "¿Qué proceso permitió que los pueblos conquistados adoptaran la cultura romana?", options: ["a. La conquista militar", "b. La romanización", "c. La esclavitud", "d. La guerra"], correct: "b" },
+        { text: "¿Qué permitía la romanización?", options: ["a. La eliminación de las culturas locales", "b. La difusión de la lengua, el derecho y las costumbres romanas", "c. La creación de nuevos dioses", "d. La fundación de colonias griegas"], correct: "b" },
+        { text: "¿Qué caracterizó a la sociedad romana durante la República?", options: ["a. Ser igualitaria", "b. Ser jerarquizada y esclavista", "c. Ser sin clases sociales", "d. Ser democrática"], correct: "b" },
+        { text: "¿Qué significa el principio de 'colegialidad' en la República romana?", options: ["a. Que los cargos eran hereditarios", "b. Que los cargos eran ejercidos por más de una persona", "c. Que los cargos eran vitalicios", "d. Que los cargos eran religiosos"], correct: "b" },
+        { text: "¿Qué legado arquitectónico dejó Roma?", options: ["a. Pirámides", "b. Acueductos, calzadas, anfiteatros y basílicas", "c. Zigurats", "d. Pagodas"], correct: "b" }
+    ];
+
+    // ==================== FUNCIONES ====================
+
+    function getRandomItems(arr, count) {
+        const shuffled = [...arr];
+        for (let i = shuffled.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+        }
+        return shuffled.slice(0, count);
+    }
+
+    let currentQuestions = [];
+    let answers = [];
+    let evaluated = false;
+
+    function renderQuestions() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        currentQuestions.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${q.options.map(opt => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${opt.charAt(0)}" id="mc_${idx}_${opt.charAt(0)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${opt.charAt(0)}">${opt}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div class="feedback-text ${answers[idx] === q.correct ? 'correct-feedback' : 'incorrect-feedback'}">${answers[idx] === q.correct ? '✅ Correcta' : '❌ Incorrecta. Respuesta correcta: ' + q.correct}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (answers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => { answers[idx] = e.target.value; });
+                });
+            }
+        });
+    }
+
+    function resetTest() {
+        evaluated = false;
+        currentQuestions = getRandomItems(bankMultipleChoice, 25);
+        answers = new Array(25).fill(null);
+        document.getElementById('results').style.display = 'none';
+        renderQuestions();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function evaluateAll() {
+        evaluated = true;
+        let correct = 0;
+        const total = currentQuestions.length;
+
+        for (let i = 0; i < total; i++) {
+            if (answers[i] === currentQuestions[i].correct) correct++;
+        }
+
+        const percentage = (correct / total) * 100;
+        let grade = 0;
+        const passing = 60;
+
+        if (percentage >= passing) {
+            grade = 4.0 + ((percentage - passing) / (100 - passing)) * 3.0;
+        } else {
+            grade = 1.0 + (percentage / passing) * 3.0;
+        }
+        grade = Math.round(grade * 100) / 100;
+        const isApproved = grade >= 4.0;
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#a5662a; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${correct} de ${total} (${Math.round(percentage)}%)</div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}">
+                <strong>${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>
+                NOTA: ${grade}
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+
+        renderQuestions();
+
+        document.getElementById('restartTestBtn')?.addEventListener('click', resetTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Historia.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_6_Historia.html');
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // ==================== INICIALIZACIÓN ====================
+    resetTest();
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>

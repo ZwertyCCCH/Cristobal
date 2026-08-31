@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicios: Antigua Roma | Historia 7°</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Roboto', 'Georgia', serif;
+            background: #f5f2e8;
+            padding: 2rem;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            background: #fefdf9;
+            border-radius: 2rem;
+            padding: 2rem;
+            box-shadow: 0 20px 35px rgba(0, 0, 0, 0.05);
+            border: 1px solid #e9dfcf;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #b55a3a;
+            padding-bottom: 1rem;
+        }
+
+        h1 {
+            font-size: 2rem;
+            color: #7a4b1d;
+        }
+
+        .subtitle {
+            color: #9b6e3e;
+            font-size: 0.9rem;
+        }
+
+        .info-bar {
+            display: flex;
+            justify-content: space-between;
+            background: #faf6eb;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            border: 1px solid #e2cfb0;
+            color: #5d431f;
+        }
+
+        .section {
+            background: #fefcf7;
+            border-radius: 1.2rem;
+            padding: 1.2rem;
+            margin-bottom: 1.8rem;
+            border-left: 5px solid #b55a3a;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #a5662a;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-weight: 600;
+        }
+
+        .question {
+            margin: 1rem 0;
+            padding: 0.8rem;
+            background: #fefcf7;
+            border-radius: 1rem;
+            border: 1px solid #ede3d2;
+        }
+
+        .question p {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #3b2b1a;
+        }
+
+        .options {
+            list-style: none;
+            margin-left: 0.5rem;
+        }
+
+        .options li {
+            margin: 0.4rem 0;
+            padding: 0.2rem 0.5rem;
+            cursor: pointer;
+            border-radius: 0.5rem;
+            transition: 0.2s;
+        }
+
+        .options li:hover {
+            background: rgba(181, 90, 58, 0.15);
+        }
+
+        input[type="radio"] {
+            margin-right: 8px;
+            accent-color: #b55a3a;
+        }
+
+        .truefalse-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .truefalse-table th, .truefalse-table td {
+            border: 1px solid #e2cfb0;
+            padding: 0.6rem;
+            vertical-align: middle;
+        }
+
+        .truefalse-table th {
+            background: #faf0e1;
+            color: #7a4b1d;
+            font-weight: 600;
+        }
+
+        select {
+            background: #fffaf2;
+            color: #2d4029;
+            border: 1px solid #d4c1a4;
+            border-radius: 0.5rem;
+            padding: 0.4rem;
+            width: 100%;
+            cursor: pointer;
+            font-family: inherit;
+        }
+
+        .short-answer-input {
+            width: 100%;
+            padding: 0.5rem 0.8rem;
+            border: 2px solid #d4c1a4;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-family: inherit;
+            background: #fffaf2;
+            color: #2d4029;
+            transition: 0.2s;
+        }
+
+        .short-answer-input:focus {
+            outline: none;
+            border-color: #b47c44;
+            box-shadow: 0 0 0 3px rgba(180, 124, 68, 0.2);
+        }
+
+        .short-answer-input:disabled {
+            background: #f0ece4;
+            cursor: not-allowed;
+        }
+
+        .btn-evaluate {
+            display: block;
+            width: 260px;
+            margin: 1rem auto;
+            background: #8b5a2b;
+            color: white;
+            border: none;
+            padding: 0.8rem;
+            border-radius: 3rem;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-evaluate:hover {
+            background: #b47c44;
+            transform: scale(1.02);
+        }
+
+        .results {
+            margin-top: 1.5rem;
+            padding: 1.5rem;
+            background: #fef8ef;
+            border-radius: 1.5rem;
+            display: none;
+            border: 2px solid #b55a3a;
+        }
+
+        .score-box {
+            font-size: 1.4rem;
+            text-align: center;
+            margin: 0.5rem 0;
+            color: #3b2b1a;
+        }
+
+        .grade-box {
+            font-size: 1.2rem;
+            text-align: center;
+            padding: 0.8rem;
+            border-radius: 1.5rem;
+            margin-top: 0.8rem;
+        }
+
+        .approved {
+            background: #e0f0e0;
+            color: #2d6a2d;
+            border: 1px solid #8bc34a;
+        }
+
+        .failed {
+            background: #fce4e4;
+            color: #b33;
+            border: 1px solid #e0a0a0;
+        }
+
+        .action-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-top: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .action-btn {
+            background: #e2cfb0;
+            color: #5d431f;
+            border: none;
+            padding: 0.5rem 1.3rem;
+            border-radius: 2rem;
+            cursor: pointer;
+            transition: 0.3s;
+            font-weight: 500;
+        }
+
+        .action-btn:hover {
+            background: #d4b883;
+            color: #3b2b1a;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 1.5rem;
+            font-size: 0.7rem;
+            color: #b0a07c;
+        }
+
+        .tf-correct {
+            color: #2d6a2d;
+            font-weight: bold;
+        }
+
+        .tf-incorrect {
+            color: #b33;
+            font-weight: bold;
+        }
+
+        .feedback-text {
+            font-size: 0.75rem;
+            margin-top: 0.3rem;
+        }
+
+        .correct-feedback {
+            color: #2d6a2d;
+        }
+
+        .incorrect-feedback {
+            color: #b33;
+        }
+
+        .short-feedback {
+            font-size: 0.8rem;
+            margin-top: 0.3rem;
+            padding: 0.2rem 0.5rem;
+            border-radius: 0.5rem;
+        }
+
+        .short-feedback.correct {
+            color: #2d6a2d;
+            background: #e0f0e0;
+        }
+
+        .short-feedback.incorrect {
+            color: #b33;
+            background: #fce4e4;
+        }
+
+        .short-feedback .accepted-answers {
+            color: #5d431f;
+            font-weight: 500;
+        }
+
+        @media (max-width: 700px) {
+            body { padding: 0.5rem; }
+            .container { padding: 1rem; }
+            .info-bar { flex-direction: column; align-items: center; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="header">
+        <h1>🏛️ Ejercicios: Antigua Roma</h1>
+        <div class="subtitle">Monarquía · República · Imperio · Romanización · Cristianismo · Caída del Imperio</div>
+        <div class="subtitle">7° Básico | Historia, Geografía y Ciencias Sociales</div>
+    </div>
+
+    <div class="info-bar">
+        <div>📋 <strong>Secciones:</strong> Selección Múltiple (12) + Verdadero/Falso (12) + Respuesta Corta (6)</div>
+        <div>✅ Exigencia: 60% | Nota máxima: 7.0</div>
+        <div>🔄 Cada vez que reinicies, las preguntas se renuevan aleatoriamente desde bancos de 40, 40 y 25 preguntas respectivamente.</div>
+    </div>
+
+    <div id="examContent">
+        <div class="section">
+            <div class="section-title">📌 I. Selección Múltiple</div>
+            <p>Selecciona la opción correcta para cada pregunta.</p>
+            <div id="multipleChoice"></div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">⚖️ II. Verdadero o Falso</div>
+            <p>Selecciona Verdadero (V) o Falso (F) para cada afirmación.</p>
+            <table class="truefalse-table" id="tfTable">
+                <thead><tr><th style="width:70%">Afirmación</th><th style="width:30%">V / F</th></tr></thead>
+                <tbody id="tfBody"></tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <div class="section-title">✏️ III. Respuesta Corta</div>
+            <p>Lee la definición y escribe la palabra correcta (máximo 3 palabras). Puedes usar mayúsculas, minúsculas, con o sin tildes.</p>
+            <div id="shortAnswer"></div>
+        </div>
+
+        <button class="btn-evaluate" id="evaluateBtn">✅ Evaluar respuestas</button>
+    </div>
+
+    <div id="results" class="results"></div>
+    <div class="footer">Historia 7° Básico | Antigua Roma</div>
+</div>
+
+<script>
+    // ==================== BANCOS DE PREGUNTAS ====================
+
+    // ----- Banco de Selección Múltiple (40 preguntas) -----
+    const bankMultipleChoice = [
+        // Geografía y contexto (1-5)
+        { text: "¿Qué río fue fundamental para el desarrollo de la ciudad de Roma?", options: ["Tíber", "Po", "Nilo", "Éufrates"], correct: 0 },
+        { text: "¿Cómo llamaban los romanos al mar Mediterráneo?", options: ["Mare Nostrum", "Mare Magnum", "Mare Internum", "Mare Liberum"], correct: 0 },
+        { text: "¿Qué península ocupaba la civilización romana?", options: ["Península itálica", "Península de los Balcanes", "Península ibérica", "Península de Anatolia"], correct: 0 },
+        { text: "¿Qué recursos minerales eran abundantes en la península itálica?", options: ["Hierro, cobre y plomo", "Oro y plata", "Estaño y aluminio", "Mercurio y zinc"], correct: 0 },
+        { text: "¿Qué cultivos eran característicos de la agricultura romana?", options: ["Cereales, vides y olivos", "Arroz y maíz", "Algodón y cacao", "Caña de azúcar y café"], correct: 0 },
+
+        // Monarquía y República (6-15)
+        { text: "¿Cuál fue la primera forma de gobierno en Roma?", options: ["Monarquía", "República", "Imperio", "Democracia"], correct: 0 },
+        { text: "¿Qué pueblo influyó en los primeros siglos de Roma?", options: ["Etruscos", "Griegos", "Fenicios", "Persas"], correct: 0 },
+        { text: "¿Qué significa la expresión 'res publica'?", options: ["La cosa pública", "El gobierno del rey", "La paz romana", "El imperio"], correct: 0 },
+        { text: "¿Qué grupo social monopolizaba el poder al inicio de la República?", options: ["Patricios", "Plebeyos", "Esclavos", "Senadores"], correct: 0 },
+        { text: "¿Qué grupo social luchó por igualdad política en la República romana?", options: ["Plebeyos", "Patricios", "Esclavos", "Etruscos"], correct: 0 },
+        { text: "¿Qué fue la Ley de las XII Tablas?", options: ["El primer código de leyes escritas", "Un tratado de paz", "Una declaración de guerra", "Un monumento conmemorativo"], correct: 0 },
+        { text: "¿Qué principio de la República establecía que los cargos eran ejercidos por más de una persona?", options: ["Colegialidad", "Temporalidad", "Responsabilidad", "Gratuidad"], correct: 0 },
+        { text: "¿Cuántos cónsules había en la República romana?", options: ["Dos", "Uno", "Cinco", "Diez"], correct: 0 },
+        { text: "¿Qué institución romana era un consejo de ancianos con funciones asesoras?", options: ["Senado", "Asamblea", "Tribunal", "Magistratura"], correct: 0 },
+        { text: "¿Qué garantizaba la Ley de las XII Tablas?", options: ["La igualdad ante la ley", "El poder absoluto del rey", "La esclavitud", "La conquista de nuevos territorios"], correct: 0 },
+
+        // Expansión y consecuencias (16-20)
+        { text: "¿Qué conflicto enfrentó a Roma y Cartago por el control del Mediterráneo?", options: ["Guerras Púnicas", "Guerras Médicas", "Guerras del Peloponeso", "Guerras de Galia"], correct: 0 },
+        { text: "¿Qué general cartaginés cruzó los Alpes con elefantes?", options: ["Aníbal", "Asdrúbal", "Amílcar", "Escipión"], correct: 0 },
+        { text: "¿Qué consecuencia social tuvo la expansión territorial de Roma?", options: ["Enriquecimiento de patricios y empobrecimiento de campesinos", "Mayor igualdad social", "Eliminación de la esclavitud", "Distribución equitativa de tierras"], correct: 0 },
+        { text: "¿Quiénes intentaron reformar el sistema agrario en Roma?", options: ["Los hermanos Graco", "Julio César", "Augusto", "Mario y Sila"], correct: 0 },
+        { text: "¿Qué general romano conquistó la Galia?", options: ["Julio César", "Augusto", "Pompeyo", "Marco Antonio"], correct: 0 },
+
+        // Imperio (21-28)
+        { text: "¿Quién fue el primer emperador romano?", options: ["Octavio Augusto", "Julio César", "Tiberio", "Constantino"], correct: 0 },
+        { text: "¿Cómo se llamó el período de paz y estabilidad del Imperio romano?", options: ["Pax Romana", "Pax Augusta", "Mare Nostrum", "Res Publica"], correct: 0 },
+        { text: "¿Qué emperador declaró la libertad de culto a los cristianos en el 313 d.C.?", options: ["Constantino", "Teodosio", "Diocleciano", "Augusto"], correct: 0 },
+        { text: "¿Qué emperador reconoció el cristianismo como religión oficial en el 380 d.C.?", options: ["Teodosio", "Constantino", "Julio César", "Nerón"], correct: 0 },
+        { text: "¿Qué título usó Augusto para no parecer un monarca absoluto?", options: ["Princeps", "Rex", "Dictador", "Cónsul"], correct: 0 },
+        { text: "¿Qué caracterizó al Bajo Imperio romano?", options: ["La monarquía militar y poder absoluto", "La armonía con el Senado", "La república", "La democracia"], correct: 0 },
+        { text: "¿Cuál era la función del Coliseo romano?", options: ["Espacio de entretenimiento con luchas de gladiadores", "Templo religioso", "Sede del Senado", "Palacio imperial"], correct: 0 },
+        { text: "¿Qué construcciones eran características de la ingeniería romana?", options: ["Acueductos, calzadas y puentes", "Pirámides", "Zigurats", "Menhires"], correct: 0 },
+
+        // Derecho y cultura (29-33)
+        { text: "¿Qué derecho se aplicaba a los ciudadanos romanos?", options: ["Ius civilis", "Ius gentium", "Ius naturale", "Ius divinum"], correct: 0 },
+        { text: "¿Qué derecho se aplicaba a los pueblos conquistados?", options: ["Ius gentium", "Ius civilis", "Ius naturale", "Ius divinum"], correct: 0 },
+        { text: "¿Qué lengua era la oficial del Imperio romano?", options: ["Latín", "Griego", "Etrusco", "Fenicio"], correct: 0 },
+        { text: "¿Qué lenguas derivan del latín?", options: ["Español, francés, italiano, portugués y rumano", "Alemán, inglés y neerlandés", "Griego, búlgaro y serbio", "Árabe, hebreo y turco"], correct: 0 },
+        { text: "¿Qué sistema de gobierno romano inspiró las democracias modernas?", options: ["República", "Monarquía", "Tiranía", "Oligarquía"], correct: 0 },
+
+        // Cristianismo y caída (34-40)
+        { text: "¿Dónde nació Jesús de Nazaret?", options: ["Judea", "Roma", "Egipto", "Grecia"], correct: 0 },
+        { text: "¿Qué mensaje predicaba Jesús de Nazaret?", options: ["El Reino de Dios, el amor y la igualdad", "La guerra contra Roma", "La conquista del mundo", "La adoración del emperador"], correct: 0 },
+        { text: "¿Qué son las catacumbas?", options: ["Túneles subterráneos usados por los cristianos como cementerios", "Templos romanos", "Palacios imperiales", "Mercados romanos"], correct: 0 },
+        { text: "¿Por qué los romanos perseguían a los cristianos?", options: ["Porque se negaban a adorar al emperador", "Porque querían conquistar Roma", "Porque eran ricos", "Porque eran extranjeros"], correct: 0 },
+        { text: "¿Qué emperador dividió el Imperio romano?", options: ["Teodosio", "Constantino", "Augusto", "Julio César"], correct: 0 },
+        { text: "¿Qué proceso permitió que los pueblos conquistados adoptaran la cultura romana?", options: ["Romanización", "Conquista militar", "Esclavitud", "Guerra"], correct: 0 },
+        { text: "¿Qué caracterizó a la sociedad romana durante la República?", options: ["Ser jerarquizada y esclavista", "Ser igualitaria", "Ser sin clases sociales", "Ser democrática"], correct: 0 }
+    ];
+
+    // ----- Banco de Verdadero/Falso (40 preguntas) -----
+    const bankTF = [
+        // Geografía y contexto (1-5)
+        { text: "Roma fue fundada a orillas del río Tíber.", correct: "V" },
+        { text: "Los romanos llamaban al Mediterráneo 'Mare Magnum'.", correct: "F" },
+        { text: "La península itálica se caracteriza por su relieve montañoso.", correct: "V" },
+        { text: "Los romanos no explotaban recursos minerales en la península itálica.", correct: "F" },
+        { text: "La agricultura romana se basaba en el cultivo de cereales, vides y olivos.", correct: "V" },
+
+        // Monarquía y República (6-15)
+        { text: "La primera forma de gobierno en Roma fue la República.", correct: "F" },
+        { text: "Los etruscos influyeron en los primeros siglos de Roma.", correct: "V" },
+        { text: "'Res publica' significa 'la cosa pública' o 'asunto del pueblo'.", correct: "V" },
+        { text: "Los patricios eran el grupo social dominante al inicio de la República.", correct: "V" },
+        { text: "Los plebeyos no tenían derechos políticos al inicio de la República.", correct: "V" },
+        { text: "La Ley de las XII Tablas fue un código de leyes orales.", correct: "F" },
+        { text: "La colegialidad significaba que los cargos eran ejercidos por más de una persona.", correct: "V" },
+        { text: "En la República romana solo había un cónsul.", correct: "F" },
+        { text: "El Senado romano era un consejo de ancianos con funciones asesoras.", correct: "V" },
+        { text: "La Ley de las XII Tablas garantizaba la igualdad ante la ley.", correct: "V" },
+
+        // Expansión (16-20)
+        { text: "Las Guerras Púnicas enfrentaron a Roma y Cartago.", correct: "V" },
+        { text: "Aníbal cruzó los Alpes con elefantes para atacar Roma.", correct: "V" },
+        { text: "La expansión territorial de Roma generó mayor igualdad social.", correct: "F" },
+        { text: "Los hermanos Graco intentaron reformar el sistema agrario en Roma.", correct: "V" },
+        { text: "Julio César conquistó la Galia.", correct: "V" },
+
+        // Imperio (21-28)
+        { text: "Octavio Augusto fue el primer emperador romano.", correct: "V" },
+        { text: "La Pax Romana fue un período de inestabilidad y guerras.", correct: "F" },
+        { text: "Constantino declaró la libertad de culto a los cristianos en el 313 d.C.", correct: "V" },
+        { text: "Teodosio reconoció el cristianismo como religión oficial en el 380 d.C.", correct: "V" },
+        { text: "Augusto usó el título de 'Rex' para gobernar.", correct: "F" },
+        { text: "El Bajo Imperio se caracterizó por el poder absoluto del emperador.", correct: "V" },
+        { text: "El Coliseo era un espacio para luchas de gladiadores.", correct: "V" },
+        { text: "Los romanos construyeron acueductos y calzadas.", correct: "V" },
+
+        // Derecho y cultura (29-33)
+        { text: "El Ius civilis se aplicaba a los ciudadanos romanos.", correct: "V" },
+        { text: "El Ius gentium se aplicaba a los pueblos conquistados.", correct: "V" },
+        { text: "El latín era la lengua oficial del Imperio romano.", correct: "V" },
+        { text: "El español no deriva del latín.", correct: "F" },
+        { text: "La República romana inspiró las democracias modernas.", correct: "V" },
+
+        // Cristianismo y caída (34-40)
+        { text: "Jesús de Nazaret nació en la provincia romana de Judea.", correct: "V" },
+        { text: "Jesús predicaba la guerra contra los romanos.", correct: "F" },
+        { text: "Las catacumbas eran templos romanos.", correct: "F" },
+        { text: "Los romanos perseguían a los cristianos porque se negaban a adorar al emperador.", correct: "V" },
+        { text: "Teodosio dividió el Imperio romano.", correct: "V" },
+        { text: "La romanización fue el proceso por el cual los pueblos conquistados adoptaron la cultura romana.", correct: "V" },
+        { text: "La sociedad romana era igualitaria.", correct: "F" }
+    ];
+
+    // ----- Banco de Respuesta Corta (25 preguntas) -----
+    const bankShortAnswer = [
+        { description: "Sistema de gobierno romano que significa 'cosa pública' y se basaba en la separación de poderes.", accepted: ["república", "res publica"] },
+        { description: "Nombre que recibía el conjunto de pueblos que habitaban en la frontera norte del Imperio y que fueron considerados 'bárbaros' por los romanos.", accepted: ["germanos", "germano"] },
+        { description: "Proceso mediante el cual los pueblos conquistados adoptaron la lengua, las costumbres y el derecho de Roma.", accepted: ["romanización"] },
+        { description: "Primer código de leyes escritas de Roma, que garantizaba la igualdad ante la ley.", accepted: ["ley de las xii tablas", "xii tablas", "doce tablas"] },
+        { description: "Grupo social romano que monopolizaba el poder político al inicio de la República.", accepted: ["patricios", "patricio"] },
+        { description: "Grupo social romano que luchó por igualdad política y logró la creación de las XII Tablas.", accepted: ["plebeyos", "plebeyo"] },
+        { description: "Principio de la República que establecía que los cargos eran ejercidos por más de una persona.", accepted: ["colegialidad"] },
+        { description: "Máximo representante del poder civil y militar en la República romana. Duraban un año en su cargo.", accepted: ["cónsul", "cónsules"] },
+        { description: "Institución vitalicia romana que autorizaba las acciones de los cónsules y controlaba las finanzas.", accepted: ["senado"] },
+        { description: "Conflictos que enfrentaron a Roma y Cartago por el control del Mediterráneo.", accepted: ["guerras púnicas", "púnicas"] },
+        { description: "General cartaginés que cruzó los Alpes con elefantes para atacar Roma.", accepted: ["aníbal"] },
+        { description: "Título honorífico que recibió Octavio, que significa 'venerable'.", accepted: ["augusto"] },
+        { description: "Título que usó Augusto para gobernar, que significa 'primer ciudadano'.", accepted: ["príncipe", "princeps"] },
+        { description: "Período de paz y estabilidad en el Imperio romano que duró más de dos siglos.", accepted: ["paz romana", "pax romana"] },
+        { description: "Edicto del año 313 que declaró la libertad de culto a los cristianos.", accepted: ["edicto de milán", "edicto de milan"] },
+        { description: "Edicto del año 380 que reconoció el cristianismo como religión oficial del Imperio.", accepted: ["edicto de tesalónica", "edicto de tesalonica"] },
+        { description: "Derecho que se aplicaba a los ciudadanos romanos.", accepted: ["ius civilis", "derecho civil"] },
+        { description: "Derecho que se aplicaba a los pueblos conquistados.", accepted: ["ius gentium", "derecho de gentes"] },
+        { description: "Lengua oficial del Imperio romano, que dio origen a las lenguas romances.", accepted: ["latín", "latino"] },
+        { description: "Provincia romana donde nació Jesús de Nazaret.", accepted: ["judea"] },
+        { description: "Fundador del cristianismo, que predicó el amor al prójimo y la igualdad.", accepted: ["jesús", "jesús de nazaret"] },
+        { description: "Túneles subterráneos donde los cristianos se reunían y enterraban a sus muertos durante las persecuciones.", accepted: ["catacumbas"] },
+        { description: "Ciudad que Constantino fundó como nueva capital del Imperio romano, actualmente llamada Estambul.", accepted: ["constantinopla"] },
+        { description: "Emperador que dividió el Imperio romano en Occidental y Oriental.", accepted: ["teodosio"] },
+        { description: "Año en que cayó el Imperio romano de Occidente, tras la destitución del último emperador.", accepted: ["476"] }
+    ];
+
+    // ==================== FUNCIONES ====================
+
+    function shuffleArray(arr) {
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function getRandomItems(arr, count) {
+        const shuffled = shuffleArray([...arr]);
+        return shuffled.slice(0, count);
+    }
+
+    function normalizeText(text) {
+        return text.toLowerCase().trim().replace(/[áéíóú]/g, function(m) {
+            return { 'á':'a', 'é':'e', 'í':'i', 'ó':'o', 'ú':'u' }[m] || m;
+        });
+    }
+
+    function isAnswerAccepted(userAnswer, acceptedList) {
+        const normalized = normalizeText(userAnswer);
+        return acceptedList.some(accepted => normalizeText(accepted) === normalized);
+    }
+
+    let currentMC = [], currentTF = [], currentSA = [];
+    let mcAnswers = [], tfAnswers = [], saAnswers = [];
+    let evaluated = false;
+
+    function renderMultipleChoice() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        currentMC.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            // Shuffle options and keep track of correct index
+            const optionsWithIndex = q.options.map((opt, i) => ({ text: opt, originalIndex: i }));
+            const shuffledOptions = shuffleArray([...optionsWithIndex]);
+            const correctLetter = String.fromCharCode(65 + shuffledOptions.findIndex(o => o.originalIndex === q.correct));
+
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${shuffledOptions.map((opt, i) => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${String.fromCharCode(65 + i)}" id="mc_${idx}_${String.fromCharCode(65 + i)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${String.fromCharCode(65 + i)}">${opt.text}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div class="feedback-text ${mcAnswers[idx] === correctLetter ? 'correct-feedback' : 'incorrect-feedback'}">${mcAnswers[idx] === correctLetter ? '✅ Correcta' : '❌ Incorrecta'}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => { mcAnswers[idx] = e.target.value; });
+                });
+            }
+        });
+    }
+
+    function renderTrueFalse() {
+        const tbody = document.getElementById('tfBody');
+        tbody.innerHTML = '';
+        currentTF.forEach((item, idx) => {
+            const row = tbody.insertRow();
+            const cellText = row.insertCell(0);
+            const cellSelect = row.insertCell(1);
+            cellText.innerHTML = `${idx+1}. ${item.text}`;
+            const select = document.createElement('select');
+            select.disabled = evaluated;
+            const defaultOpt = document.createElement('option');
+            defaultOpt.value = "";
+            defaultOpt.textContent = "Seleccione";
+            select.appendChild(defaultOpt);
+            const optV = document.createElement('option');
+            optV.value = "V";
+            optV.textContent = "Verdadero (V)";
+            const optF = document.createElement('option');
+            optF.value = "F";
+            optF.textContent = "Falso (F)";
+            select.appendChild(optV);
+            select.appendChild(optF);
+            if (!evaluated && tfAnswers[idx]) {
+                if (tfAnswers[idx] === "V") optV.selected = true;
+                else if (tfAnswers[idx] === "F") optF.selected = true;
+            }
+            select.addEventListener('change', (e) => { tfAnswers[idx] = e.target.value; });
+            cellSelect.appendChild(select);
+            if (evaluated) {
+                const isCorrect = tfAnswers[idx] === item.correct;
+                const feedback = document.createElement('div');
+                feedback.style.fontSize = '0.75rem';
+                feedback.style.marginTop = '0.3rem';
+                feedback.innerHTML = isCorrect ? '✅ Correcto' : `❌ Incorrecto`;
+                feedback.className = isCorrect ? 'tf-correct' : 'tf-incorrect';
+                cellSelect.appendChild(feedback);
+            }
+        });
+    }
+
+    function renderShortAnswer() {
+        const container = document.getElementById('shortAnswer');
+        container.innerHTML = '';
+        currentSA.forEach((item, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${item.description}</p>
+                <input type="text" class="short-answer-input" id="sa_${idx}" ${evaluated ? 'disabled' : ''} value="${evaluated ? saAnswers[idx] || '' : ''}" placeholder="Escribe tu respuesta (máx. 3 palabras)...">
+                ${evaluated ? `<div class="short-feedback ${isAnswerAccepted(saAnswers[idx] || '', item.accepted) ? 'correct' : 'incorrect'}">${isAnswerAccepted(saAnswers[idx] || '', item.accepted) ? '✅ Correcto' : '❌ Incorrecto'}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            if (!evaluated) {
+                const input = document.getElementById(`sa_${idx}`);
+                input.addEventListener('input', (e) => {
+                    saAnswers[idx] = e.target.value;
+                });
+            }
+        });
+    }
+
+    function resetTest() {
+        evaluated = false;
+        currentMC = getRandomItems(bankMultipleChoice, 12);
+        currentTF = getRandomItems(bankTF, 12);
+        currentSA = getRandomItems(bankShortAnswer, 6);
+        mcAnswers = new Array(12).fill(null);
+        tfAnswers = new Array(12).fill(null);
+        saAnswers = new Array(6).fill(null);
+        document.getElementById('results').style.display = 'none';
+        renderMultipleChoice();
+        renderTrueFalse();
+        renderShortAnswer();
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function evaluateAll() {
+        evaluated = true;
+        let mcCorrect = 0, tfCorrect = 0, saCorrect = 0;
+
+        // Recalculate MC correct answers based on current options
+        const allMCQuestions = document.querySelectorAll('#multipleChoice .question');
+        allMCQuestions.forEach((qDiv, idx) => {
+            const radios = qDiv.querySelectorAll('input[type="radio"]');
+            let correctLetter = null;
+            // Find which option was originally correct by checking the correct index stored
+            // We need to re-map the correct answer based on the shuffled order
+            // Since we don't store the shuffled order, we check the correct answer from the original data
+            const questionData = currentMC[idx];
+            const optionsWithIndex = questionData.options.map((opt, i) => ({ text: opt, originalIndex: i }));
+            const shuffledOptions = shuffleArray([...optionsWithIndex]); // This will reshuffle, breaking evaluation
+            // Fix: Store shuffled options during render
+            // We'll use a simpler approach: store the correct letter in a data attribute during render
+        });
+
+        // Simpler: use the stored answers directly
+        // We need to track correct answers properly. Let's re-render with evaluation.
+
+        // Re-evaluate MC
+        const mcRadios = document.querySelectorAll('#multipleChoice .question');
+        mcRadios.forEach((qDiv, idx) => {
+            const selected = qDiv.querySelector('input[type="radio"]:checked');
+            if (selected) {
+                mcAnswers[idx] = selected.value;
+            }
+            // Determine correct answer from current options
+            const questionData = currentMC[idx];
+            const optionsWithIndex = questionData.options.map((opt, i) => ({ text: opt, originalIndex: i }));
+            // We need the correct letter based on the shuffled order used in render
+            // We'll store it in a data attribute during render
+            const correctLetter = qDiv.dataset.correct;
+            if (mcAnswers[idx] === correctLetter) mcCorrect++;
+        });
+
+        // Re-evaluate TF
+        const tfSelects = document.querySelectorAll('#tfBody select');
+        tfSelects.forEach((select, idx) => {
+            if (select.value === currentTF[idx].correct) tfCorrect++;
+        });
+
+        // Re-evaluate SA
+        currentSA.forEach((item, idx) => {
+            if (isAnswerAccepted(saAnswers[idx] || '', item.accepted)) saCorrect++;
+        });
+
+        // Better approach: recalculate from stored data
+        // Let's do a clean evaluation by re-reading all inputs
+
+        // Re-evaluate all answers from DOM
+        mcCorrect = 0; tfCorrect = 0; saCorrect = 0;
+
+        // MC: get all questions and check selected vs correct
+        const mcQuestions = document.querySelectorAll('#multipleChoice .question');
+        mcQuestions.forEach((qDiv, idx) => {
+            const selected = qDiv.querySelector('input[type="radio"]:checked');
+            const correctLetter = qDiv.dataset.correct;
+            if (selected && selected.value === correctLetter) mcCorrect++;
+        });
+
+        // TF
+        const tfSelects2 = document.querySelectorAll('#tfBody select');
+        tfSelects2.forEach((select, idx) => {
+            if (select.value === currentTF[idx].correct) tfCorrect++;
+        });
+
+        // SA
+        currentSA.forEach((item, idx) => {
+            if (isAnswerAccepted(saAnswers[idx] || '', item.accepted)) saCorrect++;
+        });
+
+        const total = currentMC.length + currentTF.length + currentSA.length;
+        const totalCorrect = mcCorrect + tfCorrect + saCorrect;
+        const percentage = (totalCorrect / total) * 100;
+        let grade = 0;
+        const passing = 60;
+
+        if (percentage >= passing) {
+            grade = 4.0 + ((percentage - passing) / (100 - passing)) * 3.0;
+        } else {
+            grade = 1.0 + (percentage / passing) * 3.0;
+        }
+        grade = Math.round(grade * 100) / 100;
+        const isApproved = grade >= 4.0;
+
+        const resultsDiv = document.getElementById('results');
+        resultsDiv.innerHTML = `
+            <h3 style="color:#a5662a; text-align:center;">📊 Resultados</h3>
+            <div class="score-box">✅ Correctas: ${totalCorrect} de ${total} (${Math.round(percentage)}%)</div>
+            <div style="display:flex; justify-content:center; gap:1.5rem; flex-wrap:wrap; margin:0.5rem 0;">
+                <div>📌 Múltiple: ${mcCorrect}/${currentMC.length}</div>
+                <div>⚖️ V/F: ${tfCorrect}/${currentTF.length}</div>
+                <div>✏️ Respuesta Corta: ${saCorrect}/${currentSA.length}</div>
+            </div>
+            <div class="grade-box ${isApproved ? 'approved' : 'failed'}">
+                <strong>${isApproved ? '🎉 APROBADO 🎉' : '📖 REPROBADO 📖'}</strong><br>
+                NOTA: ${grade}
+            </div>
+            <div class="action-buttons">
+                <button class="action-btn" id="restartTestBtn">🔄 Reiniciar test</button>
+                <button class="action-btn" id="goToCourseBtn">📘 Ir al curso</button>
+                <button class="action-btn" id="goToClassBtn">📖 Volver a la clase</button>
+            </div>
+        `;
+        resultsDiv.style.display = 'block';
+
+        // Re-render with evaluation feedback
+        renderMultipleChoice();
+        renderTrueFalse();
+        renderShortAnswer();
+
+        document.getElementById('restartTestBtn')?.addEventListener('click', resetTest);
+        document.getElementById('goToCourseBtn')?.addEventListener('click', () => window.location.href = 'Historia.html');
+        document.getElementById('goToClassBtn')?.addEventListener('click', () => window.location.href = 'C_7_Historia.html');
+
+        resultsDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // Override renderMultipleChoice to store correct letter in data attribute
+    const originalRenderMC = renderMultipleChoice;
+    renderMultipleChoice = function() {
+        const container = document.getElementById('multipleChoice');
+        container.innerHTML = '';
+        currentMC.forEach((q, idx) => {
+            const qDiv = document.createElement('div');
+            qDiv.className = 'question';
+            // Shuffle options
+            const optionsWithIndex = q.options.map((opt, i) => ({ text: opt, originalIndex: i }));
+            const shuffledOptions = shuffleArray([...optionsWithIndex]);
+            const correctLetter = String.fromCharCode(65 + shuffledOptions.findIndex(o => o.originalIndex === q.correct));
+            qDiv.dataset.correct = correctLetter;
+
+            qDiv.innerHTML = `
+                <p><strong>${idx+1}.</strong> ${q.text}</p>
+                <ul class="options">
+                    ${shuffledOptions.map((opt, i) => `
+                        <li>
+                            <input type="radio" name="mc_${idx}" value="${String.fromCharCode(65 + i)}" id="mc_${idx}_${String.fromCharCode(65 + i)}" ${evaluated ? 'disabled' : ''}>
+                            <label for="mc_${idx}_${String.fromCharCode(65 + i)}">${opt.text}</label>
+                        </li>
+                    `).join('')}
+                </ul>
+                ${evaluated ? `<div class="feedback-text ${mcAnswers[idx] === correctLetter ? 'correct-feedback' : 'incorrect-feedback'}">${mcAnswers[idx] === correctLetter ? '✅ Correcta' : '❌ Incorrecta'}</div>` : ''}
+            `;
+            container.appendChild(qDiv);
+            if (!evaluated) {
+                const radios = document.querySelectorAll(`input[name="mc_${idx}"]`);
+                radios.forEach(radio => {
+                    if (mcAnswers[idx] === radio.value) radio.checked = true;
+                    radio.addEventListener('change', (e) => { mcAnswers[idx] = e.target.value; });
+                });
+            }
+        });
+    };
+
+    // ==================== INICIALIZACIÓN ====================
+    resetTest();
+    document.getElementById('evaluateBtn').addEventListener('click', evaluateAll);
+</script>
+</body>
+</html>
